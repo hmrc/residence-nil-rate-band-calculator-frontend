@@ -16,18 +16,14 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import javax.inject.Inject
+import javax.inject.{Inject, Singleton}
 
-import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc._
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
-import uk.gov.hmrc.play.frontend.controller.FrontendController
+import com.typesafe.config.Config
+import play.api.Configuration
+import uk.gov.hmrc.play.config.ControllerConfig
+import net.ceedubs.ficus.Ficus._
 
-import scala.concurrent.Future
-
-class HelloWorld @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi)
-  extends FrontendController with I18nSupport {
-  val helloWorld = Action.async { implicit request =>
-		Future.successful(Ok(uk.gov.hmrc.residencenilratebandcalculator.views.html.helloworld.hello_world(appConfig)))
-  }
+@Singleton
+class ControllerConfiguration @Inject()(configuration: Configuration) extends ControllerConfig {
+  lazy val controllerConfigs = configuration.underlying.as[Config]("controllers")
 }
