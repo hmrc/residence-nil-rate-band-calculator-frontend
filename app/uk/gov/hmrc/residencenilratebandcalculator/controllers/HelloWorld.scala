@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.inheritancetaxresidencenilratebandcalculator.controllers
+package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import play.api.mvc._
@@ -27,6 +27,6 @@ object HelloWorld extends HelloWorld
 
 trait HelloWorld extends FrontendController {
   val helloWorld = Action.async { implicit request =>
-		Future.successful(Ok(uk.gov.hmrc.inheritancetaxresidencenilratebandcalculator.views.html.helloworld.hello_world()))
+		Future.successful(Ok(uk.gov.hmrc.residencenilratebandcalculator.views.html.helloworld.hello_world()))
   }
 }

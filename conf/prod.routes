@@ -1,5 +1,5 @@
 # Add all the application routes to the app.routes file
-->         /inheritance-tax-residence-nil-rate-band-calculator-frontend              app.Routes
+->         /residence-nil-rate-band-calculator-frontend              app.Routes
 ->         /                          health.Routes
 ->     	   /template                  template.Routes
 
