@@ -14,20 +14,17 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.controllers
+package uk.gov.hmrc.residencenilratebandcalculator.filters
 
 import javax.inject.Inject
 
-import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc._
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
-import uk.gov.hmrc.play.frontend.controller.FrontendController
+import akka.stream.Materializer
+import play.api.mvc.{Filter, RequestHeader, Result}
+import uk.gov.hmrc.play.filters.CacheControlFilter
 
 import scala.concurrent.Future
 
-class HelloWorld @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi)
-  extends FrontendController with I18nSupport {
-  val helloWorld = Action.async { implicit request =>
-		Future.successful(Ok(uk.gov.hmrc.residencenilratebandcalculator.views.html.helloworld.hello_world(appConfig)))
-  }
+class CacheControl @Inject()(implicit val mat: Materializer) extends Filter {
+  val filter = CacheControlFilter.fromConfig("caching.allowedContentTypes")
+  override def apply(f: (RequestHeader) => Future[Result])(rh: RequestHeader): Future[Result] = filter(f)(rh)
 }

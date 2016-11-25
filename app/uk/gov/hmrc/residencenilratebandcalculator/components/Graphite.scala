@@ -14,20 +14,23 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.controllers
+package uk.gov.hmrc.residencenilratebandcalculator.components
 
-import javax.inject.Inject
+import javax.inject.{Inject, Singleton}
 
-import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc._
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
-import uk.gov.hmrc.play.frontend.controller.FrontendController
+import play.api.inject.ApplicationLifecycle
+import play.api.{Application, Configuration}
+import uk.gov.hmrc.play.graphite.GraphiteConfig
 
 import scala.concurrent.Future
 
-class HelloWorld @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi)
-  extends FrontendController with I18nSupport {
-  val helloWorld = Action.async { implicit request =>
-		Future.successful(Ok(uk.gov.hmrc.residencenilratebandcalculator.views.html.helloworld.hello_world(appConfig)))
+@Singleton
+class Graphite @Inject()(app: Application, lifecycle: ApplicationLifecycle) extends GraphiteConfig {
+  override def microserviceMetricsConfig(implicit app: Application): Option[Configuration] = app.configuration.getConfig(s"microservice.metrics")
+
+  lifecycle.addStopHook {
+    () => Future.successful(onStop(app))
   }
+
+  onStart(app)
 }

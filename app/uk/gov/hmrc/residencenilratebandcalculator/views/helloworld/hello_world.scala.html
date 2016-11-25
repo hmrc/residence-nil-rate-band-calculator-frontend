@@ -1,5 +1,10 @@
-@()(implicit request: Request[_], messages: Messages))
+@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 
-@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(title = "Hello from residence-nil-rate-band-calculator-frontend", bodyClasses = None) {
+@(appConfig: FrontendAppConfig)(implicit request: Request[_], messages: Messages))
+
+@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+  title = "Hello from residence-nil-rate-band-calculator-frontend",
+  appConfig = appConfig,
+  bodyClasses = None) {
     <h1>Hello from residence-nil-rate-band-calculator-frontend !</h1>
 }
