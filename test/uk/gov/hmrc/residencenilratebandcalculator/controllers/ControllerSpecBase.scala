@@ -16,28 +16,14 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import play.api.http.Status
 import play.api.i18n.MessagesApi
-import play.api.test.FakeRequest
-import play.api.test.Helpers._
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 
+trait ControllerSpecBase extends UnitSpec with WithFakeApplication {
 
-class HelloWorldControllerSpec extends ControllerSpecBase {
+  val injector = fakeApplication.injector
 
-  val fakeRequest = FakeRequest("GET", "/")
-
-  "GET /" should {
-    "return 200" in {
-      val result = new HelloWorld(frontendAppConfig, messagesApi).helloWorld()(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-
-    "return HTML" in {
-      val result = new HelloWorld(frontendAppConfig, messagesApi).helloWorld()(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
-    }
-  }
+  def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
+  def messagesApi = injector.instanceOf[MessagesApi]
 }
