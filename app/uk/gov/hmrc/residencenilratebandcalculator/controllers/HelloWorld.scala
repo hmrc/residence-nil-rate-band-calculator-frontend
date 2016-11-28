@@ -20,14 +20,15 @@ import javax.inject.Inject
 
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.play.frontend.controller.FrontendController
+import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
 
-import scala.concurrent.Future
-
-class HelloWorld @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi)
+class HelloWorld @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi, val rnrbConnector: RnrbConnector)
   extends FrontendController with I18nSupport {
   val helloWorld = Action.async { implicit request =>
-		Future.successful(Ok(uk.gov.hmrc.residencenilratebandcalculator.views.html.helloworld.hello_world(appConfig)))
+
+    rnrbConnector.getHelloWorld.map(response =>
+      Ok(uk.gov.hmrc.residencenilratebandcalculator.views.html.helloworld.hello_world(appConfig, response.body)))
   }
 }

@@ -16,28 +16,38 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import org.mockito.Mockito._
+import org.scalatest.mock.MockitoSugar
 import play.api.http.Status
-import play.api.i18n.MessagesApi
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
+import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 
 
-class HelloWorldControllerSpec extends ControllerSpecBase {
+class HelloWorldControllerSpec extends ControllerSpecBase with MockitoSugar with HttpResponseMocks {
 
   val fakeRequest = FakeRequest("GET", "/")
+  val response = mockResponse(200, "Some text")
+
+  val mockConnector = mock[RnrbConnector]
+  when(mockConnector.getHelloWorld) thenReturn response
 
   "GET /" should {
     "return 200" in {
-      val result = new HelloWorld(frontendAppConfig, messagesApi).helloWorld()(fakeRequest)
+      val result = new HelloWorld(frontendAppConfig, messagesApi, mockConnector).helloWorld()(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = new HelloWorld(frontendAppConfig, messagesApi).helloWorld()(fakeRequest)
+      val result = new HelloWorld(frontendAppConfig, messagesApi, mockConnector).helloWorld()(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result) shouldBe Some("utf-8")
+    }
+
+    "include text from the microservice in the page" in {
+      val result = new HelloWorld(frontendAppConfig, messagesApi, mockConnector).helloWorld()(fakeRequest)
+      contentAsString(result) should include("Some text")
     }
   }
 }
