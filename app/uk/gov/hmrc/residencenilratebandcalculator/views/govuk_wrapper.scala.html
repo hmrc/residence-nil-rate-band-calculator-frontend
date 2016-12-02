@@ -1,5 +1,6 @@
 @(appConfig: uk.gov.hmrc.residencenilratebandcalculator.AppConfig,
   title: String,
+  contentHead: Option[Html] = None,
   mainClass: Option[String] = None,
   mainDataAttributes: Option[Html] = None,
   bodyClasses: Option[String] = None,
@@ -18,6 +19,7 @@
       linkElem = None,
       headScripts = None)
     <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" href='@routes.Assets.versioned("stylesheets/rnrb-app.css")' />
 }
 
 @headerNavLinks = {
@@ -42,6 +44,7 @@
       ssoUrl = None,
       scriptElem = scriptElem,
       gaCalls = None)
+    <script src='@routes.Assets.versioned("javascripts/rnrb-app.min.js")'> </script>
 }
 
 @footerTop = {}

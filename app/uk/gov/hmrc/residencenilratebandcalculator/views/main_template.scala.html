@@ -20,13 +20,15 @@
 }
 
 
-@govuk_wrapper(appConfig = appConfig,
-               title = title,
-               mainClass = mainClass,
-               bodyClasses = bodyClasses,
-               sidebar = sidebar,
-               contentHeader = contentHeader,
-               mainContent = layouts.article(mainContent),
-               serviceInfoContent = serviceInfoContent,
-               scriptElem = scriptElem
+
+@govuk_wrapper(
+    appConfig = appConfig,
+    title = title,
+    mainClass = mainClass,
+    bodyClasses = bodyClasses,
+    sidebar = sidebar,
+    contentHeader = contentHeader,
+    mainContent = layouts.article(mainContent),
+    serviceInfoContent = serviceInfoContent,
+    scriptElem = scriptElem
 )

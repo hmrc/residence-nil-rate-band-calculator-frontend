@@ -1,0 +1,9 @@
+/*
+====================================
+Fixes native-enforcing of date field for date-of-birth fields
+as service does not implement native date inputs
+====================================
+*/
+.touchevents .date-of-birth {
+    display:block;
+}
