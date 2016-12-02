@@ -32,4 +32,8 @@ class GrossEstateValueController @Inject()(appConfig: FrontendAppConfig, val mes
     val onPageLoad = Action.async { implicit request =>
       Future.successful(Ok(gross_estate_value(appConfig)))
     }
+
+    val onSubmit = Action.async { implicit request =>
+      Future.successful(Redirect(""))
+    }
 }
