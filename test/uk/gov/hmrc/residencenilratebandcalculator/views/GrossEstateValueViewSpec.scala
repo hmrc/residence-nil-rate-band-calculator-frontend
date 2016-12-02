@@ -16,53 +16,50 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import play.api.i18n.MessagesApi
-import play.api.test.FakeRequest
-import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.gross_estate_value
-import play.api.test.Helpers._
 
-class GrossEstateValueViewSpec extends UnitSpec with WithFakeApplication {
+import scala.language.reflectiveCalls
 
-  val fakeRequest = FakeRequest("GET", "/")
-  val injector = fakeApplication.injector
+class GrossEstateValueViewSpec extends HtmlSpec {
 
-  def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
-  def messagesApi = injector.instanceOf[MessagesApi]
-
-  def messages = messagesApi.preferred(fakeRequest)
+  def fixture() = new {
+    val view = gross_estate_value(frontendAppConfig)(request, messages)
+    val doc = asDocument(view)
+  }
 
   "Gross Estate Value View" must {
 
     "display the correct browser title" in {
-      val view = gross_estate_value(frontendAppConfig)(fakeRequest, messages)
-      contentAsString(view) should include (s"<title>${messages("gross_estate_value.browser_title")}</title>")
+      val f = fixture()
+      assertEqualsMessage(f.doc, "title", "gross_estate_value.browser_title")
     }
 
     "display the correct page title" in {
-      val view = gross_estate_value(frontendAppConfig)(fakeRequest, messages)
-      contentAsString(view) should include (s"<h1>${messages("gross_estate_value.title")}</h1>")
+      val f = fixture()
+      assertPageTitleEqualsMessage(f.doc, "gross_estate_value.title")
     }
 
     "display the correct guidance" in {
-      val view = gross_estate_value(frontendAppConfig)(fakeRequest, messages)
-      contentAsString(view) should include (s"<p>${messages("gross_estate_value.guidance")}</p>")
+      val f = fixture()
+      assertContainsMessages(f.doc, "gross_estate_value.guidance")
     }
 
-    "contain a form" in {
-      val view = gross_estate_value(frontendAppConfig)(fakeRequest, messages)
-      contentAsString(view) should include(s"<form")
+    "contain a form that POSTs to the correct action" in {
+      val f = fixture()
+      val forms = f.doc.getElementsByTag("form")
+      forms.size shouldBe 1
+      val form = forms.first
+      pending // Assert that the href is correct
     }
 
     "contain an input for the value" in {
-      val view = gross_estate_value(frontendAppConfig)(fakeRequest, messages)
-      contentAsString(view) should include(s"<input")
+      val f = fixture()
+      assertRenderedById(f.doc, "value")
     }
 
     "contain a submit button" in {
-      val view = gross_estate_value(frontendAppConfig)(fakeRequest, messages)
-      contentAsString(view) should include("""<input type="submit"""")
+      val f = fixture()
+      assertRenderedByCssSelector(f.doc, "input[type=submit]")
     }
   }
 }
