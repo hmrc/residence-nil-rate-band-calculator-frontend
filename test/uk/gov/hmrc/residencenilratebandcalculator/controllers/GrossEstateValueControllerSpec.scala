@@ -24,36 +24,37 @@ import play.api.mvc.{AnyContentAsEmpty, Result}
 import play.api.test.FakeRequest
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.gross_estate_value
 import play.api.test.Helpers._
+import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.GrossEstateValueForm
 
 import scala.concurrent.Future
 
-class GrossEstateValueControllerSpec extends ControllerSpecBase {
+class GrossEstateValueControllerSpec extends ControllerSpecBase with MockSessionConnector {
 
   "Gross Estate Value Controller" must {
 
-    val fakeRequest = FakeRequest("GET", "/")
+    val fakeRequest = FakeRequest("", "")
 
     "return 200 for a GET" in {
-      val result = new GrossEstateValueController(frontendAppConfig, messagesApi).onPageLoad()(fakeRequest)
+      val result = new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector).onPageLoad()(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return the Gross Estate View for a GET" in {
-      val result = new GrossEstateValueController(frontendAppConfig, messagesApi).onPageLoad()(fakeRequest)
+      val result = new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector).onPageLoad()(fakeRequest)
       contentAsString(result) shouldBe gross_estate_value(frontendAppConfig)(fakeRequest, messagesApi.preferred(fakeRequest)).toString
     }
 
-    "return a redirect on submit" in {
-      val fakePostRequest = FakeRequest("POST", "/")
-      val result = new GrossEstateValueController(frontendAppConfig, messagesApi).onSubmit()(fakePostRequest)
+    "return a redirect on submit with valid data" in {
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", "100"))
+      val result = new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector).onSubmit()(fakePostRequest)
       status(result) shouldBe Status.SEE_OTHER
     }
 
-    "store submitted data" in {
-      val fakePostRequest = FakeRequest("POST", "/").withFormUrlEncodedBody(("value", "100"))
-      val result = new GrossEstateValueController(frontendAppConfig, messagesApi).onSubmit()(fakePostRequest)
-      status(result) shouldBe Status.SEE_OTHER
+    "store valid submitted data" in {
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", "100"))
+      val result = new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector).onSubmit()(fakePostRequest)
+      verifyValueIsCached(100)
     }
   }
 }

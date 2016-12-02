@@ -22,11 +22,13 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
+import uk.gov.hmrc.residencenilratebandcalculator.forms.GrossEstateValueForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.gross_estate_value
 
 import scala.concurrent.Future
 
-class GrossEstateValueController @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi)
+class GrossEstateValueController @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi, sessionConnector: SessionConnector)
   extends FrontendController with I18nSupport {
 
     val onPageLoad = Action.async { implicit request =>
@@ -34,6 +36,16 @@ class GrossEstateValueController @Inject()(appConfig: FrontendAppConfig, val mes
     }
 
     val onSubmit = Action.async { implicit request =>
-      Future.successful(Redirect(""))
+      def storeAndRedirect(value: Int) = {
+        sessionConnector.storeValue(value)
+        Future.successful(Redirect(""))
+      }
+
+      val boundForm = GrossEstateValueForm().bindFromRequest()
+
+      boundForm.fold(
+        formWithErrors => Future.successful(BadRequest),
+        value => storeAndRedirect(value)
+      )
     }
 }
