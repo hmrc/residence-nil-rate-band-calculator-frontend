@@ -49,5 +49,20 @@ class GrossEstateValueViewSpec extends UnitSpec with WithFakeApplication {
       val view = gross_estate_value(frontendAppConfig)(fakeRequest, messages)
       contentAsString(view) should include (s"<p>${messages("gross_estate_value.guidance")}</p>")
     }
+
+    "contain a form" in {
+      val view = gross_estate_value(frontendAppConfig)(fakeRequest, messages)
+      contentAsString(view) should include(s"<form")
+    }
+
+    "contain an input for the value" in {
+      val view = gross_estate_value(frontendAppConfig)(fakeRequest, messages)
+      contentAsString(view) should include(s"<input")
+    }
+
+    "contain a submit button" in {
+      val view = gross_estate_value(frontendAppConfig)(fakeRequest, messages)
+      contentAsString(view) should include("""<input type="submit"""")
+    }
   }
 }

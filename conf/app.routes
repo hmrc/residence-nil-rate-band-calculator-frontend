@@ -1,3 +1,5 @@
 # microservice specific routes
 
 GET        /hello-world             uk.gov.hmrc.residencenilratebandcalculator.controllers.HelloWorld.helloWorld
+
+GET        /gross-estate-value      uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onPageLoad
