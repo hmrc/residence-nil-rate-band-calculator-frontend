@@ -1,7 +1,7 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.play.views.html._
 
-@(appConfig: FrontendAppConfig)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, form: Option[Form[Int]] = None)(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("gross_estate_value.browser_title"),
@@ -11,6 +11,7 @@
     <h1>@messages("gross_estate_value.title")</h1>
 
     <p>@messages("gross_estate_value.guidance")</p>
+
 
     @helpers.form(action = Call("", ""), 'autoComplete -> "off") {
 

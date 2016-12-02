@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
+import uk.gov.hmrc.residencenilratebandcalculator.forms.GrossEstateValueForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.gross_estate_value
 
 import scala.language.reflectiveCalls

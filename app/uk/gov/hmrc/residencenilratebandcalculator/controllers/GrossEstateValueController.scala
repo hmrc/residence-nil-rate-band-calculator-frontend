@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.Inject
 
+import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._
 import uk.gov.hmrc.play.frontend.controller.FrontendController
@@ -36,16 +37,10 @@ class GrossEstateValueController @Inject()(appConfig: FrontendAppConfig, val mes
     }
 
     val onSubmit = Action.async { implicit request =>
-      def storeAndRedirect(value: Int) = {
-        sessionConnector.storeValue(value)
-        Future.successful(Redirect(""))
-      }
-
       val boundForm = GrossEstateValueForm().bindFromRequest()
-
       boundForm.fold(
-        formWithErrors => Future.successful(BadRequest),
-        value => storeAndRedirect(value)
+        (formWithErrors: Form[Int]) => Future.successful(BadRequest(gross_estate_value(appConfig, Some(formWithErrors)))),
+        (value) => sessionConnector.cache("GrossEstateValue", value).map(_ => Redirect(""))
       )
     }
 }

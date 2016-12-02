@@ -52,9 +52,31 @@ class GrossEstateValueControllerSpec extends ControllerSpecBase with MockSession
     }
 
     "store valid submitted data" in {
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", "100"))
+      val value = 100
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value.toString))
+      new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector).onSubmit()(fakePostRequest)
+      verifyValueIsCached(value)
+    }
+
+    "return bad request on submit with invalid data" in {
+      val value = "not a number"
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value))
       val result = new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector).onSubmit()(fakePostRequest)
-      verifyValueIsCached(100)
+      status(result) shouldBe Status.BAD_REQUEST
+    }
+
+    "not store invalid submitted data" in {
+      val value = "not a number"
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value))
+      new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector).onSubmit()(fakePostRequest)
+      verifyValueIsNotCached()
+    }
+
+    "return form with errors when invalid data ia submitted" in {
+      val value = "not a number"
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value))
+      val result = new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector).onSubmit()(fakePostRequest)
+      contentAsString(result) shouldBe gross_estate_value(frontendAppConfig)(fakeRequest, messagesApi.preferred(fakeRequest)).toString
     }
   }
 }
