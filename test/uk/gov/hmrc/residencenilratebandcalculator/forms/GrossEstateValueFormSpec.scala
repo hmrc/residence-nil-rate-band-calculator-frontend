@@ -16,9 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
-import uk.gov.hmrc.play.test.UnitSpec
-
-class GrossEstateValueFormSpec extends UnitSpec {
+class GrossEstateValueFormSpec extends FormSpec {
 
   "Gross Estate Value Form" must {
 
@@ -28,9 +26,23 @@ class GrossEstateValueFormSpec extends UnitSpec {
     }
 
     "fail to bind negative numbers" in {
-      val form = GrossEstateValueForm().bind(Map("value" -> "-1"))
-      form.errors.size shouldBe 1
+      val expectedError = error("value", "error.min")
+      checkForError(GrossEstateValueForm(), Map("value" -> "-1"), expectedError)
+    }
+
+    "fail to bind non-numerics" in {
+      val expectedError = error("value", "error.number")
+      checkForError(GrossEstateValueForm(), Map("value" -> "not a number"), expectedError)
+    }
+
+    "fail to bind a blank value" in {
+      val expectedError = error("value", "error.number")
+      checkForError(GrossEstateValueForm(), Map("value" -> ""), expectedError)
+    }
+
+    "fail to bind when value is omitted" in {
+      val expectedError = error("value", "error.required")
+      checkForError(GrossEstateValueForm(), emptyForm, expectedError)
     }
   }
-
 }
