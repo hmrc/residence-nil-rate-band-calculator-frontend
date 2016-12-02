@@ -23,12 +23,12 @@ class GrossEstateValueFormSpec extends UnitSpec {
   "Gross Estate Value Form" must {
 
     "bind positive numbers" in {
-      val form = GrossEstateValueForm.apply.bind(Map("value" -> "1"))
+      val form = GrossEstateValueForm().bind(Map("value" -> "1"))
       form.get shouldBe 1
     }
 
     "fail to bind negative numbers" in {
-      val form = GrossEstateValueForm.apply.bind(Map("value" -> "-1"))
+      val form = GrossEstateValueForm().bind(Map("value" -> "-1"))
       form.errors.size shouldBe 1
     }
   }

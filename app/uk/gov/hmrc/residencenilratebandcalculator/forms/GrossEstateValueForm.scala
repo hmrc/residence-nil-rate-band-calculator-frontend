@@ -16,11 +16,11 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
-import play.api.data.{Form, Forms}
+import play.api.data.Form
 import play.api.data.Forms._
 
 object GrossEstateValueForm {
 
-  def apply: Form[Int] = Form(single("value" -> number(min=0)))
+  def apply(): Form[Int] = Form(single("value" -> number(min=0)))
 
 }

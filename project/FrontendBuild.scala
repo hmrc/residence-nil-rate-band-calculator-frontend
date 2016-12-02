@@ -27,6 +27,7 @@ private object AppDependencies {
   private val pegdownVersion = "1.6.0"
   private val mockitoAllVersion = "1.10.19"
   private val whitelistVersion = "2.0.0"
+  private val httpCachingClientVersion = "6.1.0"
 
   val compile = Seq(
     ws,
@@ -38,7 +39,8 @@ private object AppDependencies {
     "uk.gov.hmrc" %% "govuk-template" % govukTemplateVersion,
     "uk.gov.hmrc" %% "play-health" % playHealthVersion,
     "uk.gov.hmrc" %% "play-ui" % playUiVersion,
-    "uk.gov.hmrc" %% "play-whitelist-filter" % whitelistVersion
+    "uk.gov.hmrc" %% "play-whitelist-filter" % whitelistVersion,
+    "uk.gov.hmrc" %% "http-caching-client" % httpCachingClientVersion
   )
 
   trait TestDependencies {
