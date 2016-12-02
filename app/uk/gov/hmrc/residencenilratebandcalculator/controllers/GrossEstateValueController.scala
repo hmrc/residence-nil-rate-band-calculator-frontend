@@ -16,15 +16,20 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import play.api.i18n.MessagesApi
-import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
+import javax.inject.Inject
+
+import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.mvc._
+import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
-import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.gross_estate_value
 
-trait ControllerSpecBase extends UnitSpec with WithFakeApplication with HttpResponseMocks {
+import scala.concurrent.Future
 
-  val injector = fakeApplication.injector
+class GrossEstateValueController @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi)
+  extends FrontendController with I18nSupport {
 
-  def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
-  def messagesApi = injector.instanceOf[MessagesApi]
+    val onPageLoad = Action.async { implicit request =>
+      Future.successful(Ok(gross_estate_value(appConfig)))
+    }
 }

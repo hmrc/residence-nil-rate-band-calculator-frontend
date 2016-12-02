@@ -25,7 +25,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 
 
-class HelloWorldControllerSpec extends ControllerSpecBase with MockitoSugar with HttpResponseMocks {
+class HelloWorldControllerSpec extends ControllerSpecBase with MockitoSugar {
 
   val fakeRequest = FakeRequest("GET", "/")
   val response = mockResponse(200, "Some text")
