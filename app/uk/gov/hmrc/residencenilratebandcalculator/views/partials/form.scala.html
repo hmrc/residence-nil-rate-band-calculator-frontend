@@ -1,0 +1,7 @@
+@(id:String, action: play.api.mvc.Call, args: (Symbol,String)*)(body: => Html)(implicit request: Request[_])
+@import views.html.helper._
+
+<form id="@id" action="@action.url" method="@action.method" @toHtmlArgs(args.toMap)>
+    @CSRF.formField
+    @body
+</form>
