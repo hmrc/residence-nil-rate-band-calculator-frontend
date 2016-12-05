@@ -16,33 +16,33 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_transfer_amount
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.gross_estate_value
 
 import scala.language.reflectiveCalls
 
-class GrossEstateValueViewSpec extends HtmlSpec {
+class ChargeableTransferAmountViewSpec extends HtmlSpec {
 
   def fixture() = new {
-    val view = gross_estate_value(frontendAppConfig)(request, messages)
+    val view = chargeable_transfer_amount(frontendAppConfig)(request, messages)
     val doc = asDocument(view)
   }
 
-  "Gross Estate Value View" must {
+  "Chargeable Transfer Amount View" must {
 
     "display the correct browser title" in {
       val f = fixture()
-      assertEqualsMessage(f.doc, "title", "gross_estate_value.browser_title")
+      assertEqualsMessage(f.doc, "title", "chargeable_transfer_amount.browser_title")
     }
 
     "display the correct page title" in {
       val f = fixture()
-      assertPageTitleEqualsMessage(f.doc, "gross_estate_value.title")
+      assertPageTitleEqualsMessage(f.doc, "chargeable_transfer_amount.title")
     }
 
     "display the correct guidance" in {
       val f = fixture()
-      assertContainsMessages(f.doc, "gross_estate_value.guidance")
+      assertContainsMessages(f.doc, "chargeable_transfer_amount.guidance")
     }
 
     "contain a form that POSTs to the correct action" in {
@@ -51,7 +51,7 @@ class GrossEstateValueViewSpec extends HtmlSpec {
       forms.size shouldBe 1
       val form = forms.first
       form.attr("method") shouldBe "POST"
-      form.attr("action") shouldBe routes.GrossEstateValueController.onSubmit().url
+      form.attr("action") shouldBe routes.ChargeableTransferAmountController.onSubmit().url
     }
 
     "contain an input for the value" in {

@@ -19,7 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.forms
 import play.api.data.Form
 import play.api.data.Forms._
 
-object GrossEstateValueForm {
+object NonNegativeIntForm {
 
   def apply(): Form[Int] = Form(single("value" -> number(min=0)))
 
