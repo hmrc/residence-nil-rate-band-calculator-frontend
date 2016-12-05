@@ -19,32 +19,18 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import javax.inject.Inject
 
 import play.api.data.Form
-import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.Action
-import uk.gov.hmrc.play.frontend.controller.FrontendController
+import play.api.i18n.MessagesApi
+import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_transfer_amount
 
-import scala.concurrent.Future
+class ChargeableTransferAmountController  @Inject()(override val appConfig: FrontendAppConfig,
+                                                    val messagesApi: MessagesApi,
+                                                    override val sessionConnector: SessionConnector) extends RnrbControllerBase {
 
-class ChargeableTransferAmountController  @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi, sessionConnector: SessionConnector)
-  extends FrontendController with I18nSupport {
 
-  val onPageLoad = Action.async { implicit request =>
-    sessionConnector.fetchAndGetEntry[Int]("ChargeableTransferAmount").map(
-      cachedValue => {
-        val form = cachedValue.map(value => NonNegativeIntForm().fill(value))
-        Ok(chargeable_transfer_amount(appConfig, form))
-      })
-  }
+  override val sessionCacheKey = "ChargeableTransferAmount"
 
-  val onSubmit = Action.async { implicit request =>
-    val boundForm = NonNegativeIntForm().bindFromRequest()
-    boundForm.fold(
-      (formWithErrors: Form[Int]) => Future.successful(BadRequest(chargeable_transfer_amount(appConfig, Some(formWithErrors)))),
-      (value) => sessionConnector.cache[Int]("ChargeableTransferAmount", value).map(_ => Redirect(""))
-    )
-  }
+  override def view(form: Option[Form[Int]])(implicit request: Request[_]) = chargeable_transfer_amount(appConfig, form)
 }
