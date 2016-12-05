@@ -29,7 +29,4 @@ class SessionConnector @Inject()(wshttp: WSHttp) extends SessionCache with Servi
   override lazy val domain: String =
     getConfString("session.domain", throw new Exception(s"Could not find config 'session.domain'"))
 
-  def storeValue(value: Int) = {
-
-  }
 }

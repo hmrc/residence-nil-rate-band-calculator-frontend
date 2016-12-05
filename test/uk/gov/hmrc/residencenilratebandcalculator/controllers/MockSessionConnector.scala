@@ -17,23 +17,36 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import org.mockito.ArgumentCaptor
-import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
+import org.mockito.Matchers._
+import org.scalatest.mock.MockitoSugar
 import org.scalatest.{BeforeAndAfter, Matchers}
+import play.api.libs.json.Writes
+import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.test.UnitSpec
+import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
+
+import scala.concurrent.Future
 
 trait MockSessionConnector extends UnitSpec with MockitoSugar with Matchers with BeforeAndAfter {
 
-  var mockSessionConnector = mock[SessionConnector]
+  var mockSessionConnector: SessionConnector = null
+  implicit val headnapper = ArgumentCaptor.forClass(classOf[HeaderCarrier])
+  implicit val writesnapper = ArgumentCaptor.forClass(classOf[Writes[Int]])
 
   before {
     mockSessionConnector = mock[SessionConnector]
+    when(mockSessionConnector.cache(anyString(), anyInt())(any(), any[HeaderCarrier])) thenReturn Future.successful(mock[CacheMap])
   }
 
   def verifyValueIsCached(value: Int) = {
-    val captor = ArgumentCaptor.forClass(classOf[Int])
-    verify(mockSessionConnector).storeValue(captor.capture)
-    captor.getValue shouldBe value
+    implicit val hc = new HeaderCarrier()
+    val valueCaptor = ArgumentCaptor.forClass(classOf[Int])
+    val keyCaptor = ArgumentCaptor.forClass(classOf[String])
+    verify(mockSessionConnector).cache(keyCaptor.capture, valueCaptor.capture)(writesnapper.capture, headnapper.capture)
+    valueCaptor.getValue shouldBe value
   }
+
+  def verifyValueIsNotCached() = verifyZeroInteractions(mockSessionConnector)
 }
