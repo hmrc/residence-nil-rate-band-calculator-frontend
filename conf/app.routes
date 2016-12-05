@@ -4,3 +4,6 @@ GET        /assets/*file            controllers.Assets.versioned(path="/public",
 GET        /hello-world             uk.gov.hmrc.residencenilratebandcalculator.controllers.HelloWorld.helloWorld
 
 GET        /gross-estate-value      uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onPageLoad
+POST       /gross-estate-value      uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onSubmit
+
+GET        /first-time              uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.firstTime

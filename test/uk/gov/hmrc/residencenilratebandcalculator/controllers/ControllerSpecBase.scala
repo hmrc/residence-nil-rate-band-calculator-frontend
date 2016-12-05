@@ -16,15 +16,19 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import play.api.i18n.MessagesApi
+import play.api.i18n._
+import play.api.test.FakeRequest
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 
 trait ControllerSpecBase extends UnitSpec with WithFakeApplication with HttpResponseMocks {
 
+  val fakeRequest = FakeRequest("", "")
+
   val injector = fakeApplication.injector
 
   def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
   def messagesApi = injector.instanceOf[MessagesApi]
+  def messages = messagesApi.preferred(fakeRequest)
 }

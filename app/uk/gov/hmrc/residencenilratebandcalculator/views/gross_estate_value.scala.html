@@ -13,9 +13,9 @@
     <p>@messages("gross_estate_value.guidance")</p>
 
 
-    @helpers.form(action = Call("", ""), 'autoComplete -> "off") {
+    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.GrossEstateValueController.onSubmit(), 'autoComplete -> "off") {
 
-        <input type="text" id="value" />
+        <input type="text" id="value" name="value" value="@form.map(f => f.value)" />
 
         <input type="submit" />
     }

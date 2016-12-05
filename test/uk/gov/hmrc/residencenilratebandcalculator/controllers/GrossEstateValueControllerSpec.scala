@@ -16,24 +16,14 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import akka.util.ByteString
-import play.api.data.Form
 import play.api.http.Status
-import play.api.libs.streams.Accumulator
-import play.api.mvc.{AnyContentAsEmpty, Result}
-import play.api.test.FakeRequest
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.gross_estate_value
 import play.api.test.Helpers._
-import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.GrossEstateValueForm
-
-import scala.concurrent.Future
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.gross_estate_value
 
 class GrossEstateValueControllerSpec extends ControllerSpecBase with MockSessionConnector {
 
   "Gross Estate Value Controller" must {
-
-    val fakeRequest = FakeRequest("", "")
 
     "return 200 for a GET" in {
       val result = new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector).onPageLoad()(fakeRequest)
@@ -42,7 +32,7 @@ class GrossEstateValueControllerSpec extends ControllerSpecBase with MockSession
 
     "return the Gross Estate View for a GET" in {
       val result = new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector).onPageLoad()(fakeRequest)
-      contentAsString(result) shouldBe gross_estate_value(frontendAppConfig)(fakeRequest, messagesApi.preferred(fakeRequest)).toString
+      contentAsString(result) shouldBe gross_estate_value(frontendAppConfig)(fakeRequest, messages).toString
     }
 
     "return a redirect on submit with valid data" in {
@@ -76,7 +66,15 @@ class GrossEstateValueControllerSpec extends ControllerSpecBase with MockSession
       val value = "not a number"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value))
       val result = new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector).onSubmit()(fakePostRequest)
-      contentAsString(result) shouldBe gross_estate_value(frontendAppConfig)(fakeRequest, messagesApi.preferred(fakeRequest)).toString
+      contentAsString(result) shouldBe gross_estate_value(frontendAppConfig)(fakeRequest, messages).toString
+    }
+
+    "get a previously stored value from keystore" in {
+      val value = 123
+      setCacheValue("GrossEstateValue", value)
+      val result = new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector).onPageLoad()(fakeRequest)
+      contentAsString(result) shouldBe
+        gross_estate_value(frontendAppConfig, Some(GrossEstateValueForm().fill(value)))(fakeRequest, messages).toString
     }
   }
 }

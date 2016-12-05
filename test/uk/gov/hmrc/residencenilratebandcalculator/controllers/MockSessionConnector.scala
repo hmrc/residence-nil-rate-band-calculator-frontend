@@ -38,6 +38,7 @@ trait MockSessionConnector extends UnitSpec with MockitoSugar with Matchers with
   before {
     mockSessionConnector = mock[SessionConnector]
     when(mockSessionConnector.cache(anyString(), anyInt())(any(), any[HeaderCarrier])) thenReturn Future.successful(mock[CacheMap])
+    when(mockSessionConnector.fetchAndGetEntry[Int](anyString())(any[HeaderCarrier], any())) thenReturn Future.successful(None)
   }
 
   def verifyValueIsCached(value: Int) = {
@@ -49,4 +50,7 @@ trait MockSessionConnector extends UnitSpec with MockitoSugar with Matchers with
   }
 
   def verifyValueIsNotCached() = verifyZeroInteractions(mockSessionConnector)
+
+  def setCacheValue(key: String, value: Int) =
+    when(mockSessionConnector.fetchAndGetEntry[Int](matches(key))(any[HeaderCarrier], any())) thenReturn Future.successful(Some(value))
 }
