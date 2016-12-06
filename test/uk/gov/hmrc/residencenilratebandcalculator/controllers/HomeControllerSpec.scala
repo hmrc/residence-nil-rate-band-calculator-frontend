@@ -16,19 +16,21 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import play.api.i18n._
-import play.api.test.FakeRequest
-import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
-import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
+import play.api.http.Status
+import play.api.test.Helpers._
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.index
 
-trait ControllerSpecBase extends UnitSpec with WithFakeApplication with HttpResponseMocks {
+class HomeControllerSpec extends ControllerSpecBase {
 
-  val fakeRequest = FakeRequest("", "")
+  "Home controller" must {
+    "return 200 for a GET" in {
+      val result = new HomeController(frontendAppConfig, messagesApi).onPageLoad()(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
 
-  val injector = fakeApplication.injector
-
-  def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
-  def messagesApi = injector.instanceOf[MessagesApi]
-  def messages = messagesApi.preferred(fakeRequest)
+    "return the Index view for a GET" in {
+      val result = new HomeController(frontendAppConfig, messagesApi).onPageLoad()(fakeRequest)
+      contentAsString(result) shouldBe index(frontendAppConfig)(fakeRequest, messages).toString
+    }
+  }
 }

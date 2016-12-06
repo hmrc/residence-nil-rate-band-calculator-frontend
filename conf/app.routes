@@ -1,4 +1,10 @@
 # microservice specific routes
 
+GET        /                        uk.gov.hmrc.residencenilratebandcalculator.controllers.HomeController.onPageLoad
+
 GET        /assets/*file            controllers.Assets.versioned(path="/public", file: Asset)
+
 GET        /hello-world             uk.gov.hmrc.residencenilratebandcalculator.controllers.HelloWorld.helloWorld
+
+GET        /gross-estate-value      uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onPageLoad
+POST       /gross-estate-value      uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onSubmit

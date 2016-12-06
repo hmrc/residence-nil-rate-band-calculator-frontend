@@ -1,0 +1,23 @@
+@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@import uk.gov.hmrc.play.views.html._
+
+@(appConfig: FrontendAppConfig, form: Option[Form[Int]] = None)(implicit request: Request[_], messages: Messages)
+
+@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+    title = messages("gross_estate_value.browser_title"),
+    appConfig = appConfig,
+    bodyClasses = None) {
+
+    <h1>@messages("gross_estate_value.title")</h1>
+
+    <p>@messages("gross_estate_value.guidance")</p>
+
+
+    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.GrossEstateValueController.onSubmit(), 'autoComplete -> "off") {
+
+        <input type="text" id="value" name="value" value="@form.map(f => f.value)" />
+
+        <input type="submit" />
+    }
+
+}

@@ -19,15 +19,12 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
 import play.api.http.Status
-import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
-import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 
 
-class HelloWorldControllerSpec extends ControllerSpecBase with MockitoSugar with HttpResponseMocks {
+class HelloWorldControllerSpec extends ControllerSpecBase with MockitoSugar {
 
-  val fakeRequest = FakeRequest("GET", "/")
   val response = mockResponse(200, "Some text")
 
   val mockConnector = mock[RnrbConnector]

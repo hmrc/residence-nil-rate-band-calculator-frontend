@@ -27,11 +27,11 @@ class Filters @Inject()(metrics: Metrics,
                         deviceId: DeviceId,
                         logging: Logging,
                         audit: Audit,
-                        csrfExceptions: CSRFExceptions,
                         csrf: CSRFFilter,
+                        csrfExceptions: CSRFExceptions,
                         cacheControl: CacheControl,
                         recovery: Recovery)
-  extends DefaultHttpFilters(metrics, headers, sessionCookieCrypto, deviceId, logging, audit, csrfExceptions, csrf, cacheControl, recovery)
+  extends DefaultHttpFilters(metrics, headers, sessionCookieCrypto, deviceId, logging, audit, csrf, csrfExceptions, cacheControl, recovery)
 
 class FiltersWithWhitelist @Inject()(metrics: Metrics,
                                      headers: Headers,
@@ -39,9 +39,9 @@ class FiltersWithWhitelist @Inject()(metrics: Metrics,
                                      deviceId: DeviceId,
                                      logging: Logging,
                                      audit: Audit,
-                                     csrfExceptions: CSRFExceptions,
                                      csrf: CSRFFilter,
+                                     csrfExceptions: CSRFExceptions,
                                      cacheControl: CacheControl,
                                      recovery: Recovery,
                                      whitelist: Whitelist)
-  extends DefaultHttpFilters(metrics, headers, sessionCookieCrypto, deviceId, logging, audit, csrfExceptions, csrf, cacheControl, recovery, whitelist)
+  extends DefaultHttpFilters(metrics, headers, sessionCookieCrypto, deviceId, logging, audit, csrf, csrfExceptions, cacheControl, recovery, whitelist)
