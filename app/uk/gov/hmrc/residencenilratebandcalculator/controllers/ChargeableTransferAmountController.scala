@@ -18,18 +18,19 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.Inject
 
+import play.api.data.Form
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
-import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.gross_estate_value
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_transfer_amount
 
-class GrossEstateValueController @Inject()(override val appConfig: FrontendAppConfig,
-                                           val messagesApi: MessagesApi,
-                                           override val sessionConnector: SessionConnector) extends RnrbControllerBase {
+class ChargeableTransferAmountController  @Inject()(override val appConfig: FrontendAppConfig,
+                                                    val messagesApi: MessagesApi,
+                                                    override val sessionConnector: SessionConnector) extends RnrbControllerBase {
 
-  override val sessionCacheKey = "GrossEstateValue"
 
-  override def view(form: Option[Form[Int]])(implicit request: Request[_]) = gross_estate_value(appConfig, form)
+  override val sessionCacheKey = "ChargeableTransferAmount"
+
+  override def view(form: Option[Form[Int]])(implicit request: Request[_]) = chargeable_transfer_amount(appConfig, form)
 }

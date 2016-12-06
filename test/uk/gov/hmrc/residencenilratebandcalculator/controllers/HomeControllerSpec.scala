@@ -17,10 +17,22 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.http.Status
+import play.api.i18n.MessagesApi
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
+import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.index
 
-class HomeControllerSpec extends ControllerSpecBase {
+class HomeControllerSpec extends UnitSpec with WithFakeApplication {
+
+  val fakeRequest = FakeRequest("", "")
+
+  val injector = fakeApplication.injector
+
+  def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
+  def messagesApi = injector.instanceOf[MessagesApi]
+  def messages = messagesApi.preferred(fakeRequest)
 
   "Home controller" must {
     "return 200 for a GET" in {

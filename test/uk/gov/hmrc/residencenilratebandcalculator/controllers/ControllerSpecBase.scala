@@ -16,13 +16,16 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import play.api.http.Status
 import play.api.i18n._
 import play.api.test.FakeRequest
+import play.api.test.Helpers._
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 
-trait ControllerSpecBase extends UnitSpec with WithFakeApplication with HttpResponseMocks {
+trait ControllerSpecBase extends UnitSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
 
   val fakeRequest = FakeRequest("", "")
 
@@ -31,4 +34,60 @@ trait ControllerSpecBase extends UnitSpec with WithFakeApplication with HttpResp
   def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
   def messagesApi = injector.instanceOf[MessagesApi]
   def messages = messagesApi.preferred(fakeRequest)
+
+  def rnrbController(createController: () => RnrbControllerBase,
+                     createView: (Option[Int]) => HtmlFormat.Appendable,
+                     cacheKey: String) = {
+
+    "return 200 for a GET" in {
+      val result = createController().onPageLoad()(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return the Gross Estate View for a GET" in {
+      val result = createController().onPageLoad()(fakeRequest)
+      contentAsString(result) shouldBe createView(None).toString
+    }
+
+    "return a redirect on submit with valid data" in {
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", "100"))
+      val result = createController().onSubmit()(fakePostRequest)
+      status(result) shouldBe Status.SEE_OTHER
+    }
+
+    "store valid submitted data" in {
+      val value = 100
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value.toString))
+      createController().onSubmit()(fakePostRequest)
+      verifyValueIsCached(value)
+    }
+
+    "return bad request on submit with invalid data" in {
+      val value = "not a number"
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value))
+      val result = createController().onSubmit()(fakePostRequest)
+      status(result) shouldBe Status.BAD_REQUEST
+    }
+
+    "return form with errors when invalid data ia submitted" in {
+      val value = "not a number"
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value))
+      val result = createController().onSubmit()(fakePostRequest)
+      contentAsString(result) shouldBe createView(None).toString
+    }
+
+    "not store invalid submitted data" in {
+      val value = "not a number"
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value))
+      createController().onSubmit()(fakePostRequest)
+      verifyValueIsNotCached()
+    }
+
+    "get a previously stored value from keystore" in {
+      val value = 123
+      setCacheValue(cacheKey, value)
+      val result = createController().onPageLoad()(fakeRequest)
+      contentAsString(result) shouldBe createView(Some(value)).toString
+    }
+  }
 }
