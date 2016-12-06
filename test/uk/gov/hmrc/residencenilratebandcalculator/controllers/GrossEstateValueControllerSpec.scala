@@ -21,60 +21,17 @@ import play.api.test.Helpers._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.gross_estate_value
 
-class GrossEstateValueControllerSpec extends ControllerSpecBase with MockSessionConnector {
+class GrossEstateValueControllerSpec extends ControllerSpecBase {
 
   "Gross Estate Value Controller" must {
 
-    "return 200 for a GET" in {
-      val result = new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector).onPageLoad()(fakeRequest)
-      status(result) shouldBe Status.OK
+    def createView = (value: Option[Int]) => value match {
+      case None => gross_estate_value(frontendAppConfig)(fakeRequest, messages)
+      case Some(v) => gross_estate_value(frontendAppConfig, Some(NonNegativeIntForm().fill(v)))(fakeRequest, messages)
     }
 
-    "return the Gross Estate View for a GET" in {
-      val result = new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector).onPageLoad()(fakeRequest)
-      contentAsString(result) shouldBe gross_estate_value(frontendAppConfig)(fakeRequest, messages).toString
-    }
+    def createController = () => new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector)
 
-    "return a redirect on submit with valid data" in {
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", "100"))
-      val result = new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector).onSubmit()(fakePostRequest)
-      status(result) shouldBe Status.SEE_OTHER
-    }
-
-    "store valid submitted data" in {
-      val value = 100
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value.toString))
-      new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector).onSubmit()(fakePostRequest)
-      verifyValueIsCached(value)
-    }
-
-    "return bad request on submit with invalid data" in {
-      val value = "not a number"
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value))
-      val result = new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector).onSubmit()(fakePostRequest)
-      status(result) shouldBe Status.BAD_REQUEST
-    }
-
-    "not store invalid submitted data" in {
-      val value = "not a number"
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value))
-      new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector).onSubmit()(fakePostRequest)
-      verifyValueIsNotCached()
-    }
-
-    "return form with errors when invalid data ia submitted" in {
-      val value = "not a number"
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value))
-      val result = new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector).onSubmit()(fakePostRequest)
-      contentAsString(result) shouldBe gross_estate_value(frontendAppConfig)(fakeRequest, messages).toString
-    }
-
-    "get a previously stored value from keystore" in {
-      val value = 123
-      setCacheValue("GrossEstateValue", value)
-      val result = new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector).onPageLoad()(fakeRequest)
-      contentAsString(result) shouldBe
-        gross_estate_value(frontendAppConfig, Some(NonNegativeIntForm().fill(value)))(fakeRequest, messages).toString
-    }
+    behave like rnrbController(createController, createView, "GrossEstateValue")
   }
 }
