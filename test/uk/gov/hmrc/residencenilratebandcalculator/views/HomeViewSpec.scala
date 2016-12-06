@@ -16,24 +16,21 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_transfer_amount
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.index
 
 import scala.language.reflectiveCalls
 
-class ChargeableTransferAmountViewSpec extends RnrbViewBehaviour with InputViewBehaviour {
+class HomeViewSpec extends RnrbViewBehaviour {
 
-  def viewAsDocument = asDocument(chargeable_transfer_amount(frontendAppConfig)(request, messages))
+  def viewAsDocument = asDocument(index(frontendAppConfig)(request, messages))
 
-  "Chargeable Transfer Amount View" must {
+  "Index View" must {
 
     behave like rnrbView(
       viewAsDocument,
-      "chargeable_transfer_amount.browser_title",
-      "chargeable_transfer_amount.title",
-      "chargeable_transfer_amount.guidance"
+      "index.browser_title",
+      "index.title",
+      "index.guidance"
     )
-
-    behave like inputView(viewAsDocument, routes.ChargeableTransferAmountController.onSubmit().url)
   }
 }

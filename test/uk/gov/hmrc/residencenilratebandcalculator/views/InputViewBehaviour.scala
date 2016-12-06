@@ -16,24 +16,25 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.gross_estate_value
+import org.jsoup.nodes.Document
 
-import scala.language.reflectiveCalls
+trait InputViewBehaviour extends HtmlSpec {
 
-class GrossEstateValueViewSpec extends RnrbViewBehaviour with InputViewBehaviour {
+  def inputView(doc: Document, url: String) = {
+    "contain a form that POSTs to the correct action" in {
+      val forms = doc.getElementsByTag("form")
+      forms.size shouldBe 1
+      val form = forms.first
+      form.attr("method") shouldBe "POST"
+      form.attr("action") shouldBe url
+    }
 
-  def viewAsDocument = asDocument(gross_estate_value(frontendAppConfig)(request, messages))
+    "contain a submit button" in {
+      assertRenderedByCssSelector(doc, "input[type=submit]")
+    }
 
-  "Gross Estate Value View" must {
-
-    behave like rnrbView(
-      viewAsDocument,
-      "gross_estate_value.browser_title",
-      "gross_estate_value.title",
-      "gross_estate_value.guidance"
-    )
-
-    behave like inputView(viewAsDocument, routes.GrossEstateValueController.onSubmit().url)
+    "contain an input for the value" in {
+      assertRenderedById(doc, "value")
+    }
   }
 }

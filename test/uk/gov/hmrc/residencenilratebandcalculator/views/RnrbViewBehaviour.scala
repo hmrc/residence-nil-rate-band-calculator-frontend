@@ -16,32 +16,21 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.index
+import org.jsoup.nodes.Document
 
-import scala.language.reflectiveCalls
+trait RnrbViewBehaviour extends HtmlSpec {
 
-class IndexViewSpec extends HtmlSpec {
-
-  def fixture() = new {
-    val view = index(frontendAppConfig)(request, messages)
-    val doc = asDocument(view)
-  }
-
-  "Index View" must {
-
+  def rnrbView(doc: Document, browserTitleKey: String, titleKey: String, additionalMessageKeys: String*) = {
     "display the correct browser title" in {
-      val f = fixture()
-      assertEqualsMessage(f.doc, "title", "index.browser_title")
+      assertEqualsMessage(doc, "title", browserTitleKey)
     }
 
     "display the correct page title" in {
-      val f = fixture()
-      assertPageTitleEqualsMessage(f.doc, "index.title")
+      assertPageTitleEqualsMessage(doc, titleKey)
     }
 
     "display the correct guidance" in {
-      val f = fixture()
-      assertContainsMessages(f.doc, "index.guidance")
+      assertContainsMessages(doc, additionalMessageKeys)
     }
   }
 }
