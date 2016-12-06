@@ -44,5 +44,6 @@ class FiltersWithWhitelist @Inject()(metrics: Metrics,
                                      csrfExceptions: CSRFExceptions,
                                      cacheControl: CacheControl,
                                      recovery: Recovery,
+                                     sessionId: SessionId,
                                      whitelist: Whitelist)
-  extends DefaultHttpFilters(metrics, headers, sessionCookieCrypto, deviceId, logging, audit, csrf, csrfExceptions, cacheControl, recovery, whitelist)
+  extends DefaultHttpFilters(metrics, headers, sessionCookieCrypto, deviceId, logging, audit, csrf, csrfExceptions, cacheControl, recovery, sessionId, whitelist)
