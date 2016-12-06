@@ -21,19 +21,47 @@ import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 
 import scala.language.reflectiveCalls
 
-class ChargeableTransferAmountViewSpec extends RnrbViewBehaviour with InputViewBehaviour {
+class ChargeableTransferAmountViewSpec extends HtmlSpec {
 
-  def viewAsDocument = asDocument(chargeable_transfer_amount(frontendAppConfig)(request, messages))
+  def fixture() = new {
+    val view = chargeable_transfer_amount(frontendAppConfig)(request, messages)
+    val doc = asDocument(view)
+  }
 
   "Chargeable Transfer Amount View" must {
 
-    behave like rnrbView(
-      viewAsDocument,
-      "chargeable_transfer_amount.browser_title",
-      "chargeable_transfer_amount.title",
-      "chargeable_transfer_amount.guidance"
-    )
+    "display the correct browser title" in {
+      val f = fixture()
+      assertEqualsMessage(f.doc, "title", "chargeable_transfer_amount.browser_title")
+    }
 
-    behave like inputView(viewAsDocument, routes.ChargeableTransferAmountController.onSubmit().url)
+    "display the correct page title" in {
+      val f = fixture()
+      assertPageTitleEqualsMessage(f.doc, "chargeable_transfer_amount.title")
+    }
+
+    "display the correct guidance" in {
+      val f = fixture()
+      assertContainsMessages(f.doc, "chargeable_transfer_amount.guidance")
+    }
+
+    "contain a form that POSTs to the correct action" in {
+      val f = fixture()
+      val forms = f.doc.getElementsByTag("form")
+      forms.size shouldBe 1
+      val form = forms.first
+      form.attr("method") shouldBe "POST"
+      form.attr("action") shouldBe routes.ChargeableTransferAmountController.onSubmit().url
+    }
+
+    "contain an input for the value" in {
+      val f = fixture()
+      assertRenderedById(f.doc, "value")
+    }
+
+    "contain a submit button" in {
+      val f = fixture()
+      assertRenderedByCssSelector(f.doc, "input[type=submit]")
+    }
   }
 }

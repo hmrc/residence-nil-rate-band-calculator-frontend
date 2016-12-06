@@ -21,19 +21,47 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.gross_estate_value
 
 import scala.language.reflectiveCalls
 
-class GrossEstateValueViewSpec extends RnrbViewBehaviour with InputViewBehaviour {
+class GrossEstateValueViewSpec extends HtmlSpec {
 
-  def viewAsDocument = asDocument(gross_estate_value(frontendAppConfig)(request, messages))
+  def fixture() = new {
+    val view = gross_estate_value(frontendAppConfig)(request, messages)
+    val doc = asDocument(view)
+  }
 
   "Gross Estate Value View" must {
 
-    behave like rnrbView(
-      viewAsDocument,
-      "gross_estate_value.browser_title",
-      "gross_estate_value.title",
-      "gross_estate_value.guidance"
-    )
+    "display the correct browser title" in {
+      val f = fixture()
+      assertEqualsMessage(f.doc, "title", "gross_estate_value.browser_title")
+    }
 
-    behave like inputView(viewAsDocument, routes.GrossEstateValueController.onSubmit().url)
+    "display the correct page title" in {
+      val f = fixture()
+      assertPageTitleEqualsMessage(f.doc, "gross_estate_value.title")
+    }
+
+    "display the correct guidance" in {
+      val f = fixture()
+      assertContainsMessages(f.doc, "gross_estate_value.guidance")
+    }
+
+    "contain a form that POSTs to the correct action" in {
+      val f = fixture()
+      val forms = f.doc.getElementsByTag("form")
+      forms.size shouldBe 1
+      val form = forms.first
+      form.attr("method") shouldBe "POST"
+      form.attr("action") shouldBe routes.GrossEstateValueController.onSubmit().url
+    }
+
+    "contain an input for the value" in {
+      val f = fixture()
+      assertRenderedById(f.doc, "value")
+    }
+
+    "contain a submit button" in {
+      val f = fixture()
+      assertRenderedByCssSelector(f.doc, "input[type=submit]")
+    }
   }
 }
