@@ -57,7 +57,7 @@ trait HtmlSpec extends UnitSpec with WithFakeApplication { self: UnitSpec =>
 
   def assertContainsText(doc:Document, text: String) = assert(doc.toString.contains(text), "\n\ntext " + text + " was not rendered on the page.\n")
 
-  def assertContainsMessages(doc: Document, expectedMessageKeys: String*) = {
+  def assertContainsMessages(doc: Document, expectedMessageKeys: Seq[String]) = {
     for (key <- expectedMessageKeys) assertContainsText(doc, messages(key))
   }
 

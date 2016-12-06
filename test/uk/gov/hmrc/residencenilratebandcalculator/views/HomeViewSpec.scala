@@ -14,13 +14,23 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.forms
+package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import play.api.data.Form
-import play.api.data.Forms._
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.index
 
-object GrossEstateValueForm {
+import scala.language.reflectiveCalls
 
-  def apply(): Form[Int] = Form(single("value" -> number(min=0)))
+class HomeViewSpec extends RnrbViewBehaviour {
 
+  def viewAsDocument = asDocument(index(frontendAppConfig)(request, messages))
+
+  "Index View" must {
+
+    behave like rnrbView(
+      viewAsDocument,
+      "index.browser_title",
+      "index.title",
+      "index.guidance"
+    )
+  }
 }

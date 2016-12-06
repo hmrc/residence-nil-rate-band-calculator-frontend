@@ -16,22 +16,20 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import play.api.http.Status
-import play.api.test.Helpers._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.gross_estate_value
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_transfer_amount
 
-class GrossEstateValueControllerSpec extends ControllerSpecBase {
+class ChargeableTransferAmountControllerSpec extends ControllerSpecBase {
 
-  "Gross Estate Value Controller" must {
+  "Chargeable Transfer Amount Controller" must {
 
     def createView = (value: Option[Int]) => value match {
-      case None => gross_estate_value(frontendAppConfig)(fakeRequest, messages)
-      case Some(v) => gross_estate_value(frontendAppConfig, Some(NonNegativeIntForm().fill(v)))(fakeRequest, messages)
+      case None => chargeable_transfer_amount(frontendAppConfig)(fakeRequest, messages)
+      case Some(v) => chargeable_transfer_amount(frontendAppConfig, Some(NonNegativeIntForm().fill(v)))(fakeRequest, messages)
     }
 
-    def createController = () => new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector)
+    def createController = () => new ChargeableTransferAmountController(frontendAppConfig, messagesApi, mockSessionConnector)
 
-    behave like rnrbController(createController, createView, "GrossEstateValue")
+    behave like rnrbController(createController, createView, "ChargeableTransferAmount")
   }
 }
