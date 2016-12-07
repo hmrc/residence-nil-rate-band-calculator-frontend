@@ -16,7 +16,12 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator
 
+import org.joda.time.LocalDate
+
 object Constants {
   val chargeableTransferAmountControllerId = "ChargeableTransferAmount"
+  val dateOfDeathControllerId = "DateOfDeath"
   val grossEstateValueControllerId = "GrossEstateValue"
+
+  val eligibilityDate = new LocalDate(2017, 4, 6)
 }

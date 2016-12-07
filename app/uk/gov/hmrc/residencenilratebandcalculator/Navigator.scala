@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator
 
 import javax.inject.{Inject, Singleton}
 
+import org.joda.time.LocalDate
 import play.api.mvc.Call
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
@@ -26,13 +27,21 @@ import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 class Navigator @Inject()() {
   private val routeMap: Map[String, CacheMap => Call] = {
 
-  Map(
-    //"ChargeableTransferAmount" -> (_ => ChargeableTransferAmountController.onPageLoad()),
-    Constants.grossEstateValueControllerId -> (_ => ChargeableTransferAmountController.onPageLoad())
-    //HomeController.onPageLoad().url -> (_ => HomeController.onPageLoad())
-  )
-}
+    Map(
+      Constants.dateOfDeathControllerId -> (cm => getDateOfDeathRoute(cm)),
+      //"ChargeableTransferAmount" -> (_ => ChargeableTransferAmountController.onPageLoad()),
+      Constants.grossEstateValueControllerId -> (_ => ChargeableTransferAmountController.onPageLoad())
+      //HomeController.onPageLoad().url -> (_ => HomeController.onPageLoad())
+    )
+  }
 
+  private def getDateOfDeathRoute(cacheMap: CacheMap) = {
+    cacheMap.getEntry[LocalDate](Constants.dateOfDeathControllerId) match {
+      case Some(d) if (d isEqual Constants.eligibilityDate) || (d isAfter Constants.eligibilityDate) => GrossEstateValueController.onPageLoad()
+      case Some(d) => TransitionController.onPageLoad()
+      case None => HomeController.onPageLoad()
+    }
+  }
 
   def nextPage(controllerId: String): CacheMap => Call = {
     routeMap.getOrElse(controllerId, _ => PageNotFoundController.onPageLoad())

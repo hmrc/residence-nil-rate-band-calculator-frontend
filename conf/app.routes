@@ -16,3 +16,5 @@ GET        /gross-estate-value              uk.gov.hmrc.residencenilratebandcalc
 POST       /gross-estate-value              uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onSubmit
 
 GET        /not-found                       uk.gov.hmrc.residencenilratebandcalculator.controllers.PageNotFoundController.onPageLoad
+
+GET        /not-possible-to-use-calculator  uk.gov.hmrc.residencenilratebandcalculator.controllers.TransitionController.onPageLoad

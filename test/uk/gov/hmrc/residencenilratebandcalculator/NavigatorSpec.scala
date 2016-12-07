@@ -16,12 +16,16 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator
 
+import org.joda.time.LocalDate
+import org.scalatest.{BeforeAndAfter, Matchers}
+import org.mockito.Mockito._
+import org.mockito.Matchers._
 import org.scalatest.mock.MockitoSugar
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 
-class NavigatorSpec extends UnitSpec with WithFakeApplication with MockitoSugar {
+class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFakeApplication {
   val navigator = new Navigator
 
   "Navigator" must {
@@ -29,6 +33,29 @@ class NavigatorSpec extends UnitSpec with WithFakeApplication with MockitoSugar 
       navigator.nextPage("")(mock[CacheMap]) shouldBe routes.PageNotFoundController.onPageLoad()
     }
 
+    "return a function that goes to the Gross Estate Value controller when given DateOfDeath, and the date of death is after 5 April 2017" in {
+      val mockCacheMap = mock[CacheMap]
+      when(mockCacheMap.getEntry[LocalDate](matches(Constants.dateOfDeathControllerId))(any())) thenReturn Some(new LocalDate(2017, 4, 6))
+      navigator.nextPage(Constants.dateOfDeathControllerId)(mockCacheMap) shouldBe routes.GrossEstateValueController.onPageLoad()
+    }
+
+    "return a function that goes to the Transition controller when given DateOfDeath, and the date of death is 5 April 2017" in {
+      val mockCacheMap = mock[CacheMap]
+      when(mockCacheMap.getEntry[LocalDate](matches(Constants.dateOfDeathControllerId))(any())) thenReturn Some(new LocalDate(2017, 4, 5))
+      navigator.nextPage(Constants.dateOfDeathControllerId)(mockCacheMap) shouldBe routes.TransitionController.onPageLoad()
+    }
+
+    "return a function that goes to the Transition controller when given DateOfDeath, and the date of death is before 5 April 2017" in {
+      val mockCacheMap = mock[CacheMap]
+      when(mockCacheMap.getEntry[LocalDate](matches(Constants.dateOfDeathControllerId))(any())) thenReturn Some(new LocalDate(2017, 4, 4))
+      navigator.nextPage(Constants.dateOfDeathControllerId)(mockCacheMap) shouldBe routes.TransitionController.onPageLoad()
+    }
+
+    "return a function that goes to the Home controller when given DateOfDeath, and the date of death does not exist in keystore" in {
+      val mockCacheMap = mock[CacheMap]
+      when(mockCacheMap.getEntry[LocalDate](matches(Constants.dateOfDeathControllerId))(any())) thenReturn None
+      navigator.nextPage(Constants.dateOfDeathControllerId)(mockCacheMap) shouldBe routes.HomeController.onPageLoad()
+    }
 
     "when the ChargeableTransferAmount is used as the class id, the navigator must return a function that when executed against any" +
       "parameter goes to the page not found controller" in {

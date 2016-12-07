@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
@@ -29,8 +30,8 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase {
       case Some(v) => date_of_death(frontendAppConfig, Some(DateForm().fill(v)))(fakeRequest, messages)
     }
 
-    def createController = () => new DateOfDeathController(frontendAppConfig, messagesApi, mockSessionConnector)
+    def createController = () => new DateOfDeathController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
-    behave like rnrbController(createController, createView, "DateOfDeath")
+    behave like rnrbController(createController, createView, Constants.dateOfDeathControllerId)
   }
 }
