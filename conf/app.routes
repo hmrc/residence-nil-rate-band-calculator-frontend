@@ -9,6 +9,9 @@ GET        /hello-world                     uk.gov.hmrc.residencenilratebandcalc
 GET        /chargeable-transfer-amount      uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableTransferAmountController.onPageLoad
 POST       /chargeable-transfer-amount      uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableTransferAmountController.onSubmit
 
+GET        /date-of-death                   uk.gov.hmrc.residencenilratebandcalculator.controllers.DateOfDeathController.onPageLoad
+POST       /date-of-death                   uk.gov.hmrc.residencenilratebandcalculator.controllers.DateOfDeathController.onSubmit
+
 GET        /gross-estate-value              uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onPageLoad
 POST       /gross-estate-value              uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onSubmit
 

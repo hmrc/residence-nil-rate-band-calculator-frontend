@@ -21,7 +21,6 @@ import javax.inject.{Inject, Singleton}
 import play.api.mvc.Call
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.{GrossEstateValueController, RnrbControllerBase}
 
 @Singleton
 class Navigator @Inject()() {

@@ -18,20 +18,19 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.Inject
 
+import play.api.data.Form
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
-import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.gross_estate_value
+import uk.gov.hmrc.residencenilratebandcalculator.models.Date
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
 
-class GrossEstateValueController @Inject()(override val appConfig: FrontendAppConfig,
-                                           val messagesApi: MessagesApi,
-                                           override val sessionConnector: SessionConnector,
-                                           override val navigator: Navigator) extends IntControllerBase {
+class DateOfDeathController @Inject()(override val appConfig: FrontendAppConfig,
+                                      val messagesApi: MessagesApi,
+                                      override val sessionConnector: SessionConnector) extends DateControllerBase {
 
+  override val sessionCacheKey = "DateOfDeath"
 
-  override val controllerId = Constants.grossEstateValueControllerId
-
-  override def view(form: Option[Form[Int]])(implicit request: Request[_]) = gross_estate_value(appConfig, form)
+  override def view(form: Option[Form[Date]])(implicit request: Request[_]) = date_of_death(appConfig, form)
 }
