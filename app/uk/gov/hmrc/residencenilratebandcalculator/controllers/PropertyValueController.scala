@@ -23,15 +23,18 @@ import play.api.mvc.Request
 import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
+import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_value
 
 class PropertyValueController @Inject()(override val appConfig: FrontendAppConfig,
                                         val messagesApi: MessagesApi,
                                         override val sessionConnector: SessionConnector,
-                                        override val navigator: Navigator) extends IntControllerBase {
+                                        override val navigator: Navigator) extends SimpleControllerBase[Int] {
 
 
   override val controllerId = Constants.propertyValueId
+
+  override def form = () => NonNegativeIntForm()
 
   override def view(form: Option[Form[Int]])(implicit request: Request[_]) = property_value(appConfig, form)
 }

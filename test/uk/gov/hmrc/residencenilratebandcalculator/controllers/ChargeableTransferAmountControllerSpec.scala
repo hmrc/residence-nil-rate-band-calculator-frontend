@@ -20,7 +20,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_transfer_amount
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
-class ChargeableTransferAmountControllerSpec extends IntControllerSpecBase {
+class ChargeableTransferAmountControllerSpec extends SimpleControllerSpecBase {
 
   "Chargeable Transfer Amount Controller" must {
 

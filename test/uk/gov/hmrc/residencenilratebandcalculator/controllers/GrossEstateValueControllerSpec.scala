@@ -20,7 +20,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.gross_estate_value
 
-class GrossEstateValueControllerSpec extends IntControllerSpecBase {
+class GrossEstateValueControllerSpec extends SimpleControllerSpecBase {
 
   "Gross Estate Value Controller" must {
 

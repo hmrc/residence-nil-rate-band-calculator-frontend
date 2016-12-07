@@ -20,7 +20,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_value
 
-class PropertyValueControllerSpec extends IntControllerSpecBase {
+class PropertyValueControllerSpec extends SimpleControllerSpecBase {
 
   "Property Value Controller" must {
 

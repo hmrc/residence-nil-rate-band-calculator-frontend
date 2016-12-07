@@ -23,15 +23,18 @@ import play.api.i18n.MessagesApi
 import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
+import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_transfer_amount
 
 class ChargeableTransferAmountController  @Inject()(override val appConfig: FrontendAppConfig,
                                                     val messagesApi: MessagesApi,
                                                     override val sessionConnector: SessionConnector,
-                                                    override val navigator: Navigator) extends IntControllerBase {
+                                                    override val navigator: Navigator) extends SimpleControllerBase[Int] {
 
 
   override val controllerId = Constants.chargeableTransferAmountId
+
+  override def form = () => NonNegativeIntForm()
 
   override def view(form: Option[Form[Int]])(implicit request: Request[_]) = chargeable_transfer_amount(appConfig, form)
 }
