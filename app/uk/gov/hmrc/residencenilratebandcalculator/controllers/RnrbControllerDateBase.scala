@@ -47,7 +47,7 @@ trait RnrbControllerDateBase extends FrontendController with I18nSupport {
     val boundForm = DateForm().bindFromRequest()
     boundForm.fold(
       (formWithErrors: Form[Date]) => Future.successful(BadRequest(view(Some(formWithErrors)))),
-      (value) => sessionConnector.cache[LocalDate](sessionCacheKey, value.unapply).map(_ => Redirect(""))
+      (value) => sessionConnector.cache[LocalDate](sessionCacheKey, value.toLocalDate).map(_ => Redirect(""))
     )
   }
 }

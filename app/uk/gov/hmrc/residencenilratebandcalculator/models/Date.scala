@@ -34,7 +34,7 @@ case class Date (day: Int, month: Int, year: Int)
     .appendFixedDecimal(DateTimeFieldType.year(), requiredYearLength)
     .toFormatter
 
-  def unapply: LocalDate = LocalDate.parse(s"$day $month $year", dateFormatter)
+  def toLocalDate: LocalDate = LocalDate.parse(s"$day $month $year", dateFormatter)
 }
 
 object Date {
