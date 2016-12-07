@@ -21,7 +21,7 @@ import javax.inject.Inject
 import play.api.data.Form
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
-import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_transfer_amount
 
@@ -31,7 +31,7 @@ class ChargeableTransferAmountController  @Inject()(override val appConfig: Fron
                                                     override val navigator: Navigator) extends RnrbControllerBase {
 
 
-  override val sessionCacheKey = "ChargeableTransferAmount"
+  override val controllerId = Constants.chargeableTransferAmountControllerId
 
   override def view(form: Option[Form[Int]])(implicit request: Request[_]) = chargeable_transfer_amount(appConfig, form)
 }

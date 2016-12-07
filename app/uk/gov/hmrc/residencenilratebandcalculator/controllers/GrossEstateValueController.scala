@@ -21,7 +21,7 @@ import javax.inject.Inject
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
 import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.gross_estate_value
 
@@ -30,7 +30,7 @@ class GrossEstateValueController @Inject()(override val appConfig: FrontendAppCo
                                            override val sessionConnector: SessionConnector,
                                            override val navigator: Navigator) extends RnrbControllerBase {
 
-  override val sessionCacheKey = "GrossEstateValue"
+  override val controllerId = Constants.grossEstateValueControllerId
 
   override def view(form: Option[Form[Int]])(implicit request: Request[_]) = gross_estate_value(appConfig, form)
 }

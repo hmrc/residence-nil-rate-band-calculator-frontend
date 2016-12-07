@@ -22,10 +22,22 @@ import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 
 class NavigatorSpec extends UnitSpec with WithFakeApplication with MockitoSugar {
+  val navigator = new Navigator
+
   "Navigator" must {
     "When the current call is not found, return a function, that when executed against any parameter routes to the page not found controller" in {
-      val navigator = new Navigator
-      navigator.next("")(mock[CacheMap]) shouldBe routes.PageNotFoundController.onPageLoad()
+      navigator.nextPage("")(mock[CacheMap]) shouldBe routes.PageNotFoundController.onPageLoad()
+    }
+
+
+    "when the ChargeableTransferAmount is used as the class id, the navigator must return a function that when executed against any" +
+      "parameter goes to the page not found controller" in {
+      navigator.nextPage(Constants.chargeableTransferAmountControllerId)(mock[CacheMap]) shouldBe routes.PageNotFoundController.onPageLoad()
+    }
+
+    "when the GrossEstateValue is used at the class id, the navigator must return a function that when executed against any" +
+      "parameter goes to the ChargeableTransferAmountController" in {
+      navigator.nextPage(Constants.grossEstateValueControllerId)(mock[CacheMap]) shouldBe routes.ChargeableTransferAmountController.onPageLoad()
     }
   }
 }

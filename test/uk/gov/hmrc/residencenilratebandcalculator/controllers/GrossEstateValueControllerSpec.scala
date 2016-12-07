@@ -16,8 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import play.api.http.Status
-import play.api.test.Helpers._
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.gross_estate_value
 
@@ -32,6 +31,6 @@ class GrossEstateValueControllerSpec extends ControllerSpecBase {
 
     def createController = () => new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
-    behave like rnrbController(createController, createView, "GrossEstateValue")
+    behave like rnrbController(createController, createView, Constants.grossEstateValueControllerId)
   }
 }

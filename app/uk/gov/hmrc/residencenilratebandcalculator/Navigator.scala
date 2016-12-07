@@ -21,17 +21,21 @@ import javax.inject.{Inject, Singleton}
 import play.api.mvc.Call
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.{GrossEstateValueController, RnrbControllerBase}
 
 @Singleton
 class Navigator @Inject()() {
-  private val routeMap: Map[String, CacheMap => Call] =
-    Map(
-      ChargeableTransferAmountController.onSubmit().url -> (_ => ChargeableTransferAmountController.onPageLoad()),
-      GrossEstateValueController.onSubmit().url -> (_ => GrossEstateValueController.onPageLoad()),
-      HomeController.onPageLoad().url -> (_ => HomeController.onPageLoad()))
+  private val routeMap: Map[String, CacheMap => Call] = {
+
+  Map(
+    //"ChargeableTransferAmount" -> (_ => ChargeableTransferAmountController.onPageLoad()),
+    Constants.grossEstateValueControllerId -> (_ => ChargeableTransferAmountController.onPageLoad())
+    //HomeController.onPageLoad().url -> (_ => HomeController.onPageLoad())
+  )
+}
 
 
-  def next(path: String): CacheMap => Call = {
-    routeMap.getOrElse(path, _ => PageNotFoundController.onPageLoad())
+  def nextPage(controllerId: String): CacheMap => Call = {
+    routeMap.getOrElse(controllerId, _ => PageNotFoundController.onPageLoad())
   }
 }

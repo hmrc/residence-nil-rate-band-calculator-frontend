@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_transfer_amount
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 class ChargeableTransferAmountControllerSpec extends ControllerSpecBase {
 
@@ -30,6 +31,6 @@ class ChargeableTransferAmountControllerSpec extends ControllerSpecBase {
 
     def createController = () => new ChargeableTransferAmountController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
-    behave like rnrbController(createController, createView, "ChargeableTransferAmount")
+    behave like rnrbController(createController, createView, Constants.chargeableTransferAmountControllerId)
   }
 }
