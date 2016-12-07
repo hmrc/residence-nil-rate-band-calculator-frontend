@@ -16,15 +16,15 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+
 import play.api.i18n.I18nSupport
 import play.api.mvc._
 import uk.gov.hmrc.play.frontend.controller.FrontendController
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.residencenilratebandcalculator.dispatch._
 
 import scala.concurrent.Future
 
@@ -34,6 +34,7 @@ trait RnrbControllerBase extends FrontendController with I18nSupport {
   def sessionConnector: SessionConnector
   val sessionCacheKey: String
   def view(form: Option[Form[Int]])(implicit request: Request[_]): HtmlFormat.Appendable
+  val navigator: Navigator
 
   val onPageLoad = Action.async { implicit request =>
     sessionConnector.fetchAndGetEntry[Int](sessionCacheKey).map(
@@ -47,6 +48,6 @@ trait RnrbControllerBase extends FrontendController with I18nSupport {
       boundForm.fold(
         (formWithErrors: Form[Int]) => Future.successful(BadRequest(view(Some(formWithErrors)))),
         (value) => sessionConnector.cache[Int](sessionCacheKey, value).map(cacheMap =>
-          Redirect(HofRouter.next(request.path)(cacheMap))))
+          Redirect(navigator.next(request.path)(cacheMap))))
     }
 }

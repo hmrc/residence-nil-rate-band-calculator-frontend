@@ -11,3 +11,5 @@ POST       /chargeable-transfer-amount      uk.gov.hmrc.residencenilratebandcalc
 
 GET        /gross-estate-value              uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onPageLoad
 POST       /gross-estate-value              uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onSubmit
+
+GET        /not-found                       uk.gov.hmrc.residencenilratebandcalculator.controllers.PageNotFoundController.onPageLoad

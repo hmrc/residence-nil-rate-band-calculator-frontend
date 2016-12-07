@@ -30,7 +30,7 @@ class GrossEstateValueControllerSpec extends ControllerSpecBase {
       case Some(v) => gross_estate_value(frontendAppConfig, Some(NonNegativeIntForm().fill(v)))(fakeRequest, messages)
     }
 
-    def createController = () => new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector)
+    def createController = () => new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
     behave like rnrbController(createController, createView, "GrossEstateValue")
   }

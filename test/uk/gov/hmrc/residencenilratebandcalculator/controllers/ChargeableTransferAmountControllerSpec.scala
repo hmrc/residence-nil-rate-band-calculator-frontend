@@ -28,7 +28,7 @@ class ChargeableTransferAmountControllerSpec extends ControllerSpecBase {
       case Some(v) => chargeable_transfer_amount(frontendAppConfig, Some(NonNegativeIntForm().fill(v)))(fakeRequest, messages)
     }
 
-    def createController = () => new ChargeableTransferAmountController(frontendAppConfig, messagesApi, mockSessionConnector)
+    def createController = () => new ChargeableTransferAmountController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
     behave like rnrbController(createController, createView, "ChargeableTransferAmount")
   }
