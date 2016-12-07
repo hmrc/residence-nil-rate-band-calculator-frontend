@@ -27,7 +27,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_transfer
 
 class ChargeableTransferAmountController  @Inject()(override val appConfig: FrontendAppConfig,
                                                     val messagesApi: MessagesApi,
-                                                    override val sessionConnector: SessionConnector) extends RnrbControllerBase {
+                                                    override val sessionConnector: SessionConnector) extends IntControllerBase {
 
 
   override val sessionCacheKey = "ChargeableTransferAmount"

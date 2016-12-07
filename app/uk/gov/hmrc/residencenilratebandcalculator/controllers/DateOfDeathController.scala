@@ -28,7 +28,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
 
 class DateOfDeathController @Inject()(override val appConfig: FrontendAppConfig,
                                       val messagesApi: MessagesApi,
-                                      override val sessionConnector: SessionConnector) extends RnrbControllerDateBase {
+                                      override val sessionConnector: SessionConnector) extends DateControllerBase {
 
   override val sessionCacheKey = "DateOfDeath"
 

@@ -37,7 +37,7 @@ trait DateControllerSpecBase extends UnitSpec with WithFakeApplication with Http
   def messagesApi = injector.instanceOf[MessagesApi]
   def messages = messagesApi.preferred(fakeRequest)
 
-  def rnrbController(createController: () => RnrbControllerDateBase,
+  def rnrbController(createController: () => DateControllerBase,
                      createView: (Option[Date]) => HtmlFormat.Appendable,
                      cacheKey: String) = {
 

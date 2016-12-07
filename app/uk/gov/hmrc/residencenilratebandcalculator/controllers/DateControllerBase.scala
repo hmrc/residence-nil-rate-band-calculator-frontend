@@ -29,7 +29,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 
 import scala.concurrent.Future
 
-trait RnrbControllerDateBase extends FrontendController with I18nSupport {
+trait DateControllerBase extends FrontendController with I18nSupport {
 
   val appConfig: FrontendAppConfig
   def sessionConnector: SessionConnector
