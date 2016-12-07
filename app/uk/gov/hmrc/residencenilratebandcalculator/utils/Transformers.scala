@@ -35,7 +35,7 @@ object Transformers {
 
   def constructDate(day: Int, month: Int, year: Int): LocalDate = LocalDate.parse(s"$day $month $year", dateFormatter)
 
-  val stringToInteger: Option[String] => Int = (input) => Try(input.getOrElse("").trim.toInt) match {
+  val stringToInt: Option[String] => Int = (input) => Try(input.getOrElse("").trim.toInt) match {
     case Success(value) => value
     case Failure(_) => 0
   }

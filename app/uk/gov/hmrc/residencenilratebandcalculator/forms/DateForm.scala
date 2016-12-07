@@ -26,9 +26,9 @@ object DateForm {
 
   def apply(): Form[Date] = Form(
     mapping(
-      "day" -> optional(text).transform[Int](stringToInteger, intToString),
-      "month" -> optional(text).transform[Int](stringToInteger, intToString),
-      "year" -> optional(text).transform[Int](stringToInteger, intToString)
+      "day" -> optional(text).transform[Int](stringToInt, intToString),
+      "month" -> optional(text).transform[Int](stringToInt, intToString),
+      "year" -> optional(text).transform[Int](stringToInt, intToString)
     )(Date.apply)(Date.unapply)
       .verifying("error.invalid_date", fields => isValidDate(fields.day, fields.month, fields.year))
   )
