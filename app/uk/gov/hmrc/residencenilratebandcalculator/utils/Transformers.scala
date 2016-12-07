@@ -14,11 +14,26 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.forms
+package uk.gov.hmrc.residencenilratebandcalculator.utils
+
+import org.joda.time.format.DateTimeFormatterBuilder
+import org.joda.time.{DateTimeFieldType, LocalDate}
 
 import scala.util.{Failure, Success, Try}
 
 object Transformers {
+
+  val requiredYearLength = 4
+
+  val dateFormatter = new DateTimeFormatterBuilder()
+    .appendDayOfMonth(1)
+    .appendLiteral(' ')
+    .appendMonthOfYear(1)
+    .appendLiteral(' ')
+    .appendFixedDecimal(DateTimeFieldType.year(), requiredYearLength)
+    .toFormatter
+
+  def constructDate(day: Int, month: Int, year: Int): LocalDate = LocalDate.parse(s"$day $month $year", dateFormatter)
 
   val stringToInteger: Option[String] => Int = (input) => Try(input.getOrElse("").trim.toInt) match {
     case Success(value) => value

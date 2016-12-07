@@ -16,16 +16,11 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
-import java.time._
-import java.time.format.{DateTimeFormatter, ResolverStyle}
+import uk.gov.hmrc.residencenilratebandcalculator.utils.Transformers._
 
 import scala.util.{Success, Try}
 
 object FormValidators {
-
-  val dateFormatter = DateTimeFormatter.ofPattern("d/M/uuuu").withResolverStyle(ResolverStyle.STRICT)
-
-  def constructDate(day: Int, month: Int, year: Int): LocalDate = LocalDate.parse(s"$day/$month/$year", dateFormatter)
 
   def isValidDate(day: Int, month: Int, year: Int): Boolean = Try(constructDate(day, month, year)) match {
     case Success(_) => true

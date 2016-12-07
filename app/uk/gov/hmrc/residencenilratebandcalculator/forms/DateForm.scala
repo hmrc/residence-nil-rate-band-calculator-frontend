@@ -20,7 +20,7 @@ import play.api.data.Form
 import play.api.data.Forms._
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.forms.FormValidators._
-import uk.gov.hmrc.residencenilratebandcalculator.forms.Transformers._
+import uk.gov.hmrc.residencenilratebandcalculator.utils.Transformers._
 
 object DateForm {
 
