@@ -20,6 +20,7 @@ import javax.inject.{Inject, Singleton}
 
 import play.api.mvc.Call
 import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.residencenilratebandcalculator
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 
 @Singleton
@@ -28,7 +29,8 @@ class Navigator @Inject()() {
 
   Map(
     //"ChargeableTransferAmount" -> (_ => ChargeableTransferAmountController.onPageLoad()),
-    Constants.grossEstateValueControllerId -> (_ => ChargeableTransferAmountController.onPageLoad())
+    Constants.grossEstateValueControllerId -> (_ => ChargeableTransferAmountController.onPageLoad()),
+    Constants.propertyValueControllerId -> (_ => PageNotFoundController.onPageLoad())
     //HomeController.onPageLoad().url -> (_ => HomeController.onPageLoad())
   )
 }

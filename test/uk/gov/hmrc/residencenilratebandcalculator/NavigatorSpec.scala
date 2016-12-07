@@ -39,5 +39,10 @@ class NavigatorSpec extends UnitSpec with WithFakeApplication with MockitoSugar 
       "parameter goes to the ChargeableTransferAmountController" in {
       navigator.nextPage(Constants.grossEstateValueControllerId)(mock[CacheMap]) shouldBe routes.ChargeableTransferAmountController.onPageLoad()
     }
+
+    "when the PropertyValue is used at the class id, the navigator must return a function that when executed against any" +
+      "parameter goes to the PageNotFound controller" in {
+      navigator.nextPage(Constants.propertyValueControllerId)(mock[CacheMap]) shouldBe routes.PageNotFoundController.onPageLoad()
+    }
   }
 }

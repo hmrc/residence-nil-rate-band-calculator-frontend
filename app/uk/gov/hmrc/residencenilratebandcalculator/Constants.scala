@@ -19,4 +19,5 @@ package uk.gov.hmrc.residencenilratebandcalculator
 object Constants {
   val chargeableTransferAmountControllerId = "ChargeableTransferAmount"
   val grossEstateValueControllerId = "GrossEstateValue"
+  val propertyValueControllerId = "PropertyValue"
 }
