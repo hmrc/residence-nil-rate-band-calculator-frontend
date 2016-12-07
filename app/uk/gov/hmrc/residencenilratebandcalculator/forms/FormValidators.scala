@@ -19,8 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.forms
 import java.time._
 import java.time.format.{DateTimeFormatter, ResolverStyle}
 
-
-import scala.util.{Failure, Success, Try}
+import scala.util.{Success, Try}
 
 object FormValidators {
 
@@ -32,6 +31,4 @@ object FormValidators {
     case Success(_) => true
     case _ => false
   }
-
-  val mandatoryCheck: String => Boolean = input => input.trim != ""
 }

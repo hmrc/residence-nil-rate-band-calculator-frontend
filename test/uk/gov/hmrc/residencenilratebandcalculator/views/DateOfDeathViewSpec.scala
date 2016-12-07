@@ -54,9 +54,19 @@ class DateOfDeathViewSpec extends HtmlSpec {
       form.attr("action") shouldBe routes.DateOfDeathController.onSubmit().url
     }
 
-    "contain an input for the value" in {
+    "contain an input for the day" in {
       val f = fixture()
-      assertRenderedById(f.doc, "value")
+      assertRenderedById(f.doc, "day")
+    }
+
+    "contain an input for the month" in {
+      val f = fixture()
+      assertRenderedById(f.doc, "month")
+    }
+
+    "contain an input for the year" in {
+      val f = fixture()
+      assertRenderedById(f.doc, "year")
     }
 
     "contain a submit button" in {
