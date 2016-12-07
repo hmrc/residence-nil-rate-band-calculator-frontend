@@ -16,16 +16,17 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm
+import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
 
-class DateOfDeathControllerSpec extends ControllerSpecBase {
+class DateOfDeathControllerSpec extends DateControllerSpecBase {
 
   "Date of Death Controller" must {
 
-    def createView = (value: Option[Int]) => value match {
+    def createView = (value: Option[Date]) => value match {
       case None => date_of_death(frontendAppConfig)(fakeRequest, messages)
-      case Some(v) => date_of_death(frontendAppConfig, Some(NonNegativeIntForm().fill(v)))(fakeRequest, messages)
+      case Some(v) => date_of_death(frontendAppConfig, Some(DateForm().fill(v)))(fakeRequest, messages)
     }
 
     def createController = () => new DateOfDeathController(frontendAppConfig, messagesApi, mockSessionConnector)
