@@ -46,19 +46,21 @@ trait MockSessionConnector extends UnitSpec with MockitoSugar with Matchers with
     when(mockSessionConnector.fetchAndGetEntry[LocalDate](anyString())(any[HeaderCarrier], any())) thenReturn Future.successful(None)
   }
 
-  def verifyValueIsCached(value: Int) = {
+  def verifyValueIsCached(key: String, value: Int) = {
     implicit val hc = new HeaderCarrier()
     val valueCaptor = ArgumentCaptor.forClass(classOf[Int])
     val keyCaptor = ArgumentCaptor.forClass(classOf[String])
     verify(mockSessionConnector).cache(keyCaptor.capture, valueCaptor.capture)(writesnapper.capture, headnapper.capture)
+    keyCaptor.getValue shouldBe key
     valueCaptor.getValue shouldBe value
   }
 
-  def verifyValueIsCached(value: LocalDate) = {
+  def verifyValueIsCached(key: String, value: LocalDate) = {
     implicit val hc = new HeaderCarrier()
     val valueCaptor = ArgumentCaptor.forClass(classOf[LocalDate])
     val keyCaptor = ArgumentCaptor.forClass(classOf[String])
     verify(mockSessionConnector).cache(keyCaptor.capture, valueCaptor.capture)(dateWritesNapper.capture, headnapper.capture)
+    keyCaptor.getValue shouldBe key
     valueCaptor.getValue shouldBe value
   }
 

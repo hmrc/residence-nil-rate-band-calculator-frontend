@@ -61,7 +61,7 @@ trait DateControllerSpecBase extends UnitSpec with WithFakeApplication with Http
       val value = new LocalDate(2018, 1, 1)
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("day", "01"), ("month", "01"), ("year", "2018"))
       createController().onSubmit()(fakePostRequest)
-      verifyValueIsCached(value)
+      verifyValueIsCached(cacheKey, value)
     }
 
     "return bad request on submit with invalid data" in {

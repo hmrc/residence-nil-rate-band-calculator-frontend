@@ -59,7 +59,7 @@ trait IntControllerSpecBase extends UnitSpec with WithFakeApplication with HttpR
       val value = 100
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value.toString))
       createController().onSubmit()(fakePostRequest)
-      verifyValueIsCached(value)
+      verifyValueIsCached(cacheKey, value)
     }
 
     "return bad request on submit with invalid data" in {
