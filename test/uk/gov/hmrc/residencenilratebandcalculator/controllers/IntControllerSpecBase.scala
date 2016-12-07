@@ -25,7 +25,7 @@ import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 
-trait ControllerSpecBase extends UnitSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
+trait IntControllerSpecBase extends UnitSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
 
   val fakeRequest = FakeRequest("", "")
 
@@ -35,7 +35,7 @@ trait ControllerSpecBase extends UnitSpec with WithFakeApplication with HttpResp
   def messagesApi = injector.instanceOf[MessagesApi]
   def messages = messagesApi.preferred(fakeRequest)
 
-  def rnrbController(createController: () => RnrbControllerBase,
+  def rnrbController(createController: () => IntControllerBase,
                      createView: (Option[Int]) => HtmlFormat.Appendable,
                      cacheKey: String) = {
 
@@ -59,7 +59,7 @@ trait ControllerSpecBase extends UnitSpec with WithFakeApplication with HttpResp
       val value = 100
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value.toString))
       createController().onSubmit()(fakePostRequest)
-      verifyValueIsCached(value)
+      verifyValueIsCached(cacheKey, value)
     }
 
     "return bad request on submit with invalid data" in {

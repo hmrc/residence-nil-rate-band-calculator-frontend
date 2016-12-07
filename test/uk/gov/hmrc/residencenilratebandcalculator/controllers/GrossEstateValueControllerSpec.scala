@@ -21,7 +21,7 @@ import play.api.test.Helpers._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.gross_estate_value
 
-class GrossEstateValueControllerSpec extends ControllerSpecBase {
+class GrossEstateValueControllerSpec extends IntControllerSpecBase {
 
   "Gross Estate Value Controller" must {
 

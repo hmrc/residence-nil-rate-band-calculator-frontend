@@ -27,7 +27,7 @@ import play.twirl.api.HtmlFormat
 
 import scala.concurrent.Future
 
-trait RnrbControllerBase extends FrontendController with I18nSupport {
+trait IntControllerBase extends FrontendController with I18nSupport {
 
   val appConfig: FrontendAppConfig
   def sessionConnector: SessionConnector
