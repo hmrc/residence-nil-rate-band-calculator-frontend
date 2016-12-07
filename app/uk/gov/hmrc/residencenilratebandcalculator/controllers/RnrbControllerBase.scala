@@ -24,6 +24,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
+import uk.gov.hmrc.residencenilratebandcalculator.dispatch._
 
 import scala.concurrent.Future
 
@@ -45,7 +46,7 @@ trait RnrbControllerBase extends FrontendController with I18nSupport {
     val boundForm = NonNegativeIntForm().bindFromRequest()
       boundForm.fold(
         (formWithErrors: Form[Int]) => Future.successful(BadRequest(view(Some(formWithErrors)))),
-        (value) => sessionConnector.cache[Int](sessionCacheKey, value).map(_ => Redirect(""))
-      )
+        (value) => sessionConnector.cache[Int](sessionCacheKey, value).map(cacheMap =>
+          Redirect(HofRouter.next(request.path)(cacheMap))))
     }
 }

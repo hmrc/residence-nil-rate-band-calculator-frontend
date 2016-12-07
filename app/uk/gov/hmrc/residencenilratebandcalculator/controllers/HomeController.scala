@@ -20,7 +20,7 @@ import java.util.UUID
 import javax.inject.Inject
 
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.Action
+import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.play.http.SessionKeys
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
@@ -31,7 +31,7 @@ import scala.concurrent.Future
 class HomeController @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi)
   extends FrontendController with I18nSupport {
 
-  def onPageLoad = Action.async { implicit request =>
+  def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(index(appConfig))
       .withSession(request.session + (SessionKeys.sessionId -> s"session-${UUID.randomUUID}")))
   }
