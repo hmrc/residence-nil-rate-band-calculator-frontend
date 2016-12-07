@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import org.joda.time.LocalDate
 import play.api.http.Status
 import play.api.i18n._
 import play.api.test.FakeRequest
@@ -57,7 +58,7 @@ trait DateControllerSpecBase extends UnitSpec with WithFakeApplication with Http
     }
 
     "store valid submitted data" in {
-      val value = Date(1, 1, 2018)
+      val value = new LocalDate(2018, 1, 1)
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("day", "01"), ("month", "01"), ("year", "2018"))
       createController().onSubmit()(fakePostRequest)
       verifyValueIsCached(value)
@@ -85,10 +86,10 @@ trait DateControllerSpecBase extends UnitSpec with WithFakeApplication with Http
     }
 
     "get a previously stored value from keystore" in {
-      val value = Date(1, 1, 2018)
+      val value = new LocalDate(2018, 1, 1)
       setCacheValue(cacheKey, value)
       val result = createController().onPageLoad()(fakeRequest)
-      contentAsString(result) shouldBe createView(Some(value)).toString
+      contentAsString(result) shouldBe createView(Some(Date(value))).toString
     }
   }
 }

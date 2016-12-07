@@ -16,10 +16,27 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
+import org.joda.time.{DateTimeFieldType, LocalDate}
+import org.joda.time.format.DateTimeFormatterBuilder
 import play.api.libs.json.Json
 
 case class Date (day: Int, month: Int, year: Int)
+{
+  implicit val formats = Json.format[Date]
+
+  val requiredYearLength = 4
+
+  val dateFormatter = new DateTimeFormatterBuilder()
+    .appendDayOfMonth(1)
+    .appendLiteral(' ')
+    .appendMonthOfYear(1)
+    .appendLiteral(' ')
+    .appendFixedDecimal(DateTimeFieldType.year(), requiredYearLength)
+    .toFormatter
+
+  def unapply: LocalDate = LocalDate.parse(s"$day $month $year", dateFormatter)
+}
 
 object Date {
-  implicit val formats = Json.format[Date]
+  def apply(date: LocalDate): Date = Date(date.getDayOfMonth, date.getMonthOfYear, date.getYear)
 }

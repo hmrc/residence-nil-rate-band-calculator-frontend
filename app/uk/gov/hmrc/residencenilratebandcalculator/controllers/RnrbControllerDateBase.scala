@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import org.joda.time.LocalDate
 import play.api.data.Form
 import play.api.i18n.I18nSupport
 import play.api.mvc._
@@ -36,9 +37,9 @@ trait RnrbControllerDateBase extends FrontendController with I18nSupport {
   def view(form: Option[Form[Date]])(implicit request: Request[_]): HtmlFormat.Appendable
 
   val onPageLoad = Action.async { implicit request =>
-    sessionConnector.fetchAndGetEntry[Date](sessionCacheKey).map(
+    sessionConnector.fetchAndGetEntry[LocalDate](sessionCacheKey).map(
       cachedValue => {
-        Ok(view(cachedValue.map(value => DateForm().fill(value))))
+        Ok(view(cachedValue.map(value => DateForm().fill(Date(value)))))
       })
   }
 
@@ -46,7 +47,7 @@ trait RnrbControllerDateBase extends FrontendController with I18nSupport {
     val boundForm = DateForm().bindFromRequest()
     boundForm.fold(
       (formWithErrors: Form[Date]) => Future.successful(BadRequest(view(Some(formWithErrors)))),
-      (value) => sessionConnector.cache[Date](sessionCacheKey, value).map(_ => Redirect(""))
+      (value) => sessionConnector.cache[LocalDate](sessionCacheKey, value.unapply).map(_ => Redirect(""))
     )
   }
 }
