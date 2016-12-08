@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_value
@@ -31,6 +32,8 @@ class PropertyValueControllerSpec extends SimpleControllerSpecBase {
 
     def createController = () => new PropertyValueController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
-    behave like rnrbController(createController, createView, Constants.propertyValueId)
+    val testValue = 123
+
+    behave like rnrbController(createController, createView, Constants.propertyValueId, testValue)(Reads.IntReads, Writes.IntWrites)
   }
 }

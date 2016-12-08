@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_transfer_amount
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
@@ -31,6 +32,8 @@ class ChargeableTransferAmountControllerSpec extends SimpleControllerSpecBase {
 
     def createController = () => new ChargeableTransferAmountController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
-    behave like rnrbController(createController, createView, Constants.chargeableTransferAmountId)
+    val testValue = 123
+
+    behave like rnrbController(createController, createView, Constants.chargeableTransferAmountId, testValue)(Reads.IntReads, Writes.IntWrites)
   }
 }
