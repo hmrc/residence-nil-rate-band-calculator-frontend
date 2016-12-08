@@ -58,8 +58,8 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     }
 
     "when the ChargeableTransferAmount is used as the class id, the navigator must return a function that when executed against any" +
-      "parameter goes to the page not found controller" in {
-      navigator.nextPage(Constants.chargeableTransferAmountId)(mock[CacheMap]) shouldBe routes.PageNotFoundController.onPageLoad()
+      "parameter goes to EstateHasProperty controller" in {
+      navigator.nextPage(Constants.chargeableTransferAmountId)(mock[CacheMap]) shouldBe routes.EstateHasPropertyController.onPageLoad()
     }
 
     "when the GrossEstateValue is used at the class id, the navigator must return a function that when executed against any" +
