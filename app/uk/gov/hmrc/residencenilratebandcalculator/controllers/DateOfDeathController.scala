@@ -23,15 +23,15 @@ import play.api.i18n.MessagesApi
 import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_transfer_amount
+import uk.gov.hmrc.residencenilratebandcalculator.models.Date
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
 
-class ChargeableTransferAmountController  @Inject()(override val appConfig: FrontendAppConfig,
-                                                    val messagesApi: MessagesApi,
-                                                    override val sessionConnector: SessionConnector,
-                                                    override val navigator: Navigator) extends IntControllerBase {
+class DateOfDeathController @Inject()(override val appConfig: FrontendAppConfig,
+                                      val messagesApi: MessagesApi,
+                                      override val sessionConnector: SessionConnector,
+                                      override val navigator: Navigator) extends DateControllerBase {
 
+  override val controllerId = Constants.dateOfDeathId
 
-  override val controllerId = Constants.chargeableTransferAmountId
-
-  override def view(form: Option[Form[Int]])(implicit request: Request[_]) = chargeable_transfer_amount(appConfig, form)
+  override def view(form: Option[Form[Date]])(implicit request: Request[_]) = date_of_death(appConfig, form)
 }
