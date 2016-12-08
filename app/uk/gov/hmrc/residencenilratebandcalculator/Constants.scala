@@ -20,9 +20,9 @@ import org.joda.time.LocalDate
 
 object Constants {
   val chargeableTransferAmountId = "ChargeableTransferAmount"
-  val grossEstateValueId = "GrossEstateValue"
   val dateOfDeathId = "DateOfDeath"
   val estateHasPropertyId = "EstateHasProperty"
+  val grossEstateValueId = "GrossEstateValue"
   val propertyValueId = "PropertyValue"
 
   val eligibilityDate = new LocalDate(2017, 4, 6)
