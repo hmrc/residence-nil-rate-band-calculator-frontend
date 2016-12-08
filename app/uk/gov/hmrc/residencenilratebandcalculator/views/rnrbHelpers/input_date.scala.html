@@ -1,12 +1,13 @@
 @(args: (Symbol, Any)*)
 @inputArgs = @{ args.toMap }
+@id = @{ inputArgs.getOrElse('_id, "").toString }
 @label = @{ inputArgs.getOrElse('_label, "").toString }
 @valueDay = @{ inputArgs.getOrElse('_valueDay, "").toString }
 @valueMonth = @{ inputArgs.getOrElse('_valueMonth, "").toString }
 @valueYear = @{ inputArgs.getOrElse('_valueYear, "").toString }
 @hint = @{ inputArgs.getOrElse('_hint, "").toString }
 
-<div class="form-group form-group error">
+<div class="form-field form-field--error">
     <fieldset>
         <legend>
         <span class="form-label bold">
@@ -19,16 +20,16 @@
         </legend>
         <div class="form-date">
             <div class="form-group form-group-day">
-                <label class="form-label" for="date-day">Day</label>
-                <input class="form-control" id="date-day" name="date-day" type="number" pattern="[0-9]*" min="1" max="31" aria-describedby="date-hint" value="@valueDay" />
+                <label class="form-label" for="@{id}-day">Day</label>
+                <input class="form-control" id="@{id}-day" name="@{id}-day" type="number" pattern="[0-9]*" min="1" max="31" aria-describedby="date-hint" value="@valueDay" />
             </div>
             <div class="form-group form-group-month">
-                <label class="form-label" for="date-month">Month</label>
-                <input class="form-control" id="date-month" name="date-month" type="number" pattern="[0-9]*" min="1" max="12" value="@valueMonth" />
+                <label class="form-label" for="@{id}-month">Month</label>
+                <input class="form-control" id="@{id}-month" name="@{id}-month" type="number" pattern="[0-9]*" min="1" max="12" value="@valueMonth" />
             </div>
             <div class="form-group form-group-year">
-                <label class="form-label" for="date-year">Year</label>
-                <input class="form-control" id="date-year" name="date-year" type="number" pattern="[0-9]*" min="1900" max="2050" value="@valueYear" />
+                <label class="form-label" for="@{id}-year">Year</label>
+                <input class="form-control" id="@{id}-year" name="@{id}-year" type="number" pattern="[0-9]*" min="1900" max="2050" value="@valueYear" />
             </div>
         </div>
     </fieldset>

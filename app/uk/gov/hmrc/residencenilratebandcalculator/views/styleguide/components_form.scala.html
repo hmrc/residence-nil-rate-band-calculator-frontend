@@ -10,49 +10,71 @@
   bodyClasses = None) {
     <h1>Form Components</h1>
     <p class="lede">Demo page to show components</p>
+<form action="" method="post">
+    @rnrbHelpers.input_text(
+    '_id -> "comp-input-text",
+    '_value -> "",
+    '_label -> "Standard text",
+    '_hint -> "This is an input hint"
+    )
+
 
     @rnrbHelpers.input_text(
+    '_id -> "comp-input-percent",
     '_value -> "",
-    '_label -> "Gross Estate label",
+    '_label -> "Percentage value",
     '_hint -> "This is an input hint",
     '_secondaryLabel -> "percentage"
     )
 
 
     @rnrbHelpers.input_text(
+    '_id -> "comp-input-currency",
     '_value -> "",
-    '_label -> "Gross Estate label",
+    '_label -> "Currency value",
     '_hint -> "This is an input hint",
     '_secondaryLabel -> "currency"
     )
 
 
-    @rnrbHelpers.input_text(
-    '_value -> "",
-    '_label -> "Gross Estate label",
-    '_hint -> "This is an input hint"
-    )
-
-
     @rnrbHelpers.input_date(
+    '_id -> "comp-input-date",
     '_valueDay -> "10",
     '_valueMonth -> "2",
     '_valueYear -> "2016",
-    '_label -> "Date label",
+    '_label -> "Date value",
     '_hint -> "This is an date hint"
     )
 
 
     @rnrbHelpers.input_yes_no(
+    '_id -> "comp-input-yn",
     '_value -> "No",
-    '_label -> "Gross Estate label",
+    '_label -> "Yes / No value",
     '_hint -> "This is an input hint"
     )
+
+    @rnrbHelpers.input_yes_no(
+    '_id -> "comp-input-yn-assoc",
+    '_label -> "Yes / No value with associated field",
+    '_hint -> "This is an input hint",
+    '_yesAssoc -> "associated-field",
+    '_noAssoc -> "associated-field-null"
+    )
+    <div class="panel-indent panel-indent--gutter js-hidden" id="associated-field">
+        @rnrbHelpers.input_text(
+        '_id -> "comp-input-currency-assoc",
+        '_value -> "",
+        '_label -> "Currency value",
+        '_hint -> "This is an input hint",
+        '_secondaryLabel -> "currency"
+        )
+    </div>
 
 
     @rnrbHelpers.submit_button()
 
 
-
+</form>
 
 }
