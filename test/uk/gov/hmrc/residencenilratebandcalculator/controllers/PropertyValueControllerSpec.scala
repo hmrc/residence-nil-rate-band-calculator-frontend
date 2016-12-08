@@ -31,6 +31,6 @@ class PropertyValueControllerSpec extends IntControllerSpecBase {
 
     def createController = () => new PropertyValueController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
-    behave like rnrbController(createController, createView, Constants.propertyValueControllerId)
+    behave like rnrbController(createController, createView, Constants.propertyValueId)
   }
 }

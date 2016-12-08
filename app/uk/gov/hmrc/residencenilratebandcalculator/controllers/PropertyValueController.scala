@@ -31,7 +31,7 @@ class PropertyValueController @Inject()(override val appConfig: FrontendAppConfi
                                         override val navigator: Navigator) extends IntControllerBase {
 
 
-  override val controllerId = Constants.propertyValueControllerId
+  override val controllerId = Constants.propertyValueId
 
   override def view(form: Option[Form[Int]])(implicit request: Request[_]) = property_value(appConfig, form)
 }

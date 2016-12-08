@@ -33,16 +33,18 @@ import scala.concurrent.Future
 trait MockSessionConnector extends UnitSpec with MockitoSugar with Matchers with BeforeAndAfter {
 
   var mockSessionConnector: SessionConnector = null
+  var mockCacheMap: CacheMap = null
   implicit val headnapper = ArgumentCaptor.forClass(classOf[HeaderCarrier])
   implicit val writesnapper = ArgumentCaptor.forClass(classOf[Writes[Int]])
   implicit val dateWritesNapper = ArgumentCaptor.forClass(classOf[Writes[LocalDate]])
 
   before {
     mockSessionConnector = mock[SessionConnector]
-    when(mockSessionConnector.cache(anyString(), anyInt())(any(), any[HeaderCarrier])) thenReturn Future.successful(mock[CacheMap])
+    mockCacheMap = mock[CacheMap]
+    when(mockSessionConnector.cache(anyString(), anyInt())(any(), any[HeaderCarrier])) thenReturn Future.successful(mockCacheMap)
     when(mockSessionConnector.fetchAndGetEntry[Int](anyString())(any[HeaderCarrier], any())) thenReturn Future.successful(None)
 
-    when(mockSessionConnector.cache(anyString(), any[LocalDate]())(any(), any[HeaderCarrier])) thenReturn Future.successful(mock[CacheMap])
+    when(mockSessionConnector.cache(anyString(), any[LocalDate]())(any(), any[HeaderCarrier])) thenReturn Future.successful(mockCacheMap)
     when(mockSessionConnector.fetchAndGetEntry[LocalDate](anyString())(any[HeaderCarrier], any())) thenReturn Future.successful(None)
   }
 
@@ -66,9 +68,13 @@ trait MockSessionConnector extends UnitSpec with MockitoSugar with Matchers with
 
   def verifyValueIsNotCached() = verifyZeroInteractions(mockSessionConnector)
 
-  def setCacheValue(key: String, value: Int) =
+  def setCacheValue(key: String, value: Int) = {
     when(mockSessionConnector.fetchAndGetEntry[Int](matches(key))(any[HeaderCarrier], any())) thenReturn Future.successful(Some(value))
+    when(mockCacheMap.getEntry[Int](matches(key))(any())) thenReturn Some(value)
+  }
 
-  def setCacheValue(key: String, value: LocalDate) =
+  def setCacheValue(key: String, value: LocalDate) = {
     when(mockSessionConnector.fetchAndGetEntry[LocalDate](matches(key))(any[HeaderCarrier], any())) thenReturn Future.successful(Some(value))
+    when(mockCacheMap.getEntry[LocalDate](matches(key))(any())) thenReturn Some(value)
+  }
 }

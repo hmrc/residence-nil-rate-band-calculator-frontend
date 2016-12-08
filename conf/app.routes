@@ -19,3 +19,5 @@ GET        /property-value                  uk.gov.hmrc.residencenilratebandcalc
 POST       /property-value                  uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyValueController.onSubmit
 
 GET        /not-found                       uk.gov.hmrc.residencenilratebandcalculator.controllers.PageNotFoundController.onPageLoad
+
+GET        /not-possible-to-use-calculator  uk.gov.hmrc.residencenilratebandcalculator.controllers.TransitionOutController.onPageLoad

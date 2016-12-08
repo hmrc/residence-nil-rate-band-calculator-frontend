@@ -22,7 +22,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc._
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.play.frontend.controller.FrontendController
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
@@ -32,12 +32,17 @@ import scala.concurrent.Future
 trait DateControllerBase extends FrontendController with I18nSupport {
 
   val appConfig: FrontendAppConfig
+
   def sessionConnector: SessionConnector
-  val sessionCacheKey: String
+
+  val controllerId: String
+
   def view(form: Option[Form[Date]])(implicit request: Request[_]): HtmlFormat.Appendable
 
+  val navigator: Navigator
+
   val onPageLoad = Action.async { implicit request =>
-    sessionConnector.fetchAndGetEntry[LocalDate](sessionCacheKey).map(
+    sessionConnector.fetchAndGetEntry[LocalDate](controllerId).map(
       cachedValue => {
         Ok(view(cachedValue.map(value => DateForm().fill(Date(value)))))
       })
@@ -47,7 +52,8 @@ trait DateControllerBase extends FrontendController with I18nSupport {
     val boundForm = DateForm().bindFromRequest()
     boundForm.fold(
       (formWithErrors: Form[Date]) => Future.successful(BadRequest(view(Some(formWithErrors)))),
-      (value) => sessionConnector.cache[LocalDate](sessionCacheKey, value.toLocalDate).map(_ => Redirect(""))
+      (value) => sessionConnector.cache[LocalDate](controllerId, value.toLocalDate).map(cacheMap =>
+        Redirect(navigator.nextPage(controllerId)(cacheMap)))
     )
   }
 }

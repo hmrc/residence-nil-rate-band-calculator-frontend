@@ -23,7 +23,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 
@@ -32,6 +32,8 @@ trait DateControllerSpecBase extends UnitSpec with WithFakeApplication with Http
   val fakeRequest = FakeRequest("", "")
 
   val injector = fakeApplication.injector
+
+  val navigator = injector.instanceOf[Navigator]
 
   def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
   def messagesApi = injector.instanceOf[MessagesApi]
@@ -53,6 +55,7 @@ trait DateControllerSpecBase extends UnitSpec with WithFakeApplication with Http
 
     "return a redirect on submit with valid data" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("day", "01"), ("month", "01"), ("year", "2018"))
+      setCacheValue(Constants.dateOfDeathId, new LocalDate(2018, 1, 1))
       val result = createController().onSubmit()(fakePostRequest)
       status(result) shouldBe Status.SEE_OTHER
     }
