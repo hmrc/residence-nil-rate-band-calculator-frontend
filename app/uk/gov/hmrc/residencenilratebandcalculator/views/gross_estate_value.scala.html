@@ -13,7 +13,7 @@
     <p>@messages("gross_estate_value.guidance")</p>
 
 
-    @helper.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.GrossEstateValueController.onSubmit(), 'autoComplete -> "off") {
+    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.GrossEstateValueController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.input_text(
             '_value -> form.fold("")(f => f.get.toString),
