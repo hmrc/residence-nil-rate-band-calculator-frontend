@@ -15,9 +15,12 @@
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeableTransferAmountController.onSubmit(), 'autoComplete -> "off") {
 
-        <input type="text" id="value" name="value" value="@form.map(f => f.value)" />
-
-        <input type="submit" />
+        @rnrbHelpers.input_text(
+            '_value -> (form.map(f => f.value)).toString,
+            '_label -> "Chargeable Transfer Amount",
+            '_hint -> "This is an input hint"
+        )
+        @rnrbHelpers.submit_button()
     }
 
 }

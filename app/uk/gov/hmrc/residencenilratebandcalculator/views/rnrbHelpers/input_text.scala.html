@@ -1,0 +1,17 @@
+@(args: (Symbol, Any)*)
+@inputArgs = @{ args.toMap }
+@label = @{ inputArgs.getOrElse('_label, "").toString }
+@value = @{ inputArgs.getOrElse('_value, "").toString }
+@hint = @{ inputArgs.getOrElse('_hint, "").toString }
+
+
+<div class="form-group form-group error">
+    <label class="form-label" for="value">
+        <span>@label</span>
+        @if(hint != ""){
+        <div class="form-hint">@hint</div>
+        }
+        <span class="error-notification" id="error-message-this-input">Error message about input goes here</span>
+    </label>
+    <input class="form-control" type="text" id="value" name="value" value="@value" aria-describedby="error-message-this-input" />
+</div>

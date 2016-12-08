@@ -59,3 +59,18 @@ Taken from GDS Elements
 @media screen and (min-width: 641px) {
     @include form-control-sizes;
 }
+
+
+/*
+=====================================
+Error styling to bring in line with GDS
+=====================================
+*/
+.error-notification {
+    font-weight: 700;
+}
+@media screen and (min-width: 640px){
+    .error-notification {
+        font-size: 19px;
+    }
+}
