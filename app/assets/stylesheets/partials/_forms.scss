@@ -74,3 +74,38 @@ Error styling to bring in line with GDS
         font-size: 19px;
     }
 }
+
+
+/*
+=====================================
+Input prefix / suffix
+=====================================
+*/
+.form-control-wrapper[data-type="currency"] input {
+    max-width: 12em;
+}
+.form-control-wrapper[data-type="currency"]:before {
+    content: "£";
+    margin-right: 0.25em;
+    font-weight: 700;
+}
+.form-control-wrapper[data-type="percentage"] input {
+    max-width: 5em;
+}
+.form-control-wrapper[data-type="percentage"]:after {
+    content: "%";
+    margin-left: 0.25em;
+    font-weight: 700;
+}
+
+/*
+Remove spinner from number inputs
+*/
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance:textfield;
+}

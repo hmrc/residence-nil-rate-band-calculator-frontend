@@ -1,0 +1,35 @@
+@(args: (Symbol, Any)*)
+@inputArgs = @{ args.toMap }
+@label = @{ inputArgs.getOrElse('_label, "").toString }
+@valueDay = @{ inputArgs.getOrElse('_valueDay, "").toString }
+@valueMonth = @{ inputArgs.getOrElse('_valueMonth, "").toString }
+@valueYear = @{ inputArgs.getOrElse('_valueYear, "").toString }
+@hint = @{ inputArgs.getOrElse('_hint, "").toString }
+
+<div class="form-group form-group error">
+    <fieldset>
+        <legend>
+        <span class="form-label bold">
+          @label
+        </span>
+        @if(hint != ""){
+            <span class="form-hint" id="date-hint">@hint</span>
+        }
+        <span class="error-notification" id="error-message-this-date">Error message about date goes here</span>
+        </legend>
+        <div class="form-date">
+            <div class="form-group form-group-day">
+                <label class="form-label" for="date-day">Day</label>
+                <input class="form-control" id="date-day" name="date-day" type="number" pattern="[0-9]*" min="1" max="31" aria-describedby="date-hint" value="@valueDay" />
+            </div>
+            <div class="form-group form-group-month">
+                <label class="form-label" for="date-month">Month</label>
+                <input class="form-control" id="date-month" name="date-month" type="number" pattern="[0-9]*" min="1" max="12" value="@valueMonth" />
+            </div>
+            <div class="form-group form-group-year">
+                <label class="form-label" for="date-year">Year</label>
+                <input class="form-control" id="date-year" name="date-year" type="number" pattern="[0-9]*" min="1900" max="2050" value="@valueYear" />
+            </div>
+        </div>
+    </fieldset>
+</div>

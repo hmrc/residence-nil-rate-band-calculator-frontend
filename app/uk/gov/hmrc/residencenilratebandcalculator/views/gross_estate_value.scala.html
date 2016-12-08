@@ -13,13 +13,32 @@
     <p>@messages("gross_estate_value.guidance")</p>
 
 
-    @helper.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.GrossEstateValueController.onSubmit(), 'autoComplete -> "off") {
+    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.GrossEstateValueController.onSubmit(), 'autoComplete -> "off") {
 
 
         @rnrbHelpers.input_text(
             '_value -> form.map(f => f.value).toString,
             '_label -> "Gross Estate label",
+            '_hint -> "This is an input hint",
+            '_secondaryLabel -> "percentage"
+        )
+        @rnrbHelpers.input_text(
+            '_value -> form.map(f => f.value).toString,
+            '_label -> "Gross Estate label",
+            '_hint -> "This is an input hint",
+            '_secondaryLabel -> "currency"
+        )
+        @rnrbHelpers.input_text(
+            '_value -> form.map(f => f.value).toString,
+            '_label -> "Gross Estate label",
             '_hint -> "This is an input hint"
+        )
+        @rnrbHelpers.input_date(
+            '_valueDay -> "10",
+            '_valueMonth -> "2",
+            '_valueYear -> "2016",
+            '_label -> "Date label",
+            '_hint -> "This is an date hint"
         )
         @rnrbHelpers.submit_button()
 

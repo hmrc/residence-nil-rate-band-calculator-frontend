@@ -3,6 +3,9 @@
 @label = @{ inputArgs.getOrElse('_label, "").toString }
 @value = @{ inputArgs.getOrElse('_value, "").toString }
 @hint = @{ inputArgs.getOrElse('_hint, "").toString }
+@secondaryLabel = @{ inputArgs.getOrElse('_secondaryLabel, "").toString }
+@inputClass = @{inputArgs.getOrElse('_inputClass, "").toString}
+
 
 
 <div class="form-group form-group error">
@@ -13,5 +16,14 @@
         }
         <span class="error-notification" id="error-message-this-input">Error message about input goes here</span>
     </label>
-    <input class="form-control" type="text" id="value" name="value" value="@value" aria-describedby="error-message-this-input" />
+    <div class="form-control-wrapper" data-type="@secondaryLabel">
+        <input
+                class="form-control @inputClass @if(secondaryLabel == "currency"){form-control-1-3} @if(secondaryLabel == "percentage"){form-control-1-4}"
+                type="text"
+                id="value"
+                name="value"
+                value="@value"
+                aria-describedby="error-message-this-input"
+        />
+    </div>
 </div>
