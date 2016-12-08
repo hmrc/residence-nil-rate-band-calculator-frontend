@@ -12,12 +12,13 @@
 
     <p>@messages("property_value.guidance")</p>
 
-
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyValueController.onSubmit(), 'autoComplete -> "off") {
 
-        <input type="text" id="value" name="value" value="@form.map(f => f.value)" />
-
-        <input type="submit" />
+        @rnrbHelpers.input_text(
+            '_value -> form.fold("")(f => f.get.toString),
+            '_label -> "Property Value",
+            '_hint -> "This is an input hint"
+        )
+        @rnrbHelpers.submit_button()
     }
-
 }

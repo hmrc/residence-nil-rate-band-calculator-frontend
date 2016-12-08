@@ -15,14 +15,11 @@
 
     @helper.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.GrossEstateValueController.onSubmit(), 'autoComplete -> "off") {
 
-
         @rnrbHelpers.input_text(
-            '_value -> form.map(f => f.value).toString,
+            '_value -> form.fold("")(f => f.get.toString),
             '_label -> "Gross Estate label",
             '_hint -> "This is an input hint"
         )
         @rnrbHelpers.submit_button()
-
     }
-
 }
