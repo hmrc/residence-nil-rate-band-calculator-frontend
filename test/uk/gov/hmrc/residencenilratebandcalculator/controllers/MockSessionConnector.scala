@@ -29,13 +29,15 @@ import uk.gov.hmrc.play.test.UnitSpec
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 
 import scala.concurrent.Future
+import scala.reflect.ClassTag
+import scala.reflect.classTag
 
 trait MockSessionConnector extends UnitSpec with MockitoSugar with Matchers with BeforeAndAfter {
 
   var mockSessionConnector: SessionConnector = null
   var mockCacheMap: CacheMap = null
   implicit val headnapper = ArgumentCaptor.forClass(classOf[HeaderCarrier])
-  implicit val writesnapper = ArgumentCaptor.forClass(classOf[Writes[Int]])
+  implicit val writesnapper = ArgumentCaptor.forClass(classOf[Writes[Any]])
   implicit val dateWritesNapper = ArgumentCaptor.forClass(classOf[Writes[LocalDate]])
 
   before {
@@ -44,37 +46,26 @@ trait MockSessionConnector extends UnitSpec with MockitoSugar with Matchers with
     when(mockSessionConnector.cache(anyString(), anyInt())(any(), any[HeaderCarrier])) thenReturn Future.successful(mockCacheMap)
     when(mockSessionConnector.fetchAndGetEntry[Int](anyString())(any[HeaderCarrier], any())) thenReturn Future.successful(None)
 
+    when(mockSessionConnector.cache(anyString(), anyBoolean())(any(), any[HeaderCarrier])) thenReturn Future.successful(mockCacheMap)
+    when(mockSessionConnector.fetchAndGetEntry[Boolean](anyString())(any[HeaderCarrier], any())) thenReturn Future.successful(None)
+
     when(mockSessionConnector.cache(anyString(), any[LocalDate]())(any(), any[HeaderCarrier])) thenReturn Future.successful(mockCacheMap)
     when(mockSessionConnector.fetchAndGetEntry[LocalDate](anyString())(any[HeaderCarrier], any())) thenReturn Future.successful(None)
   }
 
-  def verifyValueIsCached(key: String, value: Int) = {
+  def verifyValueIsCached[A: ClassTag](key: String, value: A) = {
     implicit val hc = new HeaderCarrier()
-    val valueCaptor = ArgumentCaptor.forClass(classOf[Int])
+    val valueCaptor = ArgumentCaptor.forClass(classTag[A].runtimeClass)
     val keyCaptor = ArgumentCaptor.forClass(classOf[String])
     verify(mockSessionConnector).cache(keyCaptor.capture, valueCaptor.capture)(writesnapper.capture, headnapper.capture)
     keyCaptor.getValue shouldBe key
     valueCaptor.getValue shouldBe value
   }
 
-  def verifyValueIsCached(key: String, value: LocalDate) = {
-    implicit val hc = new HeaderCarrier()
-    val valueCaptor = ArgumentCaptor.forClass(classOf[LocalDate])
-    val keyCaptor = ArgumentCaptor.forClass(classOf[String])
-    verify(mockSessionConnector).cache(keyCaptor.capture, valueCaptor.capture)(dateWritesNapper.capture, headnapper.capture)
-    keyCaptor.getValue shouldBe key
-    valueCaptor.getValue shouldBe value
-  }
-
   def verifyValueIsNotCached() = verifyZeroInteractions(mockSessionConnector)
 
-  def setCacheValue(key: String, value: Int) = {
-    when(mockSessionConnector.fetchAndGetEntry[Int](matches(key))(any[HeaderCarrier], any())) thenReturn Future.successful(Some(value))
-    when(mockCacheMap.getEntry[Int](matches(key))(any())) thenReturn Some(value)
-  }
-
-  def setCacheValue(key: String, value: LocalDate) = {
-    when(mockSessionConnector.fetchAndGetEntry[LocalDate](matches(key))(any[HeaderCarrier], any())) thenReturn Future.successful(Some(value))
-    when(mockCacheMap.getEntry[LocalDate](matches(key))(any())) thenReturn Some(value)
+  def setCacheValue[A](key: String, value: A) = {
+    when(mockSessionConnector.fetchAndGetEntry[A](matches(key))(any[HeaderCarrier], any())) thenReturn Future.successful(Some(value))
+    when(mockCacheMap.getEntry[A](matches(key))(any())) thenReturn Some(value)
   }
 }
