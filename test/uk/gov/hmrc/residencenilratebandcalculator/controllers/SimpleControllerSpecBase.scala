@@ -60,6 +60,7 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
 
     "return a redirect on submit with valid data" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))
+      setCacheValue(cacheKey, testValue)
       val result = createController().onSubmit(wts)(fakePostRequest)
       status(result) shouldBe Status.SEE_OTHER
     }

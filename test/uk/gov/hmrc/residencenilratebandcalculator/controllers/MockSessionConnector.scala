@@ -46,6 +46,9 @@ trait MockSessionConnector extends UnitSpec with MockitoSugar with Matchers with
     when(mockSessionConnector.cache(anyString(), anyInt())(any(), any[HeaderCarrier])) thenReturn Future.successful(mockCacheMap)
     when(mockSessionConnector.fetchAndGetEntry[Int](anyString())(any[HeaderCarrier], any())) thenReturn Future.successful(None)
 
+    when(mockSessionConnector.cache(anyString(), anyBoolean())(any(), any[HeaderCarrier])) thenReturn Future.successful(mockCacheMap)
+    when(mockSessionConnector.fetchAndGetEntry[Boolean](anyString())(any[HeaderCarrier], any())) thenReturn Future.successful(None)
+
     when(mockSessionConnector.cache(anyString(), any[LocalDate]())(any(), any[HeaderCarrier])) thenReturn Future.successful(mockCacheMap)
     when(mockSessionConnector.fetchAndGetEntry[LocalDate](anyString())(any[HeaderCarrier], any())) thenReturn Future.successful(None)
   }

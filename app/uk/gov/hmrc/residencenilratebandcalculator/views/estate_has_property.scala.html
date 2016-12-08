@@ -1,0 +1,31 @@
+@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@import uk.gov.hmrc.play.views.html._
+@import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.EstateHasPropertyController
+
+@(appConfig: FrontendAppConfig, form: Option[Form[Boolean]] = None)(implicit request: Request[_], messages: Messages)
+
+@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+    title = messages("estate_has_property.browser_title"),
+    appConfig = appConfig,
+    bodyClasses = None) {
+
+        <h1>@messages("estate_has_property.title")</h1>
+
+        <p>@messages("estate_has_property.guidance")</p>
+
+
+        @helpers.form(action = EstateHasPropertyController.onSubmit(), 'autoComplete -> "off") {
+
+            <label for="yesOption">
+                <input type="radio" id="yesOption" name="value" value="true" @if(form.fold(false)(form => !form.hasErrors && form.get)){checked}/>
+                Yes
+            </label>
+            <label for="noOption">
+                <input type="radio" id="noOption" name="value" value="false" @if(form.fold(false)(form => !form.hasErrors && !form.get)){checked}/>
+                No
+            </label>
+
+            <input type="submit" />
+    }
+
+}
