@@ -4,20 +4,20 @@
 @(appConfig: FrontendAppConfig, form: Option[Form[Int]] = None)(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
-title = messages("property_value.browser_title"),
-appConfig = appConfig,
-bodyClasses = None) {
+    title = messages("property_value.browser_title"),
+    appConfig = appConfig,
+    bodyClasses = None) {
 
-<h1>@messages("property_value.title")</h1>
+    <h1>@messages("property_value.title")</h1>
 
-<p>@messages("property_value.guidance")</p>
+    <p>@messages("property_value.guidance")</p>
 
 
-@helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyValueController.onSubmit(), 'autoComplete -> "off") {
+    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyValueController.onSubmit(), 'autoComplete -> "off") {
 
-<input type="text" id="value" name="value" value="@form.map(f => f.value)" />
+        <input type="text" id="value" name="value" value="@form.map(f => f.value)" />
 
-<input type="submit" />
-}
+        <input type="submit" />
+    }
 
 }
