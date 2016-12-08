@@ -42,13 +42,13 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     "return a function that goes to the Transition controller when given DateOfDeath, and the date of death is 5 April 2017" in {
       val mockCacheMap = mock[CacheMap]
       when(mockCacheMap.getEntry[LocalDate](matches(Constants.dateOfDeathId))(any())) thenReturn Some(new LocalDate(2017, 4, 5))
-      navigator.nextPage(Constants.dateOfDeathId)(mockCacheMap) shouldBe routes.TransitionController.onPageLoad()
+      navigator.nextPage(Constants.dateOfDeathId)(mockCacheMap) shouldBe routes.TransitionOutController.onPageLoad()
     }
 
     "return a function that goes to the Transition controller when given DateOfDeath, and the date of death is before 5 April 2017" in {
       val mockCacheMap = mock[CacheMap]
       when(mockCacheMap.getEntry[LocalDate](matches(Constants.dateOfDeathId))(any())) thenReturn Some(new LocalDate(2017, 4, 4))
-      navigator.nextPage(Constants.dateOfDeathId)(mockCacheMap) shouldBe routes.TransitionController.onPageLoad()
+      navigator.nextPage(Constants.dateOfDeathId)(mockCacheMap) shouldBe routes.TransitionOutController.onPageLoad()
     }
 
     "return a function that goes to the Home controller when given DateOfDeath, and the date of death does not exist in keystore" in {

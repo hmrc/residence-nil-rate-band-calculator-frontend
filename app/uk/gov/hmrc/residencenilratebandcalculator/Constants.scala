@@ -22,9 +22,7 @@ object Constants {
 
   val chargeableTransferAmountId = "ChargeableTransferAmount"
   val dateOfDeathId = "DateOfDeath"
+  val eligibilityDate = new LocalDate(2017, 4, 6)
   val grossEstateValueId = "GrossEstateValue"
   val propertyValueId = "PropertyValue"
-
-  val eligibilityDate = new LocalDate(2017, 4, 6)
-
 }

@@ -40,7 +40,7 @@ class Navigator @Inject()() {
   private def getDateOfDeathRoute(cacheMap: CacheMap) = {
     cacheMap.getEntry[LocalDate](Constants.dateOfDeathId) match {
       case Some(d) if (d isEqual Constants.eligibilityDate) || (d isAfter Constants.eligibilityDate) => GrossEstateValueController.onPageLoad()
-      case Some(d) => TransitionController.onPageLoad()
+      case Some(d) => TransitionOutController.onPageLoad()
       case None => HomeController.onPageLoad()
     }
   }

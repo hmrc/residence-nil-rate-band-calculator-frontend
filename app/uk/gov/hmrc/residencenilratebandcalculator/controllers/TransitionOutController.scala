@@ -26,7 +26,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.not_possible_to_use
 
 import scala.concurrent.Future
 
-class TransitionController @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi)
+class TransitionOutController @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi)
   extends FrontendController with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = Action.async { implicit request =>

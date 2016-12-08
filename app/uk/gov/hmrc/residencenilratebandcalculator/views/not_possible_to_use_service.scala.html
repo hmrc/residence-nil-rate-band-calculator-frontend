@@ -3,12 +3,12 @@
 @(appConfig: FrontendAppConfig)(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
-    title = messages("index.browser_title"),
+    title = messages("not_possible_to_use_service.browser_title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    <h1>@messages("index.title")</h1>
+    <h1>@messages("not_possible_to_use_service.title")</h1>
 
-    <p>@messages("index.guidance")</p>
+    <p>@messages("not_possible_to_use_service.guidance")</p>
 
 }
