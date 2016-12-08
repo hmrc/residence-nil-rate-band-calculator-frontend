@@ -18,19 +18,19 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.gross_estate_value
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_value
 
-class GrossEstateValueControllerSpec extends IntControllerSpecBase {
+class PropertyValueControllerSpec extends IntControllerSpecBase {
 
-  "Gross Estate Value Controller" must {
+  "Property Value Controller" must {
 
     def createView = (value: Option[Int]) => value match {
-      case None => gross_estate_value(frontendAppConfig)(fakeRequest, messages)
-      case Some(v) => gross_estate_value(frontendAppConfig, Some(NonNegativeIntForm().fill(v)))(fakeRequest, messages)
+      case None => property_value(frontendAppConfig)(fakeRequest, messages)
+      case Some(v) => property_value(frontendAppConfig, Some(NonNegativeIntForm().fill(v)))(fakeRequest, messages)
     }
 
-    def createController = () => new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
+    def createController = () => new PropertyValueController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
-    behave like rnrbController(createController, createView, Constants.grossEstateValueId)
+    behave like rnrbController(createController, createView, Constants.propertyValueId)
   }
 }

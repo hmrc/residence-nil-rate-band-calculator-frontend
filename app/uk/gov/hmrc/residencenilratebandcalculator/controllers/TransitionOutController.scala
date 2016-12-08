@@ -16,23 +16,20 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import java.util.UUID
 import javax.inject.Inject
 
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.frontend.controller.FrontendController
-import uk.gov.hmrc.play.http.SessionKeys
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.index
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.not_possible_to_use_service
 
 import scala.concurrent.Future
 
-class HomeController @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi)
+class TransitionOutController @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi)
   extends FrontendController with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(index(appConfig))
-      .withSession(request.session + (SessionKeys.sessionId -> s"session-${UUID.randomUUID}")))
+    Future.successful(Ok(not_possible_to_use_service(appConfig)))
   }
 }

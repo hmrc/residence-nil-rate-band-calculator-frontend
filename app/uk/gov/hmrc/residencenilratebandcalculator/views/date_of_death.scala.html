@@ -1,0 +1,24 @@
+@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@import uk.gov.hmrc.residencenilratebandcalculator.models.Date
+@import uk.gov.hmrc.play.views.html._
+
+@(appConfig: FrontendAppConfig, form: Option[Form[Date]] = None)(implicit request: Request[_], messages: Messages)
+
+@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+    title = messages("date_of_death.browser_title"),
+    appConfig = appConfig,
+    bodyClasses = None) {
+
+    <h1>@messages("date_of_death.title")</h1>
+
+    <p>@messages("date_of_death.guidance")</p>
+
+    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onSubmit(), 'autoComplete -> "off") {
+
+        <input type="text" id="day" name="day" value="@form.map(f => f.value.fold("")(d => d.day.toString))" />
+        <input type="text" id="month" name="month" value="@form.map(f => f.value.fold("")(d => d.month.toString))" />
+        <input type="text" id="year" name="year" value="@form.map(f => f.value.fold("")(d => d.year.toString))" />
+
+        <input type="submit" />
+    }
+}
