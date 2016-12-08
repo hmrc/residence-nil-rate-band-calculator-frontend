@@ -21,6 +21,7 @@ import javax.inject.{Inject, Singleton}
 import org.joda.time.LocalDate
 import play.api.mvc.Call
 import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.residencenilratebandcalculator
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 
 @Singleton
@@ -30,7 +31,8 @@ class Navigator @Inject()() {
     Map(
       Constants.dateOfDeathId -> (cm => getDateOfDeathRoute(cm)),
       //"ChargeableTransferAmount" -> (_ => ChargeableTransferAmountController.onPageLoad()),
-      Constants.grossEstateValueId -> (_ => ChargeableTransferAmountController.onPageLoad())
+      Constants.grossEstateValueId -> (_ => ChargeableTransferAmountController.onPageLoad()),
+      Constants.propertyValueId -> (_ => PageNotFoundController.onPageLoad())
       //HomeController.onPageLoad().url -> (_ => HomeController.onPageLoad())
     )
   }
