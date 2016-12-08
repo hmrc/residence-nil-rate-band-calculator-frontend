@@ -1,0 +1,58 @@
+@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@import uk.gov.hmrc.play.views.html._
+@import uk.gov.hmrc.residencenilratebandcalculator.views.html._
+
+@(appConfig: FrontendAppConfig)(implicit request: Request[_], messages: Messages)
+
+@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+  title = "Style Guide",
+  appConfig = appConfig,
+  bodyClasses = None) {
+    <h1>Form Components</h1>
+    <p class="lede">Demo page to show components</p>
+
+    @rnrbHelpers.input_text(
+    '_value -> "",
+    '_label -> "Gross Estate label",
+    '_hint -> "This is an input hint",
+    '_secondaryLabel -> "percentage"
+    )
+
+
+    @rnrbHelpers.input_text(
+    '_value -> "",
+    '_label -> "Gross Estate label",
+    '_hint -> "This is an input hint",
+    '_secondaryLabel -> "currency"
+    )
+
+
+    @rnrbHelpers.input_text(
+    '_value -> "",
+    '_label -> "Gross Estate label",
+    '_hint -> "This is an input hint"
+    )
+
+
+    @rnrbHelpers.input_date(
+    '_valueDay -> "10",
+    '_valueMonth -> "2",
+    '_valueYear -> "2016",
+    '_label -> "Date label",
+    '_hint -> "This is an date hint"
+    )
+
+
+    @rnrbHelpers.input_yes_no(
+    '_value -> "No",
+    '_label -> "Gross Estate label",
+    '_hint -> "This is an input hint"
+    )
+
+
+    @rnrbHelpers.submit_button()
+
+
+
+
+}

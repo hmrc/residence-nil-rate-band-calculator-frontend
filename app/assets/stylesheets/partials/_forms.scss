@@ -3,11 +3,10 @@
 /*
 ====================================
 Makes relationship between legend and inputs/hint tighter
-.date-of-birth sits in GDS Elements
 Legend in Assets Frontend implements a margin bottom
 ====================================
  */
-.date-of-birth__legend {
+fieldset legend {
   margin-bottom: 0;
 }
 

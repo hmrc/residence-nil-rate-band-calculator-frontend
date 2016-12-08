@@ -1,0 +1,27 @@
+@(args: (Symbol, Any)*)
+@inputArgs = @{ args.toMap }
+@label = @{ inputArgs.getOrElse('_label, "").toString }
+@value = @{ inputArgs.getOrElse('_value, "").toString }
+@hint = @{ inputArgs.getOrElse('_hint, "").toString }
+
+
+<div class="form-group form-group error">
+    <fieldset class="inline">
+
+        <legend>@label</legend>
+        @if(hint != ""){
+        <div class="form-hint">@hint</div>
+        }
+        <span class="error-notification" id="error-message-this-input">Error message about input goes here</span>
+
+        <label class="block-label selection-button-radio" for="radio-inline-1">
+            <input id="radio-inline-1" type="radio" name="radio-inline-group" value="Yes" @if(value == "Yes"){checked="checked"} />
+            Yes
+        </label>
+        <label class="block-label selection-button-radio" for="radio-inline-2">
+            <input id="radio-inline-2" type="radio" name="radio-inline-group" value="No" @if(value == "No"){checked="checked"} />
+            No
+        </label>
+
+    </fieldset>
+</div>
