@@ -31,7 +31,7 @@ class ChargeableTransferAmountController  @Inject()(override val appConfig: Fron
                                                     override val navigator: Navigator) extends IntControllerBase {
 
 
-  override val controllerId = Constants.chargeableTransferAmountControllerId
+  override val controllerId = Constants.chargeableTransferAmountId
 
   override def view(form: Option[Form[Int]])(implicit request: Request[_]) = chargeable_transfer_amount(appConfig, form)
 }

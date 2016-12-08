@@ -31,7 +31,7 @@ class GrossEstateValueController @Inject()(override val appConfig: FrontendAppCo
                                            override val navigator: Navigator) extends IntControllerBase {
 
 
-  override val controllerId = Constants.grossEstateValueControllerId
+  override val controllerId = Constants.grossEstateValueId
 
   override def view(form: Option[Form[Int]])(implicit request: Request[_]) = gross_estate_value(appConfig, form)
 }

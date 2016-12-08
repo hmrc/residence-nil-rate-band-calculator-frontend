@@ -32,6 +32,6 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase {
 
     def createController = () => new DateOfDeathController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
-    behave like rnrbController(createController, createView, Constants.dateOfDeathControllerId)
+    behave like rnrbController(createController, createView, Constants.dateOfDeathId)
   }
 }

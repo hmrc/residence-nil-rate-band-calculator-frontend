@@ -31,7 +31,7 @@ class DateOfDeathController @Inject()(override val appConfig: FrontendAppConfig,
                                       override val sessionConnector: SessionConnector,
                                       override val navigator: Navigator) extends DateControllerBase {
 
-  override val controllerId = Constants.dateOfDeathControllerId
+  override val controllerId = Constants.dateOfDeathId
 
   override def view(form: Option[Form[Date]])(implicit request: Request[_]) = date_of_death(appConfig, form)
 }

@@ -55,7 +55,7 @@ trait DateControllerSpecBase extends UnitSpec with WithFakeApplication with Http
 
     "return a redirect on submit with valid data" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("day", "01"), ("month", "01"), ("year", "2018"))
-      setCacheValue(Constants.dateOfDeathControllerId, new LocalDate(2018, 1, 1))
+      setCacheValue(Constants.dateOfDeathId, new LocalDate(2018, 1, 1))
       val result = createController().onSubmit()(fakePostRequest)
       status(result) shouldBe Status.SEE_OTHER
     }

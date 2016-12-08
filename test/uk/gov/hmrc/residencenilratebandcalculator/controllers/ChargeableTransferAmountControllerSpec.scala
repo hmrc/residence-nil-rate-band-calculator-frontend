@@ -31,6 +31,6 @@ class ChargeableTransferAmountControllerSpec extends IntControllerSpecBase {
 
     def createController = () => new ChargeableTransferAmountController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
-    behave like rnrbController(createController, createView, Constants.chargeableTransferAmountControllerId)
+    behave like rnrbController(createController, createView, Constants.chargeableTransferAmountId)
   }
 }

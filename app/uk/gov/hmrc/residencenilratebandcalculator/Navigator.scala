@@ -28,15 +28,15 @@ class Navigator @Inject()() {
   private val routeMap: Map[String, CacheMap => Call] = {
 
     Map(
-      Constants.dateOfDeathControllerId -> (cm => getDateOfDeathRoute(cm)),
+      Constants.dateOfDeathId -> (cm => getDateOfDeathRoute(cm)),
       //"ChargeableTransferAmount" -> (_ => ChargeableTransferAmountController.onPageLoad()),
-      Constants.grossEstateValueControllerId -> (_ => ChargeableTransferAmountController.onPageLoad())
+      Constants.grossEstateValueId -> (_ => ChargeableTransferAmountController.onPageLoad())
       //HomeController.onPageLoad().url -> (_ => HomeController.onPageLoad())
     )
   }
 
   private def getDateOfDeathRoute(cacheMap: CacheMap) = {
-    cacheMap.getEntry[LocalDate](Constants.dateOfDeathControllerId) match {
+    cacheMap.getEntry[LocalDate](Constants.dateOfDeathId) match {
       case Some(d) if (d isEqual Constants.eligibilityDate) || (d isAfter Constants.eligibilityDate) => GrossEstateValueController.onPageLoad()
       case Some(d) => TransitionController.onPageLoad()
       case None => HomeController.onPageLoad()

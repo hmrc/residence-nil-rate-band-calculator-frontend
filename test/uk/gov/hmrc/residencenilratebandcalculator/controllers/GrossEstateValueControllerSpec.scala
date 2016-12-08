@@ -31,6 +31,6 @@ class GrossEstateValueControllerSpec extends IntControllerSpecBase {
 
     def createController = () => new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
-    behave like rnrbController(createController, createView, Constants.grossEstateValueControllerId)
+    behave like rnrbController(createController, createView, Constants.grossEstateValueId)
   }
 }
