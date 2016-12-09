@@ -45,4 +45,16 @@ object FormHelpers {
       }
     }
   }
+
+  def getErrorByKey[A](form: Option[Form[A]], errorKey: String) = {
+    val either = for {
+      theForm <- form.toRight("").right
+      theError <- theForm.error(errorKey).toRight("").right
+    } yield theError
+
+    either match {
+      case Left(_) => ""
+      case Right(error) => error.message
+    }
+  }
 }

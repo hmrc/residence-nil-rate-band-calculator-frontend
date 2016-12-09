@@ -18,8 +18,9 @@
         @rnrbHelpers.input_text(
             '_id -> "value",
             '_value -> FormHelpers.getValue[Int](form),
-            '_label -> @messages("property_value.label"),
-            '_secondaryLabel -> "currency"
+            '_label -> messages("property_value.label"),
+            '_secondaryLabel -> "currency",
+            '_error -> FormHelpers.getErrorByKey(form, "value")
         )
         @rnrbHelpers.submit_button()
     }

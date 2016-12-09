@@ -1,4 +1,4 @@
-@(args: (Symbol, Any)*)
+@(args: (Symbol, Any)*)(implicit messages: Messages)
 @inputArgs = @{ args.toMap }
 @id = @{ inputArgs.getOrElse('_id, "").toString }
 @label = @{ inputArgs.getOrElse('_label, "").toString }
@@ -6,17 +6,17 @@
 @hint = @{ inputArgs.getOrElse('_hint, "").toString }
 @secondaryLabel = @{ inputArgs.getOrElse('_secondaryLabel, "").toString }
 @inputClass = @{inputArgs.getOrElse('_inputClass, "").toString}
-@error = @{ inputArgs.getOrElse('_error, "").toString }
+@errorKey = @{ inputArgs.getOrElse('_error, "").toString }
 
 
-<div class="form-field @if(error != ""){form-field--error}">
+<div class="form-field @if(errorKey != ""){form-field--error}">
     <label class="form-label" for="@id">
         <span>@label</span>
         @if(hint != ""){
         <div class="form-hint">@hint</div>
         }
-        @if(error != ""){
-        <span class="error-notification" id="error-message-this-input">@error</span>
+        @if(errorKey != ""){
+        <span class="error-notification" id="error-message-this-input">@messages(errorKey)</span>
         }
     </label>
     <div class="form-control-wrapper" data-type="@secondaryLabel">

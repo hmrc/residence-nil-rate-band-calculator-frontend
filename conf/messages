@@ -13,6 +13,10 @@ date_of_death.guidance = Lorem ipsum dolor sit amet, consectetur adipiscing elit
 date_of_death.label = When did the deceased die?
 
 error.invalid_date = Enter a valid date
+error.number = Please enter a valid number
+error.required = Please enter a value
+error.summary.title = Message to alert the user to a problem goes here
+error.summary.text = Optional description of the errors and how to correct them
 
 estate_has_property.browser_title = Does the estate contain a residence?
 estate_has_property.title = Does the estate contain a residence?

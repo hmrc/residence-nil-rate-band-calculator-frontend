@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
+import play.api.data.FormError
 import uk.gov.hmrc.play.test.UnitSpec
 import uk.gov.hmrc.residencenilratebandcalculator.forms.{DateForm, NonNegativeIntForm}
 import uk.gov.hmrc.residencenilratebandcalculator.models.{Date, Day, Month, Year}
@@ -26,6 +27,9 @@ class FormHelpersSpec extends UnitSpec {
   val day = 1
   val month = 2
   val year = 2000
+  val errorKey = "a key"
+  val otherErrorKey = "another key"
+  val errorMessage = "an error"
 
   "Get Value" must {
 
@@ -70,6 +74,29 @@ class FormHelpersSpec extends UnitSpec {
       val date = Date(day, month, year)
       val form = DateForm().fill(date)
       FormHelpers.getDatePart(Some(form), Year) shouldBe year
+    }
+  }
+
+  "Get Error by Key" must {
+
+    "return an empty string when given nothing" in {
+      FormHelpers.getErrorByKey[Int](None, errorKey) shouldBe ""
+    }
+
+    "return an empty string when given a form with no errors" in {
+      FormHelpers.getErrorByKey[Int](Some(NonNegativeIntForm()), errorKey) shouldBe ""
+    }
+
+    "return an empty string when given a form with an error for a different key" in {
+      val error = FormError(errorKey, errorMessage)
+      val formWithErrors = NonNegativeIntForm().withError(error)
+      FormHelpers.getErrorByKey[Int](Some(formWithErrors), otherErrorKey) shouldBe ""
+    }
+
+    "return the error when given a form with an error for this key" in {
+      val error = FormError(errorKey, errorMessage)
+      val formWithErrors = NonNegativeIntForm().withError(error)
+      FormHelpers.getErrorByKey[Int](Some(formWithErrors), errorKey) shouldBe errorMessage
     }
   }
 }

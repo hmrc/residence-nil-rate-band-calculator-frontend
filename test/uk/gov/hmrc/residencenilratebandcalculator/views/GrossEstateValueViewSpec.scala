@@ -54,6 +54,11 @@ class GrossEstateValueViewSpec extends HtmlSpec {
       form.attr("action") shouldBe routes.GrossEstateValueController.onSubmit().url
     }
 
+    "contain a label for the value" in {
+      val f = fixture()
+      assertContainsLabel(f.doc, "value", messages("gross_estate_value.label"))
+    }
+
     "contain an input for the value" in {
       val f = fixture()
       assertRenderedById(f.doc, "value")
