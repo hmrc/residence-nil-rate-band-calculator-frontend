@@ -18,8 +18,8 @@
         @rnrbHelpers.input_text(
             '_id -> "value",
             '_value -> FormHelpers.getValue[Int](form),
-            '_label -> "Property Value",
-            '_hint -> "This is an input hint"
+            '_label -> @messages("property_value.label"),
+            '_secondaryLabel -> "currency"
         )
         @rnrbHelpers.submit_button()
     }

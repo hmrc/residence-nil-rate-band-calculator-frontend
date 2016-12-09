@@ -19,9 +19,8 @@
         @rnrbHelpers.input_text(
             '_id -> "value",
             '_value -> FormHelpers.getValue[Int](form),
-            '_label -> "Gross Estate label",
-            '_hint -> "This is an input hint",
-            '_secondaryLabel -> "percentage"
+            '_label -> messages("gross_estate_value.label"),
+            '_secondaryLabel -> "currency"
         )
 
         @rnrbHelpers.submit_button()

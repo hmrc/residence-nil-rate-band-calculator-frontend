@@ -78,4 +78,8 @@ trait HtmlSpec extends UnitSpec with WithFakeApplication { self: UnitSpec =>
     assert(labels.size == 1, s"\n\nLabel for $forElement was not rendered on the page.")
     assert(labels.first.text() == expectedText, s"\n\nLabel for $forElement was not $expectedText")
   }
+
+  def assertElementHasClass(doc: Document, id: String, expectedClass: String) = {
+    assert(doc.getElementById(id).hasClass(expectedClass), s"\n\nElement $id does not have class $expectedClass")
+  }
 }

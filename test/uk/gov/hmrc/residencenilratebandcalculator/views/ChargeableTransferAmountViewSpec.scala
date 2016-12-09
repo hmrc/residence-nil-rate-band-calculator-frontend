@@ -54,6 +54,11 @@ class ChargeableTransferAmountViewSpec extends HtmlSpec {
       form.attr("action") shouldBe routes.ChargeableTransferAmountController.onSubmit().url
     }
 
+    "contain a label for the value" in {
+      val f = fixture()
+      assertContainsLabel(f.doc, "value", messages("chargeable_transfer_amount.label"))
+    }
+
     "contain an input for the value" in {
       val f = fixture()
       assertRenderedById(f.doc, "value")
