@@ -6,8 +6,9 @@
 @valueMonth = @{ inputArgs.getOrElse('_valueMonth, "").toString }
 @valueYear = @{ inputArgs.getOrElse('_valueYear, "").toString }
 @hint = @{ inputArgs.getOrElse('_hint, "").toString }
+@error = @{ inputArgs.getOrElse('_error, "").toString }
 
-<div class="form-field form-field--error">
+<div class="form-field @if(error != ""){form-field--error}">
     <fieldset>
         <legend>
         <span class="form-label bold">
@@ -16,7 +17,9 @@
         @if(hint != ""){
             <span class="form-hint" id="date-hint">@hint</span>
         }
-        <span class="error-notification" id="error-message-this-date">Error message about date goes here</span>
+        @if(error != ""){
+        <span class="error-notification" id="error-message-this-date">@error</span>
+        }
         </legend>
         <div class="form-date">
             <div class="form-group form-group-day">
