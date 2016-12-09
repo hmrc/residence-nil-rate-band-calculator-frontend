@@ -1,6 +1,7 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.play.views.html._
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.EstateHasPropertyController
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 
 @(appConfig: FrontendAppConfig, form: Option[Form[Boolean]] = None)(implicit request: Request[_], messages: Messages)
 
@@ -16,16 +17,13 @@
 
         @helpers.form(action = EstateHasPropertyController.onSubmit(), 'autoComplete -> "off") {
 
-            <label for="yesOption">
-                <input type="radio" id="yesOption" name="value" value="true" @if(form.fold(false)(form => !form.hasErrors && form.get)){checked}/>
-                Yes
-            </label>
-            <label for="noOption">
-                <input type="radio" id="noOption" name="value" value="false" @if(form.fold(false)(form => !form.hasErrors && !form.get)){checked}/>
-                No
-            </label>
+            @rnrbHelpers.input_yes_no(
+                '_id -> "value",
+                '_value -> FormHelpers.getYesNo(form),
+                '_label -> messages("estate_has_property.label"),
+                '_errorKey -> FormHelpers.getErrorByKey(form, "value")
+            )
 
-            <input type="submit" />
+            @rnrbHelpers.submit_button()
     }
-
 }

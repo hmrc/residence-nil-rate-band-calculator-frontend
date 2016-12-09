@@ -57,4 +57,19 @@ object FormHelpers {
       case Right(error) => error.message
     }
   }
+
+  def getYesNo(form: Option[Form[Boolean]]) = {
+    val either = for {
+      theForm <- form.toRight("").right
+      theValue <- theForm.value.toRight("").right
+    } yield theValue
+
+    either match {
+      case Left(_) => ""
+      case Right(yesNo) => yesNo match {
+        case true => "Yes"
+        case _ => "No"
+      }
+    }
+  }
 }

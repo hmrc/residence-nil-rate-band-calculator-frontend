@@ -18,7 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.utils
 
 import play.api.data.FormError
 import uk.gov.hmrc.play.test.UnitSpec
-import uk.gov.hmrc.residencenilratebandcalculator.forms.{DateForm, NonNegativeIntForm}
+import uk.gov.hmrc.residencenilratebandcalculator.forms.{BooleanForm, DateForm, NonNegativeIntForm}
 import uk.gov.hmrc.residencenilratebandcalculator.models.{Date, Day, Month, Year}
 
 class FormHelpersSpec extends UnitSpec {
@@ -97,6 +97,25 @@ class FormHelpersSpec extends UnitSpec {
       val error = FormError(errorKey, errorMessage)
       val formWithErrors = NonNegativeIntForm().withError(error)
       FormHelpers.getErrorByKey[Int](Some(formWithErrors), errorKey) shouldBe errorMessage
+    }
+  }
+
+  "Get Yes / No" must {
+
+    "return an empty string when given nothing" in {
+      FormHelpers.getYesNo(None) shouldBe ""
+    }
+
+    "return an empty string when given a form with no value" in {
+      FormHelpers.getYesNo(Some(BooleanForm())) shouldBe ""
+    }
+
+    "return 'Yes' when given a form with the value 'true'" in {
+      FormHelpers.getYesNo(Some(BooleanForm().fill(true))) shouldBe "Yes"
+    }
+
+    "return 'No' when given a form with the value 'false'" in {
+      FormHelpers.getYesNo(Some(BooleanForm().fill(false))) shouldBe "No"
     }
   }
 }

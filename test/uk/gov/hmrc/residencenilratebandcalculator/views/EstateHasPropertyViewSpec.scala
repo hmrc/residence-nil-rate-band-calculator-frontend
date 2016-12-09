@@ -56,28 +56,35 @@ class EstateHasPropertyViewSpec extends HtmlSpec {
       form.attr("action") shouldBe EstateHasPropertyController.onSubmit().url
     }
 
+    "contain a legend for the question" in {
+      val f = fixture()
+      val legends = f.doc.getElementsByTag("legend")
+      legends.size shouldBe 1
+      legends.first.text shouldBe messages("estate_has_property.label")
+    }
+
     "contain an input for the value" in {
       val f = fixture()
-      assertRenderedById(f.doc, "yesOption")
-      assertRenderedById(f.doc, "noOption")
+      assertRenderedById(f.doc, "value-1")
+      assertRenderedById(f.doc, "value-2")
     }
 
     "have no values checked when rendered with no form" in {
       val f = fixture()
-      assert(!f.doc.getElementById("yesOption").hasAttr("checked"))
-      assert(!f.doc.getElementById("noOption").hasAttr("checked"))
+      assert(!f.doc.getElementById("value-1").hasAttr("checked"))
+      assert(!f.doc.getElementById("value-2").hasAttr("checked"))
     }
 
     "have only the 'Yes' value checked when rendered with an appropriate form" in {
       val f = fixture(Some(BooleanForm().fill(true)))
-      assert(f.doc.getElementById("yesOption").hasAttr("checked"))
-      assert(!f.doc.getElementById("noOption").hasAttr("checked"))
+      assert(f.doc.getElementById("value-1").hasAttr("checked"))
+      assert(!f.doc.getElementById("value-2").hasAttr("checked"))
     }
 
     "have only the 'No' value checked when rendered with an appropriate form" in {
       val f = fixture(Some(BooleanForm().fill(false)))
-      assert(!f.doc.getElementById("yesOption").hasAttr("checked"))
-      assert(f.doc.getElementById("noOption").hasAttr("checked"))
+      assert(!f.doc.getElementById("value-1").hasAttr("checked"))
+      assert(f.doc.getElementById("value-2").hasAttr("checked"))
     }
     "contain a submit button" in {
       val f = fixture()
