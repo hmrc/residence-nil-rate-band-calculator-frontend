@@ -100,6 +100,26 @@ class FormHelpersSpec extends UnitSpec {
     }
   }
 
+  "Get all errors" must {
+
+    "return an empty string when given nothing" in {
+      FormHelpers.getAllErrors(None) shouldBe Seq[FormError]()
+    }
+
+    "return an empty sequence when given a form with no errors" in {
+      FormHelpers.getAllErrors[Int](Some(NonNegativeIntForm())) shouldBe Seq[FormError]()
+    }
+
+    "return all of the errors when given a form with errors" in {
+      val errors = Seq(FormError(errorKey, errorMessage), FormError(otherErrorKey, errorMessage))
+      val formWithErrors = NonNegativeIntForm()
+        .withError(FormError(errorKey, errorMessage))
+        .withError(FormError(otherErrorKey, errorMessage))
+
+      FormHelpers.getAllErrors(Some(formWithErrors)) shouldBe errors
+    }
+  }
+
   "Get Yes / No" must {
 
     "return an empty string when given nothing" in {

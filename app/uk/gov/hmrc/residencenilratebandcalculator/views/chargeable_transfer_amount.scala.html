@@ -15,11 +15,14 @@
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeableTransferAmountController.onSubmit(), 'autoComplete -> "off") {
 
+        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
         @rnrbHelpers.input_text(
             '_id -> "value",
             '_value -> FormHelpers.getValue[Int](form),
             '_label -> messages("chargeable_transfer_amount.label"),
-            '_secondaryLabel -> "currency"
+            '_secondaryLabel -> "currency",
+            '_error -> FormHelpers.getErrorByKey(form, "value")
         )
         @rnrbHelpers.submit_button()
     }

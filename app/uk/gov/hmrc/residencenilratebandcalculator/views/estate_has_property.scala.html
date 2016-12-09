@@ -17,11 +17,13 @@
 
         @helpers.form(action = EstateHasPropertyController.onSubmit(), 'autoComplete -> "off") {
 
+            @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
             @rnrbHelpers.input_yes_no(
                 '_id -> "value",
                 '_value -> FormHelpers.getYesNo(form),
                 '_label -> messages("estate_has_property.label"),
-                '_errorKey -> FormHelpers.getErrorByKey(form, "value")
+                '_error -> FormHelpers.getErrorByKey(form, "value")
             )
 
             @rnrbHelpers.submit_button()

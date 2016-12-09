@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
-import play.api.data.Form
+import play.api.data.{Form, FormError}
 import uk.gov.hmrc.residencenilratebandcalculator.models._
 
 object FormHelpers {
@@ -55,6 +55,17 @@ object FormHelpers {
     either match {
       case Left(_) => ""
       case Right(error) => error.message
+    }
+  }
+
+  def getAllErrors[A](form: Option[Form[A]]) = {
+    val either = for {
+      theForm <- form.toRight("").right
+    } yield theForm
+
+    either match {
+      case Left(_) => Seq[FormError]()
+      case Right(f) => f.errors
     }
   }
 
