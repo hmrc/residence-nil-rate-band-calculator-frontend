@@ -1,4 +1,5 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 @import uk.gov.hmrc.play.views.html._
 
 @(appConfig: FrontendAppConfig, form: Option[Form[Int]] = None)(implicit request: Request[_], messages: Messages)
@@ -15,7 +16,7 @@
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeableTransferAmountController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.input_text(
-            '_value -> form.fold("")(f => f.get.toString),
+            '_value -> FormHelpers.getValue[Int](form),
             '_label -> "Chargeable Transfer Amount",
             '_hint -> "This is an input hint"
         )
