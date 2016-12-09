@@ -32,8 +32,15 @@ class GrossEstateValueControllerSpec extends SimpleControllerSpecBase {
 
     def createController = () => new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
-    val testValue = 123
+    val validData = 123
 
-    behave like rnrbController(createController, createView, Constants.grossEstateValueId, testValue)(Reads.IntReads, Writes.IntWrites)
+    val validRequestBody = Map("value" -> validData.toString)
+
+    val invalidRequestBody = Map("value" -> "invalid data")
+
+    def cacheValue = () => setCacheValue[Int](Constants.grossEstateValueId, validData)
+
+    behave like rnrbController(createController, createView, Constants.grossEstateValueId, validData, validRequestBody,
+      invalidRequestBody, cacheValue, cacheValue)(Reads.IntReads, Writes.IntWrites)
   }
 }

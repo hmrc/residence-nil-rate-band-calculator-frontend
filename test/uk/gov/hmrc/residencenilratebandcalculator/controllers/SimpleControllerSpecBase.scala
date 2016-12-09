@@ -43,10 +43,14 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
   def messages = messagesApi.preferred(fakeRequest)
 
   def rnrbController[A: ClassTag](createController: () => SimpleControllerBase[A],
-                        createView: (Option[A]) => HtmlFormat.Appendable,
-                        cacheKey: String,
-                        testValue: A)
-                       (rds: Reads[A], wts: Writes[A]) = {
+                                  createView: (Option[A]) => HtmlFormat.Appendable,
+                                  cacheKey: String,
+                                  validData: A,
+                                  validRequestBody: Map[String, String],
+                                  invalidRequestBody: Map[String, String],
+                                  setCacheValue: () => Any,
+                                  setCacheFormValue: () => Any)
+                                 (rds: Reads[A], wts: Writes[A]) = {
 
     "return 200 for a GET" in {
       val result = createController().onPageLoad(rds)(fakeRequest)
@@ -59,44 +63,42 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
     }
 
     "return a redirect on submit with valid data" in {
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))
-      setCacheValue(cacheKey, testValue)
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(validRequestBody.toSeq: _*)
+      setCacheValue()
       val result = createController().onSubmit(wts)(fakePostRequest)
       status(result) shouldBe Status.SEE_OTHER
     }
 
     "store valid submitted data" in {
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(validRequestBody.toSeq: _*)
       createController().onSubmit(wts)(fakePostRequest)
-      verifyValueIsCached(cacheKey, testValue)
+      verifyValueIsCached(cacheKey, validData)
     }
 
     "return bad request on submit with invalid data" in {
-      val value = "invalid data"
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(invalidRequestBody.toSeq: _*)
       val result = createController().onSubmit(wts)(fakePostRequest)
       status(result) shouldBe Status.BAD_REQUEST
     }
 
     "return form with errors when invalid data is submitted" in {
-      pending // This test should checking against a form with errors, not None
-      val value = "invalid date"
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value))
+      pending
+      // This test should checking against a form with errors, not None
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(invalidRequestBody.toSeq: _*)
       val result = createController().onSubmit(wts)(fakePostRequest)
       contentAsString(result) shouldBe createView(None).toString
     }
 
     "not store invalid submitted data" in {
-      val value = "invalid data"
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(invalidRequestBody.toSeq: _*)
       createController().onSubmit(wts)(fakePostRequest)
       verifyValueIsNotCached()
     }
 
     "get a previously stored value from keystore" in {
-      setCacheValue(cacheKey, testValue)
+      setCacheFormValue()
       val result = createController().onPageLoad(rds)(fakeRequest)
-      contentAsString(result) shouldBe createView(Some(testValue)).toString
+      contentAsString(result) shouldBe createView(Some(validData)).toString
     }
   }
 }

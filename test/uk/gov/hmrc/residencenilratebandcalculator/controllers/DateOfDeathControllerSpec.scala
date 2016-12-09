@@ -16,12 +16,13 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import org.joda.time.LocalDate
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
 
-class DateOfDeathControllerSpec extends DateControllerSpecBase {
+class DateOfDeathControllerSpec extends SimpleControllerSpecBase {
 
   "Date of Death Controller" must {
 
@@ -32,6 +33,21 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase {
 
     def createController = () => new DateOfDeathController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
-    behave like rnrbController(createController, createView, Constants.dateOfDeathId)(Date.dateReads, Date.dateWrites)
+    val day = 1
+    val month = 6
+    val year = 2017
+
+    val validData = Date(day, month, year)
+
+    val validRequestBody = Map("day" -> day.toString, "month" -> month.toString, "year" -> year.toString)
+
+    val invalidRequestBody = Map("day" -> "invalid data", "month" -> "invalid data", "year" -> "invalid data")
+
+    def cacheValue = () => setCacheValue[LocalDate](Constants.dateOfDeathId, new LocalDate(year, month, day))
+
+    def cacheFormValue = () => setCacheValue[Date](Constants.dateOfDeathId, Date(day, month, year))
+
+    behave like rnrbController(createController, createView, Constants.dateOfDeathId, validData, validRequestBody,
+      invalidRequestBody, cacheValue, cacheFormValue)(Date.dateReads, Date.dateWrites)
   }
 }
