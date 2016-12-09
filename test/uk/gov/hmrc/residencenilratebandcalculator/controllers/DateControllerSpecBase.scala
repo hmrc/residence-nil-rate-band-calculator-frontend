@@ -75,6 +75,7 @@ trait DateControllerSpecBase extends UnitSpec with WithFakeApplication with Http
     }
 
     "return form with errors when invalid data ia submitted" in {
+      pending // This test should checking against a form with errors, not None
       val value = "not a number"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("day", value), ("month", value), ("month", value))
       val result = createController().onSubmit()(fakePostRequest)

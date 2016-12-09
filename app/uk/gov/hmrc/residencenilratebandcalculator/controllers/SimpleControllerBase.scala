@@ -17,18 +17,18 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 
-import play.api.i18n.I18nSupport
-import play.api.mvc._
-import uk.gov.hmrc.play.frontend.controller.FrontendController
-import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, Navigator}
-import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import play.api.data.Form
+import play.api.i18n.I18nSupport
+import play.api.libs.json.{Reads, Writes}
+import play.api.mvc._
 import play.twirl.api.HtmlFormat
+import uk.gov.hmrc.play.frontend.controller.FrontendController
+import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
+import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, Navigator}
 
 import scala.concurrent.Future
 
-trait IntControllerBase extends FrontendController with I18nSupport {
+trait SimpleControllerBase[A] extends FrontendController with I18nSupport {
 
   val appConfig: FrontendAppConfig
 
@@ -36,23 +36,24 @@ trait IntControllerBase extends FrontendController with I18nSupport {
 
   val controllerId: String
 
-  def view(form: Option[Form[Int]])(implicit request: Request[_]): HtmlFormat.Appendable
+  def form: () => Form[A]
+
+  def view(form: Option[Form[A]])(implicit request: Request[_]): HtmlFormat.Appendable
 
   val navigator: Navigator
 
-  val onPageLoad = Action.async { implicit request =>
-    sessionConnector.fetchAndGetEntry[Int](controllerId).map(
+  def onPageLoad(implicit rds: Reads[A]) = Action.async { implicit request =>
+    sessionConnector.fetchAndGetEntry[A](controllerId).map(
       cachedValue => {
-        Ok(view(cachedValue.map(value => NonNegativeIntForm().fill(value))))
+        Ok(view(cachedValue.map(value => form().fill(value))))
       })
   }
 
-  val onSubmit = Action.async { implicit request =>
-    val boundForm = NonNegativeIntForm().bindFromRequest()
+  def onSubmit(implicit wts: Writes[A]) = Action.async { implicit request => {
+    val boundForm = form().bindFromRequest()
     boundForm.fold(
-      (formWithErrors: Form[Int]) => Future.successful(BadRequest(view(Some(formWithErrors)))),
-      (value) => sessionConnector.cache[Int](controllerId, value).map(cacheMap =>
-        Redirect(navigator.nextPage(controllerId)(cacheMap)))
-    )
+      (formWithErrors: Form[A]) => Future.successful(BadRequest(view(Some(formWithErrors)))),
+      (value) => sessionConnector.cache[A](controllerId, value).map(cacheMap =>
+        Redirect(navigator.nextPage(controllerId)(cacheMap))))}
   }
 }
