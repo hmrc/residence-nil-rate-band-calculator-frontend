@@ -17,16 +17,28 @@
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import org.joda.time.LocalDate
-import play.api.libs.json.Json
-import uk.gov.hmrc.residencenilratebandcalculator.utils.Transformers._
+import play.api.data.validation.ValidationError
+import play.api.libs.json._
 
-case class Date (day: Int, month: Int, year: Int)
-{
-  implicit val formats = Json.format[Date]
+import scala.util.{Failure, Success, Try}
 
-  def toLocalDate: LocalDate = constructDate(day, month, year)
-}
+case class Date (day: Int, month: Int, year: Int) {}
 
 object Date {
-  def apply(date: LocalDate): Date = Date(date.getDayOfMonth, date.getMonthOfYear, date.getYear)
+  val dateReads = new Reads[Date] {
+    override def reads(json: JsValue) = {
+      Try(LocalDate.parse(json.as[JsString].value)) match {
+        case Success(jodaLocalDate) => JsSuccess(Date(jodaLocalDate.getDayOfMonth, jodaLocalDate.getMonthOfYear, jodaLocalDate.getYear))
+        case Failure(e) => JsError(ValidationError(e.getMessage))
+      }
+    }
+  }
+
+  val dateWrites = new Writes[Date] {
+    override def writes(date: Date) = {
+      JsString(new LocalDate(date.year, date.month, date.day).toString)
+    }
+  }
+
+  implicit val dateFormat: Format[Date] = Format(dateReads, dateWrites)
 }
