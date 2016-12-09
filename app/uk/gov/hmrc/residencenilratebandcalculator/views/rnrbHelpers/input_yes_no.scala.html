@@ -6,15 +6,18 @@
 @hint = @{ inputArgs.getOrElse('_hint, "").toString }
 @yesAssoc = @{ inputArgs.getOrElse('_yesAssoc, "").toString }
 @noAssoc = @{ inputArgs.getOrElse('_noAssoc, "").toString }
+@error = @{ inputArgs.getOrElse('_error, "").toString }
 
-<div class="form-field form-field--error">
+<div class="form-field @if(error != ""){form-field--error}">
     <fieldset class="inline">
 
         <legend>@label</legend>
         @if(hint != ""){
         <div class="form-hint">@hint</div>
         }
-        <span class="error-notification" id="error-message-this-input">Error message about input goes here</span>
+        @if(error != ""){
+        <span class="error-notification" id="error-message-this-input">@error</span>
+        }
 
         <label class="block-label selection-button-radio" for="@{id}-1" data-target="@if(yesAssoc != ""){@yesAssoc}">
             <input id="@{id}-1" type="radio" name="@{id}-group" value="Yes" @if(value == "Yes"){checked="checked"} />

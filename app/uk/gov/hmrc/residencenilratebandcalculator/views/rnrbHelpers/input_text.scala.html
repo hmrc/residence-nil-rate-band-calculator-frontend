@@ -6,16 +6,18 @@
 @hint = @{ inputArgs.getOrElse('_hint, "").toString }
 @secondaryLabel = @{ inputArgs.getOrElse('_secondaryLabel, "").toString }
 @inputClass = @{inputArgs.getOrElse('_inputClass, "").toString}
+@error = @{ inputArgs.getOrElse('_error, "").toString }
 
 
-
-<div class="form-field form-field--error">
+<div class="form-field @if(error != ""){form-field--error}">
     <label class="form-label" for="@id">
         <span>@label</span>
         @if(hint != ""){
         <div class="form-hint">@hint</div>
         }
-        <span class="error-notification" id="error-message-this-input">Error message about input goes here</span>
+        @if(error != ""){
+        <span class="error-notification" id="error-message-this-input">@error</span>
+        }
     </label>
     <div class="form-control-wrapper" data-type="@secondaryLabel">
         <input

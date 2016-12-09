@@ -13,9 +13,14 @@
 
     <form action="" method="post">
 
+
+        @rnrbHelpers.error_summary()
+
+
         <h2>Standard text input</h2>
         @rnrbHelpers.input_text(
         '_id -> "comp-input-text",
+        '_error -> "Error message goes here",
         '_value -> "",
         '_label -> "Label",
         '_hint -> "This is an input hint"
@@ -24,6 +29,7 @@
         <h2>Percentage input</h2>
         @rnrbHelpers.input_text(
         '_id -> "comp-input-percent",
+        '_error -> "Error message goes here",
         '_value -> "",
         '_label -> "Label",
         '_hint -> "This is an input hint",
@@ -33,6 +39,7 @@
         <h2>Currency input</h2>
         @rnrbHelpers.input_text(
         '_id -> "comp-input-currency",
+        '_error -> "Error message goes here",
         '_value -> "",
         '_label -> "Label",
         '_hint -> "This is an input hint",
@@ -42,6 +49,7 @@
         <h2>Date input</h2>
         @rnrbHelpers.input_date(
         '_id -> "comp-input-date",
+        '_error -> "Error message goes here",
         '_valueDay -> "10",
         '_valueMonth -> "2",
         '_valueYear -> "2016",
@@ -52,6 +60,7 @@
         <h2>Yes/No input</h2>
         @rnrbHelpers.input_yes_no(
         '_id -> "comp-input-yn",
+        '_error -> "Error message goes here",
         '_value -> "No",
         '_label -> "Label",
         '_hint -> "This is an input hint"
@@ -60,6 +69,7 @@
         <h2>Yes/No input with associated field</h2>
         @rnrbHelpers.input_yes_no(
         '_id -> "comp-input-yn-assoc",
+        '_error -> "Error message goes here",
         '_label -> "Label",
         '_hint -> "This is an input hint",
         '_yesAssoc -> "associated-field",
@@ -68,6 +78,7 @@
         <div class="panel-indent panel-indent--gutter js-hidden" id="associated-field">
             @rnrbHelpers.input_text(
             '_id -> "comp-input-currency-assoc",
+            '_error -> "Error message goes here",
             '_value -> "",
             '_label -> "Label",
             '_hint -> "This is an input hint",

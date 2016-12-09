@@ -1,0 +1,19 @@
+@(args: (Symbol, Any)*)
+@inputArgs = @{ args.toMap }
+@errors = @{ inputArgs.getOrElse('_errors, "") }
+
+<div class="error-summary error-summary--show" role="group" aria-labelledby="error-summary-heading" tabindex="-1">
+
+    <h2 class="h2-heading" id="error-summary-heading">
+        Message to alert the user to a problem goes here
+    </h2>
+
+    <p>Optional description of the errors and how to correct them</p>
+
+    <ul class="error-summary-list">
+        <li><a href="#comp-input-text">Descriptive link to the question with an error</a></li>
+        <li><a href="#comp-input-date-day">Descriptive link to the question with an error</a></li>
+        <li><a href="#comp-input-yn-1">Descriptive link to the question with an error</a></li>
+    </ul>
+
+</div>
