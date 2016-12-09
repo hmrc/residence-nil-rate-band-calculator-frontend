@@ -61,32 +61,32 @@ class DateOfDeathViewSpec extends HtmlSpec {
 
     "contain a label for the day" in {
       val f = fixture()
-      assertContainsLabel(f.doc, "date-day", messages("date.day"))
+      assertContainsLabel(f.doc, "day", messages("date.day"))
     }
 
     "contain an input for the day" in {
       val f = fixture()
-      assertRenderedById(f.doc, "date-day")
+      assertRenderedById(f.doc, "day")
     }
 
     "contain a label for the month" in {
       val f = fixture()
-      assertContainsLabel(f.doc, "date-month", messages("date.month"))
+      assertContainsLabel(f.doc, "month", messages("date.month"))
     }
 
     "contain an input for the month" in {
       val f = fixture()
-      assertRenderedById(f.doc, "date-month")
+      assertRenderedById(f.doc, "month")
     }
 
     "contain a label for the year" in {
       val f = fixture()
-      assertContainsLabel(f.doc, "date-year", messages("date.year"))
+      assertContainsLabel(f.doc, "year", messages("date.year"))
     }
 
     "contain an input for the year" in {
       val f = fixture()
-      assertRenderedById(f.doc, "date-year")
+      assertRenderedById(f.doc, "year")
     }
 
     "contain a submit button" in {

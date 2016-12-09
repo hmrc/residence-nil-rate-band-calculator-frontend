@@ -1,5 +1,6 @@
 @(args: (Symbol, Any)*)
 @inputArgs = @{ args.toMap }
+@id = @{ inputArgs.getOrElse('_id, "").toString }
 @label = @{ inputArgs.getOrElse('_label, "").toString }
 @value = @{ inputArgs.getOrElse('_value, "").toString }
 @hint = @{ inputArgs.getOrElse('_hint, "").toString }
@@ -8,8 +9,8 @@
 
 
 
-<div class="form-group form-group error">
-    <label class="form-label" for="value">
+<div class="form-field form-field--error">
+    <label class="form-label" for="@id">
         <span>@label</span>
         @if(hint != ""){
         <div class="form-hint">@hint</div>
@@ -20,7 +21,7 @@
         <input
                 class="form-control @inputClass @if(secondaryLabel == "currency"){form-control-1-3} @if(secondaryLabel == "percentage"){form-control-1-4}"
                 type="text"
-                id="value"
+                id="@id"
                 name="value"
                 value="@value"
                 aria-describedby="error-message-this-input"

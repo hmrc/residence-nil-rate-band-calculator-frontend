@@ -1,11 +1,13 @@
 @(args: (Symbol, Any)*)
 @inputArgs = @{ args.toMap }
+@id = @{ inputArgs.getOrElse('_id, "").toString }
 @label = @{ inputArgs.getOrElse('_label, "").toString }
 @value = @{ inputArgs.getOrElse('_value, "").toString }
 @hint = @{ inputArgs.getOrElse('_hint, "").toString }
+@yesAssoc = @{ inputArgs.getOrElse('_yesAssoc, "").toString }
+@noAssoc = @{ inputArgs.getOrElse('_noAssoc, "").toString }
 
-
-<div class="form-group form-group error">
+<div class="form-field form-field--error">
     <fieldset class="inline">
 
         <legend>@label</legend>
@@ -14,12 +16,12 @@
         }
         <span class="error-notification" id="error-message-this-input">Error message about input goes here</span>
 
-        <label class="block-label selection-button-radio" for="radio-inline-1">
-            <input id="radio-inline-1" type="radio" name="radio-inline-group" value="Yes" @if(value == "Yes"){checked="checked"} />
+        <label class="block-label selection-button-radio" for="@{id}-1" data-target="@if(yesAssoc != ""){@yesAssoc}">
+            <input id="@{id}-1" type="radio" name="@{id}-group" value="Yes" @if(value == "Yes"){checked="checked"} />
             Yes
         </label>
-        <label class="block-label selection-button-radio" for="radio-inline-2">
-            <input id="radio-inline-2" type="radio" name="radio-inline-group" value="No" @if(value == "No"){checked="checked"} />
+        <label class="block-label selection-button-radio" for="@{id}-2" data-target="@if(noAssoc != ""){@noAssoc}">
+            <input id="@{id}-2" type="radio" name="@{id}-group" value="No" @if(value == "No"){checked="checked"} />
             No
         </label>
 
