@@ -72,4 +72,10 @@ trait HtmlSpec extends UnitSpec with WithFakeApplication { self: UnitSpec =>
   def assertNotRenderedByCssSelector(doc: Document, cssSelector: String) = {
     assert(doc.select(cssSelector).isEmpty, "\n\nElement " + cssSelector + " was rendered on the page.\n")
   }
+
+  def assertContainsLabel(doc: Document, forElement: String, expectedText: String) = {
+    val labels = doc.getElementsByAttributeValue("for", forElement)
+    assert(labels.size == 1, s"\n\nLabel for $forElement was not rendered on the page.")
+    assert(labels.first.text() == expectedText, s"\n\nLabel for $forElement was not $expectedText")
+  }
 }

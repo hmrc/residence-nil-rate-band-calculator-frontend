@@ -1,4 +1,4 @@
-@(args: (Symbol, Any)*)
+@(args: (Symbol, Any)*)(implicit messages: Messages)
 @inputArgs = @{ args.toMap }
 @label = @{ inputArgs.getOrElse('_label, "").toString }
 @valueDay = @{ inputArgs.getOrElse('_valueDay, "").toString }
@@ -19,15 +19,15 @@
         </legend>
         <div class="form-date">
             <div class="form-group form-group-day">
-                <label class="form-label" for="date-day">Day</label>
+                <label class="form-label" for="date-day">@messages("date.day")</label>
                 <input class="form-control" id="date-day" name="date-day" type="number" pattern="[0-9]*" min="1" max="31" aria-describedby="date-hint" value="@valueDay" />
             </div>
             <div class="form-group form-group-month">
-                <label class="form-label" for="date-month">Month</label>
+                <label class="form-label" for="date-month">@messages("date.month")</label>
                 <input class="form-control" id="date-month" name="date-month" type="number" pattern="[0-9]*" min="1" max="12" value="@valueMonth" />
             </div>
             <div class="form-group form-group-year">
-                <label class="form-label" for="date-year">Year</label>
+                <label class="form-label" for="date-year">@messages("date.year")</label>
                 <input class="form-control" id="date-year" name="date-year" type="number" pattern="[0-9]*" min="1900" max="2050" value="@valueYear" />
             </div>
         </div>

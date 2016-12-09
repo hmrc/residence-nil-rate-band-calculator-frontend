@@ -19,10 +19,13 @@
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onSubmit(), 'autoComplete -> "off") {
 
-        <input type="text" id="day" name="day" value="@FormHelpers.getDatePart(form, Day)" />
-        <input type="text" id="month" name="month" value="@FormHelpers.getDatePart(form, Month)" />
-        <input type="text" id="year" name="year" value="@FormHelpers.getDatePart(form, Year)" />
+        @rnrbHelpers.input_date(
+            '_valueDay -> FormHelpers.getDatePart(form, Day),
+            '_valueMonth -> FormHelpers.getDatePart(form, Month),
+            '_valueYear -> FormHelpers.getDatePart(form, Year),
+            '_label -> messages("date_of_death.label")
+        )
 
-        <input type="submit" />
+        @rnrbHelpers.submit_button()
     }
 }
