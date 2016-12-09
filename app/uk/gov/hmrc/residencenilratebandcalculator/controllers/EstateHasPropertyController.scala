@@ -21,20 +21,20 @@ import javax.inject.Inject
 import play.api.data.Form
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
+import play.twirl.api.HtmlFormat.Appendable
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_transfer_amount
+import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.estate_has_property
 
-class ChargeableTransferAmountController  @Inject()(override val appConfig: FrontendAppConfig,
-                                                    val messagesApi: MessagesApi,
-                                                    override val sessionConnector: SessionConnector,
-                                                    override val navigator: Navigator) extends SimpleControllerBase[Int] {
+class EstateHasPropertyController @Inject()(override val appConfig: FrontendAppConfig,
+                                            val messagesApi: MessagesApi,
+                                            override val sessionConnector: SessionConnector,
+                                            override val navigator: Navigator) extends SimpleControllerBase[Boolean] {
 
+  override val controllerId: String = Constants.estateHasPropertyId
 
-  override val controllerId = Constants.chargeableTransferAmountId
+  override def form: () => Form[Boolean] = () => BooleanForm()
 
-  override def form = () => NonNegativeIntForm()
-
-  override def view(form: Option[Form[Int]])(implicit request: Request[_]) = chargeable_transfer_amount(appConfig, form)
+  override def view(form: Option[Form[Boolean]])(implicit request: Request[_]): Appendable = estate_has_property(appConfig, form)
 }

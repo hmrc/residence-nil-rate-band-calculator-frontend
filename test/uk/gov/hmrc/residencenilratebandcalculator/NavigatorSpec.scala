@@ -58,8 +58,8 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     }
 
     "when the ChargeableTransferAmount is used as the class id, the navigator must return a function that when executed against any" +
-      "parameter goes to the page not found controller" in {
-      navigator.nextPage(Constants.chargeableTransferAmountId)(mock[CacheMap]) shouldBe routes.PageNotFoundController.onPageLoad()
+      "parameter goes to EstateHasProperty controller" in {
+      navigator.nextPage(Constants.chargeableTransferAmountId)(mock[CacheMap]) shouldBe routes.EstateHasPropertyController.onPageLoad()
     }
 
     "when the GrossEstateValue is used at the class id, the navigator must return a function that when executed against any" +
@@ -70,6 +70,24 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     "when the PropertyValue is used at the class id, the navigator must return a function that when executed against any" +
       "parameter goes to the PageNotFound controller" in {
       navigator.nextPage(Constants.propertyValueId)(mock[CacheMap]) shouldBe routes.PageNotFoundController.onPageLoad()
+    }
+
+    "return a call to the PropertyValueController onPageLoad method when there is a property in the estate" in {
+      val mockCacheMap = mock[CacheMap]
+      when(mockCacheMap.getEntry[Boolean](matches(Constants.estateHasPropertyId))(any())) thenReturn Some(true)
+      navigator.nextPage(Constants.estateHasPropertyId)(mockCacheMap) shouldBe routes.PropertyValueController.onPageLoad()
+    }
+
+    "return a call to the TransitionOutController onPageLoad method when there is not a property in the estate" in {
+      val mockCacheMap = mock[CacheMap]
+      when(mockCacheMap.getEntry[Boolean](matches(Constants.estateHasPropertyId))(any())) thenReturn Some(false)
+      navigator.nextPage(Constants.estateHasPropertyId)(mockCacheMap) shouldBe routes.TransitionOutController.onPageLoad()
+    }
+
+    "return a call to the HomeController onPageLoad method when there is no indication that there is a property in the estate" in {
+      val mockCacheMap = mock[CacheMap]
+      when(mockCacheMap.getEntry[Boolean](matches(Constants.estateHasPropertyId))(any())) thenReturn None
+      navigator.nextPage(Constants.estateHasPropertyId)(mockCacheMap) shouldBe routes.HomeController.onPageLoad()
     }
   }
 }

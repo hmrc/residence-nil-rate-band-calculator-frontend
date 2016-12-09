@@ -23,7 +23,7 @@ import play.api.test.Helpers._
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
 
 
-class HelloWorldControllerSpec extends IntControllerSpecBase with MockitoSugar {
+class HelloWorldControllerSpec extends SimpleControllerSpecBase with MockitoSugar {
 
   val response = mockResponse(200, "Some text")
 

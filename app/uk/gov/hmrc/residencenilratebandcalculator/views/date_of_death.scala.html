@@ -1,7 +1,11 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 @import uk.gov.hmrc.play.views.html._
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 
+@import uk.gov.hmrc.residencenilratebandcalculator.models.Day
+@import uk.gov.hmrc.residencenilratebandcalculator.models.Month
+@import uk.gov.hmrc.residencenilratebandcalculator.models.Year
 @(appConfig: FrontendAppConfig, form: Option[Form[Date]] = None)(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
@@ -15,9 +19,9 @@
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onSubmit(), 'autoComplete -> "off") {
 
-        <input type="text" id="day" name="day" value="@form.map(f => f.value.fold("")(d => d.day.toString))" />
-        <input type="text" id="month" name="month" value="@form.map(f => f.value.fold("")(d => d.month.toString))" />
-        <input type="text" id="year" name="year" value="@form.map(f => f.value.fold("")(d => d.year.toString))" />
+        <input type="text" id="day" name="day" value="@FormHelpers.getDatePart(form, Day)" />
+        <input type="text" id="month" name="month" value="@FormHelpers.getDatePart(form, Month)" />
+        <input type="text" id="year" name="year" value="@FormHelpers.getDatePart(form, Year)" />
 
         <input type="submit" />
     }

@@ -16,6 +16,9 @@ POST       /date-of-death                   uk.gov.hmrc.residencenilratebandcalc
 GET        /gross-estate-value              uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onPageLoad
 POST       /gross-estate-value              uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onSubmit
 
+GET        /estate-has-property             uk.gov.hmrc.residencenilratebandcalculator.controllers.EstateHasPropertyController.onPageLoad
+POST       /estate-has-property             uk.gov.hmrc.residencenilratebandcalculator.controllers.EstateHasPropertyController.onSubmit
+
 GET        /property-value                  uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyValueController.onPageLoad
 POST       /property-value                  uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyValueController.onSubmit
 

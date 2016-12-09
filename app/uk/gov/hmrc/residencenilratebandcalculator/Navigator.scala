@@ -21,7 +21,6 @@ import javax.inject.{Inject, Singleton}
 import org.joda.time.LocalDate
 import play.api.mvc.Call
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.residencenilratebandcalculator
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 
 @Singleton
@@ -30,17 +29,25 @@ class Navigator @Inject()() {
 
     Map(
       Constants.dateOfDeathId -> (cm => getDateOfDeathRoute(cm)),
-      //"ChargeableTransferAmount" -> (_ => ChargeableTransferAmountController.onPageLoad()),
       Constants.grossEstateValueId -> (_ => ChargeableTransferAmountController.onPageLoad()),
+      Constants.chargeableTransferAmountId -> (_ => EstateHasPropertyController.onPageLoad()),
+      Constants.estateHasPropertyId -> (cm => getEstateHasPropertyRoute(cm)),
       Constants.propertyValueId -> (_ => PageNotFoundController.onPageLoad())
-      //HomeController.onPageLoad().url -> (_ => HomeController.onPageLoad())
     )
   }
 
   private def getDateOfDeathRoute(cacheMap: CacheMap) = {
     cacheMap.getEntry[LocalDate](Constants.dateOfDeathId) match {
       case Some(d) if (d isEqual Constants.eligibilityDate) || (d isAfter Constants.eligibilityDate) => GrossEstateValueController.onPageLoad()
-      case Some(d) => TransitionOutController.onPageLoad()
+      case Some(_) => TransitionOutController.onPageLoad()
+      case None => HomeController.onPageLoad()
+    }
+  }
+
+  private def getEstateHasPropertyRoute(cacheMap: CacheMap) = {
+    cacheMap.getEntry[Boolean](Constants.estateHasPropertyId) match {
+      case Some(true) => PropertyValueController.onPageLoad()
+      case Some(false) => TransitionOutController.onPageLoad()
       case None => HomeController.onPageLoad()
     }
   }

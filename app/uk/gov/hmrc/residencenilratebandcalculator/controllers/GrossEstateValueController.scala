@@ -23,15 +23,17 @@ import play.api.mvc.Request
 import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
+import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.gross_estate_value
 
 class GrossEstateValueController @Inject()(override val appConfig: FrontendAppConfig,
                                            val messagesApi: MessagesApi,
                                            override val sessionConnector: SessionConnector,
-                                           override val navigator: Navigator) extends IntControllerBase {
-
+                                           override val navigator: Navigator) extends SimpleControllerBase[Int] {
 
   override val controllerId = Constants.grossEstateValueId
+
+  override def form = () => NonNegativeIntForm()
 
   override def view(form: Option[Form[Int]])(implicit request: Request[_]) = gross_estate_value(appConfig, form)
 }
