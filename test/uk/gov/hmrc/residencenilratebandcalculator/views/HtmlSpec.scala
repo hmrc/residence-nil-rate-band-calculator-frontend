@@ -65,6 +65,10 @@ trait HtmlSpec extends UnitSpec with WithFakeApplication { self: UnitSpec =>
     assert(doc.getElementById(id) != null, "\n\nElement " + id + " was not rendered on the page.\n")
   }
 
+  def assertNotRenderedById(doc: Document, id: String) = {
+    assert(doc.getElementById(id) == null, "\n\nElement " + id + " was rendered on the page.\n")
+  }
+
   def assertRenderedByCssSelector(doc: Document, cssSelector: String) = {
     assert(!doc.select(cssSelector).isEmpty, "Element " + cssSelector + " was not rendered on the page.")
   }

@@ -16,56 +16,95 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
+import play.api.data.{Form, FormError}
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
+import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_value
+
 import scala.language.reflectiveCalls
 
 class PropertyValueViewSpec extends HtmlSpec {
 
-  def fixture() = new {
-    val view = property_value(frontendAppConfig)(request, messages)
+  val number = 123
+  val errorKey = "value"
+  val errorMessage = "error.number"
+  val error = FormError(errorKey, errorMessage)
+
+  def fixture(form: Option[Form[Int]] = None) = new {
+    val view = property_value(frontendAppConfig, form)(request, messages)
     val doc = asDocument(view)
   }
 
-  "Property Value View" must {
+  "Property Value View" when {
 
-    "display the correct browser title" in {
-      val f = fixture()
-      assertEqualsMessage(f.doc, "title", "property_value.browser_title")
+    def thisFixture() = fixture()
+
+    "rendered" must {
+
+      "display the correct browser title" in {
+        val f = thisFixture()
+        assertEqualsMessage(f.doc, "title", "property_value.browser_title")
+      }
+
+      "display the correct page title" in {
+        val f = thisFixture()
+        assertPageTitleEqualsMessage(f.doc, "property_value.title")
+      }
+
+      "display the correct guidance" in {
+        val f = thisFixture()
+        assertContainsMessages(f.doc, "property_value.guidance")
+      }
+
+      "contain a form that POSTs to the correct action" in {
+        val f = thisFixture()
+        val forms = f.doc.getElementsByTag("form")
+        forms.size shouldBe 1
+        val form = forms.first
+        form.attr("method") shouldBe "POST"
+        form.attr("action") shouldBe routes.PropertyValueController.onSubmit().url
+      }
+
+      "contain a label for the value" in {
+        val f = thisFixture()
+        assertContainsLabel(f.doc, "value", messages("property_value.label"))
+      }
+
+      "contain an input for the value" in {
+        val f = thisFixture()
+        assertRenderedById(f.doc, "value")
+      }
+
+      "contain a submit button" in {
+        val f = thisFixture()
+        assertRenderedByCssSelector(f.doc, "input[type=submit]")
+      }
     }
 
-    "display the correct page title" in {
-      val f = fixture()
-      assertPageTitleEqualsMessage(f.doc, "property_value.title")
+    "rendered with a valid form" must {
+
+      def thisFixture() = fixture(Some(NonNegativeIntForm().fill(number)))
+
+      "include the form's value in the value input" in {
+        val f = thisFixture()
+        f.doc.getElementById("value").attr("value") shouldBe number.toString
+      }
     }
 
-    "display the correct guidance" in {
-      val f = fixture()
-      assertContainsMessages(f.doc, "property_value.guidance")
-    }
+    "rendered with an error" must {
 
-    "contain a form that POSTs to the correct action" in {
-      val f = fixture()
-      val forms = f.doc.getElementsByTag("form")
-      forms.size shouldBe 1
-      val form = forms.first
-      form.attr("method") shouldBe "POST"
-      form.attr("action") shouldBe routes.PropertyValueController.onSubmit().url
-    }
+      val thisFixture = fixture(Some(NonNegativeIntForm().withError(error)))
 
-    "contain a label for the value" in {
-      val f = fixture()
-      assertContainsLabel(f.doc, "value", messages("property_value.label"))
-    }
+      "show an error summary" in {
+        val f = thisFixture
+        assertRenderedById(f.doc, "error-summary-heading")
+      }
 
-    "contain an input for the value" in {
-      val f = fixture()
-      assertRenderedById(f.doc, "value")
-    }
-
-    "contain a submit button" in {
-      val f = fixture()
-      assertRenderedByCssSelector(f.doc, "input[type=submit]")
+      "show an error message in the value field's label" in {
+        val f = thisFixture
+        val errorSpan = f.doc.getElementsByClass("error-notification").first
+        errorSpan.text shouldBe messages(errorMessage)
+      }
     }
   }
 }
