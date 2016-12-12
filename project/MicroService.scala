@@ -33,8 +33,8 @@ trait MicroService {
     .settings(playSettings : _*)
     .settings(
       ScoverageKeys.coverageExcludedFiles := "<empty>;Reverse.*;.*AuthService.*;models/.data/..*;.*filters.*;.*handlers.*;.*components.*;" +
-        ".*BuildInfo.*;.*javascript.*;.*FrontendAuditConnector.*;.*Routes.*;.*GuiceInjector;.*SessionConnector;.*frontendAppConfig;" + "" +
-        ".*ControllerConfiguration;",
+        ".*BuildInfo.*;.*javascript.*;.*FrontendAuditConnector.*;.*Routes.*;.*GuiceInjector;.*SessionConnector;.*frontendAppConfig;" +
+        ".*ControllerConfiguration;.*RnrbConnector.*;.*StyleGuide;",
       ScoverageKeys.coverageMinimum := 90,
       ScoverageKeys.coverageFailOnMinimum := true,
       ScoverageKeys.coverageHighlighting := true,
