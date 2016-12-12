@@ -1,12 +1,15 @@
-@(args: (Symbol, Any)*)(implicit messages: Messages)
-@inputArgs = @{ args.toMap }
-@id = @{ inputArgs.getOrElse('_id, "").toString }
-@label = @{ inputArgs.getOrElse('_label, "").toString }
-@value = @{ inputArgs.getOrElse('_value, "").toString }
-@hint = @{ inputArgs.getOrElse('_hint, "").toString }
-@yesAssoc = @{ inputArgs.getOrElse('_yesAssoc, "").toString }
-@noAssoc = @{ inputArgs.getOrElse('_noAssoc, "").toString }
-@errorKey = @{ inputArgs.getOrElse('_error, "").toString }
+@(
+id: String,
+label: String,
+errorKey: String,
+value: Option[String] = None,
+secondaryLabel: Option[String] = None,
+inputClass: Option[String] = None,
+hint: Option[String] = None,
+yesAssoc: Option[String] = None,
+noAssoc: Option[String] = None
+)(implicit messages: Messages)
+
 
 <div class="form-field @if(errorKey != ""){form-field--error}">
     <fieldset class="inline">
@@ -18,13 +21,12 @@
         @if(errorKey != ""){
         <span class="error-notification" id="error-message-this-input">@messages(errorKey)</span>
         }
-
         <label class="block-label selection-button-radio" for="@{id}-1" data-target="@if(yesAssoc != ""){@yesAssoc}">
-            <input id="yes" type="radio" name="@{id}" value="true" @if(value == "Yes"){checked="checked"} />
+            <input id="yes" type="radio" name="@{id}" value="true" @if(value == Some("Yes")){checked="checked"} />
             @messages("site.yes")
         </label>
         <label class="block-label selection-button-radio" for="@{id}-2" data-target="@if(noAssoc != ""){@noAssoc}">
-            <input id="no" type="radio" name="@{id}" value="false" @if(value == "No"){checked="checked"} />
+            <input id="no" type="radio" name="@{id}" value="false" @if(value == Some("No")){checked="checked"} />
             @messages("site.no")
         </label>
 
