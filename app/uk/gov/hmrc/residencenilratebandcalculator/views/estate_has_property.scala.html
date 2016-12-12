@@ -20,10 +20,10 @@
             @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
 
             @rnrbHelpers.input_yes_no(
-                '_id -> "value",
-                '_value -> FormHelpers.getYesNo(form),
-                '_label -> messages("estate_has_property.label"),
-                '_error -> FormHelpers.getErrorByKey(form, "value")
+                id = "value",
+                label = messages("estate_has_property.label"),
+                errorKey = FormHelpers.getErrorByKey(form, "value"),
+                value = Some(FormHelpers.getYesNo(form).toString)
             )
 
             @rnrbHelpers.submit_button()
