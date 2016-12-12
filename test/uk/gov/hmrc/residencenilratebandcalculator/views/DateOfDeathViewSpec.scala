@@ -54,14 +54,34 @@ class DateOfDeathViewSpec extends HtmlSpec {
       form.attr("action") shouldBe routes.DateOfDeathController.onSubmit().url
     }
 
+    "contain a label for the date" in {
+      val f = fixture()
+      assertContainsMessages(f.doc, "date_of_death.label")
+    }
+
+    "contain a label for the day" in {
+      val f = fixture()
+      assertContainsLabel(f.doc, "day", messages("date.day"))
+    }
+
     "contain an input for the day" in {
       val f = fixture()
       assertRenderedById(f.doc, "day")
     }
 
+    "contain a label for the month" in {
+      val f = fixture()
+      assertContainsLabel(f.doc, "month", messages("date.month"))
+    }
+
     "contain an input for the month" in {
       val f = fixture()
       assertRenderedById(f.doc, "month")
+    }
+
+    "contain a label for the year" in {
+      val f = fixture()
+      assertContainsLabel(f.doc, "year", messages("date.year"))
     }
 
     "contain an input for the year" in {

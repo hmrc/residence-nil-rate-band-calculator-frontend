@@ -1,7 +1,11 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 @import uk.gov.hmrc.play.views.html._
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 
+@import uk.gov.hmrc.residencenilratebandcalculator.models.Day
+@import uk.gov.hmrc.residencenilratebandcalculator.models.Month
+@import uk.gov.hmrc.residencenilratebandcalculator.models.Year
 @(appConfig: FrontendAppConfig, form: Option[Form[Date]] = None)(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
@@ -15,10 +19,16 @@
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onSubmit(), 'autoComplete -> "off") {
 
-        <input type="text" id="day" name="day" value="@form.map(f => f.value.fold("")(d => d.day.toString))" />
-        <input type="text" id="month" name="month" value="@form.map(f => f.value.fold("")(d => d.month.toString))" />
-        <input type="text" id="year" name="year" value="@form.map(f => f.value.fold("")(d => d.year.toString))" />
+        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
 
-        <input type="submit" />
+        @rnrbHelpers.input_date(
+            '_valueDay -> FormHelpers.getDatePart(form, Day),
+            '_valueMonth -> FormHelpers.getDatePart(form, Month),
+            '_valueYear -> FormHelpers.getDatePart(form, Year),
+            '_label -> messages("date_of_death.label"),
+            '_error -> FormHelpers.getErrorByKey(form, "")
+        )
+
+        @rnrbHelpers.submit_button()
     }
 }

@@ -1,0 +1,32 @@
+@(args: (Symbol, Any)*)(implicit messages: Messages)
+@inputArgs = @{ args.toMap }
+@id = @{ inputArgs.getOrElse('_id, "").toString }
+@label = @{ inputArgs.getOrElse('_label, "").toString }
+@value = @{ inputArgs.getOrElse('_value, "").toString }
+@hint = @{ inputArgs.getOrElse('_hint, "").toString }
+@yesAssoc = @{ inputArgs.getOrElse('_yesAssoc, "").toString }
+@noAssoc = @{ inputArgs.getOrElse('_noAssoc, "").toString }
+@errorKey = @{ inputArgs.getOrElse('_error, "").toString }
+
+<div class="form-field @if(errorKey != ""){form-field--error}">
+    <fieldset class="inline">
+
+        <legend>@label</legend>
+        @if(hint != ""){
+        <div class="form-hint">@hint</div>
+        }
+        @if(errorKey != ""){
+        <span class="error-notification" id="error-message-this-input">@messages(errorKey)</span>
+        }
+
+        <label class="block-label selection-button-radio" for="@{id}-1" data-target="@if(yesAssoc != ""){@yesAssoc}">
+            <input id="@{id}-1" type="radio" name="@{id}" value="true" @if(value == "Yes"){checked="checked"} />
+            Yes
+        </label>
+        <label class="block-label selection-button-radio" for="@{id}-2" data-target="@if(noAssoc != ""){@noAssoc}">
+            <input id="@{id}-2" type="radio" name="@{id}" value="false" @if(value == "No"){checked="checked"} />
+            No
+        </label>
+
+    </fieldset>
+</div>
