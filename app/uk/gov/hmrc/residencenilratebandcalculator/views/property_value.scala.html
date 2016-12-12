@@ -18,11 +18,11 @@
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
 
         @rnrbHelpers.input_text(
-            '_id -> "value",
-            '_value -> FormHelpers.getValue[Int](form),
-            '_label -> messages("property_value.label"),
-            '_secondaryLabel -> "currency",
-            '_error -> FormHelpers.getErrorByKey(form, "value")
+            id = "value",
+            value = Some(FormHelpers.getValue[Int](form).toString),
+            label = messages("property_value.label"),
+            secondaryLabel = Some("currency"),
+            errorKey = FormHelpers.getErrorByKey(form, "value")
         )
         @rnrbHelpers.submit_button()
     }

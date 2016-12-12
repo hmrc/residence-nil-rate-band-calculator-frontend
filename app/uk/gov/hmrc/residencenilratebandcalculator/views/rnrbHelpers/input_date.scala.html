@@ -1,12 +1,13 @@
-@(args: (Symbol, Any)*)(implicit messages: Messages)
-@inputArgs = @{ args.toMap }
-@id = @{ inputArgs.getOrElse('_id, "").toString }
-@label = @{ inputArgs.getOrElse('_label, "").toString }
-@valueDay = @{ inputArgs.getOrElse('_valueDay, "").toString }
-@valueMonth = @{ inputArgs.getOrElse('_valueMonth, "").toString }
-@valueYear = @{ inputArgs.getOrElse('_valueYear, "").toString }
-@hint = @{ inputArgs.getOrElse('_hint, "").toString }
-@errorKey = @{ inputArgs.getOrElse('_error, "").toString }
+@(
+label: String,
+errorKey: String,
+valueDay: Option[String] = None,
+valueMonth: Option[String] = None,
+valueYear: Option[String] = None,
+secondaryLabel: Option[String] = None,
+hint: Option[String] = None
+)(implicit messages: Messages)
+
 
 <div class="form-field @if(errorKey != ""){form-field--error}">
     <fieldset>
