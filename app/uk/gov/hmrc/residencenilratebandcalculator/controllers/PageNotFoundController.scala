@@ -18,12 +18,12 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.Inject
 
-import play.api.mvc.Results.NotImplemented
+import play.api.mvc.Results.Ok
 import play.api.mvc.{Action, AnyContent}
 
 import scala.concurrent.Future
 
 class PageNotFoundController @Inject()(){
-  val onPageLoad: Action[AnyContent] = Action.async { implicit request => Future.successful(NotImplemented)
+  val onPageLoad: Action[AnyContent] = Action.async { implicit request => Future.successful(Ok(""))
   }
 }
