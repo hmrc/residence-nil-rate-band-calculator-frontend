@@ -20,12 +20,12 @@
         }
 
         <label class="block-label selection-button-radio" for="@{id}-1" data-target="@if(yesAssoc != ""){@yesAssoc}">
-            <input id="@{id}-1" type="radio" name="@{id}" value="true" @if(value == "Yes"){checked="checked"} />
-            Yes
+            <input id="yes" type="radio" name="@{id}" value="true" @if(value == "Yes"){checked="checked"} />
+            @messages("site.yes")
         </label>
         <label class="block-label selection-button-radio" for="@{id}-2" data-target="@if(noAssoc != ""){@noAssoc}">
-            <input id="@{id}-2" type="radio" name="@{id}" value="false" @if(value == "No"){checked="checked"} />
-            No
+            <input id="no" type="radio" name="@{id}" value="false" @if(value == "No"){checked="checked"} />
+            @messages("site.no")
         </label>
 
     </fieldset>
