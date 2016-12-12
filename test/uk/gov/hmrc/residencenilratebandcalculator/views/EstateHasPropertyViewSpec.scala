@@ -74,14 +74,14 @@ class EstateHasPropertyViewSpec extends HtmlSpec {
 
       "contain an input for the value" in {
         val f = thisFixture()
-        assertRenderedById(f.doc, "value-1")
-        assertRenderedById(f.doc, "value-2")
+        assertRenderedById(f.doc, "yes")
+        assertRenderedById(f.doc, "no")
       }
 
       "have no values checked when rendered with no form" in {
         val f = thisFixture()
-        assert(!f.doc.getElementById("value-1").hasAttr("checked"))
-        assert(!f.doc.getElementById("value-2").hasAttr("checked"))
+        assert(!f.doc.getElementById("yes").hasAttr("checked"))
+        assert(!f.doc.getElementById("no").hasAttr("checked"))
       }
 
       "contain a submit button" in {
@@ -101,14 +101,14 @@ class EstateHasPropertyViewSpec extends HtmlSpec {
 
       "have only the 'Yes' value checked when rendered with an appropriate form" in {
         val f = thisFixture(true)
-        assert(f.doc.getElementById("value-1").hasAttr("checked"))
-        assert(!f.doc.getElementById("value-2").hasAttr("checked"))
+        assert(f.doc.getElementById("yes").hasAttr("checked"))
+        assert(!f.doc.getElementById("no").hasAttr("checked"))
       }
 
       "have only the 'No' value checked when rendered with an appropriate form" in {
         val f = thisFixture(false)
-        assert(!f.doc.getElementById("value-1").hasAttr("checked"))
-        assert(f.doc.getElementById("value-2").hasAttr("checked"))
+        assert(!f.doc.getElementById("yes").hasAttr("checked"))
+        assert(f.doc.getElementById("no").hasAttr("checked"))
       }
 
       "not render an error summary" in {
