@@ -70,4 +70,8 @@ trait MockSessionConnector extends UnitSpec with MockitoSugar with Matchers with
     when(mockSessionConnector.fetchAndGetEntry[A](matches(key))(any[HeaderCarrier], any())) thenReturn Future.successful(Some(value))
     when(mockCacheMap.getEntry[A](matches(key))(any())) thenReturn Some(value)
   }
+
+  def setCacheMap(cacheMap: CacheMap) = {
+    when(mockSessionConnector.fetch()(any[HeaderCarrier])) thenReturn Future.successful(Some(cacheMap))
+  }
 }

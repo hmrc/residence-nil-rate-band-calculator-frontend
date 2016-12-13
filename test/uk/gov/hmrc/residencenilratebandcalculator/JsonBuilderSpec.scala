@@ -155,17 +155,17 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
     "return a Future containing a Right with Json" when {
 
       "the CacheMap is present" in {
-        pending
         val cacheMap = CacheMap(id = cacheMapId, data =
           Map(
             Constants.chargeableTransferAmountId -> JsNumber(100),
             Constants.dateOfDeathId -> JsString("2017-09-10"),
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.propertyValueId -> JsNumber(200)))
+        setCacheMap(cacheMap)
         JsonBuilder.make(mockSessionConnector)(mock[HeaderCarrier]).map(result =>
           result shouldBe Right("{\"ChargeableTransferAmount\":100,\"DateOfDeath\":\"2017-09-10\",\"GrossEstateValue\":200,\"PropertyValue\":200}"))
-
       }
     }
+
   }
 }
