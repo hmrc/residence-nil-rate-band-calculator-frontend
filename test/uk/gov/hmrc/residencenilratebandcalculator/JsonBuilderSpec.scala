@@ -18,12 +18,13 @@ package uk.gov.hmrc.residencenilratebandcalculator
 
 import org.scalatest.Matchers
 import org.scalatest.mock.MockitoSugar
-import play.api.libs.json.{JsNumber, JsString}
+import play.api.libs.json.{JsNumber, JsString, Json}
 import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.MockSessionConnector
+
 import scala.concurrent.ExecutionContext.Implicits.global
-import uk.gov.hmrc.play.http.HeaderCarrier
 
 class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with WithFakeApplication with MockSessionConnector {
 
@@ -148,7 +149,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.propertyValueId -> JsNumber(200)))
         val buildResult = JsonBuilder.build(cacheMap)
-        buildResult shouldBe Right("{\"ChargeableTransferAmount\":100,\"DateOfDeath\":\"2017-09-10\",\"GrossEstateValue\":200,\"PropertyValue\":200}")
+        buildResult shouldBe Right(Json.toJson(cacheMap.data))
       }
     }
 
@@ -163,7 +164,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.propertyValueId -> JsNumber(200)))
         setCacheMap(cacheMap)
         JsonBuilder(mockSessionConnector)(mock[HeaderCarrier]).map(result =>
-          result shouldBe Right("{\"ChargeableTransferAmount\":100,\"DateOfDeath\":\"2017-09-10\",\"GrossEstateValue\":200,\"PropertyValue\":200}"))
+          result shouldBe Right(Json.toJson(cacheMap.data)))
       }
     }
 

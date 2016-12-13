@@ -18,13 +18,12 @@ package uk.gov.hmrc.residencenilratebandcalculator
 
 import com.eclipsesource.schema.{SchemaType, SchemaValidator}
 import org.joda.time.LocalDate
-import play.api.libs.json
-import play.api.libs.json.Json
+import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import scala.concurrent.ExecutionContext.Implicits.global
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 object JsonBuilder {
@@ -55,7 +54,7 @@ object JsonBuilder {
     }
   }
 
-  def build(cacheMap: CacheMap): Either[String, String] = {
+  def build(cacheMap: CacheMap): Either[String, JsValue] = {
     val incomingJson = Json.toJson(cacheMap.data)
     val validationResult = validator.validate(schema, incomingJson).asEither
     validationResult match {
@@ -66,15 +65,15 @@ object JsonBuilder {
         if(dateOfDeathIsIneligible(cacheMap)) {
           Left("Date of death is before eligibility date")
         } else {
-          Right(json.toString())
+          Right(json)
         }
       }
     }
   }
 
-  def apply(sessionConnector: SessionConnector)(implicit headerCarrier: HeaderCarrier): Future[Either[String, String]] = {
+  def apply(sessionConnector: SessionConnector)(implicit headerCarrier: HeaderCarrier): Future[Either[String, JsValue]] = {
     sessionConnector.fetch().map( optionalCacheMap => {
-      optionalCacheMap.fold[Either[String,String]](Left("could not find a cache map")){
+      optionalCacheMap.fold[Either[String, JsValue]](Left("could not find a cache map")){
         cacheMap => build(cacheMap)
       }
     })
