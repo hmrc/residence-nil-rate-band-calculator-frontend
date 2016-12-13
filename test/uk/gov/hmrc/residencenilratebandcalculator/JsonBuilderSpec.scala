@@ -22,7 +22,8 @@ import play.api.libs.json.{JsNumber, JsString}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.MockSessionConnector
-
+import scala.concurrent.ExecutionContext.Implicits.global
+import uk.gov.hmrc.play.http.HeaderCarrier
 
 class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with WithFakeApplication with MockSessionConnector {
 
@@ -129,6 +130,14 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
 
     }
 
+    "return a Future containing a Left with an error message" when {
+
+      "the SessionConnector does not return a CacheMap" in {
+        JsonBuilder.make(mockSessionConnector)(mock[HeaderCarrier]).map(result => result shouldBe Left("could not find a cache map"))
+      }
+
+    }
+
     "return a Right containing Json" when {
 
       "the CacheMap contains a valid value for all properties" in {
@@ -140,6 +149,22 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.propertyValueId -> JsNumber(200)))
         val buildResult = JsonBuilder.build(cacheMap)
         buildResult shouldBe Right("{\"ChargeableTransferAmount\":100,\"DateOfDeath\":\"2017-09-10\",\"GrossEstateValue\":200,\"PropertyValue\":200}")
+      }
+    }
+
+    "return a Future containing a Right with Json" when {
+
+      "the CacheMap is present" in {
+        pending
+        val cacheMap = CacheMap(id = cacheMapId, data =
+          Map(
+            Constants.chargeableTransferAmountId -> JsNumber(100),
+            Constants.dateOfDeathId -> JsString("2017-09-10"),
+            Constants.grossEstateValueId -> JsNumber(200),
+            Constants.propertyValueId -> JsNumber(200)))
+        JsonBuilder.make(mockSessionConnector)(mock[HeaderCarrier]).map(result =>
+          result shouldBe Right("{\"ChargeableTransferAmount\":100,\"DateOfDeath\":\"2017-09-10\",\"GrossEstateValue\":200,\"PropertyValue\":200}"))
+
       }
     }
   }

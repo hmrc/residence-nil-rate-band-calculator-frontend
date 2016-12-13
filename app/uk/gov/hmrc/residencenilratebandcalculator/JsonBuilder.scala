@@ -18,8 +18,14 @@ package uk.gov.hmrc.residencenilratebandcalculator
 
 import com.eclipsesource.schema.{SchemaType, SchemaValidator}
 import org.joda.time.LocalDate
+import play.api.libs.json
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.play.http.HeaderCarrier
+import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
+import scala.concurrent.ExecutionContext.Implicits.global
+
+import scala.concurrent.Future
 
 object JsonBuilder {
 
@@ -42,6 +48,13 @@ object JsonBuilder {
   private val schema = Json.fromJson[SchemaType](parsedJson).get
   private val validator = SchemaValidator()
 
+  private def dateOfDeathIsIneligible(cacheMap: CacheMap): Boolean = {
+    val optionDod = cacheMap.getEntry[String](Constants.dateOfDeathId)
+    optionDod.fold(true){
+      dod => LocalDate.parse(dod).isBefore(Constants.eligibilityDate)
+    }
+  }
+
   def build(cacheMap: CacheMap): Either[String, String] = {
     val incomingJson = Json.toJson(cacheMap.data)
     val validationResult = validator.validate(schema, incomingJson).asEither
@@ -50,19 +63,22 @@ object JsonBuilder {
         val errorString = error.seq.flatMap(_._2).map(_.message).foldLeft(new StringBuilder())(_ append _).toString()
         Left(errorString) }
       case Right(json) => {
-        val optionDod = cacheMap.getEntry[String](Constants.dateOfDeathId)
-        optionDod.fold[Either[String,String]](Left("date of death has gone missing!!")){
-          dod => {
-            val date = LocalDate.parse(dod)
-            if(date.isBefore(Constants.eligibilityDate)) {
-              Left("Date of death is before eligibility date")
-            } else {
-              Right(json.toString())
-            }
-          }
+        if(dateOfDeathIsIneligible(cacheMap)) {
+          Left("Date of death is before eligibility date")
+        } else {
+          Right(json.toString())
         }
       }
     }
   }
+
+  def make(sessionConnector: SessionConnector)(implicit headerCarrier: HeaderCarrier): Future[Either[String, String]] = {
+    sessionConnector.fetch().map( optionalCacheMap => {
+      optionalCacheMap.fold[Either[String,String]](Left("could not find a cache map")){
+        cacheMap => build(cacheMap)
+      }
+    })
+  }
+
 }
 
