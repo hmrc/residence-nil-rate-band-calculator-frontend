@@ -28,6 +28,7 @@ private object AppDependencies {
   private val mockitoAllVersion = "1.10.19"
   private val whitelistVersion = "2.0.0"
   private val httpCachingClientVersion = "6.1.0"
+  private val playJsonValidatorVersion = "0.8.6"
 
   val compile = Seq(
     ws,
@@ -40,7 +41,8 @@ private object AppDependencies {
     "uk.gov.hmrc" %% "play-health" % playHealthVersion,
     "uk.gov.hmrc" %% "play-ui" % playUiVersion,
     "uk.gov.hmrc" %% "play-whitelist-filter" % whitelistVersion,
-    "uk.gov.hmrc" %% "http-caching-client" % httpCachingClientVersion
+    "uk.gov.hmrc" %% "http-caching-client" % httpCachingClientVersion,
+    "com.eclipsesource" %% "play-json-schema-validator" % playJsonValidatorVersion
   )
 
   trait TestDependencies {
