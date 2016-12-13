@@ -133,7 +133,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
     "return a Future containing a Left with an error message" when {
 
       "the SessionConnector does not return a CacheMap" in {
-        JsonBuilder.make(mockSessionConnector)(mock[HeaderCarrier]).map(result => result shouldBe Left("could not find a cache map"))
+        JsonBuilder(mockSessionConnector)(mock[HeaderCarrier]).map(result => result shouldBe Left("could not find a cache map"))
       }
 
     }
@@ -162,7 +162,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.propertyValueId -> JsNumber(200)))
         setCacheMap(cacheMap)
-        JsonBuilder.make(mockSessionConnector)(mock[HeaderCarrier]).map(result =>
+        JsonBuilder(mockSessionConnector)(mock[HeaderCarrier]).map(result =>
           result shouldBe Right("{\"ChargeableTransferAmount\":100,\"DateOfDeath\":\"2017-09-10\",\"GrossEstateValue\":200,\"PropertyValue\":200}"))
       }
     }

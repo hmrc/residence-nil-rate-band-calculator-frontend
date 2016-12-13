@@ -72,7 +72,7 @@ object JsonBuilder {
     }
   }
 
-  def make(sessionConnector: SessionConnector)(implicit headerCarrier: HeaderCarrier): Future[Either[String, String]] = {
+  def apply(sessionConnector: SessionConnector)(implicit headerCarrier: HeaderCarrier): Future[Either[String, String]] = {
     sessionConnector.fetch().map( optionalCacheMap => {
       optionalCacheMap.fold[Either[String,String]](Left("could not find a cache map")){
         cacheMap => build(cacheMap)
