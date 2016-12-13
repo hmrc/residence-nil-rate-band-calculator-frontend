@@ -28,18 +28,118 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
 
   "JsonBuilder" must {
 
+    val cacheMapId = "aaaa"
+
     "return a Left with an error message" when {
 
-      "the CacheMap does not contain a value for the chargeableTransferAmount" in {
-        val cacheMap = CacheMap(id = "aaaa", data = Map(Constants.dateOfDeathId -> JsString("2017-09-10")))
+      "the CacheMap does not contain a value for the ChargeableTransferAmount" in {
+        val cacheMap = CacheMap(id = cacheMapId, data =
+          Map(
+            Constants.dateOfDeathId -> JsString("2017-09-10"),
+            Constants.grossEstateValueId -> JsNumber(200),
+            Constants.propertyValueId -> JsNumber(200)))
         val buildResult = JsonBuilder.build(cacheMap)
         buildResult shouldBe Left("Property ChargeableTransferAmount missing.")
       }
 
-      "the CacheMap does not contain a value for the dateOfDeath" in {
-        val cacheMap = CacheMap(id = "bbbb", data = Map(Constants.chargeableTransferAmountId -> JsNumber(100)))
+      "the CacheMap does not contain a value for the DateOfDeath" in {
+        val cacheMap = CacheMap(id = cacheMapId, data =
+          Map(
+            Constants.chargeableTransferAmountId -> JsNumber(100),
+            Constants.grossEstateValueId -> JsNumber(200),
+            Constants.propertyValueId -> JsNumber(200)))
         val buildResult = JsonBuilder.build(cacheMap)
         buildResult shouldBe Left("Property DateOfDeath missing.")
+      }
+
+      "the CacheMap does not contain a value for the GrossEstateValue" in {
+        val cacheMap = CacheMap(id = cacheMapId, data =
+          Map(
+            Constants.chargeableTransferAmountId -> JsNumber(100),
+            Constants.dateOfDeathId -> JsString("2017-09-10"),
+            Constants.propertyValueId -> JsNumber(200)))
+        val buildResult = JsonBuilder.build(cacheMap)
+        buildResult shouldBe Left("Property GrossEstateValue missing.")
+      }
+
+      "the CacheMap does not contain a value for the PropertyValue" in {
+        val cacheMap = CacheMap(id = cacheMapId, data =
+          Map(
+            Constants.chargeableTransferAmountId -> JsNumber(100),
+            Constants.dateOfDeathId -> JsString("2017-09-10"),
+            Constants.grossEstateValueId -> JsNumber(200)))
+        val buildResult = JsonBuilder.build(cacheMap)
+        buildResult shouldBe Left("Property PropertyValue missing.")
+      }
+
+      "the CacheMap contains a negative value for ChargeableTransferAmount" in {
+        val cacheMap = CacheMap(id = cacheMapId, data =
+          Map(
+            Constants.chargeableTransferAmountId -> JsNumber(-100),
+            Constants.dateOfDeathId -> JsString("2017-09-10"),
+            Constants.grossEstateValueId -> JsNumber(200),
+            Constants.propertyValueId -> JsNumber(200)))
+        val buildResult = JsonBuilder.build(cacheMap)
+        buildResult shouldBe Left("-100 is smaller than required minimum value of 0.")
+      }
+
+      "the CacheMap contains a negative value for GrossEstateValue" in {
+        val cacheMap = CacheMap(id = cacheMapId, data =
+          Map(
+            Constants.chargeableTransferAmountId -> JsNumber(100),
+            Constants.dateOfDeathId -> JsString("2017-09-10"),
+            Constants.grossEstateValueId -> JsNumber(-200),
+            Constants.propertyValueId -> JsNumber(200)))
+        val buildResult = JsonBuilder.build(cacheMap)
+        buildResult shouldBe Left("-200 is smaller than required minimum value of 0.")
+      }
+
+      "the CacheMap contains a negative value for PropertyValue" in {
+        val cacheMap = CacheMap(id = cacheMapId, data =
+          Map(
+            Constants.chargeableTransferAmountId -> JsNumber(100),
+            Constants.dateOfDeathId -> JsString("2017-09-10"),
+            Constants.grossEstateValueId -> JsNumber(200),
+            Constants.propertyValueId -> JsNumber(-200)))
+        val buildResult = JsonBuilder.build(cacheMap)
+        buildResult shouldBe Left("-200 is smaller than required minimum value of 0.")
+      }
+
+      "the CacheMap contains an unparseable date for DateOfDeath" in {
+        val cacheMap = CacheMap(id = cacheMapId, data =
+          Map(
+            Constants.chargeableTransferAmountId -> JsNumber(100),
+            Constants.dateOfDeathId -> JsString("xxxx-yy-zz"),
+            Constants.grossEstateValueId -> JsNumber(200),
+            Constants.propertyValueId -> JsNumber(200)))
+        val buildResult = JsonBuilder.build(cacheMap)
+        buildResult shouldBe Left("'xxxx-yy-zz' does not match pattern ^\\d{4}-\\d{2}-\\d{2}$.")
+      }
+
+      "the CacheMap contains a date prior to the eligibility date for DateOfDeath" in {
+        val cacheMap = CacheMap(id = cacheMapId, data =
+          Map(
+            Constants.chargeableTransferAmountId -> JsNumber(100),
+            Constants.dateOfDeathId -> JsString("1996-01-01"),
+            Constants.grossEstateValueId -> JsNumber(200),
+            Constants.propertyValueId -> JsNumber(200)))
+        val buildResult = JsonBuilder.build(cacheMap)
+        buildResult shouldBe Left("Date of death is before eligibility date")
+      }
+
+    }
+
+    "return a Right containing Json" when {
+
+      "the CacheMap contains a valid value for all properties" in {
+        val cacheMap = CacheMap(id = cacheMapId, data =
+          Map(
+            Constants.chargeableTransferAmountId -> JsNumber(100),
+            Constants.dateOfDeathId -> JsString("2017-09-10"),
+            Constants.grossEstateValueId -> JsNumber(200),
+            Constants.propertyValueId -> JsNumber(200)))
+        val buildResult = JsonBuilder.build(cacheMap)
+        buildResult shouldBe Right("{\"ChargeableTransferAmount\":100,\"DateOfDeath\":\"2017-09-10\",\"GrossEstateValue\":200,\"PropertyValue\":200}")
       }
     }
   }

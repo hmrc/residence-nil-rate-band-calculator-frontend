@@ -17,36 +17,51 @@
 package uk.gov.hmrc.residencenilratebandcalculator
 
 import com.eclipsesource.schema.{SchemaType, SchemaValidator}
+import org.joda.time.LocalDate
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.cache.client.CacheMap
 
 object JsonBuilder {
 
-  lazy val schemaDescription: String =
+  private val schemaDescription: String =
     """{
         |"$$schema": "http://json-schema.org/draft-04/schema#",
         |"title": "Test RNRB Schema",
         |"description": "A simple schema to test against",
         |"type:": "object",
         |"properties": {
-        |  "ChargeableTransferAmount": {"type": "integer"},
-        |  "DateOfDeath": {"type": "string"}
+        |  "ChargeableTransferAmount": {"type": "integer", "minimum": 0},
+        |  "DateOfDeath": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+        |  "GrossEstateValue": {"type": "integer", "minimum": 0},
+        |  "PropertyValue": {"type": "integer", "minimum": 0}
         |},
-        |"required": ["ChargeableTransferAmount", "DateOfDeath"]
+        |"required": ["ChargeableTransferAmount", "DateOfDeath", "GrossEstateValue", "PropertyValue"]
       }""".stripMargin
 
-  def build(cacheMap: CacheMap): Either[String, String] = {
+  private val parsedJson = Json.parse(schemaDescription)
+  private val schema = Json.fromJson[SchemaType](parsedJson).get
+  private val validator = SchemaValidator()
 
+  def build(cacheMap: CacheMap): Either[String, String] = {
     val incomingJson = Json.toJson(cacheMap.data)
-    val parsedJson = Json.parse(schemaDescription)
-    val schema = Json.fromJson[SchemaType](parsedJson).get
-    val validator = SchemaValidator()
     val validationResult = validator.validate(schema, incomingJson).asEither
     validationResult match {
       case Left(error) => {
         val errorString = error.seq.flatMap(_._2).map(_.message).foldLeft(new StringBuilder())(_ append _).toString()
         Left(errorString) }
-      case Right(json) => Right(json.toString())
+      case Right(json) => {
+        val optionDod = cacheMap.getEntry[String](Constants.dateOfDeathId)
+        optionDod.fold[Either[String,String]](Left("date of death has gone missing!!")){
+          dod => {
+            val date = LocalDate.parse(dod)
+            if(date.isBefore(Constants.eligibilityDate)) {
+              Left("Date of death is before eligibility date")
+            } else {
+              Right(json.toString())
+            }
+          }
+        }
+      }
     }
   }
 }
