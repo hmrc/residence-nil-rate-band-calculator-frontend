@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import javax.inject.Inject
+import javax.inject.{Inject, Singleton}
 
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
@@ -26,6 +26,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.gross_estate_value
 
+@Singleton
 class GrossEstateValueController @Inject()(override val appConfig: FrontendAppConfig,
                                            val messagesApi: MessagesApi,
                                            override val sessionConnector: SessionConnector,

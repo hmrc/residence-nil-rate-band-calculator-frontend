@@ -17,7 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import java.util.UUID
-import javax.inject.Inject
+import javax.inject.{Inject, Singleton}
 
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
@@ -28,6 +28,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.index
 
 import scala.concurrent.Future
 
+@Singleton
 class HomeController @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi)
   extends FrontendController with I18nSupport {
 
