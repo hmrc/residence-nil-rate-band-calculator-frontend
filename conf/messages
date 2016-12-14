@@ -36,6 +36,11 @@ not_possible_to_use_service.browser_title = Not possible to use this Calculator
 not_possible_to_use_service.title = Not possible to use this Calculator
 not_possible_to_use_service.guidance = Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
 
+percentage_closely_inherited.browser_title = Percentage of the property closely inherited
+percentage_closely_inherited.title = What was the percentage of the property closely inherited?
+percentage_closely_inherited.guidance = Property closeiny inherited sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
+percentage_closely_inherited.label = What was the percentage of the property closely inherited?
+
 property_value.browser_title = Value of the property
 property_value.title = What was the value of the property?
 property_value.guidance = Property value guidance ipsum dolor sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
