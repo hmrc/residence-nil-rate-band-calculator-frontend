@@ -17,9 +17,9 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
-import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_closely_inherited
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import uk.gov.hmrc.residencenilratebandcalculator.forms.PercentForm
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_closely_inherited
 
 class PercentageCloselyInheritedControllerSpec extends SimpleControllerSpecBase {
 
@@ -27,12 +27,12 @@ class PercentageCloselyInheritedControllerSpec extends SimpleControllerSpecBase 
 
     def createView = (value: Option[Int]) => value match {
       case None => percentage_closely_inherited(frontendAppConfig)(fakeRequest, messages)
-      case Some(v) => percentage_closely_inherited(frontendAppConfig, Some(NonNegativeIntForm().fill(v)))(fakeRequest, messages)
+      case Some(v) => percentage_closely_inherited(frontendAppConfig, Some(PercentForm().fill(v)))(fakeRequest, messages)
     }
 
     def createController = () => new PercentageCloselyInheritedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
-    val testValue = 123
+    val testValue = 50
 
     behave like rnrbController(createController, createView, Constants.percentageCloselyInheritedId, testValue)(Reads.IntReads, Writes.IntWrites)
   }
