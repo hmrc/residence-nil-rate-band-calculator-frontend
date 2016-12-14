@@ -25,15 +25,15 @@ hint: Option[String] = None
         <div class="form-date">
             <div class="form-group form-group-day">
                 <label class="form-label" for="day">@messages("date.day")</label>
-                <input class="form-control" id="day" name="day" type="number" pattern="[0-9]*" min="1" max="31" aria-describedby="date-hint" value="@valueDay" />
+                <input class="form-control" id="day" name="day" type="number" min="1" max="31" aria-describedby="date-hint" value="@valueDay" />
             </div>
             <div class="form-group form-group-month">
                 <label class="form-label" for="month">@messages("date.month")</label>
-                <input class="form-control" id="month" name="month" type="number" pattern="[0-9]*" min="1" max="12" value="@valueMonth" />
+                <input class="form-control" id="month" name="month" type="number" min="1" max="12" value="@valueMonth" />
             </div>
             <div class="form-group form-group-year">
                 <label class="form-label" for="year">@messages("date.year")</label>
-                <input class="form-control" id="year" name="year" type="number" pattern="[0-9]*" min="1900" max="2050" value="@valueYear" />
+                <input class="form-control" id="year" name="year" type="number" min="1900" max="2050" value="@valueYear" />
             </div>
         </div>
     </fieldset>
