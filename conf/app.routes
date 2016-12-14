@@ -4,7 +4,6 @@ GET        /                                uk.gov.hmrc.residencenilratebandcalc
 
 GET        /assets/*file                    controllers.Assets.versioned(path="/public", file: Asset)
 
-GET        /hello-world                     uk.gov.hmrc.residencenilratebandcalculator.controllers.HelloWorld.helloWorld
 GET        /style-guide                     uk.gov.hmrc.residencenilratebandcalculator.controllers.StyleGuide.styleGuide
 
 GET        /chargeable-transfer-amount      uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableTransferAmountController.onPageLoad

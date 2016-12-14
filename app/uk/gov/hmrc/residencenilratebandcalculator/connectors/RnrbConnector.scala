@@ -29,6 +29,5 @@ class RnrbConnector @Inject()(http: WSHttp) extends ServicesConfig {
   implicit val hc: HeaderCarrier = HeaderCarrier()
   lazy val serviceUrl = baseUrl("residence-nil-rate-band-calculator")
 
-  def getHelloWorld = http.GET(s"$serviceUrl/residence-nil-rate-band-calculator/hello-world")
   def getStyleGuide = http.GET(s"$serviceUrl/residence-nil-rate-band-calculator/style-guide")
 }
