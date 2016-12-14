@@ -68,8 +68,8 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     }
 
     "when the PropertyValue is used at the class id, the navigator must return a function that when executed against any" +
-      "parameter goes to the PageNotFound controller" in {
-      navigator.nextPage(Constants.propertyValueId)(mock[CacheMap]) shouldBe routes.PageNotFoundController.onPageLoad()
+      "parameter goes to the Results controller" in {
+      navigator.nextPage(Constants.propertyValueId)(mock[CacheMap]) shouldBe routes.ResultsController.onPageLoad()
     }
 
     "return a call to the PropertyValueController onPageLoad method when there is a property in the estate" in {
