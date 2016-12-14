@@ -18,17 +18,31 @@
         @layouts.sidebar(sidebarLinks.get, Some("sidebar"))
     }
 }
+@if(!appConfig.fullStyle) {
 
+    @basic_template(
+        appConfig = appConfig,
+        title = title,
+        mainClass = mainClass,
+        bodyClasses = bodyClasses,
+        sidebar = sidebar,
+        contentHeader = contentHeader,
+        mainContent = layouts.article(mainContent),
+        serviceInfoContent = serviceInfoContent,
+        scriptElem = scriptElem
+    )
 
+} else {
 
-@govuk_wrapper(
-    appConfig = appConfig,
-    title = title,
-    mainClass = mainClass,
-    bodyClasses = bodyClasses,
-    sidebar = sidebar,
-    contentHeader = contentHeader,
-    mainContent = layouts.article(mainContent),
-    serviceInfoContent = serviceInfoContent,
-    scriptElem = scriptElem
-)
+    @govuk_wrapper(
+        appConfig = appConfig,
+        title = title,
+        mainClass = mainClass,
+        bodyClasses = bodyClasses,
+        sidebar = sidebar,
+        contentHeader = contentHeader,
+        mainContent = layouts.article(mainContent),
+        serviceInfoContent = serviceInfoContent,
+        scriptElem = scriptElem
+    )
+}
