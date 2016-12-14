@@ -16,16 +16,16 @@ noAssoc: Option[String] = None
 
         <legend>@label</legend>
         @if(hint != ""){
-        <div class="form-hint">@hint</div>
+        <span class="form-hint">@hint</span>
         }
         @if(errorKey != ""){
         <span class="error-notification" id="error-message-this-input">@messages(errorKey)</span>
         }
-        <label class="block-label selection-button-radio" for="@{id}-1" data-target="@if(yesAssoc != ""){@yesAssoc}">
+        <label class="block-label selection-button-radio" for="yes" data-target="@if(yesAssoc != ""){@yesAssoc}">
             <input id="yes" type="radio" name="@{id}" value="true" @if(value == Some("Yes")){checked="checked"} />
             @messages("site.yes")
         </label>
-        <label class="block-label selection-button-radio" for="@{id}-2" data-target="@if(noAssoc != ""){@noAssoc}">
+        <label class="block-label selection-button-radio" for="no" data-target="@if(noAssoc != ""){@noAssoc}">
             <input id="no" type="radio" name="@{id}" value="false" @if(value == Some("No")){checked="checked"} />
             @messages("site.no")
         </label>
