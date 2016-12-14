@@ -31,12 +31,14 @@ import scala.concurrent.Future
 class RnrbConnector @Inject()(http: WSHttp) extends ServicesConfig {
   implicit val hc: HeaderCarrier = HeaderCarrier()
   lazy val serviceUrl = baseUrl("residence-nil-rate-band-calculator")
+  val baseSegment = "/residence-nil-rate-band-calculator/"
+  val jsonContentTypeHeader = ("Content-Type", "application/json")
 
-  def getHelloWorld = http.GET(s"$serviceUrl/residence-nil-rate-band-calculator/hello-world")
-  def getStyleGuide = http.GET(s"$serviceUrl/residence-nil-rate-band-calculator/style-guide")
+  def getHelloWorld = http.GET(s"$serviceUrl${baseSegment}hello-world")
+  def getStyleGuide = http.GET(s"$serviceUrl${baseSegment}style-guide")
 
   def send(json: JsValue): Future[Either[String, CalculationResult]] =
-    http.POST(s"$serviceUrl/residence-nil-rate-band-calculator/calculate", json, Seq(("Content-Type", "application/json")))
+    http.POST(s"$serviceUrl${baseSegment}calculate", json, Seq(jsonContentTypeHeader))
     .map {
       response => Json.fromJson[CalculationResult](response.json) match {
         case JsSuccess(result, _) => Right(result)

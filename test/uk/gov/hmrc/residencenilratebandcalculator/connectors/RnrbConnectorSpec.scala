@@ -30,51 +30,53 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
 import scala.concurrent.Future
 
 class RnrbConnectorSpec extends UnitSpec with WithFakeApplication with MockitoSugar {
+
+  def getHttpMock(returnedData: JsValue) = {
+    val httpMock = mock[WSHttp]
+    when(httpMock.POST(anyString, any[JsValue], any[Seq[(String, String)]])(any[Writes[Any]], any[HttpReads[Any]],
+      any[HeaderCarrier])) thenReturn Future.successful(HttpResponse(Status.OK, Some(returnedData)))
+    httpMock
+  }
+
+  val minimalJson = JsObject(Map[String, JsValue]())
+
   "RNRB Connector" must {
 
     "call the Microservice with the given JSON" in {
       implicit val headerCarrierNapper = ArgumentCaptor.forClass(classOf[HeaderCarrier])
       implicit val httpReadsNapper = ArgumentCaptor.forClass(classOf[HttpReads[Any]])
       implicit val jsonWritesNapper = ArgumentCaptor.forClass(classOf[Writes[Any]])
-      val urlNapper = ArgumentCaptor.forClass(classOf[String])
-      val bodyNapper = ArgumentCaptor.forClass(classOf[JsValue])
-      val headersNapper = ArgumentCaptor.forClass(classOf[Seq[(String, String)]])
-      val httpMock = mock[WSHttp]
-      when(httpMock.POST(anyString, any[JsValue], any[Seq[(String, String)]])(any[Writes[Any]], any[HttpReads[Any]],
-        any[HeaderCarrier])) thenReturn Future.successful(HttpResponse(Status.OK, Some(Json.parse("{}"))))
-      val data = Json.parse("{}")
+      val urlCaptor = ArgumentCaptor.forClass(classOf[String])
+      val bodyCaptor = ArgumentCaptor.forClass(classOf[JsValue])
+      val headersCaptor = ArgumentCaptor.forClass(classOf[Seq[(String, String)]])
+      val httpMock = getHttpMock(minimalJson)
 
-      await(new RnrbConnector(httpMock).send(data))
+      val connector = new RnrbConnector(httpMock)
+      await(connector.send(minimalJson))
 
-      verify(httpMock).POST(urlNapper.capture, bodyNapper.capture, headersNapper.capture)(jsonWritesNapper.capture,
+      verify(httpMock).POST(urlCaptor.capture, bodyCaptor.capture, headersCaptor.capture)(jsonWritesNapper.capture,
         httpReadsNapper.capture, headerCarrierNapper.capture)
-      urlNapper.getValue should endWith("residence-nil-rate-band-calculator/calculate")
-      bodyNapper.getValue shouldBe data
-      headersNapper.getValue shouldBe Seq(("Content-Type", "application/json"))
+      urlCaptor.getValue should endWith(s"${connector.baseSegment}calculate")
+      bodyCaptor.getValue shouldBe minimalJson
+      headersCaptor.getValue shouldBe Seq(connector.jsonContentTypeHeader)
     }
 
     "return a case class representing the received JSON when the send method is successful" in {
       val residenceNilRateAmount = 100
       val carryForwardAmount = 100
       val calculationResult = CalculationResult(residenceNilRateAmount, carryForwardAmount)
-      val httpMock = mock[WSHttp]
-      when(httpMock.POST(anyString, any[JsValue], any[Seq[(String, String)]])(any[Writes[Any]], any[HttpReads[Any]],
-        any[HeaderCarrier])) thenReturn Future.successful(HttpResponse(Status.OK, Some(Json.toJson(calculationResult))))
 
-      val result = await(new RnrbConnector(httpMock).send(JsObject(Map[String, JsValue]())))
+      val result = await(new RnrbConnector(getHttpMock(Json.toJson(calculationResult))).send(minimalJson))
 
       result.right.get shouldBe calculationResult
     }
 
     "return a string representing the error when send method fails" in {
-      val errorResponse = "Something went wrong!"
-      val httpMock = mock[WSHttp]
-      when(httpMock.POST(anyString, any[JsValue], any[Seq[(String, String)]])(any[Writes[Any]], any[HttpReads[Any]],
-        any[HeaderCarrier])) thenReturn Future.successful(HttpResponse(Status.OK, Some(JsString(errorResponse))))
+      val errorResponse = JsString("Something went wrong!")
 
-      val result = await(new RnrbConnector(httpMock).send(JsObject(Map[String, JsValue]())))
+      val result = await(new RnrbConnector(getHttpMock(errorResponse)).send(minimalJson))
 
-      result.left.get shouldBe s""""$errorResponse""""
+      result.left.get shouldBe errorResponse.toString
     }
   }
 }
