@@ -42,13 +42,16 @@ class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar w
   val mockRightJsonBuilder: JsonBuilder = mock[JsonBuilder]
   when(mockRightJsonBuilder.build(any[SessionConnector])(any[HeaderCarrier])) thenReturn Future.successful(Right(testJsNumber))
 
+  val expectedResidenceNilRateAmount = 77796325
+  val expectedCarriedForwardAmount = 9999
+
+  val eitherCalculationResult = Right(CalculationResult(expectedResidenceNilRateAmount, expectedCarriedForwardAmount))
+
   def mockRnrbConnector = {
     val mockConnector = mock[RnrbConnector]
-    when(mockConnector.send(any[JsValue])) thenReturn Future.successful(Right(CalculationResult(77796325, 9)))
+    when(mockConnector.send(any[JsValue])) thenReturn Future.successful(eitherCalculationResult)
     mockConnector
   }
-
-  val optionCalculationResult = Some(CalculationResult(9, 19))
 
   def resultsController(jsonBuilder: JsonBuilder, rnrbConnector: RnrbConnector = mockRnrbConnector) =
     new ResultsController(frontendAppConfig, messagesApi, rnrbConnector, mockSessionConnector, jsonBuilder)
@@ -62,7 +65,7 @@ class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar w
 
     "return the View for a GET" in {
       val result = resultsController(mockRightJsonBuilder).onPageLoad()(fakeRequest)
-      contentAsString(result) shouldBe results(frontendAppConfig, optionCalculationResult)(fakeRequest, messages).toString
+      contentAsString(result) shouldBe results(frontendAppConfig, eitherCalculationResult)(fakeRequest, messages).toString
     }
 
     "returns an Internal Server Error when the JsonBuilder fails" in {

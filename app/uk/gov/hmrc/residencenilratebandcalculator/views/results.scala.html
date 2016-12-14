@@ -3,12 +3,19 @@
 @import scala.concurrent.Future
 @import scala.concurrent.ExecutionContext.Implicits.global
 
-@(appConfig: FrontendAppConfig, calculationResult: Option[CalculationResult])(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, calculationResult: Either[String, CalculationResult])(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
-    title = "",
+    title = messages("results.browser_title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
+    <p>@messages("results.residenceNilRateAmount.label")</p>
 
+    @{
+       calculationResult match {
+         case Left(err) => ""
+         case Right(cr) => cr.residenceNilRateAmount.toString()
+       }
+    }
 }
