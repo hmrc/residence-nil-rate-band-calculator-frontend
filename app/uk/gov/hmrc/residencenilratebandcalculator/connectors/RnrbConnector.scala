@@ -18,10 +18,13 @@ package uk.gov.hmrc.residencenilratebandcalculator.connectors
 
 import javax.inject.{Inject, Singleton}
 
+import play.api.libs.json.{JsSuccess, JsValue, Json}
 import uk.gov.hmrc.play.config.ServicesConfig
-import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
+import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.WSHttp
+import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 @Singleton
@@ -31,4 +34,16 @@ class RnrbConnector @Inject()(http: WSHttp) extends ServicesConfig {
 
   def getHelloWorld = http.GET(s"$serviceUrl/residence-nil-rate-band-calculator/hello-world")
   def getStyleGuide = http.GET(s"$serviceUrl/residence-nil-rate-band-calculator/style-guide")
+
+  def send(json: JsValue): Future[Either[String, CalculationResult]] =
+    http.POST(s"$serviceUrl/residence-nil-rate-band-calculator/calculate", json, Seq(("Content-Type", "application/json")))
+    .map {
+      response => Json.fromJson[CalculationResult](response.json) match {
+        case JsSuccess(result, _) => Right(result)
+        case _ => {
+          // TODO: Log this!!!!
+          Left(response.body)
+        }
+      }
+    }
 }
