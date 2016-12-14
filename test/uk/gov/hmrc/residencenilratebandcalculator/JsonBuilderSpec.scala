@@ -31,6 +31,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
   "JsonBuilder" must {
 
     val cacheMapId = "aaaa"
+    val jsonBuilder = new JsonBuilder
 
     "return a Left with an error message" when {
 
@@ -40,7 +41,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.dateOfDeathId -> JsString("2017-09-10"),
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.propertyValueId -> JsNumber(200)))
-        val buildResult = JsonBuilder.build(cacheMap)
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Left("Property ChargeableTransferAmount missing.")
       }
 
@@ -50,7 +51,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.chargeableTransferAmountId -> JsNumber(100),
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.propertyValueId -> JsNumber(200)))
-        val buildResult = JsonBuilder.build(cacheMap)
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Left("Property DateOfDeath missing.")
       }
 
@@ -60,7 +61,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.chargeableTransferAmountId -> JsNumber(100),
             Constants.dateOfDeathId -> JsString("2017-09-10"),
             Constants.propertyValueId -> JsNumber(200)))
-        val buildResult = JsonBuilder.build(cacheMap)
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Left("Property GrossEstateValue missing.")
       }
 
@@ -70,7 +71,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.chargeableTransferAmountId -> JsNumber(100),
             Constants.dateOfDeathId -> JsString("2017-09-10"),
             Constants.grossEstateValueId -> JsNumber(200)))
-        val buildResult = JsonBuilder.build(cacheMap)
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Left("Property PropertyValue missing.")
       }
 
@@ -81,7 +82,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.dateOfDeathId -> JsString("2017-09-10"),
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.propertyValueId -> JsNumber(200)))
-        val buildResult = JsonBuilder.build(cacheMap)
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Left("-100 is smaller than required minimum value of 0.")
       }
 
@@ -92,7 +93,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.dateOfDeathId -> JsString("2017-09-10"),
             Constants.grossEstateValueId -> JsNumber(-200),
             Constants.propertyValueId -> JsNumber(200)))
-        val buildResult = JsonBuilder.build(cacheMap)
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Left("-200 is smaller than required minimum value of 0.")
       }
 
@@ -103,7 +104,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.dateOfDeathId -> JsString("2017-09-10"),
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.propertyValueId -> JsNumber(-200)))
-        val buildResult = JsonBuilder.build(cacheMap)
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Left("-200 is smaller than required minimum value of 0.")
       }
 
@@ -114,7 +115,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.dateOfDeathId -> JsString("xxxx-yy-zz"),
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.propertyValueId -> JsNumber(200)))
-        val buildResult = JsonBuilder.build(cacheMap)
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Left("'xxxx-yy-zz' does not match pattern ^\\d{4}-\\d{2}-\\d{2}$.")
       }
 
@@ -125,7 +126,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.dateOfDeathId -> JsString("1996-01-01"),
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.propertyValueId -> JsNumber(200)))
-        val buildResult = JsonBuilder.build(cacheMap)
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Left("Date of death is before eligibility date")
       }
 
@@ -134,7 +135,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
     "return a Future containing a Left with an error message" when {
 
       "the SessionConnector does not return a CacheMap" in {
-        JsonBuilder(mockSessionConnector)(mock[HeaderCarrier]).map(result => result shouldBe Left("could not find a cache map"))
+        jsonBuilder.build(mockSessionConnector)(mock[HeaderCarrier]).map(result => result shouldBe Left("could not find a cache map"))
       }
 
     }
@@ -148,7 +149,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.dateOfDeathId -> JsString("2017-09-10"),
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.propertyValueId -> JsNumber(200)))
-        val buildResult = JsonBuilder.build(cacheMap)
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Right(Json.toJson(cacheMap.data))
       }
     }
@@ -163,7 +164,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.propertyValueId -> JsNumber(200)))
         setCacheMap(cacheMap)
-        JsonBuilder(mockSessionConnector)(mock[HeaderCarrier]).map(result =>
+        jsonBuilder.build(mockSessionConnector)(mock[HeaderCarrier]).map(result =>
           result shouldBe Right(Json.toJson(cacheMap.data)))
       }
     }

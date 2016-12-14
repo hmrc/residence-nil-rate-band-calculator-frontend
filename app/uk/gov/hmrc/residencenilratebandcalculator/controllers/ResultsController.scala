@@ -21,16 +21,36 @@ import javax.inject.{Inject, Singleton}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._
 import uk.gov.hmrc.play.frontend.controller.FrontendController
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
-import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
+import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, JsonBuilder}
+import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
+import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.results
 
 import scala.concurrent.Future
 
 @Singleton
-class ResultsController @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi, val sessionConnector: SessionConnector)
+class ResultsController @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi,
+                                  rnrbConnector: RnrbConnector, sessionConnector: SessionConnector, jsonBuilder: JsonBuilder)
   extends FrontendController with I18nSupport  {
 
-   def onPageLoad: Action[AnyContent] = Action.async { implicit request => Future.successful(Ok(results(appConfig))) }
+//  def onPageLoad = Action.async { implicit request =>
+//    val jsonEither = jsonBuilder.build(sessionConnector)
+//    jsonEither.map {
+//      case Left(error) => {
+//        // TODO: Logging
+//        InternalServerError(error)
+//      }
+//      case Right(json) => {
+//        val xx: Future[Option[CalculationResult]] = rnrbConnector.send(json).map{
+//          (eitherResult: Either[String, CalculationResult]) => eitherResult match {
+//            case Left(error) => None
+//            case Right(calculationResult) => Some(calculationResult)
+//          }
+//        }
+//        xx.map{ option => Ok(results(appConfig, option))}
+//      }
+//    }
+//  }
+  def onPageLoad = Action.async {implicit request => Future.successful(Ok(""))}
 
 }

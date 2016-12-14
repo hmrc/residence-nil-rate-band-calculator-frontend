@@ -18,9 +18,11 @@ package uk.gov.hmrc.residencenilratebandcalculator.connectors
 
 import javax.inject.{Inject, Singleton}
 
+import play.api.libs.json.JsValue
 import uk.gov.hmrc.play.config.ServicesConfig
 import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.residencenilratebandcalculator.WSHttp
+import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
 
 import scala.concurrent.Future
 
@@ -30,5 +32,6 @@ class RnrbConnector @Inject()(http: WSHttp) extends ServicesConfig {
   lazy val serviceUrl = baseUrl("residence-nil-rate-band-calculator")
 
   def getHelloWorld = http.GET(s"$serviceUrl/residence-nil-rate-band-calculator/hello-world")
-  def getStyleGuide = http.GET(s"$serviceUrl/residence-nil-rate-band-calculator/style-guide")
+  def getStyleGuide: Future[HttpResponse] = http.GET(s"$serviceUrl/residence-nil-rate-band-calculator/style-guide")
+  def send(json: JsValue): Future[Either[String, CalculationResult]] = ???
 }

@@ -16,29 +16,72 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import org.mockito.ArgumentCaptor
+import org.scalatest.Matchers
+import org.scalatest.mock.MockitoSugar
+import org.mockito.Mockito._
+import org.mockito.Matchers._
 import play.api.http.Status
-import play.api.mvc.Result
+import play.api.libs.json.{JsNumber, JsValue}
 import play.api.test.Helpers._
+import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.results
+import uk.gov.hmrc.residencenilratebandcalculator.JsonBuilder
+import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
+import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
 
 import scala.concurrent.Future
 
-class ResultsControllerSpec extends SimpleControllerSpecBase {
+class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar with Matchers {
 
-  val resultsController = new ResultsController(frontendAppConfig, messagesApi, mockSessionConnector)
+  val testJsNumber = JsNumber(10)
+
+  val mockLeftJsonBuilder: JsonBuilder = mock[JsonBuilder]
+  when(mockLeftJsonBuilder.build(any[SessionConnector])(any[HeaderCarrier])) thenReturn Future.successful(Left("Something bad happened"))
+
+  val mockRightJsonBuilder: JsonBuilder = mock[JsonBuilder]
+  when(mockRightJsonBuilder.build(any[SessionConnector])(any[HeaderCarrier])) thenReturn Future.successful(Right(testJsNumber))
+
+  def mockRnrbConnector = {
+    val mockConnector = mock[RnrbConnector]
+    when(mockConnector.send(any[JsValue])) thenReturn Future.successful(Right(CalculationResult(77796325, 9)))
+    mockConnector
+  }
+
+  val optionCalculationResult = Some(CalculationResult(9, 19))
+
+  def resultsController(jsonBuilder: JsonBuilder, rnrbConnector: RnrbConnector = mockRnrbConnector) =
+    new ResultsController(frontendAppConfig, messagesApi, rnrbConnector, mockSessionConnector, jsonBuilder)
 
   "ResultsController" must {
 
     "return 200 for a GET" in {
-      val result = resultsController.onPageLoad()(fakeRequest)
+      val result = resultsController(mockRightJsonBuilder).onPageLoad()(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return the View for a GET" in {
-      val result: Future[Result] = resultsController.onPageLoad()(fakeRequest)
-      contentAsString(result) shouldBe results(frontendAppConfig)(fakeRequest, messages).toString
+      val result = resultsController(mockRightJsonBuilder).onPageLoad()(fakeRequest)
+      contentAsString(result) shouldBe results(frontendAppConfig, optionCalculationResult)(fakeRequest, messages).toString
     }
 
-  }
+    "returns an Internal Server Error when the JsonBuilder fails" in {
+      val result = resultsController(mockLeftJsonBuilder).onPageLoad()(fakeRequest)
+      status(result) shouldBe INTERNAL_SERVER_ERROR
+    }
 
+    "send Json to the Microservice if the JsonBuilder succeeds" in {
+      val connector = mockRnrbConnector
+      val jsonNapper = ArgumentCaptor.forClass(classOf[JsValue])
+      await(resultsController(mockRightJsonBuilder, connector).onPageLoad()(fakeRequest))
+      verify(connector).send(jsonNapper.capture)
+      jsonNapper.getValue shouldBe testJsNumber
+    }
+
+    "display the calculation result if the Microservice successfully returns it" in {
+      val result = resultsController(mockRightJsonBuilder).onPageLoad()(fakeRequest)
+      val contents = contentAsString(result)
+      contents should include("77796325")
+    }
+  }
 }
