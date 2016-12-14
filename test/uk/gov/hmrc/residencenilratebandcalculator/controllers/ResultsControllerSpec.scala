@@ -17,15 +17,26 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.http.Status
+import play.api.mvc.Result
+import play.api.test.Helpers._
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.results
+
+import scala.concurrent.Future
 
 class ResultsControllerSpec extends SimpleControllerSpecBase {
+
+  val resultsController = new ResultsController(frontendAppConfig, messagesApi, mockSessionConnector)
 
   "ResultsController" must {
 
     "return 200 for a GET" in {
-      val resultsController = new ResultsController(frontendAppConfig, messagesApi, mockSessionConnector)
       val result = resultsController.onPageLoad()(fakeRequest)
       status(result) shouldBe Status.OK
+    }
+
+    "return the View for a GET" in {
+      val result: Future[Result] = resultsController.onPageLoad()(fakeRequest)
+      contentAsString(result) shouldBe results(frontendAppConfig)(fakeRequest, messages).toString
     }
 
   }

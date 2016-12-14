@@ -23,6 +23,7 @@ import play.api.mvc._
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.results
 
 import scala.concurrent.Future
 
@@ -30,6 +31,6 @@ import scala.concurrent.Future
 class ResultsController @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi, val sessionConnector: SessionConnector)
   extends FrontendController with I18nSupport  {
 
-   def onPageLoad: Action[AnyContent] = Action.async( request => Future.successful(Ok("")))
+   def onPageLoad: Action[AnyContent] = Action.async { implicit request => Future.successful(Ok(results(appConfig))) }
 
 }
