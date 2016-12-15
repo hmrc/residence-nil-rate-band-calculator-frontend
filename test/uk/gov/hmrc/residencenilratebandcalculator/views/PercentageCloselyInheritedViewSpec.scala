@@ -19,13 +19,13 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 import play.api.data.{Form, FormError}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_closely_inherited
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
-import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.PercentForm
 
 import scala.language.reflectiveCalls
 
 class PercentageCloselyInheritedViewSpec extends HtmlSpec {
 
-  val number = 123
+  val number = 50
   val errorKey = "value"
   val errorMessage = "error.number"
   val error = FormError(errorKey, errorMessage)
@@ -89,7 +89,7 @@ class PercentageCloselyInheritedViewSpec extends HtmlSpec {
 
   "rendered with a valid form" must {
 
-    def thisFixture() = fixture(Some(NonNegativeIntForm().fill(number)))
+    def thisFixture() = fixture(Some(PercentForm().fill(number)))
 
     "include the form's value in the value input" in {
       val f = thisFixture()
@@ -99,7 +99,7 @@ class PercentageCloselyInheritedViewSpec extends HtmlSpec {
 
   "rendered with an error" must {
 
-    val thisFixture = fixture(Some(NonNegativeIntForm().withError(error)))
+    val thisFixture = fixture(Some(PercentForm().withError(error)))
 
     "show an error summary" in {
       val f = thisFixture

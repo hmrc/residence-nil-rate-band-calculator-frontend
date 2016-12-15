@@ -21,8 +21,13 @@ class PercentFormSpec extends FormSpec {
   "Percent Int Form" must {
 
     "bind positive numbers" in {
-      val form = NonNegativeIntForm().bind(Map("value" -> "1"))
+      val form = PercentForm().bind(Map("value" -> "1"))
       form.get shouldBe 1
+    }
+
+    "bind numbers as high as 100" in {
+      val form = PercentForm().bind(Map("value" -> "100"))
+      form.get shouldBe 100
     }
 
     "fail to bind negative numbers" in {
