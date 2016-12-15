@@ -1,7 +1,5 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
-@import scala.concurrent.Future
-@import scala.concurrent.ExecutionContext.Implicits.global
 
 @(appConfig: FrontendAppConfig, calculationResult: Either[String, CalculationResult])(implicit request: Request[_], messages: Messages)
 

@@ -22,10 +22,9 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.libs.json.JsValue
 import play.api.mvc._
 import uk.gov.hmrc.play.frontend.controller.FrontendController
-import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, JsonBuilder}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
-import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.results
+import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, JsonBuilder}
 
 import scala.concurrent.Future
 
@@ -43,7 +42,8 @@ class ResultsController @Inject()(appConfig: FrontendAppConfig, val messagesApi:
         Future.successful(InternalServerError(error))
       }
       case Right(json) => {
-        rnrbConnector.send(json).map { (either: Either[String, CalculationResult]) => Ok(results(appConfig, either))
+        rnrbConnector.send(json).map {
+          rnrbEither => Ok(results(appConfig, rnrbEither))
         }
       }
     }

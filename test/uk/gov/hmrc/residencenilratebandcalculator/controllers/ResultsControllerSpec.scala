@@ -44,7 +44,6 @@ class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar w
 
   val expectedResidenceNilRateAmount = 77796325
   val expectedCarriedForwardAmount = 9999
-
   val eitherCalculationResult = Right(CalculationResult(expectedResidenceNilRateAmount, expectedCarriedForwardAmount))
 
   def mockRnrbConnector = {
