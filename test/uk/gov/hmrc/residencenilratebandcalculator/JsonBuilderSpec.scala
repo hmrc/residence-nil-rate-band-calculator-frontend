@@ -41,7 +41,8 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
           Map(
             Constants.dateOfDeathId -> JsString("2017-09-10"),
             Constants.grossEstateValueId -> JsNumber(200),
-            Constants.propertyValueId -> JsNumber(200)))
+            Constants.propertyValueId -> JsNumber(200),
+            Constants.percentageCloselyInheritedId -> JsNumber(50)))
         val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Left("Property chargeableTransferAmount missing.")
       }
@@ -51,7 +52,8 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
           Map(
             Constants.chargeableTransferAmountId -> JsNumber(100),
             Constants.grossEstateValueId -> JsNumber(200),
-            Constants.propertyValueId -> JsNumber(200)))
+            Constants.propertyValueId -> JsNumber(200),
+            Constants.percentageCloselyInheritedId -> JsNumber(50)))
         val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Left("Property dateOfDeath missing.")
       }
@@ -61,7 +63,8 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
           Map(
             Constants.chargeableTransferAmountId -> JsNumber(100),
             Constants.dateOfDeathId -> JsString("2017-09-10"),
-            Constants.propertyValueId -> JsNumber(200)))
+            Constants.propertyValueId -> JsNumber(200),
+            Constants.percentageCloselyInheritedId -> JsNumber(50)))
         val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Left("Property grossEstateValue missing.")
       }
@@ -71,9 +74,22 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
           Map(
             Constants.chargeableTransferAmountId -> JsNumber(100),
             Constants.dateOfDeathId -> JsString("2017-09-10"),
-            Constants.grossEstateValueId -> JsNumber(200)))
+
+            Constants.grossEstateValueId -> JsNumber(200),
+            Constants.percentageCloselyInheritedId -> JsNumber(50)))
         val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Left("Property propertyValue missing.")
+      }
+
+      "the CacheMap does not contain a value for the PercentageCloselyInherited" in {
+        val cacheMap = CacheMap(id = cacheMapId, data =
+          Map(
+            Constants.chargeableTransferAmountId -> JsNumber(100),
+            Constants.dateOfDeathId -> JsString("2017-09-10"),
+            Constants.grossEstateValueId -> JsNumber(200),
+            Constants.propertyValueId -> JsNumber(200)))
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
+        buildResult shouldBe Left("Property percentageCloselyInherited missing.")
       }
 
       "the CacheMap contains a negative value for ChargeableTransferAmount" in {
@@ -82,7 +98,8 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.chargeableTransferAmountId -> JsNumber(-100),
             Constants.dateOfDeathId -> JsString("2017-09-10"),
             Constants.grossEstateValueId -> JsNumber(200),
-            Constants.propertyValueId -> JsNumber(200)))
+            Constants.propertyValueId -> JsNumber(200),
+            Constants.percentageCloselyInheritedId -> JsNumber(50)))
         val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Left("-100 is smaller than required minimum value of 0.")
       }
@@ -93,7 +110,8 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.chargeableTransferAmountId -> JsNumber(100),
             Constants.dateOfDeathId -> JsString("2017-09-10"),
             Constants.grossEstateValueId -> JsNumber(-200),
-            Constants.propertyValueId -> JsNumber(200)))
+            Constants.propertyValueId -> JsNumber(200),
+            Constants.percentageCloselyInheritedId -> JsNumber(50)))
         val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Left("-200 is smaller than required minimum value of 0.")
       }
@@ -104,9 +122,22 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.chargeableTransferAmountId -> JsNumber(100),
             Constants.dateOfDeathId -> JsString("2017-09-10"),
             Constants.grossEstateValueId -> JsNumber(200),
-            Constants.propertyValueId -> JsNumber(-200)))
+            Constants.propertyValueId -> JsNumber(-200),
+            Constants.percentageCloselyInheritedId -> JsNumber(50)))
         val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Left("-200 is smaller than required minimum value of 0.")
+      }
+
+      "the CacheMap contains a negative value for PercentageCloselyInherited" in {
+        val cacheMap = CacheMap(id = cacheMapId, data =
+          Map(
+            Constants.chargeableTransferAmountId -> JsNumber(100),
+            Constants.dateOfDeathId -> JsString("2017-09-10"),
+            Constants.grossEstateValueId -> JsNumber(200),
+            Constants.propertyValueId -> JsNumber(200),
+            Constants.percentageCloselyInheritedId -> JsNumber(-1)))
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
+        buildResult shouldBe Left("-1 is smaller than required minimum value of 0.")
       }
 
       "the CacheMap contains an unparseable date for DateOfDeath" in {
@@ -115,7 +146,8 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.chargeableTransferAmountId -> JsNumber(100),
             Constants.dateOfDeathId -> JsString("xxxx-yy-zz"),
             Constants.grossEstateValueId -> JsNumber(200),
-            Constants.propertyValueId -> JsNumber(200)))
+            Constants.propertyValueId -> JsNumber(200),
+            Constants.percentageCloselyInheritedId -> JsNumber(50)))
         val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Left("'xxxx-yy-zz' does not match pattern ^\\d{4}-\\d{2}-\\d{2}$.")
       }
@@ -126,11 +158,23 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.chargeableTransferAmountId -> JsNumber(100),
             Constants.dateOfDeathId -> JsString("1996-01-01"),
             Constants.grossEstateValueId -> JsNumber(200),
-            Constants.propertyValueId -> JsNumber(200)))
+            Constants.propertyValueId -> JsNumber(200),
+            Constants.percentageCloselyInheritedId -> JsNumber(50)))
         val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Left("Date of death is before eligibility date")
       }
 
+      "the CacheMap contains a value greater than 100 for PercentageCloselyInherited" in {
+        val cacheMap = CacheMap(id = cacheMapId, data =
+          Map(
+            Constants.chargeableTransferAmountId -> JsNumber(100),
+            Constants.dateOfDeathId -> JsString("2017-09-10"),
+            Constants.grossEstateValueId -> JsNumber(200),
+            Constants.propertyValueId -> JsNumber(200),
+            Constants.percentageCloselyInheritedId -> JsNumber(101)))
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
+        buildResult shouldBe Left("101 exceeds maximum value of 100.")
+      }
     }
 
     "return a Future containing a Left with an error message" when {
@@ -149,7 +193,8 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.chargeableTransferAmountId -> JsNumber(100),
             Constants.dateOfDeathId -> JsString("2017-09-10"),
             Constants.grossEstateValueId -> JsNumber(200),
-            Constants.propertyValueId -> JsNumber(200)))
+            Constants.propertyValueId -> JsNumber(200),
+            Constants.percentageCloselyInheritedId -> JsNumber(50)))
         val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Right(Json.toJson(jsonBuilder.setKeys(cacheMap)))
       }
@@ -163,7 +208,8 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.chargeableTransferAmountId -> JsNumber(100),
             Constants.dateOfDeathId -> JsString("2017-09-10"),
             Constants.grossEstateValueId -> JsNumber(200),
-            Constants.propertyValueId -> JsNumber(200)))
+            Constants.propertyValueId -> JsNumber(200),
+            Constants.percentageCloselyInheritedId -> JsNumber(50)))
         setCacheMap(cacheMap)
         jsonBuilder.build(mockSessionConnector)(mock[HeaderCarrier]).map(result =>
           result shouldBe Right(Json.toJson(cacheMap.data)))

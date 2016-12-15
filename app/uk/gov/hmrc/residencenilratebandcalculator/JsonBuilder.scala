@@ -41,9 +41,10 @@ class JsonBuilder @Inject()() {
         |  "chargeableTransferAmount": {"type": "integer", "minimum": 0},
         |  "dateOfDeath": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
         |  "grossEstateValue": {"type": "integer", "minimum": 0},
-        |  "propertyValue": {"type": "integer", "minimum": 0}
+        |  "propertyValue": {"type": "integer", "minimum": 0},
+        |  "percentageCloselyInherited": {"type": "integer", "minimum": 0, "maximum": 100}
         |},
-        |"required": ["chargeableTransferAmount", "dateOfDeath", "grossEstateValue", "propertyValue"]
+        |"required": ["chargeableTransferAmount", "dateOfDeath", "grossEstateValue", "propertyValue", "percentageCloselyInherited"]
       }""".stripMargin
 
   private val parsedJson = Json.parse(schemaDescription)
