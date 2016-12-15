@@ -38,6 +38,16 @@ class ResultsViewSpec extends HtmlSpec {
         assertEqualsMessage(f.doc, "title", "results.browser_title")
       }
 
+      "display the correct page title" in {
+        val f = thisFixture()
+        assertPageTitleEqualsMessage(f.doc, "results.title")
+      }
+
+      "display the correct guidance" in {
+        val f = thisFixture()
+        assertContainsMessages(f.doc, "results.guidance")
+      }
+
       "contain a label for the value" in {
         val f = thisFixture()
         assertContainsMessages(f.doc, "results.residenceNilRateAmount.label")
