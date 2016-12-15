@@ -25,4 +25,12 @@ object Constants {
   val estateHasPropertyId = "EstateHasProperty"
   val grossEstateValueId = "GrossEstateValue"
   val propertyValueId = "PropertyValue"
+
+  val jsonKeys = Map(
+    chargeableTransferAmountId -> "chargeableTransferAmount",
+    dateOfDeathId -> "dateOfDeath",
+    estateHasPropertyId -> "estateHasProperty",
+    grossEstateValueId -> "grossEstateValue",
+    propertyValueId -> "propertyValue"
+  )
 }
