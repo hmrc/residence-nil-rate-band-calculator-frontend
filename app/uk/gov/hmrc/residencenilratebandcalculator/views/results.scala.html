@@ -1,0 +1,23 @@
+@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
+
+@(appConfig: FrontendAppConfig, calculationResult: Either[String, CalculationResult])(implicit request: Request[_], messages: Messages)
+
+@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+    title = messages("results.browser_title"),
+    appConfig = appConfig,
+    bodyClasses = None) {
+
+    <h1>@messages("results.title")</h1>
+
+    <p>@messages("results.guidance")</p>
+
+    <p>@messages("results.residenceNilRateAmount.label")</p>
+
+    @{
+       calculationResult match {
+         case Left(err) => ""
+         case Right(cr) => cr.residenceNilRateAmount.toString()
+       }
+    }
+}

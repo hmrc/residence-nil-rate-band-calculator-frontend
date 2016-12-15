@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import javax.inject.Inject
+import javax.inject.{Inject, Singleton}
 
 import play.api.data.Form
 import play.api.i18n.MessagesApi
@@ -26,6 +26,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_transfer_amount
 
+@Singleton
 class ChargeableTransferAmountController  @Inject()(override val appConfig: FrontendAppConfig,
                                                     val messagesApi: MessagesApi,
                                                     override val sessionConnector: SessionConnector,

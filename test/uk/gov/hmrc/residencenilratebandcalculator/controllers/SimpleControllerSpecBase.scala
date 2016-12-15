@@ -53,7 +53,7 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
       status(result) shouldBe Status.OK
     }
 
-    "return the Gross Estate View for a GET" in {
+    "return the View for a GET" in {
       val result = createController().onPageLoad(rds)(fakeRequest)
       contentAsString(result) shouldBe createView(None).toString
     }

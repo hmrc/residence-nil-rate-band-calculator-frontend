@@ -32,7 +32,7 @@ class Navigator @Inject()() {
       Constants.grossEstateValueId -> (_ => ChargeableTransferAmountController.onPageLoad()),
       Constants.chargeableTransferAmountId -> (_ => EstateHasPropertyController.onPageLoad()),
       Constants.estateHasPropertyId -> (cm => getEstateHasPropertyRoute(cm)),
-      Constants.propertyValueId -> (_ => PageNotFoundController.onPageLoad())
+      Constants.propertyValueId -> (_ => ResultsController.onPageLoad())
     )
   }
 

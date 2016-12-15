@@ -23,7 +23,6 @@ import uk.gov.hmrc.play.config.ServicesConfig
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.WSHttp
 import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 

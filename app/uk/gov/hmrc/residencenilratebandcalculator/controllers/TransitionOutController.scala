@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import javax.inject.Inject
+import javax.inject.{Inject, Singleton}
 
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
@@ -26,6 +26,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.not_possible_to_use
 
 import scala.concurrent.Future
 
+@Singleton
 class TransitionOutController @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi)
   extends FrontendController with I18nSupport {
 

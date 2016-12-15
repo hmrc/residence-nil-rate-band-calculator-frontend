@@ -16,6 +16,8 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator
 
+import javax.inject.{Inject, Singleton}
+
 import com.eclipsesource.schema.{SchemaType, SchemaValidator}
 import org.joda.time.LocalDate
 import play.api.libs.json.{JsValue, Json}
@@ -26,7 +28,8 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-object JsonBuilder {
+@Singleton
+class JsonBuilder @Inject()() {
 
   private val schemaDescription: String =
     """{
@@ -49,20 +52,21 @@ object JsonBuilder {
 
   private def dateOfDeathIsIneligible(cacheMap: CacheMap): Boolean = {
     val optionDod = cacheMap.getEntry[String](Constants.dateOfDeathId)
-    optionDod.fold(true){
+    optionDod.fold(true) {
       dod => LocalDate.parse(dod).isBefore(Constants.eligibilityDate)
     }
   }
 
-  def build(cacheMap: CacheMap): Either[String, JsValue] = {
+  def buildFromCacheMap(cacheMap: CacheMap): Either[String, JsValue] = {
     val incomingJson = Json.toJson(cacheMap.data)
     val validationResult = validator.validate(schema, incomingJson).asEither
     validationResult match {
       case Left(error) => {
         val errorString = error.seq.flatMap(_._2).map(_.message).foldLeft(new StringBuilder())(_ append _).toString()
-        Left(errorString) }
+        Left(errorString)
+      }
       case Right(json) => {
-        if(dateOfDeathIsIneligible(cacheMap)) {
+        if (dateOfDeathIsIneligible(cacheMap)) {
           Left("Date of death is before eligibility date")
         } else {
           Right(json)
@@ -71,10 +75,10 @@ object JsonBuilder {
     }
   }
 
-  def apply(sessionConnector: SessionConnector)(implicit headerCarrier: HeaderCarrier): Future[Either[String, JsValue]] = {
+  def build(sessionConnector: SessionConnector)(implicit headerCarrier: HeaderCarrier): Future[Either[String, JsValue]] = {
     sessionConnector.fetch().map( optionalCacheMap => {
       optionalCacheMap.fold[Either[String, JsValue]](Left("could not find a cache map")){
-        cacheMap => build(cacheMap)
+        cacheMap => buildFromCacheMap(cacheMap)
       }
     })
   }
