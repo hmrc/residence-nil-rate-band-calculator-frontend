@@ -39,8 +39,8 @@ class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar w
   val mockLeftJsonBuilder: JsonBuilder = mock[JsonBuilder]
   when(mockLeftJsonBuilder.build(any[SessionConnector])(any[HeaderCarrier])) thenReturn Future.successful(Left("Something bad happened"))
 
-  val mockRightJsonBuilder: JsonBuilder = mock[JsonBuilder]
-  when(mockRightJsonBuilder.build(any[SessionConnector])(any[HeaderCarrier])) thenReturn Future.successful(Right(testJsNumber))
+  val mockJsonBuilderThatSucceeds: JsonBuilder = mock[JsonBuilder]
+  when(mockJsonBuilderThatSucceeds.build(any[SessionConnector])(any[HeaderCarrier])) thenReturn Future.successful(Right(testJsNumber))
 
   val expectedResidenceNilRateAmount = 77796325
   val expectedCarriedForwardAmount = 9999
@@ -58,12 +58,12 @@ class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar w
   "ResultsController" must {
 
     "return 200 for a GET" in {
-      val result = resultsController(mockRightJsonBuilder).onPageLoad()(fakeRequest)
+      val result = resultsController(mockJsonBuilderThatSucceeds).onPageLoad()(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return the View for a GET" in {
-      val result = resultsController(mockRightJsonBuilder).onPageLoad()(fakeRequest)
+      val result = resultsController(mockJsonBuilderThatSucceeds).onPageLoad()(fakeRequest)
       contentAsString(result) shouldBe results(frontendAppConfig, eitherCalculationResult)(fakeRequest, messages).toString
     }
 
@@ -75,13 +75,13 @@ class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar w
     "send Json to the Microservice if the JsonBuilder succeeds" in {
       val connector = mockRnrbConnector
       val jsonNapper = ArgumentCaptor.forClass(classOf[JsValue])
-      await(resultsController(mockRightJsonBuilder, connector).onPageLoad()(fakeRequest))
+      await(resultsController(mockJsonBuilderThatSucceeds, connector).onPageLoad()(fakeRequest))
       verify(connector).send(jsonNapper.capture)
       jsonNapper.getValue shouldBe testJsNumber
     }
 
     "display the calculation result if the Microservice successfully returns it" in {
-      val result = resultsController(mockRightJsonBuilder).onPageLoad()(fakeRequest)
+      val result = resultsController(mockJsonBuilderThatSucceeds).onPageLoad()(fakeRequest)
       val contents = contentAsString(result)
       contents should include("77796325")
     }
