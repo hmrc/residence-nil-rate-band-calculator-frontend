@@ -85,12 +85,13 @@ class JsonBuilder @Inject()() {
 
   def setKeys(cacheMap: CacheMap) = {
     def keyIsRecognised(key: String) = jsonKeys.keySet.contains(key)
-    val keys = for {
-      recognisedKeys <- cacheMap.data.filterKeys(keyIsRecognised)
-    } yield recognisedKeys
+    
+    val usableEntries = for {
+      recognisedEntries <- cacheMap.data.filterKeys(keyIsRecognised)
+    } yield recognisedEntries
 
-    keys map {
-      case(k, v) => (jsonKeys(k), v)
+    usableEntries map {
+      case(key, value) => (jsonKeys(key), value)
     }
   }
 }
