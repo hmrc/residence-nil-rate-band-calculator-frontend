@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import javax.inject.Inject
+import javax.inject.{Inject, Singleton}
 
 import play.api.data.Form
 import play.api.i18n.MessagesApi
@@ -27,6 +27,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
 
+@Singleton
 class DateOfDeathController @Inject()(override val appConfig: FrontendAppConfig,
                                       val messagesApi: MessagesApi,
                                       override val sessionConnector: SessionConnector,

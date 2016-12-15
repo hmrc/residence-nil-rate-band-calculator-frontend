@@ -72,8 +72,8 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.propertyValueId)(mock[CacheMap]) shouldBe routes.PercentageCloselyInheritedController.onPageLoad()
     }
 
-    "return a function that goes to the PageNotFound controller when given PercentageCloselyInherited" in {
-      navigator.nextPage(Constants.percentageCloselyInheritedId)(mock[CacheMap]) shouldBe routes.PageNotFoundController.onPageLoad()
+    "return a function that goes to the Results controller when given PercentageCloselyInherited" in {
+      navigator.nextPage(Constants.percentageCloselyInheritedId)(mock[CacheMap]) shouldBe routes.ResultsController.onPageLoad()
     }
 
     "return a call to the PropertyValueController onPageLoad method when there is a property in the estate" in {

@@ -16,17 +16,20 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator
 
+import javax.inject.{Inject, Singleton}
+
 import com.eclipsesource.schema.{SchemaType, SchemaValidator}
 import org.joda.time.LocalDate
 import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-
+import uk.gov.hmrc.residencenilratebandcalculator.Constants.jsonKeys
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-object JsonBuilder {
+@Singleton
+class JsonBuilder @Inject()() {
 
   private val schemaDescription: String =
     """{
@@ -35,13 +38,13 @@ object JsonBuilder {
         |"description": "A simple schema to test against",
         |"type:": "object",
         |"properties": {
-        |  "ChargeableTransferAmount": {"type": "integer", "minimum": 0},
-        |  "DateOfDeath": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
-        |  "GrossEstateValue": {"type": "integer", "minimum": 0},
-        |  "PropertyValue": {"type": "integer", "minimum": 0},
-        |  "PercentageCloselyInherited": {"type": "integer", "minimum": 0, "maximum": 100}
+        |  "chargeableTransferAmount": {"type": "integer", "minimum": 0},
+        |  "dateOfDeath": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+        |  "grossEstateValue": {"type": "integer", "minimum": 0},
+        |  "propertyValue": {"type": "integer", "minimum": 0},
+        |  "percentageCloselyInherited": {"type": "integer", "minimum": 0, "maximum": 100}
         |},
-        |"required": ["ChargeableTransferAmount", "DateOfDeath", "GrossEstateValue", "PropertyValue", "PercentageCloselyInherited"]
+        |"required": ["chargeableTransferAmount", "dateOfDeath", "grossEstateValue", "propertyValue", "percentageCloselyInherited"]
       }""".stripMargin
 
   private val parsedJson = Json.parse(schemaDescription)
@@ -50,20 +53,21 @@ object JsonBuilder {
 
   private def dateOfDeathIsIneligible(cacheMap: CacheMap): Boolean = {
     val optionDod = cacheMap.getEntry[String](Constants.dateOfDeathId)
-    optionDod.fold(true){
+    optionDod.fold(true) {
       dod => LocalDate.parse(dod).isBefore(Constants.eligibilityDate)
     }
   }
 
-  def build(cacheMap: CacheMap): Either[String, JsValue] = {
-    val incomingJson = Json.toJson(cacheMap.data)
+  def buildFromCacheMap(cacheMap: CacheMap): Either[String, JsValue] = {
+    val incomingJson = Json.toJson(setKeys(cacheMap))
     val validationResult = validator.validate(schema, incomingJson).asEither
     validationResult match {
       case Left(error) => {
         val errorString = error.seq.flatMap(_._2).map(_.message).foldLeft(new StringBuilder())(_ append _).toString()
-        Left(errorString) }
+        Left(errorString)
+      }
       case Right(json) => {
-        if(dateOfDeathIsIneligible(cacheMap)) {
+        if (dateOfDeathIsIneligible(cacheMap)) {
           Left("Date of death is before eligibility date")
         } else {
           Right(json)
@@ -72,13 +76,24 @@ object JsonBuilder {
     }
   }
 
-  def apply(sessionConnector: SessionConnector)(implicit headerCarrier: HeaderCarrier): Future[Either[String, JsValue]] = {
+  def build(sessionConnector: SessionConnector)(implicit headerCarrier: HeaderCarrier): Future[Either[String, JsValue]] = {
     sessionConnector.fetch().map( optionalCacheMap => {
       optionalCacheMap.fold[Either[String, JsValue]](Left("could not find a cache map")){
-        cacheMap => build(cacheMap)
+        cacheMap => buildFromCacheMap(cacheMap)
       }
     })
   }
 
+  def setKeys(cacheMap: CacheMap) = {
+    def keyIsRecognised(key: String) = jsonKeys.keySet.contains(key)
+    
+    val usableEntries = for {
+      recognisedEntries <- cacheMap.data.filterKeys(keyIsRecognised)
+    } yield recognisedEntries
+
+    usableEntries map {
+      case(key, value) => (jsonKeys(key), value)
+    }
+  }
 }
 

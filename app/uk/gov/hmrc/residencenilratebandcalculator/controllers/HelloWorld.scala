@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import javax.inject.Inject
+import javax.inject.{Inject, Singleton}
 
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._
@@ -24,6 +24,7 @@ import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
 
+@Singleton
 class HelloWorld @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi, val rnrbConnector: RnrbConnector)
   extends FrontendController with I18nSupport {
   val helloWorld = Action.async { implicit request =>

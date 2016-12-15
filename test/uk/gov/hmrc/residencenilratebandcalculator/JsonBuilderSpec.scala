@@ -23,6 +23,7 @@ import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.MockSessionConnector
+import uk.gov.hmrc.residencenilratebandcalculator.Constants._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -31,6 +32,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
   "JsonBuilder" must {
 
     val cacheMapId = "aaaa"
+    val jsonBuilder = new JsonBuilder
 
     "return a Left with an error message" when {
 
@@ -41,8 +43,8 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.propertyValueId -> JsNumber(200),
             Constants.percentageCloselyInheritedId -> JsNumber(50)))
-        val buildResult = JsonBuilder.build(cacheMap)
-        buildResult shouldBe Left("Property ChargeableTransferAmount missing.")
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
+        buildResult shouldBe Left("Property chargeableTransferAmount missing.")
       }
 
       "the CacheMap does not contain a value for the DateOfDeath" in {
@@ -52,8 +54,8 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.propertyValueId -> JsNumber(200),
             Constants.percentageCloselyInheritedId -> JsNumber(50)))
-        val buildResult = JsonBuilder.build(cacheMap)
-        buildResult shouldBe Left("Property DateOfDeath missing.")
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
+        buildResult shouldBe Left("Property dateOfDeath missing.")
       }
 
       "the CacheMap does not contain a value for the GrossEstateValue" in {
@@ -63,8 +65,8 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.dateOfDeathId -> JsString("2017-09-10"),
             Constants.propertyValueId -> JsNumber(200),
             Constants.percentageCloselyInheritedId -> JsNumber(50)))
-        val buildResult = JsonBuilder.build(cacheMap)
-        buildResult shouldBe Left("Property GrossEstateValue missing.")
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
+        buildResult shouldBe Left("Property grossEstateValue missing.")
       }
 
       "the CacheMap does not contain a value for the PropertyValue" in {
@@ -72,10 +74,11 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
           Map(
             Constants.chargeableTransferAmountId -> JsNumber(100),
             Constants.dateOfDeathId -> JsString("2017-09-10"),
+
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.percentageCloselyInheritedId -> JsNumber(50)))
-        val buildResult = JsonBuilder.build(cacheMap)
-        buildResult shouldBe Left("Property PropertyValue missing.")
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
+        buildResult shouldBe Left("Property propertyValue missing.")
       }
 
       "the CacheMap does not contain a value for the PercentageCloselyInherited" in {
@@ -85,8 +88,8 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.dateOfDeathId -> JsString("2017-09-10"),
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.propertyValueId -> JsNumber(200)))
-        val buildResult = JsonBuilder.build(cacheMap)
-        buildResult shouldBe Left("Property PercentageCloselyInherited missing.")
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
+        buildResult shouldBe Left("Property percentageCloselyInherited missing.")
       }
 
       "the CacheMap contains a negative value for ChargeableTransferAmount" in {
@@ -97,7 +100,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.propertyValueId -> JsNumber(200),
             Constants.percentageCloselyInheritedId -> JsNumber(50)))
-        val buildResult = JsonBuilder.build(cacheMap)
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Left("-100 is smaller than required minimum value of 0.")
       }
 
@@ -109,7 +112,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.grossEstateValueId -> JsNumber(-200),
             Constants.propertyValueId -> JsNumber(200),
             Constants.percentageCloselyInheritedId -> JsNumber(50)))
-        val buildResult = JsonBuilder.build(cacheMap)
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Left("-200 is smaller than required minimum value of 0.")
       }
 
@@ -121,7 +124,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.propertyValueId -> JsNumber(-200),
             Constants.percentageCloselyInheritedId -> JsNumber(50)))
-        val buildResult = JsonBuilder.build(cacheMap)
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Left("-200 is smaller than required minimum value of 0.")
       }
 
@@ -133,7 +136,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.propertyValueId -> JsNumber(200),
             Constants.percentageCloselyInheritedId -> JsNumber(-1)))
-        val buildResult = JsonBuilder.build(cacheMap)
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Left("-1 is smaller than required minimum value of 0.")
       }
 
@@ -145,7 +148,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.propertyValueId -> JsNumber(200),
             Constants.percentageCloselyInheritedId -> JsNumber(50)))
-        val buildResult = JsonBuilder.build(cacheMap)
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Left("'xxxx-yy-zz' does not match pattern ^\\d{4}-\\d{2}-\\d{2}$.")
       }
 
@@ -157,7 +160,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.propertyValueId -> JsNumber(200),
             Constants.percentageCloselyInheritedId -> JsNumber(50)))
-        val buildResult = JsonBuilder.build(cacheMap)
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Left("Date of death is before eligibility date")
       }
 
@@ -169,7 +172,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.propertyValueId -> JsNumber(200),
             Constants.percentageCloselyInheritedId -> JsNumber(101)))
-        val buildResult = JsonBuilder.build(cacheMap)
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
         buildResult shouldBe Left("101 exceeds maximum value of 100.")
       }
     }
@@ -177,7 +180,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
     "return a Future containing a Left with an error message" when {
 
       "the SessionConnector does not return a CacheMap" in {
-        JsonBuilder(mockSessionConnector)(mock[HeaderCarrier]).map(result => result shouldBe Left("could not find a cache map"))
+        jsonBuilder.build(mockSessionConnector)(mock[HeaderCarrier]).map(result => result shouldBe Left("could not find a cache map"))
       }
 
     }
@@ -192,8 +195,8 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.propertyValueId -> JsNumber(200),
             Constants.percentageCloselyInheritedId -> JsNumber(50)))
-        val buildResult = JsonBuilder.build(cacheMap)
-        buildResult shouldBe Right(Json.toJson(cacheMap.data))
+        val buildResult = jsonBuilder.buildFromCacheMap(cacheMap)
+        buildResult shouldBe Right(Json.toJson(jsonBuilder.setKeys(cacheMap)))
       }
     }
 
@@ -208,10 +211,58 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.propertyValueId -> JsNumber(200),
             Constants.percentageCloselyInheritedId -> JsNumber(50)))
         setCacheMap(cacheMap)
-        JsonBuilder(mockSessionConnector)(mock[HeaderCarrier]).map(result =>
+        jsonBuilder.build(mockSessionConnector)(mock[HeaderCarrier]).map(result =>
           result shouldBe Right(Json.toJson(cacheMap.data)))
       }
     }
 
+  }
+
+  "Set Keys" must {
+
+    val cacheMapId = "aaaa"
+    val jsonBuilder = new JsonBuilder
+
+    "return a map with the correct JSON keys when all of the keys are recognised" in {
+      val cacheMap = CacheMap(id = cacheMapId, data =
+        Map(
+          Constants.dateOfDeathId -> JsString("2017-09-10"),
+          Constants.grossEstateValueId -> JsNumber(200)))
+
+      jsonBuilder.setKeys(cacheMap) shouldBe Map(
+        Constants.jsonKeys(Constants.dateOfDeathId) -> JsString("2017-09-10"),
+        Constants.jsonKeys(Constants.grossEstateValueId) -> JsNumber(200))
+    }
+
+    "return a map with the correct translation of the recognised keys, and no entry for unrecognised keys, when both recognised and unrecognised keys are supplied" in {
+      val madeUpKey = "A made-up key"
+
+      val cacheMap = CacheMap(id = cacheMapId, data =
+        Map(
+          Constants.dateOfDeathId -> JsString("2017-09-10"),
+          Constants.grossEstateValueId -> JsNumber(200),
+          madeUpKey -> JsNumber(200)))
+
+      jsonBuilder.setKeys(cacheMap) shouldBe Map(
+        Constants.jsonKeys(Constants.dateOfDeathId) -> JsString("2017-09-10"),
+        Constants.jsonKeys(Constants.grossEstateValueId) -> JsNumber(200))
+    }
+
+    "return an empty map when all keys are unrecognised" in {
+      val madeUpKey = "A made-up key"
+      val anotherMadeUpKey = "Another made-up key"
+
+      val cacheMap = CacheMap(id = cacheMapId, data =
+        Map(
+          anotherMadeUpKey -> JsNumber(200),
+          madeUpKey -> JsNumber(200)))
+
+      jsonBuilder.setKeys(cacheMap) shouldBe Map()
+    }
+
+    "return an empty map when given an empty cache map" in {
+      val cacheMap = CacheMap(id = cacheMapId, data = Map())
+      jsonBuilder.setKeys(cacheMap) shouldBe Map()
+    }
   }
 }

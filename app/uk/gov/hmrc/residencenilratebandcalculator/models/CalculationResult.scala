@@ -14,17 +14,12 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.controllers
+package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import javax.inject.{Inject, Singleton}
+import play.api.libs.json.{Json, OFormat}
 
-import play.api.mvc.Results.Ok
-import play.api.mvc.{Action, AnyContent}
+case class CalculationResult (residenceNilRateAmount: Int, carryForwardAmount: Int) {}
 
-import scala.concurrent.Future
-
-@Singleton
-class PageNotFoundController @Inject()(){
-  val onPageLoad: Action[AnyContent] = Action.async { implicit request => Future.successful(Ok(""))
-  }
+object CalculationResult {
+  implicit val formats: OFormat[CalculationResult] = Json.format[CalculationResult]
 }

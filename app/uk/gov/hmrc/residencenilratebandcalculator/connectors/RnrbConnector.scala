@@ -18,17 +18,33 @@ package uk.gov.hmrc.residencenilratebandcalculator.connectors
 
 import javax.inject.{Inject, Singleton}
 
+import play.api.libs.json.{JsSuccess, JsValue, Json}
 import uk.gov.hmrc.play.config.ServicesConfig
-import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
+import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.WSHttp
-
+import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 @Singleton
 class RnrbConnector @Inject()(http: WSHttp) extends ServicesConfig {
   implicit val hc: HeaderCarrier = HeaderCarrier()
   lazy val serviceUrl = baseUrl("residence-nil-rate-band-calculator")
+  val baseSegment = "/residence-nil-rate-band-calculator/"
+  val jsonContentTypeHeader = ("Content-Type", "application/json")
 
-  def getHelloWorld = http.GET(s"$serviceUrl/residence-nil-rate-band-calculator/hello-world")
-  def getStyleGuide = http.GET(s"$serviceUrl/residence-nil-rate-band-calculator/style-guide")
+  def getHelloWorld = http.GET(s"$serviceUrl${baseSegment}hello-world")
+  def getStyleGuide = http.GET(s"$serviceUrl${baseSegment}style-guide")
+
+  def send(json: JsValue): Future[Either[String, CalculationResult]] =
+    http.POST(s"$serviceUrl${baseSegment}calculate", json, Seq(jsonContentTypeHeader))
+    .map {
+      response => Json.fromJson[CalculationResult](response.json) match {
+        case JsSuccess(result, _) => Right(result)
+        case _ => {
+          // TODO: Log this!!!!
+          Left(response.body)
+        }
+      }
+    }
 }

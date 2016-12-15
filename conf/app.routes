@@ -22,8 +22,11 @@ POST       /estate-has-property             uk.gov.hmrc.residencenilratebandcalc
 GET        /property-value                  uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyValueController.onPageLoad
 POST       /property-value                  uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyValueController.onSubmit
 
+
 GET        /percentage-closely-inherited    uk.gov.hmrc.residencenilratebandcalculator.controllers.PercentageCloselyInheritedController.onPageLoad
 POST       /percentage-closely-inherited    uk.gov.hmrc.residencenilratebandcalculator.controllers.PercentageCloselyInheritedController.onSubmit
+
+GET        /results                         uk.gov.hmrc.residencenilratebandcalculator.controllers.ResultsController.onPageLoad
 
 GET        /not-found                       uk.gov.hmrc.residencenilratebandcalculator.controllers.PageNotFoundController.onPageLoad
 
