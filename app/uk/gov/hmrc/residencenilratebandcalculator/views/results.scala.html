@@ -1,7 +1,8 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
+@import scala.util.{Try, Success, Failure}
 
-@(appConfig: FrontendAppConfig, calculationResult: Either[String, CalculationResult])(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, calculationResult: Try[CalculationResult])(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("results.browser_title"),
@@ -16,8 +17,8 @@
 
     @{
        calculationResult match {
-         case Left(err) => ""
-         case Right(cr) => cr.residenceNilRateAmount.toString()
+         case Failure(exception) => exception.getMessage()
+         case Success(cr) => cr.residenceNilRateAmount.toString()
        }
     }
 }

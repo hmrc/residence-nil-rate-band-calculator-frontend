@@ -25,8 +25,10 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, Ses
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.results
 import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, JsonBuilder}
 import play.Logger
-import scala.util.{Success, Failure}
+import play.api.libs.json.JsValue
+import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
 
+import scala.util.{Failure, Success, Try}
 import scala.concurrent.Future
 
 @Singleton
@@ -35,9 +37,9 @@ class ResultsController @Inject()(appConfig: FrontendAppConfig, val messagesApi:
   extends FrontendController with I18nSupport {
 
   def onPageLoad = Action.async { implicit request => {
-    val jsonEither = jsonBuilder.build(sessionConnector)
+    val futureTryJson: Future[Try[JsValue]] = jsonBuilder.build(sessionConnector)
 
-    jsonEither.flatMap {
+    futureTryJson.flatMap {
       case Failure(exception) => {
         val exceptionMessage = exception.getMessage
         Logger.error(exceptionMessage)
@@ -47,7 +49,7 @@ class ResultsController @Inject()(appConfig: FrontendAppConfig, val messagesApi:
       case Success(json) => {
         Logger.warn("Sending " + json) // Left in as a reminder on how to produce logs - only warn and error are currently visible during local deployment
         rnrbConnector.send(json).map {
-          rnrbEither => Ok(results(appConfig, rnrbEither))
+          (rnrbTry: Try[CalculationResult] with Product with Serializable) => Ok(results(appConfig, rnrbTry))
         }
       }
     }
