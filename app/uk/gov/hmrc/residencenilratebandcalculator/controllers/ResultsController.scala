@@ -39,12 +39,11 @@ class ResultsController @Inject()(appConfig: FrontendAppConfig, val messagesApi:
 
     jsonEither.flatMap {
       case Left(error) => {
-        println("%%%%%%%%%%%%%%%%%%%%%%%% HORRID ERROR")
         Logger.error(error)
-        println("%%%%%%%%%%%%%%%%%%%%%%%% HORRID ERROR")
         Future.successful(InternalServerError(error))
       }
       case Right(json) => {
+        Logger.warn("Sending " + json) // Left in as a reminder on how to produce logs - only warn and error are currently visible during local deployment
         rnrbConnector.send(json).map {
           rnrbEither => Ok(results(appConfig, rnrbEither))
         }
