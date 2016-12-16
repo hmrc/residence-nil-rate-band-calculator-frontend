@@ -32,8 +32,15 @@ class PropertyValueControllerSpec extends SimpleControllerSpecBase {
 
     def createController = () => new PropertyValueController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
-    val testValue = 123
+    val validData = 123
 
-    behave like rnrbController(createController, createView, Constants.propertyValueId, testValue)(Reads.IntReads, Writes.IntWrites)
+    val validRequestBody = Map("value" -> validData.toString)
+
+    val invalidRequestBody = Map("value" -> "invalid data")
+
+    def cacheValue = () => setCacheValue[Int](Constants.propertyValueId, validData)
+
+    behave like rnrbController(createController, createView, Constants.propertyValueId, validData, validRequestBody,
+      invalidRequestBody, cacheValue, cacheValue)(Reads.IntReads, Writes.IntWrites)
   }
 }

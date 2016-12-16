@@ -32,8 +32,15 @@ class EstateHasPropertyControllerSpec extends SimpleControllerSpecBase {
 
     def createController = () => new EstateHasPropertyController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
-    val testValue = true
+    val validData = true
 
-    behave like rnrbController(createController, createView, Constants.estateHasPropertyId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+    val validRequestBody = Map("value" -> validData.toString)
+
+    val invalidRequestBody = Map("value" -> "invalid data")
+
+    def cacheValue = () => setCacheValue[Boolean](Constants.estateHasPropertyId, validData)
+
+    behave like rnrbController(createController, createView, Constants.estateHasPropertyId, validData, validRequestBody,
+      invalidRequestBody, cacheValue, cacheValue)(Reads.BooleanReads, Writes.BooleanWrites)
   }
 }
