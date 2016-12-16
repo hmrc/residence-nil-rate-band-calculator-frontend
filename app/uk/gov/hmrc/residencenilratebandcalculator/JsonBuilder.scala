@@ -70,7 +70,7 @@ class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
 
   def build(sessionConnector: SessionConnector)(implicit headerCarrier: HeaderCarrier) = {
     sessionConnector.fetch.flatMap {
-      case None => Future.successful(Failure(new NoCacheMapException("No cache map.")))
+      case None => Future.successful(Failure(new NoCacheMapException("Unable to retrieve cache map from SessionConnector")))
       case Some(cacheMap) => buildFromCacheMap(cacheMap)
     }
   }

@@ -59,7 +59,6 @@ class RnrbConnector @Inject()(http: WSHttp) extends ServicesConfig {
       response => Json.fromJson[SchemaType](response.json) match {
         case JsSuccess(schema, _) => Success(schema)
         case error: JsError => {
-          Left((JsError.toJson(error) \ "obj" \ 0 \ "msg" \ 0).as[String])
           val errorLookupResult = (JsError.toJson(error) \ "obj" \ 0 \ "msg" \ 0).as[String]
           Failure(new JsonInvalidException(errorLookupResult.toString))
         }

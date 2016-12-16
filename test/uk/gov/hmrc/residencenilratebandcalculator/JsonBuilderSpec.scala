@@ -280,7 +280,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
           result => result match {
             case Failure(exception) => {
               exception shouldBe a [NoCacheMapException]
-              exception.getMessage shouldBe "No cache map."
+              exception.getMessage shouldBe "Unable to retrieve cache map from SessionConnector"
             }
             case Success(json) => fail
           }
