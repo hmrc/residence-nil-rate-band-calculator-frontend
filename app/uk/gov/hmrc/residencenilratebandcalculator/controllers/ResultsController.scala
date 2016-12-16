@@ -25,6 +25,7 @@ import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.results
 import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, JsonBuilder}
+import play.Logger
 
 import scala.concurrent.Future
 
@@ -38,10 +39,11 @@ class ResultsController @Inject()(appConfig: FrontendAppConfig, val messagesApi:
 
     jsonEither.flatMap {
       case Left(error) => {
-        //TODO: Logging
+        Logger.error(error)
         Future.successful(InternalServerError(error))
       }
       case Right(json) => {
+        Logger.warn("Sending " + json) // Left in as a reminder on how to produce logs - only warn and error are currently visible during local deployment
         rnrbConnector.send(json).map {
           rnrbEither => Ok(results(appConfig, rnrbEither))
         }
