@@ -17,7 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator
 
 import com.eclipsesource.schema.SchemaType
-import org.mockito.Mockito.when
+import org.mockito.Mockito.{when, verify, times}
 import org.scalatest.Matchers
 import org.scalatest.mock.MockitoSugar
 import play.api.libs.json.{JsNumber, JsString, Json}
@@ -283,5 +283,15 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
       val cacheMap = CacheMap(id = cacheMapId, data = Map())
       jsonBuilder.setKeys(cacheMap) shouldBe Map()
     }
+  }
+
+  "only get the schema once" in {
+    val jsonBuilder = new JsonBuilder(rnrbConnector)
+
+    val hc = mock[HeaderCarrier]
+    jsonBuilder.build(mockSessionConnector)(hc)
+    jsonBuilder.build(mockSessionConnector)(hc)
+
+    verify(rnrbConnector, times(1)).getSuccessfulResponseSchema
   }
 }
