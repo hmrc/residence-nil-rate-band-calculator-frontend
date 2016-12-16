@@ -23,10 +23,12 @@ import play.api.libs.json._
 import uk.gov.hmrc.play.config.ServicesConfig
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.WSHttp
+import uk.gov.hmrc.residencenilratebandcalculator.exceptions.JsonInvalidException
 import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.util.{Failure, Success, Try}
 
 @Singleton
 class RnrbConnector @Inject()(http: WSHttp) extends ServicesConfig {
@@ -50,11 +52,15 @@ class RnrbConnector @Inject()(http: WSHttp) extends ServicesConfig {
       }
     }
 
-  def getSuccessfulResponseSchema: Future[Either[String, SchemaType]] =
+  def getSuccessfulResponseSchema =
     http.GET(s"$serviceUrl${baseSegment}schemas/deceaseds-estate.jsonschema").map {
       response => Json.fromJson[SchemaType](response.json) match {
-        case JsSuccess(schema, _) => Right(schema)
-        case error: JsError => Left((JsError.toJson(error) \ "obj" \ 0 \ "msg" \ 0).as[String])
+        case JsSuccess(schema, _) => Success(schema)
+        case error: JsError => {
+          Left((JsError.toJson(error) \ "obj" \ 0 \ "msg" \ 0).as[String])
+          val errorLookupResult = (JsError.toJson(error) \ "obj" \ 0 \ "msg" \ 0).as[String]
+          Failure(new JsonInvalidException(errorLookupResult.toString))
+        }
       }
     }
 }

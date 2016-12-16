@@ -26,9 +26,11 @@ import play.api.libs.json._
 import uk.gov.hmrc.play.http.{HeaderCarrier, HttpReads, HttpResponse}
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.WSHttp
+import uk.gov.hmrc.residencenilratebandcalculator.exceptions.JsonInvalidException
 import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
 
 import scala.concurrent.Future
+import scala.util.{Failure, Success}
 
 class RnrbConnectorSpec extends UnitSpec with WithFakeApplication with MockitoSugar {
 
@@ -84,13 +86,19 @@ class RnrbConnectorSpec extends UnitSpec with WithFakeApplication with MockitoSu
     "return a schema when JSON representing a schema is received" in {
       val result = await(new RnrbConnector(getHttpMock(minimalJson)).getSuccessfulResponseSchema)
 
-      result shouldBe Right(Json.fromJson[SchemaType](minimalJson).get)
+      result shouldBe Success(Json.fromJson[SchemaType](minimalJson).get)
     }
 
     "return an error when JSON not representing a schema is received" in {
       val result = await(new RnrbConnector(getHttpMock(Json.parse("{\"type\": 0}"))).getSuccessfulResponseSchema)
 
-      result shouldBe Left("Invalid JSON schema")
+      result match {
+        case Failure(exception) => {
+          exception shouldBe a [JsonInvalidException]
+          exception.getMessage shouldBe "Invalid JSON schema"
+        }
+        case Success(json) => fail
+      }
     }
   }
 }

@@ -36,7 +36,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
 
   val rnrbConnector = mock[RnrbConnector]
   when(rnrbConnector.getSuccessfulResponseSchema) thenReturn Future.successful(
-    Right[String, SchemaType](Json.fromJson[SchemaType](Json.parse("""{
+    Success[SchemaType](Json.fromJson[SchemaType](Json.parse("""{
         |"$$schema": "http://json-schema.org/draft-04/schema#",
         |"title": "Test RNRB Schema",
         |"description": "A simple schema to test against",
