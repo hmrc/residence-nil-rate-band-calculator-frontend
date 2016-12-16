@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.connectors
 
+import com.eclipsesource.schema.SchemaType
 import org.mockito.ArgumentCaptor
 import org.mockito.Matchers._
 import org.mockito.Mockito.{verify, when}
@@ -35,6 +36,7 @@ class RnrbConnectorSpec extends UnitSpec with WithFakeApplication with MockitoSu
     val httpMock = mock[WSHttp]
     when(httpMock.POST(anyString, any[JsValue], any[Seq[(String, String)]])(any[Writes[Any]], any[HttpReads[Any]],
       any[HeaderCarrier])) thenReturn Future.successful(HttpResponse(Status.OK, Some(returnedData)))
+    when(httpMock.GET(anyString)(any[HttpReads[Any]], any[HeaderCarrier])) thenReturn Future.successful(HttpResponse(Status.OK, Some(returnedData)))
     httpMock
   }
 
@@ -77,6 +79,18 @@ class RnrbConnectorSpec extends UnitSpec with WithFakeApplication with MockitoSu
       val result = await(new RnrbConnector(getHttpMock(errorResponse)).send(minimalJson))
 
       result.left.get shouldBe errorResponse.toString
+    }
+
+    "return a schema when JSON representing a schema is received" in {
+      val result = await(new RnrbConnector(getHttpMock(minimalJson)).getSuccessfulResponseSchema)
+
+      result shouldBe Right(Json.fromJson[SchemaType](minimalJson).get)
+    }
+
+    "return an error when JSON not representing a schema is received" in {
+      val result = await(new RnrbConnector(getHttpMock(Json.parse("{\"type\": 0}"))).getSuccessfulResponseSchema)
+
+      result shouldBe Left("Invalid JSON schema")
     }
   }
 }
