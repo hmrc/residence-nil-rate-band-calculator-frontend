@@ -25,6 +25,7 @@ import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.results
 import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, JsonBuilder}
+import play.Logger
 
 import scala.concurrent.Future
 
@@ -38,7 +39,9 @@ class ResultsController @Inject()(appConfig: FrontendAppConfig, val messagesApi:
 
     jsonEither.flatMap {
       case Left(error) => {
-        //TODO: Logging
+        println("%%%%%%%%%%%%%%%%%%%%%%%% HORRID ERROR")
+        Logger.error(error)
+        println("%%%%%%%%%%%%%%%%%%%%%%%% HORRID ERROR")
         Future.successful(InternalServerError(error))
       }
       case Right(json) => {
