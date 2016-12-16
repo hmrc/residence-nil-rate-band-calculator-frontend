@@ -47,4 +47,9 @@ class RnrbConnector @Inject()(http: WSHttp) extends ServicesConfig {
         }
       }
     }
+
+  def getSuccessfulResponseSchema: Future[JsValue] =
+    http.GET(s"$serviceUrl${baseSegment}schemas/deceaseds-estate.jsonschema").map {
+      response => response.json
+    }
 }
