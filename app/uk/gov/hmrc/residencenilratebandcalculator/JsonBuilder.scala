@@ -24,7 +24,7 @@ import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-
+import uk.gov.hmrc.residencenilratebandcalculator.Constants.jsonKeys
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
@@ -38,12 +38,13 @@ class JsonBuilder @Inject()() {
         |"description": "A simple schema to test against",
         |"type:": "object",
         |"properties": {
-        |  "ChargeableTransferAmount": {"type": "integer", "minimum": 0},
-        |  "DateOfDeath": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
-        |  "GrossEstateValue": {"type": "integer", "minimum": 0},
-        |  "PropertyValue": {"type": "integer", "minimum": 0}
+        |  "chargeableTransferAmount": {"type": "integer", "minimum": 0},
+        |  "dateOfDeath": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+        |  "grossEstateValue": {"type": "integer", "minimum": 0},
+        |  "propertyValue": {"type": "integer", "minimum": 0},
+        |  "percentageCloselyInherited": {"type": "integer", "minimum": 0, "maximum": 100}
         |},
-        |"required": ["ChargeableTransferAmount", "DateOfDeath", "GrossEstateValue", "PropertyValue"]
+        |"required": ["chargeableTransferAmount", "dateOfDeath", "grossEstateValue", "propertyValue", "percentageCloselyInherited"]
       }""".stripMargin
 
   private val parsedJson = Json.parse(schemaDescription)
@@ -58,7 +59,7 @@ class JsonBuilder @Inject()() {
   }
 
   def buildFromCacheMap(cacheMap: CacheMap): Either[String, JsValue] = {
-    val incomingJson = Json.toJson(cacheMap.data)
+    val incomingJson = Json.toJson(setKeys(cacheMap))
     val validationResult = validator.validate(schema, incomingJson).asEither
     validationResult match {
       case Left(error) => {
@@ -83,5 +84,16 @@ class JsonBuilder @Inject()() {
     })
   }
 
+  def setKeys(cacheMap: CacheMap) = {
+    def keyIsRecognised(key: String) = jsonKeys.keySet.contains(key)
+    
+    val usableEntries = for {
+      recognisedEntries <- cacheMap.data.filterKeys(keyIsRecognised)
+    } yield recognisedEntries
+
+    usableEntries map {
+      case(key, value) => (jsonKeys(key), value)
+    }
+  }
 }
 
