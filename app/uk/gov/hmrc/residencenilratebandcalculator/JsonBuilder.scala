@@ -25,9 +25,12 @@ import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.Constants.jsonKeys
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
+import uk.gov.hmrc.residencenilratebandcalculator.exceptions.{JsonInvalidException, NoCacheMapException}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.util.{Failure, Success, Try}
+
 
 @Singleton
 class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
@@ -42,7 +45,7 @@ class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
     }
   }
 
-  def buildFromCacheMap(cacheMap: CacheMap): Future[Either[String, JsValue]] = {
+  def buildFromCacheMap(cacheMap: CacheMap): Future[Try[JsValue]] = {
     futureSchema.map {
       case Right(schema) => {
         val incomingJson = Json.toJson(setKeys(cacheMap))
@@ -50,24 +53,24 @@ class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
         validationResult match {
           case Left(error) => {
             val errorString = error.seq.flatMap(_._2).map(_.message).foldLeft(new StringBuilder())(_ append _).toString()
-            Left(errorString)
+            Failure(new JsonInvalidException(errorString))
           }
           case Right(json) => {
             if (dateOfDeathIsIneligible(cacheMap)) {
-              Left("Date of death is before eligibility date")
+              Failure(new JsonInvalidException("Date of death is before eligibility date"))
             } else {
-              Right(json)
+              Success(json)
             }
           }
         }
       }
-      case Left(error) => Left(error)
+      case Left(error: String) => Failure(new RuntimeException(error))
     }
   }
 
-  def build(sessionConnector: SessionConnector)(implicit headerCarrier: HeaderCarrier): Future[Either[String, JsValue]] = {
+  def build(sessionConnector: SessionConnector)(implicit headerCarrier: HeaderCarrier) = {
     sessionConnector.fetch.flatMap {
-      case None => Future.successful(Left("No cache map returned"))
+      case None => Future.successful(Failure(new NoCacheMapException("No cache map.")))
       case Some(cacheMap) => buildFromCacheMap(cacheMap)
     }
   }

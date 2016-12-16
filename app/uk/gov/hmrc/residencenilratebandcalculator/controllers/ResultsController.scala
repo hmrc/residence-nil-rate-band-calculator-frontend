@@ -19,13 +19,13 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import javax.inject.{Inject, Singleton}
 
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.libs.json.JsValue
 import play.api.mvc._
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.results
 import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, JsonBuilder}
 import play.Logger
+import scala.util.{Success, Failure}
 
 import scala.concurrent.Future
 
@@ -35,14 +35,16 @@ class ResultsController @Inject()(appConfig: FrontendAppConfig, val messagesApi:
   extends FrontendController with I18nSupport {
 
   def onPageLoad = Action.async { implicit request => {
-    val jsonEither: Future[Either[String, JsValue]] = jsonBuilder.build(sessionConnector)
+    val jsonEither = jsonBuilder.build(sessionConnector)
 
     jsonEither.flatMap {
-      case Left(error) => {
-        Logger.error(error)
-        Future.successful(InternalServerError(error))
+      case Failure(exception) => {
+        val exceptionMessage = exception.getMessage
+        Logger.error(exceptionMessage)
+        Logger.error(exception.getStackTrace.toString)
+        Future.successful(InternalServerError(exceptionMessage))
       }
-      case Right(json) => {
+      case Success(json) => {
         Logger.warn("Sending " + json) // Left in as a reminder on how to produce logs - only warn and error are currently visible during local deployment
         rnrbConnector.send(json).map {
           rnrbEither => Ok(results(appConfig, rnrbEither))
