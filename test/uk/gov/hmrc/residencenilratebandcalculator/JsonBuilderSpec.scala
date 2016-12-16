@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator
 
+import com.eclipsesource.schema.SchemaType
 import org.mockito.Mockito.when
 import org.scalatest.Matchers
 import org.scalatest.mock.MockitoSugar
@@ -33,7 +34,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
 
   val rnrbConnector = mock[RnrbConnector]
   when(rnrbConnector.getSuccessfulResponseSchema) thenReturn Future.successful(
-    Json.parse("""{
+    Right[String, SchemaType](Json.fromJson[SchemaType](Json.parse("""{
         |"$$schema": "http://json-schema.org/draft-04/schema#",
         |"title": "Test RNRB Schema",
         |"description": "A simple schema to test against",
@@ -46,8 +47,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
         |  "percentageCloselyInherited": {"type": "integer", "minimum": 0, "maximum": 100}
         |},
         |"required": ["chargeableTransferAmount", "dateOfDeath", "grossEstateValue", "propertyValue", "percentageCloselyInherited"]
-      }""".stripMargin)
-  )
+      }""".stripMargin)).get))
 
   "JsonBuilder" must {
 

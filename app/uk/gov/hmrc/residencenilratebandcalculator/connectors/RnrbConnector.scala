@@ -18,11 +18,13 @@ package uk.gov.hmrc.residencenilratebandcalculator.connectors
 
 import javax.inject.{Inject, Singleton}
 
-import play.api.libs.json.{JsSuccess, JsValue, Json}
+import com.eclipsesource.schema.SchemaType
+import play.api.libs.json._
 import uk.gov.hmrc.play.config.ServicesConfig
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.WSHttp
 import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
@@ -48,8 +50,11 @@ class RnrbConnector @Inject()(http: WSHttp) extends ServicesConfig {
       }
     }
 
-  def getSuccessfulResponseSchema: Future[JsValue] =
+  def getSuccessfulResponseSchema: Future[Either[String, SchemaType]] =
     http.GET(s"$serviceUrl${baseSegment}schemas/deceaseds-estate.jsonschema").map {
-      response => response.json
+      response => Json.fromJson[SchemaType](response.json) match {
+        case JsSuccess(schema, _) => Right(schema)
+        case error: JsError => Left((JsError.toJson(error) \ "obj" \ 0 \ "msg" \ 0).as[String])
+      }
     }
 }

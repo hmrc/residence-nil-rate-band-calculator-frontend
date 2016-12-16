@@ -18,7 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator
 
 import javax.inject.{Inject, Singleton}
 
-import com.eclipsesource.schema.{SchemaType, SchemaValidator}
+import com.eclipsesource.schema.SchemaValidator
 import org.joda.time.LocalDate
 import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.http.cache.client.CacheMap
@@ -32,9 +32,7 @@ import scala.concurrent.Future
 @Singleton
 class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
 
-  private lazy val futureSchema = rnrbConnector.getSuccessfulResponseSchema.map {
-    schemaDescription => Json.fromJson[SchemaType](schemaDescription).get
-  }
+  private lazy val futureSchema = rnrbConnector.getSuccessfulResponseSchema
   private val validator = SchemaValidator()
 
   private def dateOfDeathIsIneligible(cacheMap: CacheMap): Boolean = {
@@ -46,7 +44,7 @@ class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
 
   def buildFromCacheMap(cacheMap: CacheMap): Future[Either[String, JsValue]] = {
     futureSchema.map {
-      schema =>
+      case Right(schema) => {
         val incomingJson = Json.toJson(setKeys(cacheMap))
         val validationResult = validator.validate(schema, incomingJson).asEither
         validationResult match {
@@ -62,6 +60,8 @@ class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
             }
           }
         }
+      }
+      case Left(error) => Left(error)
     }
   }
 
