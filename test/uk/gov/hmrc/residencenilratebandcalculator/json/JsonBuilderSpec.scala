@@ -14,27 +14,30 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator
+package uk.gov.hmrc.residencenilratebandcalculator.json
 
 import com.eclipsesource.schema.SchemaType
-import org.mockito.Mockito.{when, verify, times}
+import org.mockito.Mockito.{times, verify, when}
 import org.scalatest.Matchers
 import org.scalatest.mock.MockitoSugar
 import play.api.libs.json.{JsNumber, JsString, Json}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.MockSessionConnector
+import uk.gov.hmrc.residencenilratebandcalculator.exceptions.{JsonInvalidException, NoCacheMapException}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.util.{Failure, Success}
 
 class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with WithFakeApplication with MockSessionConnector {
 
   val rnrbConnector = mock[RnrbConnector]
   when(rnrbConnector.getSuccessfulResponseSchema) thenReturn Future.successful(
-    Right[String, SchemaType](Json.fromJson[SchemaType](Json.parse("""{
+    Success[SchemaType](Json.fromJson[SchemaType](Json.parse("""{
         |"$$schema": "http://json-schema.org/draft-04/schema#",
         |"title": "Test RNRB Schema",
         |"description": "A simple schema to test against",
@@ -54,7 +57,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
     val cacheMapId = "aaaa"
     val jsonBuilder = new JsonBuilder(rnrbConnector)
 
-    "return a Left with an error message" when {
+    "return a Failure with a JasonInvalidException in it" when {
 
       "the CacheMap does not contain a value for the ChargeableTransferAmount" in {
         val cacheMap = CacheMap(id = cacheMapId, data =
@@ -65,7 +68,13 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.percentageCloselyInheritedId -> JsNumber(50),
             Constants.propertyValueId -> JsNumber(200)))
         val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
-        buildResult shouldBe Left("Property chargeableTransferAmount missing.")
+        buildResult match {
+          case Failure(exception) => {
+            exception shouldBe a [JsonInvalidException]
+            exception.getMessage shouldBe "JSON error: Property chargeableTransferAmount missing.\n"
+          }
+          case Success(json) => fail
+        }
       }
 
       "the CacheMap does not contain a value for the DateOfDeath" in {
@@ -77,7 +86,13 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.percentageCloselyInheritedId -> JsNumber(50),
             Constants.propertyValueId -> JsNumber(200)))
         val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
-        buildResult shouldBe Left("Property dateOfDeath missing.")
+        buildResult match {
+          case Failure(exception) => {
+            exception shouldBe a [JsonInvalidException]
+            exception.getMessage shouldBe "JSON error: Property dateOfDeath missing.\n"
+          }
+          case Success(json) => fail
+        }
       }
 
       "the CacheMap does not contain a value for the GrossEstateValue" in {
@@ -88,7 +103,14 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.propertyValueId -> JsNumber(200),
             Constants.percentageCloselyInheritedId -> JsNumber(50)))
         val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
-        buildResult shouldBe Left("Property grossEstateValue missing.")
+        buildResult match {
+          case Failure(exception) => {
+            exception shouldBe a [JsonInvalidException]
+            exception.getMessage shouldBe
+            "JSON error: Property grossEstateValue missing.\n"
+          }
+          case Success(json) => fail
+        }
       }
 
       "the CacheMap does not contain a value for the PropertyValue" in {
@@ -99,7 +121,15 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.percentageCloselyInheritedId -> JsNumber(50)))
         val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
-        buildResult shouldBe Left("Property propertyValue missing.")
+
+        buildResult match {
+          case Failure(exception) => {
+            exception shouldBe a [JsonInvalidException]
+            exception.getMessage shouldBe
+            "JSON error: Property propertyValue missing.\n"
+          }
+          case Success(json) => fail
+        }
       }
 
       "the CacheMap does not contain a value for the PercentageCloselyInherited" in {
@@ -110,7 +140,14 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.propertyValueId -> JsNumber(200)))
         val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
-        buildResult shouldBe Left("Property percentageCloselyInherited missing.")
+        buildResult match {
+          case Failure(exception) => {
+            exception shouldBe a [JsonInvalidException]
+            exception.getMessage shouldBe
+            "JSON error: Property percentageCloselyInherited missing.\n"
+          }
+          case Success(json) => fail
+        }
       }
 
       "the CacheMap contains a negative value for ChargeableTransferAmount" in {
@@ -122,7 +159,15 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.propertyValueId -> JsNumber(200),
             Constants.percentageCloselyInheritedId -> JsNumber(50)))
         val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
-        buildResult shouldBe Left("-100 is smaller than required minimum value of 0.")
+        buildResult match {
+          case Failure(exception) => {
+            exception shouldBe a [JsonInvalidException]
+            exception.getMessage shouldBe
+            "JSON error: -100 is smaller than required minimum value of 0.\n"
+
+          }
+          case Success(json) => fail
+        }
       }
 
       "the CacheMap contains a negative value for GrossEstateValue" in {
@@ -134,7 +179,14 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.propertyValueId -> JsNumber(200),
             Constants.percentageCloselyInheritedId -> JsNumber(50)))
         val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
-        buildResult shouldBe Left("-200 is smaller than required minimum value of 0.")
+        buildResult match {
+          case Failure(exception) => {
+            exception shouldBe a[JsonInvalidException]
+            exception.getMessage shouldBe
+            "JSON error: -200 is smaller than required minimum value of 0.\n"
+          }
+          case Success(json) => fail
+        }
       }
 
       "the CacheMap contains a negative value for PropertyValue" in {
@@ -146,7 +198,14 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.propertyValueId -> JsNumber(-200),
             Constants.percentageCloselyInheritedId -> JsNumber(50)))
         val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
-        buildResult shouldBe Left("-200 is smaller than required minimum value of 0.")
+        buildResult match {
+          case Failure(exception) => {
+            exception shouldBe a [JsonInvalidException]
+            exception.getMessage shouldBe
+            "JSON error: -200 is smaller than required minimum value of 0.\n"
+          }
+          case Success(json) => fail
+        }
       }
 
       "the CacheMap contains a negative value for PercentageCloselyInherited" in {
@@ -158,7 +217,13 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.propertyValueId -> JsNumber(200),
             Constants.percentageCloselyInheritedId -> JsNumber(-1)))
         val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
-        buildResult shouldBe Left("-1 is smaller than required minimum value of 0.")
+        buildResult match {
+          case Failure(exception) => {
+            exception shouldBe a [JsonInvalidException]
+            exception.getMessage shouldBe "JSON error: -1 is smaller than required minimum value of 0.\n"
+          }
+          case Success(json) => fail
+        }
       }
 
       "the CacheMap contains an unparseable date for DateOfDeath" in {
@@ -170,7 +235,13 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.propertyValueId -> JsNumber(200),
             Constants.percentageCloselyInheritedId -> JsNumber(50)))
         val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
-        buildResult shouldBe Left("'xxxx-yy-zz' does not match pattern ^\\d{4}-\\d{2}-\\d{2}$.")
+        buildResult match {
+          case Failure(exception) => {
+            exception shouldBe a [JsonInvalidException]
+            exception.getMessage shouldBe "JSON error: 'xxxx-yy-zz' does not match pattern ^\\d{4}-\\d{2}-\\d{2}$.\n"
+          }
+          case Success(json) => fail
+        }
       }
 
       "the CacheMap contains a date prior to the eligibility date for DateOfDeath" in {
@@ -182,7 +253,13 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.propertyValueId -> JsNumber(200),
             Constants.percentageCloselyInheritedId -> JsNumber(50)))
         val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
-        buildResult shouldBe Left("Date of death is before eligibility date")
+        buildResult match {
+          case Failure(exception) => {
+            exception shouldBe a [JsonInvalidException]
+            exception.getMessage shouldBe "JSON error: Date of death is before eligibility date\n"
+          }
+          case Success(json) => fail
+        }
       }
 
       "the CacheMap contains a value greater than 100 for PercentageCloselyInherited" in {
@@ -194,14 +271,28 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.propertyValueId -> JsNumber(200),
             Constants.percentageCloselyInheritedId -> JsNumber(101)))
         val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
-        buildResult shouldBe Left("101 exceeds maximum value of 100.")
+        buildResult match {
+          case Failure(exception) => {
+            exception shouldBe a [JsonInvalidException]
+            exception.getMessage shouldBe "JSON error: 101 exceeds maximum value of 100.\n"
+          }
+          case Success(json) => fail
+        }
       }
     }
 
     "return a Future containing a Left with an error message" when {
 
       "the SessionConnector does not return a CacheMap" in {
-        jsonBuilder.build(mockSessionConnector)(mock[HeaderCarrier]).map(result => result shouldBe Left("could not find a cache map"))
+        jsonBuilder.build(mockSessionConnector)(mock[HeaderCarrier]).map {
+          result => result match {
+            case Failure(exception) => {
+              exception shouldBe a [NoCacheMapException]
+              exception.getMessage shouldBe "Unable to retrieve cache map from SessionConnector"
+            }
+            case Success(json) => fail
+          }
+        }
       }
     }
 
@@ -216,7 +307,10 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
             Constants.propertyValueId -> JsNumber(200),
             Constants.percentageCloselyInheritedId -> JsNumber(50)))
         val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
-        buildResult shouldBe Right(Json.toJson(jsonBuilder.setKeys(cacheMap)))
+        buildResult match {
+          case Failure(exception) => fail
+          case Success(json) => json shouldBe Json.toJson(jsonBuilder.setKeys(cacheMap))
+        }
       }
     }
 

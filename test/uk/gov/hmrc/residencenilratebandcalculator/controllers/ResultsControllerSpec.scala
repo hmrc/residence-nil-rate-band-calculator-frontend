@@ -26,10 +26,12 @@ import play.api.libs.json.{JsNumber, JsValue}
 import play.api.test.Helpers._
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.results
-import uk.gov.hmrc.residencenilratebandcalculator.JsonBuilder
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
+import uk.gov.hmrc.residencenilratebandcalculator.exceptions.{JsonInvalidException, NoCacheMapException}
+import uk.gov.hmrc.residencenilratebandcalculator.json.JsonBuilder
 
+import scala.util.{Failure, Success}
 import scala.concurrent.Future
 
 class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar with Matchers {
@@ -37,14 +39,14 @@ class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar w
   val testJsNumber = JsNumber(10)
 
   val mockLeftJsonBuilder: JsonBuilder = mock[JsonBuilder]
-  when(mockLeftJsonBuilder.build(any[SessionConnector])(any[HeaderCarrier])) thenReturn Future.successful(Left("Something bad happened"))
+  when(mockLeftJsonBuilder.build(any[SessionConnector])(any[HeaderCarrier])) thenReturn Future.successful(Failure(new NoCacheMapException("Something bad happened")))
 
   val mockJsonBuilderThatSucceeds: JsonBuilder = mock[JsonBuilder]
-  when(mockJsonBuilderThatSucceeds.build(any[SessionConnector])(any[HeaderCarrier])) thenReturn Future.successful(Right(testJsNumber))
+  when(mockJsonBuilderThatSucceeds.build(any[SessionConnector])(any[HeaderCarrier])) thenReturn Future.successful(Success(testJsNumber))
 
   val expectedResidenceNilRateAmount = 77796325
   val expectedCarriedForwardAmount = 9999
-  val eitherCalculationResult = Right(CalculationResult(expectedResidenceNilRateAmount, expectedCarriedForwardAmount))
+  val eitherCalculationResult = Success(CalculationResult(expectedResidenceNilRateAmount, expectedCarriedForwardAmount))
 
   def mockRnrbConnector = {
     val mockConnector = mock[RnrbConnector]

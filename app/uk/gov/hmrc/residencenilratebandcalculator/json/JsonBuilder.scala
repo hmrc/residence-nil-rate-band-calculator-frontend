@@ -14,20 +14,25 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator
+package uk.gov.hmrc.residencenilratebandcalculator.json
 
 import javax.inject.{Inject, Singleton}
 
-import com.eclipsesource.schema.SchemaValidator
+import com.eclipsesource.schema.{SchemaType, SchemaValidator}
 import org.joda.time.LocalDate
-import play.api.libs.json.{JsValue, Json}
+import play.api.data.validation.ValidationError
+import play.api.libs.json.{JsPath, JsValue, Json}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.HeaderCarrier
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.Constants.jsonKeys
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
+import uk.gov.hmrc.residencenilratebandcalculator.exceptions.{JsonInvalidException, NoCacheMapException}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.util.{Failure, Success, Try}
+
 
 @Singleton
 class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
@@ -42,32 +47,32 @@ class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
     }
   }
 
-  def buildFromCacheMap(cacheMap: CacheMap): Future[Either[String, JsValue]] = {
+
+  def buildFromCacheMap(cacheMap: CacheMap): Future[Try[JsValue]] = {
     futureSchema.map {
-      case Right(schema) => {
+      case Success(schema) => {
         val incomingJson = Json.toJson(setKeys(cacheMap))
         val validationResult = validator.validate(schema, incomingJson).asEither
         validationResult match {
           case Left(error) => {
-            val errorString = error.seq.flatMap(_._2).map(_.message).foldLeft(new StringBuilder())(_ append _).toString()
-            Left(errorString)
+            Failure(new JsonInvalidException(JsonErrorProcessor(error)))
           }
           case Right(json) => {
             if (dateOfDeathIsIneligible(cacheMap)) {
-              Left("Date of death is before eligibility date")
+              Failure(new JsonInvalidException("JSON error: Date of death is before eligibility date\n"))
             } else {
-              Right(json)
+              Success(json)
             }
           }
         }
       }
-      case Left(error) => Left(error)
+      case Failure(exception) => Failure(exception)
     }
   }
 
-  def build(sessionConnector: SessionConnector)(implicit headerCarrier: HeaderCarrier): Future[Either[String, JsValue]] = {
+  def build(sessionConnector: SessionConnector)(implicit headerCarrier: HeaderCarrier) = {
     sessionConnector.fetch.flatMap {
-      case None => Future.successful(Left("No cache map returned"))
+      case None => Future.successful(Failure(new NoCacheMapException("Unable to retrieve cache map from SessionConnector")))
       case Some(cacheMap) => buildFromCacheMap(cacheMap)
     }
   }
