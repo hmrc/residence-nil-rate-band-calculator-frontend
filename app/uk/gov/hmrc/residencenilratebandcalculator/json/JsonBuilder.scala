@@ -55,7 +55,6 @@ class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
         val validationResult = validator.validate(schema, incomingJson).asEither
         validationResult match {
           case Left(error) => {
-            //val errorString = error.seq.flatMap(_._2).map(_.message).foldLeft(new StringBuilder())(_ append _).toString()
             Failure(new JsonInvalidException(JsonErrorProcessor(error)))
           }
           case Right(json) => {

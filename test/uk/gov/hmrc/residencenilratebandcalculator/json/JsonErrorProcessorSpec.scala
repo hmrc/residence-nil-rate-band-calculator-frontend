@@ -21,9 +21,6 @@ import play.api.data.validation.ValidationError
 import play.api.libs.json._
 import uk.gov.hmrc.play.test.UnitSpec
 
-/**
-  * Created by andy on 19/12/2016.
-  */
 class JsonErrorProcessorSpec extends UnitSpec {
   val schema = Json.fromJson[SchemaType](Json.parse("""{
                                 |"$$schema": "http://json-schema.org/draft-04/schema#",

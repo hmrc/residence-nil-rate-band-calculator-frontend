@@ -19,9 +19,6 @@ package uk.gov.hmrc.residencenilratebandcalculator.json
 import play.api.data.validation.ValidationError
 import play.api.libs.json.{JsPath, JsValue}
 
-/**
-  * Created by andy on 19/12/2016.
-  */
 object JsonErrorProcessor {
   def validationErrorToString(v: ValidationError): String = {
     v.messages.foldLeft(new StringBuilder())(_ append _).toString()
