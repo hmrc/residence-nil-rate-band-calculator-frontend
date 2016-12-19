@@ -19,6 +19,8 @@ package uk.gov.hmrc.residencenilratebandcalculator
 import org.joda.time.LocalDate
 
 object Constants {
+  val anyBroughtForwardAllowanceId = "AnyBroughtForwardAllowance"
+  val broughtForwardAllowanceId = "BroughtForwardAllowance"
   val chargeableTransferAmountId = "ChargeableTransferAmount"
   val dateOfDeathId = "DateOfDeath"
   val eligibilityDate = new LocalDate(2017, 4, 6)
@@ -29,6 +31,7 @@ object Constants {
   val percentageCloselyInheritedId = "PercentageCloselyInherited"
 
   val jsonKeys = Map(
+    broughtForwardAllowanceId -> "broughtForwardAllowance",
     chargeableTransferAmountId -> "chargeableTransferAmount",
     dateOfDeathId -> "dateOfDeath",
     estateHasPropertyId -> "estateHasProperty",
