@@ -56,7 +56,8 @@ class Navigator @Inject()() {
   private def getGrossEstateValueRoute(cacheMap: CacheMap) = {
     cacheMap.getEntry[Int](Constants.grossEstateValueId) match {
       case Some(v) if v > Constants.maxGrossEstateValue => TransitionOutController.onPageLoad()
-      case _ => ChargeableTransferAmountController.onPageLoad()
+      case Some(_) => ChargeableTransferAmountController.onPageLoad()
+      case None => HomeController.onPageLoad()
     }
   }
 
