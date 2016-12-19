@@ -22,9 +22,6 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.results
 import scala.language.reflectiveCalls
 import scala.util.Success
 
-/**
-  * Created by andy on 14/12/2016.
-  */
 class ResultsViewSpec extends HtmlSpec {
   def fixture() = new {
     val view = results(frontendAppConfig, Success(CalculationResult(10, 100)))(request, messages)
