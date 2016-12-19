@@ -20,11 +20,14 @@ import javax.inject.{Inject, Singleton}
 
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
-import play.api.data.Form
+import play.api.data.{Form, FormError}
+import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_value
+
+import scala.concurrent.Future
 
 @Singleton
 class PropertyValueController @Inject()(override val appConfig: FrontendAppConfig,
@@ -38,4 +41,12 @@ class PropertyValueController @Inject()(override val appConfig: FrontendAppConfi
   override def form = () => NonNegativeIntForm()
 
   override def view(form: Option[Form[Int]])(implicit request: Request[_]) = property_value(appConfig, form)
+
+  override def validate(value: Int)(implicit hc: HeaderCarrier): Future[Option[FormError]] = {
+    sessionConnector.fetchAndGetEntry[Int](Constants.grossEstateValueId).map {
+      case None => new Some(FormError("value", "property_value.greater_than_gross_estate_value.error"))
+      case Some(g) if value > g => Some(FormError("value", "property_value.greater_than_gross_estate_value.error"))
+      case _ => None
+    }
+  }
 }

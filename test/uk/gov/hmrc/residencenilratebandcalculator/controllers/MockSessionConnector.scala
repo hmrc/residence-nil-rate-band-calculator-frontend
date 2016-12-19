@@ -58,9 +58,7 @@ trait MockSessionConnector extends UnitSpec with MockitoSugar with Matchers with
   def verifyValueIsCached[A: ClassTag](key: String, value: A) = {
     implicit val hc = new HeaderCarrier()
     val valueCaptor = ArgumentCaptor.forClass(classTag[A].runtimeClass)
-    val keyCaptor = ArgumentCaptor.forClass(classOf[String])
-    verify(mockSessionConnector).cache(keyCaptor.capture, valueCaptor.capture)(writesnapper.capture, headnapper.capture)
-    keyCaptor.getValue shouldBe key
+    verify(mockSessionConnector).cache(matches(key), valueCaptor.capture)(writesnapper.capture, headnapper.capture)
     valueCaptor.getValue shouldBe value
   }
 
