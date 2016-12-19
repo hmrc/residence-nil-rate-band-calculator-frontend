@@ -48,8 +48,9 @@ class RnrbConnector @Inject()(http: WSHttp) extends ServicesConfig {
       response => Json.fromJson[CalculationResult](response.json) match {
         case JsSuccess(result, _) => Success(result)
         case JsError(error) => {
-          val msg  = error.seq.flatMap(_._2).map(_.message).foldLeft(new StringBuilder())(_ append _).toString()
-          Failure(new JsonInvalidException(msg))
+          //val xxx: Seq[(JsPath, Seq[ValidationError])] = error
+          //val msg  = error.seq.flatMap(_._2).map(_.message).foldLeft(new StringBuilder())(_ append _).toString()
+          Failure(new JsonInvalidException(error.toString()))
         }
       }
     }

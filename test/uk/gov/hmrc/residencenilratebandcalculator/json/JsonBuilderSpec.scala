@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator
+package uk.gov.hmrc.residencenilratebandcalculator.json
 
 import com.eclipsesource.schema.SchemaType
 import org.mockito.Mockito.{times, verify, when}
@@ -24,13 +24,14 @@ import play.api.libs.json.{JsNumber, JsString, Json}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.MockSessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.{JsonInvalidException, NoCacheMapException}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import scala.util.{Failure, Success, Try}
+import scala.util.{Failure, Success}
 
 class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with WithFakeApplication with MockSessionConnector {
 
@@ -70,7 +71,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
         buildResult match {
           case Failure(exception) => {
             exception shouldBe a [JsonInvalidException]
-            exception.getMessage shouldBe "Property chargeableTransferAmount missing."
+            exception.getMessage shouldBe "JSON error: Property chargeableTransferAmount missing.\n"
           }
           case Success(json) => fail
         }
@@ -88,7 +89,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
         buildResult match {
           case Failure(exception) => {
             exception shouldBe a [JsonInvalidException]
-            exception.getMessage shouldBe "Property dateOfDeath missing."
+            exception.getMessage shouldBe "JSON error: Property dateOfDeath missing.\n"
           }
           case Success(json) => fail
         }
@@ -105,7 +106,8 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
         buildResult match {
           case Failure(exception) => {
             exception shouldBe a [JsonInvalidException]
-            exception.getMessage shouldBe "Property grossEstateValue missing."
+            exception.getMessage shouldBe
+            "JSON error: Property grossEstateValue missing.\n"
           }
           case Success(json) => fail
         }
@@ -123,7 +125,8 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
         buildResult match {
           case Failure(exception) => {
             exception shouldBe a [JsonInvalidException]
-            exception.getMessage shouldBe "Property propertyValue missing."
+            exception.getMessage shouldBe
+            "JSON error: Property propertyValue missing.\n"
           }
           case Success(json) => fail
         }
@@ -140,7 +143,8 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
         buildResult match {
           case Failure(exception) => {
             exception shouldBe a [JsonInvalidException]
-            exception.getMessage shouldBe "Property percentageCloselyInherited missing."
+            exception.getMessage shouldBe
+            "JSON error: Property percentageCloselyInherited missing.\n"
           }
           case Success(json) => fail
         }
@@ -158,7 +162,9 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
         buildResult match {
           case Failure(exception) => {
             exception shouldBe a [JsonInvalidException]
-            exception.getMessage shouldBe "-100 is smaller than required minimum value of 0."
+            exception.getMessage shouldBe
+            "JSON error: -100 is smaller than required minimum value of 0.\n"
+
           }
           case Success(json) => fail
         }
@@ -176,7 +182,8 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
         buildResult match {
           case Failure(exception) => {
             exception shouldBe a[JsonInvalidException]
-            exception.getMessage shouldBe "-200 is smaller than required minimum value of 0."
+            exception.getMessage shouldBe
+            "JSON error: -200 is smaller than required minimum value of 0.\n"
           }
           case Success(json) => fail
         }
@@ -194,7 +201,8 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
         buildResult match {
           case Failure(exception) => {
             exception shouldBe a [JsonInvalidException]
-            exception.getMessage shouldBe "-200 is smaller than required minimum value of 0."
+            exception.getMessage shouldBe
+            "JSON error: -200 is smaller than required minimum value of 0.\n"
           }
           case Success(json) => fail
         }
@@ -212,7 +220,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
         buildResult match {
           case Failure(exception) => {
             exception shouldBe a [JsonInvalidException]
-            exception.getMessage shouldBe "-1 is smaller than required minimum value of 0."
+            exception.getMessage shouldBe "JSON error: -1 is smaller than required minimum value of 0.\n"
           }
           case Success(json) => fail
         }
@@ -230,7 +238,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
         buildResult match {
           case Failure(exception) => {
             exception shouldBe a [JsonInvalidException]
-            exception.getMessage shouldBe "'xxxx-yy-zz' does not match pattern ^\\d{4}-\\d{2}-\\d{2}$."
+            exception.getMessage shouldBe "JSON error: 'xxxx-yy-zz' does not match pattern ^\\d{4}-\\d{2}-\\d{2}$.\n"
           }
           case Success(json) => fail
         }
@@ -248,7 +256,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
         buildResult match {
           case Failure(exception) => {
             exception shouldBe a [JsonInvalidException]
-            exception.getMessage shouldBe "Date of death is before eligibility date"
+            exception.getMessage shouldBe "JSON error: Date of death is before eligibility date\n"
           }
           case Success(json) => fail
         }
@@ -266,7 +274,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
         buildResult match {
           case Failure(exception) => {
             exception shouldBe a [JsonInvalidException]
-            exception.getMessage shouldBe "101 exceeds maximum value of 100."
+            exception.getMessage shouldBe "JSON error: 101 exceeds maximum value of 100.\n"
           }
           case Success(json) => fail
         }

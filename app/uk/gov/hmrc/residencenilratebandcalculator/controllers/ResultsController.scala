@@ -23,9 +23,10 @@ import play.api.mvc._
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.results
-import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, JsonBuilder}
+import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import play.Logger
 import play.api.libs.json.JsValue
+import uk.gov.hmrc.residencenilratebandcalculator.json.JsonBuilder
 import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
 
 import scala.util.{Failure, Success, Try}

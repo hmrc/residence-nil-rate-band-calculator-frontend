@@ -14,15 +14,17 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator
+package uk.gov.hmrc.residencenilratebandcalculator.json
 
 import javax.inject.{Inject, Singleton}
 
-import com.eclipsesource.schema.SchemaValidator
+import com.eclipsesource.schema.{SchemaType, SchemaValidator}
 import org.joda.time.LocalDate
-import play.api.libs.json.{JsValue, Json}
+import play.api.data.validation.ValidationError
+import play.api.libs.json.{JsPath, JsValue, Json}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.HeaderCarrier
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.Constants.jsonKeys
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.{JsonInvalidException, NoCacheMapException}
@@ -45,6 +47,7 @@ class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
     }
   }
 
+
   def buildFromCacheMap(cacheMap: CacheMap): Future[Try[JsValue]] = {
     futureSchema.map {
       case Success(schema) => {
@@ -52,12 +55,12 @@ class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
         val validationResult = validator.validate(schema, incomingJson).asEither
         validationResult match {
           case Left(error) => {
-            val errorString = error.seq.flatMap(_._2).map(_.message).foldLeft(new StringBuilder())(_ append _).toString()
-            Failure(new JsonInvalidException(errorString))
+            //val errorString = error.seq.flatMap(_._2).map(_.message).foldLeft(new StringBuilder())(_ append _).toString()
+            Failure(new JsonInvalidException(JsonErrorProcessor(error)))
           }
           case Right(json) => {
             if (dateOfDeathIsIneligible(cacheMap)) {
-              Failure(new JsonInvalidException("Date of death is before eligibility date"))
+              Failure(new JsonInvalidException("JSON error: Date of death is before eligibility date\n"))
             } else {
               Success(json)
             }
