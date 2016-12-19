@@ -2,6 +2,7 @@ chargeable_transfer_amount.browser_title = Net Chargeable Transfer Value
 chargeable_transfer_amount.title = Net Chargeable Transfer Value of the Estate
 chargeable_transfer_amount.guidance = Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
 chargeable_transfer_amount.label = What is the chargeable transfer amount?
+chargeable_transfer_amount.greater_than_gross_estate_value.error = Chargeable Transfer Amount cannot be greater than the Gross Estate Value
 
 date.day = Day
 date.month = Month
@@ -45,6 +46,7 @@ property_value.browser_title = Value of the property
 property_value.title = What was the value of the property?
 property_value.guidance = Property value guidance ipsum dolor sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
 property_value.label = What is the property value?
+property_value.greater_than_gross_estate_value.error = Property Value cannot be greater than the Gross Estate Value
 
 results.browser_title = Final calculation
 results.title = Your results are:

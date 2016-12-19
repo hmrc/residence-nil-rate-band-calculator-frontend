@@ -24,6 +24,7 @@ object Constants {
   val eligibilityDate = new LocalDate(2017, 4, 6)
   val estateHasPropertyId = "EstateHasProperty"
   val grossEstateValueId = "GrossEstateValue"
+  val maxGrossEstateValue = 2000000
   val propertyValueId = "PropertyValue"
   val percentageCloselyInheritedId = "PercentageCloselyInherited"
 

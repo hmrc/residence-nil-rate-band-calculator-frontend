@@ -17,14 +17,15 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 
-import play.api.data.Form
+import play.api.data.{Form, FormError}
 import play.api.i18n.I18nSupport
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc._
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.play.frontend.controller.FrontendController
+import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 import scala.concurrent.Future
 
@@ -49,11 +50,16 @@ trait SimpleControllerBase[A] extends FrontendController with I18nSupport {
       })
   }
 
-  def onSubmit(implicit wts: Writes[A]) = Action.async { implicit request => {
+  def onSubmit(implicit wts: Writes[A]) = Action.async { implicit request =>
     val boundForm = form().bindFromRequest()
     boundForm.fold(
       (formWithErrors: Form[A]) => Future.successful(BadRequest(view(Some(formWithErrors)))),
-      (value) => sessionConnector.cache[A](controllerId, value).map(cacheMap =>
-        Redirect(navigator.nextPage(controllerId)(cacheMap))))}
+      (value) => validate(value).flatMap {
+        case Some(error) => Future.successful(BadRequest(view(Some(form().fill(value).withError(error)))))
+        case None => sessionConnector.cache[A](controllerId, value).map(cacheMap =>
+          Redirect(navigator.nextPage(controllerId)(cacheMap)))
+      })
   }
+
+  def validate(value: A)(implicit hc: HeaderCarrier): Future[Option[FormError]] = Future.successful(None)
 }

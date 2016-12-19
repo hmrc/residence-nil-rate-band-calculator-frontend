@@ -29,7 +29,7 @@ class Navigator @Inject()() {
 
     Map(
       Constants.dateOfDeathId -> (cm => getDateOfDeathRoute(cm)),
-      Constants.grossEstateValueId -> (_ => ChargeableTransferAmountController.onPageLoad()),
+      Constants.grossEstateValueId -> (cm => getGrossEstateValueRoute(cm)),
       Constants.chargeableTransferAmountId -> (_ => EstateHasPropertyController.onPageLoad()),
       Constants.estateHasPropertyId -> (cm => getEstateHasPropertyRoute(cm)),
       Constants.propertyValueId -> (_ => PercentageCloselyInheritedController.onPageLoad()),
@@ -49,6 +49,14 @@ class Navigator @Inject()() {
     cacheMap.getEntry[Boolean](Constants.estateHasPropertyId) match {
       case Some(true) => PropertyValueController.onPageLoad()
       case Some(false) => TransitionOutController.onPageLoad()
+      case None => HomeController.onPageLoad()
+    }
+  }
+
+  private def getGrossEstateValueRoute(cacheMap: CacheMap) = {
+    cacheMap.getEntry[Int](Constants.grossEstateValueId) match {
+      case Some(v) if v > Constants.maxGrossEstateValue => TransitionOutController.onPageLoad()
+      case Some(_) => ChargeableTransferAmountController.onPageLoad()
       case None => HomeController.onPageLoad()
     }
   }
