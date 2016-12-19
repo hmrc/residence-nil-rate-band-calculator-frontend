@@ -27,8 +27,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.exceptions.JsonInvalidExceptio
 import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import play.Logger
-import play.api.data.validation.ValidationError
+import uk.gov.hmrc.residencenilratebandcalculator.json.JsonErrorProcessor
 
 import scala.util.{Failure, Success, Try}
 
@@ -48,9 +47,7 @@ class RnrbConnector @Inject()(http: WSHttp) extends ServicesConfig {
       response => Json.fromJson[CalculationResult](response.json) match {
         case JsSuccess(result, _) => Success(result)
         case JsError(error) => {
-          //val xxx: Seq[(JsPath, Seq[ValidationError])] = error
-          //val msg  = error.seq.flatMap(_._2).map(_.message).foldLeft(new StringBuilder())(_ append _).toString()
-          Failure(new JsonInvalidException(error.toString()))
+          Failure(new JsonInvalidException(JsonErrorProcessor(error)))
         }
       }
     }
