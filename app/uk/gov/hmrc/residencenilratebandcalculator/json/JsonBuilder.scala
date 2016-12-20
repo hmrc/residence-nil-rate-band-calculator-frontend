@@ -21,7 +21,7 @@ import javax.inject.{Inject, Singleton}
 import com.eclipsesource.schema.{SchemaType, SchemaValidator}
 import org.joda.time.LocalDate
 import play.api.data.validation.ValidationError
-import play.api.libs.json.{JsPath, JsValue, Json}
+import play.api.libs.json._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
@@ -32,7 +32,6 @@ import uk.gov.hmrc.residencenilratebandcalculator.exceptions.{JsonInvalidExcepti
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
-
 
 @Singleton
 class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
@@ -47,11 +46,10 @@ class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
     }
   }
 
-
   def buildFromCacheMap(cacheMap: CacheMap): Future[Try[JsValue]] = {
     futureSchema.map {
       case Success(schema) => {
-        val incomingJson = Json.toJson(setKeys(cacheMap))
+        val incomingJson = Json.toJson(constructDataFromCacheMap(cacheMap))
         val validationResult = validator.validate(schema, incomingJson).asEither
         validationResult match {
           case Left(error) => {
@@ -77,16 +75,25 @@ class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
     }
   }
 
-  def setKeys(cacheMap: CacheMap) = {
+  def constructDataFromCacheMap(cacheMap: CacheMap) = {
     def keyIsRecognised(key: String) = jsonKeys.keySet.contains(key)
 
     val usableEntries = for {
       recognisedEntries <- cacheMap.data.filterKeys(keyIsRecognised)
     } yield recognisedEntries
 
-    usableEntries map {
+    val dataWithCorrectKeys = usableEntries map {
       case (key, value) => (jsonKeys(key), value)
+    }
+
+    dataWithCorrectKeys ++ constructAdditionalData(cacheMap)
+  }
+
+  def constructAdditionalData(cacheMap: CacheMap): Map[String, JsValue] = {
+    if (cacheMap.data.get(Constants.anyBroughtForwardAllowanceId).contains(JsBoolean(false))) {
+      Map(jsonKeys(Constants.broughtForwardAllowanceId) -> JsNumber(0))
+    } else {
+      Map()
     }
   }
 }
-

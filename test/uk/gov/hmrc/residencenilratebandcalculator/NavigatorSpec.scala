@@ -85,8 +85,8 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.propertyValueId)(mock[CacheMap]) shouldBe routes.PercentageCloselyInheritedController.onPageLoad()
     }
 
-    "return a function that goes to the Results controller when given PercentageCloselyInherited" in {
-      navigator.nextPage(Constants.percentageCloselyInheritedId)(mock[CacheMap]) shouldBe routes.ResultsController.onPageLoad()
+    "return a function that goes to the Any Brought Forward Allowance controller when given PercentageCloselyInherited" in {
+      navigator.nextPage(Constants.percentageCloselyInheritedId)(mock[CacheMap]) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
     }
 
     "return a call to the PropertyValueController onPageLoad method when there is a property in the estate" in {
@@ -105,6 +105,22 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       val mockCacheMap = mock[CacheMap]
       when(mockCacheMap.getEntry[Boolean](matches(Constants.estateHasPropertyId))(any())) thenReturn None
       navigator.nextPage(Constants.estateHasPropertyId)(mockCacheMap) shouldBe routes.HomeController.onPageLoad()
+    }
+
+    "return a call to the BroughtForwardAllowanceController onPageLoad method when there is some brought forward allowance" in {
+      val mockCacheMap = mock[CacheMap]
+      when(mockCacheMap.getEntry[Boolean](matches(Constants.anyBroughtForwardAllowanceId))(any())) thenReturn Some(true)
+      navigator.nextPage(Constants.anyBroughtForwardAllowanceId)(mockCacheMap) shouldBe routes.BroughtForwardAllowanceController.onPageLoad()
+    }
+
+    "return a call to the ResultsController onPageLoad method when there is no brought forward allowance" in {
+      val mockCacheMap = mock[CacheMap]
+      when(mockCacheMap.getEntry[Boolean](matches(Constants.anyBroughtForwardAllowanceId))(any())) thenReturn Some(false)
+      navigator.nextPage(Constants.anyBroughtForwardAllowanceId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
+    }
+
+    "return a call to the ResultsController onPageLoad method from the BroughtForwardController" in {
+      navigator.nextPage(Constants.broughtForwardAllowanceId)(mock[CacheMap]) shouldBe routes.ResultsController.onPageLoad()
     }
   }
 }

@@ -44,7 +44,7 @@ class ChargeableTransferAmountController  @Inject()(override val appConfig: Fron
 
   override def validate(value: Int)(implicit hc: HeaderCarrier): Future[Option[FormError]] = {
     sessionConnector.fetchAndGetEntry[Int](Constants.grossEstateValueId).map {
-      case None => new Some(FormError("value", "chargeable_transfer_amount.greater_than_gross_estate_value.error"))
+      case None => Some(FormError("value", "chargeable_transfer_amount.greater_than_gross_estate_value.error"))
       case Some(g) if value > g => Some(FormError("value", "chargeable_transfer_amount.greater_than_gross_estate_value.error"))
       case _ => None
     }
