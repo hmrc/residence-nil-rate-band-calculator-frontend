@@ -20,7 +20,7 @@ import com.eclipsesource.schema.SchemaType
 import org.mockito.Mockito.{times, verify, when}
 import org.scalatest.Matchers
 import org.scalatest.mock.MockitoSugar
-import play.api.libs.json.{JsNumber, JsString, Json}
+import play.api.libs.json.{JsBoolean, JsNumber, JsString, Json}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
@@ -309,7 +309,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
         val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
         buildResult match {
           case Failure(exception) => fail
-          case Success(json) => json shouldBe Json.toJson(jsonBuilder.setKeys(cacheMap))
+          case Success(json) => json shouldBe Json.toJson(jsonBuilder.constructDataFromCacheMap(cacheMap))
         }
       }
     }
@@ -331,7 +331,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
     }
   }
 
-  "Set Keys" must {
+  "Construct Data From Cache Map" must {
 
     val cacheMapId = "aaaa"
     val jsonBuilder = new JsonBuilder(rnrbConnector)
@@ -342,12 +342,13 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
           Constants.dateOfDeathId -> JsString("2017-09-10"),
           Constants.grossEstateValueId -> JsNumber(200)))
 
-      jsonBuilder.setKeys(cacheMap) shouldBe Map(
+      jsonBuilder.constructDataFromCacheMap(cacheMap) shouldBe Map(
         Constants.jsonKeys(Constants.dateOfDeathId) -> JsString("2017-09-10"),
         Constants.jsonKeys(Constants.grossEstateValueId) -> JsNumber(200))
     }
 
-    "return a map with the correct translation of the recognised keys, and no entry for unrecognised keys, when both recognised and unrecognised keys are supplied" in {
+    "return a map with the correct translation of the recognised keys, and no entry for unrecognised keys," + "" +
+      " when both recognised and unrecognised keys are supplied" in {
       val madeUpKey = "A made-up key"
 
       val cacheMap = CacheMap(id = cacheMapId, data =
@@ -356,7 +357,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
           Constants.grossEstateValueId -> JsNumber(200),
           madeUpKey -> JsNumber(200)))
 
-      jsonBuilder.setKeys(cacheMap) shouldBe Map(
+      jsonBuilder.constructDataFromCacheMap(cacheMap) shouldBe Map(
         Constants.jsonKeys(Constants.dateOfDeathId) -> JsString("2017-09-10"),
         Constants.jsonKeys(Constants.grossEstateValueId) -> JsNumber(200))
     }
@@ -370,12 +371,34 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
           anotherMadeUpKey -> JsNumber(200),
           madeUpKey -> JsNumber(200)))
 
-      jsonBuilder.setKeys(cacheMap) shouldBe Map()
+      jsonBuilder.constructDataFromCacheMap(cacheMap) shouldBe Map()
     }
 
     "return an empty map when given an empty cache map" in {
       val cacheMap = CacheMap(id = cacheMapId, data = Map())
-      jsonBuilder.setKeys(cacheMap) shouldBe Map()
+      jsonBuilder.constructDataFromCacheMap(cacheMap) shouldBe Map()
+    }
+
+    "return a map with a brought forward allowance of 0 when 'any brought forward allowance' is false" in {
+      val cacheMap = CacheMap(id = cacheMapId, data = Map(
+        Constants.anyBroughtForwardAllowanceId -> JsBoolean(false)
+      ))
+
+      jsonBuilder.constructDataFromCacheMap(cacheMap) shouldBe Map(
+        Constants.jsonKeys(Constants.broughtForwardAllowanceId) -> JsNumber(0)
+      )
+    }
+
+    "return a map with the actual brought forward allowance when 'any brought forward allowance' is true" in {
+      val cacheMap = CacheMap(id = cacheMapId, data = Map(
+        Constants.anyBroughtForwardAllowanceId -> JsBoolean(true),
+        Constants.broughtForwardAllowanceId -> JsNumber(1)
+      ))
+
+      jsonBuilder.constructDataFromCacheMap(cacheMap) shouldBe Map(
+        Constants.jsonKeys(Constants.broughtForwardAllowanceId) -> JsNumber(1)
+      )
+
     }
   }
 
