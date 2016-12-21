@@ -38,7 +38,6 @@ class RnrbConnector @Inject()(http: WSHttp) extends ServicesConfig {
   val baseSegment = "/residence-nil-rate-band-calculator/"
   val jsonContentTypeHeader = ("Content-Type", "application/json")
 
-  def getHelloWorld = http.GET(s"$serviceUrl${baseSegment}hello-world")
   def getStyleGuide = http.GET(s"$serviceUrl${baseSegment}style-guide")
 
   def send(json: JsValue) =
