@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import play.api.http.Status
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_transfer_amount
@@ -34,6 +35,16 @@ class ChargeableTransferAmountControllerSpec extends SimpleControllerSpecBase {
 
     val testValue = 123
 
-    behave like rnrbController(createController, createView, Constants.chargeableTransferAmountId, testValue)(Reads.IntReads, Writes.IntWrites)
+    val valuesToCacheBeforeSubmission = Map(Constants.grossEstateValueId -> testValue)
+
+    behave like rnrbController(createController, createView, Constants.chargeableTransferAmountId,
+      testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
+
+    "return bad request on submit with a value greater than the previously saved Gross Estate Value" in {
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))
+      setCacheValue(Constants.grossEstateValueId, testValue - 1)
+      val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
+      status(result) shouldBe Status.BAD_REQUEST
+    }
   }
 }

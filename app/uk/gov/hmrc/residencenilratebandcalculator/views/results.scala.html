@@ -1,0 +1,24 @@
+@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
+@import scala.util.{Try, Success, Failure}
+
+@(appConfig: FrontendAppConfig, calculationResult: Try[CalculationResult])(implicit request: Request[_], messages: Messages)
+
+@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+    title = messages("results.browser_title"),
+    appConfig = appConfig,
+    bodyClasses = None) {
+
+    <h1>@messages("results.title")</h1>
+
+    <p>@messages("results.guidance")</p>
+
+    <p>@messages("results.residenceNilRateAmount.label")</p>
+
+    @{
+       calculationResult match {
+         case Failure(exception) => exception.getMessage()
+         case Success(cr) => cr.residenceNilRateAmount.toString()
+       }
+    }
+}

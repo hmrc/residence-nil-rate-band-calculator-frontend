@@ -16,26 +16,25 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.Inject
 
 import play.api.data.Form
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm
-import uk.gov.hmrc.residencenilratebandcalculator.models.Date
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
+import uk.gov.hmrc.residencenilratebandcalculator.forms.{NonNegativeIntForm, PercentForm}
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_closely_inherited
 
-@Singleton
-class DateOfDeathController @Inject()(override val appConfig: FrontendAppConfig,
-                                      val messagesApi: MessagesApi,
-                                      override val sessionConnector: SessionConnector,
-                                      override val navigator: Navigator) extends SimpleControllerBase[Date] {
+class PercentageCloselyInheritedController  @Inject()(override val appConfig: FrontendAppConfig,
+                                                      val messagesApi: MessagesApi,
+                                                      override val sessionConnector: SessionConnector,
+                                                      override val navigator: Navigator) extends SimpleControllerBase[Int] {
 
-  override val controllerId = Constants.dateOfDeathId
 
-  override def form = () => DateForm()
+  override val controllerId = Constants.percentageCloselyInheritedId
 
-  override def view(form: Option[Form[Date]])(implicit request: Request[_]) = date_of_death(appConfig, form)
+  override def form = () => PercentForm()
+
+  override def view(form: Option[Form[Int]])(implicit request: Request[_]) = percentage_closely_inherited(appConfig, form)
 }

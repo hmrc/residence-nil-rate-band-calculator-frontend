@@ -14,17 +14,6 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.controllers
+package uk.gov.hmrc.residencenilratebandcalculator.exceptions
 
-import javax.inject.{Inject, Singleton}
-
-import play.api.mvc.Results.Ok
-import play.api.mvc.{Action, AnyContent}
-
-import scala.concurrent.Future
-
-@Singleton
-class PageNotFoundController @Inject()(){
-  val onPageLoad: Action[AnyContent] = Action.async { implicit request => Future.successful(Ok(""))
-  }
-}
+class JsonInvalidException(msg: String) extends RuntimeException(msg)

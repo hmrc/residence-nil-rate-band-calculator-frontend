@@ -1,7 +1,18 @@
+any_brought_forward_allowance.browser_title = Is there any Brought Forward Allowance?
+any_brought_forward_allowance.title = Is there any Brought Forward Allowance?
+any_brought_forward_allowance.guidance = Any brought forward allowance, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
+any_brought_forward_allowance.label = Is there any brought forward allowance?
+
+brought_forward_allowance.browser_title = Brought Forward Allowance
+brought_forward_allowance.title = Brought Forward Allowance
+brought_forward_allowance.guidance = Brought forward allowance, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
+brought_forward_allowance.label = How much Brought Forward Allowance is available?
+
 chargeable_transfer_amount.browser_title = Net Chargeable Transfer Value
 chargeable_transfer_amount.title = Net Chargeable Transfer Value of the Estate
 chargeable_transfer_amount.guidance = Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
 chargeable_transfer_amount.label = What is the chargeable transfer amount?
+chargeable_transfer_amount.greater_than_gross_estate_value.error = Chargeable Transfer Amount cannot be greater than the Gross Estate Value
 
 date.day = Day
 date.month = Month
@@ -36,10 +47,21 @@ not_possible_to_use_service.browser_title = Not possible to use this Calculator
 not_possible_to_use_service.title = Not possible to use this Calculator
 not_possible_to_use_service.guidance = Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
 
+percentage_closely_inherited.browser_title = Percentage of the property closely inherited
+percentage_closely_inherited.title = What was the percentage of the property closely inherited?
+percentage_closely_inherited.guidance = Property closeiny inherited sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
+percentage_closely_inherited.label = What was the percentage of the property closely inherited?
+
 property_value.browser_title = Value of the property
 property_value.title = What was the value of the property?
 property_value.guidance = Property value guidance ipsum dolor sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
 property_value.label = What is the property value?
+property_value.greater_than_gross_estate_value.error = Property Value cannot be greater than the Gross Estate Value
+
+results.browser_title = Final calculation
+results.title = Your results are:
+results.guidance = Results guidance ipsum dolor sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
+results.residenceNilRateAmount.label = Calculated residence nil rate amount is
 
 site.no = No
 site.yes = Yes

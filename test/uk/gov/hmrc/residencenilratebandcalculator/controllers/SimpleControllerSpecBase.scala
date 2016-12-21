@@ -45,7 +45,8 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
   def rnrbController[A: ClassTag](createController: () => SimpleControllerBase[A],
                         createView: (Option[A]) => HtmlFormat.Appendable,
                         cacheKey: String,
-                        testValue: A)
+                        testValue: A,
+                        valuesToCacheBeforeSubmission: Map[String, A] = Map[String, A]())
                        (rds: Reads[A], wts: Writes[A]) = {
 
     "return 200 for a GET" in {
@@ -53,13 +54,14 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
       status(result) shouldBe Status.OK
     }
 
-    "return the Gross Estate View for a GET" in {
+    "return the View for a GET" in {
       val result = createController().onPageLoad(rds)(fakeRequest)
       contentAsString(result) shouldBe createView(None).toString
     }
 
     "return a redirect on submit with valid data" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))
+      for (v <- valuesToCacheBeforeSubmission) setCacheValue(v._1, v._2)
       setCacheValue(cacheKey, testValue)
       val result = createController().onSubmit(wts)(fakePostRequest)
       status(result) shouldBe Status.SEE_OTHER
@@ -67,7 +69,9 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
 
     "store valid submitted data" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))
-      createController().onSubmit(wts)(fakePostRequest)
+      for (v <- valuesToCacheBeforeSubmission) setCacheValue(v._1, v._2)
+      setCacheValue(cacheKey, testValue)
+      await (createController().onSubmit(wts)(fakePostRequest))
       verifyValueIsCached(cacheKey, testValue)
     }
 

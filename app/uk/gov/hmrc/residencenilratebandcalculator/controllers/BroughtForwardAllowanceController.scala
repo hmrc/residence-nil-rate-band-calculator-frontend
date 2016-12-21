@@ -23,19 +23,18 @@ import play.api.i18n.MessagesApi
 import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm
-import uk.gov.hmrc.residencenilratebandcalculator.models.Date
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
+import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.brought_forward_allowance
 
 @Singleton
-class DateOfDeathController @Inject()(override val appConfig: FrontendAppConfig,
-                                      val messagesApi: MessagesApi,
-                                      override val sessionConnector: SessionConnector,
-                                      override val navigator: Navigator) extends SimpleControllerBase[Date] {
+class BroughtForwardAllowanceController @Inject()(override val appConfig: FrontendAppConfig,
+                                           val messagesApi: MessagesApi,
+                                           override val sessionConnector: SessionConnector,
+                                           override val navigator: Navigator) extends SimpleControllerBase[Int] {
 
-  override val controllerId = Constants.dateOfDeathId
+  override val controllerId = Constants.broughtForwardAllowanceId
 
-  override def form = () => DateForm()
+  override def form = () => NonNegativeIntForm()
 
-  override def view(form: Option[Form[Date]])(implicit request: Request[_]) = date_of_death(appConfig, form)
+  override def view(form: Option[Form[Int]])(implicit request: Request[_]) = brought_forward_allowance(appConfig, form)
 }

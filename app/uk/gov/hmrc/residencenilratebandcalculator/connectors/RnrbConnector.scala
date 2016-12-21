@@ -18,16 +18,47 @@ package uk.gov.hmrc.residencenilratebandcalculator.connectors
 
 import javax.inject.{Inject, Singleton}
 
+import com.eclipsesource.schema.SchemaType
+import play.api.libs.json._
 import uk.gov.hmrc.play.config.ServicesConfig
-import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
+import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.WSHttp
+import uk.gov.hmrc.residencenilratebandcalculator.exceptions.JsonInvalidException
+import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
 
-import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+import uk.gov.hmrc.residencenilratebandcalculator.json.JsonErrorProcessor
+
+import scala.util.{Failure, Success, Try}
 
 @Singleton
 class RnrbConnector @Inject()(http: WSHttp) extends ServicesConfig {
   implicit val hc: HeaderCarrier = HeaderCarrier()
   lazy val serviceUrl = baseUrl("residence-nil-rate-band-calculator")
+  val baseSegment = "/residence-nil-rate-band-calculator/"
+  val jsonContentTypeHeader = ("Content-Type", "application/json")
 
-  def getStyleGuide = http.GET(s"$serviceUrl/residence-nil-rate-band-calculator/style-guide")
+  def getStyleGuide = http.GET(s"$serviceUrl${baseSegment}style-guide")
+
+  def send(json: JsValue) =
+    http.POST(s"$serviceUrl${baseSegment}calculate", json, Seq(jsonContentTypeHeader))
+    .map {
+      response => Json.fromJson[CalculationResult](response.json) match {
+        case JsSuccess(result, _) => Success(result)
+        case JsError(error) => {
+          Failure(new JsonInvalidException(JsonErrorProcessor(error)))
+        }
+      }
+    }
+
+  def getSuccessfulResponseSchema =
+    http.GET(s"$serviceUrl${baseSegment}schemas/deceaseds-estate.jsonschema").map {
+      response => Json.fromJson[SchemaType](response.json) match {
+        case JsSuccess(schema, _) => Success(schema)
+        case error: JsError => {
+          val errorLookupResult = (JsError.toJson(error) \ "obj" \ 0 \ "msg" \ 0).as[String]
+          Failure(new JsonInvalidException(errorLookupResult.toString))
+        }
+      }
+    }
 }

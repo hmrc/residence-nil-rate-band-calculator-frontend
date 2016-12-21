@@ -16,16 +16,20 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import javax.inject.Inject
+import javax.inject.{Inject, Singleton}
 
-import play.api.data.Form
+import play.api.data.{Form, FormError}
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
+import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_transfer_amount
 
+import scala.concurrent.Future
+
+@Singleton
 class ChargeableTransferAmountController  @Inject()(override val appConfig: FrontendAppConfig,
                                                     val messagesApi: MessagesApi,
                                                     override val sessionConnector: SessionConnector,
@@ -37,4 +41,12 @@ class ChargeableTransferAmountController  @Inject()(override val appConfig: Fron
   override def form = () => NonNegativeIntForm()
 
   override def view(form: Option[Form[Int]])(implicit request: Request[_]) = chargeable_transfer_amount(appConfig, form)
+
+  override def validate(value: Int)(implicit hc: HeaderCarrier): Future[Option[FormError]] = {
+    sessionConnector.fetchAndGetEntry[Int](Constants.grossEstateValueId).map {
+      case None => Some(FormError("value", "chargeable_transfer_amount.greater_than_gross_estate_value.error"))
+      case Some(g) if value > g => Some(FormError("value", "chargeable_transfer_amount.greater_than_gross_estate_value.error"))
+      case _ => None
+    }
+  }
 }

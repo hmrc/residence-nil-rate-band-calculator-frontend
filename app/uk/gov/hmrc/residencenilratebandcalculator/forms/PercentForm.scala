@@ -14,17 +14,13 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.controllers
+package uk.gov.hmrc.residencenilratebandcalculator.forms
 
-import javax.inject.{Inject, Singleton}
+import play.api.data.Form
+import play.api.data.Forms._
 
-import play.api.mvc.Results.Ok
-import play.api.mvc.{Action, AnyContent}
+object PercentForm {
 
-import scala.concurrent.Future
+  def apply(): Form[Int] = Form(single("value" -> number(min=0, max=100)))
 
-@Singleton
-class PageNotFoundController @Inject()(){
-  val onPageLoad: Action[AnyContent] = Action.async { implicit request => Future.successful(Ok(""))
-  }
 }
