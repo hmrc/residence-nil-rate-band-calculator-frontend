@@ -17,8 +17,27 @@
 
     @{
        calculationResult match {
-         case Failure(exception) => exception.getMessage()
-         case Success(cr) => cr.residenceNilRateAmount.toString()
+         case Failure(exception) => exception.getMessage
+         case Success(cr) => cr.residenceNilRateAmount.toString
        }
     }
+
+    <p>@messages("results.carryForwardAmount.label")</p>
+
+    @{
+        calculationResult match {
+            case Failure(exception) => exception.getMessage
+            case Success(cr) => cr.carryForwardAmount.toString
+        }
+    }
+
+    <p>@messages("results.applicableNilRateBandAmount.label")</p>
+
+    @{
+        calculationResult match {
+            case Failure(exception) => exception.getMessage
+            case Success(cr) => cr.applicableNilRateBandAmount.toString
+        }
+    }
+
 }
