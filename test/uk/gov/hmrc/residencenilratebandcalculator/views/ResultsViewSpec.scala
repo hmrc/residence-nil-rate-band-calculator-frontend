@@ -24,7 +24,7 @@ import scala.util.Success
 
 class ResultsViewSpec extends HtmlSpec {
   def fixture() = new {
-    val view = results(frontendAppConfig, Success(CalculationResult(10, 50, 100)))(request, messages)
+    val view = results(frontendAppConfig, Success(CalculationResult(10, 50, 300)))(request, messages)
     val doc = asDocument(view)
   }
 
@@ -52,14 +52,29 @@ class ResultsViewSpec extends HtmlSpec {
         assertContainsMessages(f.doc, "results.residenceNilRateAmount.label")
       }
 
+      "contain an amount for the value" in {
+        val f = thisFixture()
+        assertContainsText(f.doc, "10")
+      }
+
       "contain a label for the carry forward amount" in {
         val f = thisFixture()
         assertContainsMessages(f.doc, "results.carryForwardAmount.label")
       }
 
+      "contain an amount for the carry forward amount" in {
+        val f = thisFixture()
+        assertContainsText(f.doc, "300")
+      }
+
       "contain a label for the applicable nil rate band amount" in {
         val f = thisFixture()
         assertContainsMessages(f.doc, "results.applicableNilRateBandAmount.label")
+      }
+
+      "contain an amount for the applicable nil rate band amount" in {
+        val f = thisFixture()
+        assertContainsText(f.doc, "50")
       }
     }
   }
