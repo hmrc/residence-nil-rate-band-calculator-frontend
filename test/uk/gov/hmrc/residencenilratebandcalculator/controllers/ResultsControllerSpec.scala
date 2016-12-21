@@ -45,8 +45,9 @@ class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar w
   when(mockJsonBuilderThatSucceeds.build(any[SessionConnector])(any[HeaderCarrier])) thenReturn Future.successful(Success(testJsNumber))
 
   val expectedResidenceNilRateAmount = 77796325
+  val expectedApplicableNilRateBandAmount = 88881
   val expectedCarriedForwardAmount = 9999
-  val eitherCalculationResult = Success(CalculationResult(expectedResidenceNilRateAmount, expectedCarriedForwardAmount))
+  val eitherCalculationResult = Success(CalculationResult(expectedResidenceNilRateAmount, expectedApplicableNilRateBandAmount, expectedCarriedForwardAmount))
 
   def mockRnrbConnector = {
     val mockConnector = mock[RnrbConnector]
@@ -86,6 +87,18 @@ class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar w
       val result = resultsController(mockJsonBuilderThatSucceeds).onPageLoad()(fakeRequest)
       val contents = contentAsString(result)
       contents should include("77796325")
+    }
+
+    "display the carry forward amount if the Microservice successfully returns it" in {
+      val result = resultsController(mockJsonBuilderThatSucceeds).onPageLoad()(fakeRequest)
+      val contents = contentAsString(result)
+      contents should include("9999")
+    }
+
+    "display the applicable nil rate band if the Microservice successfully returns it" in {
+      val result = resultsController(mockJsonBuilderThatSucceeds).onPageLoad()(fakeRequest)
+      val contents = contentAsString(result)
+      contents should include("88881")
     }
   }
 }

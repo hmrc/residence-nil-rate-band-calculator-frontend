@@ -67,8 +67,9 @@ class RnrbConnectorSpec extends UnitSpec with WithFakeApplication with MockitoSu
 
     "return a case class representing the received JSON when the send method is successful" in {
       val residenceNilRateAmount = 100
+      val applicableNilRateBandAmount = 100
       val carryForwardAmount = 100
-      val calculationResult = CalculationResult(residenceNilRateAmount, carryForwardAmount)
+      val calculationResult = CalculationResult(residenceNilRateAmount, applicableNilRateBandAmount, carryForwardAmount)
 
       val result = await(new RnrbConnector(getHttpMock(Json.toJson(calculationResult))).send(minimalJson))
 
