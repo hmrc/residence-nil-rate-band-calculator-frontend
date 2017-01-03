@@ -94,7 +94,8 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     "return a function that goes to the Any Brought Forward Allowance controller when given PercentageCloselyInherited of 0" in {
       val mockCacheMap = mock[CacheMap]
       when(mockCacheMap.getEntry[Int](matches(Constants.percentageCloselyInheritedId))(any())) thenReturn Some(0)
-      navigator.nextPage(Constants.percentageCloselyInheritedId)(mockCacheMap) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()    }
+      navigator.nextPage(Constants.percentageCloselyInheritedId)(mockCacheMap) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
+    }
 
     "return a call to the PropertyValueController onPageLoad method when there is a property in the estate" in {
       val mockCacheMap = mock[CacheMap]
@@ -130,8 +131,20 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.broughtForwardAllowanceId)(mock[CacheMap]) shouldBe routes.ResultsController.onPageLoad()
     }
 
-    "return a call to the Any Brought Forward Allowance onPageLoad method from the AnyExemptionsController" in {
-      navigator.nextPage(Constants.anyExemptionId)(mock[CacheMap]) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
+    "return a call to the Any Brought Forward Allowance onPageLoad method when no exemptions apply to the property" in {
+      val mockCacheMap = mock[CacheMap]
+      when(mockCacheMap.getEntry[Boolean](matches(Constants.anyExemptionId))(any())) thenReturn Some(false)
+      navigator.nextPage(Constants.anyExemptionId)(mockCacheMap) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
+    }
+
+    "return a call to the Property Value After Exemption onPageLoad method when exemptions apply to the property" in {
+      val mockCacheMap = mock[CacheMap]
+      when(mockCacheMap.getEntry[Boolean](matches(Constants.anyExemptionId))(any())) thenReturn Some(true)
+      navigator.nextPage(Constants.anyExemptionId)(mockCacheMap) shouldBe routes.PropertyValueAfterExemptionController.onPageLoad()
+    }
+
+    "return a call to the Any Brought Forward Allowance onPageLoad method from the Property Value After Exemption controller" in {
+      navigator.nextPage(Constants.propertyValueAfterExemptionId)(mock[CacheMap]) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
     }
   }
 }
