@@ -1,0 +1,43 @@
+/*
+ * Copyright 2017 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package uk.gov.hmrc.residencenilratebandcalculator.models
+
+import play.api.libs.json._
+import play.api.libs.json.Writes._
+import play.api.libs.json.Reads._
+import play.api.libs.functional.syntax._
+
+case class PropertyValueAfterExemption(propertyValue: Int, propertyValueCloselyInherited: Int)
+
+object PropertyValueAfterExemption {
+  val propertyValueAfterExemptionReads: Reads[PropertyValueAfterExemption] = (
+    (__ \ "propertyValue").read[Int] and
+    (__ \ "propertyValueCloselyInherited").read[Int]
+  )(PropertyValueAfterExemption.apply _)
+
+  val propertyValueAfterExemptionWrites: Writes[PropertyValueAfterExemption] = (
+    (__ \ "propertyValue").write[Int] and
+    (__ \ "propertyValueCloselyInherited").write[Int]
+  )(unlift(PropertyValueAfterExemption.unapply _))
+
+  implicit val propertyValueAfterExemptionFormat: Format[PropertyValueAfterExemption] =
+    Format(propertyValueAfterExemptionReads, propertyValueAfterExemptionWrites)
+}
+
+sealed abstract class PropertyValueAfterExemptionKey
+case object PropertyValue extends PropertyValueAfterExemptionKey
+case object PropertyValueCloselyInherited extends PropertyValueAfterExemptionKey

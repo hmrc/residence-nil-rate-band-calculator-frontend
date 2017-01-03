@@ -28,6 +28,7 @@ object Constants {
   val estateHasPropertyId = "EstateHasProperty"
   val grossEstateValueId = "GrossEstateValue"
   val maxGrossEstateValue = 2000000
+  val propertyValueAfterExemptionId = "PropertyValueAfterExemption"
   val propertyValueId = "PropertyValue"
   val percentageCloselyInheritedId = "PercentageCloselyInherited"
 

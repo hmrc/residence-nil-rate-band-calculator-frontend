@@ -5,7 +5,8 @@ errorKey: String,
 value: Option[String] = None,
 secondaryLabel: Option[String] = None,
 inputClass: Option[String] = None,
-hint: Option[String] = None
+hint: Option[String] = None,
+name: String = "value"
 )(implicit messages: Messages)
 
 
@@ -27,7 +28,7 @@ hint: Option[String] = None
                 class="form-control @inputClass @if(secondaryLabel == "currency"){form-control-1-3} @if(secondaryLabel == "percentage"){form-control-1-4}"
                 type="text"
                 id="@id"
-                name="value"
+                name="@name"
                 value="@value"
                 aria-describedby="error-message-this-input"
         />
