@@ -29,9 +29,9 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_value_afte
 
 class PropertyValueAfterExemptionControllerSpec extends UnitSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
 
-  val propertyValue = 123
+  val propertyValue = 456
 
-  val propertyValueCloselyInherited = 456
+  val propertyValueCloselyInherited = 123
 
   val testValue = PropertyValueAfterExemption(propertyValue, propertyValueCloselyInherited)
 
@@ -60,7 +60,7 @@ class PropertyValueAfterExemptionControllerSpec extends UnitSpec with WithFakeAp
 
   def writes = PropertyValueAfterExemption.propertyValueAfterExemptionWrites
 
-  val valuesToCacheBeforeSubmission = Map()
+  val valuesToCacheBeforeSubmission = Map(Constants.propertyValueId -> propertyValue)
 
   "Property Value After Exemption Controller" must {
 
@@ -114,5 +114,13 @@ class PropertyValueAfterExemptionControllerSpec extends UnitSpec with WithFakeAp
       contentAsString(result) shouldBe createView(Some(testValue)).toString
     }
 
+    "return bad request on submit with a value greater than the previously saved Property Value" in {
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(
+        ("value", propertyValue.toString),
+        ("valueCloselyInherited", propertyValueCloselyInherited.toString))
+      setCacheValue(Constants.propertyValueId, propertyValue - 1)
+      val result = createController().onSubmit(writes)(fakePostRequest)
+      status(result) shouldBe Status.BAD_REQUEST
+    }
   }
 }
