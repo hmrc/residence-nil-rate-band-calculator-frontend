@@ -18,6 +18,7 @@ date.day = Day
 date.month = Month
 date.year = Year
 
+date_of_death.question_number = Question 1
 date_of_death.browser_title = Date of Death
 date_of_death.title = Date of Death
 date_of_death.guidance = Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.

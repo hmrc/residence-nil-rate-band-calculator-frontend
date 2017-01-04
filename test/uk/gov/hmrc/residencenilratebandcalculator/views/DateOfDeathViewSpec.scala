@@ -30,6 +30,11 @@ class DateOfDeathViewSpec extends HtmlSpec {
 
   "Date of Death View" must {
 
+    "display the correct question designator" in {
+      val f = fixture()
+      assertContainsMessages(f.doc, "date_of_death.question_number")
+    }
+
     "display the correct browser title" in {
       val f = fixture()
       assertEqualsMessage(f.doc, "title", "date_of_death.browser_title")
