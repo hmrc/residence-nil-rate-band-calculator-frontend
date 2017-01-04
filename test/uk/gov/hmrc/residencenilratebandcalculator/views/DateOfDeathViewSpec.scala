@@ -50,6 +50,11 @@ class DateOfDeathViewSpec extends HtmlSpec {
       assertContainsMessages(f.doc, "date_of_death.guidance")
     }
 
+    "display the correct example" in {
+      val f = fixture()
+      assertContainsMessages(f.doc, "date_of_death.example")
+    }
+
     "contain a form that POSTs to the correct action" in {
       val f = fixture()
       val forms = f.doc.getElementsByTag("form")
