@@ -18,43 +18,43 @@ package uk.gov.hmrc.residencenilratebandcalculator.utils
 
 import uk.gov.hmrc.play.test.UnitSpec
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PropertyValueAfterExemptionForm
-import uk.gov.hmrc.residencenilratebandcalculator.models.{PropertyValue, PropertyValueAfterExemption, PropertyValueCloselyInherited}
+import uk.gov.hmrc.residencenilratebandcalculator.models.{Value, PropertyValueAfterExemption, ValueCloselyInherited}
 
 class PropertyValueAfterExemptionFormHelperSpec extends UnitSpec {
 
   "Get Value By Key" when {
 
-    "asking for Property Value" must {
+    "asking for Value" must {
 
       "return an empty string when given nothing" in {
-        PropertyValueAfterExemptionFormHelper.getValueByKey(None, PropertyValue) shouldBe ""
+        PropertyValueAfterExemptionFormHelper.getValueByKey(None, Value) shouldBe ""
       }
 
       "return an empty string when given a form with no value" in {
-        PropertyValueAfterExemptionFormHelper.getValueByKey(Some(PropertyValueAfterExemptionForm()), PropertyValue) shouldBe ""
+        PropertyValueAfterExemptionFormHelper.getValueByKey(Some(PropertyValueAfterExemptionForm()), Value) shouldBe ""
       }
 
-      "return the property value when one is present in the form" in {
+      "return the value when one is present in the form" in {
         val values = PropertyValueAfterExemption(1, 2)
         val form = PropertyValueAfterExemptionForm().fill(values)
-        PropertyValueAfterExemptionFormHelper.getValueByKey(Some(form), PropertyValue) shouldBe 1
+        PropertyValueAfterExemptionFormHelper.getValueByKey(Some(form), Value) shouldBe 1
       }
     }
 
-    "asking for Property Value Closely Inherited" must {
+    "asking for Value Closely Inherited" must {
 
       "return an empty string when given nothing" in {
-        PropertyValueAfterExemptionFormHelper.getValueByKey(None, PropertyValueCloselyInherited) shouldBe ""
+        PropertyValueAfterExemptionFormHelper.getValueByKey(None, ValueCloselyInherited) shouldBe ""
       }
 
       "return an empty string when given a form with no value" in {
-        PropertyValueAfterExemptionFormHelper.getValueByKey(Some(PropertyValueAfterExemptionForm()), PropertyValueCloselyInherited) shouldBe ""
+        PropertyValueAfterExemptionFormHelper.getValueByKey(Some(PropertyValueAfterExemptionForm()), ValueCloselyInherited) shouldBe ""
       }
 
-      "return the property value closely inherited when one is present in the form" in {
+      "return the value closely inherited when one is present in the form" in {
         val values = PropertyValueAfterExemption(1, 2)
         val form = PropertyValueAfterExemptionForm().fill(values)
-        PropertyValueAfterExemptionFormHelper.getValueByKey(Some(form), PropertyValueCloselyInherited) shouldBe 2
+        PropertyValueAfterExemptionFormHelper.getValueByKey(Some(form), ValueCloselyInherited) shouldBe 2
       }
     }
   }

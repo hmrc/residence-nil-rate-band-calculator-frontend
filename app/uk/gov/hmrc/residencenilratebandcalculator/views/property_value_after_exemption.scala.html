@@ -1,7 +1,7 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.{FormHelpers, PropertyValueAfterExemptionFormHelper}
 @import uk.gov.hmrc.play.views.html._
-@import uk.gov.hmrc.residencenilratebandcalculator.models.{PropertyValueAfterExemption, PropertyValue, PropertyValueCloselyInherited}
+@import uk.gov.hmrc.residencenilratebandcalculator.models.{PropertyValueAfterExemption, Value, ValueCloselyInherited}
 
 @(appConfig: FrontendAppConfig, form: Option[Form[PropertyValueAfterExemption]] = None)(implicit request: Request[_], messages: Messages)
 
@@ -17,20 +17,20 @@
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
 
         @rnrbHelpers.input_text(
-            id = "propertyValue",
-            name = "propertyValue",
-            value = Some(PropertyValueAfterExemptionFormHelper.getValueByKey(form, PropertyValue).toString),
-            label = messages("property_value_after_exemption.property_value.label"),
+            id = "value",
+            name = "value",
+            value = Some(PropertyValueAfterExemptionFormHelper.getValueByKey(form, Value).toString),
+            label = messages("property_value_after_exemption.value.label"),
             secondaryLabel = Some("currency"),
-            errorKey = FormHelpers.getErrorByKey(form, "propertyValue")
+            errorKey = FormHelpers.getErrorByKey(form, "value")
         )
         @rnrbHelpers.input_text(
-            id = "propertyValueCloselyInherited",
-            name = "propertyValueCloselyInherited",
-            value = Some(PropertyValueAfterExemptionFormHelper.getValueByKey(form, PropertyValueCloselyInherited).toString),
-            label = messages("property_value_after_exemption.property_value_closely_inherited.label"),
+            id = "valueCloselyInherited",
+            name = "valueCloselyInherited",
+            value = Some(PropertyValueAfterExemptionFormHelper.getValueByKey(form, ValueCloselyInherited).toString),
+            label = messages("property_value_after_exemption.value_closely_inherited.label"),
             secondaryLabel = Some("currency"),
-            errorKey = FormHelpers.getErrorByKey(form, "propertyValueCloselyInherited")
+            errorKey = FormHelpers.getErrorByKey(form, "valueCloselyInherited")
         )
 
         @rnrbHelpers.submit_button()

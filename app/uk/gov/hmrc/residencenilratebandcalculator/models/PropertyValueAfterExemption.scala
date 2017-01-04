@@ -21,17 +21,17 @@ import play.api.libs.json.Writes._
 import play.api.libs.json.Reads._
 import play.api.libs.functional.syntax._
 
-case class PropertyValueAfterExemption(propertyValue: Int, propertyValueCloselyInherited: Int)
+case class PropertyValueAfterExemption(value: Int, valueCloselyInherited: Int)
 
 object PropertyValueAfterExemption {
   val propertyValueAfterExemptionReads: Reads[PropertyValueAfterExemption] = (
-    (__ \ "propertyValue").read[Int] and
-    (__ \ "propertyValueCloselyInherited").read[Int]
+    (__ \ "value").read[Int] and
+    (__ \ "valueCloselyInherited").read[Int]
   )(PropertyValueAfterExemption.apply _)
 
   val propertyValueAfterExemptionWrites: Writes[PropertyValueAfterExemption] = (
-    (__ \ "propertyValue").write[Int] and
-    (__ \ "propertyValueCloselyInherited").write[Int]
+    (__ \ "value").write[Int] and
+    (__ \ "valueCloselyInherited").write[Int]
   )(unlift(PropertyValueAfterExemption.unapply _))
 
   implicit val propertyValueAfterExemptionFormat: Format[PropertyValueAfterExemption] =
@@ -39,5 +39,5 @@ object PropertyValueAfterExemption {
 }
 
 sealed abstract class PropertyValueAfterExemptionKey
-case object PropertyValue extends PropertyValueAfterExemptionKey
-case object PropertyValueCloselyInherited extends PropertyValueAfterExemptionKey
+case object Value extends PropertyValueAfterExemptionKey
+case object ValueCloselyInherited extends PropertyValueAfterExemptionKey

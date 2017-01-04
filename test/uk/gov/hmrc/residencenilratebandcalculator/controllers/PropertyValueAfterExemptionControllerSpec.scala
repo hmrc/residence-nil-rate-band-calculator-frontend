@@ -76,8 +76,8 @@ class PropertyValueAfterExemptionControllerSpec extends UnitSpec with WithFakeAp
 
     "return a redirect on submit with valid data" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(
-        ("propertyValue", propertyValue.toString),
-        ("propertyValueCloselyInherited", propertyValueCloselyInherited.toString))
+        ("value", propertyValue.toString),
+        ("valueCloselyInherited", propertyValueCloselyInherited.toString))
       for (v <- valuesToCacheBeforeSubmission) setCacheValue(v._1, v._2)
       setCacheValue(cacheKey, testValue)
       val result = createController().onSubmit(writes)(fakePostRequest)
@@ -86,8 +86,8 @@ class PropertyValueAfterExemptionControllerSpec extends UnitSpec with WithFakeAp
 
     "store valid submitted data" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(
-        ("propertyValue", propertyValue.toString),
-        ("propertyValueCloselyInherited", propertyValueCloselyInherited.toString))
+        ("value", propertyValue.toString),
+        ("valueCloselyInherited", propertyValueCloselyInherited.toString))
       for (v <- valuesToCacheBeforeSubmission) setCacheValue(v._1, v._2)
       setCacheValue(cacheKey, testValue)
       await (createController().onSubmit(writes)(fakePostRequest))

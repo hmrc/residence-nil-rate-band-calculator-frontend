@@ -28,7 +28,7 @@ class PropertyValueAfterExemptionViewSpec extends HtmlSpec {
 
   val propertyValue = 123
   val propertyValueCloselyInherited = 111
-  val propertyValueKey = "propertyValue"
+  val propertyValueKey = "value"
   val errorMessage = "error.number"
   val error = FormError(propertyValueKey, errorMessage)
 
@@ -62,24 +62,24 @@ class PropertyValueAfterExemptionViewSpec extends HtmlSpec {
         form.attr("action") shouldBe routes.PropertyValueAfterExemptionController.onSubmit().url
       }
 
-      "contain a label for the property value" in {
+      "contain a label for the value" in {
         val f = thisFixture()
-        assertContainsLabel(f.doc, "propertyValue", messages("property_value_after_exemption.property_value.label"))
+        assertContainsLabel(f.doc, "value", messages("property_value_after_exemption.value.label"))
       }
 
-      "contain an input for the property value" in {
+      "contain an input for the value" in {
         val f = thisFixture()
-        assertRenderedById(f.doc, "propertyValue")
+        assertRenderedById(f.doc, "value")
       }
 
-      "contain a label for the property value closely inherited" in {
+      "contain a label for the value closely inherited" in {
         val f = thisFixture()
-        assertContainsLabel(f.doc, "propertyValueCloselyInherited", messages("property_value_after_exemption.property_value_closely_inherited.label"))
+        assertContainsLabel(f.doc, "valueCloselyInherited", messages("property_value_after_exemption.value_closely_inherited.label"))
       }
 
-      "contain an input for the property value closely inherited" in {
+      "contain an input for the value closely inherited" in {
         val f = thisFixture()
-        assertRenderedById(f.doc, "propertyValueCloselyInherited")
+        assertRenderedById(f.doc, "valueCloselyInherited")
       }
 
       "contain a submit button" in {
@@ -92,14 +92,14 @@ class PropertyValueAfterExemptionViewSpec extends HtmlSpec {
 
       def thisFixture() = fixture(Some(PropertyValueAfterExemptionForm().fill(PropertyValueAfterExemption(propertyValue, propertyValueCloselyInherited))))
 
-      "include the form's property value in the value input" in {
+      "include the form's value in the correct input" in {
         val f = thisFixture()
-        f.doc.getElementById("propertyValue").attr("value") shouldBe propertyValue.toString
+        f.doc.getElementById("value").attr("value") shouldBe propertyValue.toString
       }
 
-      "include the form's property value closely inherited in the value input" in {
+      "include the form's value closely inherited in the correct input" in {
         val f = thisFixture()
-        f.doc.getElementById("propertyValueCloselyInherited").attr("value") shouldBe propertyValueCloselyInherited.toString
+        f.doc.getElementById("valueCloselyInherited").attr("value") shouldBe propertyValueCloselyInherited.toString
       }
     }
 

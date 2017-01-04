@@ -24,8 +24,8 @@ object PropertyValueAfterExemptionForm {
 
   def apply(): Form[PropertyValueAfterExemption] = Form(
     mapping(
-      "propertyValue" -> number(min=0),
-      "propertyValueCloselyInherited" -> number(min=0)
+      "value" -> number(min=0),
+      "valueCloselyInherited" -> number(min=0)
     )(PropertyValueAfterExemption.apply)(PropertyValueAfterExemption.unapply)
   )
 }

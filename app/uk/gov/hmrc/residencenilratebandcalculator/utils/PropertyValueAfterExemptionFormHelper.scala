@@ -17,7 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
 import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.models.{PropertyValue, PropertyValueAfterExemption, PropertyValueAfterExemptionKey, PropertyValueCloselyInherited}
+import uk.gov.hmrc.residencenilratebandcalculator.models.{Value, PropertyValueAfterExemption, PropertyValueAfterExemptionKey, ValueCloselyInherited}
 
 object PropertyValueAfterExemptionFormHelper {
 
@@ -30,8 +30,8 @@ object PropertyValueAfterExemptionFormHelper {
     either match {
       case Left(_) => ""
       case Right(v) => key match {
-        case PropertyValue => v.propertyValue
-        case PropertyValueCloselyInherited => v.propertyValueCloselyInherited
+        case Value => v.value
+        case ValueCloselyInherited => v.valueCloselyInherited
       }
     }
   }
