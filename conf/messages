@@ -57,10 +57,11 @@ percentage_closely_inherited.title = What was the percentage of the property clo
 percentage_closely_inherited.guidance = Property closeiny inherited sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
 percentage_closely_inherited.label = What was the percentage of the property closely inherited?
 
-property_value.browser_title = Value of the property
-property_value.title = What was the value of the property?
-property_value.guidance = Property value guidance ipsum dolor sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
-property_value.label = What is the property value?
+property_value.question_number = Question 5
+property_value.browser_title = Question page
+property_value.title = What is the value of any Qualifying Residential Interest at the date of death?
+property_value.guidance = This is the value of any house, flat or other residential property that is included within the value of the deceased`s estate at the date of death and which the deceased lived in as their home at some time. Any outstanding mortgages or other debts charged on the property should be taken into account. if there was more than one residence in the estate at the time of death the personal representatives can nominate which property is to be taken into account. Include the value of the nominated property here.
+property_value.label =
 property_value.greater_than_gross_estate_value.error = Property Value cannot be greater than the Gross Estate Value
 
 results.browser_title = Final calculation

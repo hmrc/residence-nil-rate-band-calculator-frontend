@@ -41,6 +41,11 @@ class PropertyValueViewSpec extends HtmlSpec {
 
     "rendered" must {
 
+      "display the correct question designator" in {
+        val f = thisFixture()
+        assertContainsMessages(f.doc, "property_value.question_number")
+      }
+
       "display the correct browser title" in {
         val f = thisFixture()
         assertEqualsMessage(f.doc, "title", "property_value.browser_title")
