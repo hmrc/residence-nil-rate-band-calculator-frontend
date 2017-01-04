@@ -24,9 +24,19 @@ class PropertyValueAfterExemptionFormSpec extends FormSpec {
 
     def values(value: String, valueCloselyInherited: String) = Map("value" -> value, "valueCloselyInherited" -> valueCloselyInherited)
 
-    "bind positive numbers" in {
-      val form = PropertyValueAfterExemptionForm().bind(values("1", "2"))
-      form.get shouldBe PropertyValueAfterExemption(1, 2)
+    "bind positive equal numbers" in {
+      val form = PropertyValueAfterExemptionForm().bind(values("1", "1"))
+      form.get shouldBe PropertyValueAfterExemption(1, 1)
+    }
+
+    "bind positive numbers when value is greater than value closely inherited" in {
+      val form = PropertyValueAfterExemptionForm().bind(values("2", "1"))
+      form.get shouldBe PropertyValueAfterExemption(2, 1)
+    }
+
+    "fail to bind when value closely inherited is greater than value" in {
+      val expectedError = error("", "property_value_after_exemption.value_closely_inherited_greater_than_value.error")
+      checkForError(PropertyValueAfterExemptionForm(), values("1", "2"), expectedError)
     }
 
     "fail to bind a negative value" in {

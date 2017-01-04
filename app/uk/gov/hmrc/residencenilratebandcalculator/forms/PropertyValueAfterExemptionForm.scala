@@ -27,5 +27,6 @@ object PropertyValueAfterExemptionForm {
       "value" -> number(min=0),
       "valueCloselyInherited" -> number(min=0)
     )(PropertyValueAfterExemption.apply)(PropertyValueAfterExemption.unapply)
+      verifying("property_value_after_exemption.value_closely_inherited_greater_than_value.error", x => x.valueCloselyInherited <= x.value)
   )
 }
