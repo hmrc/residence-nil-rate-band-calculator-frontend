@@ -39,6 +39,7 @@ object Constants {
     estateHasPropertyId -> "estateHasProperty",
     grossEstateValueId -> "grossEstateValue",
     propertyValueId -> "propertyValue",
-    percentageCloselyInheritedId -> "percentageCloselyInherited"
+    percentageCloselyInheritedId -> "percentageCloselyInherited",
+    propertyValueAfterExemptionId -> "propertyValueAfterExemption"
   )
 }
