@@ -41,6 +41,11 @@ class ChargeableTransferAmountViewSpec extends HtmlSpec {
 
       def thisFixture() = fixture()
 
+      "display the correct question designator" in {
+        val f = thisFixture()
+        assertContainsMessages(f.doc, "chargeable_transfer_amount.question_number")
+      }
+
       "display the correct browser title" in {
         val f = thisFixture()
         assertEqualsMessage(f.doc, "title", "chargeable_transfer_amount.browser_title")

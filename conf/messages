@@ -8,10 +8,11 @@ brought_forward_allowance.title = Brought Forward Allowance
 brought_forward_allowance.guidance = Brought forward allowance, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
 brought_forward_allowance.label = How much Brought Forward Allowance is available?
 
-chargeable_transfer_amount.browser_title = Net Chargeable Transfer Value
-chargeable_transfer_amount.title = Net Chargeable Transfer Value of the Estate
-chargeable_transfer_amount.guidance = Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
-chargeable_transfer_amount.label = What is the chargeable transfer amount?
+chargeable_transfer_amount.question_number = Question 3
+chargeable_transfer_amount.browser_title = Question page
+chargeable_transfer_amount.title = What is the amount of the chargeable transfer on death?
+chargeable_transfer_amount.guidance = This is the net value transferred on death, AFTER reliefs and exemptions. It does not include any lifetime transfers within 7 years of death thar are taken into account in working out the total inheritance tax liability.
+chargeable_transfer_amount.label =
 chargeable_transfer_amount.greater_than_gross_estate_value.error = Chargeable Transfer Amount cannot be greater than the Gross Estate Value
 
 date.day = Day
