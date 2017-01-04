@@ -32,10 +32,11 @@ error.required = Please enter a value
 error.summary.title = Message to alert the user to a problem goes here
 error.summary.text = Optional description of the errors and how to correct them
 
-estate_has_property.browser_title = Does the estate contain a residence?
-estate_has_property.title = Does the estate contain a residence?
-estate_has_property.guidance = Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
-estate_has_property.label = Does the estate contain a qualifying residence?
+estate_has_property.question_number = Question 4
+estate_has_property.browser_title = Question page
+estate_has_property.title = Does the deceased`s estate include any residential property that has ever been the deceased`s residence while they owned that property?
+estate_has_property.guidance = Answer '''Yes''' if the deceased`s estate includes a property that they ever lived in as their residence while they owned the property. This does not need to be a residence that is being left to the deceased`s children or remoter descendants.
+estate_has_property.label =
 
 gross_estate_value.question_number = Question 2
 gross_estate_value.browser_title = Question page

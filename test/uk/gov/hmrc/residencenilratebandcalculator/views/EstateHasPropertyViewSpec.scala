@@ -41,6 +41,11 @@ class EstateHasPropertyViewSpec extends HtmlSpec {
 
       def thisFixture() = fixture()
 
+      "display the correct question designator" in {
+        val f = thisFixture()
+        assertContainsMessages(f.doc, "estate_has_property.question_number")
+      }
+
       "display the correct browser title" in {
         val f = thisFixture()
         assertEqualsMessage(f.doc, "title", "estate_has_property.browser_title")
