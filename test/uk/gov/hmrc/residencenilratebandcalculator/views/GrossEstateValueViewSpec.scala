@@ -41,6 +41,11 @@ class GrossEstateValueViewSpec extends HtmlSpec {
 
       def thisFixture() = fixture()
 
+      "display the correct question designator" in {
+        val f = fixture()
+        assertContainsMessages(f.doc, "gross_estate_value.question_number")
+      }
+
       "display the correct browser title" in {
         val f = thisFixture()
         assertEqualsMessage(f.doc, "title", "gross_estate_value.browser_title")
