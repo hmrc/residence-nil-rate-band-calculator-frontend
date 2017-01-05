@@ -49,8 +49,12 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
         |  "propertyValue": {"type": "integer", "minimum": 0},
         |  "percentageCloselyInherited": {"type": "integer", "minimum": 0, "maximum": 100},
         |  "propertyValueAfterExemption": {
-        |    "value": {"type": "integer", "minimum": 0},
-        |    "valueCloselyInherited": {"type": "integer", "minimum": 0}
+        |    "type": "object",
+        |    "properties": {
+        |      "value": {"type": "integer", "minimum": 0},
+        |      "valueCloselyInherited": {"type": "integer", "minimum": 0}
+        |    },
+        |    "required": ["value", "valueCloselyInherited"]
         |  }
         |},
         |"required": ["chargeableTransferAmount", "dateOfDeath", "grossEstateValue", "propertyValue", "percentageCloselyInherited"]
@@ -148,7 +152,51 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
           case Failure(exception) => {
             exception shouldBe a [JsonInvalidException]
             exception.getMessage shouldBe
-            "JSON error: Property percentageCloselyInherited missing.\n"
+              "JSON error: Property percentageCloselyInherited missing.\n"
+          }
+          case Success(json) => fail
+        }
+      }
+
+      "the CacheMap contains a PropertyValueAfterExemption structure which does not contain a value" in {
+        val cacheMap = CacheMap(id = cacheMapId, data =
+          Map(
+            Constants.chargeableTransferAmountId -> JsNumber(100),
+            Constants.dateOfDeathId -> JsString("2017-09-10"),
+            Constants.grossEstateValueId -> JsNumber(200),
+            Constants.propertyValueId -> JsNumber(200),
+            Constants.percentageCloselyInheritedId -> JsNumber(50),
+            Constants.propertyValueAfterExemptionId -> JsObject(Map(
+              "valueCloselyInherited" -> JsNumber(1)
+            ))))
+        val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
+        buildResult match {
+          case Failure(exception) => {
+            exception shouldBe a [JsonInvalidException]
+            exception.getMessage shouldBe
+              "JSON error: Property value missing.\n"
+          }
+          case Success(json) => fail
+        }
+      }
+
+      "the CacheMap contains a PropertyValueAfterExemption structure which does not contain a valueCloselyInherited" in {
+        val cacheMap = CacheMap(id = cacheMapId, data =
+          Map(
+            Constants.chargeableTransferAmountId -> JsNumber(100),
+            Constants.dateOfDeathId -> JsString("2017-09-10"),
+            Constants.grossEstateValueId -> JsNumber(200),
+            Constants.propertyValueId -> JsNumber(200),
+            Constants.percentageCloselyInheritedId -> JsNumber(50),
+            Constants.propertyValueAfterExemptionId -> JsObject(Map(
+              "value" -> JsNumber(1)
+            ))))
+        val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
+        buildResult match {
+          case Failure(exception) => {
+            exception shouldBe a [JsonInvalidException]
+            exception.getMessage shouldBe
+              "JSON error: Property valueCloselyInherited missing.\n"
           }
           case Success(json) => fail
         }
@@ -170,6 +218,52 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
               "JSON error: -100 is smaller than required minimum value of 0.\n"
           }
           case Success(json) => fail
+        }
+      }
+
+      "the CacheMap contains a negative value for PropertyValueAfterExemption.value" in {
+        val cacheMap = CacheMap(id = cacheMapId, data =
+          Map(
+            Constants.chargeableTransferAmountId -> JsNumber(100),
+            Constants.dateOfDeathId -> JsString("2017-09-10"),
+            Constants.grossEstateValueId -> JsNumber(200),
+            Constants.propertyValueId -> JsNumber(200),
+            Constants.percentageCloselyInheritedId -> JsNumber(50),
+            Constants.propertyValueAfterExemptionId -> JsObject(Map(
+              "value" -> JsNumber(-1),
+              "valueCloselyInherited" -> JsNumber(1)
+            ))))
+        val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
+        buildResult match {
+          case Failure(exception) => {
+            exception shouldBe a [JsonInvalidException]
+            exception.getMessage shouldBe
+              "JSON error: -1 is smaller than required minimum value of 0.\n"
+          }
+          case Success(json) => fail("JSON is: " + json)
+        }
+      }
+
+      "the CacheMap contains a negative value for PropertyValueAfterExemption.valueCloselyInherited" in {
+        val cacheMap = CacheMap(id = cacheMapId, data =
+          Map(
+            Constants.chargeableTransferAmountId -> JsNumber(100),
+            Constants.dateOfDeathId -> JsString("2017-09-10"),
+            Constants.grossEstateValueId -> JsNumber(200),
+            Constants.propertyValueId -> JsNumber(200),
+            Constants.percentageCloselyInheritedId -> JsNumber(50),
+            Constants.propertyValueAfterExemptionId -> JsObject(Map(
+              "value" -> JsNumber(1),
+              "valueCloselyInherited" -> JsNumber(-1)
+            ))))
+        val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
+        buildResult match {
+          case Failure(exception) => {
+            exception shouldBe a [JsonInvalidException]
+            exception.getMessage shouldBe
+              "JSON error: -1 is smaller than required minimum value of 0.\n"
+          }
+          case Success(json) => fail("JSON is: " + json)
         }
       }
 
