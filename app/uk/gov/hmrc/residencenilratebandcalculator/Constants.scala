@@ -20,6 +20,7 @@ import org.joda.time.LocalDate
 
 object Constants {
   val anyBroughtForwardAllowanceId = "AnyBroughtForwardAllowance"
+  val anyExemptionId = "AnyExemption"
   val broughtForwardAllowanceId = "BroughtForwardAllowance"
   val chargeableTransferAmountId = "ChargeableTransferAmount"
   val dateOfDeathId = "DateOfDeath"
@@ -27,6 +28,7 @@ object Constants {
   val estateHasPropertyId = "EstateHasProperty"
   val grossEstateValueId = "GrossEstateValue"
   val maxGrossEstateValue = 2000000
+  val propertyValueAfterExemptionId = "PropertyValueAfterExemption"
   val propertyValueId = "PropertyValue"
   val percentageCloselyInheritedId = "PercentageCloselyInherited"
 
@@ -37,6 +39,7 @@ object Constants {
     estateHasPropertyId -> "estateHasProperty",
     grossEstateValueId -> "grossEstateValue",
     propertyValueId -> "propertyValue",
-    percentageCloselyInheritedId -> "percentageCloselyInherited"
+    percentageCloselyInheritedId -> "percentageCloselyInherited",
+    propertyValueAfterExemptionId -> "propertyValueAfterExemption"
   )
 }

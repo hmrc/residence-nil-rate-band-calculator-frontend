@@ -33,9 +33,11 @@ class Navigator @Inject()() {
       Constants.chargeableTransferAmountId -> (_ => EstateHasPropertyController.onPageLoad()),
       Constants.estateHasPropertyId -> (cm => getEstateHasPropertyRoute(cm)),
       Constants.propertyValueId -> (_ => PercentageCloselyInheritedController.onPageLoad()),
-      Constants.percentageCloselyInheritedId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
+      Constants.percentageCloselyInheritedId -> (cm => getPercentageCloselyInheritedRoute(cm)),
       Constants.anyBroughtForwardAllowanceId -> (cm => getAnyBroughtForwardAllowanceRoute(cm)),
-      Constants.broughtForwardAllowanceId -> (_ => ResultsController.onPageLoad())
+      Constants.broughtForwardAllowanceId -> (_ => ResultsController.onPageLoad()),
+      Constants.anyExemptionId -> (cm => getAnyExemptionRoute(cm)),
+      Constants.propertyValueAfterExemptionId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad())
     )
   }
 
@@ -67,6 +69,22 @@ class Navigator @Inject()() {
     cacheMap.getEntry[Boolean](Constants.anyBroughtForwardAllowanceId) match {
       case Some(true) => BroughtForwardAllowanceController.onPageLoad()
       case Some(false) => ResultsController.onPageLoad()
+      case None => HomeController.onPageLoad()
+    }
+  }
+
+  private def getPercentageCloselyInheritedRoute(cacheMap: CacheMap) = {
+    cacheMap.getEntry[Int](Constants.percentageCloselyInheritedId) match {
+      case Some(x) if x == 0 => AnyBroughtForwardAllowanceController.onPageLoad()
+      case Some(_) => AnyExemptionController.onPageLoad()
+      case None => HomeController.onPageLoad()
+    }
+  }
+
+  private def getAnyExemptionRoute(cacheMap: CacheMap) = {
+    cacheMap.getEntry[Boolean](Constants.anyExemptionId) match {
+      case Some(true) => PropertyValueAfterExemptionController.onPageLoad()
+      case Some(false) => AnyBroughtForwardAllowanceController.onPageLoad()
       case None => HomeController.onPageLoad()
     }
   }
