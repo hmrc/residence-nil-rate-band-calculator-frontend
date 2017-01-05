@@ -69,7 +69,8 @@ class RnrbConnectorSpec extends UnitSpec with WithFakeApplication with MockitoSu
       val residenceNilRateAmount = 100
       val applicableNilRateBandAmount = 100
       val carryForwardAmount = 100
-      val calculationResult = CalculationResult(residenceNilRateAmount, applicableNilRateBandAmount, carryForwardAmount)
+      val defaultAllowanceAmount = 100
+      val calculationResult = CalculationResult(residenceNilRateAmount, applicableNilRateBandAmount, carryForwardAmount, defaultAllowanceAmount)
 
       val result = await(new RnrbConnector(getHttpMock(Json.toJson(calculationResult))).send(minimalJson))
 
