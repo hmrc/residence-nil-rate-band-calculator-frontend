@@ -36,6 +36,7 @@ class RnrbConnector @Inject()(http: WSHttp) extends ServicesConfig {
   implicit val hc: HeaderCarrier = HeaderCarrier()
   lazy val serviceUrl = baseUrl("residence-nil-rate-band-calculator")
   val baseSegment = "/residence-nil-rate-band-calculator/"
+  val schemaBaseSegment = s"${baseSegment}api/conf/0.1/schemas/"
   val jsonContentTypeHeader = ("Content-Type", "application/json")
 
   def getStyleGuide = http.GET(s"$serviceUrl${baseSegment}style-guide")
@@ -52,7 +53,7 @@ class RnrbConnector @Inject()(http: WSHttp) extends ServicesConfig {
     }
 
   def getSuccessfulResponseSchema =
-    http.GET(s"$serviceUrl${baseSegment}schemas/deceaseds-estate.jsonschema").map {
+    http.GET(s"$serviceUrl${schemaBaseSegment}deceaseds-estate.jsonschema").map {
       response => Json.fromJson[SchemaType](response.json) match {
         case JsSuccess(schema, _) => Success(schema)
         case error: JsError => {
