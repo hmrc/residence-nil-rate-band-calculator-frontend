@@ -41,6 +41,11 @@ class AnyExemptionViewSpec extends HtmlSpec {
 
       def thisFixture() = fixture()
 
+      "display the correct question designator" in {
+        val f = thisFixture()
+        assertContainsMessages(f.doc, "any_exemption.question_number")
+      }
+
       "display the correct browser title" in {
         val f = thisFixture()
         assertEqualsMessage(f.doc, "title", "any_exemption.browser_title")
