@@ -10,10 +10,11 @@ any_exemption.title = Is any part of the Qualifying Residential Interest exempt 
 any_exemption.guidance = Answer '''Yes''' if any part of the Qualifying Residence passes to an exempt beneficiary, such as the deceased`s spouse/civil partner or to a charity, or if Agricultural Relief applies applies to any part of the Qualifying Residence. If the Qualifying Residence falls into the residue of the estate and any part of the residue is exempt, answer '''Yes''' to this question.
 any_exemption.label =
 
-brought_forward_allowance.browser_title = Brought Forward Allowance
-brought_forward_allowance.title = Brought Forward Allowance
-brought_forward_allowance.guidance = Brought forward allowance, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
-brought_forward_allowance.label = How much Brought Forward Allowance is available?
+brought_forward_allowance.question_number = Question 10
+brought_forward_allowance.browser_title = Question page
+brought_forward_allowance.title = What is the amount of brought-forward-allowance being claimed
+brought_forward_allowance.guidance = This is the value from box 33 of the form IHT436
+brought_forward_allowance.label =
 
 chargeable_transfer_amount.question_number = Question 3
 chargeable_transfer_amount.browser_title = Question page

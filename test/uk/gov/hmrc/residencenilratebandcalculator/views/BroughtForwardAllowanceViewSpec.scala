@@ -41,6 +41,11 @@ class BroughtForwardAllowanceViewSpec extends HtmlSpec {
 
     "rendered" must {
 
+      "display the correct question designator" in {
+        val f = thisFixture()
+        assertContainsMessages(f.doc, "brought_forward_allowance.question_number")
+      }
+
       "display the correct browser title" in {
         val f = thisFixture()
         assertEqualsMessage(f.doc, "title", "brought_forward_allowance.browser_title")
