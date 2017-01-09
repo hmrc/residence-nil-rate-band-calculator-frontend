@@ -47,7 +47,9 @@ class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar w
   val expectedResidenceNilRateAmount = 77796325
   val expectedApplicableNilRateBandAmount = 88881
   val expectedCarriedForwardAmount = 9999
-  val eitherCalculationResult = Success(CalculationResult(expectedResidenceNilRateAmount, expectedApplicableNilRateBandAmount, expectedCarriedForwardAmount))
+  val expectedDefaultAllowance = 3333
+  val eitherCalculationResult = Success(CalculationResult(expectedResidenceNilRateAmount, expectedApplicableNilRateBandAmount,
+    expectedCarriedForwardAmount, expectedDefaultAllowance))
 
   def mockRnrbConnector = {
     val mockConnector = mock[RnrbConnector]
@@ -99,6 +101,12 @@ class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar w
       val result = resultsController(mockJsonBuilderThatSucceeds).onPageLoad()(fakeRequest)
       val contents = contentAsString(result)
       contents should include("88881")
+    }
+
+    "display the default allowance if the Microservice successfully returns it" in {
+      val result = resultsController(mockJsonBuilderThatSucceeds).onPageLoad()(fakeRequest)
+      val contents = contentAsString(result)
+      contents should include("3333")
     }
   }
 }

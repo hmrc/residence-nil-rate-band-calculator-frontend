@@ -1,0 +1,38 @@
+@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.{FormHelpers, PropertyValueAfterExemptionFormHelper}
+@import uk.gov.hmrc.play.views.html._
+@import uk.gov.hmrc.residencenilratebandcalculator.models.{PropertyValueAfterExemption, Value, ValueCloselyInherited}
+
+@(appConfig: FrontendAppConfig, form: Option[Form[PropertyValueAfterExemption]] = None)(implicit request: Request[_], messages: Messages)
+
+@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+    title = messages("property_value_after_exemption.browser_title"),
+    appConfig = appConfig,
+    bodyClasses = None) {
+
+    <h1>@messages("property_value_after_exemption.title")</h1>
+
+    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyValueAfterExemptionController.onSubmit(), 'autoComplete -> "off") {
+
+        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
+        @rnrbHelpers.input_text(
+            id = "value",
+            name = "value",
+            value = Some(PropertyValueAfterExemptionFormHelper.getValueByKey(form, Value).toString),
+            label = messages("property_value_after_exemption.value.label"),
+            secondaryLabel = Some("currency"),
+            errorKey = FormHelpers.getErrorByKey(form, "value")
+        )
+        @rnrbHelpers.input_text(
+            id = "valueCloselyInherited",
+            name = "valueCloselyInherited",
+            value = Some(PropertyValueAfterExemptionFormHelper.getValueByKey(form, ValueCloselyInherited).toString),
+            label = messages("property_value_after_exemption.value_closely_inherited.label"),
+            secondaryLabel = Some("currency"),
+            errorKey = FormHelpers.getErrorByKey(form, "valueCloselyInherited")
+        )
+
+        @rnrbHelpers.submit_button()
+    }
+}

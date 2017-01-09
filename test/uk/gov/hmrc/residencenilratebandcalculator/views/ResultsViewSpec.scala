@@ -24,7 +24,7 @@ import scala.util.Success
 
 class ResultsViewSpec extends HtmlSpec {
   def fixture() = new {
-    val view = results(frontendAppConfig, Success(CalculationResult(10, 50, 300)))(request, messages)
+    val view = results(frontendAppConfig, Success(CalculationResult(10, 50, 300, 260)))(request, messages)
     val doc = asDocument(view)
   }
 
@@ -75,6 +75,11 @@ class ResultsViewSpec extends HtmlSpec {
       "contain an amount for the applicable nil rate band amount" in {
         val f = thisFixture()
         assertContainsText(f.doc, "50")
+      }
+
+      "contain an amount for the default allowance amount" in {
+        val f = thisFixture()
+        assertContainsText(f.doc, "260")
       }
     }
   }

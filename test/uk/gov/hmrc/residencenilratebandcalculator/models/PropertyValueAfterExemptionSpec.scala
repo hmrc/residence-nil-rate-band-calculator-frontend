@@ -16,11 +16,19 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import play.api.libs.json.{Json, OFormat}
+import uk.gov.hmrc.play.test.UnitSpec
+import play.api.libs.json._
 
-case class CalculationResult (residenceNilRateAmount: Int, applicableNilRateBandAmount: Int,
-                              carryForwardAmount: Int, defaultAllowanceAmount: Int) {}
+class PropertyValueAfterExemptionSpec extends UnitSpec {
 
-object CalculationResult {
-  implicit val formats: OFormat[CalculationResult] = Json.format[CalculationResult]
+  "Proeprty Values After Exemption model" must {
+
+    "be parsable as JSON" in {
+      Json.toJson(PropertyValueAfterExemption(1, 2)) shouldBe Json.parse("""{"value":1,"valueCloselyInherited":2}""")
+    }
+
+    "give an error when trying to contruct itself from invalid JSON" in {
+      Json.fromJson[PropertyValueAfterExemption](JsString("invalid data")) shouldBe a [JsError]
+    }
+  }
 }

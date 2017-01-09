@@ -22,15 +22,6 @@
        }
     }
 
-    <p>@messages("results.carryForwardAmount.label")</p>
-
-    @{
-        calculationResult match {
-            case Failure(exception) => exception.getMessage
-            case Success(cr) => cr.carryForwardAmount.toString
-        }
-    }
-
     <p>@messages("results.applicableNilRateBandAmount.label")</p>
 
     @{
@@ -40,4 +31,21 @@
         }
     }
 
+    <p>@messages("results.defaultAllowanceAmount.label")</p>
+
+    @{
+        calculationResult match {
+            case Failure(exception) => exception.getMessage
+            case Success(cr) => cr.defaultAllowanceAmount.toString
+        }
+    }
+
+    <p>@messages("results.carryForwardAmount.label")</p>
+
+    @{
+        calculationResult match {
+            case Failure(exception) => exception.getMessage
+            case Success(cr) => cr.carryForwardAmount.toString
+        }
+    }
 }
