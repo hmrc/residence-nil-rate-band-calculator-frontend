@@ -43,6 +43,11 @@ class PropertyValueAfterExemptionViewSpec extends HtmlSpec {
 
     "rendered" must {
 
+      "display the correct question designator" in {
+        val f = thisFixture()
+        assertContainsMessages(f.doc, "property_value_after_exemption.question_number")
+      }
+
       "display the correct browser title" in {
         val f = thisFixture()
         assertEqualsMessage(f.doc, "title", "property_value_after_exemption.browser_title")

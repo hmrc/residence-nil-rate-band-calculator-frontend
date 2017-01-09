@@ -10,6 +10,8 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
+    <p>@messages("property_value_after_exemption.question_number")</p>
+
     <h1>@messages("property_value_after_exemption.title")</h1>
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyValueAfterExemptionController.onSubmit(), 'autoComplete -> "off") {
