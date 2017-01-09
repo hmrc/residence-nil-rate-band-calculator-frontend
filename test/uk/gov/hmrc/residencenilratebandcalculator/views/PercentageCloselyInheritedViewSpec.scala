@@ -41,6 +41,11 @@ class PercentageCloselyInheritedViewSpec extends HtmlSpec {
 
       def thisFixture() = fixture()
 
+      "display the correct question designator" in {
+        val f = thisFixture()
+        assertContainsMessages(f.doc, "percentage_closely_inherited.question_number")
+      }
+
       "display the correct browser title" in {
         val f = thisFixture()
         assertEqualsMessage(f.doc, "title", "percentage_closely_inherited.browser_title")
