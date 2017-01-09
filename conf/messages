@@ -1,12 +1,14 @@
-any_brought_forward_allowance.browser_title = Is there any Brought Forward Allowance?
-any_brought_forward_allowance.title = Is there any Brought Forward Allowance?
-any_brought_forward_allowance.guidance = Any brought forward allowance, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
+any_brought_forward_allowance.question_number = Question 9
+any_brought_forward_allowance.browser_title = Question pages
+any_brought_forward_allowance.title = Is a claim being made for a brought-forward allowance from the death of a pre-deceased spouse or civil partner of teh deceased?
+any_brought_forward_allowance.guidance = Brought-forward allowance needs to be claimed. Please complete form IHT436 to make this claim.
 any_brought_forward_allowance.label = Is there any brought forward allowance?
 
-any_exemption.browser_title = Is any part of the Qualifying Residential Interest exempt from Inheritance Tax, or does any part of it qualify for relief?
+any_exemption.question_number = Question 7
+any_exemption.browser_title = Question page
 any_exemption.title = Is any part of the Qualifying Residential Interest exempt from Inheritance Tax, or does any part of it qualify for relief?
-any_exemption.guidance = Any exemptions adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
-any_exemption.label = Is any part of the Qualifying Residential Interest exempt from Inheritance Tax, or does any part of it qualify for relief?
+any_exemption.guidance = Answer '''Yes''' if any part of the Qualifying Residence passes to an exempt beneficiary, such as the deceased`s spouse/civil partner or to a charity, or if Agricultural Relief applies applies to any part of the Qualifying Residence. If the Qualifying Residence falls into the residue of the estate and any part of the residue is exempt, answer '''Yes''' to this question.
+any_exemption.label =
 
 brought_forward_allowance.browser_title = Brought Forward Allowance
 brought_forward_allowance.title = Brought Forward Allowance
@@ -57,10 +59,11 @@ not_possible_to_use_service.browser_title = Not possible to use this Calculator
 not_possible_to_use_service.title = Not possible to use this Calculator
 not_possible_to_use_service.guidance = Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
 
-percentage_closely_inherited.browser_title = Percentage of the property closely inherited
-percentage_closely_inherited.title = What was the percentage of the property closely inherited?
-percentage_closely_inherited.guidance = Property closeiny inherited sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
-percentage_closely_inherited.label = What was the percentage of the property closely inherited?
+percentage_closely_inherited.question_number = Question 6
+percentage_closely_inherited.browser_title = Question page
+percentage_closely_inherited.title = Does a percentage of the Qualifying Residence pass to a direct descendant following the death?
+percentage_closely_inherited.guidance = This is the percentage share of the property that passes to a direct descendant, or the spouse or civil partner of a direct descendant.
+percentage_closely_inherited.label = Percentage passing to direct descendant
 
 property_value.question_number = Question 5
 property_value.browser_title = Question page
