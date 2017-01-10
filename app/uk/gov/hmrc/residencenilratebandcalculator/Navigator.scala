@@ -19,8 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator
 import javax.inject.{Inject, Singleton}
 
 import org.joda.time.LocalDate
-import play.api.libs.json.Reads
-import play.api.mvc.{Action, Call}
+import play.api.mvc.Call
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 
@@ -51,7 +50,8 @@ class Navigator @Inject()() {
       Constants.propertyValueId -> (() => EstateHasPropertyController.onPageLoad()),
       Constants.percentageCloselyInheritedId -> (() => PropertyValueController.onPageLoad()),
       Constants.anyExemptionId -> (() => PercentageCloselyInheritedController.onPageLoad()),
-      Constants.propertyValueAfterExemptionId -> (() => AnyExemptionController.onPageLoad())
+      Constants.propertyValueAfterExemptionId -> (() => AnyExemptionController.onPageLoad()),
+      Constants.anyBroughtForwardAllowanceId -> (() => PropertyValueAfterExemptionController.onPageLoad())
     )
   }
 

@@ -174,5 +174,9 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     "return a call to the Any Exemption when back linking from the Property Value After Exemption page" in {
       navigator.lastPage(Constants.propertyValueAfterExemptionId)() shouldBe routes.AnyExemptionController.onPageLoad()
     }
+
+    "return a call to the Property Value After Exemption when back linking from the Any Brought Forward Allowance page" in {
+      navigator.lastPage(Constants.anyBroughtForwardAllowanceId)() shouldBe routes.PropertyValueAfterExemptionController.onPageLoad()
+    }
   }
 }
