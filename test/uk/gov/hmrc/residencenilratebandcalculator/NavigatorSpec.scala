@@ -162,13 +162,13 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     "return a call to the TransitionOutController Controller onPageLoad method when a date before 8th July 2015 is" +
       "supplied as the Date of Disposal " in {
       val mockCacheMap = mock[CacheMap]
-      when(mockCacheMap.getEntry[LocalDate](matches(Constants.dateOfDisposalId))(any())) thenReturn Some(new LocalDate(2017, 7, 7))
+      when(mockCacheMap.getEntry[LocalDate](matches(Constants.dateOfDisposalId))(any())) thenReturn Some(new LocalDate(2015, 7, 7))
       navigator.nextPage(Constants.dateOfDisposalId)(mockCacheMap) shouldBe routes.TransitionOutController.onPageLoad()
     }
 
     "return a call to the Results Controller onPageLoad method when a date on or after 8th July 2015 is supplied as the Date of Disposal " in {
       val mockCacheMap = mock[CacheMap]
-      when(mockCacheMap.getEntry[LocalDate](matches(Constants.dateOfDisposalId))(any())) thenReturn Some(new LocalDate(2017, 7, 8))
+      when(mockCacheMap.getEntry[LocalDate](matches(Constants.dateOfDisposalId))(any())) thenReturn Some(new LocalDate(2015, 7, 8))
       navigator.nextPage(Constants.dateOfDisposalId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
     }
 

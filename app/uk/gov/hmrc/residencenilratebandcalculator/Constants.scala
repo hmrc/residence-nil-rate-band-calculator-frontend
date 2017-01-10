@@ -27,7 +27,7 @@ object Constants {
   val dateOfDeathId = "DateOfDeath"
   val dateOfDisposalId = "DateOfDisposal"
   val eligibilityDate = new LocalDate(2017, 4, 6)
-  val downsizingEligibilityDate = new LocalDate(2017, 7, 8)
+  val downsizingEligibilityDate = new LocalDate(2015, 7, 8)
   val estateHasPropertyId = "EstateHasProperty"
   val grossEstateValueId = "GrossEstateValue"
   val maxGrossEstateValue = 2000000
