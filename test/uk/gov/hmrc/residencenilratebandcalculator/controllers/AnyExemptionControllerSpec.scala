@@ -34,6 +34,6 @@ class AnyExemptionControllerSpec extends SimpleControllerSpecBase {
 
     val testValue = true
 
-    behave like rnrbController(createController, createView, Constants.anyExemptionId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+    behave like rnrbController[Boolean](createController, createView, Constants.anyExemptionId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
   }
 }

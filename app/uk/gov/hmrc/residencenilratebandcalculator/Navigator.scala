@@ -19,9 +19,11 @@ package uk.gov.hmrc.residencenilratebandcalculator
 import javax.inject.{Inject, Singleton}
 
 import org.joda.time.LocalDate
-import play.api.mvc.Call
+import play.api.libs.json.Reads
+import play.api.mvc.{Action, Call}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+
 
 @Singleton
 class Navigator @Inject()() {
@@ -39,6 +41,10 @@ class Navigator @Inject()() {
       Constants.anyExemptionId -> (cm => getAnyExemptionRoute(cm)),
       Constants.propertyValueAfterExemptionId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad())
     )
+  }
+
+  private val reverseRouteMap: Map[String, () => Call] = {
+    Map(Constants.percentageCloselyInheritedId -> (() => PropertyValueController.onPageLoad()))
   }
 
   private def getDateOfDeathRoute(cacheMap: CacheMap) = {
@@ -91,5 +97,9 @@ class Navigator @Inject()() {
 
   def nextPage(controllerId: String): CacheMap => Call = {
     routeMap.getOrElse(controllerId, _ => PageNotFoundController.onPageLoad())
+  }
+
+  def lastPage(controllerId: String): () => Call = {
+    reverseRouteMap.getOrElse(controllerId, () => PageNotFoundController.onPageLoad())
   }
 }

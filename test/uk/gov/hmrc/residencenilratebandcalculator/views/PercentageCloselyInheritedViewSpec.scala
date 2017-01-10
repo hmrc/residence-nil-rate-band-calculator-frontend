@@ -31,7 +31,7 @@ class PercentageCloselyInheritedViewSpec extends HtmlSpec {
   val error = FormError(errorKey, errorMessage)
 
   def fixture(form: Option[Form[Int]] = None) = new {
-    val view = percentage_closely_inherited(frontendAppConfig, form)(request, messages)
+    val view = percentage_closely_inherited(frontendAppConfig, form, "URL")(request, messages)
     val doc = asDocument(view)
   }
 
@@ -40,6 +40,11 @@ class PercentageCloselyInheritedViewSpec extends HtmlSpec {
     "rendered" must {
 
       def thisFixture() = fixture()
+
+      "contain a back link pointing to another page" in {
+        val f = thisFixture()
+        f.doc.getElementById("back").attr("href") should be("URL")
+      }
 
       "display the correct question designator" in {
         val f = thisFixture()

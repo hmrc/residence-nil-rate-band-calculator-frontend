@@ -33,8 +33,8 @@ POST       /property-value                  uk.gov.hmrc.residencenilratebandcalc
 GET        /property-value-after-exemption  uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyValueAfterExemptionController.onPageLoad
 POST       /property-value-after-exemption  uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyValueAfterExemptionController.onSubmit
 
-GET        /percentage-closely-inherited    uk.gov.hmrc.residencenilratebandcalculator.controllers.PercentageCloselyInheritedController.onPageLoad
-POST       /percentage-closely-inherited    uk.gov.hmrc.residencenilratebandcalculator.controllers.PercentageCloselyInheritedController.onSubmit
+GET        /percentage-closely-inherited         uk.gov.hmrc.residencenilratebandcalculator.controllers.PercentageCloselyInheritedController.onPageLoad
+POST       /percentage-closely-inherited         uk.gov.hmrc.residencenilratebandcalculator.controllers.PercentageCloselyInheritedController.onSubmit
 
 GET        /results                         uk.gov.hmrc.residencenilratebandcalculator.controllers.ResultsController.onPageLoad
 

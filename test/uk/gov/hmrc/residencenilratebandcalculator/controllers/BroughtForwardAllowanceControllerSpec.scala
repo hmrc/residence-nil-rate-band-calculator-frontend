@@ -34,6 +34,6 @@ class BroughtForwardAllowanceControllerSpec extends SimpleControllerSpecBase {
 
     val testValue = 123
 
-    behave like rnrbController(createController, createView, Constants.broughtForwardAllowanceId, testValue)(Reads.IntReads, Writes.IntWrites)
+    behave like rnrbController[Int](createController, createView, Constants.broughtForwardAllowanceId, testValue)(Reads.IntReads, Writes.IntWrites)
   }
 }
