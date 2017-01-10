@@ -49,14 +49,14 @@ trait DateControllerSpecBase extends UnitSpec with WithFakeApplication with Http
       status(result) shouldBe Status.OK
     }
 
-    "return the Gross Estate View for a GET" in {
+    "return the View for a GET" in {
       val result = createController().onPageLoad(rds)(fakeRequest)
       contentAsString(result) shouldBe createView(None).toString
     }
 
     "return a redirect on submit with valid data" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("day", "01"), ("month", "01"), ("year", "2018"))
-      setCacheValue(Constants.dateOfDeathId, new LocalDate(2018, 1, 1))
+      setCacheValue(cacheKey, new LocalDate(2018, 1, 1))
       val result = createController().onSubmit(wts)(fakePostRequest)
       status(result) shouldBe Status.SEE_OTHER
     }
@@ -64,7 +64,7 @@ trait DateControllerSpecBase extends UnitSpec with WithFakeApplication with Http
     "store valid submitted data" in {
       val value = Date(1, 1, 2018)
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("day", "01"), ("month", "01"), ("year", "2018"))
-      setCacheValue(Constants.dateOfDeathId, new LocalDate(2018, 1, 1))
+      setCacheValue(cacheKey, new LocalDate(2018, 1, 1))
       await (createController().onSubmit(wts)(fakePostRequest))
       verifyValueIsCached(cacheKey, value)
     }

@@ -24,6 +24,9 @@ POST       /chargeable-transfer-amount      uk.gov.hmrc.residencenilratebandcalc
 GET        /date-of-death                   uk.gov.hmrc.residencenilratebandcalculator.controllers.DateOfDeathController.onPageLoad
 POST       /date-of-death                   uk.gov.hmrc.residencenilratebandcalculator.controllers.DateOfDeathController.onSubmit
 
+GET        /date-of-disposal                uk.gov.hmrc.residencenilratebandcalculator.controllers.DateOfDisposalController.onPageLoad
+POST       /date-of-disposal                uk.gov.hmrc.residencenilratebandcalculator.controllers.DateOfDisposalController.onSubmit
+
 GET        /gross-estate-value              uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onPageLoad
 POST       /gross-estate-value              uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onSubmit
 
