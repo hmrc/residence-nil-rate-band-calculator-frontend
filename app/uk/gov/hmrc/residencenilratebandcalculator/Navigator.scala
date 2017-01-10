@@ -50,7 +50,8 @@ class Navigator @Inject()() {
       Constants.estateHasPropertyId -> (() => ChargeableTransferAmountController.onPageLoad()),
       Constants.propertyValueId -> (() => EstateHasPropertyController.onPageLoad()),
       Constants.percentageCloselyInheritedId -> (() => PropertyValueController.onPageLoad()),
-      Constants.anyExemptionId -> (() => PercentageCloselyInheritedController.onPageLoad())
+      Constants.anyExemptionId -> (() => PercentageCloselyInheritedController.onPageLoad()),
+      Constants.propertyValueAfterExemptionId -> (() => AnyExemptionController.onPageLoad())
     )
   }
 

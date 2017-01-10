@@ -29,6 +29,8 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_value_afte
 
 class PropertyValueAfterExemptionControllerSpec extends UnitSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
 
+  val url = "/inheritance-tax-residence-nil-rate-band-calculator/any-exemption"
+
   val propertyValue = 456
 
   val propertyValueCloselyInherited = 123
@@ -52,8 +54,8 @@ class PropertyValueAfterExemptionControllerSpec extends UnitSpec with WithFakeAp
   def createController = () => new PropertyValueAfterExemptionController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
   def createView = (values: Option[PropertyValueAfterExemption]) => values match {
-    case None => property_value_after_exemption(frontendAppConfig)(fakeRequest, messages)
-    case Some(v) => property_value_after_exemption(frontendAppConfig, Some(PropertyValueAfterExemptionForm().fill(v)))(fakeRequest, messages)
+    case None => property_value_after_exemption(frontendAppConfig, url)(fakeRequest, messages)
+    case Some(v) => property_value_after_exemption(frontendAppConfig, url, Some(PropertyValueAfterExemptionForm().fill(v)))(fakeRequest, messages)
   }
 
   def reads = PropertyValueAfterExemption.propertyValueAfterExemptionReads

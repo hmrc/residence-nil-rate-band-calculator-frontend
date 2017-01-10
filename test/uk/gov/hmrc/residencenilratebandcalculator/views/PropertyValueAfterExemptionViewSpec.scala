@@ -26,6 +26,7 @@ import scala.language.reflectiveCalls
 
 class PropertyValueAfterExemptionViewSpec extends HtmlSpec {
 
+  val url = "url"
   val propertyValue = 123
   val propertyValueCloselyInherited = 111
   val propertyValueKey = "value"
@@ -33,7 +34,7 @@ class PropertyValueAfterExemptionViewSpec extends HtmlSpec {
   val error = FormError(propertyValueKey, errorMessage)
 
   def fixture(form: Option[Form[PropertyValueAfterExemption]] = None) = new {
-    val view = property_value_after_exemption(frontendAppConfig, form)(request, messages)
+    val view = property_value_after_exemption(frontendAppConfig, url, form)(request, messages)
     val doc = asDocument(view)
   }
 
@@ -42,6 +43,11 @@ class PropertyValueAfterExemptionViewSpec extends HtmlSpec {
     def thisFixture() = fixture()
 
     "rendered" must {
+
+      "contain a back link pointing to another page" in {
+        val f = thisFixture()
+        f.doc.getElementById("back").attr("href") should be(url)
+      }
 
       "display the correct question designator" in {
         val f = thisFixture()
