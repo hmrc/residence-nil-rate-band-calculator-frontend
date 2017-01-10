@@ -35,7 +35,8 @@ class Navigator @Inject()() {
       Constants.propertyValueId -> (_ => PercentageCloselyInheritedController.onPageLoad()),
       Constants.percentageCloselyInheritedId -> (cm => getPercentageCloselyInheritedRoute(cm)),
       Constants.anyBroughtForwardAllowanceId -> (cm => getAnyBroughtForwardAllowanceRoute(cm)),
-      Constants.broughtForwardAllowanceId -> (_ => ResultsController.onPageLoad()),
+      Constants.broughtForwardAllowanceId -> (_ => AnyDownsizingAllowanceController.onPageLoad()),
+      Constants.anyDownsizingAllowanceId -> (cm => getAnyDownsizingAllowanceRoute(cm)),
       Constants.anyExemptionId -> (cm => getAnyExemptionRoute(cm)),
       Constants.propertyValueAfterExemptionId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad())
     )
@@ -68,6 +69,14 @@ class Navigator @Inject()() {
   private def getAnyBroughtForwardAllowanceRoute(cacheMap: CacheMap) = {
     cacheMap.getEntry[Boolean](Constants.anyBroughtForwardAllowanceId) match {
       case Some(true) => BroughtForwardAllowanceController.onPageLoad()
+      case Some(false) => AnyDownsizingAllowanceController.onPageLoad()
+      case None => HomeController.onPageLoad()
+    }
+  }
+
+  private def getAnyDownsizingAllowanceRoute(cacheMap: CacheMap) = {
+    cacheMap.getEntry[Boolean](Constants.anyDownsizingAllowanceId) match {
+      case Some(true) => ResultsController.onPageLoad()
       case Some(false) => ResultsController.onPageLoad()
       case None => HomeController.onPageLoad()
     }

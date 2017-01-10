@@ -9,6 +9,9 @@ GET        /style-guide                     uk.gov.hmrc.residencenilratebandcalc
 GET        /any-brought-forward-allowance   uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyBroughtForwardAllowanceController.onPageLoad
 POST       /any-brought-forward-allowance   uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyBroughtForwardAllowanceController.onSubmit
 
+GET        /any-downsizing-allowance        uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyDownsizingAllowanceController.onPageLoad
+POST       /any-downsizing-allowance        uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyDownsizingAllowanceController.onSubmit
+
 GET        /any-exemption                   uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyExemptionController.onPageLoad
 POST       /any-exemption                   uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyExemptionController.onSubmit
 

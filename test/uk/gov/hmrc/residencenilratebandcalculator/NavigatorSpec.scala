@@ -121,14 +121,14 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.anyBroughtForwardAllowanceId)(mockCacheMap) shouldBe routes.BroughtForwardAllowanceController.onPageLoad()
     }
 
-    "return a call to the ResultsController onPageLoad method when there is no brought forward allowance" in {
+    "return a call to the AnyDownsizingAllowanceController onPageLoad method when there is no brought forward allowance" in {
       val mockCacheMap = mock[CacheMap]
       when(mockCacheMap.getEntry[Boolean](matches(Constants.anyBroughtForwardAllowanceId))(any())) thenReturn Some(false)
-      navigator.nextPage(Constants.anyBroughtForwardAllowanceId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
+      navigator.nextPage(Constants.anyBroughtForwardAllowanceId)(mockCacheMap) shouldBe routes.AnyDownsizingAllowanceController.onPageLoad()
     }
 
-    "return a call to the Results onPageLoad method from the BroughtForwardController" in {
-      navigator.nextPage(Constants.broughtForwardAllowanceId)(mock[CacheMap]) shouldBe routes.ResultsController.onPageLoad()
+    "return a call to the AnyDownsizingAllowanceController onPageLoad method from the BroughtForwardController" in {
+      navigator.nextPage(Constants.broughtForwardAllowanceId)(mock[CacheMap]) shouldBe routes.AnyDownsizingAllowanceController.onPageLoad()
     }
 
     "return a call to the Any Brought Forward Allowance onPageLoad method when no exemptions apply to the property" in {
@@ -146,5 +146,19 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     "return a call to the Any Brought Forward Allowance onPageLoad method from the Property Value After Exemption controller" in {
       navigator.nextPage(Constants.propertyValueAfterExemptionId)(mock[CacheMap]) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
     }
+
+    "return a call to the Results Controller onPageLoad method when there is no downsizing allowance" in {
+      val mockCacheMap = mock[CacheMap]
+      when(mockCacheMap.getEntry[Boolean](matches(Constants.anyDownsizingAllowanceId))(any())) thenReturn Some(false)
+      navigator.nextPage(Constants.anyDownsizingAllowanceId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
+    }
+
+    "return a call to the date of property disposal controller onPageLoad method when there is some downsizing allowance" in {
+      pending
+      val mockCacheMap = mock[CacheMap]
+      when(mockCacheMap.getEntry[Boolean](matches(Constants.anyDownsizingAllowanceId))(any())) thenReturn Some(true)
+      navigator.nextPage(Constants.anyDownsizingAllowanceId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
+    }
+
   }
 }
