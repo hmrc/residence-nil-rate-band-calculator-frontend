@@ -8,6 +8,11 @@ any_brought_forward_allowance.title = Is there any Brought Forward Allowance?
 any_brought_forward_allowance.guidance = Any brought forward allowance, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
 any_brought_forward_allowance.label = Is there any brought forward allowance?
 
+any_brought_forward_allowance_on_disposal.browser_title = Would any brought-forward allowance have been available at the date of disposal if a valid claim had been made at that time?
+any_brought_forward_allowance_on_disposal.title = Would any brought-forward allowance have been available at the date of disposal if a valid claim had been made at that time?
+any_brought_forward_allowance_on_disposal.guidance = If disposal was made on or before 5 April 2017 there would not have been any brought-forward allowance available.
+any_brought_forward_allowance_on_disposal.label = Would any brought-forward allowance have been available at the date of disposal if a valid claim had been made at that time?
+
 any_downsizing_allowance.browser_title = Are you claiming any Downsizing Allowance?
 any_downsizing_allowance.title = Are you claiming any Downsizing Allowance?
 any_downsizing_allowance.guidance = In order to claim downsizing allowance the deceased must have had a residence which:
@@ -20,6 +25,11 @@ any_exemption.browser_title = Is any part of the Qualifying Residential Interest
 any_exemption.title = Is any part of the Qualifying Residential Interest exempt from Inheritance Tax, or does any part of it qualify for relief?
 any_exemption.guidance = Any exemptions adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
 any_exemption.label = Is any part of the Qualifying Residential Interest exempt from Inheritance Tax, or does any part of it qualify for relief?
+
+assets_passing_to_direct_descendants.browser_title = What is the value of the property passing to direct descendants referred to in Question 14?
+assets_passing_to_direct_descendants.title = What is the value of the property passing to direct descendants referred to in Question 14?
+assets_passing_to_direct_descendants.guidance = This is the value that is taken into account for inheritance tax purposes. So if, for example, grossing up under s.38 IHTA, or interaction under s.39A IHTA applies which affects the value that is taken into account for inheritance tax purposes, you need to include that adjusted value here.
+assets_passing_to_direct_descendants.label = What is the value of the property passing to direct descendants referred to in Question 14?
 
 brought_forward_allowance.browser_title = Brought Forward Allowance
 brought_forward_allowance.title = Brought Forward Allowance

@@ -6,17 +6,23 @@ GET        /assets/*file                                controllers.Assets.versi
 
 GET        /style-guide                                 uk.gov.hmrc.residencenilratebandcalculator.controllers.StyleGuide.styleGuide
 
-GET        /any-assets-passing-to-direct-descendants  uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyAssetsPassingToDirectDescendantsController.onPageLoad
-POST       /any-assets-passing-to-direct-descendants  uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyAssetsPassingToDirectDescendantsController.onSubmit
+GET        /any-assets-passing-to-direct-descendants    uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyAssetsPassingToDirectDescendantsController.onPageLoad
+POST       /any-assets-passing-to-direct-descendants    uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyAssetsPassingToDirectDescendantsController.onSubmit
 
 GET        /any-brought-forward-allowance               uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyBroughtForwardAllowanceController.onPageLoad
 POST       /any-brought-forward-allowance               uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyBroughtForwardAllowanceController.onSubmit
+
+GET        /any-brought-forward-allowance-on-disposal   uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyBroughtForwardAllowanceOnDisposalController.onPageLoad
+POST       /any-brought-forward-allowance-on-disposal   uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyBroughtForwardAllowanceOnDisposalController.onSubmit
 
 GET        /any-downsizing-allowance                    uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyDownsizingAllowanceController.onPageLoad
 POST       /any-downsizing-allowance                    uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyDownsizingAllowanceController.onSubmit
 
 GET        /any-exemption                               uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyExemptionController.onPageLoad
 POST       /any-exemption                               uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyExemptionController.onSubmit
+
+GET        /assets-passing-to-direct-descendants        uk.gov.hmrc.residencenilratebandcalculator.controllers.AssetsPassingToDirectDescendantsController.onPageLoad
+POST       /assets-passing-to-direct-descendants        uk.gov.hmrc.residencenilratebandcalculator.controllers.AssetsPassingToDirectDescendantsController.onSubmit
 
 GET        /brought-forward-allowance                   uk.gov.hmrc.residencenilratebandcalculator.controllers.BroughtForwardAllowanceController.onPageLoad
 POST       /brought-forward-allowance                   uk.gov.hmrc.residencenilratebandcalculator.controllers.BroughtForwardAllowanceController.onSubmit

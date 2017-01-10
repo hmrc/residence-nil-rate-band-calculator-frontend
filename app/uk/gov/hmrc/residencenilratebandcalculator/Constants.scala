@@ -21,8 +21,10 @@ import org.joda.time.LocalDate
 object Constants {
   val anyAssetsPassingToDirectDescendantsId = "AnyAssetsPassingToDirectDescendants"
   val anyBroughtForwardAllowanceId = "AnyBroughtForwardAllowance"
+  val anyBroughtForwardAllowanceOnDisposalId = "AnyBroughtForwardAllowanceOnDisposal"
   val anyDownsizingAllowanceId = "AnyDownsizingAllowance"
   val anyExemptionId = "AnyExemption"
+  val assetsPassingToDirectDescendantsId = "AssetsPassingToDirectDescendants"
   val broughtForwardAllowanceId = "BroughtForwardAllowance"
   val chargeableTransferAmountId = "ChargeableTransferAmount"
   val dateOfDeathId = "DateOfDeath"
