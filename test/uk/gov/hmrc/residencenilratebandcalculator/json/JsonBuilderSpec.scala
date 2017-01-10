@@ -359,25 +359,6 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
         }
       }
 
-      "the CacheMap contains a date of disposal prior to the eligibility date for DateOfDisposal" in {
-        val cacheMap = CacheMap(id = cacheMapId, data =
-          Map(
-            Constants.chargeableTransferAmountId -> JsNumber(100),
-            Constants.dateOfDeathId -> JsString("2018-01-01"),
-            Constants.dateOfDisposalId -> JsString("2015-01-01"),
-            Constants.grossEstateValueId -> JsNumber(200),
-            Constants.propertyValueId -> JsNumber(200),
-            Constants.percentageCloselyInheritedId -> JsNumber(50)))
-        val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
-        buildResult match {
-          case Failure(exception) => {
-            exception shouldBe a [JsonInvalidException]
-            exception.getMessage shouldBe "JSON error: Date of disposal is before eligibility date\n"
-          }
-          case Success(json) => fail
-        }
-      }
-
       "the CacheMap contains a value greater than 100 for PercentageCloselyInherited" in {
         val cacheMap = CacheMap(id = cacheMapId, data =
           Map(
@@ -419,7 +400,6 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
           Map(
             Constants.chargeableTransferAmountId -> JsNumber(100),
             Constants.dateOfDeathId -> JsString("2017-09-10"),
-            Constants.dateOfDisposalId -> JsString("2016-09-10"),
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.propertyValueId -> JsNumber(200),
             Constants.percentageCloselyInheritedId -> JsNumber(50)))
@@ -435,7 +415,6 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
           Map(
             Constants.chargeableTransferAmountId -> JsNumber(100),
             Constants.dateOfDeathId -> JsString("2017-09-10"),
-            Constants.dateOfDisposalId -> JsString("2017-06-10"),
             Constants.grossEstateValueId -> JsNumber(200),
             Constants.propertyValueId -> JsNumber(200),
             Constants.percentageCloselyInheritedId -> JsNumber(50),
