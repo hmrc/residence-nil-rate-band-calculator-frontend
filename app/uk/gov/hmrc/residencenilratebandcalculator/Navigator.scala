@@ -49,7 +49,9 @@ class Navigator @Inject()() {
       Constants.chargeableTransferAmountId -> (() => GrossEstateValueController.onPageLoad()),
       Constants.estateHasPropertyId -> (() => ChargeableTransferAmountController.onPageLoad()),
       Constants.propertyValueId -> (() => EstateHasPropertyController.onPageLoad()),
-      Constants.percentageCloselyInheritedId -> (() => PropertyValueController.onPageLoad()))
+      Constants.percentageCloselyInheritedId -> (() => PropertyValueController.onPageLoad()),
+      Constants.anyExemptionId -> (() => PercentageCloselyInheritedController.onPageLoad())
+    )
   }
 
   private def getDateOfDeathRoute(cacheMap: CacheMap) = {

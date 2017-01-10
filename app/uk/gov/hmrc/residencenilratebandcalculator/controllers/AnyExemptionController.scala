@@ -37,5 +37,8 @@ class AnyExemptionController @Inject()(override val appConfig: FrontendAppConfig
 
   override def form: () => Form[Boolean] = () => BooleanForm()
 
-  override def view(form: Option[Form[Boolean]])(implicit request: Request[_]): Appendable = any_exemption(appConfig, form)
+  override def view(form: Option[Form[Boolean]])(implicit request: Request[_]): Appendable = {
+    val backUrl = navigator.lastPage(controllerId)().url
+    any_exemption(appConfig, backUrl, form)
+  }
 }

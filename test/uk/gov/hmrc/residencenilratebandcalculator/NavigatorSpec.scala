@@ -166,5 +166,9 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     "return a call to the Property Value when back linking from the Percentage Closely Inherited page" in {
       navigator.lastPage(Constants.percentageCloselyInheritedId)() shouldBe routes.PropertyValueController.onPageLoad()
     }
+
+    "return a call to the Percentage Closely Inherited when back linking from the Any Exemption page" in {
+      navigator.lastPage(Constants.anyExemptionId)() shouldBe routes.PercentageCloselyInheritedController.onPageLoad()
+    }
   }
 }

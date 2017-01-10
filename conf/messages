@@ -74,8 +74,8 @@ property_value.label =
 property_value.greater_than_gross_estate_value.error = Property Value cannot be greater than the Gross Estate Value
 
 property_value_after_exemption.question_number = Question 8
-property_value_after_exemption.browser_title = Values
-property_value_after_exemption.title = Question page
+property_value_after_exemption.browser_title = Question page
+property_value_after_exemption.title = Values
 property_value_after_exemption.value.label = What is the value that is taken into account for inheritance tax purposes in respect of the Qualifying Residential Interest?
 property_value_after_exemption.value_closely_inherited.label = What is the value that is taken into account for inheritance tax purposes of the part of the Qualifying Residential Interest that passes to direct descendants?
 property_value_after_exemption.greater_than_property_value.error = Property Value after exemptions cannot be greater than the Property Value
