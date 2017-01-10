@@ -59,7 +59,7 @@ class Navigator @Inject()() {
   private def getEstateHasPropertyRoute(cacheMap: CacheMap) = {
     cacheMap.getEntry[Boolean](Constants.estateHasPropertyId) match {
       case Some(true) => PropertyValueController.onPageLoad()
-      case Some(false) => TransitionOutController.onPageLoad()
+      case Some(false) => AnyDownsizingAllowanceController.onPageLoad()
       case None => HomeController.onPageLoad()
     }
   }
