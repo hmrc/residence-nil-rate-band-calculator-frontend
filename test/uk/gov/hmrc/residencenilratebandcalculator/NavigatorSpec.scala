@@ -146,5 +146,17 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     "return a call to the Any Brought Forward Allowance onPageLoad method from the Property Value After Exemption controller" in {
       navigator.nextPage(Constants.propertyValueAfterExemptionId)(mock[CacheMap]) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
     }
+
+    "return a call to the Date Of Death when back linking from the Gross Estate Value page" in {
+      navigator.lastPage(Constants.grossEstateValueId)() shouldBe routes.DateOfDeathController.onPageLoad()
+    }
+
+    "return a call to the Gross Estate Value when back linking from the Chargeable Transfer Amount page" in {
+      navigator.lastPage(Constants.chargeableTransferAmountId)() shouldBe routes.GrossEstateValueController.onPageLoad()
+    }
+
+    "return a call to the Property Value when back linking from the Percentage Closely Inherited page" in {
+      navigator.lastPage(Constants.percentageCloselyInheritedId)() shouldBe routes.PropertyValueController.onPageLoad()
+    }
   }
 }

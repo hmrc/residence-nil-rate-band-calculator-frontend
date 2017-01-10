@@ -25,13 +25,14 @@ import scala.language.reflectiveCalls
 
 class GrossEstateValueViewSpec extends HtmlSpec {
 
+  val url = "url"
   val number = 123
   val errorKey = "value"
   val errorMessage = "error.number"
   val error = FormError(errorKey, errorMessage)
 
   def fixture(form: Option[Form[Int]] = None) = new {
-    val view = gross_estate_value(frontendAppConfig, form)(request, messages)
+    val view = gross_estate_value(frontendAppConfig, url, form)(request, messages)
     val doc = asDocument(view)
   }
 
@@ -40,6 +41,11 @@ class GrossEstateValueViewSpec extends HtmlSpec {
     "rendered" must {
 
       def thisFixture() = fixture()
+
+      "contain a back link pointing to another page" in {
+        val f = thisFixture()
+        f.doc.getElementById("back").attr("href") should be(url)
+      }
 
       "display the correct question designator" in {
         val f = fixture()

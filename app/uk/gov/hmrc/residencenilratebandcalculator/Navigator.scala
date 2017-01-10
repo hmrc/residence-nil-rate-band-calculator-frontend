@@ -44,7 +44,10 @@ class Navigator @Inject()() {
   }
 
   private val reverseRouteMap: Map[String, () => Call] = {
-    Map(Constants.percentageCloselyInheritedId -> (() => PropertyValueController.onPageLoad()))
+    Map(
+      Constants.grossEstateValueId -> (() => DateOfDeathController.onPageLoad()),
+      Constants.chargeableTransferAmountId -> (() => GrossEstateValueController.onPageLoad()),
+      Constants.percentageCloselyInheritedId -> (() => PropertyValueController.onPageLoad()))
   }
 
   private def getDateOfDeathRoute(cacheMap: CacheMap) = {

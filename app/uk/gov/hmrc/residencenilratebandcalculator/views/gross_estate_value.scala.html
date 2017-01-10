@@ -2,12 +2,14 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 @import uk.gov.hmrc.play.views.html._
 
-@(appConfig: FrontendAppConfig, form: Option[Form[Int]] = None)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[Int]] = None)(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("gross_estate_value.browser_title"),
     appConfig = appConfig,
     bodyClasses = None) {
+
+    <a id="back" href=@backUrl>@messages("site.back")</a>
 
     <p>@messages("gross_estate_value.question_number")</p>
 

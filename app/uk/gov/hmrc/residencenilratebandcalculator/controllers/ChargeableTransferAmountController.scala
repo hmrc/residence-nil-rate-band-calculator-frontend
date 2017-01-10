@@ -40,7 +40,10 @@ class ChargeableTransferAmountController  @Inject()(override val appConfig: Fron
 
   override def form = () => NonNegativeIntForm()
 
-  override def view(form: Option[Form[Int]])(implicit request: Request[_]) = chargeable_transfer_amount(appConfig, form)
+  override def view(form: Option[Form[Int]])(implicit request: Request[_]) = {
+    val backUrl = navigator.lastPage(controllerId)().url
+    chargeable_transfer_amount(appConfig, backUrl, form)
+  }
 
   override def validate(value: Int)(implicit hc: HeaderCarrier): Future[Option[FormError]] = {
     sessionConnector.fetchAndGetEntry[Int](Constants.grossEstateValueId).map {
