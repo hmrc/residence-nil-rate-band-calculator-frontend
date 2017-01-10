@@ -25,9 +25,12 @@ class EstateHasPropertyControllerSpec extends SimpleControllerSpecBase {
 
   "Estate Has Property Controller" must {
 
-    def createView = (value: Option[Boolean]) => value match {
-      case None => estate_has_property(frontendAppConfig)(fakeRequest, messages)
-      case Some(v) => estate_has_property(frontendAppConfig, Some(BooleanForm().fill(v)))(fakeRequest, messages)
+    def createView = (value: Option[Boolean]) => {
+      val backUrl = "/inheritance-tax-residence-nil-rate-band-calculator/chargeable-transfer-amount"
+      value match {
+        case None => estate_has_property(frontendAppConfig, backUrl)(fakeRequest, messages)
+        case Some(v) => estate_has_property(frontendAppConfig, backUrl, Some(BooleanForm().fill(v)))(fakeRequest, messages)
+      }
     }
 
     def createController = () => new EstateHasPropertyController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)

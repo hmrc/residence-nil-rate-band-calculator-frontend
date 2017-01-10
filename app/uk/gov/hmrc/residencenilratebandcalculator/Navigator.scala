@@ -47,6 +47,7 @@ class Navigator @Inject()() {
     Map(
       Constants.grossEstateValueId -> (() => DateOfDeathController.onPageLoad()),
       Constants.chargeableTransferAmountId -> (() => GrossEstateValueController.onPageLoad()),
+      Constants.estateHasPropertyId -> (() => ChargeableTransferAmountController.onPageLoad()),
       Constants.percentageCloselyInheritedId -> (() => PropertyValueController.onPageLoad()))
   }
 

@@ -25,13 +25,14 @@ import scala.language.reflectiveCalls
 
 class EstateHasPropertyViewSpec extends HtmlSpec {
 
+  val url = "URL"
   val number = 123
   val errorKey = "value"
   val errorMessage = "error.number"
   val error = FormError(errorKey, errorMessage)
 
   def fixture(form: Option[Form[Boolean]] = None) = new {
-    val view = estate_has_property(frontendAppConfig, form)(request, messages)
+    val view = estate_has_property(frontendAppConfig, url, form)(request, messages)
     val doc = asDocument(view)
   }
 
@@ -40,6 +41,12 @@ class EstateHasPropertyViewSpec extends HtmlSpec {
     "rendered" must {
 
       def thisFixture() = fixture()
+
+
+      "contain a back link pointing to another page" in {
+        val f = thisFixture()
+        f.doc.getElementById("back").attr("href") should be(url)
+      }
 
       "display the correct question designator" in {
         val f = thisFixture()
