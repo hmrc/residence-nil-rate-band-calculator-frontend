@@ -1,0 +1,28 @@
+@import uk.gov.hmrc.play.views.html._
+@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@import uk.gov.hmrc.residencenilratebandcalculator.models.Date
+
+@(appConfig: FrontendAppConfig, form: Option[Form[Date]] = None)(implicit request: Request[_], messages: Messages)
+
+@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+    title = messages("date_of_disposal.browser_title"),
+    appConfig = appConfig,
+    bodyClasses = None) {
+
+    <h1>@messages("date_of_disposal.title")</h1>
+
+    <p>@messages("date_of_disposal.guidance")</p>
+
+    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDisposalController.onSubmit(), 'autoComplete -> "off") {
+
+        @rnrbHelpers.input_date(
+            label = messages("date_of_disposal.label"),
+            errorKey = "",
+            hint = Some(messages("date_of_disposal.hint"))
+        )
+
+        @rnrbHelpers.submit_button()
+
+    }
+
+}
