@@ -32,6 +32,7 @@ object Constants {
   val propertyValueAfterExemptionId = "PropertyValueAfterExemption"
   val propertyValueId = "PropertyValue"
   val percentageCloselyInheritedId = "PercentageCloselyInherited"
+  val valueOfDisposedPropertyId = "ValueOfDisposedProperty"
 
   val jsonKeys = Map(
     broughtForwardAllowanceId -> "broughtForwardAllowance",
