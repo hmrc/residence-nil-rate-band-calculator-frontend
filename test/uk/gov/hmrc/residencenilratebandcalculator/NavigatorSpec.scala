@@ -154,10 +154,22 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     }
 
     "return a call to the date of property disposal controller onPageLoad method when there is some downsizing allowance" in {
-      pending
       val mockCacheMap = mock[CacheMap]
       when(mockCacheMap.getEntry[Boolean](matches(Constants.anyDownsizingAllowanceId))(any())) thenReturn Some(true)
-      navigator.nextPage(Constants.anyDownsizingAllowanceId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
+      navigator.nextPage(Constants.anyDownsizingAllowanceId)(mockCacheMap) shouldBe routes.DateOfDisposalController.onPageLoad()
+    }
+
+    "return a call to the TransitionOutController Controller onPageLoad method when a date before 8th July 2015 is" +
+      "supplied as the Date of Disposal " in {
+      val mockCacheMap = mock[CacheMap]
+      when(mockCacheMap.getEntry[LocalDate](matches(Constants.dateOfDisposalId))(any())) thenReturn Some(new LocalDate(2015, 7, 7))
+      navigator.nextPage(Constants.dateOfDisposalId)(mockCacheMap) shouldBe routes.TransitionOutController.onPageLoad()
+    }
+
+    "return a call to the Results Controller onPageLoad method when a date on or after 8th July 2015 is supplied as the Date of Disposal " in {
+      val mockCacheMap = mock[CacheMap]
+      when(mockCacheMap.getEntry[LocalDate](matches(Constants.dateOfDisposalId))(any())) thenReturn Some(new LocalDate(2015, 7, 8))
+      navigator.nextPage(Constants.dateOfDisposalId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
     }
 
     "return a call to the any assets passing to direct descendants controller onPageLoad method from the ValueOfDisposedProperty controller" in {

@@ -29,13 +29,15 @@ object Constants {
   val broughtForwardAllowanceOnDisposalId = "BroughtForwardAllowanceOnDisposal"
   val chargeableTransferAmountId = "ChargeableTransferAmount"
   val dateOfDeathId = "DateOfDeath"
+  val dateOfDisposalId = "DateOfDisposal"
+  val downsizingEligibilityDate = new LocalDate(2015, 7, 8)
   val eligibilityDate = new LocalDate(2017, 4, 6)
   val estateHasPropertyId = "EstateHasProperty"
   val grossEstateValueId = "GrossEstateValue"
   val maxGrossEstateValue = 2000000
+  val percentageCloselyInheritedId = "PercentageCloselyInherited"
   val propertyValueAfterExemptionId = "PropertyValueAfterExemption"
   val propertyValueId = "PropertyValue"
-  val percentageCloselyInheritedId = "PercentageCloselyInherited"
   val valueOfDisposedPropertyId = "ValueOfDisposedProperty"
 
   val jsonKeys = Map(
