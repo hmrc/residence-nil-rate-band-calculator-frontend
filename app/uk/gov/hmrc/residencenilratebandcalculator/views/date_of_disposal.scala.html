@@ -1,6 +1,11 @@
 @import uk.gov.hmrc.play.views.html._
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.models.Date
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
+
+@import uk.gov.hmrc.residencenilratebandcalculator.models.Day
+@import uk.gov.hmrc.residencenilratebandcalculator.models.Month
+@import uk.gov.hmrc.residencenilratebandcalculator.models.Year
 
 @(appConfig: FrontendAppConfig, form: Option[Form[Date]] = None)(implicit request: Request[_], messages: Messages)
 
@@ -15,9 +20,14 @@
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDisposalController.onSubmit(), 'autoComplete -> "off") {
 
+        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
         @rnrbHelpers.input_date(
             label = messages("date_of_disposal.label"),
-            errorKey = "",
+            errorKey = FormHelpers.getErrorByKey(form, ""),
+            valueDay = Some(FormHelpers.getDatePart(form, Day).toString),
+            valueMonth = Some(FormHelpers.getDatePart(form, Month).toString),
+            valueYear = Some(FormHelpers.getDatePart(form, Year).toString),
             hint = Some(messages("date_of_disposal.hint"))
         )
 
