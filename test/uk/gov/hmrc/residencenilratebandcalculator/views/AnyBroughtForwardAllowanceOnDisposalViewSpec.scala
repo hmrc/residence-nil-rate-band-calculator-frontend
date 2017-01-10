@@ -35,7 +35,7 @@ class AnyBroughtForwardAllowanceOnDisposalViewSpec extends HtmlSpec {
     val doc = asDocument(view)
   }
 
-  "Any Brought Forward Allowance View" when {
+  "Any Brought Forward Allowance on Disposal View" when {
 
     "rendered" must {
 

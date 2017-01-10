@@ -21,7 +21,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_brought_forward_allowance_on_disposal
 
-class AnyBroughtForwardAllowanceControllerOnDisposalSpec extends SimpleControllerSpecBase {
+class AnyBroughtForwardAllowanceOnDisposalControllerSpec extends SimpleControllerSpecBase {
 
   "Any Brought Forward Allowance On Disposal Controller" must {
 

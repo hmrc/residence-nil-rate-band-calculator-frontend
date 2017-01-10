@@ -26,6 +26,7 @@ object Constants {
   val anyExemptionId = "AnyExemption"
   val assetsPassingToDirectDescendantsId = "AssetsPassingToDirectDescendants"
   val broughtForwardAllowanceId = "BroughtForwardAllowance"
+  val broughtForwardAllowanceOnDisposalId = "BroughtForwardAllowanceOnDisposal"
   val chargeableTransferAmountId = "ChargeableTransferAmount"
   val dateOfDeathId = "DateOfDeath"
   val eligibilityDate = new LocalDate(2017, 4, 6)

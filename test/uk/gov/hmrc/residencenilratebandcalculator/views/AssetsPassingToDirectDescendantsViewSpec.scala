@@ -35,7 +35,7 @@ class AssetsPassingToDirectDescendantsViewSpec extends HtmlSpec {
     val doc = asDocument(view)
   }
 
-  "Property Value View" when {
+  "Assest Passing to Direct Descendants View" when {
 
     def thisFixture() = fixture()
 

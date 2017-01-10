@@ -36,6 +36,11 @@ brought_forward_allowance.title = Brought Forward Allowance
 brought_forward_allowance.guidance = Brought forward allowance, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
 brought_forward_allowance.label = How much Brought Forward Allowance is available?
 
+brought_forward_allowance_on_disposal.browser_title = What would the amount of brought-forward amount have been at the date of disposal?
+brought_forward_allowance_on_disposal.title = What would the amount of brought-forward amount have been at the date of disposal?
+brought_forward_allowance_on_disposal.guidance = If disposal was made on or before 5 April 2017 there would not have been any brought-forward allowance available.
+brought_forward_allowance_on_disposal.label = What would the amount of brought-forward amount have been at the date of disposal?
+
 chargeable_transfer_amount.browser_title = Net Chargeable Transfer Value
 chargeable_transfer_amount.title = Net Chargeable Transfer Value of the Estate
 chargeable_transfer_amount.guidance = Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
