@@ -19,6 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator
 import org.joda.time.LocalDate
 
 object Constants {
+  val anyAssetsPassingToDirectDescendantsId = "AnyAssetsPassingToDirectDescendants"
   val anyBroughtForwardAllowanceId = "AnyBroughtForwardAllowance"
   val anyDownsizingAllowanceId = "AnyDownsizingAllowance"
   val anyExemptionId = "AnyExemption"
