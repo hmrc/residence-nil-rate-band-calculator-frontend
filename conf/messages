@@ -1,6 +1,7 @@
 any_assets_passing_to_direct_descendants.browser_title = Is there any property which passes to a direct descendant?
 any_assets_passing_to_direct_descendants.title = Is there any property which passes to a direct descendant following the death, other than any property mentioned at Question 4 above?
 any_assets_passing_to_direct_descendants.guidance = If there is no property passing to direct descendants or the spouse or civil partner of a direct descendant, there will not be any downsizing allowance.
+any_assets_passing_to_direct_descendants.label = Is there any property which passes to a direct descendant following the death, other than any property mentioned at Question 4 above?
 
 any_brought_forward_allowance.browser_title = Is there any Brought Forward Allowance?
 any_brought_forward_allowance.title = Is there any Brought Forward Allowance?
@@ -93,6 +94,7 @@ results.defaultAllowanceAmount.label = Adding these two figures together gives t
 site.no = No
 site.yes = Yes
 
-value_of_disposed_property.title = What was teh value of the property interest disposed of?
-value_of_disposed_property.browser_title = What was teh value of the property interest disposed of?
+value_of_disposed_property.title = What was the value of the property interest disposed of?
+value_of_disposed_property.browser_title = What was the value of the property interest disposed of?
 value_of_disposed_property.guidance = Enter the open market value of the interest disposed of at the date of disposal. If the property was sold and there was a mortgage on the property, deduct the mortgage from the sale price, but do not deduct the costs of selling the property, such as solicitor''s or estate agent''s fees.
+value_of_disposed_property.label = What was the value of the property interest disposed of?

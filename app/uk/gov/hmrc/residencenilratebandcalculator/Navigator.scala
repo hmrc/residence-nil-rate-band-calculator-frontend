@@ -38,7 +38,9 @@ class Navigator @Inject()() {
       Constants.broughtForwardAllowanceId -> (_ => AnyDownsizingAllowanceController.onPageLoad()),
       Constants.anyDownsizingAllowanceId -> (cm => getAnyDownsizingAllowanceRoute(cm)),
       Constants.anyExemptionId -> (cm => getAnyExemptionRoute(cm)),
-      Constants.propertyValueAfterExemptionId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad())
+      Constants.propertyValueAfterExemptionId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
+      Constants.valueOfDisposedPropertyId -> (_ => AnyAssetsPassingToDirectDescendantsController.onPageLoad()),
+      Constants.anyAssetsPassingToDirectDescendantsId -> (cm => getAnyAssetsPassingToDirectDescendantsRoute(cm))
     )
   }
 
@@ -94,6 +96,14 @@ class Navigator @Inject()() {
     cacheMap.getEntry[Boolean](Constants.anyExemptionId) match {
       case Some(true) => PropertyValueAfterExemptionController.onPageLoad()
       case Some(false) => AnyBroughtForwardAllowanceController.onPageLoad()
+      case None => HomeController.onPageLoad()
+    }
+  }
+
+  private def getAnyAssetsPassingToDirectDescendantsRoute(cacheMap: CacheMap) = {
+    cacheMap.getEntry[Boolean](Constants.anyAssetsPassingToDirectDescendantsId) match {
+      case Some(true) => ResultsController.onPageLoad()
+      case Some(false) => ResultsController.onPageLoad()
       case None => HomeController.onPageLoad()
     }
   }

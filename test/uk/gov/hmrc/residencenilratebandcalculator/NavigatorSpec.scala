@@ -160,5 +160,22 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.anyDownsizingAllowanceId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
     }
 
+    "return a call to the any assets passing to direct descendants controller onPageLoad method from the ValueOfDisposedProperty controller" in {
+      navigator.nextPage(Constants.valueOfDisposedPropertyId)(mock[CacheMap]) shouldBe routes.AnyAssetsPassingToDirectDescendantsController.onPageLoad()
+    }
+
+    "return a call to the assest passing to direct descendant onPageLoad method when there are some assest passing to the direct descendant" in {
+      pending
+      val mockCacheMap = mock[CacheMap]
+      when(mockCacheMap.getEntry[Boolean](matches(Constants.anyAssetsPassingToDirectDescendantsId))(any())) thenReturn Some(true)
+      navigator.nextPage(Constants.anyAssetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
+    }
+
+    "return a call to the results onPageLoad method when there are no assest passing to the direct descendant" in {
+      val mockCacheMap = mock[CacheMap]
+      when(mockCacheMap.getEntry[Boolean](matches(Constants.anyAssetsPassingToDirectDescendantsId))(any())) thenReturn Some(false)
+      navigator.nextPage(Constants.anyAssetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
+
+    }
   }
 }
