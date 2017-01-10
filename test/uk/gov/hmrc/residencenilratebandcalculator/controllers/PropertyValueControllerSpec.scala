@@ -26,9 +26,11 @@ class PropertyValueControllerSpec extends SimpleControllerSpecBase {
 
   "Property Value Controller" must {
 
+    val backUrl = "/inheritance-tax-residence-nil-rate-band-calculator/estate-has-property"
+
     def createView = (value: Option[Int]) => value match {
-      case None => property_value(frontendAppConfig)(fakeRequest, messages)
-      case Some(v) => property_value(frontendAppConfig, Some(NonNegativeIntForm().fill(v)))(fakeRequest, messages)
+      case None => property_value(frontendAppConfig, backUrl)(fakeRequest, messages)
+      case Some(v) => property_value(frontendAppConfig, backUrl, Some(NonNegativeIntForm().fill(v)))(fakeRequest, messages)
     }
 
     def createController = () => new PropertyValueController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)

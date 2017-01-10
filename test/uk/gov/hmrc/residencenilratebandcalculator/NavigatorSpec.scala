@@ -159,6 +159,10 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.estateHasPropertyId)() shouldBe routes.ChargeableTransferAmountController.onPageLoad()
     }
 
+    "return a call to the Estate Has Property when back linking from the Property Value page" in {
+      navigator.lastPage(Constants.propertyValueId)() shouldBe routes.EstateHasPropertyController.onPageLoad()
+    }
+
     "return a call to the Property Value when back linking from the Percentage Closely Inherited page" in {
       navigator.lastPage(Constants.percentageCloselyInheritedId)() shouldBe routes.PropertyValueController.onPageLoad()
     }
