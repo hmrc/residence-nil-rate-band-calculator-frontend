@@ -1,7 +1,17 @@
+any_assets_passing_to_direct_descendants.browser_title = Is there any property which passes to a direct descendant?
+any_assets_passing_to_direct_descendants.title = Is there any property which passes to a direct descendant following the death, other than any property mentioned at Question 4 above?
+any_assets_passing_to_direct_descendants.guidance = If there is no property passing to direct descendants or the spouse or civil partner of a direct descendant, there will not be any downsizing allowance.
+any_assets_passing_to_direct_descendants.label = Is there any property which passes to a direct descendant following the death, other than any property mentioned at Question 4 above?
+
 any_brought_forward_allowance.browser_title = Is there any Brought Forward Allowance?
 any_brought_forward_allowance.title = Is there any Brought Forward Allowance?
 any_brought_forward_allowance.guidance = Any brought forward allowance, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
 any_brought_forward_allowance.label = Is there any brought forward allowance?
+
+any_brought_forward_allowance_on_disposal.browser_title = Would any brought-forward allowance have been available at the date of disposal if a valid claim had been made at that time?
+any_brought_forward_allowance_on_disposal.title = Would any brought-forward allowance have been available at the date of disposal if a valid claim had been made at that time?
+any_brought_forward_allowance_on_disposal.guidance = If disposal was made on or before 5 April 2017 there would not have been any brought-forward allowance available.
+any_brought_forward_allowance_on_disposal.label = Would any brought-forward allowance have been available at the date of disposal if a valid claim had been made at that time?
 
 any_downsizing_allowance.browser_title = Are you claiming any Downsizing Allowance?
 any_downsizing_allowance.title = Are you claiming any Downsizing Allowance?
@@ -16,10 +26,20 @@ any_exemption.title = Is any part of the Qualifying Residential Interest exempt 
 any_exemption.guidance = Any exemptions adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
 any_exemption.label = Is any part of the Qualifying Residential Interest exempt from Inheritance Tax, or does any part of it qualify for relief?
 
+assets_passing_to_direct_descendants.browser_title = What is the value of the property passing to direct descendants referred to in Question 14?
+assets_passing_to_direct_descendants.title = What is the value of the property passing to direct descendants referred to in Question 14?
+assets_passing_to_direct_descendants.guidance = This is the value that is taken into account for inheritance tax purposes. So if, for example, grossing up under s.38 IHTA, or interaction under s.39A IHTA applies which affects the value that is taken into account for inheritance tax purposes, you need to include that adjusted value here.
+assets_passing_to_direct_descendants.label = What is the value of the property passing to direct descendants referred to in Question 14?
+
 brought_forward_allowance.browser_title = Brought Forward Allowance
 brought_forward_allowance.title = Brought Forward Allowance
 brought_forward_allowance.guidance = Brought forward allowance, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
 brought_forward_allowance.label = How much Brought Forward Allowance is available?
+
+brought_forward_allowance_on_disposal.browser_title = What would the amount of brought-forward amount have been at the date of disposal?
+brought_forward_allowance_on_disposal.title = What would the amount of brought-forward amount have been at the date of disposal?
+brought_forward_allowance_on_disposal.guidance = If disposal was made on or before 5 April 2017 there would not have been any brought-forward allowance available.
+brought_forward_allowance_on_disposal.label = What would the amount of brought-forward amount have been at the date of disposal?
 
 chargeable_transfer_amount.browser_title = Net Chargeable Transfer Value
 chargeable_transfer_amount.title = Net Chargeable Transfer Value of the Estate
@@ -94,3 +114,8 @@ results.defaultAllowanceAmount.label = Adding these two figures together gives t
 
 site.no = No
 site.yes = Yes
+
+value_of_disposed_property.title = What was the value of the property interest disposed of?
+value_of_disposed_property.browser_title = What was the value of the property interest disposed of?
+value_of_disposed_property.guidance = Enter the open market value of the interest disposed of at the date of disposal. If the property was sold and there was a mortgage on the property, deduct the mortgage from the sale price, but do not deduct the costs of selling the property, such as solicitor''s or estate agent''s fees.
+value_of_disposed_property.label = What was the value of the property interest disposed of?

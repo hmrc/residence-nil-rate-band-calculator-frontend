@@ -1,0 +1,29 @@
+@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
+@import uk.gov.hmrc.play.views.html._
+
+@(appConfig: FrontendAppConfig, form: Option[Form[Int]] = None)(implicit request: Request[_], messages: Messages)
+
+@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+    title = messages("value_of_disposed_property.browser_title"),
+    appConfig = appConfig,
+    bodyClasses = None) {
+
+    <h1>@messages("value_of_disposed_property.title")</h1>
+
+    <p>@messages("value_of_disposed_property.guidance")</p>
+
+    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfDisposedPropertyController.onSubmit(), 'autoComplete -> "off") {
+
+        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
+        @rnrbHelpers.input_text(
+            id = "value",
+            value = Some(FormHelpers.getValue[Int](form).toString),
+            label = messages("value_of_disposed_property.label"),
+            secondaryLabel = Some("currency"),
+            errorKey = FormHelpers.getErrorByKey(form, "value")
+        )
+        @rnrbHelpers.submit_button()
+    }
+}

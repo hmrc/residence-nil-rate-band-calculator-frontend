@@ -39,7 +39,12 @@ class Navigator @Inject()() {
       Constants.anyDownsizingAllowanceId -> (cm => getAnyDownsizingAllowanceRoute(cm)),
       Constants.dateOfDisposalId -> (cm => getDateOfDisposalRoute(cm)),
       Constants.anyExemptionId -> (cm => getAnyExemptionRoute(cm)),
-      Constants.propertyValueAfterExemptionId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad())
+      Constants.propertyValueAfterExemptionId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
+      Constants.valueOfDisposedPropertyId -> (_ => AnyAssetsPassingToDirectDescendantsController.onPageLoad()),
+      Constants.anyAssetsPassingToDirectDescendantsId -> (cm => getAnyAssetsPassingToDirectDescendantsRoute(cm)),
+      Constants.assetsPassingToDirectDescendantsId -> (_ => AnyBroughtForwardAllowanceOnDisposalController.onPageLoad()),
+      Constants.anyBroughtForwardAllowanceOnDisposalId -> (cm => getAnyBroughtForwardAllowanceOnDisposalRoute(cm)),
+      Constants.broughtForwardAllowanceOnDisposalId -> (_ => ResultsController.onPageLoad())
     )
   }
 
@@ -54,7 +59,7 @@ class Navigator @Inject()() {
   private def getEstateHasPropertyRoute(cacheMap: CacheMap) = {
     cacheMap.getEntry[Boolean](Constants.estateHasPropertyId) match {
       case Some(true) => PropertyValueController.onPageLoad()
-      case Some(false) => TransitionOutController.onPageLoad()
+      case Some(false) => AnyDownsizingAllowanceController.onPageLoad()
       case None => HomeController.onPageLoad()
     }
   }
@@ -75,6 +80,14 @@ class Navigator @Inject()() {
     }
   }
 
+  private def getAnyBroughtForwardAllowanceOnDisposalRoute(cacheMap: CacheMap) = {
+    cacheMap.getEntry[Boolean](Constants.anyBroughtForwardAllowanceOnDisposalId) match {
+      case Some(true) => BroughtForwardAllowanceOnDisposalController.onPageLoad()
+      case Some(false) => ResultsController.onPageLoad()
+      case None => HomeController.onPageLoad()
+    }
+  }
+
   private def getAnyDownsizingAllowanceRoute(cacheMap: CacheMap) = {
     cacheMap.getEntry[Boolean](Constants.anyDownsizingAllowanceId) match {
       case Some(true) => DateOfDisposalController.onPageLoad()
@@ -85,7 +98,7 @@ class Navigator @Inject()() {
 
   private def getDateOfDisposalRoute(cacheMap: CacheMap) = {
     cacheMap.getEntry[LocalDate](Constants.dateOfDisposalId) match {
-      case Some(d) if (d isEqual Constants.downsizingEligibilityDate) || (d isAfter Constants.downsizingEligibilityDate) => ResultsController.onPageLoad()
+      case Some(d) if (d isEqual Constants.downsizingEligibilityDate) || (d isAfter Constants.downsizingEligibilityDate) => ValueOfDisposedPropertyController.onPageLoad()
       case Some(_) => TransitionOutController.onPageLoad()
       case None => HomeController.onPageLoad()
     }
@@ -103,6 +116,14 @@ class Navigator @Inject()() {
     cacheMap.getEntry[Boolean](Constants.anyExemptionId) match {
       case Some(true) => PropertyValueAfterExemptionController.onPageLoad()
       case Some(false) => AnyBroughtForwardAllowanceController.onPageLoad()
+      case None => HomeController.onPageLoad()
+    }
+  }
+
+  private def getAnyAssetsPassingToDirectDescendantsRoute(cacheMap: CacheMap) = {
+    cacheMap.getEntry[Boolean](Constants.anyAssetsPassingToDirectDescendantsId) match {
+      case Some(true) => AssetsPassingToDirectDescendantsController.onPageLoad()
+      case Some(false) => ResultsController.onPageLoad()
       case None => HomeController.onPageLoad()
     }
   }
