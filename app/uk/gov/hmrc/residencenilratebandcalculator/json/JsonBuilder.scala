@@ -46,6 +46,13 @@ class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
     }
   }
 
+  private def dateOfDisposalIsIneligible(cacheMap: CacheMap): Boolean = {
+    val optionDod = cacheMap.getEntry[String](Constants.dateOfDisposalId)
+    optionDod.fold(true) {
+      dod => LocalDate.parse(dod).isBefore(Constants.downsizingEligibilityDate)
+    }
+  }
+
   def buildFromCacheMap(cacheMap: CacheMap): Future[Try[JsValue]] = {
     futureSchema.map {
       case Success(schema) => {

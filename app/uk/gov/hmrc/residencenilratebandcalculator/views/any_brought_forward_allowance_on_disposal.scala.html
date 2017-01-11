@@ -1,0 +1,31 @@
+@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@import uk.gov.hmrc.play.views.html._
+@import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
+
+@(appConfig: FrontendAppConfig, form: Option[Form[Boolean]] = None)(implicit request: Request[_], messages: Messages)
+
+@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+    title = messages("any_brought_forward_allowance_on_disposal.browser_title"),
+    appConfig = appConfig,
+    bodyClasses = None) {
+
+    <h1>@messages("any_brought_forward_allowance_on_disposal.title")</h1>
+
+    <p>@messages("any_brought_forward_allowance_on_disposal.guidance")</p>
+
+
+    @helpers.form(action = AnyBroughtForwardAllowanceOnDisposalController.onSubmit(), 'autoComplete -> "off") {
+
+        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
+        @rnrbHelpers.input_yes_no(
+            id = "value",
+            label = messages("any_brought_forward_allowance_on_disposal.label"),
+            errorKey = FormHelpers.getErrorByKey(form, "value"),
+            value = Some(FormHelpers.getYesNo(form))
+        )
+
+        @rnrbHelpers.submit_button()
+    }
+}

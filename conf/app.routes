@@ -1,43 +1,65 @@
 # microservice specific routes
 
-GET        /                                uk.gov.hmrc.residencenilratebandcalculator.controllers.HomeController.onPageLoad
+GET        /                                            uk.gov.hmrc.residencenilratebandcalculator.controllers.HomeController.onPageLoad
 
-GET        /assets/*file                    controllers.Assets.versioned(path="/public", file: Asset)
+GET        /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)
 
-GET        /style-guide                     uk.gov.hmrc.residencenilratebandcalculator.controllers.StyleGuide.styleGuide
+GET        /any-assets-passing-to-direct-descendants    uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyAssetsPassingToDirectDescendantsController.onPageLoad
+POST       /any-assets-passing-to-direct-descendants    uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyAssetsPassingToDirectDescendantsController.onSubmit
 
-GET        /any-brought-forward-allowance   uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyBroughtForwardAllowanceController.onPageLoad
-POST       /any-brought-forward-allowance   uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyBroughtForwardAllowanceController.onSubmit
+GET        /any-brought-forward-allowance               uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyBroughtForwardAllowanceController.onPageLoad
+POST       /any-brought-forward-allowance               uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyBroughtForwardAllowanceController.onSubmit
 
-GET        /any-exemption                   uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyExemptionController.onPageLoad
-POST       /any-exemption                   uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyExemptionController.onSubmit
+GET        /any-brought-forward-allowance-on-disposal   uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyBroughtForwardAllowanceOnDisposalController.onPageLoad
+POST       /any-brought-forward-allowance-on-disposal   uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyBroughtForwardAllowanceOnDisposalController.onSubmit
 
-GET        /brought-forward-allowance       uk.gov.hmrc.residencenilratebandcalculator.controllers.BroughtForwardAllowanceController.onPageLoad
-POST       /brought-forward-allowance       uk.gov.hmrc.residencenilratebandcalculator.controllers.BroughtForwardAllowanceController.onSubmit
+GET        /any-downsizing-allowance                    uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyDownsizingAllowanceController.onPageLoad
+POST       /any-downsizing-allowance                    uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyDownsizingAllowanceController.onSubmit
 
-GET        /chargeable-transfer-amount      uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableTransferAmountController.onPageLoad
-POST       /chargeable-transfer-amount      uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableTransferAmountController.onSubmit
+GET        /any-exemption                               uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyExemptionController.onPageLoad
+POST       /any-exemption                               uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyExemptionController.onSubmit
 
-GET        /date-of-death                   uk.gov.hmrc.residencenilratebandcalculator.controllers.DateOfDeathController.onPageLoad
-POST       /date-of-death                   uk.gov.hmrc.residencenilratebandcalculator.controllers.DateOfDeathController.onSubmit
+GET        /assets-passing-to-direct-descendants        uk.gov.hmrc.residencenilratebandcalculator.controllers.AssetsPassingToDirectDescendantsController.onPageLoad
+POST       /assets-passing-to-direct-descendants        uk.gov.hmrc.residencenilratebandcalculator.controllers.AssetsPassingToDirectDescendantsController.onSubmit
 
-GET        /gross-estate-value              uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onPageLoad
-POST       /gross-estate-value              uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onSubmit
+GET        /brought-forward-allowance                   uk.gov.hmrc.residencenilratebandcalculator.controllers.BroughtForwardAllowanceController.onPageLoad
+POST       /brought-forward-allowance                   uk.gov.hmrc.residencenilratebandcalculator.controllers.BroughtForwardAllowanceController.onSubmit
 
-GET        /estate-has-property             uk.gov.hmrc.residencenilratebandcalculator.controllers.EstateHasPropertyController.onPageLoad
-POST       /estate-has-property             uk.gov.hmrc.residencenilratebandcalculator.controllers.EstateHasPropertyController.onSubmit
+GET        /brought-forward-allowance-on-disposal       uk.gov.hmrc.residencenilratebandcalculator.controllers.BroughtForwardAllowanceOnDisposalController.onPageLoad
+POST       /brought-forward-allowance-on-disposal       uk.gov.hmrc.residencenilratebandcalculator.controllers.BroughtForwardAllowanceOnDisposalController.onSubmit
 
-GET        /property-value                  uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyValueController.onPageLoad
-POST       /property-value                  uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyValueController.onSubmit
+GET        /chargeable-transfer-amount                  uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableTransferAmountController.onPageLoad
+POST       /chargeable-transfer-amount                  uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableTransferAmountController.onSubmit
 
-GET        /property-value-after-exemption  uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyValueAfterExemptionController.onPageLoad
-POST       /property-value-after-exemption  uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyValueAfterExemptionController.onSubmit
+GET        /date-of-death                               uk.gov.hmrc.residencenilratebandcalculator.controllers.DateOfDeathController.onPageLoad
+POST       /date-of-death                               uk.gov.hmrc.residencenilratebandcalculator.controllers.DateOfDeathController.onSubmit
 
-GET        /percentage-closely-inherited         uk.gov.hmrc.residencenilratebandcalculator.controllers.PercentageCloselyInheritedController.onPageLoad
-POST       /percentage-closely-inherited         uk.gov.hmrc.residencenilratebandcalculator.controllers.PercentageCloselyInheritedController.onSubmit
+GET        /date-of-disposal                            uk.gov.hmrc.residencenilratebandcalculator.controllers.DateOfDisposalController.onPageLoad
+POST       /date-of-disposal                            uk.gov.hmrc.residencenilratebandcalculator.controllers.DateOfDisposalController.onSubmit
 
-GET        /results                         uk.gov.hmrc.residencenilratebandcalculator.controllers.ResultsController.onPageLoad
+GET        /gross-estate-value                          uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onPageLoad
+POST       /gross-estate-value                          uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onSubmit
 
-GET        /not-found                       uk.gov.hmrc.residencenilratebandcalculator.controllers.PageNotFoundController.onPageLoad
+GET        /estate-has-property                         uk.gov.hmrc.residencenilratebandcalculator.controllers.EstateHasPropertyController.onPageLoad
+POST       /estate-has-property                         uk.gov.hmrc.residencenilratebandcalculator.controllers.EstateHasPropertyController.onSubmit
 
-GET        /not-possible-to-use-calculator  uk.gov.hmrc.residencenilratebandcalculator.controllers.TransitionOutController.onPageLoad
+GET        /not-found                                   uk.gov.hmrc.residencenilratebandcalculator.controllers.PageNotFoundController.onPageLoad
+
+GET        /not-possible-to-use-calculator              uk.gov.hmrc.residencenilratebandcalculator.controllers.TransitionOutController.onPageLoad
+
+GET        /percentage-closely-inherited                uk.gov.hmrc.residencenilratebandcalculator.controllers.PercentageCloselyInheritedController.onPageLoad
+POST       /percentage-closely-inherited                uk.gov.hmrc.residencenilratebandcalculator.controllers.PercentageCloselyInheritedController.onSubmit
+
+GET        /property-value                              uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyValueController.onPageLoad
+POST       /property-value                              uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyValueController.onSubmit
+
+GET        /property-value-after-exemption              uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyValueAfterExemptionController.onPageLoad
+POST       /property-value-after-exemption              uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyValueAfterExemptionController.onSubmit
+
+GET        /results                                     uk.gov.hmrc.residencenilratebandcalculator.controllers.ResultsController.onPageLoad
+
+GET        /style-guide                                 uk.gov.hmrc.residencenilratebandcalculator.controllers.StyleGuide.styleGuide
+
+GET        /value-of-disposed-property                  uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfDisposedPropertyController.onPageLoad
+POST       /value-of-disposed-property                  uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfDisposedPropertyController.onSubmit
+

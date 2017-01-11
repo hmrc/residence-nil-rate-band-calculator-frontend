@@ -1,8 +1,21 @@
+any_assets_passing_to_direct_descendants.browser_title = Is there any property which passes to a direct descendant?
+any_assets_passing_to_direct_descendants.title = Is there any property which passes to a direct descendant following the death, other than any property mentioned at Question 4 above?
+any_assets_passing_to_direct_descendants.guidance = If there is no property passing to direct descendants or the spouse or civil partner of a direct descendant, there will not be any downsizing allowance.
+any_assets_passing_to_direct_descendants.label = Is there any property which passes to a direct descendant following the death, other than any property mentioned at Question 4 above?
+
 any_brought_forward_allowance.question_number = Question 9
 any_brought_forward_allowance.browser_title = Question pages
 any_brought_forward_allowance.title = Is a claim being made for a brought-forward allowance from the death of a pre-deceased spouse or civil partner of the deceased?
 any_brought_forward_allowance.guidance = Brought-forward allowance needs to be claimed. Please complete form IHT436 to make this claim.
 any_brought_forward_allowance.label = Is there any brought forward allowance?
+
+any_downsizing_allowance.browser_title = Are you claiming any Downsizing Allowance?
+any_downsizing_allowance.title = Are you claiming any Downsizing Allowance?
+any_downsizing_allowance.guidance = In order to claim downsizing allowance the deceased must have had a residence which:
+any_downsizing_allowance.guidance1 = They were treated as owning for inheritance tax purposes
+any_downsizing_allowance.guidance2 = They occupied as a residence while they owned it and
+any_downsizing_allowance.guidance3 = Disposed of this residence, or their ownership of the residence for inheritance tax purposes, during their lifetime.
+any_downsizing_allowance.label = Are you claiming any Downsizing Allowance?
 
 any_exemption.question_number = Question 7
 any_exemption.browser_title = Question page
@@ -10,18 +23,27 @@ any_exemption.title = Is any part of the Qualifying Residential Interest exempt 
 any_exemption.guidance = Answer '''Yes''' if any part of the Qualifying Residence passes to an exempt beneficiary, such as the deceased`s spouse/civil partner or to a charity, or if Agricultural Relief applies applies to any part of the Qualifying Residence. If the Qualifying Residence falls into the residue of the estate and any part of the residue is exempt, answer '''Yes''' to this question.
 any_exemption.label =
 
+assets_passing_to_direct_descendants.browser_title = What is the value of the property passing to direct descendants referred to in Question 14?
+assets_passing_to_direct_descendants.title = What is the value of the property passing to direct descendants referred to in Question 14?
+assets_passing_to_direct_descendants.guidance = This is the value that is taken into account for inheritance tax purposes. So if, for example, grossing up under s.38 IHTA, or interaction under s.39A IHTA applies which affects the value that is taken into account for inheritance tax purposes, you need to include that adjusted value here.
+assets_passing_to_direct_descendants.label = What is the value of the property passing to direct descendants referred to in Question 14?
+
 brought_forward_allowance.question_number = Question 10
 brought_forward_allowance.browser_title = Question page
 brought_forward_allowance.title = What is the amount of brought-forward-allowance being claimed
 brought_forward_allowance.guidance = This is the value from box 33 of the form IHT436
 brought_forward_allowance.label =
 
+brought_forward_allowance_on_disposal.browser_title = What would the amount of brought-forward amount have been at the date of disposal?
+brought_forward_allowance_on_disposal.title = What would the amount of brought-forward amount have been at the date of disposal?
+brought_forward_allowance_on_disposal.guidance = If disposal was made on or before 5 April 2017 there would not have been any brought-forward allowance available.
+brought_forward_allowance_on_disposal.label = What would the amount of brought-forward amount have been at the date of disposal?
+
 chargeable_transfer_amount.question_number = Question 3
 chargeable_transfer_amount.browser_title = Question page
 chargeable_transfer_amount.title = What is the amount of the chargeable transfer on death?
 chargeable_transfer_amount.guidance = This is the net value transferred on death, AFTER reliefs and exemptions. It does not include any lifetime transfers within 7 years of death thar are taken into account in working out the total inheritance tax liability.
 chargeable_transfer_amount.label =
-chargeable_transfer_amount.greater_than_gross_estate_value.error = Chargeable Transfer Amount cannot be greater than the Gross Estate Value
 
 date.day = Day
 date.month = Month
@@ -33,6 +55,12 @@ date_of_death.title = What is the date of death for the deceased?
 date_of_death.guidance = If the date of death is before 6 April 2017 RNRB is not due
 date_of_death.example = For example, 31 3 1980
 date_of_death.label =
+
+date_of_disposal.browser_title = What was the date the property interest was disposed of?
+date_of_disposal.title = What was the date the property interest was disposed of?
+date_of_disposal.guidance = Include the date of the disposal that you wish to take into account. If there has been more than one disposal connected with the same property, for example a gift of a half share followed by a further gift of the remaining half share on a different day, only one disposal can be taken into account.
+date_of_disposal.hint = For example, 31 3 1980
+date_of_disposal.label = What was the date the property interest was disposed of?
 
 error.invalid_date = Enter a valid date
 error.number = Please enter a valid number
@@ -93,3 +121,8 @@ site.no = No
 site.yes = Yes
 site.continue = Continue
 site.back = Back
+
+value_of_disposed_property.title = What was the value of the property interest disposed of?
+value_of_disposed_property.browser_title = What was the value of the property interest disposed of?
+value_of_disposed_property.guidance = Enter the open market value of the interest disposed of at the date of disposal. If the property was sold and there was a mortgage on the property, deduct the mortgage from the sale price, but do not deduct the costs of selling the property, such as solicitor''s or estate agent''s fees.
+value_of_disposed_property.label = What was the value of the property interest disposed of?

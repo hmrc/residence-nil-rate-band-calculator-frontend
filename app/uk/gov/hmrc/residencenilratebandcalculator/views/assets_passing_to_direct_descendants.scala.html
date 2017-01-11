@@ -1,0 +1,29 @@
+@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
+@import uk.gov.hmrc.play.views.html._
+
+@(appConfig: FrontendAppConfig, form: Option[Form[Int]] = None)(implicit request: Request[_], messages: Messages)
+
+@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+    title = messages("assets_passing_to_direct_descendants.browser_title"),
+    appConfig = appConfig,
+    bodyClasses = None) {
+
+    <h1>@messages("assets_passing_to_direct_descendants.title")</h1>
+
+    <p>@messages("assets_passing_to_direct_descendants.guidance")</p>
+
+    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AssetsPassingToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
+
+        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
+        @rnrbHelpers.input_text(
+            id = "value",
+            value = Some(FormHelpers.getValue[Int](form).toString),
+            label = messages("assets_passing_to_direct_descendants.label"),
+            secondaryLabel = Some("currency"),
+            errorKey = FormHelpers.getErrorByKey(form, "value")
+        )
+        @rnrbHelpers.submit_button()
+    }
+}
