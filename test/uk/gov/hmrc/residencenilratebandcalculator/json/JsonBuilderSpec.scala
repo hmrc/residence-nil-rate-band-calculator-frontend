@@ -55,6 +55,16 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
         |      "valueCloselyInherited": {"type": "integer", "minimum": 0}
         |    },
         |    "required": ["value", "valueCloselyInherited"]
+        |  },
+        |  "downsizingDetails": {
+        |    "type": "object",
+        |    "properties": {
+        |       "dateOfDisposal": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+        |       "valueOfDisposedProperty": {"type": "integer", "minimum": 0},
+        |       "valueCloselyInherited": {"type": "integer", "minimum": 0},
+        |       "broughtForwardAllowanceAtDisposal": {"type": "integer", "minimum": 0}
+        |    },
+        |    "required": ["dateOfDisposal", "valueOfDisposedProperty", "valueCloselyInherited", "broughtForwardAllowanceAtDisposal"]
         |  }
         |},
         |"required": ["chargeableTransferAmount", "dateOfDeath", "grossEstateValue", "propertyValue", "percentageCloselyInherited"]
@@ -202,6 +212,77 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
         }
       }
 
+      "the CacheMap contains a value of true for anyDownsizingDetails but date of disposal is missing" in {
+        val cacheMap = CacheMap(id = cacheMapId, data =
+          Map(
+            Constants.chargeableTransferAmountId -> JsNumber(100),
+            Constants.dateOfDeathId -> JsString("2017-09-10"),
+            Constants.grossEstateValueId -> JsNumber(200),
+            Constants.propertyValueId -> JsNumber(200),
+            Constants.percentageCloselyInheritedId -> JsNumber(50),
+            Constants.anyDownsizingAllowanceId -> JsBoolean(true),
+            Constants.valueOfDisposedPropertyId -> JsNumber(100),
+            Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(false),
+            Constants.anyBroughtForwardAllowanceOnDisposalId -> JsBoolean(false)))
+        val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
+        buildResult match {
+          case Failure(exception) => {
+            exception shouldBe a [JsonInvalidException]
+            exception.getMessage shouldBe
+              "JSON error: Property dateOfDisposal missing.\n"
+          }
+          case Success(json) => fail
+        }
+      }
+
+      "the CacheMap contains a value of true for anyDownsizingDetails but value of disposed property is missing" in {
+        val cacheMap = CacheMap(id = cacheMapId, data =
+          Map(
+            Constants.chargeableTransferAmountId -> JsNumber(100),
+            Constants.dateOfDeathId -> JsString("2017-09-10"),
+            Constants.grossEstateValueId -> JsNumber(200),
+            Constants.propertyValueId -> JsNumber(200),
+            Constants.percentageCloselyInheritedId -> JsNumber(50),
+            Constants.anyDownsizingAllowanceId -> JsBoolean(true),
+            Constants.dateOfDisposalId -> JsString("2017-09-10"),
+            Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(false),
+            Constants.anyBroughtForwardAllowanceOnDisposalId -> JsBoolean(false)))
+        val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
+        buildResult match {
+          case Failure(exception) => {
+            exception shouldBe a [JsonInvalidException]
+            exception.getMessage shouldBe
+              "JSON error: Property valueOfDisposedProperty missing.\n"
+          }
+          case Success(json) => fail
+        }
+      }
+
+      "the CacheMap contains a value of true for anyDownsizingDetails and anyBroughtForwardAllowanceOnDisposal, but broughtForwardAllowanceOnDisposal is missing" in {
+        val cacheMap = CacheMap(id = cacheMapId, data =
+          Map(
+            Constants.chargeableTransferAmountId -> JsNumber(100),
+            Constants.dateOfDeathId -> JsString("2017-09-10"),
+            Constants.grossEstateValueId -> JsNumber(200),
+            Constants.propertyValueId -> JsNumber(200),
+            Constants.percentageCloselyInheritedId -> JsNumber(50),
+            Constants.anyDownsizingAllowanceId -> JsBoolean(true),
+            Constants.dateOfDisposalId -> JsString("2017-09-10"),
+            Constants.valueOfDisposedPropertyId -> JsNumber(100),
+            Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true),
+            Constants.assetsPassingToDirectDescendantsId -> JsNumber(100),
+            Constants.anyBroughtForwardAllowanceOnDisposalId -> JsBoolean(true)))
+        val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
+        buildResult match {
+          case Failure(exception) => {
+            exception shouldBe a [JsonInvalidException]
+            exception.getMessage shouldBe
+              "JSON error: Property broughtForwardAllowanceAtDisposal missing.\n"
+          }
+          case Success(json) => fail
+        }
+      }
+
       "the CacheMap contains a negative value for ChargeableTransferAmount" in {
         val cacheMap = CacheMap(id = cacheMapId, data =
           Map(
@@ -336,6 +417,103 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
           case Failure(exception) => {
             exception shouldBe a [JsonInvalidException]
             exception.getMessage shouldBe "JSON error: 'xxxx-yy-zz' does not match pattern ^\\d{4}-\\d{2}-\\d{2}$.\n"
+          }
+          case Success(json) => fail
+        }
+      }
+
+      "the CacheMap contains true for anyDownsizingDetails and an unparseable date for DateOfDisposal" in {
+        val cacheMap = CacheMap(id = cacheMapId, data =
+          Map(
+            Constants.chargeableTransferAmountId -> JsNumber(100),
+            Constants.dateOfDeathId -> JsString("2017-09-10"),
+            Constants.grossEstateValueId -> JsNumber(200),
+            Constants.propertyValueId -> JsNumber(200),
+            Constants.percentageCloselyInheritedId -> JsNumber(50),
+            Constants.anyDownsizingAllowanceId -> JsBoolean(true),
+            Constants.dateOfDisposalId -> JsString("xxxx-yy-zz"),
+            Constants.valueOfDisposedPropertyId -> JsNumber(100),
+            Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true),
+            Constants.assetsPassingToDirectDescendantsId -> JsNumber(100),
+            Constants.anyBroughtForwardAllowanceOnDisposalId -> JsBoolean(false)))
+        val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
+        buildResult match {
+          case Failure(exception) => {
+            exception shouldBe a [JsonInvalidException]
+            exception.getMessage shouldBe "JSON error: 'xxxx-yy-zz' does not match pattern ^\\d{4}-\\d{2}-\\d{2}$.\n"
+          }
+          case Success(json) => fail
+        }
+      }
+
+      "the CacheMap contains true for anyDownsizingDetails and a negative value for value of disposed property" in {
+        val cacheMap = CacheMap(id = cacheMapId, data =
+          Map(
+            Constants.chargeableTransferAmountId -> JsNumber(100),
+            Constants.dateOfDeathId -> JsString("2017-09-10"),
+            Constants.grossEstateValueId -> JsNumber(200),
+            Constants.propertyValueId -> JsNumber(200),
+            Constants.percentageCloselyInheritedId -> JsNumber(50),
+            Constants.anyDownsizingAllowanceId -> JsBoolean(true),
+            Constants.dateOfDisposalId -> JsString("2017-01-01"),
+            Constants.valueOfDisposedPropertyId -> JsNumber(-1),
+            Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true),
+            Constants.assetsPassingToDirectDescendantsId -> JsNumber(100),
+            Constants.anyBroughtForwardAllowanceOnDisposalId -> JsBoolean(false)))
+        val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
+        buildResult match {
+          case Failure(exception) => {
+            exception shouldBe a [JsonInvalidException]
+            exception.getMessage shouldBe "JSON error: -1 is smaller than required minimum value of 0.\n"
+          }
+          case Success(json) => fail
+        }
+      }
+
+      "the CacheMap contains true for anyDownsizingDetails and a negative value for assets passing to direct descendant" in {
+        val cacheMap = CacheMap(id = cacheMapId, data =
+          Map(
+            Constants.chargeableTransferAmountId -> JsNumber(100),
+            Constants.dateOfDeathId -> JsString("2017-09-10"),
+            Constants.grossEstateValueId -> JsNumber(200),
+            Constants.propertyValueId -> JsNumber(200),
+            Constants.percentageCloselyInheritedId -> JsNumber(50),
+            Constants.anyDownsizingAllowanceId -> JsBoolean(true),
+            Constants.dateOfDisposalId -> JsString("2017-01-01"),
+            Constants.valueOfDisposedPropertyId -> JsNumber(100),
+            Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true),
+            Constants.assetsPassingToDirectDescendantsId -> JsNumber(-1),
+            Constants.anyBroughtForwardAllowanceOnDisposalId -> JsBoolean(false)))
+        val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
+        buildResult match {
+          case Failure(exception) => {
+            exception shouldBe a [JsonInvalidException]
+            exception.getMessage shouldBe "JSON error: -1 is smaller than required minimum value of 0.\n"
+          }
+          case Success(json) => fail
+        }
+      }
+
+      "the CacheMap contains true for anyDownsizingDetails and a negative value for brought forward allowance on disposal" in {
+        val cacheMap = CacheMap(id = cacheMapId, data =
+          Map(
+            Constants.chargeableTransferAmountId -> JsNumber(100),
+            Constants.dateOfDeathId -> JsString("2017-09-10"),
+            Constants.grossEstateValueId -> JsNumber(200),
+            Constants.propertyValueId -> JsNumber(200),
+            Constants.percentageCloselyInheritedId -> JsNumber(50),
+            Constants.anyDownsizingAllowanceId -> JsBoolean(true),
+            Constants.dateOfDisposalId -> JsString("2017-01-01"),
+            Constants.valueOfDisposedPropertyId -> JsNumber(100),
+            Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true),
+            Constants.assetsPassingToDirectDescendantsId -> JsNumber(100),
+            Constants.anyBroughtForwardAllowanceOnDisposalId -> JsBoolean(true),
+            Constants.broughtForwardAllowanceOnDisposalId -> JsNumber(-1)))
+        val buildResult = await(jsonBuilder.buildFromCacheMap(cacheMap))
+        buildResult match {
+          case Failure(exception) => {
+            exception shouldBe a [JsonInvalidException]
+            exception.getMessage shouldBe "JSON error: -1 is smaller than required minimum value of 0.\n"
           }
           case Success(json) => fail
         }
@@ -514,7 +692,23 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
       jsonBuilder.constructDataFromCacheMap(cacheMap) shouldBe Map(
         Constants.jsonKeys(Constants.broughtForwardAllowanceId) -> JsNumber(1)
       )
+    }
 
+    "return a map with downsizing details when they are present" in {
+      val cacheMap = CacheMap(id = cacheMapId, data =
+        Map(
+          Constants.dateOfDeathId -> JsString("2017-09-10"),
+          Constants.grossEstateValueId -> JsNumber(200),
+          Constants.anyDownsizingAllowanceId -> JsBoolean(true),
+          Constants.valueOfDisposedPropertyId -> JsNumber(100)))
+
+      jsonBuilder.constructDataFromCacheMap(cacheMap) shouldBe Map(
+        Constants.jsonKeys(Constants.dateOfDeathId) -> JsString("2017-09-10"),
+        Constants.jsonKeys(Constants.grossEstateValueId) -> JsNumber(200),
+        Constants.downsizingDetails -> Json.toJson(Map(
+          Constants.downsizingKeys(Constants.valueOfDisposedPropertyId )-> JsNumber(100))
+        )
+      )
     }
   }
 
@@ -526,5 +720,117 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
     jsonBuilder.build(mockSessionConnector)(hc)
 
     verify(rnrbConnector, times(1)).getSuccessfulResponseSchema
+  }
+
+  "handleAssetsPassingToDirectDescendants" must {
+    val cacheMapId = "aaaa"
+    val jsonBuilder = new JsonBuilder(rnrbConnector)
+
+    "return an empty map when anyAssetsPassingToDirectDescendantsId is not present in the cache map" in {
+      val cacheMap = CacheMap(id = cacheMapId, data = Map())
+      jsonBuilder.handleAssetsPassingToDirectDescendants(cacheMap) shouldBe Map()
+    }
+
+    "return an empty map when anyAssetsPassingToDirectDescendantsId is true" in {
+      val cacheMap = CacheMap(id = cacheMapId, data = Map(
+        Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true)
+      ))
+      jsonBuilder.handleAssetsPassingToDirectDescendants(cacheMap) shouldBe Map()
+    }
+
+    "return a map containing assetsPassingToDirectDescendant with a value of 0 when anyAssetsPassingToDirectDescendantsId is false" in {
+      val cacheMap = CacheMap(id = cacheMapId, data = Map(
+        Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(false)
+      ))
+      jsonBuilder.handleAssetsPassingToDirectDescendants(cacheMap) shouldBe Map(Constants.downsizingKeys(Constants.assetsPassingToDirectDescendantsId) -> JsNumber(0))
+    }
+  }
+
+  "handleBroughtForwardAllowanceOnDisposal" must {
+    val cacheMapId = "aaaa"
+    val jsonBuilder = new JsonBuilder(rnrbConnector)
+
+    "return an empty map when anyBroughtForwardAllowanceOnDisposal is not present in the cache map" in {
+      val cacheMap = CacheMap(id = cacheMapId, data = Map())
+      jsonBuilder.handleBroughtForwardAllowanceOnDisposal(cacheMap) shouldBe Map()
+    }
+
+    "return an empty map when anyAssetsPassingToDirectDescendantsId is true" in {
+      val cacheMap = CacheMap(id = cacheMapId, data = Map(
+        Constants.anyBroughtForwardAllowanceOnDisposalId -> JsBoolean(true)
+      ))
+      jsonBuilder.handleBroughtForwardAllowanceOnDisposal(cacheMap) shouldBe Map()
+    }
+
+    "return a map containing assetsPassingToDirectDescendant with a value of 0 when anyAssetsPassingToDirectDescendantsId is false" in {
+      val cacheMap = CacheMap(id = cacheMapId, data = Map(
+        Constants.anyBroughtForwardAllowanceOnDisposalId -> JsBoolean(false)
+      ))
+      jsonBuilder.handleBroughtForwardAllowanceOnDisposal(cacheMap) shouldBe Map(Constants.downsizingKeys(Constants.broughtForwardAllowanceOnDisposalId) -> JsNumber(0))
+    }
+  }
+
+  "constructDownsizingDetails" must {
+    val cacheMapId = "aaaa"
+    val jsonBuilder = new JsonBuilder(rnrbConnector)
+
+    "return an empty map when anyDownsizingDetails is not present in the cache map" in {
+      val cacheMap = CacheMap(id = cacheMapId, data = Map())
+      jsonBuilder.constructDownsizingDetails(cacheMap) shouldBe Map()
+    }
+
+    "return an empty map when anyDownsizingDetails is false" in {
+      val cacheMap = CacheMap(id = cacheMapId, data = Map(
+        Constants.anyDownsizingAllowanceId -> JsBoolean(false)
+      ))
+      jsonBuilder.constructDownsizingDetails(cacheMap) shouldBe Map()
+    }
+
+    "return the actual value for assets passing to direct descendant when it is present" in {
+      val cacheMap = CacheMap(id = cacheMapId, data = Map(
+        Constants.anyDownsizingAllowanceId -> JsBoolean(true),
+        Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true),
+        Constants.assetsPassingToDirectDescendantsId -> JsNumber(100)
+      ))
+      jsonBuilder.constructDownsizingDetails(cacheMap) shouldBe Map(
+        Constants.downsizingDetails -> Json.toJson(Map(
+          Constants.downsizingKeys(Constants.assetsPassingToDirectDescendantsId) -> JsNumber(100)))
+      )
+    }
+
+    "return values of 0 for assets passing to direct descendant and brought forward allowance on disposal when anyAssetsPassingToDirectDescendant is false" in {
+      val cacheMap = CacheMap(id = cacheMapId, data = Map(
+        Constants.anyDownsizingAllowanceId -> JsBoolean(true),
+        Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(false)
+      ))
+      jsonBuilder.constructDownsizingDetails(cacheMap) shouldBe Map(
+        Constants.downsizingDetails -> Json.toJson(Map(
+          Constants.downsizingKeys(Constants.assetsPassingToDirectDescendantsId) -> JsNumber(0),
+          Constants.downsizingKeys(Constants.broughtForwardAllowanceOnDisposalId) -> JsNumber(0)))
+      )
+    }
+
+    "return the actual value for brought forward allowance on disposal when it is present" in {
+      val cacheMap = CacheMap(id = cacheMapId, data = Map(
+        Constants.anyDownsizingAllowanceId -> JsBoolean(true),
+        Constants.anyBroughtForwardAllowanceOnDisposalId -> JsBoolean(true),
+        Constants.broughtForwardAllowanceOnDisposalId -> JsNumber(100)
+      ))
+      jsonBuilder.constructDownsizingDetails(cacheMap) shouldBe Map(
+        Constants.downsizingDetails -> Json.toJson(Map(
+          Constants.downsizingKeys(Constants.broughtForwardAllowanceOnDisposalId) -> JsNumber(100)))
+      )
+    }
+
+    "return a value of 0 for brought forward allowance on disposal when anyBroughtForwardAllowanceOnDisposal is false" in {
+      val cacheMap = CacheMap(id = cacheMapId, data = Map(
+        Constants.anyDownsizingAllowanceId -> JsBoolean(true),
+        Constants.anyBroughtForwardAllowanceOnDisposalId -> JsBoolean(false)
+      ))
+      jsonBuilder.constructDownsizingDetails(cacheMap) shouldBe Map(
+        Constants.downsizingDetails -> Json.toJson(Map(
+          Constants.downsizingKeys(Constants.broughtForwardAllowanceOnDisposalId) -> JsNumber(0)))
+      )
+    }
   }
 }

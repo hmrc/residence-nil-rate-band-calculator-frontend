@@ -25,7 +25,7 @@ import play.api.libs.json._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
-import uk.gov.hmrc.residencenilratebandcalculator.Constants.jsonKeys
+import uk.gov.hmrc.residencenilratebandcalculator.Constants.{downsizingKeys, jsonKeys}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.{JsonInvalidException, NoCacheMapException}
 
@@ -93,12 +93,50 @@ class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
       case (key, value) => (jsonKeys(key), value)
     }
 
-    dataWithCorrectKeys ++ constructAdditionalData(cacheMap)
+    dataWithCorrectKeys ++ handleBroughtForwardAllowance(cacheMap) ++ constructDownsizingDetails(cacheMap)
   }
 
-  def constructAdditionalData(cacheMap: CacheMap): Map[String, JsValue] = {
+  def handleBroughtForwardAllowance(cacheMap: CacheMap) = {
     if (cacheMap.data.get(Constants.anyBroughtForwardAllowanceId).contains(JsBoolean(false))) {
       Map(jsonKeys(Constants.broughtForwardAllowanceId) -> JsNumber(0))
+    } else {
+      Map()
+    }
+  }
+
+  def constructDownsizingDetails(cacheMap: CacheMap) = {
+    if (cacheMap.data.get(Constants.anyDownsizingAllowanceId).contains(JsBoolean(true))) {
+      def keyIsRecognised(key: String) = downsizingKeys.keySet.contains(key)
+
+      val usableEntries = for {
+        recognisedEntries <- cacheMap.data.filterKeys(keyIsRecognised)
+      } yield recognisedEntries
+
+      val dataWithCorrectKeys = usableEntries map {
+        case (key, value) => (downsizingKeys(key), value)
+      }
+
+      val allData = dataWithCorrectKeys ++ handleAssetsPassingToDirectDescendants(cacheMap) ++ handleBroughtForwardAllowanceOnDisposal(cacheMap)
+
+      Map(Constants.downsizingDetails -> Json.toJson(allData))
+    }
+    else {
+      Map()
+    }
+  }
+
+  def handleAssetsPassingToDirectDescendants(cacheMap: CacheMap) = {
+    if (cacheMap.data.get(Constants.anyAssetsPassingToDirectDescendantsId).contains(JsBoolean(false))) {
+      Map(downsizingKeys(Constants.assetsPassingToDirectDescendantsId) -> JsNumber(0))
+    } else {
+      Map()
+    }
+  }
+
+  def handleBroughtForwardAllowanceOnDisposal(cacheMap: CacheMap) = {
+    if (cacheMap.data.get(Constants.anyAssetsPassingToDirectDescendantsId).contains(JsBoolean(false))
+        || cacheMap.data.get(Constants.anyBroughtForwardAllowanceOnDisposalId).contains(JsBoolean(false))) {
+      Map(downsizingKeys(Constants.broughtForwardAllowanceOnDisposalId) -> JsNumber(0))
     } else {
       Map()
     }
