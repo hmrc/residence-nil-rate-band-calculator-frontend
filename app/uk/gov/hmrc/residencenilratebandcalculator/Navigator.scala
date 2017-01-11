@@ -59,7 +59,8 @@ class Navigator @Inject()() {
       Constants.anyExemptionId -> (() => PercentageCloselyInheritedController.onPageLoad()),
       Constants.propertyValueAfterExemptionId -> (() => AnyExemptionController.onPageLoad()),
       Constants.anyBroughtForwardAllowanceId -> (() => PropertyValueAfterExemptionController.onPageLoad()),
-      Constants.broughtForwardAllowanceId -> (() => AnyBroughtForwardAllowanceController.onPageLoad())
+      Constants.broughtForwardAllowanceId -> (() => AnyBroughtForwardAllowanceController.onPageLoad()),
+      Constants.anyDownsizingAllowanceId -> (() => BroughtForwardAllowanceController.onPageLoad())
     )
   }
 

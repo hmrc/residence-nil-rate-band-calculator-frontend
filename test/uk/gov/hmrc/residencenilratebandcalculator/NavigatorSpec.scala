@@ -183,6 +183,10 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.broughtForwardAllowanceId)() shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
     }
 
+    "return a call to the Brought Forward Allowance After Exemption when back linking from the Any Downsizing Allowance page" in {
+      navigator.lastPage(Constants.anyDownsizingAllowanceId)() shouldBe routes.BroughtForwardAllowanceController.onPageLoad()
+    }
+
     "return a call to the Results Controller onPageLoad method when there is no downsizing allowance" in {
       val mockCacheMap = mock[CacheMap]
       when(mockCacheMap.getEntry[Boolean](matches(Constants.anyDownsizingAllowanceId))(any())) thenReturn Some(false)
