@@ -25,13 +25,14 @@ import scala.language.reflectiveCalls
 
 class BroughtForwardAllowanceViewSpec extends HtmlSpec {
 
+  val url = "url"
   val number = 123
   val errorKey = "value"
   val errorMessage = "error.number"
   val error = FormError(errorKey, errorMessage)
 
   def fixture(form: Option[Form[Int]] = None) = new {
-    val view = brought_forward_allowance(frontendAppConfig, form)(request, messages)
+    val view = brought_forward_allowance(frontendAppConfig, url, form)(request, messages)
     val doc = asDocument(view)
   }
 
@@ -40,6 +41,11 @@ class BroughtForwardAllowanceViewSpec extends HtmlSpec {
     def thisFixture() = fixture()
 
     "rendered" must {
+
+      "contain a back link pointing to another page" in {
+        val f = thisFixture()
+        f.doc.getElementById("back").attr("href") should be(url)
+      }
 
       "display the correct question designator" in {
         val f = thisFixture()
