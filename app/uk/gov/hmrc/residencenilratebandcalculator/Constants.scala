@@ -30,6 +30,7 @@ object Constants {
   val chargeableTransferAmountId = "ChargeableTransferAmount"
   val dateOfDeathId = "DateOfDeath"
   val dateOfDisposalId = "DateOfDisposal"
+  val downsizingDetails = "downsizingDetails"
   val downsizingEligibilityDate = new LocalDate(2015, 7, 8)
   val eligibilityDate = new LocalDate(2017, 4, 6)
   val estateHasPropertyId = "EstateHasProperty"
@@ -49,5 +50,12 @@ object Constants {
     propertyValueId -> "propertyValue",
     percentageCloselyInheritedId -> "percentageCloselyInherited",
     propertyValueAfterExemptionId -> "propertyValueAfterExemption"
+  )
+
+  val downsizingKeys = Map(
+    dateOfDisposalId -> "dateOfDisposal",
+    valueOfDisposedPropertyId -> "valueOfDisposedProperty",
+    assetsPassingToDirectDescendantsId -> "valueCloselyInherited",
+    broughtForwardAllowanceOnDisposalId -> "broughtForwardAllowanceAtDisposal"
   )
 }
