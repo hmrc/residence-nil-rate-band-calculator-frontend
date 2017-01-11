@@ -10,14 +10,11 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
-    <a id="back" href=@backUrl>@messages("site.back")</a>
+    @rnrbHelpers.back_link(backUrl)
 
-    <p>@messages("any_exemption.question_number")</p>
-
-    <h1>@messages("any_exemption.title")</h1>
+    @rnrbHelpers.heading_with_pre_text("any_exemption.title", "any_exemption.question_number")
 
     <p>@messages("any_exemption.guidance")</p>
-
 
     @helpers.form(action = AnyExemptionController.onSubmit(), 'autoComplete -> "off") {
 

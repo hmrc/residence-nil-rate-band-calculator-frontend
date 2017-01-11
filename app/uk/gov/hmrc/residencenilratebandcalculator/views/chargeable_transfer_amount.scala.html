@@ -9,11 +9,9 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
-    <a id="back" href=@backUrl>@messages("site.back")</a>
+    @rnrbHelpers.back_link(backUrl)
 
-    <p>@messages("chargeable_transfer_amount.question_number")</p>
-
-    <h1>@messages("chargeable_transfer_amount.title")</h1>
+    @rnrbHelpers.heading_with_pre_text("chargeable_transfer_amount.title", "chargeable_transfer_amount.question_number")
 
     <p>@messages("chargeable_transfer_amount.guidance")</p>
 

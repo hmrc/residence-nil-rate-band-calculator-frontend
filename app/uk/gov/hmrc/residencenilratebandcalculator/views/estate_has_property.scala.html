@@ -10,15 +10,11 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
+        @rnrbHelpers.back_link(backUrl)
 
-        <a id="back" href=@backUrl>@messages("site.back")</a>
-
-        <p>@messages("estate_has_property.question_number")</p>
-
-        <h1>@messages("estate_has_property.title")</h1>
+    @rnrbHelpers.heading_with_pre_text("estate_has_property.title", "estate_has_property.question_number")
 
         <p>@messages("estate_has_property.guidance")</p>
-
 
         @helpers.form(action = EstateHasPropertyController.onSubmit(), 'autoComplete -> "off") {
 

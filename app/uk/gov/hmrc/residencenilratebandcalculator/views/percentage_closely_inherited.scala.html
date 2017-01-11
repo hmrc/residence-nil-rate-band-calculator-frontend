@@ -9,11 +9,9 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
-    <a id="back" href=@backUrl>@messages("site.back")</a>
+    @rnrbHelpers.back_link(backUrl)
 
-    <p>@messages("percentage_closely_inherited.question_number")</p>
-
-    <h1>@messages("percentage_closely_inherited.title")</h1>
+    @rnrbHelpers.heading_with_pre_text("percentage_closely_inherited.title", "percentage_closely_inherited.question_number")
 
     <p>@messages("percentage_closely_inherited.guidance")</p>
 
