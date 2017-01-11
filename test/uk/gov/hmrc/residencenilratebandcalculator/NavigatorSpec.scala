@@ -191,6 +191,10 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.dateOfDisposalId)() shouldBe routes.AnyDownsizingAllowanceController.onPageLoad()
     }
 
+    "return a call to the Date of Disposal After Exemption when back linking from the Value Of Disposed Property page" in {
+      navigator.lastPage(Constants.valueOfDisposedPropertyId)() shouldBe routes.DateOfDisposalController.onPageLoad()
+    }
+
     "return a call to the Results Controller onPageLoad method when there is no downsizing allowance" in {
       val mockCacheMap = mock[CacheMap]
       when(mockCacheMap.getEntry[Boolean](matches(Constants.anyDownsizingAllowanceId))(any())) thenReturn Some(false)

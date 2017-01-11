@@ -129,7 +129,8 @@ site.yes = Yes
 site.continue = Continue
 site.back = Back
 
+value_of_disposed_property.question_number = Question 13
 value_of_disposed_property.title = What was the value of the property interest disposed of?
-value_of_disposed_property.browser_title = What was the value of the property interest disposed of?
+value_of_disposed_property.browser_title = Question page
 value_of_disposed_property.guidance = Enter the open market value of the interest disposed of at the date of disposal. If the property was sold and there was a mortgage on the property, deduct the mortgage from the sale price, but do not deduct the costs of selling the property, such as solicitor''s or estate agent''s fees.
 value_of_disposed_property.label = What was the value of the property interest disposed of?

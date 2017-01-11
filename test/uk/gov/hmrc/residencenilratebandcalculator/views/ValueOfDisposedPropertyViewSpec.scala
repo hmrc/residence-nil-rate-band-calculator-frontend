@@ -25,13 +25,14 @@ import scala.language.reflectiveCalls
 
 class ValueOfDisposedPropertyViewSpec extends HtmlSpec {
 
+  val url = "url"
   val number = 123
   val errorKey = "value"
   val errorMessage = "error.number"
   val error = FormError(errorKey, errorMessage)
 
   def fixture(form: Option[Form[Int]] = None) = new {
-    val view = value_of_disposed_property(frontendAppConfig, form)(request, messages)
+    val view = value_of_disposed_property(frontendAppConfig, url, form)(request, messages)
     val doc = asDocument(view)
   }
 
@@ -40,6 +41,16 @@ class ValueOfDisposedPropertyViewSpec extends HtmlSpec {
     def thisFixture() = fixture()
 
     "rendered" must {
+
+      "contain a back link pointing to another page" in {
+        val f = thisFixture()
+        f.doc.getElementById("back").attr("href") should be(url)
+      }
+
+      "display the correct question designator" in {
+        val f = thisFixture()
+        assertContainsMessages(f.doc, "value_of_disposed_property.question_number")
+      }
 
       "display the correct browser title" in {
         val f = thisFixture()
