@@ -2,14 +2,16 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 @import uk.gov.hmrc.play.views.html._
 
-@(appConfig: FrontendAppConfig, form: Option[Form[Int]] = None)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[Int]] = None)(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("value_of_disposed_property.browser_title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    <h1>@messages("value_of_disposed_property.title")</h1>
+    @rnrbHelpers.back_link(backUrl)
+
+    @rnrbHelpers.heading_with_pre_text("value_of_disposed_property.title", "value_of_disposed_property.question_number")
 
     <p>@messages("value_of_disposed_property.guidance")</p>
 

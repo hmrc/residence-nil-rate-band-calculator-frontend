@@ -2,14 +2,16 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 @import uk.gov.hmrc.play.views.html._
 
-@(appConfig: FrontendAppConfig, form: Option[Form[Int]] = None)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[Int]] = None)(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("brought_forward_allowance.browser_title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    <h1>@messages("brought_forward_allowance.title")</h1>
+    @rnrbHelpers.back_link(backUrl)
+
+    @rnrbHelpers.heading_with_pre_text("brought_forward_allowance.title", "brought_forward_allowance.question_number")
 
     <p>@messages("brought_forward_allowance.guidance")</p>
 

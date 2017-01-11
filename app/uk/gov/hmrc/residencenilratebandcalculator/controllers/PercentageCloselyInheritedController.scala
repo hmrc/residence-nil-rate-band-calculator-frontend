@@ -36,5 +36,8 @@ class PercentageCloselyInheritedController  @Inject()(override val appConfig: Fr
 
   override def form = () => PercentForm()
 
-  override def view(form: Option[Form[Int]])(implicit request: Request[_]) = percentage_closely_inherited(appConfig, form)
+  override def view(form: Option[Form[Int]])(implicit request: Request[_]) = {
+    val backUrl = navigator.lastPage(controllerId)().url
+    percentage_closely_inherited(appConfig, backUrl, form)
+  }
 }

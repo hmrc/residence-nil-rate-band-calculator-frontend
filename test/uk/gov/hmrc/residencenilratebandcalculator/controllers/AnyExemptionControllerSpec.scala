@@ -25,15 +25,19 @@ class AnyExemptionControllerSpec extends SimpleControllerSpecBase {
 
   "Any Exemption Controller" must {
 
-    def createView = (value: Option[Boolean]) => value match {
-      case None => any_exemption(frontendAppConfig)(fakeRequest, messages)
-      case Some(v) => any_exemption(frontendAppConfig, Some(BooleanForm().fill(v)))(fakeRequest, messages)
+    def createView = (value: Option[Boolean]) => {
+      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PercentageCloselyInheritedController.onPageLoad().url
+
+      value match {
+        case None => any_exemption(frontendAppConfig, url)(fakeRequest, messages)
+        case Some(v) => any_exemption(frontendAppConfig, url, Some(BooleanForm().fill(v)))(fakeRequest, messages)
+      }
     }
 
     def createController = () => new AnyExemptionController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
     val testValue = true
 
-    behave like rnrbController(createController, createView, Constants.anyExemptionId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+    behave like rnrbController[Boolean](createController, createView, Constants.anyExemptionId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
   }
 }

@@ -25,15 +25,19 @@ class BroughtForwardAllowanceControllerSpec extends SimpleControllerSpecBase {
 
   "Brought Forward Allowance Controller" must {
 
-    def createView = (value: Option[Int]) => value match {
-      case None => brought_forward_allowance(frontendAppConfig)(fakeRequest, messages)
-      case Some(v) => brought_forward_allowance(frontendAppConfig, Some(NonNegativeIntForm().fill(v)))(fakeRequest, messages)
+    def createView = (value: Option[Int]) => {
+      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyBroughtForwardAllowanceController.onPageLoad().url
+
+      value match {
+        case None => brought_forward_allowance(frontendAppConfig, url)(fakeRequest, messages)
+        case Some(v) => brought_forward_allowance(frontendAppConfig, url, Some(NonNegativeIntForm().fill(v)))(fakeRequest, messages)
+      }
     }
 
     def createController = () => new BroughtForwardAllowanceController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
     val testValue = 123
 
-    behave like rnrbController(createController, createView, Constants.broughtForwardAllowanceId, testValue)(Reads.IntReads, Writes.IntWrites)
+    behave like rnrbController[Int](createController, createView, Constants.broughtForwardAllowanceId, testValue)(Reads.IntReads, Writes.IntWrites)
   }
 }

@@ -3,14 +3,16 @@
 @import uk.gov.hmrc.play.views.html._
 @import uk.gov.hmrc.residencenilratebandcalculator.models.{PropertyValueAfterExemption, Value, ValueCloselyInherited}
 
-@(appConfig: FrontendAppConfig, form: Option[Form[PropertyValueAfterExemption]] = None)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[PropertyValueAfterExemption]] = None)(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("property_value_after_exemption.browser_title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    <h1>@messages("property_value_after_exemption.title")</h1>
+    @rnrbHelpers.back_link(backUrl)
+
+    @rnrbHelpers.heading_with_pre_text("property_value_after_exemption.title", "property_value_after_exemption.question_number")
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyValueAfterExemptionController.onSubmit(), 'autoComplete -> "off") {
 

@@ -1,19 +1,23 @@
-any_assets_passing_to_direct_descendants.browser_title = Is there any property which passes to a direct descendant?
+any_assets_passing_to_direct_descendants.question_number = Question 14
+any_assets_passing_to_direct_descendants.browser_title = Question page
 any_assets_passing_to_direct_descendants.title = Is there any property which passes to a direct descendant following the death, other than any property mentioned at Question 4 above?
 any_assets_passing_to_direct_descendants.guidance = If there is no property passing to direct descendants or the spouse or civil partner of a direct descendant, there will not be any downsizing allowance.
 any_assets_passing_to_direct_descendants.label = Is there any property which passes to a direct descendant following the death, other than any property mentioned at Question 4 above?
 
-any_brought_forward_allowance.browser_title = Is there any Brought Forward Allowance?
-any_brought_forward_allowance.title = Is there any Brought Forward Allowance?
-any_brought_forward_allowance.guidance = Any brought forward allowance, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
+any_brought_forward_allowance.question_number = Question 9
+any_brought_forward_allowance.browser_title = Question pages
+any_brought_forward_allowance.title = Is a claim being made for a brought-forward allowance from the death of a pre-deceased spouse or civil partner of the deceased?
+any_brought_forward_allowance.guidance = Brought-forward allowance needs to be claimed. Please complete form IHT436 to make this claim.
 any_brought_forward_allowance.label = Is there any brought forward allowance?
 
-any_brought_forward_allowance_on_disposal.browser_title = Would any brought-forward allowance have been available at the date of disposal if a valid claim had been made at that time?
+any_brought_forward_allowance_on_disposal.question_number = Question 16
+any_brought_forward_allowance_on_disposal.browser_title = Question page
 any_brought_forward_allowance_on_disposal.title = Would any brought-forward allowance have been available at the date of disposal if a valid claim had been made at that time?
 any_brought_forward_allowance_on_disposal.guidance = If disposal was made on or before 5 April 2017 there would not have been any brought-forward allowance available.
 any_brought_forward_allowance_on_disposal.label = Would any brought-forward allowance have been available at the date of disposal if a valid claim had been made at that time?
 
-any_downsizing_allowance.browser_title = Are you claiming any Downsizing Allowance?
+any_downsizing_allowance.question_number = Question 11
+any_downsizing_allowance.browser_title = Question pages
 any_downsizing_allowance.title = Are you claiming any Downsizing Allowance?
 any_downsizing_allowance.guidance = In order to claim downsizing allowance the deceased must have had a residence which:
 any_downsizing_allowance.guidance1 = They were treated as owning for inheritance tax purposes
@@ -21,42 +25,49 @@ any_downsizing_allowance.guidance2 = They occupied as a residence while they own
 any_downsizing_allowance.guidance3 = Disposed of this residence, or their ownership of the residence for inheritance tax purposes, during their lifetime.
 any_downsizing_allowance.label = Are you claiming any Downsizing Allowance?
 
-any_exemption.browser_title = Is any part of the Qualifying Residential Interest exempt from Inheritance Tax, or does any part of it qualify for relief?
+any_exemption.question_number = Question 7
+any_exemption.browser_title = Question page
 any_exemption.title = Is any part of the Qualifying Residential Interest exempt from Inheritance Tax, or does any part of it qualify for relief?
-any_exemption.guidance = Any exemptions adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
-any_exemption.label = Is any part of the Qualifying Residential Interest exempt from Inheritance Tax, or does any part of it qualify for relief?
+any_exemption.guidance = Answer '''Yes''' if any part of the Qualifying Residence passes to an exempt beneficiary, such as the deceased`s spouse/civil partner or to a charity, or if Agricultural Relief applies applies to any part of the Qualifying Residence. If the Qualifying Residence falls into the residue of the estate and any part of the residue is exempt, answer '''Yes''' to this question.
+any_exemption.label =
 
-assets_passing_to_direct_descendants.browser_title = What is the value of the property passing to direct descendants referred to in Question 14?
+assets_passing_to_direct_descendants.question_number = Question 15
+assets_passing_to_direct_descendants.browser_title = Question page
 assets_passing_to_direct_descendants.title = What is the value of the property passing to direct descendants referred to in Question 14?
 assets_passing_to_direct_descendants.guidance = This is the value that is taken into account for inheritance tax purposes. So if, for example, grossing up under s.38 IHTA, or interaction under s.39A IHTA applies which affects the value that is taken into account for inheritance tax purposes, you need to include that adjusted value here.
 assets_passing_to_direct_descendants.label = What is the value of the property passing to direct descendants referred to in Question 14?
 
-brought_forward_allowance.browser_title = Brought Forward Allowance
-brought_forward_allowance.title = Brought Forward Allowance
-brought_forward_allowance.guidance = Brought forward allowance, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
-brought_forward_allowance.label = How much Brought Forward Allowance is available?
+brought_forward_allowance.question_number = Question 10
+brought_forward_allowance.browser_title = Question page
+brought_forward_allowance.title = What is the amount of brought-forward-allowance being claimed
+brought_forward_allowance.guidance = This is the value from box 33 of the form IHT436
+brought_forward_allowance.label =
 
-brought_forward_allowance_on_disposal.browser_title = What would the amount of brought-forward amount have been at the date of disposal?
+brought_forward_allowance_on_disposal.question_number = Question 17
+brought_forward_allowance_on_disposal.browser_title = Question page
 brought_forward_allowance_on_disposal.title = What would the amount of brought-forward amount have been at the date of disposal?
 brought_forward_allowance_on_disposal.guidance = If disposal was made on or before 5 April 2017 there would not have been any brought-forward allowance available.
 brought_forward_allowance_on_disposal.label = What would the amount of brought-forward amount have been at the date of disposal?
 
-chargeable_transfer_amount.browser_title = Net Chargeable Transfer Value
-chargeable_transfer_amount.title = Net Chargeable Transfer Value of the Estate
-chargeable_transfer_amount.guidance = Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
-chargeable_transfer_amount.label = What is the chargeable transfer amount?
-chargeable_transfer_amount.greater_than_gross_estate_value.error = Chargeable Transfer Amount cannot be greater than the Gross Estate Value
+chargeable_transfer_amount.question_number = Question 3
+chargeable_transfer_amount.browser_title = Question page
+chargeable_transfer_amount.title = What is the amount of the chargeable transfer on death?
+chargeable_transfer_amount.guidance = This is the net value transferred on death, AFTER reliefs and exemptions. It does not include any lifetime transfers within 7 years of death thar are taken into account in working out the total inheritance tax liability.
+chargeable_transfer_amount.label =
 
 date.day = Day
 date.month = Month
 date.year = Year
 
-date_of_death.browser_title = Date of Death
-date_of_death.title = Date of Death
-date_of_death.guidance = Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
-date_of_death.label = When did the deceased die?
+date_of_death.question_number = Question 1
+date_of_death.browser_title = Question page
+date_of_death.title = What is the date of death for the deceased?
+date_of_death.guidance = If the date of death is before 6 April 2017 RNRB is not due
+date_of_death.example = For example, 31 3 1980
+date_of_death.label =
 
-date_of_disposal.browser_title = What was the date the property interest was disposed of?
+date_of_disposal.question_number = Question 12
+date_of_disposal.browser_title = Question page
 date_of_disposal.title = What was the date the property interest was disposed of?
 date_of_disposal.guidance = Include the date of the disposal that you wish to take into account. If there has been more than one disposal connected with the same property, for example a gift of a half share followed by a further gift of the remaining half share on a different day, only one disposal can be taken into account.
 date_of_disposal.hint = For example, 31 3 1980
@@ -68,15 +79,17 @@ error.required = Please enter a value
 error.summary.title = Message to alert the user to a problem goes here
 error.summary.text = Optional description of the errors and how to correct them
 
-estate_has_property.browser_title = Does the estate contain a residence?
-estate_has_property.title = Does the estate contain a residence?
-estate_has_property.guidance = Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
-estate_has_property.label = Does the estate contain a qualifying residence?
+estate_has_property.question_number = Question 4
+estate_has_property.browser_title = Question page
+estate_has_property.title = Does the deceased`s estate include any residential property that has ever been the deceased`s residence while they owned that property?
+estate_has_property.guidance = Answer '''Yes''' if the deceased`s estate includes a property that they ever lived in as their residence while they owned the property. This does not need to be a residence that is being left to the deceased`s children or remoter descendants.
+estate_has_property.label =
 
-gross_estate_value.browser_title = Gross value of the estate
-gross_estate_value.title = What was the gross value of the estate?
-gross_estate_value.guidance = Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
-gross_estate_value.label = What is the gross value of the estate?
+gross_estate_value.question_number = Question 2
+gross_estate_value.browser_title = Question page
+gross_estate_value.title = What was the total value of the estate at the time of death?
+gross_estate_value.guidance = This is the total value of all the property treated as passing on the deceased`s death BEFORE applying any exemptions or reliefs
+gross_estate_value.label =
 
 index.browser_title = Residence Nil-rate Band Calculator
 index.title = Residence Nil-rate Band Calculator
@@ -86,18 +99,21 @@ not_possible_to_use_service.browser_title = Not possible to use this Calculator
 not_possible_to_use_service.title = Not possible to use this Calculator
 not_possible_to_use_service.guidance = Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
 
-percentage_closely_inherited.browser_title = Percentage of the property closely inherited
-percentage_closely_inherited.title = What was the percentage of the property closely inherited?
-percentage_closely_inherited.guidance = Property closeiny inherited sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
-percentage_closely_inherited.label = What was the percentage of the property closely inherited?
+percentage_closely_inherited.question_number = Question 6
+percentage_closely_inherited.browser_title = Question page
+percentage_closely_inherited.title = Does a percentage of the Qualifying Residence pass to a direct descendant following the death?
+percentage_closely_inherited.guidance = This is the percentage share of the property that passes to a direct descendant, or the spouse or civil partner of a direct descendant.
+percentage_closely_inherited.label = Percentage passing to direct descendant
 
-property_value.browser_title = Value of the property
-property_value.title = What was the value of the property?
-property_value.guidance = Property value guidance ipsum dolor sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
-property_value.label = What is the property value?
+property_value.question_number = Question 5
+property_value.browser_title = Question page
+property_value.title = What is the value of any Qualifying Residential Interest at the date of death?
+property_value.guidance = This is the value of any house, flat or other residential property that is included within the value of the deceased`s estate at the date of death and which the deceased lived in as their home at some time. Any outstanding mortgages or other debts charged on the property should be taken into account. if there was more than one residence in the estate at the time of death the personal representatives can nominate which property is to be taken into account. Include the value of the nominated property here.
+property_value.label =
 property_value.greater_than_gross_estate_value.error = Property Value cannot be greater than the Gross Estate Value
 
-property_value_after_exemption.browser_title = Values
+property_value_after_exemption.question_number = Question 8
+property_value_after_exemption.browser_title = Question page
 property_value_after_exemption.title = Values
 property_value_after_exemption.value.label = What is the value that is taken into account for inheritance tax purposes in respect of the Qualifying Residential Interest?
 property_value_after_exemption.value_closely_inherited.label = What is the value that is taken into account for inheritance tax purposes of the part of the Qualifying Residential Interest that passes to direct descendants?
@@ -114,8 +130,11 @@ results.defaultAllowanceAmount.label = Adding these two figures together gives t
 
 site.no = No
 site.yes = Yes
+site.continue = Continue
+site.back = Back
 
+value_of_disposed_property.question_number = Question 13
 value_of_disposed_property.title = What was the value of the property interest disposed of?
-value_of_disposed_property.browser_title = What was the value of the property interest disposed of?
+value_of_disposed_property.browser_title = Question page
 value_of_disposed_property.guidance = Enter the open market value of the interest disposed of at the date of disposal. If the property was sold and there was a mortgage on the property, deduct the mortgage from the sale price, but do not deduct the costs of selling the property, such as solicitor''s or estate agent''s fees.
 value_of_disposed_property.label = What was the value of the property interest disposed of?

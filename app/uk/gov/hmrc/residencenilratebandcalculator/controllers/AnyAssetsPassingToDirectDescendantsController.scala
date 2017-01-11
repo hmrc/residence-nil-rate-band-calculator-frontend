@@ -37,5 +37,8 @@ class AnyAssetsPassingToDirectDescendantsController @Inject()(override val appCo
 
   override def form: () => Form[Boolean] = () => BooleanForm()
 
-  override def view(form: Option[Form[Boolean]])(implicit request: Request[_]): Appendable = any_assets_passing_to_direct_descendants(appConfig, form)
+  override def view(form: Option[Form[Boolean]])(implicit request: Request[_]): Appendable = {
+    val backUrl = navigator.lastPage(controllerId)().url
+    any_assets_passing_to_direct_descendants(appConfig, backUrl, form)
+  }
 }

@@ -40,7 +40,10 @@ class PropertyValueController @Inject()(override val appConfig: FrontendAppConfi
 
   override def form = () => NonNegativeIntForm()
 
-  override def view(form: Option[Form[Int]])(implicit request: Request[_]) = property_value(appConfig, form)
+  override def view(form: Option[Form[Int]])(implicit request: Request[_]) = {
+    val backUrl = navigator.lastPage(controllerId)().url
+    property_value(appConfig, backUrl, form)
+  }
 
   override def validate(value: Int)(implicit hc: HeaderCarrier): Future[Option[FormError]] = {
     sessionConnector.fetchAndGetEntry[Int](Constants.grossEstateValueId).map {

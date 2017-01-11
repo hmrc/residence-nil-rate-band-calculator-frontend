@@ -23,13 +23,24 @@ import scala.language.reflectiveCalls
 
 class DateOfDisposalViewSpec extends HtmlSpec {
 
+  val url = "URL"
 
   def fixture() = new {
-    val view = date_of_disposal(frontendAppConfig)(request, messages)
+    val view = date_of_disposal(frontendAppConfig, url)(request, messages)
     val doc = asDocument(view)
   }
 
   "Date of Disposal View" must {
+
+    "contain a back link pointing to another page" in {
+      val f = fixture()
+      f.doc.getElementById("back").attr("href") should be(url)
+    }
+
+    "display the correct question designator" in {
+      val f = fixture()
+      assertContainsMessages(f.doc, "date_of_disposal.question_number")
+    }
 
     "display the correct browser title" in {
       val f = fixture()

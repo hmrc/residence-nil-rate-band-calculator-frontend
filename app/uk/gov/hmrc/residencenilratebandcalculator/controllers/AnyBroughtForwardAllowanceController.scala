@@ -37,5 +37,8 @@ class AnyBroughtForwardAllowanceController @Inject()(override val appConfig: Fro
 
   override def form: () => Form[Boolean] = () => BooleanForm()
 
-  override def view(form: Option[Form[Boolean]])(implicit request: Request[_]): Appendable = any_brought_forward_allowance(appConfig, form)
+  override def view(form: Option[Form[Boolean]])(implicit request: Request[_]): Appendable = {
+    val backUrl = navigator.lastPage(controllerId)().url
+    any_brought_forward_allowance(appConfig, backUrl, form)
+  }
 }

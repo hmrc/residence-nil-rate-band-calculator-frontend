@@ -23,6 +23,7 @@ import play.api.mvc.Call
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 
+
 @Singleton
 class Navigator @Inject()() {
   private val routeMap: Map[String, CacheMap => Call] = {
@@ -45,6 +46,27 @@ class Navigator @Inject()() {
       Constants.assetsPassingToDirectDescendantsId -> (_ => AnyBroughtForwardAllowanceOnDisposalController.onPageLoad()),
       Constants.anyBroughtForwardAllowanceOnDisposalId -> (cm => getAnyBroughtForwardAllowanceOnDisposalRoute(cm)),
       Constants.broughtForwardAllowanceOnDisposalId -> (_ => ResultsController.onPageLoad())
+    )
+  }
+
+  private val reverseRouteMap: Map[String, () => Call] = {
+    Map(
+      Constants.grossEstateValueId -> (() => DateOfDeathController.onPageLoad()),
+      Constants.chargeableTransferAmountId -> (() => GrossEstateValueController.onPageLoad()),
+      Constants.estateHasPropertyId -> (() => ChargeableTransferAmountController.onPageLoad()),
+      Constants.propertyValueId -> (() => EstateHasPropertyController.onPageLoad()),
+      Constants.percentageCloselyInheritedId -> (() => PropertyValueController.onPageLoad()),
+      Constants.anyExemptionId -> (() => PercentageCloselyInheritedController.onPageLoad()),
+      Constants.propertyValueAfterExemptionId -> (() => AnyExemptionController.onPageLoad()),
+      Constants.anyBroughtForwardAllowanceId -> (() => PropertyValueAfterExemptionController.onPageLoad()),
+      Constants.broughtForwardAllowanceId -> (() => AnyBroughtForwardAllowanceController.onPageLoad()),
+      Constants.anyDownsizingAllowanceId -> (() => BroughtForwardAllowanceController.onPageLoad()),
+      Constants.dateOfDisposalId -> (() => AnyDownsizingAllowanceController.onPageLoad()),
+      Constants.valueOfDisposedPropertyId -> (() => DateOfDisposalController.onPageLoad()),
+      Constants.anyAssetsPassingToDirectDescendantsId -> (() => ValueOfDisposedPropertyController.onPageLoad()),
+      Constants.assetsPassingToDirectDescendantsId -> (() => AnyAssetsPassingToDirectDescendantsController.onPageLoad()),
+      Constants.anyBroughtForwardAllowanceOnDisposalId -> (() => AssetsPassingToDirectDescendantsController.onPageLoad()),
+      Constants.broughtForwardAllowanceOnDisposalId -> (() => AnyBroughtForwardAllowanceOnDisposalController.onPageLoad())
     )
   }
 
@@ -130,5 +152,9 @@ class Navigator @Inject()() {
 
   def nextPage(controllerId: String): CacheMap => Call = {
     routeMap.getOrElse(controllerId, _ => PageNotFoundController.onPageLoad())
+  }
+
+  def lastPage(controllerId: String): () => Call = {
+    reverseRouteMap.getOrElse(controllerId, () => PageNotFoundController.onPageLoad())
   }
 }

@@ -25,13 +25,14 @@ import scala.language.reflectiveCalls
 
 class PercentageCloselyInheritedViewSpec extends HtmlSpec {
 
+  val url = "URL"
   val number = 50
   val errorKey = "value"
   val errorMessage = "error.number"
   val error = FormError(errorKey, errorMessage)
 
   def fixture(form: Option[Form[Int]] = None) = new {
-    val view = percentage_closely_inherited(frontendAppConfig, form)(request, messages)
+    val view = percentage_closely_inherited(frontendAppConfig, url, form)(request, messages)
     val doc = asDocument(view)
   }
 
@@ -40,6 +41,16 @@ class PercentageCloselyInheritedViewSpec extends HtmlSpec {
     "rendered" must {
 
       def thisFixture() = fixture()
+
+      "contain a back link pointing to another page" in {
+        val f = thisFixture()
+        f.doc.getElementById("back").attr("href") should be(url)
+      }
+
+      "display the correct question designator" in {
+        val f = thisFixture()
+        assertContainsMessages(f.doc, "percentage_closely_inherited.question_number")
+      }
 
       "display the correct browser title" in {
         val f = thisFixture()

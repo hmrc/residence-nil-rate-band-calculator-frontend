@@ -25,9 +25,13 @@ class ValueOfDisposedPropertyControllerSpec extends SimpleControllerSpecBase {
 
   "Value of Disposed Property Controller" must {
 
-    def createView = (value: Option[Int]) => value match {
-      case None => value_of_disposed_property(frontendAppConfig)(fakeRequest, messages)
-      case Some(v) => value_of_disposed_property(frontendAppConfig, Some(NonNegativeIntForm().fill(v)))(fakeRequest, messages)
+    def createView = (value: Option[Int]) => {
+      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDisposalController.onPageLoad().url
+
+      value match {
+        case None => value_of_disposed_property(frontendAppConfig, url)(fakeRequest, messages)
+        case Some(v) => value_of_disposed_property(frontendAppConfig, url, Some(NonNegativeIntForm().fill(v)))(fakeRequest, messages)
+      }
     }
 
     def createController = () => new ValueOfDisposedPropertyController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)

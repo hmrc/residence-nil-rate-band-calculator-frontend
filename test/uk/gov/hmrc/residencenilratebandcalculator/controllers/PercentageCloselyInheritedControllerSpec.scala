@@ -25,15 +25,19 @@ class PercentageCloselyInheritedControllerSpec extends SimpleControllerSpecBase 
 
   "Percentage Closely Inherited Controller" must {
 
-    def createView = (value: Option[Int]) => value match {
-      case None => percentage_closely_inherited(frontendAppConfig)(fakeRequest, messages)
-      case Some(v) => percentage_closely_inherited(frontendAppConfig, Some(PercentForm().fill(v)))(fakeRequest, messages)
+    def createView = (value: Option[Int]) => {
+      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyValueController.onPageLoad().url
+
+      value match {
+        case None => percentage_closely_inherited(frontendAppConfig, url)(fakeRequest, messages)
+        case Some(v) => percentage_closely_inherited(frontendAppConfig, url, Some(PercentForm().fill(v)))(fakeRequest, messages)
+      }
     }
 
     def createController = () => new PercentageCloselyInheritedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
     val testValue = 50
 
-    behave like rnrbController(createController, createView, Constants.percentageCloselyInheritedId, testValue)(Reads.IntReads, Writes.IntWrites)
+    behave like rnrbController[Int](createController, createView, Constants.percentageCloselyInheritedId, testValue)(Reads.IntReads, Writes.IntWrites)
   }
 }

@@ -25,15 +25,19 @@ class GrossEstateValueControllerSpec extends SimpleControllerSpecBase {
 
   "Gross Estate Value Controller" must {
 
-    def createView = (value: Option[Int]) => value match {
-      case None => gross_estate_value(frontendAppConfig)(fakeRequest, messages)
-      case Some(v) => gross_estate_value(frontendAppConfig, Some(NonNegativeIntForm().fill(v)))(fakeRequest, messages)
+    def createView = (value: Option[Int]) => {
+      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onPageLoad().url
+
+      value match {
+        case None => gross_estate_value(frontendAppConfig, url)(fakeRequest, messages)
+        case Some(v) => gross_estate_value(frontendAppConfig, url, Some(NonNegativeIntForm().fill(v)))(fakeRequest, messages)
+      }
     }
 
     def createController = () => new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
     val testValue = 123
 
-    behave like rnrbController(createController, createView, Constants.grossEstateValueId, testValue)(Reads.IntReads, Writes.IntWrites)
+    behave like rnrbController[Int](createController, createView, Constants.grossEstateValueId, testValue)(Reads.IntReads, Writes.IntWrites)
   }
 }

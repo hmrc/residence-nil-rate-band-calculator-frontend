@@ -13,9 +13,13 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
+    <p>@messages("date_of_death.question_number")</p>
+
     <h1>@messages("date_of_death.title")</h1>
 
     <p>@messages("date_of_death.guidance")</p>
+
+    <p>@messages("date_of_death.example")</p>
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onSubmit(), 'autoComplete -> "off") {
 

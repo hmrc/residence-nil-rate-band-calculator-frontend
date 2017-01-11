@@ -23,9 +23,13 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_downsizing_allo
 
 class AnyDownsizingAllowanceControllerSpec extends SimpleControllerSpecBase {
 
-  def createView = (value: Option[Boolean]) => value match {
-    case None => any_downsizing_allowance(frontendAppConfig)(fakeRequest, messages)
-    case Some(v) => any_downsizing_allowance(frontendAppConfig, Some(BooleanForm().fill(v)))(fakeRequest, messages)
+  def createView = (value: Option[Boolean]) => {
+    val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.BroughtForwardAllowanceController.onPageLoad().url
+
+    value match {
+      case None => any_downsizing_allowance(frontendAppConfig, url)(fakeRequest, messages)
+      case Some(v) => any_downsizing_allowance(frontendAppConfig, url, Some(BooleanForm().fill(v)))(fakeRequest, messages)
+    }
   }
 
   def createController = () => new AnyDownsizingAllowanceController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
@@ -33,5 +37,4 @@ class AnyDownsizingAllowanceControllerSpec extends SimpleControllerSpecBase {
   val testValue = true
 
   behave like rnrbController(createController, createView, Constants.anyDownsizingAllowanceId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
-
 }

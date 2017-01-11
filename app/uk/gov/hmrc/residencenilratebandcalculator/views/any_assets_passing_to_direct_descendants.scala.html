@@ -3,14 +3,16 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 
-@(appConfig: FrontendAppConfig, form: Option[Form[Boolean]] = None)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[Boolean]] = None)(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("any_assets_passing_to_direct_descendants.browser_title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    <h1>@messages("any_assets_passing_to_direct_descendants.title")</h1>
+    @rnrbHelpers.back_link(backUrl)
+
+    @rnrbHelpers.heading_with_pre_text("any_assets_passing_to_direct_descendants.title", "any_assets_passing_to_direct_descendants.question_number")
 
     <p>@messages("any_assets_passing_to_direct_descendants.guidance")</p>
 
