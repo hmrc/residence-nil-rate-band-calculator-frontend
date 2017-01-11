@@ -30,7 +30,8 @@ any_exemption.title = Is any part of the Qualifying Residential Interest exempt 
 any_exemption.guidance = Answer '''Yes''' if any part of the Qualifying Residence passes to an exempt beneficiary, such as the deceased`s spouse/civil partner or to a charity, or if Agricultural Relief applies applies to any part of the Qualifying Residence. If the Qualifying Residence falls into the residue of the estate and any part of the residue is exempt, answer '''Yes''' to this question.
 any_exemption.label =
 
-assets_passing_to_direct_descendants.browser_title = What is the value of the property passing to direct descendants referred to in Question 14?
+assets_passing_to_direct_descendants.question_number = Question 15
+assets_passing_to_direct_descendants.browser_title = Question page
 assets_passing_to_direct_descendants.title = What is the value of the property passing to direct descendants referred to in Question 14?
 assets_passing_to_direct_descendants.guidance = This is the value that is taken into account for inheritance tax purposes. So if, for example, grossing up under s.38 IHTA, or interaction under s.39A IHTA applies which affects the value that is taken into account for inheritance tax purposes, you need to include that adjusted value here.
 assets_passing_to_direct_descendants.label = What is the value of the property passing to direct descendants referred to in Question 14?

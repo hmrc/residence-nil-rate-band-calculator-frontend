@@ -199,6 +199,10 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.anyAssetsPassingToDirectDescendantsId)() shouldBe routes.ValueOfDisposedPropertyController.onPageLoad()
     }
 
+    "return a call to the Assets Passing To Direct Decendants when back linking from the Assets Passing To Direct Decendants page" in {
+      navigator.lastPage(Constants.assetsPassingToDirectDescendantsId)() shouldBe routes.AnyAssetsPassingToDirectDescendantsController.onPageLoad()
+    }
+
     "return a call to the Results Controller onPageLoad method when there is no downsizing allowance" in {
       val mockCacheMap = mock[CacheMap]
       when(mockCacheMap.getEntry[Boolean](matches(Constants.anyDownsizingAllowanceId))(any())) thenReturn Some(false)

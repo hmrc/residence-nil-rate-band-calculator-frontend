@@ -63,7 +63,8 @@ class Navigator @Inject()() {
       Constants.anyDownsizingAllowanceId -> (() => BroughtForwardAllowanceController.onPageLoad()),
       Constants.dateOfDisposalId -> (() => AnyDownsizingAllowanceController.onPageLoad()),
       Constants.valueOfDisposedPropertyId -> (() => DateOfDisposalController.onPageLoad()),
-      Constants.anyAssetsPassingToDirectDescendantsId -> (() => ValueOfDisposedPropertyController.onPageLoad())
+      Constants.anyAssetsPassingToDirectDescendantsId -> (() => ValueOfDisposedPropertyController.onPageLoad()),
+      Constants.assetsPassingToDirectDescendantsId -> (() => AnyAssetsPassingToDirectDescendantsController.onPageLoad())
     )
   }
 
