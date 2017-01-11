@@ -38,6 +38,6 @@ class AssetsPassingToDirectDescendantsControllerSpec extends SimpleControllerSpe
 
     val testValue = 123
 
-    behave like rnrbController(createController, createView, Constants.assetsPassingToDirectDescendantsId, testValue)(Reads.IntReads, Writes.IntWrites)
+    behave like rnrbController[Int](createController, createView, Constants.assetsPassingToDirectDescendantsId, testValue)(Reads.IntReads, Writes.IntWrites)
   }
 }

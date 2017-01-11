@@ -10,7 +10,8 @@ any_brought_forward_allowance.title = Is a claim being made for a brought-forwar
 any_brought_forward_allowance.guidance = Brought-forward allowance needs to be claimed. Please complete form IHT436 to make this claim.
 any_brought_forward_allowance.label = Is there any brought forward allowance?
 
-any_brought_forward_allowance_on_disposal.browser_title = Would any brought-forward allowance have been available at the date of disposal if a valid claim had been made at that time?
+any_brought_forward_allowance_on_disposal.question_number = Question 16
+any_brought_forward_allowance_on_disposal.browser_title = Question page
 any_brought_forward_allowance_on_disposal.title = Would any brought-forward allowance have been available at the date of disposal if a valid claim had been made at that time?
 any_brought_forward_allowance_on_disposal.guidance = If disposal was made on or before 5 April 2017 there would not have been any brought-forward allowance available.
 any_brought_forward_allowance_on_disposal.label = Would any brought-forward allowance have been available at the date of disposal if a valid claim had been made at that time?

@@ -199,8 +199,12 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.anyAssetsPassingToDirectDescendantsId)() shouldBe routes.ValueOfDisposedPropertyController.onPageLoad()
     }
 
-    "return a call to the Assets Passing To Direct Decendants when back linking from the Assets Passing To Direct Decendants page" in {
+    "return a call to the Any Assets Passing To Direct Decendants when back linking from the Assets Passing To Direct Decendants page" in {
       navigator.lastPage(Constants.assetsPassingToDirectDescendantsId)() shouldBe routes.AnyAssetsPassingToDirectDescendantsController.onPageLoad()
+    }
+
+    "return a call to the Assets Passing To Direct Decendants when back linking from the Any Brought Forward Allowance On Disposal page" in {
+      navigator.lastPage(Constants.anyBroughtForwardAllowanceOnDisposalId)() shouldBe routes.AssetsPassingToDirectDescendantsController.onPageLoad()
     }
 
     "return a call to the Results Controller onPageLoad method when there is no downsizing allowance" in {
