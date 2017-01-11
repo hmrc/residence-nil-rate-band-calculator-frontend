@@ -26,7 +26,7 @@ class AnyExemptionControllerSpec extends SimpleControllerSpecBase {
   "Any Exemption Controller" must {
 
     def createView = (value: Option[Boolean]) => {
-      val url = "/inheritance-tax-residence-nil-rate-band-calculator/percentage-closely-inherited"
+      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PercentageCloselyInheritedController.onPageLoad().url
 
       value match {
         case None => any_exemption(frontendAppConfig, url)(fakeRequest, messages)

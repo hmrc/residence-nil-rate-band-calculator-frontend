@@ -26,10 +26,11 @@ class GrossEstateValueControllerSpec extends SimpleControllerSpecBase {
   "Gross Estate Value Controller" must {
 
     def createView = (value: Option[Int]) => {
-      val backUrl = "/inheritance-tax-residence-nil-rate-band-calculator/date-of-death"
+      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onPageLoad().url
+
       value match {
-        case None => gross_estate_value(frontendAppConfig, backUrl)(fakeRequest, messages)
-        case Some(v) => gross_estate_value(frontendAppConfig, backUrl, Some(NonNegativeIntForm().fill(v)))(fakeRequest, messages)
+        case None => gross_estate_value(frontendAppConfig, url)(fakeRequest, messages)
+        case Some(v) => gross_estate_value(frontendAppConfig, url, Some(NonNegativeIntForm().fill(v)))(fakeRequest, messages)
       }
     }
 

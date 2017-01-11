@@ -29,7 +29,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_value_afte
 
 class PropertyValueAfterExemptionControllerSpec extends UnitSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
 
-  val url = "/inheritance-tax-residence-nil-rate-band-calculator/any-exemption"
+  val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyExemptionController.onPageLoad().url
 
   val propertyValue = 456
 
