@@ -1,4 +1,5 @@
-any_assets_passing_to_direct_descendants.browser_title = Is there any property which passes to a direct descendant?
+any_assets_passing_to_direct_descendants.question_number = Question 14
+any_assets_passing_to_direct_descendants.browser_title = Question page
 any_assets_passing_to_direct_descendants.title = Is there any property which passes to a direct descendant following the death, other than any property mentioned at Question 4 above?
 any_assets_passing_to_direct_descendants.guidance = If there is no property passing to direct descendants or the spouse or civil partner of a direct descendant, there will not be any downsizing allowance.
 any_assets_passing_to_direct_descendants.label = Is there any property which passes to a direct descendant following the death, other than any property mentioned at Question 4 above?

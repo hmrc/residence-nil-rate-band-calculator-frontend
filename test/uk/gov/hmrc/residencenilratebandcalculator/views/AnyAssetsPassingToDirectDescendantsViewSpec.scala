@@ -25,13 +25,14 @@ import scala.language.reflectiveCalls
 
 class AnyAssetsPassingToDirectDescendantsViewSpec extends HtmlSpec {
 
+  val url = "url"
   val number = 123
   val errorKey = "value"
   val errorMessage = "error.number"
   val error = FormError(errorKey, errorMessage)
 
   def fixture(form: Option[Form[Boolean]] = None) = new {
-    val view = any_assets_passing_to_direct_descendants(frontendAppConfig, form)(request, messages)
+    val view = any_assets_passing_to_direct_descendants(frontendAppConfig, url, form)(request, messages)
     val doc = asDocument(view)
   }
 
@@ -40,6 +41,16 @@ class AnyAssetsPassingToDirectDescendantsViewSpec extends HtmlSpec {
     "rendered" must {
 
       def thisFixture() = fixture()
+
+      "contain a back link pointing to another page" in {
+        val f = thisFixture()
+        f.doc.getElementById("back").attr("href") should be(url)
+      }
+
+      "display the correct question designator" in {
+        val f = thisFixture()
+        assertContainsMessages(f.doc, "any_assets_passing_to_direct_descendants.question_number")
+      }
 
       "display the correct browser title" in {
         val f = thisFixture()

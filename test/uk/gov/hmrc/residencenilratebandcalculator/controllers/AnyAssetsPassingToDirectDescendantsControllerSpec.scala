@@ -25,9 +25,13 @@ class AnyAssetsPassingToDirectDescendantsControllerSpec extends SimpleController
 
   "Any Assets Passing to Direct Descendants Controller" must {
 
-    def createView = (value: Option[Boolean]) => value match {
-      case None => any_assets_passing_to_direct_descendants(frontendAppConfig)(fakeRequest, messages)
-      case Some(v) => any_assets_passing_to_direct_descendants(frontendAppConfig, Some(BooleanForm().fill(v)))(fakeRequest, messages)
+    def createView = (value: Option[Boolean]) => {
+      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfDisposedPropertyController.onPageLoad().url
+
+      value match {
+        case None => any_assets_passing_to_direct_descendants(frontendAppConfig, url)(fakeRequest, messages)
+        case Some(v) => any_assets_passing_to_direct_descendants(frontendAppConfig, url, Some(BooleanForm().fill(v)))(fakeRequest, messages)
+      }
     }
 
     def createController = () => new AnyAssetsPassingToDirectDescendantsController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
