@@ -60,7 +60,8 @@ class Navigator @Inject()() {
       Constants.propertyValueAfterExemptionId -> (() => AnyExemptionController.onPageLoad()),
       Constants.anyBroughtForwardAllowanceId -> (() => PropertyValueAfterExemptionController.onPageLoad()),
       Constants.broughtForwardAllowanceId -> (() => AnyBroughtForwardAllowanceController.onPageLoad()),
-      Constants.anyDownsizingAllowanceId -> (() => BroughtForwardAllowanceController.onPageLoad())
+      Constants.anyDownsizingAllowanceId -> (() => BroughtForwardAllowanceController.onPageLoad()),
+      Constants.dateOfDisposalId -> (() => AnyDownsizingAllowanceController.onPageLoad())
     )
   }
 

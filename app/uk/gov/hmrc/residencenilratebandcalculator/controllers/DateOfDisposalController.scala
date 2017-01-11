@@ -37,6 +37,8 @@ class DateOfDisposalController @Inject()(override val appConfig: FrontendAppConf
 
   def form: () => Form[Date] = () => DateForm()
 
-  def view(form: Option[Form[Date]])(implicit request: Request[_]) = date_of_disposal(appConfig, form)
-
+  def view(form: Option[Form[Date]])(implicit request: Request[_]) = {
+    val backUrl = navigator.lastPage(controllerId)().url
+    date_of_disposal(appConfig, backUrl, form)
+  }
 }
