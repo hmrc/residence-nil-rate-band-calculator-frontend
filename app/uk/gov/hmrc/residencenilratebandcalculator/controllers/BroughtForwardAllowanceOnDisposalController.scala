@@ -36,5 +36,8 @@ class BroughtForwardAllowanceOnDisposalController @Inject()(override val appConf
 
   override def form = () => NonNegativeIntForm()
 
-  override def view(form: Option[Form[Int]])(implicit request: Request[_]) = brought_forward_allowance_on_disposal(appConfig, form)
+  override def view(form: Option[Form[Int]])(implicit request: Request[_]) = {
+    val backUrl = navigator.lastPage(controllerId)().url
+    brought_forward_allowance_on_disposal(appConfig, backUrl, form)
+  }
 }

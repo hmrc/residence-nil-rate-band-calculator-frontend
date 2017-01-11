@@ -2,12 +2,16 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 @import uk.gov.hmrc.play.views.html._
 
-@(appConfig: FrontendAppConfig, form: Option[Form[Int]] = None)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[Int]] = None)(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("brought_forward_allowance_on_disposal.browser_title"),
     appConfig = appConfig,
     bodyClasses = None) {
+
+    <a id="back" href=@backUrl>@messages("site.back")</a>
+
+    <p>@messages("brought_forward_allowance_on_disposal.question_number")</p>
 
     <h1>@messages("brought_forward_allowance_on_disposal.title")</h1>
 

@@ -25,9 +25,12 @@ class BroughtForwardAllowanceOnDisposalControllerSpec extends SimpleControllerSp
 
   "Brought Forward Allowance On Disposal Controller" must {
 
-    def createView = (value: Option[Int]) => value match {
-      case None => brought_forward_allowance_on_disposal(frontendAppConfig)(fakeRequest, messages)
-      case Some(v) => brought_forward_allowance_on_disposal(frontendAppConfig, Some(NonNegativeIntForm().fill(v)))(fakeRequest, messages)
+    def createView = (value: Option[Int]) => {
+      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyBroughtForwardAllowanceOnDisposalController.onPageLoad().url
+      value match {
+        case None => brought_forward_allowance_on_disposal(frontendAppConfig, url)(fakeRequest, messages)
+        case Some(v) => brought_forward_allowance_on_disposal(frontendAppConfig, url, Some(NonNegativeIntForm().fill(v)))(fakeRequest, messages)
+      }
     }
 
     def createController = () => new BroughtForwardAllowanceOnDisposalController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
