@@ -30,6 +30,13 @@ trait BooleanViewSpecBase extends ViewSpecBase {
 
     "behave like a page with a Yes/No question" when {
       "rendered" must {
+        "contain a legend for the question" in {
+          val doc = asDocument(createView(None))
+          val legends = doc.getElementsByTag("legend")
+          legends.size shouldBe 1
+          legends.first.text shouldBe messages(s"$messageKeyPrefix.label")
+        }
+
         "contain an input for the value" in {
           val doc = asDocument(createView(None))
           assertRenderedById(doc, "yes")

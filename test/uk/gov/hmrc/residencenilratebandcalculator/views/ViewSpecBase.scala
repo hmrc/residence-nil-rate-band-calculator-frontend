@@ -88,13 +88,6 @@ trait ViewSpecBase extends HtmlSpec {
           form.attr("action") shouldBe expectedFormAction
         }
 
-        "contain a legend for the question" in {
-          val doc = asDocument(createView(None))
-          val legends = doc.getElementsByTag("legend")
-          legends.size shouldBe 1
-          legends.first.text shouldBe messages(s"$messageKeyPrefix.label")
-        }
-
         "contain a submit button" in {
           val doc = asDocument(createView(None))
           val input = assertRenderedByCssSelector(doc, "input[type=submit]")
