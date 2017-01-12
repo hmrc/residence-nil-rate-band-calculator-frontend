@@ -16,12 +16,18 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
+import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
+import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 
 import scala.language.reflectiveCalls
 
-class DateOfDeathViewSpec extends HtmlSpec {
+class DateOfDeathViewSpec extends DateViewSpecBase {
+
+  val messageKeyPrefix = "date_of_death"
+
+  def createView(form: Option[Form[Date]] = None) = date_of_death(frontendAppConfig, form)(request, messages)
 
   def fixture() = new {
     val view = date_of_death(frontendAppConfig)(request, messages)
@@ -30,78 +36,13 @@ class DateOfDeathViewSpec extends HtmlSpec {
 
   "Date of Death View" must {
 
-    "display the correct question designator" in {
-      val f = fixture()
-      assertContainsMessages(f.doc, "date_of_death.question_number")
-    }
+    behave like rnrbPage[Date](createView, messageKeyPrefix, "guidance")
 
-    "display the correct browser title" in {
-      val f = fixture()
-      assertEqualsMessage(f.doc, "title", "date_of_death.browser_title")
-    }
-
-    "display the correct page title" in {
-      val f = fixture()
-      assertPageTitleEqualsMessage(f.doc, "date_of_death.title")
-    }
-
-    "display the correct guidance" in {
-      val f = fixture()
-      assertContainsMessages(f.doc, "date_of_death.guidance")
-    }
+    behave like datePage(createView, messageKeyPrefix, DateOfDeathController.onSubmit().url)
 
     "display the correct example" in {
       val f = fixture()
       assertContainsMessages(f.doc, "date_of_death.example")
-    }
-
-    "contain a form that POSTs to the correct action" in {
-      val f = fixture()
-      val forms = f.doc.getElementsByTag("form")
-      forms.size shouldBe 1
-      val form = forms.first
-      form.attr("method") shouldBe "POST"
-      form.attr("action") shouldBe routes.DateOfDeathController.onSubmit().url
-    }
-
-    "contain a label for the date" in {
-      val f = fixture()
-      assertContainsMessages(f.doc, "date_of_death.label")
-    }
-
-    "contain a label for the day" in {
-      val f = fixture()
-      assertContainsLabel(f.doc, "day", messages("date.day"))
-    }
-
-    "contain an input for the day" in {
-      val f = fixture()
-      assertRenderedById(f.doc, "day")
-    }
-
-    "contain a label for the month" in {
-      val f = fixture()
-      assertContainsLabel(f.doc, "month", messages("date.month"))
-    }
-
-    "contain an input for the month" in {
-      val f = fixture()
-      assertRenderedById(f.doc, "month")
-    }
-
-    "contain a label for the year" in {
-      val f = fixture()
-      assertContainsLabel(f.doc, "year", messages("date.year"))
-    }
-
-    "contain an input for the year" in {
-      val f = fixture()
-      assertRenderedById(f.doc, "year")
-    }
-
-    "contain a submit button" in {
-      val f = fixture()
-      assertRenderedByCssSelector(f.doc, "input[type=submit]")
     }
   }
 }

@@ -13,9 +13,7 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
-    <p>@messages("date_of_death.question_number")</p>
-
-    <h1>@messages("date_of_death.title")</h1>
+    @rnrbHelpers.heading_with_pre_text("date_of_death.title", "date_of_death.question_number")
 
     <p>@messages("date_of_death.guidance")</p>
 
