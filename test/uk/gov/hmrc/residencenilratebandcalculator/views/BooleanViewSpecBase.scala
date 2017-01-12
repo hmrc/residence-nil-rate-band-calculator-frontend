@@ -26,7 +26,7 @@ trait BooleanViewSpecBase extends ViewSpecBase {
                   messageKeyPrefix: String,
                   expectedFormAction: String) = {
 
-    behave like singleQuestionPage[Boolean](createView, messageKeyPrefix, expectedFormAction)
+    behave like questionPage[Boolean](createView, messageKeyPrefix, expectedFormAction)
 
     "behave like a page with a Yes/No question" when {
       "rendered" must {

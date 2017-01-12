@@ -32,7 +32,7 @@ trait DateViewSpecBase extends ViewSpecBase {
                messageKeyPrefix: String,
                expectedFormAction: String) = {
 
-    behave like singleQuestionPage[Date](createView, messageKeyPrefix, expectedFormAction)
+    behave like questionPage[Date](createView, messageKeyPrefix, expectedFormAction)
 
     "behave like a date page" when {
       "rendered" must {

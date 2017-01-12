@@ -28,7 +28,7 @@ trait IntViewSpecBase extends ViewSpecBase {
               messageKeyPrefix: String,
               expectedFormAction: String) = {
 
-    behave like singleQuestionPage[Int](createView, messageKeyPrefix, expectedFormAction)
+    behave like questionPage[Int](createView, messageKeyPrefix, expectedFormAction)
 
     "behave like a page with an integer value field" when {
       "rendered" must {

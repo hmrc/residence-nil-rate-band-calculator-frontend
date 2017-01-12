@@ -66,11 +66,11 @@ trait ViewSpecBase extends HtmlSpec {
     }
   }
 
-  def singleQuestionPage[A: ClassTag](createView: (Option[Form[A]]) => HtmlFormat.Appendable,
-                                      messageKeyPrefix: String,
-                                      expectedFormAction: String) = {
+  def questionPage[A: ClassTag](createView: (Option[Form[A]]) => HtmlFormat.Appendable,
+                                messageKeyPrefix: String,
+                                expectedFormAction: String) = {
 
-    "behave like a page with a single question" when {
+    "behave like a page with a question" when {
       "rendered" must {
         "contain the correct question designator" in {
           val doc = asDocument(createView(None))
