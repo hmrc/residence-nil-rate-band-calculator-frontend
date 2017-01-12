@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.assets_passing_to_direct_descendants
 
 import scala.language.reflectiveCalls
@@ -34,6 +35,6 @@ class AssetsPassingToDirectDescendantsViewSpec extends IntViewSpecBase {
 
     behave like pageWithBackLink[Int](createView)
 
-    behave like intPage(createView, messageKeyPrefix, AssetsPassingToDirectDescendantsController.onSubmit().url)
+    behave like intPage(createView, messageKeyPrefix, AssetsPassingToDirectDescendantsController.onSubmit().url, NonNegativeIntForm())
   }
 }

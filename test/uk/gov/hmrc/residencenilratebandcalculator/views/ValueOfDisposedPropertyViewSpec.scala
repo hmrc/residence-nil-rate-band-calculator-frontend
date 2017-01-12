@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_disposed_property
 
 import scala.language.reflectiveCalls
@@ -34,6 +35,6 @@ class ValueOfDisposedPropertyViewSpec extends IntViewSpecBase {
 
     behave like pageWithBackLink[Int](createView)
 
-    behave like intPage(createView, messageKeyPrefix, ValueOfDisposedPropertyController.onSubmit().url)
+    behave like intPage(createView, messageKeyPrefix, ValueOfDisposedPropertyController.onSubmit().url, NonNegativeIntForm())
   }
 }

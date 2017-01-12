@@ -19,6 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_transfer_amount
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 
 import scala.language.reflectiveCalls
 
@@ -34,6 +35,6 @@ class ChargeableTransferAmountViewSpec extends IntViewSpecBase {
 
     behave like pageWithBackLink[Int](createView)
 
-    behave like intPage(createView, messageKeyPrefix, ChargeableTransferAmountController.onSubmit().url)
+    behave like intPage(createView, messageKeyPrefix, ChargeableTransferAmountController.onSubmit().url, NonNegativeIntForm())
   }
 }

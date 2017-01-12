@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.gross_estate_value
 
 import scala.language.reflectiveCalls
@@ -34,6 +35,6 @@ class GrossEstateValueViewSpec extends IntViewSpecBase {
 
     behave like pageWithBackLink[Int](createView)
 
-    behave like intPage(createView, messageKeyPrefix, GrossEstateValueController.onSubmit().url)
+    behave like intPage(createView, messageKeyPrefix, GrossEstateValueController.onSubmit().url, NonNegativeIntForm())
   }
 }
