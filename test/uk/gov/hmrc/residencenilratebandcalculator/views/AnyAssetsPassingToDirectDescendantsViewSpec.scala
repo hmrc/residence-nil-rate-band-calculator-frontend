@@ -26,8 +26,7 @@ class AnyAssetsPassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "any_assets_passing_to_direct_descendants"
 
-  def createView(form: Option[Form[Boolean]] = None) =
-    any_assets_passing_to_direct_descendants(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = any_assets_passing_to_direct_descendants(frontendAppConfig, backUrl, form)(request, messages)
 
   "Any Assets Passing to Direct Descendants View" must {
 
