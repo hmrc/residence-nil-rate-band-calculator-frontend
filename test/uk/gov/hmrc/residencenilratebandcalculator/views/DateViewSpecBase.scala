@@ -18,9 +18,15 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
+import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 
 trait DateViewSpecBase extends ViewSpecBase {
+
+  val day = 1
+  val month = 2
+  val year = 2000
+  val date = Date(day, month, year)
 
   def datePage(createView: (Option[Form[Date]]) => HtmlFormat.Appendable,
                messageKeyPrefix: String,
@@ -58,6 +64,35 @@ trait DateViewSpecBase extends ViewSpecBase {
         "contain an input for the year" in {
           val doc = asDocument(createView(None))
           assertRenderedById(doc, "year")
+        }
+
+        "not render an error summary" in {
+          val doc = asDocument(createView(None))
+          assertNotRenderedById(doc, "error-summary_header")
+        }
+      }
+
+      "rendered with a value" must {
+        "include the day value in the day input" in {
+          val doc = asDocument(createView(Some(DateForm().fill(date))))
+          doc.getElementById("day").attr("value") shouldBe day.toString
+        }
+
+        "include the month value in the month input" in {
+          val doc = asDocument(createView(Some(DateForm().fill(date))))
+          doc.getElementById("month").attr("value") shouldBe month.toString
+        }
+
+        "include the year value in the year input" in {
+          val doc = asDocument(createView(Some(DateForm().fill(date))))
+          doc.getElementById("year").attr("value") shouldBe year.toString
+        }
+      }
+
+      "rendered with an error" must {
+        "show an error summary" in {
+          val doc = asDocument(createView(Some(DateForm().withError(error))))
+          assertRenderedById(doc, "error-summary-heading")
         }
       }
     }

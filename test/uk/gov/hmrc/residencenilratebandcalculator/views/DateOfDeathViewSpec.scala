@@ -29,11 +29,6 @@ class DateOfDeathViewSpec extends DateViewSpecBase {
 
   def createView(form: Option[Form[Date]] = None) = date_of_death(frontendAppConfig, form)(request, messages)
 
-  def fixture() = new {
-    val view = date_of_death(frontendAppConfig)(request, messages)
-    val doc = asDocument(view)
-  }
-
   "Date of Death View" must {
 
     behave like rnrbPage[Date](createView, messageKeyPrefix, "guidance")
@@ -41,8 +36,8 @@ class DateOfDeathViewSpec extends DateViewSpecBase {
     behave like datePage(createView, messageKeyPrefix, DateOfDeathController.onSubmit().url)
 
     "display the correct example" in {
-      val f = fixture()
-      assertContainsMessages(f.doc, "date_of_death.example")
+      val doc = asDocument(createView(None))
+      assertContainsMessages(doc, s"$messageKeyPrefix.example")
     }
   }
 }
