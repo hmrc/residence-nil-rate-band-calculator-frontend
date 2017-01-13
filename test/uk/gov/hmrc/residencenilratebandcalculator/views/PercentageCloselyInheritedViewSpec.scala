@@ -16,111 +16,25 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import play.api.data.{Form, FormError}
+import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_closely_inherited
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PercentForm
 
 import scala.language.reflectiveCalls
 
-class PercentageCloselyInheritedViewSpec extends HtmlSpec {
+class PercentageCloselyInheritedViewSpec extends IntViewSpecBase {
 
-  val url = "URL"
-  val number = 50
-  val errorKey = "value"
-  val errorMessage = "error.number"
-  val error = FormError(errorKey, errorMessage)
+  val messageKeyPrefix = "percentage_closely_inherited"
 
-  def fixture(form: Option[Form[Int]] = None) = new {
-    val view = percentage_closely_inherited(frontendAppConfig, url, form)(request, messages)
-    val doc = asDocument(view)
-  }
+  def createView(form: Option[Form[Int]] = None) = percentage_closely_inherited(frontendAppConfig, backUrl, form)(request, messages)
 
-  "Percentage Closely Inherited View" when {
+  "Percentage Closely Inherited View" must {
 
-    "rendered" must {
+    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance")
 
-      def thisFixture() = fixture()
+    behave like pageWithBackLink[Int](createView)
 
-      "contain a back link pointing to another page" in {
-        val f = thisFixture()
-        f.doc.getElementById("back").attr("href") should be(url)
-      }
-
-      "display the correct question designator" in {
-        val f = thisFixture()
-        assertContainsMessages(f.doc, "percentage_closely_inherited.question_number")
-      }
-
-      "display the correct browser title" in {
-        val f = thisFixture()
-        assertEqualsMessage(f.doc, "title", "percentage_closely_inherited.browser_title")
-      }
-
-      "display the correct page title" in {
-        val f = thisFixture()
-        assertPageTitleEqualsMessage(f.doc, "percentage_closely_inherited.title")
-      }
-
-      "display the correct guidance" in {
-        val f = thisFixture()
-        assertContainsMessages(f.doc, "percentage_closely_inherited.guidance")
-      }
-
-      "contain a form that POSTs to the correct action" in {
-        val f = thisFixture()
-        val forms = f.doc.getElementsByTag("form")
-        forms.size shouldBe 1
-        val form = forms.first
-        form.attr("method") shouldBe "POST"
-        form.attr("action") shouldBe routes.PercentageCloselyInheritedController.onSubmit().url
-      }
-
-      "contain a label for the value" in {
-        val f = thisFixture()
-        assertContainsLabel(f.doc, "value", messages("percentage_closely_inherited.label"))
-      }
-
-      "contain an input for the value" in {
-        val f = thisFixture()
-        assertRenderedById(f.doc, "value")
-      }
-
-      "contain a submit button" in {
-        val f = thisFixture()
-        assertRenderedByCssSelector(f.doc, "input[type=submit]")
-      }
-
-      "not render an error summary" in {
-        val f = thisFixture()
-        assertNotRenderedById(f.doc, "error-summary-heading")
-      }
-    }
-  }
-
-  "rendered with a valid form" must {
-
-    def thisFixture() = fixture(Some(PercentForm().fill(number)))
-
-    "include the form's value in the value input" in {
-      val f = thisFixture()
-      f.doc.getElementById("value").attr("value") shouldBe number.toString
-    }
-  }
-
-  "rendered with an error" must {
-
-    val thisFixture = fixture(Some(PercentForm().withError(error)))
-
-    "show an error summary" in {
-      val f = thisFixture
-      assertRenderedById(f.doc, "error-summary-heading")
-    }
-
-    "show an error message in the value field's label" in {
-      val f = thisFixture
-      val errorSpan = f.doc.getElementsByClass("error-notification").first
-      errorSpan.text shouldBe messages(errorMessage)
-    }
+    behave like intPage(createView, messageKeyPrefix, PercentageCloselyInheritedController.onSubmit().url, PercentForm())
   }
 }
