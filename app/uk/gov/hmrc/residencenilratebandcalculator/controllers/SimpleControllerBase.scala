@@ -30,6 +30,9 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 import scala.concurrent.Future
 
 trait SimpleControllerBase[A] extends FrontendController with I18nSupport {
+  val cleanoutMap: Map[String, Seq[String]] = Map(
+    Constants.anyAssetsPassingToDirectDescendantsId -> Seq(Constants.estateHasPropertyId, Constants.chargeableTransferAmountId)
+  )
 
   val appConfig: FrontendAppConfig
 
@@ -43,23 +46,47 @@ trait SimpleControllerBase[A] extends FrontendController with I18nSupport {
 
   val navigator: Navigator
 
-  def onPageLoad(implicit rds: Reads[A]) = Action.async { implicit request =>
-    sessionConnector.fetchAndGetEntry[A](controllerId).map(
-      cachedValue => {
-        Ok(view(cachedValue.map(value => form().fill(value))))
-      })
+  private def storeInSession(value: A) = sessionConnector.cache[A](controllerId, value).map { cacheMap =>
+    Redirect(navigator.nextPage(controllerId)(cacheMap))
   }
 
-  def onSubmit(implicit wts: Writes[A]) = Action.async { implicit request =>
-    val boundForm = form().bindFromRequest()
-    boundForm.fold(
-      (formWithErrors: Form[A]) => Future.successful(BadRequest(view(Some(formWithErrors)))),
-      (value) => validate(value).flatMap {
-        case Some(error) => Future.successful(BadRequest(view(Some(form().fill(value).withError(error)))))
-        case None => sessionConnector.cache[A](controllerId, value).map(cacheMap =>
-          Redirect(navigator.nextPage(controllerId)(cacheMap)))
-      })
-  }
+  def erase(id: String): Unit /* Future[Result]*/ = ???
 
-  def validate(value: A)(implicit hc: HeaderCarrier): Future[Option[FormError]] = Future.successful(None)
-}
+  private def maybeCleanOutSessionThenStore(value: A): Future[Result] = {
+    // Decide here if redoing a value at controller id requires other id values to be replaced
+    // If it does, clear out the other values then store, if it does not then simply store
+
+      cleanoutMap.get(controllerId).fold(storeInSession(value)) { ids =>
+        ids.map { id =>
+          erase(id)
+        }
+        storeInSession(value)
+      }
+    }
+
+    private def store(value: A) = {
+      sessionConnector.fetchAndGetEntry[A](controllerId).flatMap {
+        case Some(_) => maybeCleanOutSessionThenStore(value)
+        case None => storeInSession(value)
+      }
+    }
+
+    def onPageLoad(implicit rds: Reads[A]) = Action.async { implicit request =>
+      sessionConnector.fetchAndGetEntry[A](controllerId).map(
+        cachedValue => {
+          Ok(view(cachedValue.map(value => form().fill(value))))
+        })
+    }
+
+    def onSubmit(implicit wts: Writes[A]) = Action.async { implicit request =>
+      val boundForm = form().bindFromRequest()
+      boundForm.fold(
+        (formWithErrors: Form[A]) => Future.successful(BadRequest(view(Some(formWithErrors)))),
+        (value) => validate(value).flatMap {
+          case Some(error) => Future.successful(BadRequest(view(Some(form().fill(value).withError(error)))))
+          case None => store(value)
+        })
+    }
+
+    def validate(value: A)(implicit hc: HeaderCarrier): Future[Option[FormError]] = Future.successful(None)
+  }
