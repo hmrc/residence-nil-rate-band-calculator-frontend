@@ -62,22 +62,10 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.chargeableTransferAmountId)(mock[CacheMap]) shouldBe routes.EstateHasPropertyController.onPageLoad()
     }
 
-    "return a function that goes to the Chargeable Transfer Amount controller when given Gross Estate Value, and the value is £2 million" in {
-      val mockCacheMap = mock[CacheMap]
-      when(mockCacheMap.getEntry[Int](matches(Constants.grossEstateValueId))(any())) thenReturn Some(1999999)
-      navigator.nextPage(Constants.grossEstateValueId)(mockCacheMap) shouldBe routes.ChargeableTransferAmountController.onPageLoad()
-    }
-
-    "return a function that goes to the Chargeable Transfer Amount controller when given Gross Estate Value, and the value is under £2 million" in {
+    "return a call to the ChargeableTransferAmountController onPageLoad method when given Gross Estate Value" in {
       val mockCacheMap = mock[CacheMap]
       when(mockCacheMap.getEntry[Int](matches(Constants.grossEstateValueId))(any())) thenReturn Some(2000000)
       navigator.nextPage(Constants.grossEstateValueId)(mockCacheMap) shouldBe routes.ChargeableTransferAmountController.onPageLoad()
-    }
-
-    "return a function that goes to the Transition Out controller when given Gross Estate Value, and the value is over £2 million" in {
-      val mockCacheMap = mock[CacheMap]
-      when(mockCacheMap.getEntry[Int](matches(Constants.grossEstateValueId))(any())) thenReturn Some(2000001)
-      navigator.nextPage(Constants.grossEstateValueId)(mockCacheMap) shouldBe routes.TransitionOutController.onPageLoad()
     }
 
     "when the PropertyValue is used at the class id, the navigator must return a function that when executed against any" +
