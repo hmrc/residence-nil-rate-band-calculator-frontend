@@ -85,6 +85,8 @@ estate_has_property.title = Does the deceased`s estate include any residential p
 estate_has_property.guidance = Answer '''Yes''' if the deceased`s estate includes a property that they ever lived in as their residence while they owned the property. This does not need to be a residence that is being left to the deceased`s children or remoter descendants.
 estate_has_property.label =
 
+exit_questionnaire.browser_title = "Survey"
+
 gross_estate_value.question_number = Question 2
 gross_estate_value.browser_title = Question page
 gross_estate_value.title = What was the total value of the estate at the time of death?

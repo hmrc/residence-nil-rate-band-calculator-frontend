@@ -43,6 +43,9 @@ POST       /gross-estate-value                          uk.gov.hmrc.residencenil
 GET        /estate-has-property                         uk.gov.hmrc.residencenilratebandcalculator.controllers.EstateHasPropertyController.onPageLoad
 POST       /estate-has-property                         uk.gov.hmrc.residencenilratebandcalculator.controllers.EstateHasPropertyController.onSubmit
 
+GET        /exit-questionnaire                          uk.gov.hmrc.residencenilratebandcalculator.controllers.ExitQuestionnaireController.onPageLoad
+POST       /exit-questionnaire                          uk.gov.hmrc.residencenilratebandcalculator.controllers.ExitQuestionnaireController.onSubmit
+
 GET        /not-found                                   uk.gov.hmrc.residencenilratebandcalculator.controllers.PageNotFoundController.onPageLoad
 
 GET        /not-possible-to-use-calculator              uk.gov.hmrc.residencenilratebandcalculator.controllers.TransitionOutController.onPageLoad
