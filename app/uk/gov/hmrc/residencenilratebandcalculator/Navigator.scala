@@ -45,7 +45,8 @@ class Navigator @Inject()() {
       Constants.anyAssetsPassingToDirectDescendantsId -> (cm => getAnyAssetsPassingToDirectDescendantsRoute(cm)),
       Constants.assetsPassingToDirectDescendantsId -> (_ => AnyBroughtForwardAllowanceOnDisposalController.onPageLoad()),
       Constants.anyBroughtForwardAllowanceOnDisposalId -> (cm => getAnyBroughtForwardAllowanceOnDisposalRoute(cm)),
-      Constants.broughtForwardAllowanceOnDisposalId -> (_ => ResultsController.onPageLoad())
+      Constants.broughtForwardAllowanceOnDisposalId -> (_ => CheckAnswersController.onPageLoad()),
+      Constants.checkAnswersId -> (_ => ResultsController.onPageLoad())
     )
   }
 
@@ -105,7 +106,7 @@ class Navigator @Inject()() {
   private def getAnyBroughtForwardAllowanceOnDisposalRoute(cacheMap: CacheMap) = {
     cacheMap.getEntry[Boolean](Constants.anyBroughtForwardAllowanceOnDisposalId) match {
       case Some(true) => BroughtForwardAllowanceOnDisposalController.onPageLoad()
-      case Some(false) => ResultsController.onPageLoad()
+      case Some(false) => CheckAnswersController.onPageLoad()
       case None => HomeController.onPageLoad()
     }
   }
@@ -113,7 +114,7 @@ class Navigator @Inject()() {
   private def getAnyDownsizingAllowanceRoute(cacheMap: CacheMap) = {
     cacheMap.getEntry[Boolean](Constants.anyDownsizingAllowanceId) match {
       case Some(true) => DateOfDisposalController.onPageLoad()
-      case Some(false) => ResultsController.onPageLoad()
+      case Some(false) => CheckAnswersController.onPageLoad()
       case None => HomeController.onPageLoad()
     }
   }
@@ -145,7 +146,7 @@ class Navigator @Inject()() {
   private def getAnyAssetsPassingToDirectDescendantsRoute(cacheMap: CacheMap) = {
     cacheMap.getEntry[Boolean](Constants.anyAssetsPassingToDirectDescendantsId) match {
       case Some(true) => AssetsPassingToDirectDescendantsController.onPageLoad()
-      case Some(false) => ResultsController.onPageLoad()
+      case Some(false) => CheckAnswersController.onPageLoad()
       case None => HomeController.onPageLoad()
     }
   }
