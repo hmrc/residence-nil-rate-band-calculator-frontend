@@ -44,15 +44,15 @@ class AnswerRowSpec extends UnitSpec with WithFakeApplication {
     }
 
     "correctly format a true Boolean as Yes" in {
-      AnswerRow("", true, mockCall)(messages).data shouldBe "Yes"
+      AnswerRow("", true, mockCall)(messages).data shouldBe messages("site.yes")
     }
 
     "correctly format a false Boolean as No" in {
-      AnswerRow("", false, mockCall)(messages).data shouldBe "No"
+      AnswerRow("", false, mockCall)(messages).data shouldBe messages("site.no")
     }
 
     "pull the title from the messages file" in {
-      AnswerRow("site.yes", true, mockCall)(messages).title shouldBe "Yes"
+      AnswerRow("site.yes", true, mockCall)(messages).title shouldBe messages("site.yes")
     }
 
     "use the url from the provided Call object" in {
