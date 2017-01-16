@@ -19,15 +19,18 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.data.{Form, FormError}
 import play.api.i18n.I18nSupport
-import play.api.libs.json.{Reads, Writes}
+import play.api.libs.json.{JsValue, Reads, Writes}
 import play.api.mvc._
 import play.twirl.api.HtmlFormat
+import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
-import scala.concurrent.Future
+import scala.collection.immutable.Iterable
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future}
 
 trait SimpleControllerBase[A] extends FrontendController with I18nSupport {
   val cleanoutMap: Map[String, Seq[String]] = Map(
@@ -50,43 +53,55 @@ trait SimpleControllerBase[A] extends FrontendController with I18nSupport {
     Redirect(navigator.nextPage(controllerId)(cacheMap))
   }
 
-  def erase(id: String): Unit /* Future[Result]*/ = ???
+  def erase(id: String): Future[Result] = ???
+
+  def altErase(ids: Seq[String], value: A): Future[Result] = {
+    val cache: Future[Option[CacheMap]] = sessionConnector.fetch()
+    cache.flatMap { optionalCache =>
+      optionalCache.fold(Future.successful(BadRequest("wibble"))) { cache =>
+        val originalMap: Map[String, JsValue] = cache.data
+        val newMap = originalMap.filterKeys(s => ids.contains(s))
+        Await.ready(sessionConnector.remove(), Duration.Inf)
+        Future.sequence(newMap.map { z => sessionConnector.cache(z._1, z._2)}).flatMap { ic => storeInSession(value)}
+      }
+    }
+  }
 
   private def maybeCleanOutSessionThenStore(value: A): Future[Result] = {
     // Decide here if redoing a value at controller id requires other id values to be replaced
     // If it does, clear out the other values then store, if it does not then simply store
 
-      cleanoutMap.get(controllerId).fold(storeInSession(value)) { ids =>
-        ids.map { id =>
-          erase(id)
-        }
-        storeInSession(value)
-      }
-    }
 
-    private def store(value: A) = {
-      sessionConnector.fetchAndGetEntry[A](controllerId).flatMap {
-        case Some(_) => maybeCleanOutSessionThenStore(value)
-        case None => storeInSession(value)
-      }
+    cleanoutMap.get(controllerId).fold(storeInSession(value)) { ids =>
+      Future.sequence(ids.map { id =>
+        erase(id)
+      }).flatMap { _ => storeInSession(value) }
     }
-
-    def onPageLoad(implicit rds: Reads[A]) = Action.async { implicit request =>
-      sessionConnector.fetchAndGetEntry[A](controllerId).map(
-        cachedValue => {
-          Ok(view(cachedValue.map(value => form().fill(value))))
-        })
-    }
-
-    def onSubmit(implicit wts: Writes[A]) = Action.async { implicit request =>
-      val boundForm = form().bindFromRequest()
-      boundForm.fold(
-        (formWithErrors: Form[A]) => Future.successful(BadRequest(view(Some(formWithErrors)))),
-        (value) => validate(value).flatMap {
-          case Some(error) => Future.successful(BadRequest(view(Some(form().fill(value).withError(error)))))
-          case None => store(value)
-        })
-    }
-
-    def validate(value: A)(implicit hc: HeaderCarrier): Future[Option[FormError]] = Future.successful(None)
   }
+
+  private def store(value: A) = {
+    sessionConnector.fetchAndGetEntry[A](controllerId).flatMap {
+      case Some(_) => maybeCleanOutSessionThenStore(value)
+      case None => storeInSession(value)
+    }
+  }
+
+  def onPageLoad(implicit rds: Reads[A]) = Action.async { implicit request =>
+    sessionConnector.fetchAndGetEntry[A](controllerId).map(
+      cachedValue => {
+        Ok(view(cachedValue.map(value => form().fill(value))))
+      })
+  }
+
+  def onSubmit(implicit wts: Writes[A]) = Action.async { implicit request =>
+    val boundForm = form().bindFromRequest()
+    boundForm.fold(
+      (formWithErrors: Form[A]) => Future.successful(BadRequest(view(Some(formWithErrors)))),
+      (value) => validate(value).flatMap {
+        case Some(error) => Future.successful(BadRequest(view(Some(form().fill(value).withError(error)))))
+        case None => store(value)
+      })
+  }
+
+  def validate(value: A)(implicit hc: HeaderCarrier): Future[Option[FormError]] = Future.successful(None)
+}
