@@ -86,6 +86,10 @@ estate_has_property.guidance = Answer '''Yes''' if the deceased`s estate include
 estate_has_property.label =
 
 exit_questionnaire.browser_title = Survey
+exit_questionnaire.title = Survey
+exit_questionnaire.email.label = Email
+exit_questionnaire.full_name.label = Full name
+exit_questionnaire.phone_number.label = Phone number
 
 gross_estate_value.question_number = Question 2
 gross_estate_value.browser_title = Question page
