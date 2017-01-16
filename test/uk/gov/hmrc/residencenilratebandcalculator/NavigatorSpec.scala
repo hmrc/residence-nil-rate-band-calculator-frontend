@@ -17,9 +17,9 @@
 package uk.gov.hmrc.residencenilratebandcalculator
 
 import org.joda.time.LocalDate
-import org.scalatest.{BeforeAndAfter, Matchers}
-import org.mockito.Mockito._
 import org.mockito.Matchers._
+import org.mockito.Mockito._
+import org.scalatest.Matchers
 import org.scalatest.mock.MockitoSugar
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
@@ -211,10 +211,10 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.broughtForwardAllowanceOnDisposalId)() shouldBe routes.AnyBroughtForwardAllowanceOnDisposalController.onPageLoad()
     }
 
-    "return a call to the Results Controller onPageLoad method when there is no downsizing allowance" in {
+    "return a call to the check answers Controller onPageLoad method when there is no downsizing allowance" in {
       val mockCacheMap = mock[CacheMap]
       when(mockCacheMap.getEntry[Boolean](matches(Constants.anyDownsizingAllowanceId))(any())) thenReturn Some(false)
-      navigator.nextPage(Constants.anyDownsizingAllowanceId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
+      navigator.nextPage(Constants.anyDownsizingAllowanceId)(mockCacheMap) shouldBe routes.CheckAnswersController.onPageLoad()
     }
 
     "return a call to the date of property disposal controller onPageLoad method when there is some downsizing allowance" in {
@@ -246,20 +246,20 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.anyAssetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.AssetsPassingToDirectDescendantsController.onPageLoad()
     }
 
-    "return a call to the results onPageLoad method when there are no assets passing to the direct descendant" in {
+    "return a call to the check answers onPageLoad method when there are no assets passing to the direct descendant" in {
       val mockCacheMap = mock[CacheMap]
       when(mockCacheMap.getEntry[Boolean](matches(Constants.anyAssetsPassingToDirectDescendantsId))(any())) thenReturn Some(false)
-      navigator.nextPage(Constants.anyAssetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
+      navigator.nextPage(Constants.anyAssetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.CheckAnswersController.onPageLoad()
     }
 
     "return a call to the Any Brought Forward Allowance On Disposal controller onPageLoad method from the AssetsPassingToDirectDescendants controller" in {
       navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mock[CacheMap]) shouldBe routes.AnyBroughtForwardAllowanceOnDisposalController.onPageLoad()
     }
 
-    "return a call to the results onPageLoad method when there is no brought forward allowance on disposal" in {
+    "return a call to the check answers onPageLoad method when there is no brought forward allowance on disposal" in {
       val mockCacheMap = mock[CacheMap]
       when(mockCacheMap.getEntry[Boolean](matches(Constants.anyBroughtForwardAllowanceOnDisposalId))(any())) thenReturn Some(false)
-      navigator.nextPage(Constants.anyBroughtForwardAllowanceOnDisposalId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
+      navigator.nextPage(Constants.anyBroughtForwardAllowanceOnDisposalId)(mockCacheMap) shouldBe routes.CheckAnswersController.onPageLoad()
     }
 
     "return a call to the Brought Forward Allowance on Disposal onPageLoad method when there is some brought forward allowance on disposal" in {
@@ -268,8 +268,12 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.anyBroughtForwardAllowanceOnDisposalId)(mockCacheMap) shouldBe routes.BroughtForwardAllowanceOnDisposalController.onPageLoad()
     }
 
-    "return a call to the Results controller onPageLoad method from the BroughtForwardAllowanceOnDisposal controller" in {
-      navigator.nextPage(Constants.broughtForwardAllowanceOnDisposalId)(mock[CacheMap]) shouldBe routes.ResultsController.onPageLoad()
+    "return a call to the check answers controller onPageLoad method from the BroughtForwardAllowanceOnDisposal controller" in {
+      navigator.nextPage(Constants.broughtForwardAllowanceOnDisposalId)(mock[CacheMap]) shouldBe routes.CheckAnswersController.onPageLoad()
+    }
+
+    "return a call to the results controller onPageLoad method from the CheckAnswers controller" in {
+      navigator.nextPage(Constants.checkAnswersId)(mock[CacheMap]) shouldBe routes.ResultsController.onPageLoad()
     }
   }
 }
