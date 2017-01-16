@@ -40,3 +40,11 @@ object ExitQuestionnaire {
 
   implicit val formats = Json.format[ExitQuestionnaire]
 }
+
+sealed abstract class ExitQuestionnaireKey
+case object ServiceDifficulty extends ExitQuestionnaireKey
+case object ServiceFeel extends ExitQuestionnaireKey
+case object Comments extends ExitQuestionnaireKey
+case object FullName extends ExitQuestionnaireKey
+case object PhoneNumber extends ExitQuestionnaireKey
+case object Email extends ExitQuestionnaireKey

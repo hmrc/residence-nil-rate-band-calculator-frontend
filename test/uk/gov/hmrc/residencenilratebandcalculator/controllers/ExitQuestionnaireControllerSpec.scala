@@ -29,7 +29,6 @@ class ExitQuestionnaireControllerSpec extends HtmlSpec with WithFakeApplication 
 
   val navigator = injector.instanceOf[Navigator]
 
-
   "Exit Questionnaire controller" must {
 
     "return 200 for a GET" in {

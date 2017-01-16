@@ -20,8 +20,8 @@ import javax.inject.{Inject, Singleton}
 
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.Action
-import play.api.mvc.Results._
 import uk.gov.hmrc.play.frontend.controller.FrontendController
+import uk.gov.hmrc.residencenilratebandcalculator.forms.ExitQuestionnaireForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exit_questionnaire
 import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, Navigator}
 
@@ -37,6 +37,25 @@ class ExitQuestionnaireController @Inject()(val appConfig: FrontendAppConfig,
   }
 
   def onSubmit = Action.async { implicit request =>
+    val boundForm = ExitQuestionnaireForm().bindFromRequest()
+
+    boundForm.fold(
+      formWithErrors => Future.successful(BadRequest(exit_questionnaire(appConfig, Some(formWithErrors)))),
+      value => ???
+    )
+
     ???
   }
 }
+/*
+  def onSubmit(implicit wts: Writes[A]) = Action.async { implicit request =>
+    val boundForm = form().bindFromRequest()
+    boundForm.fold(
+      (formWithErrors: Form[A]) => Future.successful(BadRequest(view(Some(formWithErrors)))),
+      (value) => validate(value).flatMap {
+        case Some(error) => Future.successful(BadRequest(view(Some(form().fill(value).withError(error)))))
+        case None => sessionConnector.cache[A](controllerId, value).map(cacheMap =>
+          Redirect(navigator.nextPage(controllerId)(cacheMap)))
+      })
+  }
+ */

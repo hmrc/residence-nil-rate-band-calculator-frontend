@@ -16,16 +16,90 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
+import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.forms.ExitQuestionnaireForm
+import uk.gov.hmrc.residencenilratebandcalculator.models.ExitQuestionnaire
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exit_questionnaire
 
 class ExitQuestionnaireViewSpec extends ViewSpecBase {
 
   val messageKeyPrefix = "exit_questionnaire"
 
+  override val errorKey = "fullName"
+
+  def createView(form: Option[Form[ExitQuestionnaire]]) = exit_questionnaire(frontendAppConfig, form)(request, messages)
+
   "Exit Questionnaire view" must {
-    "display the correct browser title" in {
-      val doc = asDocument(exit_questionnaire(frontendAppConfig)(request, messages))
-      assertEqualsMessage(doc, "title", s"$messageKeyPrefix.browser_title")
+    behave like rnrbPage[ExitQuestionnaire](createView, messageKeyPrefix)
+  }
+
+  "Exit Questionnaire view" when {
+    "rendered" must {
+
+      "contain a label for the full name" in {
+        val doc = asDocument(createView(None))
+        assertContainsLabel(doc, "fullName", messages(s"$messageKeyPrefix.full_name.label"))
+      }
+
+      "contain an input for the full name" in {
+        val doc = asDocument(createView(None))
+        assertRenderedById(doc, "fullName")
+      }
+
+      "contain a label for the email" in {
+        val doc = asDocument(createView(None))
+        assertContainsLabel(doc, "email", messages(s"$messageKeyPrefix.email.label"))
+      }
+
+      "contain an input for the email" in {
+        val doc = asDocument(createView(None))
+        assertRenderedById(doc, "email")
+      }
+
+      "contain a label for the phone number" in {
+        val doc = asDocument(createView(None))
+        assertContainsLabel(doc, "phoneNumber", messages(s"$messageKeyPrefix.phone_number.label"))
+      }
+
+      "contain an input for the phone number" in {
+        val doc = asDocument(createView(None))
+        assertRenderedById(doc, "phoneNumber")
+      }
+    }
+
+    "rendered with a valid form" must {
+
+      val serviceDifficulty = "a"
+      val serviceFeel = "b"
+      val comments = "c"
+      val fullName = "d"
+      val email = "e"
+      val phoneNumber = "f"
+
+      def filledForm = ExitQuestionnaireForm().fill(
+        ExitQuestionnaire(Some(serviceDifficulty), Some(serviceFeel), Some(comments), Some(fullName), Some(email), Some(phoneNumber)))
+
+      "include the form's full name in the correct input input" in {
+        val doc = asDocument(createView(Some(filledForm)))
+        doc.getElementById("fullName").attr("value") shouldBe fullName
+      }
+
+      "include the form's email in the correct input input" in {
+        val doc = asDocument(createView(Some(filledForm)))
+        doc.getElementById("email").attr("value") shouldBe email
+      }
+
+      "include the form's phone number in the correct input input" in {
+        val doc = asDocument(createView(Some(filledForm)))
+        doc.getElementById("phoneNumber").attr("value") shouldBe phoneNumber
+      }
+    }
+
+    "rendered with an error" must {
+      "show an error summary" in {
+        val doc = asDocument(createView(Some(ExitQuestionnaireForm().withError(error))))
+        assertRenderedById(doc, "error-summary-heading")
+      }
     }
   }
 }

@@ -1,11 +1,48 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@import uk.gov.hmrc.play.views.html._
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.{FormHelpers, ExitQuestionnaireFormHelper}
+@import uk.gov.hmrc.residencenilratebandcalculator.models.ExitQuestionnaire
 
-@(appConfig: FrontendAppConfig)(implicit request: Request[_], messages: Messages)
+@import uk.gov.hmrc.residencenilratebandcalculator.models.FullName
+@import uk.gov.hmrc.residencenilratebandcalculator.models.Email
+@import uk.gov.hmrc.residencenilratebandcalculator.models.PhoneNumber
+@(appConfig: FrontendAppConfig, form: Option[Form[ExitQuestionnaire]] = None)(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("exit_questionnaire.browser_title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    Exit quesitonnaire page
+    <h1>@messages("exit_questionnaire.title")</h1>
+
+    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ExitQuestionnaireController.onSubmit(), 'autoComplete -> "off") {
+
+        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
+        @rnrbHelpers.input_text(
+            id = "fullName",
+            name = "fullName",
+            value = Some(ExitQuestionnaireFormHelper.getValueByKey(form, FullName)),
+            label = messages("exit_questionnaire.full_name.label"),
+            errorKey = FormHelpers.getErrorByKey(form, "fullName")
+        )
+
+        @rnrbHelpers.input_text(
+            id = "email",
+            name = "email",
+            value = Some(ExitQuestionnaireFormHelper.getValueByKey(form, Email)),
+            label = messages("exit_questionnaire.email.label"),
+            errorKey = FormHelpers.getErrorByKey(form, "email")
+        )
+
+        @rnrbHelpers.input_text(
+            id = "phoneNumber",
+            name = "phoneNumber",
+            value = Some(ExitQuestionnaireFormHelper.getValueByKey(form, PhoneNumber)),
+            label = messages("exit_questionnaire.phone_number.label"),
+            errorKey = FormHelpers.getErrorByKey(form, "phoneNumber")
+        )
+
+        @rnrbHelpers.submit_button()
+    }
 }
