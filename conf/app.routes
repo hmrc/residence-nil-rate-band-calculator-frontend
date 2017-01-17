@@ -59,6 +59,8 @@ POST       /property-value                              uk.gov.hmrc.residencenil
 GET        /property-value-after-exemption              uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyValueAfterExemptionController.onPageLoad
 POST       /property-value-after-exemption              uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyValueAfterExemptionController.onSubmit
 
+GET        /check-answers                               uk.gov.hmrc.residencenilratebandcalculator.controllers.CheckAnswersController.onPageLoad
+
 GET        /results                                     uk.gov.hmrc.residencenilratebandcalculator.controllers.ResultsController.onPageLoad
 
 GET        /style-guide                                 uk.gov.hmrc.residencenilratebandcalculator.controllers.StyleGuide.styleGuide

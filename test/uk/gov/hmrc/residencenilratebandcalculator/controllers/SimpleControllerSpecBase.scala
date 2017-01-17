@@ -45,7 +45,7 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
   def messages = messagesApi.preferred(fakeRequest)
 
   def rnrbController[A: ClassTag](createController: () => SimpleControllerBase[A],
-                        createView: (Option[A]) => HtmlFormat.Appendable,
+                        createView: (Option[Map[String, String]]) => HtmlFormat.Appendable,
                         cacheKey: String,
                         testValue: A,
                         valuesToCacheBeforeSubmission: Map[String, A] = Map[String, A]())
@@ -85,11 +85,10 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
     }
 
     "return form with errors when invalid data is submitted" in {
-      pending // This test should checking against a form with errors, not None
-      val value = "invalid date"
+      val value = "invalid data"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value))
       val result = createController().onSubmit(wts)(fakePostRequest)
-      contentAsString(result) shouldBe createView(None).toString
+      contentAsString(result) shouldBe createView(Some(Map("value" -> value))).toString
     }
 
     "not store invalid submitted data" in {
@@ -102,7 +101,7 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
     "get a previously stored value from keystore" in {
       setCacheValue(cacheKey, testValue)
       val result = createController().onPageLoad(rds)(fakeRequest)
-      contentAsString(result) shouldBe createView(Some(testValue)).toString
+      contentAsString(result) shouldBe createView(Some(Map("value" -> testValue.toString))).toString
     }
   }
 }

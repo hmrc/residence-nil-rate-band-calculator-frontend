@@ -78,16 +78,14 @@ class RnrbConnectorSpec extends UnitSpec with WithFakeApplication with MockitoSu
     }
 
     "return a string representing the error when send method fails" in {
-      //We need better error message generation here
-      pending
       val errorResponse = JsString("Something went wrong!")
 
       val result = await(new RnrbConnector(getHttpMock(errorResponse)).send(minimalJson))
 
       result match {
         case Failure(exception) => {
-          exception shouldBe a [JsonInvalidException]
-          exception.getMessage() shouldBe ""
+          exception shouldBe a[JsonInvalidException]
+          exception.getMessage() shouldBe List.fill(4)("JSON error: error.path.missing\n").mkString("")
         }
         case Success(_) => fail
       }
