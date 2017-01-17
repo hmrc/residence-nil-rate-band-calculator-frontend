@@ -87,9 +87,17 @@ estate_has_property.label =
 
 exit_questionnaire.browser_title = Survey
 exit_questionnaire.title = Survey
+exit_questionnaire.comments.label = How could we improve this service?
+exit_questionnaire.comments.help.1 = (Limit is 1200 characters)
+exit_questionnaire.comments.help.2 = Please don’t include any personal or financial details, like your National Insurance or credit card numbers.
 exit_questionnaire.email.label = Email
 exit_questionnaire.full_name.label = Full name
 exit_questionnaire.phone_number.label = Phone number
+exit_questionnaire.service_feel.label = How do you feel about your experience using this service today?
+exit_questionnaire.service_difficulty.label = How easy was it to do what you wanted?
+exit_questionnaire.guidance = Please complete this short survey to help us improve the service. The survey should take no more than 2 minutes.
+exit_questionnaire.user_research.title = We’re looking for people to help us with user research.
+exit_questionnaire.user_research.guidance = This will help improve the service. If you would like to be contacted with more details about the user research, enter your name and contact details below.
 
 gross_estate_value.question_number = Question 2
 gross_estate_value.browser_title = Question page
@@ -140,6 +148,7 @@ site.continue = Continue
 site.back = Back
 
 thank_you.browser_title = Thank You
+thank_you.title = Thank You
 
 value_of_disposed_property.question_number = Question 13
 value_of_disposed_property.title = What was the value of the property interest disposed of?

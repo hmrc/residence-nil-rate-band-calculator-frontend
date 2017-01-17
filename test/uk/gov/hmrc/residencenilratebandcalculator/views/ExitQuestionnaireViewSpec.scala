@@ -30,7 +30,8 @@ class ExitQuestionnaireViewSpec extends ViewSpecBase {
   def createView(form: Option[Form[ExitQuestionnaire]]) = exit_questionnaire(frontendAppConfig, form)(request, messages)
 
   "Exit Questionnaire view" must {
-    behave like rnrbPage[ExitQuestionnaire](createView, messageKeyPrefix)
+    behave like rnrbPage[ExitQuestionnaire](createView, messageKeyPrefix,
+      "guidance", "comments.help.1", "comments.help.2", "user_research.title", "user_research.guidance")
   }
 
   "Exit Questionnaire view" when {

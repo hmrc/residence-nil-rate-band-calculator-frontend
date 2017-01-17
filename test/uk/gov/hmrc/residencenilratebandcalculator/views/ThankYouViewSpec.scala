@@ -27,5 +27,10 @@ class ThankYouViewSpec extends ViewSpecBase {
       val doc = asDocument(thank_you(frontendAppConfig)(request, messages))
       assertEqualsMessage(doc, "title", s"$messageKeyPrefix.browser_title")
     }
+
+    "display the correct title" in {
+      val doc = asDocument(thank_you(frontendAppConfig)(request, messages))
+      assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.title")
+    }
   }
 }

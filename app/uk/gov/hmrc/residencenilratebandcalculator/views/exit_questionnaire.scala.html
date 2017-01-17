@@ -15,9 +15,27 @@
 
     <h1>@messages("exit_questionnaire.title")</h1>
 
+    <p>@messages("exit_questionnaire.guidance")</p>
+
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ExitQuestionnaireController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
+        @* TODO :Add radio groups for "serviceFeel" and "serviceDifficulty" *@
+
+        @* TODO: Move this text area to a partial *@
+        <label class="form-label" for="comments">
+            <span>@messages("exit_questionnaire.comments.label")</span>
+        </label>
+        <textarea id="comments" name="comments"></textarea>
+
+        <p class="font-xsmall">@messages("exit_questionnaire.comments.help.1")</p>
+        <p>@messages("exit_questionnaire.comments.help.2")</p>
+
+
+        <h2>@messages("exit_questionnaire.user_research.title")</h2>
+
+        <p>@messages("exit_questionnaire.user_research.guidance")</p>
 
         @rnrbHelpers.input_text(
             id = "fullName",
