@@ -18,19 +18,23 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
 
+import play.api.Logger
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.Action
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.forms.ExitQuestionnaireForm
+import uk.gov.hmrc.residencenilratebandcalculator.models.ExitQuestionnaireEvent
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exit_questionnaire
-import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, FrontendAuditConnector, Navigator}
 
 import scala.concurrent.Future
 
 @Singleton
 class ExitQuestionnaireController @Inject()(val appConfig: FrontendAppConfig,
                                             val messagesApi: MessagesApi,
+                                            val auditConnector: FrontendAuditConnector,
                                             val navigator: Navigator) extends FrontendController with I18nSupport {
+
 
   def onPageLoad = Action.async { implicit request =>
     Future.successful(Ok(exit_questionnaire(appConfig)))
@@ -41,21 +45,20 @@ class ExitQuestionnaireController @Inject()(val appConfig: FrontendAppConfig,
 
     boundForm.fold(
       formWithErrors => Future.successful(BadRequest(exit_questionnaire(appConfig, Some(formWithErrors)))),
-      value => ???
-    )
+      value => {
 
-    ???
+        val questionnaireResult = auditConnector.sendEvent(new ExitQuestionnaireEvent(value.serviceDifficulty.getOrElse(""),
+                                                                                      value.serviceFeel.getOrElse(""),
+                                                                                      value.comments.getOrElse(""),
+                                                                                      value.fullName.getOrElse(""),
+                                                                                      value.email.getOrElse(""),
+                                                                                      value.phoneNumber.getOrElse("")))
+        questionnaireResult.onFailure {
+          case e: Throwable => Logger.error(s"[ExitQuestionnaireController][post] ${e.getMessage}", e)
+        }
+
+        Future.successful(Redirect(routes.ThankYouController.onPageLoad()))
+      }
+    )
   }
 }
-/*
-  def onSubmit(implicit wts: Writes[A]) = Action.async { implicit request =>
-    val boundForm = form().bindFromRequest()
-    boundForm.fold(
-      (formWithErrors: Form[A]) => Future.successful(BadRequest(view(Some(formWithErrors)))),
-      (value) => validate(value).flatMap {
-        case Some(error) => Future.successful(BadRequest(view(Some(form().fill(value).withError(error)))))
-        case None => sessionConnector.cache[A](controllerId, value).map(cacheMap =>
-          Redirect(navigator.nextPage(controllerId)(cacheMap)))
-      })
-  }
- */
