@@ -141,6 +141,7 @@ results.residenceNilRateAmount.label = The Residence Nil Rate Band (RNRB) availa
 results.carryForwardAmount.label = The amount of unused residence Nil Rate Band available to be carried forward is
 results.applicableNilRateBandAmount.label = The Residential Enhancement at the date of death is
 results.defaultAllowanceAmount.label = Adding these two figures together gives the Default Allowance at the date of death of
+results.link_to_exit_questionnaire.text = Complete a short survey
 
 site.no = No
 site.yes = Yes

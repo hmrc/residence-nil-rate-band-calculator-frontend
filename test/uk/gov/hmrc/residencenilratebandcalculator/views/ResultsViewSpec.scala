@@ -16,11 +16,13 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.results
 
 import scala.language.reflectiveCalls
 import scala.util.Success
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class ResultsViewSpec extends HtmlSpec {
   def fixture() = new {
@@ -80,6 +82,13 @@ class ResultsViewSpec extends HtmlSpec {
       "contain an amount for the default allowance amount" in {
         val f = thisFixture()
         assertContainsText(f.doc, "260")
+      }
+
+      "contain a link to the exit questionnaire" in {
+        val f = thisFixture()
+        val links = f.doc.getElementsByAttributeValue("href", routes.ExitQuestionnaireController.onPageLoad().url)
+        links.size shouldBe 1
+        links.first.text shouldBe messages("results.link_to_exit_questionnaire.text")
       }
     }
   }
