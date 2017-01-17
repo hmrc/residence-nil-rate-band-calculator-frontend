@@ -41,7 +41,7 @@ trait DateControllerSpecBase extends UnitSpec with WithFakeApplication with Http
   def messages = messagesApi.preferred(fakeRequest)
 
   def rnrbController(createController: () => SimpleControllerBase[Date],
-                     createView: (Option[Date]) => HtmlFormat.Appendable,
+                     createView: (Option[Map[String, String]]) => HtmlFormat.Appendable,
                      cacheKey: String)(rds: Reads[Date], wts: Writes[Date]) = {
 
     "return 200 for a GET" in {
@@ -77,11 +77,11 @@ trait DateControllerSpecBase extends UnitSpec with WithFakeApplication with Http
     }
 
     "return form with errors when invalid data ia submitted" in {
-      pending // This test should checking against a form with errors, not None
       val value = "not a number"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("day", value), ("month", value), ("month", value))
       val result = createController().onSubmit(wts)(fakePostRequest)
-      contentAsString(result) shouldBe createView(None).toString
+      val valueMap = Map("day" -> value, "month" -> value, "year" -> value)
+      contentAsString(result) shouldBe createView(Some(valueMap)).toString
     }
 
     "not store invalid submitted data" in {
@@ -98,7 +98,9 @@ trait DateControllerSpecBase extends UnitSpec with WithFakeApplication with Http
       val value = new Date(day, month, year)
       setCacheValue(cacheKey, value)
       val result = createController().onPageLoad(rds)(fakeRequest)
-      contentAsString(result) shouldBe createView(Some(value)).toString
+
+      val valueMap = Map("day" -> day.toString, "month" -> month.toString, "year" -> year.toString)
+      contentAsString(result) shouldBe createView(Some(valueMap)).toString
     }
   }
 }
