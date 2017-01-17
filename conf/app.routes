@@ -37,14 +37,14 @@ POST       /date-of-death                               uk.gov.hmrc.residencenil
 GET        /date-of-disposal                            uk.gov.hmrc.residencenilratebandcalculator.controllers.DateOfDisposalController.onPageLoad
 POST       /date-of-disposal                            uk.gov.hmrc.residencenilratebandcalculator.controllers.DateOfDisposalController.onSubmit
 
-GET        /gross-estate-value                          uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onPageLoad
-POST       /gross-estate-value                          uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onSubmit
-
 GET        /estate-has-property                         uk.gov.hmrc.residencenilratebandcalculator.controllers.EstateHasPropertyController.onPageLoad
 POST       /estate-has-property                         uk.gov.hmrc.residencenilratebandcalculator.controllers.EstateHasPropertyController.onSubmit
 
 GET        /exit-questionnaire                          uk.gov.hmrc.residencenilratebandcalculator.controllers.ExitQuestionnaireController.onPageLoad
 POST       /exit-questionnaire                          uk.gov.hmrc.residencenilratebandcalculator.controllers.ExitQuestionnaireController.onSubmit
+
+GET        /gross-estate-value                          uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onPageLoad
+POST       /gross-estate-value                          uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onSubmit
 
 GET        /not-found                                   uk.gov.hmrc.residencenilratebandcalculator.controllers.PageNotFoundController.onPageLoad
 
