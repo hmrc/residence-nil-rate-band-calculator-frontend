@@ -22,13 +22,11 @@ import play.api.i18n.I18nSupport
 import play.api.libs.json.{JsValue, Reads, Writes}
 import play.api.mvc._
 import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.http.cache.client.{CacheMap, CachingException}
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
-
-import scala.collection.immutable.Iterable
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
 
@@ -49,37 +47,36 @@ trait SimpleControllerBase[A] extends FrontendController with I18nSupport {
 
   val navigator: Navigator
 
-  private def storeInSession(value: A) = sessionConnector.cache[A](controllerId, value).map { cacheMap =>
+  private def storeInSession(value: A)(implicit wts: Writes[A], hc: HeaderCarrier) = sessionConnector.cache[A](controllerId, value).map { cacheMap =>
     Redirect(navigator.nextPage(controllerId)(cacheMap))
   }
 
-  def erase(id: String): Future[Result] = ???
 
-  def altErase(ids: Seq[String], value: A): Future[Result] = {
+  def eraseThenStore(ids: Seq[String], value: A)(implicit wts: Writes[A], hc: HeaderCarrier): Future[Result] = {
     val cache: Future[Option[CacheMap]] = sessionConnector.fetch()
     cache.flatMap { optionalCache =>
-      optionalCache.fold(Future.successful(BadRequest("wibble"))) { cache =>
-        val originalMap: Map[String, JsValue] = cache.data
-        val newMap = originalMap.filterKeys(s => ids.contains(s))
+      optionalCache.fold(Future.successful(BadRequest("cache not available"))) { cache =>
+        val newMap = cache.data.filterKeys(s => ids.contains(s))
         Await.ready(sessionConnector.remove(), Duration.Inf)
-        Future.sequence(newMap.map { z => sessionConnector.cache(z._1, z._2)}).flatMap { ic => storeInSession(value)}
+        try {
+          Future.sequence(newMap.map { zz => sessionConnector.cache(zz._1, zz._2) }).flatMap { ic => storeInSession(value) }
+        } catch {
+          case ce: CachingException => Future.successful(BadRequest("cache exception: " + ce))
+        }
       }
     }
   }
 
-  private def maybeCleanOutSessionThenStore(value: A): Future[Result] = {
+  private def maybeCleanOutSessionThenStore(value: A)(implicit wts: Writes[A], hc: HeaderCarrier): Future[Result] = {
     // Decide here if redoing a value at controller id requires other id values to be replaced
     // If it does, clear out the other values then store, if it does not then simply store
 
-
     cleanoutMap.get(controllerId).fold(storeInSession(value)) { ids =>
-      Future.sequence(ids.map { id =>
-        erase(id)
-      }).flatMap { _ => storeInSession(value) }
+      eraseThenStore(ids, value)
     }
   }
 
-  private def store(value: A) = {
+  private def store(value: A)(implicit rds: Reads[A], wts: Writes[A], hc: HeaderCarrier) = {
     sessionConnector.fetchAndGetEntry[A](controllerId).flatMap {
       case Some(_) => maybeCleanOutSessionThenStore(value)
       case None => storeInSession(value)
@@ -93,7 +90,7 @@ trait SimpleControllerBase[A] extends FrontendController with I18nSupport {
       })
   }
 
-  def onSubmit(implicit wts: Writes[A]) = Action.async { implicit request =>
+  def onSubmit(implicit rds: Reads[A], wts: Writes[A]) = Action.async { implicit request =>
     val boundForm = form().bindFromRequest()
     boundForm.fold(
       (formWithErrors: Form[A]) => Future.successful(BadRequest(view(Some(formWithErrors)))),
