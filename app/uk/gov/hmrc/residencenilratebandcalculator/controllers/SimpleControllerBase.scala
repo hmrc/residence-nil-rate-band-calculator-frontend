@@ -51,7 +51,6 @@ trait SimpleControllerBase[A] extends FrontendController with I18nSupport {
     Redirect(navigator.nextPage(controllerId)(cacheMap))
   }
 
-
   def eraseThenStore(ids: Seq[String], value: A)(implicit wts: Writes[A], hc: HeaderCarrier): Future[Result] = {
     val cache: Future[Option[CacheMap]] = sessionConnector.fetch()
     cache.flatMap { optionalCache =>
