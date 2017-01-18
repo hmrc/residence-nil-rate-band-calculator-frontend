@@ -710,6 +710,30 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
         )
       )
     }
+
+    "return a map with propertyValue and percentageCloselyInherited of 0 when estateHasProperty is false" in {
+      val cacheMap = CacheMap(id = cacheMapId, data = Map(
+        Constants.estateHasPropertyId -> JsBoolean(false)
+      ))
+
+      jsonBuilder.constructDataFromCacheMap(cacheMap) shouldBe Map(
+        Constants.jsonKeys(Constants.propertyValueId) -> JsNumber(0),
+        Constants.jsonKeys(Constants.percentageCloselyInheritedId) -> JsNumber(0)
+      )
+    }
+
+    "return a map with the actual propertyValue and percentageCloselyInherited when estateHasProperty is true" in {
+      val cacheMap = CacheMap(id = cacheMapId, data = Map(
+        Constants.estateHasPropertyId -> JsBoolean(true),
+        Constants.propertyValueId -> JsNumber(1),
+        Constants.percentageCloselyInheritedId -> JsNumber(2)
+      ))
+
+      jsonBuilder.constructDataFromCacheMap(cacheMap) shouldBe Map(
+        Constants.jsonKeys(Constants.propertyValueId) -> JsNumber(1),
+        Constants.jsonKeys(Constants.percentageCloselyInheritedId) -> JsNumber(2)
+      )
+    }
   }
 
   "only get the schema once" in {
@@ -720,6 +744,33 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
     jsonBuilder.build(mockSessionConnector)(hc)
 
     verify(rnrbConnector, times(1)).getSuccessfulResponseSchema
+  }
+
+  "handleEstateHasProperty" must {
+    val cacheMapId = "aaaa"
+    val jsonBuilder = new JsonBuilder(rnrbConnector)
+
+    "return an empty map when estateHasPropertyId is not present in the cache map" in {
+      val cacheMap = CacheMap(id = cacheMapId, data = Map())
+      jsonBuilder.handleEstateHasProperty(cacheMap) shouldBe Map()
+    }
+
+    "return an empty map when estateHasPropertyId is true" in {
+      val cacheMap = CacheMap(id = cacheMapId, data = Map(
+        Constants.estateHasPropertyId -> JsBoolean(true)
+      ))
+      jsonBuilder.handleEstateHasProperty(cacheMap) shouldBe Map()
+    }
+
+    "return a map containing propertyValue and percentageCloselyInherited set to 0 when estateHasProperty is false" in {
+      val cacheMap = CacheMap(id = cacheMapId, data = Map(
+        Constants.estateHasPropertyId -> JsBoolean(false)
+      ))
+      jsonBuilder.handleEstateHasProperty(cacheMap) shouldBe Map(
+        Constants.jsonKeys(Constants.propertyValueId) -> JsNumber(0),
+        Constants.jsonKeys(Constants.percentageCloselyInheritedId) -> JsNumber(0)
+      )
+    }
   }
 
   "handleAssetsPassingToDirectDescendants" must {

@@ -45,7 +45,6 @@ object Constants {
     broughtForwardAllowanceId -> "broughtForwardAllowance",
     chargeableTransferAmountId -> "chargeableTransferAmount",
     dateOfDeathId -> "dateOfDeath",
-    estateHasPropertyId -> "estateHasProperty",
     grossEstateValueId -> "grossEstateValue",
     propertyValueId -> "propertyValue",
     percentageCloselyInheritedId -> "percentageCloselyInherited",
