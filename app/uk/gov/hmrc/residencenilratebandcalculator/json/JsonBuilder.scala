@@ -93,12 +93,26 @@ class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
       case (key, value) => (jsonKeys(key), value)
     }
 
-    dataWithCorrectKeys ++ handleBroughtForwardAllowance(cacheMap) ++ constructDownsizingDetails(cacheMap)
+    dataWithCorrectKeys ++
+      handleBroughtForwardAllowance(cacheMap) ++
+      handleEstateHasProperty(cacheMap) ++
+      constructDownsizingDetails(cacheMap)
   }
 
   def handleBroughtForwardAllowance(cacheMap: CacheMap) = {
     if (cacheMap.data.get(Constants.anyBroughtForwardAllowanceId).contains(JsBoolean(false))) {
       Map(jsonKeys(Constants.broughtForwardAllowanceId) -> JsNumber(0))
+    } else {
+      Map()
+    }
+  }
+
+  def handleEstateHasProperty(cacheMap: CacheMap) = {
+    if (cacheMap.data.get(Constants.estateHasPropertyId).contains(JsBoolean(false))) {
+      Map(
+        jsonKeys(Constants.propertyValueId) -> JsNumber(0),
+        jsonKeys(Constants.percentageCloselyInheritedId) -> JsNumber(0)
+      )
     } else {
       Map()
     }
