@@ -36,4 +36,10 @@ object AnswerRow {
 
   def apply(titleKey: String, percent: Double, url: Call)(messages: Messages): AnswerRow =
     AnswerRow(messages(titleKey), s"$percent%", url.url)
+
+  def apply(titleKey: String, data: PropertyValueAfterExemption, url: Call)(messages: Messages): AnswerRow = {
+    val value = NumberFormat.getCurrencyInstance.format(data.value)
+    val valueCloselyInherited = NumberFormat.getCurrencyInstance.format(data.valueCloselyInherited)
+    AnswerRow(messages(titleKey), s"$value \n$valueCloselyInherited", url.url)
+  }
 }

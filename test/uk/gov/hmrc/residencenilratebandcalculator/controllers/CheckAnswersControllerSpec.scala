@@ -26,7 +26,7 @@ import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
-import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, PropertyValueAfterExemption}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.check_answers
 import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, Navigator}
 
@@ -154,6 +154,20 @@ class CheckAnswersControllerSpec extends UnitSpec with WithFakeApplication with 
       fixture()
       an[RuntimeException] should be thrownBy
         controller.percentAnswerRowFn("check_answers.title", "", () => Call("", ""))(JsString(""))(messages)
+    }
+
+    "correctly create property value after exemptions AnswerRows" in {
+      fixture()
+      val data = PropertyValueAfterExemption(1000, 5000)
+      controller.propertyValueAfterExemptionAnswerRowFn("check_answers.title", "",
+        () => Call("", "http://example.com"))(Json.toJson[PropertyValueAfterExemption](data))(messages) shouldBe
+        AnswerRow(messages("check_answers.title"), "£1,000.00 \n£5,000.00", "http://example.com")
+    }
+
+    "throw an exception when propertyValueAfterExemptionAnswerRowFn not passed a PropertyValueAfterExemption" in {
+      fixture()
+      an[RuntimeException] should be thrownBy
+        controller.propertyValueAfterExemptionAnswerRowFn("check_answers.title", "", () => Call("", ""))(JsString(""))(messages)
     }
   }
 }
