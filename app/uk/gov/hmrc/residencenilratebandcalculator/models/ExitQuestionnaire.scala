@@ -68,7 +68,7 @@ case object Email extends ExitQuestionnaireKey
 case class QuestionnaireOption(id: String, value: String, messageKey: String)
 
 object QuestionnaireOption {
-  def apply(keyPrefix: String, option: String) = QuestionnaireOption(
+  def apply(keyPrefix: String, option: String): QuestionnaireOption = QuestionnaireOption(
     s"$keyPrefix.$option",
     option,
     s"$keyPrefix.$option"
