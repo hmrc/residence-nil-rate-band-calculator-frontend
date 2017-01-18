@@ -25,7 +25,7 @@ import play.api.mvc.{Action, Call, Request}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, PropertyValueAfterExemption}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.check_answers
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
@@ -56,23 +56,30 @@ class CheckAnswersController @Inject()(val appConfig: FrontendAppConfig,
     Constants.propertyValueAfterExemptionId -> 108
   )
 
+  def errorString(title: String) = s"$title unavailable from cache"
+
   def intAnswerRowFn(summaryKey: String, title: String, url: () => Call) =
-    (jsValue: JsValue) => Json.fromJson[Int](jsValue).fold(_ => throw new RuntimeException(s"$title unavailable from cache"), {
+    (jsValue: JsValue) => Json.fromJson[Int](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
       value => AnswerRow(summaryKey, value, url()) _
     })
 
   def boolAnswerRowFn(summaryKey: String, title: String, url: () => Call) =
-    (jsValue: JsValue) => Json.fromJson[Boolean](jsValue).fold(_ => throw new RuntimeException(s"$title unavailable from cache"), {
+    (jsValue: JsValue) => Json.fromJson[Boolean](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
       value => AnswerRow(summaryKey, value, url()) _
     })
 
   def dateAnswerRowFn(summaryKey: String, title: String, url: () => Call) =
-    (jsValue: JsValue) => Json.fromJson[LocalDate](jsValue).fold(_ => throw new RuntimeException(s"$title unavailable from cache"), {
+    (jsValue: JsValue) => Json.fromJson[LocalDate](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
       value => AnswerRow(summaryKey, value, url()) _
     })
 
   def percentAnswerRowFn(summaryKey: String, title: String, url: () => Call) =
-    (jsValue: JsValue) => Json.fromJson[Double](jsValue).fold(_ => throw new RuntimeException(s"$title unavailable from cache"), {
+    (jsValue: JsValue) => Json.fromJson[Double](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
+      value => AnswerRow(summaryKey, value, url()) _
+    })
+
+  def propertyValueAfterExemptionAnswerRowFn(summaryKey: String, title: String, url: () => Call) =
+    (jsValue: JsValue) => Json.fromJson[PropertyValueAfterExemption](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
       value => AnswerRow(summaryKey, value, url()) _
     })
 
@@ -118,7 +125,9 @@ class CheckAnswersController @Inject()(val appConfig: FrontendAppConfig,
     Constants.propertyValueId ->
       intAnswerRowFn("property_value.summary", "Property value", routes.PropertyValueController.onPageLoad),
     Constants.propertyValueAfterExemptionId ->
-      intAnswerRowFn("property_value_after_exemption.summary", "Property value after exemption", routes.PropertyValueAfterExemptionController.onPageLoad)
+      propertyValueAfterExemptionAnswerRowFn("property_value_after_exemption.summary",
+        "Property value after exemption",
+        routes.PropertyValueAfterExemptionController.onPageLoad)
   )
 
   def constructAnswerRows(cacheMap: CacheMap,
