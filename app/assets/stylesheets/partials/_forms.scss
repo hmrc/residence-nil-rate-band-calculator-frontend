@@ -48,6 +48,9 @@ Added double-class selectors to by-pass the full-width in panel rule
 Taken from GDS Elements
 ====================================
 */
+.form-control--full-width {
+    width: 100%;
+}
 .form-control-1-4 {
   width: 100%;
 }
@@ -138,4 +141,13 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 input[type="number"] {
     -moz-appearance:textfield;
+}
+
+/*
+override character count display
+*/
+@media screen and (min-width: 641px){
+    .char-counter {
+        display: block;
+    }
 }

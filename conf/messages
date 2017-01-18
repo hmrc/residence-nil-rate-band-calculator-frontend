@@ -60,7 +60,7 @@ brought_forward_allowance_on_disposal.summary =
 chargeable_transfer_amount.question_number = Question 3
 chargeable_transfer_amount.browser_title = Question page
 chargeable_transfer_amount.title = What is the amount of the chargeable transfer on death?
-chargeable_transfer_amount.guidance = This is the net value transferred on death, AFTER reliefs and exemptions. It does not include any lifetime transfers within 7 years of death thar are taken into account in working out the total inheritance tax liability.
+chargeable_transfer_amount.guidance = This is the net value transferred on death, AFTER reliefs and exemptions. It does not include any lifetime transfers within 7 years of death that are taken into account in working out the total inheritance tax liability.
 chargeable_transfer_amount.label =
 chargeable_transfer_amount.summary = Amount of the chargeable transfer on death
 
@@ -77,7 +77,7 @@ date_of_death.browser_title = Question page
 date_of_death.title = What is the date of death for the deceased?
 date_of_death.guidance = If the date of death is before 6 April 2017 RNRB is not due
 date_of_death.example = For example, 31 3 1980
-date_of_death.label =
+date_of_death.label = Date of death
 date_of_death.summary = Date of death for the deceased
 
 date_of_disposal.question_number = Question 12
@@ -163,15 +163,17 @@ results.applicableNilRateBandAmount.label = The Residential Enhancement at the d
 results.defaultAllowanceAmount.label = Adding these two figures together gives the Default Allowance at the date of death of
 results.link_to_exit_questionnaire.text = Complete a short survey
 
+service.no_thanks = No thanks - sign me out
+
 service_difficulty.very_easy = Very easy
 service_difficulty.easy = Easy
-service_difficulty.neither_ed = Neither easy or difficult
+service_difficulty.neither = Neither easy or difficult
 service_difficulty.difficult = Difficult
 service_difficulty.very_difficult = Very difficult
 
 service_feel.very_satisfied = Very satisfied
 service_feel.satisfied = Satisfied
-service_feel.neither_su = Neither satisfied or dissatisfied
+service_feel.neither = Neither satisfied or dissatisfied
 service_feel.dissatisfied = Dissatisfied
 service_feel.very_dissatisfied = Very dissatisfied
 

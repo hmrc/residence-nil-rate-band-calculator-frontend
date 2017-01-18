@@ -1,5 +1,6 @@
 @(
 label: String,
+legendClass: String = "",
 errorKey: String,
 valueDay: Option[String] = None,
 valueMonth: Option[String] = None,
@@ -12,7 +13,7 @@ hint: Option[String] = None
 <div class="form-field @if(errorKey != ""){form-field--error}">
     <fieldset>
         <legend>
-        <span class="form-label bold">
+        <span class="form-label bold @if(legendClass != ""){@legendClass}">
           @label
         </span>
         @if(hint != ""){
@@ -24,15 +25,15 @@ hint: Option[String] = None
         </legend>
         <div class="form-date">
             <div class="form-group form-group-day">
-                <label class="form-label" for="day">@messages("date.day")</label>
+                <label class="form-label bold" for="day">@messages("date.day")</label>
                 <input class="form-control" id="day" name="day" type="number" min="1" max="31" aria-describedby="date-hint" value="@valueDay" />
             </div>
             <div class="form-group form-group-month">
-                <label class="form-label" for="month">@messages("date.month")</label>
+                <label class="form-label bold" for="month">@messages("date.month")</label>
                 <input class="form-control" id="month" name="month" type="number" min="1" max="12" value="@valueMonth" />
             </div>
             <div class="form-group form-group-year">
-                <label class="form-label" for="year">@messages("date.year")</label>
+                <label class="form-label bold" for="year">@messages("date.year")</label>
                 <input class="form-control" id="year" name="year" type="number" min="1900" max="2050" value="@valueYear" />
             </div>
         </div>

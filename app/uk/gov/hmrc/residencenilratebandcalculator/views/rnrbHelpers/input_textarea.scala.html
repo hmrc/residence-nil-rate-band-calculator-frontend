@@ -9,10 +9,6 @@ hint: Option[String] = None,
 name: String = "value"
 )(implicit messages: Messages)
 
-
-
-
-
 <div class="form-field @if(errorKey != ""){form-field--error}">
     <label class="form-label" for="@id">
         <span class="bold">@label</span>
@@ -23,14 +19,20 @@ name: String = "value"
         <span class="error-notification" id="error-message-this-input">@messages(errorKey)</span>
         }
     </label>
-    <div class="form-control-wrapper" data-type="@secondaryLabel">
-        <input
-                class="form-control @inputClass @if(secondaryLabel == "currency"){form-control-1-3} @if(secondaryLabel == "percentage"){form-control-1-4}"
-                type="text"
+    <div class="form-control-wrapper char-counter" data-char-counter>
+        <textarea
+                class="form-control form-control--full-width @inputClass"
                 id="@id"
                 name="@name"
                 value="@value"
                 aria-describedby="error-message-this-input"
-        />
+                maxLength="1200"
+                data-char-field
+                cols="30"
+                rows="20"
+        ></textarea>
+        <noscript>
+            <p class="char-counter-text flush">Limit is 1200 characters</p>
+        </noscript>
     </div>
 </div>

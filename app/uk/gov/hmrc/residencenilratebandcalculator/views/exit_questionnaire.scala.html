@@ -17,19 +17,38 @@
 
     <p>@messages("exit_questionnaire.guidance")</p>
 
+    @* TODO : wrap in sign-out form or change to a link *@
+    @rnrbHelpers.button(messageKey = "service.no_thanks")
+
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ExitQuestionnaireController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
 
-        @* TODO :Add radio groups for "serviceFeel" and "serviceDifficulty" *@
+        @rnrbHelpers.input_radio(
+            name = "serviceFeel",
+            legend = messages("exit_questionnaire.service_feel.label"),
+            errorKey = FormHelpers.getErrorByKey(form, "serviceFeel"),
+            inputs = ExitQuestionnaire.serviceFeelOptions
+        )
 
-        @* TODO: Move this text area to a partial *@
-        <label class="form-label" for="comments">
-            <span>@messages("exit_questionnaire.comments.label")</span>
-        </label>
-        <textarea id="comments" name="comments"></textarea>
+        @rnrbHelpers.input_radio(
+            name = "serviceDifficulty",
+            legend = messages("exit_questionnaire.service_difficulty.label"),
+            errorKey = FormHelpers.getErrorByKey(form, "serviceDifficulty"),
+            inputs = ExitQuestionnaire.serviceDifficultyOptions
+        )
 
-        <p class="font-xsmall">@messages("exit_questionnaire.comments.help.1")</p>
+
+        @rnrbHelpers.input_textarea(
+            id = "comments",
+            name = "comments",
+            label = messages("exit_questionnaire.comments.label"),
+            inputClass = Some("textarea--fullwidth"),
+            errorKey = FormHelpers.getErrorByKey(form, "comments")
+        )
+
+
+        <!--<p class="font-xsmall">@messages("exit_questionnaire.comments.help.1")</p>-->
         <p>@messages("exit_questionnaire.comments.help.2")</p>
 
 
