@@ -29,14 +29,30 @@ object ExitQuestionnaire {
   val VERY_SATISFIED = "very_satisfied"
   val SATISFIED = "satisfied"
   val NEITHER_SU = "neither"
-  val UNSATISFIED = "unsatisfied"
-  val VERY_UNSATISFIED = "very_unsatisfied"
+  val DISSATISFIED = "dissatisfied"
+  val VERY_DISSATISFIED = "very_dissatisfied"
 
   val VERY_EASY = "very_easy"
   val EASY = "easy"
   val NEITHER_ED = "neither"
   val DIFFICULT = "difficult"
   val VERY_DIFFICULT = "very_difficult"
+
+  val serviceDifficultyOptions = Seq(
+    QuestionnaireOption("service_difficulty", VERY_EASY),
+    QuestionnaireOption("service_difficulty", EASY),
+    QuestionnaireOption("service_difficulty", NEITHER_ED),
+    QuestionnaireOption("service_difficulty", DIFFICULT),
+    QuestionnaireOption("service_difficulty", VERY_DIFFICULT)
+  )
+
+  val serviceFeelOptions = Seq(
+    QuestionnaireOption("service_feel", VERY_SATISFIED),
+    QuestionnaireOption("service_feel", SATISFIED),
+    QuestionnaireOption("service_feel", NEITHER_SU),
+    QuestionnaireOption("service_feel", DISSATISFIED),
+    QuestionnaireOption("service_feel", VERY_DISSATISFIED)
+  )
 
   implicit val formats = Json.format[ExitQuestionnaire]
 }
@@ -48,3 +64,13 @@ case object Comments extends ExitQuestionnaireKey
 case object FullName extends ExitQuestionnaireKey
 case object PhoneNumber extends ExitQuestionnaireKey
 case object Email extends ExitQuestionnaireKey
+
+case class QuestionnaireOption(id: String, value: String, messageKey: String)
+
+object QuestionnaireOption {
+  def apply(keyPrefix: String, option: String) = QuestionnaireOption(
+    s"$keyPrefix.$option",
+    option,
+    s"$keyPrefix.$option"
+  )
+}
