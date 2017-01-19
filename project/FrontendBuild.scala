@@ -29,8 +29,10 @@ private object AppDependencies {
   private val whitelistVersion = "2.0.0"
   private val httpCachingClientVersion = "6.1.0"
   private val playJsonValidatorVersion = "0.8.6"
+  private val playReactivemongoVersion = "5.1.0"
 
   val compile = Seq(
+    "uk.gov.hmrc" %% "play-reactivemongo" % playReactivemongoVersion,
     ws,
     "uk.gov.hmrc" %% "frontend-bootstrap" % frontendBootstrapVersion,
     "uk.gov.hmrc" %% "play-partials" % playPartialsVersion,
