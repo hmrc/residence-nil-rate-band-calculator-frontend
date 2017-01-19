@@ -28,6 +28,7 @@ object Constants {
   val broughtForwardAllowanceId = "BroughtForwardAllowance"
   val broughtForwardAllowanceOnDisposalId = "BroughtForwardAllowanceOnDisposal"
   val chargeableTransferAmountId = "ChargeableTransferAmount"
+  val checkAnswersId = "CheckAnswers"
   val dateOfDeathId = "DateOfDeath"
   val dateOfDisposalId = "DateOfDisposal"
   val downsizingDetails = "downsizingDetails"
@@ -35,7 +36,6 @@ object Constants {
   val eligibilityDate = new LocalDate(2017, 4, 6)
   val estateHasPropertyId = "EstateHasProperty"
   val grossEstateValueId = "GrossEstateValue"
-  val maxGrossEstateValue = 2000000
   val percentageCloselyInheritedId = "PercentageCloselyInherited"
   val propertyValueAfterExemptionId = "PropertyValueAfterExemption"
   val propertyValueId = "PropertyValue"
@@ -45,7 +45,6 @@ object Constants {
     broughtForwardAllowanceId -> "broughtForwardAllowance",
     chargeableTransferAmountId -> "chargeableTransferAmount",
     dateOfDeathId -> "dateOfDeath",
-    estateHasPropertyId -> "estateHasProperty",
     grossEstateValueId -> "grossEstateValue",
     propertyValueId -> "propertyValue",
     percentageCloselyInheritedId -> "percentageCloselyInherited",

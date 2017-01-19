@@ -18,6 +18,9 @@
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
 
+        <h2>@messages("property_value_after_exemption.value.title")</h2>
+        <p>@messages("property_value_after_exemption.value.guidance")</p>
+
         @rnrbHelpers.input_text(
             id = "value",
             name = "value",
@@ -26,6 +29,10 @@
             secondaryLabel = Some("currency"),
             errorKey = FormHelpers.getErrorByKey(form, "value")
         )
+
+        <h2>@messages("property_value_after_exemption.value_closely_inherited.title")</h2>
+        <p>@messages("property_value_after_exemption.value_closely_inherited.guidance")</p>
+
         @rnrbHelpers.input_text(
             id = "valueCloselyInherited",
             name = "valueCloselyInherited",

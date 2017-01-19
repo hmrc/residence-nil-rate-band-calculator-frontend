@@ -25,9 +25,9 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase {
 
   "Date of Death Controller" must {
 
-    def createView = (value: Option[Date]) => value match {
+    def createView = (value: Option[Map[String, String]]) => value match {
       case None => date_of_death(frontendAppConfig)(fakeRequest, messages)
-      case Some(v) => date_of_death(frontendAppConfig, Some(DateForm().fill(v)))(fakeRequest, messages)
+      case Some(v) => date_of_death(frontendAppConfig, Some(DateForm().bind(v)))(fakeRequest, messages)
     }
 
     def createController = () => new DateOfDeathController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
