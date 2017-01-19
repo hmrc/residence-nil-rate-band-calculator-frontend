@@ -16,10 +16,13 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
+import org.jsoup.select.Elements
 import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.forms.ExitQuestionnaireForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.ExitQuestionnaire
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exit_questionnaire
+
+import scala.concurrent.Future
 
 class ExitQuestionnaireViewSpec extends ViewSpecBase {
 
@@ -36,6 +39,44 @@ class ExitQuestionnaireViewSpec extends ViewSpecBase {
 
   "Exit Questionnaire view" when {
     "rendered" must {
+
+      "contain a legend for the service feel" in {
+        val doc = asDocument(createView(None))
+        assertContainsMessages(doc, messages(s"$messageKeyPrefix.service_feel.label"))
+      }
+
+      "contain radio buttons for service feel" in {
+        val doc = asDocument(createView(None))
+        assertContainsRadioButton(doc, "service_feel.very_satisfied", "serviceFeel", "very_satisfied", false)
+        assertContainsRadioButton(doc, "service_feel.satisfied", "serviceFeel", "satisfied", false)
+        assertContainsRadioButton(doc, "service_feel.neither", "serviceFeel", "neither", false)
+        assertContainsRadioButton(doc, "service_feel.dissatisfied", "serviceFeel", "dissatisfied", false)
+        assertContainsRadioButton(doc, "service_feel.very_dissatisfied", "serviceFeel", "very_dissatisfied", false)
+      }
+
+      "contain a legend for the service difficulty" in {
+        val doc = asDocument(createView(None))
+        assertContainsMessages(doc, messages(s"$messageKeyPrefix.service_difficulty.label"))
+      }
+
+      "contain radio buttons for service difficuly" in {
+        val doc = asDocument(createView(None))
+        assertContainsRadioButton(doc, "service_difficulty.very_easy", "serviceDifficulty", "very_easy", false)
+        assertContainsRadioButton(doc, "service_difficulty.easy", "serviceDifficulty", "easy", false)
+        assertContainsRadioButton(doc, "service_difficulty.neither", "serviceDifficulty", "neither", false)
+        assertContainsRadioButton(doc, "service_difficulty.difficult", "serviceDifficulty", "difficult", false)
+        assertContainsRadioButton(doc, "service_difficulty.very_difficult", "serviceDifficulty", "very_difficult", false)
+      }
+
+      "contain a label for the comments" in {
+        val doc = asDocument(createView(None))
+        assertContainsLabel(doc, "comments", messages(s"$messageKeyPrefix.comments.label"))
+      }
+
+      "contain a textarea for the comments" in {
+        val doc = asDocument(createView(None))
+        assertRenderedById(doc, "comments")
+      }
 
       "contain a label for the full name" in {
         val doc = asDocument(createView(None))

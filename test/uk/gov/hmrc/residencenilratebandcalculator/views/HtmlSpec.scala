@@ -86,4 +86,15 @@ trait HtmlSpec extends UnitSpec with WithFakeApplication { self: UnitSpec =>
   def assertElementHasClass(doc: Document, id: String, expectedClass: String) = {
     assert(doc.getElementById(id).hasClass(expectedClass), s"\n\nElement $id does not have class $expectedClass")
   }
+
+  def assertContainsRadioButton(doc: Document, id: String, name: String, value: String, isChecked: Boolean) = {
+    assertRenderedById(doc, id)
+    val radio = doc.getElementById(id)
+    assert(radio.attr("name") == name, s"\n\nElement $id does not have name $name")
+    assert(radio.attr("value") == value, s"\n\nElement $id does not have value $value")
+    isChecked match {
+      case true => assert(radio.attr("checked") == "true", s"\n\nElement $id is not checked")
+      case _ => assert(!radio.hasAttr("checked") || radio.attr("checked") == "false", s"\n\nElement $id is checked")
+    }
+  }
 }
