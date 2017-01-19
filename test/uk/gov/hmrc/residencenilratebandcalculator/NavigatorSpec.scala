@@ -91,10 +91,10 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.estateHasPropertyId)(mockCacheMap) shouldBe routes.PropertyValueController.onPageLoad()
     }
 
-    "return a call to the AnyDownsizingAllowance onPageLoad method when there is not a property in the estate" in {
+    "return a call to the AnyBroughtForwardAllowance onPageLoad method when there is not a property in the estate" in {
       val mockCacheMap = mock[CacheMap]
       when(mockCacheMap.getEntry[Boolean](matches(Constants.estateHasPropertyId))(any())) thenReturn Some(false)
-      navigator.nextPage(Constants.estateHasPropertyId)(mockCacheMap) shouldBe routes.AnyDownsizingAllowanceController.onPageLoad()
+      navigator.nextPage(Constants.estateHasPropertyId)(mockCacheMap) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
     }
 
     "return a call to the HomeController onPageLoad method when there is no indication that there is a property in the estate" in {
