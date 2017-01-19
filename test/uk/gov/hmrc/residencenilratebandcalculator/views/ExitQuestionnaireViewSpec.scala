@@ -22,8 +22,6 @@ import uk.gov.hmrc.residencenilratebandcalculator.forms.ExitQuestionnaireForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.ExitQuestionnaire
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exit_questionnaire
 
-import scala.concurrent.Future
-
 class ExitQuestionnaireViewSpec extends ViewSpecBase {
 
   val messageKeyPrefix = "exit_questionnaire"
@@ -119,8 +117,8 @@ class ExitQuestionnaireViewSpec extends ViewSpecBase {
 
     "rendered with a valid form" must {
 
-      val serviceDifficulty = "a"
-      val serviceFeel = "b"
+      val serviceDifficulty = ExitQuestionnaire.EASY
+      val serviceFeel = ExitQuestionnaire.SATISFIED
       val comments = "c"
       val fullName = "d"
       val email = "e"
@@ -129,17 +127,17 @@ class ExitQuestionnaireViewSpec extends ViewSpecBase {
       def filledForm = ExitQuestionnaireForm().fill(
         ExitQuestionnaire(Some(serviceDifficulty), Some(serviceFeel), Some(comments), Some(fullName), Some(email), Some(phoneNumber)))
 
-      "include the form's full name in the correct input input" in {
+      "include the form's full name in the correct input" in {
         val doc = asDocument(createView(Some(filledForm)))
         doc.getElementById("fullName").attr("value") shouldBe fullName
       }
 
-      "include the form's email in the correct input input" in {
+      "include the form's email in the correct input" in {
         val doc = asDocument(createView(Some(filledForm)))
         doc.getElementById("email").attr("value") shouldBe email
       }
 
-      "include the form's phone number in the correct input input" in {
+      "include the form's phone number in the correct input" in {
         val doc = asDocument(createView(Some(filledForm)))
         doc.getElementById("phoneNumber").attr("value") shouldBe phoneNumber
       }
