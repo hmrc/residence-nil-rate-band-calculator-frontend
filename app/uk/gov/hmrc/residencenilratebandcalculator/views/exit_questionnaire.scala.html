@@ -1,5 +1,6 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.play.views.html._
+@import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.{FormHelpers, ExitQuestionnaireFormHelper}
 @import uk.gov.hmrc.residencenilratebandcalculator.models.ExitQuestionnaire
 
@@ -18,7 +19,7 @@
     <p>@messages("exit_questionnaire.guidance")</p>
 
     @* TODO : wrap in sign-out form or change to a link *@
-    @rnrbHelpers.button(messageKey = "service.no_thanks")
+    @rnrbHelpers.button_link(messageKey = "service.no_thanks", href=ThankYouController.onPageLoad().url)
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ExitQuestionnaireController.onSubmit(), 'autoComplete -> "off") {
 

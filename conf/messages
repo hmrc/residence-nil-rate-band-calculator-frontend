@@ -167,7 +167,7 @@ results.applicableNilRateBandAmount.label = The Residential Enhancement at the d
 results.defaultAllowanceAmount.label = Adding these two figures together gives the Default Allowance at the date of death of
 results.link_to_exit_questionnaire.text = Complete a short survey
 
-service.no_thanks = No thanks - sign me out
+service.no_thanks = No thanks
 
 service_difficulty.very_easy = Very easy
 service_difficulty.easy = Easy

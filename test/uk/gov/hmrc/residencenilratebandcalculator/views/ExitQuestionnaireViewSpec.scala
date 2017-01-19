@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import org.jsoup.select.Elements
+import uk.gov.hmrc.residencenilratebandcalculator.controllers._
 import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.forms.ExitQuestionnaireForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.ExitQuestionnaire
@@ -39,6 +39,14 @@ class ExitQuestionnaireViewSpec extends ViewSpecBase {
 
   "Exit Questionnaire view" when {
     "rendered" must {
+
+      "contain a 'no thanks' link" in {
+        val doc = asDocument(createView(None))
+        val links = doc.select("a.button")
+        links.size shouldBe 1
+        links.first.text shouldBe messages("service.no_thanks")
+        links.first.attr("href") shouldBe routes.ThankYouController.onPageLoad().url
+      }
 
       "contain a legend for the service feel" in {
         val doc = asDocument(createView(None))
