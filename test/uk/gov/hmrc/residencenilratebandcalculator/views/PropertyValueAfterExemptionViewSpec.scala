@@ -46,6 +46,16 @@ class PropertyValueAfterExemptionViewSpec extends ViewSpecBase {
     "behave correctly" when {
       "rendered" must {
 
+        "contain a title for the value" in {
+          val doc = asDocument(createView(None))
+          assertContainsMessages(doc, "property_value_after_exemption.value.title")
+        }
+
+        "contain guidance for the value" in {
+          val doc = asDocument(createView(None))
+          assertContainsMessages(doc, "property_value_after_exemption.value.guidance")
+        }
+
         "contain a label for the value" in {
           val doc = asDocument(createView(None))
           assertContainsLabel(doc, "value", messages("property_value_after_exemption.value.label"))
@@ -54,6 +64,16 @@ class PropertyValueAfterExemptionViewSpec extends ViewSpecBase {
         "contain an input for the value" in {
           val doc = asDocument(createView(None))
           assertRenderedById(doc, "value")
+        }
+
+        "contain a title for the value closely inherited" in {
+          val doc = asDocument(createView(None))
+          assertContainsMessages(doc, "property_value_after_exemption.value_closely_inherited.title")
+        }
+
+        "contain guidance for the value closely inherited" in {
+          val doc = asDocument(createView(None))
+          assertContainsMessages(doc, "property_value_after_exemption.value_closely_inherited.guidance")
         }
 
         "contain a label for the value closely inherited" in {
