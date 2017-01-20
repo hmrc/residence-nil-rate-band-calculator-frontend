@@ -32,8 +32,7 @@ import scala.concurrent.Future
 @Singleton
 class ExitQuestionnaireController @Inject()(val appConfig: FrontendAppConfig,
                                             val messagesApi: MessagesApi,
-                                            val auditConnector: FrontendAuditConnector,
-                                            val navigator: Navigator) extends FrontendController with I18nSupport {
+                                            val auditConnector: FrontendAuditConnector) extends FrontendController with I18nSupport {
 
 
   def onPageLoad = Action.async { implicit request =>
