@@ -19,20 +19,16 @@ package uk.gov.hmrc.residencenilratebandcalculator.repositories
 import javax.inject.{Inject, Singleton}
 
 import play.modules.reactivemongo.MongoDbConnection
+import reactivemongo.api._
+import reactivemongo.bson.BSONObjectID
 import uk.gov.hmrc.http.cache.client.CacheMap
-import reactivemongo.bson.{BSONDocument, BSONObjectID}
+import uk.gov.hmrc.mongo.ReactiveRepository
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import reactivemongo.api.indexes.{Index, IndexType}
-import reactivemongo.api.{BSONSerializationPack, GenericDB, _}
-import reactivemongo.bson.{BSONDocument, BSONObjectID}
-import uk.gov.hmrc.mongo.{ReactiveRepository, Repository}
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
-
 import scala.concurrent.Future
 import scala.util.Try
 
-class SessionRepository(implicit mongo: () => DefaultDB)
+class SessionRepository(mongo: () => DefaultDB)
   extends ReactiveRepository[CacheMap, BSONObjectID]("residenceNilRateBand", mongo, CacheMap.formats) {
 
   def upsert(body: CacheMap): Future[Boolean] = {
@@ -45,13 +41,17 @@ class SessionRepository(implicit mongo: () => DefaultDB)
     Try {
       BSONObjectID(sessionId)
     }.map { id: BSONObjectID =>
-      findById(id)}.recover {case _: IllegalArgumentException => Future.successful(None)}.get
-   }
+      findById(id)
+    }.recover { case _: IllegalArgumentException => Future.successful(None) }.get
+  }
 }
 
-object SessionRepositoryPrime extends MongoDbConnection {
+@Singleton
+class SessionRepositoryPrime @Inject()() {
 
-  private lazy val sessionRepository = new SessionRepository
+  class DbConnection extends MongoDbConnection
+
+  private lazy val sessionRepository = new SessionRepository(new DbConnection().db)
 
   def apply(): SessionRepository = sessionRepository
 }
