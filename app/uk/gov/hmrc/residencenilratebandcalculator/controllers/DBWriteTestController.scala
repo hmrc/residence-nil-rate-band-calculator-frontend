@@ -19,20 +19,21 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import javax.inject.{Inject, Singleton}
 
 import play.api.libs.json.{JsNumber, JsValue}
-import play.api.mvc.{Action, Result}
+import play.api.mvc.Action
 import play.api.mvc.Results._
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.repositories.SessionRepositoryPrime
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
 @Singleton
-class DBWriteTestController @Inject()(val appConfig: FrontendAppConfig) {
+class DBWriteTestController @Inject()(val sessionRepository: SessionRepositoryPrime) {
 
-  def onPageLoad() = Action.async { request =>
-    val theMap: Map[String, JsValue] = Map("aKey" -> JsNumber(44))
-    val cm: CacheMap = CacheMap("ID", theMap)
-    SessionRepositoryPrime().upsert(cm).map { b => Ok(b.toString) }
+  def onPageLoad() = Action.async {
+    _ => {
+      val theMap: Map[String, JsValue] = Map("aKey" -> JsNumber(42))
+      val cm: CacheMap = CacheMap("ID", theMap)
+      sessionRepository().upsert(cm).map { b => Ok(b.toString) }
+    }
   }
 }

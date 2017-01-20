@@ -16,18 +16,19 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.repositories
 
+import javax.inject.{Inject, Singleton}
+
 import play.api.libs.json.Json
 import play.modules.reactivemongo.MongoDbConnection
 import reactivemongo.api.DefaultDB
+import reactivemongo.bson.{BSONDocument, BSONObjectID}
 import uk.gov.hmrc.http.cache.client.CacheMap
-
-import scala.concurrent.ExecutionContext.Implicits.global
-import reactivemongo.bson.{BSON, BSONDocument, BSONObjectID}
 import uk.gov.hmrc.mongo.ReactiveRepository
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class SessionRepository(implicit mongo: () => DefaultDB)
+class SessionRepository(mongo: () => DefaultDB)
   extends ReactiveRepository[CacheMap, BSONObjectID]("residenceNilRateBand", mongo, CacheMap.formats) {
 
   def upsert(cm: CacheMap): Future[Boolean] = {
@@ -45,9 +46,12 @@ class SessionRepository(implicit mongo: () => DefaultDB)
   }
 }
 
-object SessionRepositoryPrime extends MongoDbConnection {
+@Singleton
+class SessionRepositoryPrime @Inject()() {
 
-  private lazy val sessionRepository = new SessionRepository
+  class DbConnection extends MongoDbConnection
+
+  private lazy val sessionRepository = new SessionRepository(new DbConnection().db)
 
   def apply(): SessionRepository = sessionRepository
 }
