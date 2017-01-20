@@ -16,13 +16,10 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import java.io.Serializable
 import javax.inject.{Inject, Singleton}
 
-import play.api.libs.json.{JsNumber, JsValue}
 import play.api.mvc.Action
 import play.api.mvc.Results._
-import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.repositories.SessionRepositoryPrime
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -31,7 +28,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 class DBReadTestController @Inject()(val sessionRepository: SessionRepositoryPrime) {
 
   def onPageLoad() = Action.async { request =>
-    sessionRepository().get("ID").map {ss =>
+    sessionRepository().get("ID").map { ss =>
       Ok(ss.toString())
     }
   }
