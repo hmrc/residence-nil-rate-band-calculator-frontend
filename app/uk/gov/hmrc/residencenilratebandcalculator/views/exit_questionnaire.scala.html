@@ -18,7 +18,6 @@
 
     <p>@messages("exit_questionnaire.guidance")</p>
 
-    @* TODO : wrap in sign-out form or change to a link *@
     @rnrbHelpers.button_link(messageKey = "service.no_thanks", href=ThankYouController.onPageLoad().url)
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ExitQuestionnaireController.onSubmit(), 'autoComplete -> "off") {
@@ -39,7 +38,6 @@
             inputs = ExitQuestionnaire.serviceDifficultyOptions
         )
 
-
         @rnrbHelpers.input_textarea(
             id = "comments",
             name = "comments",
@@ -48,8 +46,6 @@
             errorKey = FormHelpers.getErrorByKey(form, "comments")
         )
 
-
-        <!--<p class="font-xsmall">@messages("exit_questionnaire.comments.help.1")</p>-->
         <p>@messages("exit_questionnaire.comments.help.2")</p>
 
         <h2>@messages("exit_questionnaire.user_research.title")</h2>
