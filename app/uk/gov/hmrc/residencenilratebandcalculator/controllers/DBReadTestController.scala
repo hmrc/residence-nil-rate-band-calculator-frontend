@@ -20,20 +20,18 @@ import java.io.Serializable
 import javax.inject.{Inject, Singleton}
 
 import play.api.libs.json.{JsNumber, JsValue}
-import play.api.mvc.{Action, Result}
+import play.api.mvc.Action
 import play.api.mvc.Results._
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.repositories.SessionRepositoryPrime
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-
 @Singleton
-class DBReadTestController @Inject()(val appConfig: FrontendAppConfig) {
+class DBReadTestController @Inject()(val sessionRepository: SessionRepositoryPrime) {
 
   def onPageLoad() = Action.async { request =>
-    SessionRepositoryPrime().get("ID").map {ss =>
+    sessionRepository().get("ID").map {ss =>
       Ok(ss.toString())
     }
   }
