@@ -65,5 +65,5 @@ GET        /style-guide                                 uk.gov.hmrc.residencenil
 GET        /value-of-disposed-property                  uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfDisposedPropertyController.onPageLoad
 POST       /value-of-disposed-property                  uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfDisposedPropertyController.onSubmit
 
-GET        /test                                        uk.gov.hmrc.residencenilratebandcalculator.controllers.DBTestController.onPageLoad
-
+GET        /testw                                        uk.gov.hmrc.residencenilratebandcalculator.controllers.DBWriteTestController.onPageLoad
+GET        /testr                                        uk.gov.hmrc.residencenilratebandcalculator.controllers.DBReadTestController.onPageLoad

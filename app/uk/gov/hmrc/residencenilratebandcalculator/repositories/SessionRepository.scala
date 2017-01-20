@@ -16,37 +16,33 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.repositories
 
-import javax.inject.{Inject, Singleton}
-
+import play.api.libs.json.Json
 import play.modules.reactivemongo.MongoDbConnection
+import reactivemongo.api.DefaultDB
 import uk.gov.hmrc.http.cache.client.CacheMap
-import reactivemongo.bson.{BSONDocument, BSONObjectID}
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import reactivemongo.api.indexes.{Index, IndexType}
-import reactivemongo.api.{BSONSerializationPack, GenericDB, _}
-import reactivemongo.bson.{BSONDocument, BSONObjectID}
-import uk.gov.hmrc.mongo.{ReactiveRepository, Repository}
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+import reactivemongo.bson.{BSON, BSONDocument, BSONObjectID}
+import uk.gov.hmrc.mongo.ReactiveRepository
 
 import scala.concurrent.Future
-import scala.util.Try
 
 class SessionRepository(implicit mongo: () => DefaultDB)
   extends ReactiveRepository[CacheMap, BSONObjectID]("residenceNilRateBand", mongo, CacheMap.formats) {
 
-  def upsert(body: CacheMap): Future[Boolean] = {
-    collection.insert(body).map { lastError =>
+  def upsert(cm: CacheMap): Future[Boolean] = {
+    val selector = BSONDocument("id" -> cm.id)
+    val cmDocument = Json.toJson(cm)
+    val modifier = BSONDocument("$set" -> cmDocument)
+
+    collection.update(selector, modifier, upsert = true).map { lastError =>
       lastError.ok
     }
   }
 
-  def get(sessionId: String): Future[Option[CacheMap]] = {
-    Try {
-      BSONObjectID(sessionId)
-    }.map { id: BSONObjectID =>
-      findById(id)}.recover {case _: IllegalArgumentException => Future.successful(None)}.get
-   }
+  def get(id: String): Future[Seq[CacheMap]] = {
+    collection.find(Json.obj("id" -> id)).cursor[CacheMap]().collect[Seq]()
+  }
 }
 
 object SessionRepositoryPrime extends MongoDbConnection {

@@ -28,12 +28,11 @@ import uk.gov.hmrc.residencenilratebandcalculator.repositories.SessionRepository
 import scala.concurrent.ExecutionContext.Implicits.global
 
 @Singleton
-class DBTestController @Inject()(val appConfig: FrontendAppConfig) {
+class DBWriteTestController @Inject()(val appConfig: FrontendAppConfig) {
 
   def onPageLoad() = Action.async { request =>
-    val theMap: Map[String, JsValue] = Map("aKey" -> JsNumber(42))
+    val theMap: Map[String, JsValue] = Map("aKey" -> JsNumber(44))
     val cm: CacheMap = CacheMap("ID", theMap)
-    println("%%%%%%%%%%%%%%%%%I executed DBTest!!!!%%%%%%%%%%%%%%")
     SessionRepositoryPrime().upsert(cm).map { b => Ok(b.toString) }
   }
 }
