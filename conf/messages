@@ -104,7 +104,6 @@ estate_has_property.summary = Does the deceased’s estate include any residenti
 exit_questionnaire.browser_title = Survey
 exit_questionnaire.title = Survey
 exit_questionnaire.comments.label = How could we improve this service?
-exit_questionnaire.comments.help.1 = (Limit is 1200 characters)
 exit_questionnaire.comments.help.2 = Please don’t include any personal or financial details, like your National Insurance or credit card numbers.
 exit_questionnaire.email.label = Email
 exit_questionnaire.full_name.label = Full name
@@ -187,6 +186,7 @@ site.continue = Continue
 site.back = Back
 site.change = Change
 site.hidden-change = Change details about {0}
+site.textarea.char_limit = (Limit is 1200 characters)
 
 thank_you.browser_title = Thank You
 thank_you.title = Thank You
