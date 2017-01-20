@@ -1,0 +1,30 @@
+@import uk.gov.hmrc.residencenilratebandcalculator.models.{ExitQuestionnaire,QuestionnaireOption}
+
+@(
+name: String,
+legend: String,
+legendClass: Option[String] = None,
+errorKey: String,
+value: Option[String] = None,
+hint: Option[String] = None,
+inputs: Seq[QuestionnaireOption]
+)(implicit messages: Messages)
+
+<div class="form-field">
+    <fieldset class="form-group">
+        <legend class="bold-small @if(legendClass != ""){@legendClass}">@legend</legend>
+        @if(hint != ""){
+        <span class="form-hint">@hint</span>
+        }
+        @if(errorKey != ""){
+        <span class="error-notification" id="error-message-this-input">@messages(errorKey)</span>
+        }
+        @for(input <- inputs) {
+        <label class="block-label selection-button-radio" for="@{input.id}">
+            <input id="@{input.id}" type="radio" name="@{name}" value="@{input.value}" @if(value == Some(input.value)){checked="checked"} />
+            @messages(input.messageKey)
+        </label>
+        }
+
+    </fieldset>
+</div>

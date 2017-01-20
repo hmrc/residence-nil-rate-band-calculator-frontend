@@ -1,0 +1,11 @@
+@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+
+@(appConfig: FrontendAppConfig)(implicit request: Request[_], messages: Messages)
+
+@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+    title = messages("thank_you.browser_title"),
+    appConfig = appConfig,
+    bodyClasses = None) {
+
+    <h1>@messages("thank_you.title")</h1>
+}

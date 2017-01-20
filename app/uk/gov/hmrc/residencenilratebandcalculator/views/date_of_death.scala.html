@@ -17,14 +17,14 @@
 
     <p>@messages("date_of_death.guidance")</p>
 
-    <p>@messages("date_of_death.example")</p>
-
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
 
         @rnrbHelpers.input_date(
             label = messages("date_of_death.label"),
+            legendClass = "visually-hidden",
+            hint = Some(messages("date_of_death.example")),
             errorKey = FormHelpers.getErrorByKey(form, ""),
             valueDay = Some(FormHelpers.getDatePart(form, Day).toString),
             valueMonth = Some(FormHelpers.getDatePart(form, Month).toString),

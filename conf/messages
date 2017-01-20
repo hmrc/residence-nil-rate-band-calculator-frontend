@@ -60,7 +60,7 @@ brought_forward_allowance_on_disposal.summary =
 chargeable_transfer_amount.question_number = Question 3
 chargeable_transfer_amount.browser_title = Question page
 chargeable_transfer_amount.title = What is the amount of the chargeable transfer on death?
-chargeable_transfer_amount.guidance = This is the net value transferred on death, AFTER reliefs and exemptions. It does not include any lifetime transfers within 7 years of death thar are taken into account in working out the total inheritance tax liability.
+chargeable_transfer_amount.guidance = This is the net value transferred on death, AFTER reliefs and exemptions. It does not include any lifetime transfers within 7 years of death that are taken into account in working out the total inheritance tax liability.
 chargeable_transfer_amount.label =
 chargeable_transfer_amount.summary = Amount of the chargeable transfer on death
 
@@ -77,7 +77,7 @@ date_of_death.browser_title = Question page
 date_of_death.title = What is the date of death for the deceased?
 date_of_death.guidance = If the date of death is before 6 April 2017 RNRB is not due
 date_of_death.example = For example, 31 3 1980
-date_of_death.label =
+date_of_death.label = Date of death
 date_of_death.summary = Date of death for the deceased
 
 date_of_disposal.question_number = Question 12
@@ -100,6 +100,19 @@ estate_has_property.title = Does the deceased’s estate include any residential
 estate_has_property.guidance = Answer ''Yes'' if the deceased’s estate includes a property that they ever lived in as their residence while they owned the property. This does not need to be a residence that is being left to the deceased’s children or remoter descendants.
 estate_has_property.label =
 estate_has_property.summary = Does the deceased’s estate include any residential property that has ever been the deceased’s residence while they owned that property?
+
+exit_questionnaire.browser_title = Survey
+exit_questionnaire.title = Survey
+exit_questionnaire.comments.label = How could we improve this service?
+exit_questionnaire.comments.help.2 = Please don’t include any personal or financial details, like your National Insurance or credit card numbers.
+exit_questionnaire.email.label = Email
+exit_questionnaire.full_name.label = Full name
+exit_questionnaire.phone_number.label = Phone number
+exit_questionnaire.service_feel.label = How do you feel about your experience using this service today?
+exit_questionnaire.service_difficulty.label = How easy was it to do what you wanted?
+exit_questionnaire.guidance = Please complete this short survey to help us improve the service. The survey should take no more than 2 minutes.
+exit_questionnaire.user_research.title = We’re looking for people to help us with user research.
+exit_questionnaire.user_research.guidance = This will help improve the service. If you would like to be contacted with more details about the user research, enter your name and contact details below.
 
 gross_estate_value.question_number = Question 2
 gross_estate_value.browser_title = Question page
@@ -151,6 +164,21 @@ results.residenceNilRateAmount.label = The Residence Nil Rate Band (RNRB) availa
 results.carryForwardAmount.label = The amount of unused residence Nil Rate Band available to be carried forward is
 results.applicableNilRateBandAmount.label = The Residential Enhancement at the date of death is
 results.defaultAllowanceAmount.label = Adding these two figures together gives the Default Allowance at the date of death of
+results.link_to_exit_questionnaire.text = Complete a short survey
+
+service.no_thanks = No thanks
+
+service_difficulty.very_easy = Very easy
+service_difficulty.easy = Easy
+service_difficulty.neither = Neither easy or difficult
+service_difficulty.difficult = Difficult
+service_difficulty.very_difficult = Very difficult
+
+service_feel.very_satisfied = Very satisfied
+service_feel.satisfied = Satisfied
+service_feel.neither = Neither satisfied or dissatisfied
+service_feel.dissatisfied = Dissatisfied
+service_feel.very_dissatisfied = Very dissatisfied
 
 site.no = No
 site.yes = Yes
@@ -158,6 +186,10 @@ site.continue = Continue
 site.back = Back
 site.change = Change
 site.hidden-change = Change details about {0}
+site.textarea.char_limit = (Limit is 1200 characters)
+
+thank_you.browser_title = Thank You
+thank_you.title = Thank You
 
 value_of_disposed_property.question_number = Question 13
 value_of_disposed_property.title = What was the value of the property interest disposed of?

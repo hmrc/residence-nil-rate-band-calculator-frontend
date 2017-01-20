@@ -19,6 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import play.api.http.Status
 import play.api.libs.json.{Reads, Writes}
 import play.api.i18n._
+import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
@@ -26,6 +27,7 @@ import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 
+import scala.concurrent.Future
 import scala.reflect.ClassTag
 
 trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {

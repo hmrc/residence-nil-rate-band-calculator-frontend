@@ -1,5 +1,6 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
+@import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 @import scala.util.{Try, Success, Failure}
 
 @(appConfig: FrontendAppConfig, calculationResult: Try[CalculationResult])(implicit request: Request[_], messages: Messages)
@@ -48,4 +49,8 @@
             case Success(cr) => cr.carryForwardAmount.toString
         }
     }
+    
+    <p>
+        <a href="@routes.ExitQuestionnaireController.onPageLoad().url">@messages("results.link_to_exit_questionnaire.text")</a>
+    </p>
 }
