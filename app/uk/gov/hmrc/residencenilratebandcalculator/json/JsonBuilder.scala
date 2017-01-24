@@ -38,18 +38,17 @@ class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
   private val validator = SchemaValidator()
   private var cachedSchema: Option[SchemaType] = None
 
-  private def getSchema: Future[Try[SchemaType]] = {
-    if (cachedSchema.isDefined) {
-      Future.successful(Success(cachedSchema.get))
-    } else {
+  private def getSchema = cachedSchema match {
+    case Some(schema) => Future.successful(Success(schema))
+    case None =>
       rnrbConnector.getSuccessfulResponseSchema.map {
         case Success(schema) =>
           cachedSchema = Some(schema)
           Success(schema)
         case Failure(exception) => Failure(exception)
-      }
     }
   }
+
 
   private def dateOfDeathIsIneligible(cacheMap: CacheMap): Boolean = {
     val optionDod = cacheMap.getEntry[String](Constants.dateOfDeathId)
