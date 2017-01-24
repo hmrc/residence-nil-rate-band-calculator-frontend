@@ -35,40 +35,41 @@ import scala.util.{Failure, Success}
 
 class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with WithFakeApplication with MockSessionConnector {
 
+  val schema = """{
+                 |"$$schema": "http://json-schema.org/draft-04/schema#",
+                 |"title": "Test RNRB Schema",
+                 |"description": "A simple schema to test against",
+                 |"type:": "object",
+                 |"properties": {
+                 |  "chargeableTransferAmount": {"type": "integer", "minimum": 0},
+                 |  "dateOfDeath": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+                 |  "grossEstateValue": {"type": "integer", "minimum": 0},
+                 |  "propertyValue": {"type": "integer", "minimum": 0},
+                 |  "percentageCloselyInherited": {"type": "integer", "minimum": 0, "maximum": 100},
+                 |  "propertyValueAfterExemption": {
+                 |    "type": "object",
+                 |    "properties": {
+                 |      "value": {"type": "integer", "minimum": 0},
+                 |      "valueCloselyInherited": {"type": "integer", "minimum": 0}
+                 |    },
+                 |    "required": ["value", "valueCloselyInherited"]
+                 |  },
+                 |  "downsizingDetails": {
+                 |    "type": "object",
+                 |    "properties": {
+                 |       "dateOfDisposal": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+                 |       "valueOfDisposedProperty": {"type": "integer", "minimum": 0},
+                 |       "valueCloselyInherited": {"type": "integer", "minimum": 0},
+                 |       "broughtForwardAllowanceAtDisposal": {"type": "integer", "minimum": 0}
+                 |    },
+                 |    "required": ["dateOfDisposal", "valueOfDisposedProperty", "valueCloselyInherited", "broughtForwardAllowanceAtDisposal"]
+                 |  }
+                 |},
+                 |"required": ["chargeableTransferAmount", "dateOfDeath", "grossEstateValue", "propertyValue", "percentageCloselyInherited"]
+      }""".stripMargin
+
   val rnrbConnector = mock[RnrbConnector]
-  when(rnrbConnector.getSuccessfulResponseSchema) thenReturn Future.successful(
-    Success[SchemaType](Json.fromJson[SchemaType](Json.parse("""{
-        |"$$schema": "http://json-schema.org/draft-04/schema#",
-        |"title": "Test RNRB Schema",
-        |"description": "A simple schema to test against",
-        |"type:": "object",
-        |"properties": {
-        |  "chargeableTransferAmount": {"type": "integer", "minimum": 0},
-        |  "dateOfDeath": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
-        |  "grossEstateValue": {"type": "integer", "minimum": 0},
-        |  "propertyValue": {"type": "integer", "minimum": 0},
-        |  "percentageCloselyInherited": {"type": "integer", "minimum": 0, "maximum": 100},
-        |  "propertyValueAfterExemption": {
-        |    "type": "object",
-        |    "properties": {
-        |      "value": {"type": "integer", "minimum": 0},
-        |      "valueCloselyInherited": {"type": "integer", "minimum": 0}
-        |    },
-        |    "required": ["value", "valueCloselyInherited"]
-        |  },
-        |  "downsizingDetails": {
-        |    "type": "object",
-        |    "properties": {
-        |       "dateOfDisposal": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
-        |       "valueOfDisposedProperty": {"type": "integer", "minimum": 0},
-        |       "valueCloselyInherited": {"type": "integer", "minimum": 0},
-        |       "broughtForwardAllowanceAtDisposal": {"type": "integer", "minimum": 0}
-        |    },
-        |    "required": ["dateOfDisposal", "valueOfDisposedProperty", "valueCloselyInherited", "broughtForwardAllowanceAtDisposal"]
-        |  }
-        |},
-        |"required": ["chargeableTransferAmount", "dateOfDeath", "grossEstateValue", "propertyValue", "percentageCloselyInherited"]
-      }""".stripMargin)).get))
+  when(rnrbConnector.getSuccessfulResponseSchema) thenReturn Future.successful(Success[SchemaType](Json.fromJson[SchemaType](Json.parse(schema)).get))
 
   "JsonBuilder" must {
 
@@ -736,14 +737,30 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
     }
   }
 
-  "only get the schema once" in {
+  "only get the schema once when it is successfully retrieved" in {
+    val hc = mock[HeaderCarrier]
+    val rnrbConnector = mock[RnrbConnector]
+    when(rnrbConnector.getSuccessfulResponseSchema) thenReturn Future.successful(Success[SchemaType](Json.fromJson[SchemaType](Json.parse(schema)).get))
+
     val jsonBuilder = new JsonBuilder(rnrbConnector)
 
-    val hc = mock[HeaderCarrier]
-    jsonBuilder.build(mockSessionConnector)(hc)
-    jsonBuilder.build(mockSessionConnector)(hc)
+    val x = jsonBuilder.build(mockSessionConnector)(hc)
+    val y = jsonBuilder.build(mockSessionConnector)(hc)
 
     verify(rnrbConnector, times(1)).getSuccessfulResponseSchema
+  }
+
+  "try to get the schema again when the first call to retrieve it fails" in {
+    val hc = mock[HeaderCarrier]
+    val rnrbConnector = mock[RnrbConnector]
+    when(rnrbConnector.getSuccessfulResponseSchema).thenReturn(Failure(new JsonInvalidException("An error")))
+
+    val jsonBuilder = new JsonBuilder(rnrbConnector)
+
+    val x = jsonBuilder.build(mockSessionConnector)(hc)
+    val y = jsonBuilder.build(mockSessionConnector)(hc)
+
+    verify(rnrbConnector, times(2)).getSuccessfulResponseSchema
   }
 
   "handleEstateHasProperty" must {
