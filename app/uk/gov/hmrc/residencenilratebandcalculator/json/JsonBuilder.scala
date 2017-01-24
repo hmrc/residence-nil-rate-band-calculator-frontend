@@ -36,14 +36,15 @@ import scala.util.{Failure, Success, Try}
 class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
 
   private val validator = SchemaValidator()
-  private var cachedSchema: SchemaType = _
+  private var cachedSchema: Option[SchemaType] = None
 
   private def getSchema: Future[Try[SchemaType]] = {
-    if (cachedSchema != null) Future.successful(Success(cachedSchema))
-    else {
+    if (cachedSchema.isDefined) {
+      Future.successful(Success(cachedSchema.get))
+    } else {
       rnrbConnector.getSuccessfulResponseSchema.map {
         case Success(schema) =>
-          cachedSchema = schema
+          cachedSchema = Some(schema)
           Success(schema)
         case Failure(exception) => Failure(exception)
       }
