@@ -20,7 +20,6 @@ import javax.inject.{Inject, Singleton}
 
 import com.eclipsesource.schema.{SchemaType, SchemaValidator}
 import org.joda.time.LocalDate
-import play.api.data.validation.ValidationError
 import play.api.libs.json._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.HeaderCarrier
@@ -36,8 +35,20 @@ import scala.util.{Failure, Success, Try}
 @Singleton
 class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
 
-  private lazy val futureSchema = rnrbConnector.getSuccessfulResponseSchema
   private val validator = SchemaValidator()
+  private var cachedSchema: SchemaType = _
+
+  private def getSchema: Future[Try[SchemaType]] = {
+    if (cachedSchema != null) Future.successful(Success(cachedSchema))
+    else {
+      rnrbConnector.getSuccessfulResponseSchema.map {
+        case Success(schema) =>
+          cachedSchema = schema
+          Success(schema)
+        case Failure(exception) => Failure(exception)
+      }
+    }
+  }
 
   private def dateOfDeathIsIneligible(cacheMap: CacheMap): Boolean = {
     val optionDod = cacheMap.getEntry[String](Constants.dateOfDeathId)
@@ -54,7 +65,7 @@ class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
   }
 
   def buildFromCacheMap(cacheMap: CacheMap): Future[Try[JsValue]] = {
-    futureSchema.map {
+    getSchema.map {
       case Success(schema) => {
         val incomingJson = Json.toJson(constructDataFromCacheMap(cacheMap))
         val validationResult = validator.validate(schema, incomingJson).asEither
