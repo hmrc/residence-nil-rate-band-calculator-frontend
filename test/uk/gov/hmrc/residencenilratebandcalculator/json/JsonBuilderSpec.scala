@@ -68,7 +68,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
                  |"required": ["chargeableTransferAmount", "dateOfDeath", "grossEstateValue", "propertyValue", "percentageCloselyInherited"]
       }""".stripMargin
 
-  val rnrbConnector = mock[RnrbConnector]
+  var rnrbConnector = mock[RnrbConnector]
   when(rnrbConnector.getSuccessfulResponseSchema) thenReturn Future.successful(Success[SchemaType](Json.fromJson[SchemaType](Json.parse(schema)).get))
 
   "JsonBuilder" must {
@@ -752,7 +752,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
 
   "try to get the schema again when the first call to retrieve it fails" in {
     val hc = mock[HeaderCarrier]
-    val rnrbConnector = mock[RnrbConnector]
+    rnrbConnector = mock[RnrbConnector]
     when(rnrbConnector.getSuccessfulResponseSchema).thenReturn(Failure(new JsonInvalidException("An error")))
 
     val jsonBuilder = new JsonBuilder(rnrbConnector)
