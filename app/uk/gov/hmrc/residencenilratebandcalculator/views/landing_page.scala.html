@@ -1,0 +1,812 @@
+@()(implicit request: Request[_])
+<!DOCTYPE html>
+<!--[if lt IE 9]><html class="lte-ie8" lang="en"><![endif]--><!--[if gt IE 8]><!--><html lang="en">
+        <!--<![endif]-->
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <title>Inheritance Tax: residence nil rate band (RNRB) - GOV.UK</title>
+
+            <!--[if gt IE 8]><!--><link href="https://assets.publishing.service.gov.uk/static/govuk-template-1875638511d35be82a4aeaa8d591b5f57b9d3819604feaf89b65f2812cf794ea.css" media="screen" rel="stylesheet">
+            <!--<![endif]-->
+            <!--[if IE 6]><link href="https://assets.publishing.service.gov.uk/static/govuk-template-ie6-b4e746f94e865a9ee488a3ec929fcfeedb2267bf2fac1aeac9215bfc3d3b4a6a.css" media="screen" rel="stylesheet" /><![endif]-->
+            <!--[if IE 7]><link href="https://assets.publishing.service.gov.uk/static/govuk-template-ie7-94d0308e53aaef4aedad5d6dc36b7a67a1c63e2a3da5b63f3a570be958810e12.css" media="screen" rel="stylesheet" /><![endif]-->
+            <!--[if IE 8]><link href="https://assets.publishing.service.gov.uk/static/govuk-template-ie8-58ada30e1ac2d11845dee1121f95a666b999e5248bc456940063cc530b3f5344.css" media="screen" rel="stylesheet" /><![endif]-->
+        <link href="https://assets.publishing.service.gov.uk/static/govuk-template-print-1076519521c2fffbbf75ab3b0d3b32ee2d96ac7e9778f1cdfac1771eefd1a1c0.css" media="print" rel="stylesheet">
+
+            <!--[if IE 8]><link href="https://assets.publishing.service.gov.uk/static/fonts-ie8-f5e3c18a96ecb0f37246556a27330202d6e18feffa05a3b67825024609629ac8.css" media="all" rel="stylesheet" /><![endif]-->
+            <!--[if gte IE 9]><!--><link href="https://assets.publishing.service.gov.uk/static/fonts-5ff8c53913434afd0072a480d7cfca67cace4c8d03f6ef96b78a4455728ce745.css" media="all" rel="stylesheet">
+            <!--<![endif]-->
+            <!--[if lt IE 9]><script src="https://assets.publishing.service.gov.uk/static/ie-75db9d4df4993de5335d6e49013362743a78107245bcf6543337a0ecc0a95b41.js"></script><![endif]-->
+
+        <link rel="shortcut icon" href="https://assets.publishing.service.gov.uk/static/favicon-8d811b8c3badbc0b0e2f6e25d3660a96cc0cca7993e6f32e98785f205fc40907.ico" type="image/x-icon">
+        <link rel="mask-icon" href="https://assets.publishing.service.gov.uk/static/gov.uk_logotype_crown-a0097118fe9226ce1ffde1ccfeb86c61be3607915046196c99f68b9548485ad3.svg" color="#0b0c0c">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="https://assets.publishing.service.gov.uk/static/apple-touch-icon-152x152-55dd2af7a53abb7dd14ba6a3c6c3fc786c57a074ba809f6dd767e186955a87e1.png">
+        <link rel="apple-touch-icon-precomposed" sizes="120x120" href="https://assets.publishing.service.gov.uk/static/apple-touch-icon-120x120-92580784afc35143f96b8cf5614e221427fdea444aeb13d912c879e884af7336.png">
+        <link rel="apple-touch-icon-precomposed" sizes="76x76" href="https://assets.publishing.service.gov.uk/static/apple-touch-icon-76x76-9b193f39cde53b92ba555efed856bcd103d6d1dc650919eb9f29dbe5f442cfb0.png">
+        <link rel="apple-touch-icon-precomposed" href="https://assets.publishing.service.gov.uk/static/apple-touch-icon-60x60-0af0a7cf886701647210f13b661e607b7223bc3221b6d275718a89af79b3e7b9.png">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta property="og:image" content="https://assets.publishing.service.gov.uk/static/opengraph-image-a1f7d89ffd0782738b1aeb0da37842d8bd0addbd724b8e58c3edbc7287cc11de.png">
+
+            <!--[if gt IE 8]><!--><link rel="stylesheet" media="screen" href="https://assets.publishing.service.gov.uk/static/core-layout-c752ca434badc80c8788585d85ce88442e21ae64982f37011b903e3d62a57b74.css">
+            <!--<![endif]-->
+            <!--[if IE 6]><link rel="stylesheet" media="screen" href="https://assets.publishing.service.gov.uk/static/core-layout-ie6-ec2b392cffa0745a824dc68536344a010ca96fee93f007ee5664b852d146fa77.css" /><script>var ieVersion = 6;</script><![endif]-->
+            <!--[if IE 7]><link rel="stylesheet" media="screen" href="https://assets.publishing.service.gov.uk/static/core-layout-ie7-0c084da51a7e66b3f5e1c27f972ce13cea2f477d83368117e4cf565c76498e43.css" /><script>var ieVersion = 7;</script><![endif]-->
+            <!--[if IE 8]><link rel="stylesheet" media="screen" href="https://assets.publishing.service.gov.uk/static/core-layout-ie8-5f881c40f53358512da4651114bbf95de09b7683c541d407c9a0b8a4cc6b1c26.css" /><script>var ieVersion = 8;</script><![endif]-->
+
+        <link rel="stylesheet" media="print" href="https://assets.publishing.service.gov.uk/static/core-layout-print-1c753fca6d62d1cc48669dab1730ab0ae06cbf7c9fa7b39e2af3031b88828d89.css">
+
+
+            <!--[if gt IE 8]><!--><link rel="stylesheet" media="screen" href="https://assets.publishing.service.gov.uk/government-frontend/application-d178d10ad72d8af7ed1fbf0bea9f2d90ce24123523a491cf3923aaab3dd55fee.css">
+            <!--<![endif]--><meta name="csrf-param" content="authenticity_token">
+        <meta name="csrf-token" content="grlXgiOV5hi2cRPoKYGotSDeoo7bR/Njtoctyg8h3Ssmz47hV/VqYPn4xOHAsIRTFHH7OcMicGri2+2N9ajXJQ==">
+        <meta name="govuk:format" content="detailed_guide">
+        <meta name="govuk:analytics:organisations" content="&lt;D25&gt;">
+        <meta name="govuk:political-status" content="non-political">
+        <meta name="govuk:publishing-government" content="2015-conservative-government">
+        <meta name="description" content="This guide tells you how the new home allowance, or residence nil rate band (RNRB), applies for Inheritance Tax (IHT).
+">
+        <meta name="govuk:content-id" content="46b314b8-0965-4f70-8b9f-cfc1e359ecf6">
+            <!--[if IE 6]><link rel="stylesheet" media="screen" href="https://assets.publishing.service.gov.uk/government-frontend/application-ie6-b84d38c2b34d597078faa59e7fae5cb1e70b40af74a177b74fc555f405a66b5d.css" /><script>var ieVersion = 6;</script><![endif]--><!--[if IE 7]><link rel="stylesheet" media="screen" href="https://assets.publishing.service.gov.uk/government-frontend/application-ie7-b84d38c2b34d597078faa59e7fae5cb1e70b40af74a177b74fc555f405a66b5d.css" /><script>var ieVersion = 7;</script><![endif]--><!--[if IE 8]><link rel="stylesheet" media="screen" href="https://assets.publishing.service.gov.uk/government-frontend/application-ie8-db519697b3ba4ebbd784e451fa6381aa1d01e7c462aa3819006ae8102f224c4f.css" /><script>var ieVersion = 8;</script><![endif]--><meta name="govuk:rendering-application" content="government-frontend">
+    </head>
+
+    <body>
+        <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
+
+
+
+        <div id="skiplink-container">
+            <div>
+                <a href="#content" class="skiplink">Skip to main content</a>
+            </div>
+        </div>
+
+        <div id="global-cookie-message">
+            <p>GOV.UK uses cookies to make the site simpler. <a href="https://www.gov.uk/help/cookies">Find out more about cookies</a></p>
+        </div>
+
+        <header role="banner" id="global-header" class=" with-proposition">
+            <div class="header-wrapper">
+                <div class="header-global">
+                    <div class="header-logo">
+                        <a href="https://www.gov.uk" title="Go to the GOV.UK homepage" id="logo" class="content">
+                            <img src="https://assets.publishing.service.gov.uk/static/gov.uk_logotype_crown_invert_trans-203e1db49d3eff430d7dc450ce723c1002542fe1d2bce661b6d8571f14c1043c.png" width="36" height="32" alt=""> GOV.UK
+                        </a>
+                    </div>
+                    <a href="#search" class="search-toggle js-header-toggle">Search</a>
+
+                    <form id="search" class="site-search" action="/search" method="get" role="search">
+                        <div class="content">
+                            <label for="site-search-text">Search</label>
+                            <input type="search" name="q" id="site-search-text" title="Search" class="js-search-focus">
+                            <input class="submit" type="submit" value="Search">
+                        </div>
+                    </form>
+
+                </div>
+
+                <div class="header-proposition">
+                    <div class="content">
+                        <a href="#proposition-links" class="js-header-toggle menu">Menu</a>
+                        <nav id="proposition-menu" class="no-proposition-name">
+                            <ul id="proposition-links">
+                                <li>
+                                    <a class="" href="/government/organisations">
+        Departments
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="" href="/government/world">
+        Worldwide
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="" href="/government/how-government-works">
+        How government works
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="" href="/government/get-involved">
+        Get involved
+                                    </a>
+                                </li>
+                                <li class="clear-child">
+                                    <a class="" href="/government/policies">
+        Policies
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="" href="/government/publications">
+        Publications
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="" href="/government/publications?publication_filter_option=consultations">
+        Consultations
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="" href="/government/statistics">
+        Statistics
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="" href="/government/announcements">
+        Announcements
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div id="user-satisfaction-survey-container"></div>
+
+
+        <div id="global-header-bar"></div>
+
+        <div id="wrapper" class="direction-ltr">
+            <main role="main" id="content" class="detailed-guide" lang="en">
+
+
+
+                <div class="govuk-breadcrumbs">
+                    <ol>
+                        <li>
+                            <a data-track-category="breadcrumbClicked" data-track-action="1" data-track-label="/" data-track-dimension="Home" data-track-dimension-index="29" data-module="track-click" href="/">Home</a>
+                        </li>
+                        <li>
+                            <a data-track-category="breadcrumbClicked" data-track-action="2" data-track-label="/topic/personal-tax" data-track-dimension="Personal tax" data-track-dimension-index="29" data-module="track-click" href="/topic/personal-tax">Personal tax</a>
+                        </li>
+                        <li>
+                            <a data-track-category="breadcrumbClicked" data-track-action="3" data-track-label="/topic/personal-tax/inheritance-tax" data-track-dimension="Inheritance Tax" data-track-dimension-index="29" data-module="track-click" href="/topic/personal-tax/inheritance-tax">Inheritance Tax</a>
+                        </li>
+                    </ol>
+                </div>
+
+
+
+                <div class="grid-row">
+                    <div class="column-two-thirds">
+                        <div class="govuk-title length-long">
+                            <p class="context">Guidance</p>
+                            <h1>Inheritance Tax: residence nil rate band (RNRB)</h1>
+                        </div>
+
+                    </div>
+                    <div class="column-third">
+
+  </div>
+                </div>
+
+
+                <div class="grid-row">
+                    <div class="column-two-thirds">
+                        <div class="govuk-metadata direction-ltr">
+                            <dl>
+                                <dt>From:</dt>
+                                <dd><a href="/government/organisations/hm-revenue-customs">HM Revenue &amp; Customs</a></dd>
+                                <dt>Part of:</dt>
+                                <dd><a href="/topic/personal-tax/inheritance-tax">Inheritance Tax</a></dd>
+                                <dt>First published:</dt>
+                                <dd>8 November 2016</dd>
+                            </dl>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <p class="description">
+  This guide tells you how the new home allowance, or residence nil rate band (RNRB), applies for Inheritance Tax (IHT).
+                </p>
+
+
+                <div class="grid-row sidebar-with-body" data-module="sticky-element-container" id="contents">
+                    <div class="column-third">
+                        <nav role="navigation">
+                            <h1>Contents</h1>
+                            <ol class="dash-list">
+                                <li>
+                                    <a href="#introduction">Introduction</a>
+                                </li>
+                                <li>
+                                    <a href="#basic-rules">Basic rules</a>
+                                </li>
+                                <li>
+                                    <a href="#how-to-calculate-and-apply-the-rnrb">How to calculate and apply the RNRB
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#tran-fer">Transfer of any unused RNRB
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#direct-decs">Direct descendants</a>
+                                </li>
+                                <li>
+                                    <a href="#the-home">The home</a>
+                                </li>
+                                <li>
+                                    <a href="#inh-home">Inheriting the home</a>
+                                </li>
+                                <li>
+                                    <a href="#trust-cases">Trusts</a>
+                                </li>
+                                <li>
+                                    <a href="#tap-away">Tapering away the RNRB
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#down-size">Downsizing</a>
+                                </li>
+                            </ol>
+                        </nav>
+
+                    </div>
+                    <div class="column-two-thirds ">
+                        <div class="govuk-govspeak direction-ltr">
+                            <div class="govspeak">
+                                <h2 id="introduction">Introduction</h2>
+
+                                <p>This guide tells you how the residence nil rate band (<abbr title="residence nil rate band">RNRB</abbr>) applies in most circumstances.</p>
+
+                                <p>HM Revenue and Customs (<abbr title="HM Revenue and Customs">HMRC</abbr>) can’t:</p>
+
+                                <ul>
+                                    <li>give tax planning advice</li>
+                                    <li>comment on what someone should do to take advantage of the <abbr title="residence nil rate band">RNRB</abbr>
+</li>
+                                    <li>explain what someone’s entitlement to the <abbr title="residence nil rate band">RNRB</abbr> or tax position will be</li>
+                                </ul>
+
+                                <p>These will depend on a number of factors. You should get professional advice about how to work out the <abbr title="residence nil rate band">RNRB</abbr> in some situations. You may want to get advice about the effect of <abbr title="residence nil rate band">RNRB</abbr> on the Inheritance Tax (<abbr title="Inheritance Tax">IHT</abbr>) liability, or what action you need to take to make sure that an estate qualifies for the <abbr title="residence nil rate band">RNRB</abbr>.</p>
+
+                                <h2 id="basic-rules">Basic rules</h2>
+
+                                <p>An estate will be entitled to the <abbr title="residence nil rate band">RNRB</abbr> if the:</p>
+
+                                <ul>
+                                    <li>individual dies on or after 6 April 2017</li>
+                                    <li>individual owns a <a href="#the-home">home</a>, or a share of one, so that it’s included in their estate</li>
+                                    <li>individual’s <a href="#direct-decs">direct descendants</a> such as children or grandchildren <a href="#inh-home">inherit the home</a>, or a share of it</li>
+                                    <li>value of the estate isn’t more than £2 million</li>
+                                </ul>
+
+                                <p>An estate will also be entitled to the <abbr title="residence nil rate band">RNRB</abbr> when an individual has <a href="#down-size">downsized</a> to a less valuable home or sold or given away their home after 7 July 2015.</p>
+
+                                <p>The maximum available amount of the <abbr title="residence nil rate band">RNRB</abbr> will increase yearly .</p>
+
+                                <p>For deaths in the following tax years it will be:</p>
+
+                                <ul>
+                                    <li>£100,000 in 2017 to 2018</li>
+                                    <li>£125,000 in 2018 to 2019</li>
+                                    <li>£150,000 in 2019 to 2020</li>
+                                    <li>£175,000 in 2020 to 2021</li>
+                                </ul>
+
+                                <p>For later years, the maximum <abbr title="residence nil rate band">RNRB</abbr> will increase in line with inflation (based on the Consumer Prices Index).</p>
+
+                                <p>Any unused <abbr title="residence nil rate band">RNRB</abbr> when someone dies can be <a href="#tran-fer">transferred</a> to the deceased’s spouse or civil partner’s estate. This can also be done if the first of the couple died before 6 April 2017, even though the <abbr title="residence nil rate band">RNRB</abbr> wasn’t available at that time.</p>
+
+                                <p>For estates valued at more than £2 million, the <abbr title="residence nil rate band">RNRB</abbr> (and any transferred <abbr title="residence nil rate band">RNRB</abbr>) will be gradually withdrawn or <a href="#tap-away">tapered away</a>.</p>
+
+                                <p>Although you don’t need to make a formal claim for the <abbr title="residence nil rate band">RNRB</abbr>, you’ll need to give details of the amount due and supporting information on the <abbr title="Inheritance Tax">IHT</abbr> return following a death. You’ll need to make a claim to transfer any unused <abbr title="residence nil rate band">RNRB</abbr> from the estate of a late spouse or civil partner. You’ll also need to make a claim for any additional <abbr title="residence nil rate band">RNRB</abbr> as a result of downsizing or disposal of the home before death.</p>
+
+                                <p>The <abbr title="residence nil rate band">RNRB</abbr> only applies to the estate of a person who’s died. It doesn’t apply to gifts or other transfers made during a person’s lifetime. This includes gifts that become taxable because they’ve been made within 7 years of a donor’s death.</p>
+
+                                <p>Where someone gives away their home and continues to benefit from it, for example, by living in the property, <abbr title="HM Revenue and Customs">HMRC</abbr> treats that home as being included in the estate. So the <abbr title="residence nil rate band">RNRB</abbr> may be available for that home if it’s given away to a direct descendant.</p>
+
+                                <h2 id="how-to-calculate-and-apply-the-rnrb">How to calculate and apply the <abbr title="residence nil rate band">RNRB</abbr>
+</h2>
+
+                                <p>The <abbr title="residence nil rate band">RNRB</abbr> applies in addition to the <a href="https://www.gov.uk/guidance/inheritance-tax-transfer-of-threshold">existing nil rate band (<abbr title="nil rate band">NRB</abbr>) or threshold</a> (currently £325,000) if the individual and estate meet the qualifying conditions. The <abbr title="residence nil rate band">RNRB</abbr> doesn’t mean that the home is exempt for <abbr title="Inheritance Tax">IHT</abbr> purposes but that could be the result of the new rules in some cases.</p>
+
+                                <p>The amount of the <abbr title="residence nil rate band">RNRB</abbr> due for an estate will be the lower of:</p>
+
+                                <ul>
+                                    <li>the value of the home, or share, that’s inherited by <a href="#direct-decs">direct descendants</a>
+</li>
+                                    <li>the maximum <abbr title="residence nil rate band">RNRB</abbr> available for the estate when the individual died</li>
+                                </ul>
+
+                                <p>You should add any <a href="#tran-fer">transferred</a> <abbr title="residence nil rate band">RNRB</abbr> from a late spouse’s or civil partner’s estate to the amount of the <abbr title="residence nil rate band">RNRB</abbr> due for an estate. You set the combined <abbr title="residence nil rate band">RNRB</abbr> against the value of the estate first.</p>
+
+                                <p>You then set the existing <abbr title="nil rate band">NRB</abbr> (and any transferred <abbr title="nil rate band">NRB</abbr>) against the remaining value of the estate. In many cases the order that you apply the <abbr title="residence nil rate band">RNRB</abbr> and <abbr title="nil rate band">NRB</abbr> will make no difference. But in some cases it will affect the amount of any unused <abbr title="residence nil rate band">RNRB</abbr> or <abbr title="nil rate band">NRB</abbr> available for transfer to a spouse or civil partner’s estate.</p>
+
+                                <p><a href="https://www.gov.uk/government/case-studies/inheritance-tax-residence-nil-rate-band-case-studies">Case study 1</a> shows how the <abbr title="residence nil rate band">RNRB</abbr> and <abbr title="nil rate band">NRB</abbr> applies to an estate.</p>
+
+                                <p>The value of the home that direct descendants inherit doesn’t have to be more than the existing <abbr title="nil rate band">NRB</abbr> (or transferred <abbr title="nil rate band">NRB</abbr>) for <abbr title="residence nil rate band">RNRB</abbr> to apply. You apply the <abbr title="residence nil rate band">RNRB</abbr> to the whole taxable estate, not just to the value of the home, so the benefit of the <abbr title="residence nil rate band">RNRB</abbr> is shared across the whole estate.</p>
+
+                                <p>If the value of the home is less than the maximum available <abbr title="residence nil rate band">RNRB</abbr>, the unused amount of <abbr title="residence nil rate band">RNRB</abbr> can’t be set against the other assets in the estate. But, the unused <abbr title="residence nil rate band">RNRB</abbr> would be available to transfer to the deceased’s spouse or civil partner’s estate when they die and leave a home to their direct descendants.</p>
+
+                                <p><a href="https://www.gov.uk/government/case-studies/inheritance-tax-residence-nil-rate-band-case-studies">Case study 2</a> shows how the <abbr title="residence nil rate band">RNRB</abbr> applies in these situations.</p>
+
+                                <h3 id="gift-others">Gifts and other transfers made during a person’s lifetime (lifetime transfers)</h3>
+
+                                <p>Unlike the existing <a href="https://www.gov.uk/guidance/inheritance-tax-transfer-of-threshold"><abbr title="nil rate band">NRB</abbr></a> the <abbr title="residence nil rate band">RNRB</abbr> doesn’t apply to any lifetime transfers, such as:</p>
+
+                                <ul>
+                                    <li>transfers into trusts</li>
+                                    <li>the value of any <a href="#gift-others">gifts</a> made within 7 years of a donor’s death which then become taxable</li>
+                                </ul>
+
+                                <p><a href="https://www.gov.uk/government/case-studies/inheritance-tax-residence-nil-rate-band-case-studies">Case Study 3</a> shows how the existing <abbr title="nil rate band">NRB</abbr> applies to lifetime transfers, and how that affects how the <abbr title="residence nil rate band">RNRB</abbr> applies.</p>
+
+                                <p>The existing <abbr title="nil rate band">NRB</abbr> applies to any lifetime transfers and any gifts made within 7 years of the donor’s death, but the <abbr title="residence nil rate band">RNRB</abbr> doesn’t. So the existing <abbr title="nil rate band">NRB</abbr> could be completely used up by those transfers and gifts, but any <abbr title="residence nil rate band">RNRB</abbr> would still be available to reduce the <abbr title="Inheritance Tax">IHT</abbr> charge on the estate at death.</p>
+
+                                <p><a href="https://www.gov.uk/government/case-studies/inheritance-tax-residence-nil-rate-band-case-studies">Case Study 4</a> shows how the <abbr title="nil rate band">NRB</abbr> is used separately from the <abbr title="residence nil rate band">RNRB</abbr>.</p>
+
+                                <p>For married couples and civil partners, you look at the position for each person’s estate separately on each death. This would include each person’s share of the home if it’s owned jointly.</p>
+
+                                <h2 id="tran-fer">Transfer of any unused <abbr title="residence nil rate band">RNRB</abbr>
+</h2>
+
+                                <p>For married couples and civil partners any unused <abbr title="residence nil rate band">RNRB</abbr> can be transferred when the surviving spouse or civil partner dies after 5 April 2017. It doesn’t matter when the first of the couple died, even if the death occurred before the <abbr title="residence nil rate band">RNRB</abbr> was available. The <abbr title="residence nil rate band">RNRB</abbr> can’t be transferred to a ‘partner’ who’s not the spouse or civil partner of the deceased. This is still true even if they lived together and jointly owned the home.</p>
+
+                                <p>If the <abbr title="residence nil rate band">RNRB</abbr> wasn’t fully used when the first of the couple died, the unused percentage can be transferred to the surviving spouse or civil partner’s estate. This is transferred in a similar way to the existing <abbr title="nil rate band">NRB</abbr>.</p>
+
+                                <p>Where the first of the couple died before 6 April 2017 their estate wouldn’t have used any of the <abbr title="residence nil rate band">RNRB</abbr> as it wasn’t available. So 100% of the <abbr title="residence nil rate band">RNRB</abbr> will be available for transfer unless the value of their estate exceeded £2 million and the <abbr title="residence nil rate band">RNRB</abbr> is <a href="#tap-away">tapered away</a>. It’s the unused percentage of the <abbr title="residence nil rate band">RNRB</abbr> that’s transferred, not the unused amount. This makes sure that if the maximum amount of <abbr title="residence nil rate band">RNRB</abbr> increases over time, the survivor’s estate will benefit from that increase.</p>
+
+                                <p>You calculate the actual amount that’s transferred to the surviving spouse or civil partner’s estate in 2 steps:</p>
+
+                                <p>Step 1. Work out the percentage of <abbr title="residence nil rate band">RNRB</abbr> that wasn’t used on the first death. You do this by dividing the unused amount of <abbr title="residence nil rate band">RNRB</abbr> by the total <abbr title="residence nil rate band">RNRB</abbr> that was available on the first death and multiplying the result by 100. If the first death occurred before 6 April 2017 the unused <abbr title="residence nil rate band">RNRB</abbr> and total available <abbr title="residence nil rate band">RNRB</abbr> are both deemed to be £100,000 so the unused percentage is 100%.</p>
+
+                                <p>Step 2. Multiply the percentage of <abbr title="residence nil rate band">RNRB</abbr> that was unused on the first death by the maximum <abbr title="residence nil rate band">RNRB</abbr> available at the time of the survivor’s death. This gives the sum available to transfer.</p>
+
+                                <p><a href="https://www.gov.uk/government/case-studies/inheritance-tax-residence-nil-rate-band-case-studies">Case study 5</a> shows an example of how the <abbr title="residence nil rate band">RNRB</abbr> is transferred.</p>
+
+                                <p>The personal representatives of the surviving spouse or civil partner must make a claim to transfer the unused <abbr title="residence nil rate band">RNRB</abbr> within 2 years of the end of the month in which the person dies. This can be extended in some circumstances.</p>
+
+                                <p>The <abbr title="residence nil rate band">RNRB</abbr> and existing <abbr title="nil rate band">NRB</abbr> aren’t linked so the percentages transferred can be different. For example, if the estate of the first of the couple to die used up all of the existing <abbr title="nil rate band">NRB</abbr> leaving none to transfer, but there’s unused <abbr title="residence nil rate band">RNRB</abbr>, you can still transfer the unused <abbr title="residence nil rate band">RNRB</abbr>.</p>
+
+                                <p>The percentage of transferred <abbr title="residence nil rate band">RNRB</abbr> will be limited to 100%. This means that if an individual has had more than one spouse or civil partner and they make a claim to transfer the unused <abbr title="residence nil rate band">RNRB</abbr> from each one, the total transferred <abbr title="residence nil rate band">RNRB</abbr> can’t be more than 100% of the maximum available amount.</p>
+
+                                <p>The home that the surviving spouse or civil partner leaves to their direct descendants doesn’t have to be the same home that they lived in with their late spouse or civil partner to either qualify for the <abbr title="residence nil rate band">RNRB</abbr> or transfer it.</p>
+
+                                <p>The surviving spouse or civil partner doesn’t have to have previously owned the home with their late spouse or civil partner, or inherited it from them. It can be any <a href="#the-home">home</a> as long as the surviving spouse or civil partner lived in it at some stage before they died and the home is included in their estate when they die.</p>
+
+                                <p>The <abbr title="residence nil rate band">RNRB</abbr> and any transferred <abbr title="residence nil rate band">RNRB</abbr> is only available if:</p>
+
+                                <ul>
+                                    <li>the surviving spouse or civil partner leaves a home to their <a href="#direct-decs">direct descendants</a>
+</li>
+                                    <li>the home of the surviving spouse or civil partner is included in their estate</li>
+                                </ul>
+
+                                <p>But, if the surviving spouse or civil partner disposed of their home after 7 July 2015 and leaves other assets to their direct descendants when they die, the <abbr title="residence nil rate band">RNRB</abbr> may still be available under <a href="#down-size">the downsizing rules</a>.</p>
+
+                                <p>Couples who aren’t married or in a civil partnership, or who’ve divorced, will still be able to benefit from the <abbr title="residence nil rate band">RNRB</abbr> individually if they leave a home to their direct descendants. But they won’t be able to transfer any unused <abbr title="residence nil rate band">RNRB</abbr> to each other.</p>
+
+                                <h2 id="direct-decs">Direct descendants</h2>
+
+                                <p>For <abbr title="residence nil rate band">RNRB</abbr> purposes, a direct descendant of a person is:</p>
+
+                                <ul>
+                                    <li>a child, grandchild or other lineal descendant of that person</li>
+                                    <li>a spouse or civil partner of a lineal descendant (including their widow, widower or surviving civil partner)</li>
+                                </ul>
+
+                                <p>In addition, a person’s direct descendant is:</p>
+
+                                <ul>
+                                    <li>a child who is, or was at any time, that person’s step-child</li>
+                                    <li>an adopted child of that person</li>
+                                    <li>a child who was fostered at any time by that person</li>
+                                    <li>a child where that person is appointed as a guardian or special guardian for that child when they’re under 18</li>
+                                </ul>
+
+                                <p>In this context, the child who inherits the home doesn’t have to be under 18. A person’s step-child is limited to someone whose parent is, or was, the spouse or civil partner of that person.</p>
+
+                                <p>Direct descendants don’t include nephews, nieces, siblings and other relatives who aren’t included in the list above.</p>
+
+                                <p>One or more direct descendants of the deceased can <a href="#inh-home">inherit a home</a>, or a share of it.</p>
+
+                                <p>To be eligible for the <abbr title="residence nil rate band">RNRB</abbr>, the home, or the share of it, must be left to a person’s direct descendants so that it becomes part of the beneficiaries’ estate as a result of the person’s death.</p>
+
+                                <p>If a home is left to beneficiaries who are a mixture of direct descendants and other relatives or individuals, the value of the home must be apportioned according to the share of the property the direct descendants inherit.</p>
+
+                                <p id="the-home"><a href="https://www.gov.uk/government/case-studies/inheritance-tax-residence-nil-rate-band-case-studies">Case study 6</a> explains this.</p>
+
+                                <h2 id="the-home">The home</h2>
+
+                                <p>The <abbr title="residence nil rate band">RNRB</abbr> only applies to one home where it’s both:</p>
+
+                                <ul>
+                                    <li>included in the deceased’s estate</li>
+                                    <li>lived in at some stage by the deceased before their death</li>
+                                </ul>
+
+                                <p>If the deceased downsized or disposed of their home before they died, the <abbr title="residence nil rate band">RNRB</abbr> only applies if the former home would have been included in their estate before the downsizing or disposal.</p>
+
+                                <p>If the deceased owned more than one home, the personal representatives can nominate which one should qualify for the <abbr title="residence nil rate band">RNRB</abbr>.</p>
+
+                                <p>The home doesn’t have to be a person’s main home or have been lived in, or owned, for a minimum period. It can be any property that the deceased lived in as long as it’s included in their estate on death. A property that the deceased owned, but never lived in, such as a buy-to-let property, won’t be eligible for the <abbr title="residence nil rate band">RNRB</abbr>.</p>
+
+                                <p>The value of the home for <abbr title="residence nil rate band">RNRB</abbr> purposes will be the open market value of the property less any liabilities secured on it such as a mortgage. The home doesn’t have to be worth more than a certain minimum value (for example, more than £325,000 or above the maximum available <abbr title="residence nil rate band">RNRB</abbr>). If the value of the home, or share of it, being inherited by direct descendants is below the maximum available <abbr title="residence nil rate band">RNRB</abbr>, the amount of the <abbr title="residence nil rate band">RNRB</abbr> is limited accordingly.</p>
+
+                                <p>The whole of the home doesn’t have to be left to direct descendants. If only a share of the home is inherited by the deceased’s direct descendants, the value of the home must be apportioned. The  <abbr title="residence nil rate band">RNRB</abbr> is calculated on the basis of that apportioned value.</p>
+
+                                <p><a href="https://www.gov.uk/government/case-studies/inheritance-tax-residence-nil-rate-band-case-studies">Case Study 6</a> shows how the <abbr title="residence nil rate band">RNRB</abbr> is calculated when a share of the home is left to direct descendants.</p>
+
+                                <p>The home doesn’t have to be in the UK but it does have to be within the scope of <abbr title="Inheritance Tax">IHT</abbr> and it must be included in a person’s estate. This may depend on the deceased’s domicile and the location of the home.</p>
+
+                                <p>UK domiciled individuals are subject to <abbr title="Inheritance Tax">IHT</abbr> on their worldwide assets so it doesn’t matter where the home is located. Non-UK domiciled individuals are only subject to <abbr title="Inheritance Tax">IHT</abbr> on their assets in the UK, so the home must be located in the UK to be within the scope of <abbr title="Inheritance Tax">IHT</abbr> and within their estate. In these cases, the home will only qualify for the <abbr title="residence nil rate band">RNRB</abbr> if it’s in the UK.</p>
+
+                                <h2 id="inh-home">Inheriting the home</h2>
+
+                                <p>For <abbr title="residence nil rate band">RNRB</abbr> purposes, a person’s direct descendants inherit a home if it’s left to them:</p>
+
+                                <ul>
+                                    <li>on death in the deceased’s will</li>
+                                    <li>under the rules of intestacy</li>
+                                    <li>by some other legal means as a result of the person’s death</li>
+                                </ul>
+
+                                <p>The home doesn’t have to be specifically mentioned in the deceased’s will. It can be inherited as part of the residue of the estate. Where the home is included in the residue and that residue passes to a number of different people, <abbr title="HM Revenue and Customs">HMRC</abbr> treat each as inheriting a proportion of the home.</p>
+
+                                <p>The direct descendants will only inherit the property for <abbr title="residence nil rate band">RNRB</abbr> purposes if they become entitled to it on the death of the deceased. If the will has a condition that the deceased’s grandchildren have to reach a certain age before they can inherit the home which means the property is held in a <a href="#trust-cases">trust</a> subject to a contingency, the <abbr title="residence nil rate band">RNRB</abbr> wouldn’t apply. This is because the grandchildren don’t inherit the home on the death of their grandparent.</p>
+
+                                <p>If the home is held in <a href="#trust-cases">trust</a> before death and it stays in trust, the home will only qualify for the <abbr title="residence nil rate band">RNRB</abbr> if it becomes part of the direct descendant’s estate for <abbr title="Inheritance Tax">IHT</abbr> purposes following the death.</p>
+
+                                <p>The actual home doesn’t have to end up in the hands of the deceased’s direct descendants. An estate could still be eligible for the <abbr title="residence nil rate band">RNRB</abbr> if the deceased’s personal representatives sell the home as part of the administration of the estate and pass the sale proceeds to the direct descendants.</p>
+
+                                <p>In the same way, once the direct descendants have inherited the home, there are no restrictions on what they have to do with it. An estate will still qualify for the <abbr title="residence nil rate band">RNRB</abbr> even if the direct descendants decide to sell the home after they’ve inherited it.</p>
+
+                                <p><a href="https://www.gov.uk/government/case-studies/inheritance-tax-residence-nil-rate-band-case-studies">Case study 7</a> shows how the <abbr title="residence nil rate band">RNRB</abbr> applies when the home is sold after a death.</p>
+
+                                <p>The direct descendants can also inherit the home if it’s left to them as a result of amending the deceased’s will by a <a href="https://www.gov.uk/alter-a-will-after-a-death">deed of variation</a>. The terms of a will would effectively be superseded by the deed of variation so the outcome of the deed has to be considered, rather than the wording of the will.</p>
+
+                                <h2 id="trust-cases">Trusts</h2>
+
+                                <p>A home, or a share of one, can be held in a trust before an individual’s death. Or it can be transferred to a trust on their death.</p>
+
+                                <p>The availability of the <abbr title="residence nil rate band">RNRB</abbr> will depend on the type of trust. This is because the type of trust will affect whether <abbr title="HM Revenue and Customs">HMRC</abbr> treat the home as part of a person’s estate for <abbr title="Inheritance Tax">IHT</abbr> purposes. It will also affect whether <abbr title="HM Revenue and Customs">HMRC</abbr> treat that person’s direct descendants as inheriting the home.</p>
+
+                                <p>Because this is complicated, the information given below is only a general guide. Where a home, or a share of one, is held in a trust or transferred to a trust, you should discuss how the <abbr title="residence nil rate band">RNRB</abbr> applies with a solicitor or other professional adviser who knows about trust law.</p>
+
+                                <p>The <abbr title="residence nil rate band">RNRB</abbr> won’t apply to transfers of the home or any other assets into a trust during a person’s lifetime. This applies even if the beneficiary is a direct descendant of the transferor, or if they’re entitled to the assets in the trust.</p>
+
+                                <h3 id="trusts-included-in-a-persons-estate">Trusts included in a person’s estate</h3>
+
+                                <p>If a home is held in a trust for a person’s benefit before their death, it’ll usually be included in that person’s estate for <abbr title="Inheritance Tax">IHT</abbr> purposes if the trust gives the person (the beneficiary) the right to use or occupy the property. This right is often called an interest in possession.</p>
+
+                                <p>This can happen when a person is given a right to live in the family home following the death of their spouse or civil partner. The home is held in a trust for the lifetime of the survivor (or life tenant) and is included in their estate for <abbr title="Inheritance Tax">IHT</abbr> purposes. When the survivor dies, their estate will be eligible for the <abbr title="residence nil rate band">RNRB</abbr> if their direct descendants then inherit their home.</p>
+
+                                <p>If a home is put into a trust on an individual’s death, the <abbr title="residence nil rate band">RNRB</abbr> will available if both the:</p>
+
+                                <ul>
+                                    <li>person who benefits from the trust (the beneficiary) is a direct descendant of the deceased</li>
+                                    <li>type of trust, is one that means the home is included in the beneficiary’s estate for <abbr title="Inheritance Tax">IHT</abbr> purposes</li>
+                                </ul>
+
+                                <p>If the beneficiary isn’t a direct descendant of the deceased, the estate won’t qualify for the <abbr title="residence nil rate band">RNRB</abbr>. In that case the unused <abbr title="residence nil rate band">RNRB</abbr> would be available to transfer to a surviving spouse or civil partner’s estate.</p>
+
+                                <p><a href="https://www.gov.uk/government/case-studies/inheritance-tax-residence-nil-rate-band-case-studies">Case study 8</a> shows how the <abbr title="residence nil rate band">RNRB</abbr> is transferred when a home is put into a trust for a surviving spouse.</p>
+
+                                <p>The home will no longer be in the beneficiary’s estate if the trust comes to an end during the beneficiary’s lifetime. This could happen, for example, when the surviving spouse remarries and the home then passes to their direct descendants. In this situation the surviving spouse’s estate wouldn’t qualify for the <abbr title="residence nil rate band">RNRB</abbr> when they die because the home isn’t inherited by their direct descendants on death. But the transfer of the home may still qualify as a disposal for <a href="#down-size">downsizing</a> purposes.</p>
+
+                                <h3 id="trusts-not-included-in-a-persons-estate">Trusts not included in a person’s estate</h3>
+
+                                <p>If a home is held in a discretionary trust, the home wouldn’t normally form part of a person’s estate. In these circumstances, their estate wouldn’t be eligible for the <abbr title="residence nil rate band">RNRB</abbr> even if the home goes to the beneficiary’s direct descendants when the beneficiary dies.</p>
+
+                                <p>If a home is put into a discretionary trust on death, the deceased’s estate won’t qualify for the <abbr title="residence nil rate band">RNRB</abbr> even if the beneficiaries are direct descendants of the deceased. Whether the beneficiaries are entitled to use the home is at the discretion of the trustees, so the home won’t form part of any beneficiary’s estate and they’ll not be treated as <a href="#inh-home">inheriting the home</a>.</p>
+
+                                <p>The estate may still qualify for the <abbr title="residence nil rate band">RNRB</abbr> if the trust meets certain conditions. For example, if the trust has been set up for:</p>
+
+                                <ul>
+                                    <li>a disabled beneficiary</li>
+                                    <li>orphaned children under 18</li>
+                                    <li>any children under 25</li>
+                                </ul>
+
+                                <p>You should discuss how the <abbr title="residence nil rate band">RNRB</abbr> applies in these situations with a solicitor or other professional adviser.</p>
+
+                                <h2 id="tap-away">Tapering away the <abbr title="residence nil rate band">RNRB</abbr>
+</h2>
+
+                                <p>The <abbr title="residence nil rate band">RNRB</abbr> will be gradually withdrawn, or tapered away, for an estate valued at more than £2 million even if a home is left to direct descendants. The <abbr title="residence nil rate band">RNRB</abbr> will be reduced by £1 for every £2 that the value of the estate is more than the £2 million taper threshold.</p>
+
+                                <p>This threshold may increase in line with inflation after the tax year 2020 to 2021.</p>
+
+                                <p><a href="https://www.gov.uk/government/case-studies/inheritance-tax-residence-nil-rate-band-case-studies">Case study 9</a> shows how the <abbr title="residence nil rate band">RNRB</abbr> is tapered away for an estate worth more than £2 million.</p>
+
+                                <p>To work out whether the taper applies, the value of the estate is the total of all the assets in the estate less any debts or liabilities. When you work out the value of the estate for taper purposes you don’t take off any:</p>
+
+                                <ul>
+                                    <li>exemptions such as spouse exemption</li>
+                                    <li>reliefs such as agricultural or business property relief</li>
+                                </ul>
+
+                                <p>You ignore assets that are specifically excluded from <abbr title="Inheritance Tax">IHT</abbr> (excluded property).</p>
+
+                                <p>Tapering can also reduce the amount of <abbr title="residence nil rate band">RNRB</abbr> available to transfer to a surviving spouse or civil partner, even if no <abbr title="residence nil rate band">RNRB</abbr> is used when the first of the couple dies. You calculate the amount of <a href="#tran-fer">transferred <abbr title="residence nil rate band">RNRB</abbr></a> that the survivor’s estate can claim using the percentage of <abbr title="residence nil rate band">RNRB</abbr> that was unused on the earlier death. If the estate of the first of the couple to die is worth more than £2 million, tapering will reduce the amount of the unused <abbr title="residence nil rate band">RNRB</abbr> in that estate. This also in turn reduces the amount of <abbr title="residence nil rate band">RNRB</abbr> that can be transferred to the surviving spouse or civil partner’s estate.</p>
+
+                                <p><a href="https://www.gov.uk/government/case-studies/inheritance-tax-residence-nil-rate-band-case-studies">Case study 10</a> shows how the <abbr title="residence nil rate band">RNRB</abbr> available for transfer is reduced by tapering.</p>
+
+                                <h2 id="down-size">Downsizing</h2>
+
+                                <p>If an estate doesn’t qualify for the full amount of <abbr title="residence nil rate band">RNRB</abbr>, the estate may be entitled to an additional amount of <abbr title="residence nil rate band">RNRB</abbr>, known as a downsizing addition if all these conditions apply:</p>
+
+                                <ul>
+                                    <li>the deceased disposed of a former home and either downsized to a less valuable home, or ceased to own a home, on or after 8 July 2015</li>
+                                    <li>the former home would have qualified for the <abbr title="residence nil rate band">RNRB</abbr> if it had been kept until death</li>
+                                    <li>at least some of the estate is inherited by the deceased’s direct descendants</li>
+                                </ul>
+
+                                <p>The amount of the downsizing addition will generally be equal to the <abbr title="residence nil rate band">RNRB</abbr> that’s been lost because the former home is no longer in the estate. It will also depend on the value of the other assets in the estate that are left to direct descendants. But the downsizing addition can’t exceed the maximum amount of <abbr title="residence nil rate band">RNRB</abbr> that would have been available if the disposal or downsizing hadn’t happened.</p>
+
+                                <p>The deceased’s personal representatives must make a claim for the downsizing addition within 2 years of the end of the month in which the person dies. The time limit  can be extended in some circumstances.</p>
+
+                                <p><abbr title="HM Revenue and Customs">HMRC</abbr> doesn’t have to be told when the downsizing move or disposal of the former home takes place. The deceased’s personal representatives can make the claim for the <abbr title="residence nil rate band">RNRB</abbr> and any downsizing addition as part of completing the <abbr title="Inheritance Tax">IHT</abbr> returns. But, it may be helpful to make a note of the details of the move or disposal so that personal representatives are aware of it and have the information available to make the claim accordingly.</p>
+
+                                <p>Only one disposal of a former home can be taken into account for the downsizing addition. If the deceased disposed of more than one home between 8 July 2015 and their date of death, the personal representatives can choose which disposal is taken into account to calculate the downsizing addition.</p>
+
+                                <h3 id="dis-pose">Calculating the lost <abbr title="residence nil rate band">RNRB</abbr>
+</h3>
+
+                                <p>There are 5 steps to work out the amount of <abbr title="residence nil rate band">RNRB</abbr> that’s been lost:</p>
+
+                                <p>Step 1. Work out the <abbr title="residence nil rate band">RNRB</abbr> that would have been available when the disposal of the former home took place. This figure is made up of the maximum <abbr title="residence nil rate band">RNRB</abbr> due at the date of disposal (or £100,000 if the disposal occurred before 6 April 2017) on any transferred <abbr title="residence nil rate band">RNRB</abbr> which is available at the date of death.</p>
+
+                                <p>Step 2. Divide the value of the former home at the date of disposal by the figure in step 1 and multiply the result by 100 to get a percentage. If the value of the former home is greater than the figure in step 1 the percentage will be limited to 100%. If the value of the home disposed of is less than the figure in step 1, the percentage will be between 0% and 100%.</p>
+
+                                <p>Step 3. If there is a home in the estate on death, divide the value of the home on death by the <abbr title="residence nil rate band">RNRB</abbr> that would be available at the date of death (including any transferred <abbr title="residence nil rate band">RNRB</abbr>). Multiply the result by 100 to get a percentage (again this percentage can’t exceed 100%). If there’s no home in the estate at death this percentage will be 0%.</p>
+
+                                <p>Step 4. Deduct the percentage in step 3 from the percentage in step 2.</p>
+
+                                <p>Step 5. Multiply the <abbr title="residence nil rate band">RNRB</abbr> that would be available at the date of death by the figure from step 4. This gives the amount of the lost <abbr title="residence nil rate band">RNRB</abbr>.</p>
+
+                                <p><a href="https://www.gov.uk/government/case-studies/inheritance-tax-residence-nil-rate-band-case-studies">Case study 11</a> shows how the lost <abbr title="residence nil rate band">RNRB</abbr> is calculated.</p>
+
+                                <p>The effect of step 3 is that there’ll be a different amount of lost <abbr title="residence nil rate band">RNRB</abbr> depending on whether the deceased has either:</p>
+
+                                <ul>
+                                    <li>downsized to a less valuable home</li>
+                                    <li>disposed of a home
+                                        If the percentage in step 3 is the same as, or greater than, the percentage in step 2 there’s no loss of <abbr title="residence nil rate band">RNRB</abbr> and there’ll be no downsizing addition.</li>
+                                </ul>
+
+                                <h3 id="downsizing-to-a-less-valuable-home">Downsizing to a less valuable home</h3>
+
+                                <p>There may be some lost <abbr title="residence nil rate band">RNRB</abbr> where the deceased downsized to a less valuable home but still has a home in their estate on death. This will only happen when the value of the home at death is below the maximum <abbr title="residence nil rate band">RNRB</abbr> available to the estate.</p>
+
+                                <p>The downsizing rules won’t apply if either:</p>
+
+                                <ul>
+                                    <li>there’s no loss of the <abbr title="residence nil rate band">RNRB</abbr> because the value of any home at death is equal to, or more than the maximum available <abbr title="residence nil rate band">RNRB</abbr>
+</li>
+                                    <li>the <abbr title="residence nil rate band">RNRB</abbr> isn’t available because although there is a home in the estate on death, the home isn’t left to a direct descendant</li>
+                                </ul>
+
+                                <p>To see if the downsizing addition applies, you don’t just look at whether the estate qualifies for the maximum <abbr title="residence nil rate band">RNRB</abbr>. Instead you have to work out whether the value of any home still in the estate at death is too low to qualify for the maximum <abbr title="residence nil rate band">RNRB</abbr> if it was left to direct descendants.</p>
+
+                                <p><a href="https://www.gov.uk/government/case-studies/inheritance-tax-residence-nil-rate-band-case-studies">Case study 12</a> gives an example of when a downsizing addition wouldn’t be due.</p>
+
+                                <p>Where the deceased downsized and still had a home when they died, the <abbr title="residence nil rate band">RNRB</abbr> for the estate will be made up of both:</p>
+
+                                <ul>
+                                    <li>the <abbr title="residence nil rate band">RNRB</abbr> on the home included in the estate</li>
+                                    <li>any downsizing addition due for the former home</li>
+                                </ul>
+
+                                <p>The downsizing addition will generally be the lower of:</p>
+
+                                <ul>
+                                    <li>the amount of <abbr title="residence nil rate band">RNRB</abbr> that’s been lost as a result of the downsizing move</li>
+                                    <li>the value of the other assets in the estate left to direct descendants</li>
+                                </ul>
+
+                                <p><a href="https://www.gov.uk/government/case-studies/inheritance-tax-residence-nil-rate-band-case-studies">Case study 13</a> shows how the downsizing addition and <abbr title="residence nil rate band">RNRB</abbr> are worked out.</p>
+
+                                <p>If only part of the <a href="#the-home">home</a> in the estate is left to direct descendants, that part is used to work out the <abbr title="residence nil rate band">RNRB</abbr>. This may also affect the total <abbr title="residence nil rate band">RNRB</abbr> for the estate in downsizing situations.</p>
+
+                                <p><a href="https://www.gov.uk/government/case-studies/inheritance-tax-residence-nil-rate-band-case-studies">Case study 14</a> shows how the downsizing addition and <abbr title="residence nil rate band">RNRB</abbr> are worked out where only a part of the home is left to direct descendants.</p>
+
+                                <p>Where the downsizing occurs before 6 April 2017, <abbr title="HM Revenue and Customs">HMRC</abbr> treat the maximum available <abbr title="residence nil rate band">RNRB</abbr> at that time as £100,000.</p>
+
+                                <p><a href="https://www.gov.uk/government/case-studies/inheritance-tax-residence-nil-rate-band-case-studies">Case study 15</a> shows how the downsizing addition is worked out in these situations.</p>
+
+                                <p>If the deceased had downsized but had never lived in the less valuable property, that property is not a home and isn’t included in the estate for <abbr title="residence nil rate band">RNRB</abbr> purpose. This means that the position is the same as if the former home had been disposed of.</p>
+
+                                <h3 id="disposing-of-a-home">Disposing of a home</h3>
+
+                                <p>Where the deceased sold or disposed of a former home so there’s no longer any home in their estate, the <abbr title="residence nil rate band">RNRB</abbr> for the estate will be equal to the downsizing addition in respect of the former home.</p>
+
+                                <p>You calculate the downsizing allowance in these situations differently because there’s no home in the estate that could qualify for any <abbr title="residence nil rate band">RNRB</abbr> on death. When you work out the lost <abbr title="residence nil rate band">RNRB</abbr>, the percentage at step 3 will always be 0% and the result at step 4 will always be the same as the figure at step 2. So, steps 3 and 4 can be missed out.</p>
+
+                                <p>The amount of <abbr title="residence nil rate band">RNRB</abbr> that’s been lost will depend only on the value of the former property and the maximum <abbr title="residence nil rate band">RNRB</abbr> available at that time. Again, if the disposal took place on or after 8 July 2015 but before 6 April 2017, <abbr title="HM Revenue and Customs">HMRC</abbr> will treat the maximum <abbr title="residence nil rate band">RNRB</abbr> available as £100,000.</p>
+
+                                <p>If the value of the former home is equal to or more than the maximum available <abbr title="residence nil rate band">RNRB</abbr> at the time of the disposal, <abbr title="HM Revenue and Customs">HMRC</abbr> will treat the lost <abbr title="residence nil rate band">RNRB</abbr> as 100% of the maximum <abbr title="residence nil rate band">RNRB</abbr> available at the date of death.</p>
+
+                                <p>Where there’s no home in the estate at death, the downsizing addition will generally be the lower of:</p>
+
+                                <ul>
+                                    <li>the amount of <abbr title="residence nil rate band">RNRB</abbr> that’s been lost as a result of the disposal</li>
+                                    <li>the value of the other assets in the estate that the direct descendants inherit</li>
+                                </ul>
+
+                                <p><a href="https://www.gov.uk/government/case-studies/inheritance-tax-residence-nil-rate-band-case-studies">Case study 16</a> shows how the downsizing addition is worked out if there is no home in the estate at death.</p>
+
+                                <p>If the value of the home in the person’s estate is less than the maximum <abbr title="residence nil rate band">RNRB</abbr> at the time of the disposal, the lost <abbr title="residence nil rate band">RNRB</abbr> is worked out as a percentage of that maximum <abbr title="residence nil rate band">RNRB</abbr>. You then apply that percentage to the maximum <abbr title="residence nil rate band">RNRB</abbr> at the date of death.</p>
+
+                                <p><a href="https://www.gov.uk/government/case-studies/inheritance-tax-residence-nil-rate-band-case-studies">Case study 17</a> shows how the downsizing addition is worked out if the home is worth less than the maximum available <abbr title="residence nil rate band">RNRB</abbr>.</p>
+
+                                <h3 id="downsizing-where-there-is-transferred-rnrb">Downsizing where there is transferred <abbr title="residence nil rate band">RNRB</abbr>
+</h3>
+
+                                <p>Where <abbr title="residence nil rate band">RNRB</abbr> is transferred following the death of a spouse or civil partner, you calculate the downsizing allowance in largely the same way. The difference is that the maximum <abbr title="residence nil rate band">RNRB</abbr> available at both the date of death and the date of disposal is increased to include the amount of transferred <abbr title="residence nil rate band">RNRB</abbr>.</p>
+
+                                <p><a href="https://www.gov.uk/government/case-studies/inheritance-tax-residence-nil-rate-band-case-studies">Case study 18</a> shows how the downsizing addition is worked out when <abbr title="residence nil rate band">RNRB</abbr> has been transferred from a spouse or civil partner’s estate.</p>
+
+                                <h3 id="downsizing-and-trusts">Downsizing and trusts</h3>
+
+                                <p>The downsizing rules apply where a person disposes of a home that’s included in their estate. Property held in certain <a href="#trust-cases">trusts</a> is included within a person’s estate for <abbr title="Inheritance Tax">IHT</abbr> purposes and so the downsizing rules apply in these circumstances too.</p>
+
+                                <p>Where a home is held in such a trust, the trustees might be able to dispose of it or they may change it to a less valuable one. This is treated the same as if the deceased had downsized or disposed of the home themselves. Where a person’s right to occupy a home held in a trust ceases, for example on re-marriage, this is also treated as a disposal for the purposes of the downsizing rules.</p>
+
+                                <p>A person can have more than one interest in a home. For example, they may own half of a house outright while the other half is held in a trust for their benefit. These would be two separate interests in the same home.</p>
+
+                                <p>If a person disposes of more than one interest in a single home at the same time, for example, because they sell the whole house, all those interests can be taken into account for downsizing purposes. But, if a person disposes of different interests at different times, the deceased’s personal representatives can only nominate one of those disposals to be taken into account to work out any downsizing addition.</p>
+
+                                <p>The downsizing rules can be complicated where the <abbr title="residence nil rate band">RNRB</abbr> is transferred or trusts are involved. Whilst this guide explains the basic rules, it can’t cover more complex situations. You should get professional advice about how to work out the <abbr title="residence nil rate band">RNRB</abbr> in these situations.</p>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div data-sticky-element class="sticky-element">
+                        <a class="back-to-content" href="#contents">Contents</a>
+                    </div>
+                </div>
+
+                <div class="govuk-document-footer direction-ltr">
+                    <h2 class="visuallyhidden">
+    Document information
+                    </h2>
+                    <div class="history-information" id="history">
+                        <p>
+        Published:
+                            <span class="published definition">8 November 2016</span>
+                        </p>
+                    </div>
+                    <div class="related-information">
+                        <p>From: <span class="from">
+                            <span class="definition">
+                                <a href="/government/organisations/hm-revenue-customs">HM Revenue &amp; Customs</a>
+                            </span>
+                        </span></p>
+                        <p>
+        Part of:
+                            <span class="part-of">
+                                <span class="definition">
+                                    <a href="/topic/personal-tax/inheritance-tax">Inheritance Tax</a>
+                                </span>
+                            </span></p>
+                    </div>
+                </div>
+
+
+            </main>
+            <div class="report-a-problem-container">
+                <div class="report-a-problem-inner">
+                    <div class="report-a-problem-content">
+                        <h2>Help us improve GOV.UK</h2>
+                        <form accept-charset="UTF-8" action="/contact/govuk/problem_reports" method="post">
+                            <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"></div>
+                            <input id="url" name="url" type="hidden" value="https://www.gov.uk/guidance/inheritance-tax-residence-nil-rate-band">
+
+                            <input id="source" name="source" type="hidden" value="">
+
+
+                            <input id="page_owner" name="page_owner" type="hidden" value="">
+
+
+                            <p>Don’t include personal or financial information like your National Insurance number or credit card details.</p>
+
+                            <label for="what_doing">What you were doing</label>
+                            <input id="what_doing" name="what_doing" type="text">
+
+                            <label for="what_wrong">What went wrong</label>
+                            <input id="what_wrong" name="what_wrong" type="text">
+
+                            <div class="button-wrapper">
+                                <button name="commit" type="submit" class="button">Send</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <footer class="group js-footer" id="footer" role="contentinfo">
+
+            <div class="footer-wrapper">
+                <div class="footer-categories">
+                    <div class="footer-explore">
+                        <h2>Services and information</h2>
+
+                        <ul>
+                            <li><a href="/browse/benefits">Benefits</a></li>
+                            <li><a href="/browse/births-deaths-marriages">Births, deaths, marriages and care</a></li>
+                            <li><a href="/browse/business">Business and self-employed</a></li>
+                            <li><a href="/browse/childcare-parenting">Childcare and parenting</a></li>
+                            <li><a href="/browse/citizenship">Citizenship and living in the UK</a></li>
+                            <li><a href="/browse/justice">Crime, justice and the law</a></li>
+                            <li><a href="/browse/disabilities">Disabled people</a></li>
+                            <li><a href="/browse/driving">Driving and transport</a></li>
+                        </ul>
+                        <ul>
+                            <li><a href="/browse/education">Education and learning</a></li>
+                            <li><a href="/browse/employing-people">Employing people</a></li>
+                            <li><a href="/browse/environment-countryside">Environment and countryside</a></li>
+                            <li><a href="/browse/housing-local-services">Housing and local services</a></li>
+                            <li><a href="/browse/tax">Money and tax</a></li>
+                            <li><a href="/browse/abroad">Passports, travel and living abroad</a></li>
+                            <li><a href="/browse/visas-immigration">Visas and immigration</a></li>
+                            <li><a href="/browse/working">Working, jobs and pensions</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-inside-government">
+                        <h2>Departments and policy</h2>
+
+                        <ul>
+                            <li><a href="/government/how-government-works">How government works</a></li>
+                            <li><a href="/government/organisations">Departments</a></li>
+                            <li><a href="/government/world">Worldwide</a></li>
+                            <li><a href="/government/policies">Policies</a></li>
+                            <li><a href="/government/publications">Publications</a></li>
+                            <li><a href="/government/announcements">Announcements</a></li>
+                        </ul>
+                    </div>
+                    <hr>
+                </div>
+
+
+                <div class="footer-meta">
+                    <div class="footer-meta-inner">
+                        <h2 class="visuallyhidden">Support links</h2>
+                        <ul>
+                            <li><a href="/help">Help</a></li>
+                            <li><a href="/help/cookies">Cookies</a></li>
+                            <li><a href="/contact">Contact</a></li>
+                            <li><a href="/help/terms-conditions">Terms and conditions</a></li>
+                            <li><a href="/cymraeg" lang="cy" hreflang="cy">Rhestr o Wasanaethau Cymraeg</a></li>
+                            <li>Built by the <a href="https://www.gov.uk/government/organisations/government-digital-service">Government Digital Service</a>
+</li>
+                        </ul>
+
+
+
+                        <div class="open-government-licence">
+                            <p class="logo"><a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license">Open Government Licence</a></p>
+                            <p>All content is available under the <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license">Open Government Licence v3.0</a>, except where otherwise stated</p>
+                        </div>
+                    </div>
+
+                    <div class="copyright">
+                        <a href="http://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/copyright-and-re-use/crown-copyright/">© Crown copyright</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <div id="global-app-error" class="app-error hidden"></div>
+
+        <script src="https://assets.publishing.service.gov.uk/static/govuk-template-c4f303154d2a238bdda4d5cf1ebd8d4487822e4cbc3e4c83e743da869443ce72.js"></script>
+
+        <script src="https://assets.publishing.service.gov.uk/static/libs/jquery/jquery-1.11.3-c40d54aaf7339842749de8469b5b8915b886b5e67cd218d48a780cc2f2471853.js"></script>
+        <script src="https://assets.publishing.service.gov.uk/static/header-footer-only-05514ab68b4e27a6859955af10f2372748be7d05011eb0722030b7588c907437.js"></script>
+
+
+
+        <script>if (typeof window.GOVUK === 'undefined') document.body.className = document.body.className.replace('js-enabled', '');</script>
+        <script src="https://assets.publishing.service.gov.uk/government-frontend/application-b6af057ac563794cd9a306086ff7e990546cebe83309153e4e2bb7763c141cd9.js"></script>
+    </body>
+</html>
