@@ -1,55 +1,31 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
-@import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
+@import uk.gov.hmrc.residencenilratebandcalculator.models.DisplayResults
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
-@import scala.util.{Try, Success, Failure}
 
-@(appConfig: FrontendAppConfig, calculationResult: Try[CalculationResult])(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, calculationResult: DisplayResults)(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("results.browser_title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    <h1>@messages("results.title")</h1>
+    <div>
+        <h1>@messages("results.title", calculationResult.residenceNilRateAmount)</h1>
+    </div>
 
+    <h2>@messages("results.title")</h2>
     <p>@messages("results.guidance")</p>
+    <a>@messages("results.link_to_print")</a>
 
-    <p>@messages("results.residenceNilRateAmount.label")</p>
+    <h2>@messages("results.explanation_title")</h2>
 
-    @{
-       calculationResult match {
-         case Failure(exception) => exception.getMessage
-         case Success(cr) => cr.residenceNilRateAmount.toString
-       }
-    }
+    @rnrbHelpers.summary(calculationResult.resultsRows)
 
-    <p>@messages("results.applicableNilRateBandAmount.label")</p>
+    <div>
+        <a>@messages("results.answers")</a>
+        @rnrbHelpers.answer_rows(calculationResult.answerRows, false)
+    </div>
 
-    @{
-        calculationResult match {
-            case Failure(exception) => exception.getMessage
-            case Success(cr) => cr.applicableNilRateBandAmount.toString
-        }
-    }
-
-    <p>@messages("results.defaultAllowanceAmount.label")</p>
-
-    @{
-        calculationResult match {
-            case Failure(exception) => exception.getMessage
-            case Success(cr) => cr.defaultAllowanceAmount.toString
-        }
-    }
-
-    <p>@messages("results.carryForwardAmount.label")</p>
-
-    @{
-        calculationResult match {
-            case Failure(exception) => exception.getMessage
-            case Success(cr) => cr.carryForwardAmount.toString
-        }
-    }
-    
     <p>
         <a href="@routes.ExitQuestionnaireController.onPageLoad().url">@messages("results.link_to_exit_questionnaire.text")</a>
     </p>

@@ -18,13 +18,13 @@ package uk.gov.hmrc.residencenilratebandcalculator.views.rnrbHelpers
 
 import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.rnrbHelpers.rows
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.rnrbHelpers.answer_rows
 
 class RowsViewSpec extends HtmlSpec {
   "Rows View Spec" when {
     "rendered" must {
       "not contain any list elements when passed any empty seq of rows" in {
-        val partial = rows(Seq[AnswerRow]())(messages)
+        val partial = answer_rows(Seq[AnswerRow]())(messages)
         val doc = asDocument(partial)
 
         assert(doc.select("li").isEmpty)
@@ -32,7 +32,7 @@ class RowsViewSpec extends HtmlSpec {
 
       "contain a single row when passed a seq containing a single row" in {
         val row = AnswerRow("Title", "Data", "http://www.example.com")
-        val partial = rows(Seq[AnswerRow](row))(messages)
+        val partial = answer_rows(Seq[AnswerRow](row))(messages)
         val doc = asDocument(partial)
 
         assert(doc.select("li").size() == 1)
@@ -44,7 +44,7 @@ class RowsViewSpec extends HtmlSpec {
       "contains both rows when passed a seq containing 2 rows" in {
         val row1 = AnswerRow("Title1", "Data1", "http://www.example.com/1")
         val row2 = AnswerRow("Title2", "Data2", "http://www.example.com/2")
-        val partial = rows(Seq[AnswerRow](row1, row2))(messages)
+        val partial = answer_rows(Seq[AnswerRow](row1, row2))(messages)
         val doc = asDocument(partial)
 
         assert(doc.select("li").size() == 2)

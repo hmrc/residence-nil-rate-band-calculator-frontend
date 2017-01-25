@@ -49,10 +49,10 @@ trait HtmlSpec extends UnitSpec with WithFakeApplication { self: UnitSpec =>
     assert(elements.first().html().replace("\n", "") == expectedValue)
   }
 
-  def assertPageTitleEqualsMessage(doc: Document, expectedMessageKey: String) = {
+  def assertPageTitleEqualsMessage(doc: Document, expectedMessageKey: String, args: Any*) = {
     val headers = doc.getElementsByTag("h1")
     headers.size shouldBe 1
-    headers.first.text shouldBe messages(expectedMessageKey)
+    headers.first.text shouldBe messages(expectedMessageKey, args:_*)
   }
 
   def assertContainsText(doc:Document, text: String) = assert(doc.toString.contains(text), "\n\ntext " + text + " was not rendered on the page.\n")

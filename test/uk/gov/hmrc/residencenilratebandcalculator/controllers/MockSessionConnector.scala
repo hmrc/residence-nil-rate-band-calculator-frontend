@@ -22,7 +22,7 @@ import org.mockito.Mockito._
 import org.mockito.Matchers._
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.{BeforeAndAfter, Matchers}
-import play.api.libs.json.Writes
+import play.api.libs.json.{JsValue, Writes}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.test.UnitSpec
@@ -34,15 +34,17 @@ import scala.reflect.classTag
 
 trait MockSessionConnector extends UnitSpec with MockitoSugar with Matchers with BeforeAndAfter {
 
-  var mockSessionConnector: SessionConnector = null
-  var mockCacheMap: CacheMap = null
+  var mockSessionConnector: SessionConnector = _
+  var mockCacheMap: CacheMap = _
   implicit val headnapper = ArgumentCaptor.forClass(classOf[HeaderCarrier])
   implicit val writesnapper = ArgumentCaptor.forClass(classOf[Writes[Any]])
   implicit val dateWritesNapper = ArgumentCaptor.forClass(classOf[Writes[LocalDate]])
 
   before {
-    mockSessionConnector = mock[SessionConnector]
     mockCacheMap = mock[CacheMap]
+    when(mockCacheMap.data) thenReturn Map[String, JsValue]()
+
+    mockSessionConnector = mock[SessionConnector]
     when(mockSessionConnector.cache(anyString(), anyInt())(any(), any[HeaderCarrier])) thenReturn Future.successful(mockCacheMap)
     when(mockSessionConnector.fetchAndGetEntry[Int](anyString())(any[HeaderCarrier], any())) thenReturn Future.successful(None)
 

@@ -1,0 +1,23 @@
+@import uk.gov.hmrc.residencenilratebandcalculator.models.ResultsRow
+
+@(rows: Seq[ResultsRow])(implicit messages: Messages)
+<ul class="tablular-data">
+    <li class="tabular-data__entry tabular-data__entry--grouped divider--bottom">
+        <div class="tabular-data__data tabular-data__data--6-12">
+            @messages("results.allowance")
+        </div>
+        <div class="tabular-data__data tabular-data__data--3-12 u-align--tablet-right">
+            @messages("results.amount")
+        </div>
+    </li>
+    @for(row <- rows) {
+    <li class="tabular-data__entry tabular-data__entry--grouped divider--bottom">
+        <div class="tabular-data__data tabular-data__data--6-12">
+            @row.summary
+        </div>
+        <div class="tabular-data__data tabular-data__data--3-12 u-align--tablet-right">
+            @row.data
+        </div>
+    </li>
+    }
+</ul>
