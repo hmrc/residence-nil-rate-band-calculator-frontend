@@ -1,7 +1,17 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 
-@(rows: Seq[AnswerRow], includeChangeLink: Boolean = true)(implicit messages: Messages)
-<ul class="tablular-data">
+@(rows: Seq[AnswerRow], includeChangeLink: Boolean = true, showHeading: Boolean = false)(implicit messages: Messages)
+<ul class="tablular-data tabular-data--list">
+    @if(showHeading){
+    <li aria-hidden="true" class="tabular-data__entry tabular-data__entry--grouped divider--bottom">
+        <div class="tabular-data__data tabular-data__data--6-12 bold">
+            [Question]
+        </div>
+        <div class="tabular-data__data tabular-data__data--3-12 u-align--tablet-right bold">
+            [Answer]
+        </div>
+    </li>
+    }
     @for(row <- rows) {
         <li class="tabular-data__entry tabular-data__entry--grouped divider--bottom">
             <div class="tabular-data__data tabular-data__data--6-12">

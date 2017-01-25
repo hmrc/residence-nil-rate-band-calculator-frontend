@@ -158,7 +158,7 @@ property_value_after_exemption.greater_than_property_value.error = Property Valu
 property_value_after_exemption.value_closely_inherited_greater_than_value.error = Value Closely Inherited cannot be greater than the Property Value
 
 results.browser_title = Final calculation
-results.title = The Residence Nil Rate Amount available for this estate is {0}
+results.title = The Residence Nil Rate Amount available for this estate&nbsp;is {0}
 results.guidance = You should make a copy of this figure and enter it on the TK form in box TK.
 results.link_to_print = Print off this page
 results.explanation_title = How this is calculated?

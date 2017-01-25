@@ -9,22 +9,29 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
-    <div>
-        <h1>@messages("results.title", calculationResult.residenceNilRateAmount)</h1>
-    </div>
+    <header class="hero center">
+        <section class="hero__content u-align--center">
+            <h1 class="hero__heading-small">@Html(messages("results.title", "<span class=\"hero__heading-large\">" + calculationResult.residenceNilRateAmount + "</span>"))</h1>
+        </section>
+    </header>
 
-    <h2>@messages("results.title")</h2>
-    <p>@messages("results.guidance")</p>
-    <a>@messages("results.link_to_print")</a>
+    <section class="section">
+        <h2 class="heading-medium">[What happends next]</h2>
+        <p>@messages("results.guidance")</p>
+        <a>@messages("results.link_to_print")</a>
+    </section>
 
-    <h2>@messages("results.explanation_title")</h2>
+    <section class="section">
+        <h2 class="heading-medium">@messages("results.explanation_title")</h2>
+        @rnrbHelpers.summary(calculationResult.resultsRows)
 
-    @rnrbHelpers.summary(calculationResult.resultsRows)
-
-    <div>
-        <a>@messages("results.answers")</a>
-        @rnrbHelpers.answer_rows(calculationResult.answerRows, false)
-    </div>
+        <details>
+            <summary>@messages("results.answers")</summary>
+            <div class="panel-indent panel-indent--gutter">
+                @rnrbHelpers.answer_rows(calculationResult.answerRows, false, true)
+            </div>
+        </details>
+    </section>
 
     <p>
         <a href="@routes.ExitQuestionnaireController.onPageLoad().url">@messages("results.link_to_exit_questionnaire.text")</a>
