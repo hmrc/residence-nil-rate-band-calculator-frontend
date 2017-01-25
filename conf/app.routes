@@ -70,3 +70,4 @@ GET        /thank-you                                   uk.gov.hmrc.residencenil
 GET        /value-of-disposed-property                  uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfDisposedPropertyController.onPageLoad
 POST       /value-of-disposed-property                  uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfDisposedPropertyController.onSubmit
 
+GET        /landing-page                                uk.gov.hmrc.residencenilratebandcalculator.controllers.LandingPageController.onPageLoad
