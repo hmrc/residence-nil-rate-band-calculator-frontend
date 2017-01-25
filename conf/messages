@@ -158,13 +158,17 @@ property_value_after_exemption.greater_than_property_value.error = Property Valu
 property_value_after_exemption.value_closely_inherited_greater_than_value.error = Value Closely Inherited cannot be greater than the Property Value
 
 results.browser_title = Final calculation
-results.title = Your results are:
-results.guidance = Results guidance ipsum dolor sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
-results.residenceNilRateAmount.label = The Residence Nil Rate Band (RNRB) available for this estate is
-results.carryForwardAmount.label = The amount of unused residence Nil Rate Band available to be carried forward is
-results.applicableNilRateBandAmount.label = The Residential Enhancement at the date of death is
-results.defaultAllowanceAmount.label = Adding these two figures together gives the Default Allowance at the date of death of
+results.title = The Residence Nil Rate Amount available for this estate&nbsp;is {0}
+results.guidance = You should make a copy of this figure and enter it on the TK form in box TK.
+results.link_to_print = Print off this page
+results.explanation_title = How this is calculated?
+results.applicableNilRateBandAmount.label = Residential Enhancement at the date of death is
+results.defaultAllowanceAmount.label = Default Allowance at the date of death is therefore
+results.carryForwardAmount.label = Amount of unused Residence Nil Rate Band available to be carried forward is
 results.link_to_exit_questionnaire.text = Complete a short survey
+results.allowance = Allowance
+results.amount = Amount
+results.answers = Your answers
 
 service.no_thanks = No thanks
 
