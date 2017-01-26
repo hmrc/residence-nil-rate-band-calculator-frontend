@@ -60,7 +60,6 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
       case Some(id) => {
         sessionRepository().get(id.toString).flatMap { optionalCacheMap =>
           optionalCacheMap.fold(Future(new CacheMap(id.toString, Map()))) { cm =>
-            //val newCacheMap: CacheMap = cm copy (data = cm.data + (key -> Json.toJson(value)))
             val newCacheMap = funcMap.get(key).fold(cm copy (data = cm.data + (key -> Json.toJson(value)))) { fn => fn(cm)}
             sessionRepository().upsert(newCacheMap).map { _ => newCacheMap}
           }
@@ -100,54 +99,4 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
     funcMap = funcMap + (key -> fn)
   }
 }
-
-//@Singleton
-//class AltSessionConnector @Inject()(val sessionRepository: SessionRepository){
-//  var funcMap: Map[String, CacheMap => CacheMap] = Map()
-//
-//  def update[A](key: String, value: A)(implicit write: Writes[A], hc: HeaderCarrier): Future[Boolean] = {
-//    hc.sessionId match {
-//      case None => Future(false)
-//      case Some(id) => {
-//        sessionRepository().get(id.toString).flatMap { cmSeq =>
-//          if (cmSeq.length != 1) {
-//            Future(false)
-//          } else {
-//            val originalCacheMap = cmSeq.head
-//            val newCacheMap = funcMap.get(key).fold(originalCacheMap copy (data = originalCacheMap.data + (key -> Json.toJson(value)))) { fn =>
-//              fn(originalCacheMap)
-//            }
-//            sessionRepository().upsert(newCacheMap)
-//          }
-//        }
-//      }
-//    }
-//  }
-//
-//  //Keys that do not exist are ignored
-//  def delete(key: String)(implicit hc: HeaderCarrier): Future[Boolean] = {
-//    hc.sessionId match {
-//      case None => Future(false)
-//      case Some(id) => {
-//        sessionRepository().get(id.toString).flatMap { cmSeq =>
-//          if (cmSeq.length != 1) {
-//            Future(false)
-//          } else {
-//            val originalCacheMap = cmSeq.head
-//            if (originalCacheMap.data.isDefinedAt(key)) {
-//              val newCacheMap = originalCacheMap copy (data = originalCacheMap.data - key)
-//              sessionRepository().upsert(newCacheMap)
-//            } else {
-//              Future(true)
-//            }
-//          }
-//        }
-//      }
-//    }
-//  }
-//
-//  def associateFunc(key: String, fn: CacheMap => CacheMap) = {
-//    funcMap = funcMap + (key -> fn)
-//  }
-//}
 
