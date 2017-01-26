@@ -16,17 +16,17 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
+import java.text.NumberFormat
+
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
-import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
+import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationResult, DisplayResults}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.results
 
 import scala.language.reflectiveCalls
-import scala.util.Success
-import scala.concurrent.ExecutionContext.Implicits.global
 
 class ResultsViewSpec extends HtmlSpec {
   def fixture() = new {
-    val view = results(frontendAppConfig, Success(CalculationResult(10, 50, 300, 260)))(request, messages)
+    val view = results(frontendAppConfig, DisplayResults(CalculationResult(10, 50, 300, 260), Nil)(messages))(request, messages)
     val doc = asDocument(view)
   }
 
@@ -41,17 +41,12 @@ class ResultsViewSpec extends HtmlSpec {
 
       "display the correct page title" in {
         val f = thisFixture()
-        assertPageTitleEqualsMessage(f.doc, "results.title")
+        assertPageTitleEqualsMessage(f.doc, "results.title", NumberFormat.getCurrencyInstance.format(10))
       }
 
       "display the correct guidance" in {
         val f = thisFixture()
         assertContainsMessages(f.doc, "results.guidance")
-      }
-
-      "contain a label for the value" in {
-        val f = thisFixture()
-        assertContainsMessages(f.doc, "results.residenceNilRateAmount.label")
       }
 
       "contain an amount for the value" in {

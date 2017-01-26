@@ -16,44 +16,46 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import java.text.NumberFormat
+
 import org.mockito.ArgumentCaptor
+import org.mockito.Matchers._
+import org.mockito.Mockito._
 import org.scalatest.Matchers
 import org.scalatest.mock.MockitoSugar
-import org.mockito.Mockito._
-import org.mockito.Matchers._
 import play.api.http.Status
 import play.api.libs.json.{JsNumber, JsValue}
 import play.api.test.Helpers._
-import uk.gov.hmrc.play.http.HeaderCarrier
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.results
-import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
-import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
-import uk.gov.hmrc.residencenilratebandcalculator.exceptions.{JsonInvalidException, NoCacheMapException}
+import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
+import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.json.JsonBuilder
+import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationResult, DisplayResults}
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.results
 
-import scala.util.{Failure, Success}
 import scala.concurrent.Future
+import scala.util.{Failure, Success}
 
 class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar with Matchers {
 
   val testJsNumber = JsNumber(10)
 
   val mockLeftJsonBuilder: JsonBuilder = mock[JsonBuilder]
-  when(mockLeftJsonBuilder.build(any[SessionConnector])(any[HeaderCarrier])) thenReturn Future.successful(Failure(new NoCacheMapException("Something bad happened")))
+  when(mockLeftJsonBuilder.buildFromCacheMap(any[CacheMap])) thenReturn Future.successful(Failure(new NoCacheMapException("Something bad happened")))
 
   val mockJsonBuilderThatSucceeds: JsonBuilder = mock[JsonBuilder]
-  when(mockJsonBuilderThatSucceeds.build(any[SessionConnector])(any[HeaderCarrier])) thenReturn Future.successful(Success(testJsNumber))
+  when(mockJsonBuilderThatSucceeds.buildFromCacheMap(any[CacheMap])) thenReturn Future.successful(Success(testJsNumber))
 
   val expectedResidenceNilRateAmount = 77796325
   val expectedApplicableNilRateBandAmount = 88881
   val expectedCarriedForwardAmount = 9999
   val expectedDefaultAllowance = 3333
-  val eitherCalculationResult = Success(CalculationResult(expectedResidenceNilRateAmount, expectedApplicableNilRateBandAmount,
-    expectedCarriedForwardAmount, expectedDefaultAllowance))
+  val calculationResult = CalculationResult(expectedResidenceNilRateAmount, expectedApplicableNilRateBandAmount,
+    expectedCarriedForwardAmount, expectedDefaultAllowance)
 
   def mockRnrbConnector = {
     val mockConnector = mock[RnrbConnector]
-    when(mockConnector.send(any[JsValue])) thenReturn Future.successful(eitherCalculationResult)
+    when(mockConnector.send(any[JsValue])) thenReturn Future.successful(Success(calculationResult))
     mockConnector
   }
 
@@ -69,7 +71,7 @@ class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar w
 
     "return the View for a GET" in {
       val result = resultsController(mockJsonBuilderThatSucceeds).onPageLoad()(fakeRequest)
-      contentAsString(result) shouldBe results(frontendAppConfig, eitherCalculationResult)(fakeRequest, messages).toString
+      contentAsString(result) shouldBe results(frontendAppConfig, DisplayResults(calculationResult, Nil)(messages))(fakeRequest, messages).toString
     }
 
     "returns an Internal Server Error when the JsonBuilder fails" in {
@@ -88,25 +90,25 @@ class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar w
     "display the calculation result if the Microservice successfully returns it" in {
       val result = resultsController(mockJsonBuilderThatSucceeds).onPageLoad()(fakeRequest)
       val contents = contentAsString(result)
-      contents should include("77796325")
+      contents should include(NumberFormat.getCurrencyInstance.format(expectedResidenceNilRateAmount))
     }
 
     "display the carry forward amount if the Microservice successfully returns it" in {
       val result = resultsController(mockJsonBuilderThatSucceeds).onPageLoad()(fakeRequest)
       val contents = contentAsString(result)
-      contents should include("9999")
+      contents should include(NumberFormat.getCurrencyInstance.format(expectedCarriedForwardAmount))
     }
 
     "display the applicable nil rate band if the Microservice successfully returns it" in {
       val result = resultsController(mockJsonBuilderThatSucceeds).onPageLoad()(fakeRequest)
       val contents = contentAsString(result)
-      contents should include("88881")
+      contents should include(NumberFormat.getCurrencyInstance.format(expectedApplicableNilRateBandAmount))
     }
 
     "display the default allowance if the Microservice successfully returns it" in {
       val result = resultsController(mockJsonBuilderThatSucceeds).onPageLoad()(fakeRequest)
       val contents = contentAsString(result)
-      contents should include("3333")
+      contents should include(NumberFormat.getCurrencyInstance.format(expectedDefaultAllowance))
     }
   }
 }

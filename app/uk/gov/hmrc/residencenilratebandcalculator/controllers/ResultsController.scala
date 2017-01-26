@@ -18,41 +18,66 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
 
-import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc._
-import uk.gov.hmrc.play.frontend.controller.FrontendController
-import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.results
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import play.Logger
+import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.libs.json.JsValue
+import play.api.mvc._
+import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.play.frontend.controller.FrontendController
+import uk.gov.hmrc.play.http.HeaderCarrier
+import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
+import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.json.JsonBuilder
-import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, DisplayResults}
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.results
 
-import scala.util.{Failure, Success, Try}
 import scala.concurrent.Future
+import scala.util.{Failure, Success, Try}
 
 @Singleton
 class ResultsController @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi,
                                   rnrbConnector: RnrbConnector, sessionConnector: SessionConnector, jsonBuilder: JsonBuilder)
   extends FrontendController with I18nSupport {
 
-  def onPageLoad = Action.async { implicit request => {
-    val futureTryJson: Future[Try[JsValue]] = jsonBuilder.build(sessionConnector)
+  private def fail(ex: Throwable) = {
+    val errorMessage = ex.getMessage
+    Logger.error(errorMessage)
+    Logger.error(ex.getStackTrace.toString)
+    InternalServerError(ex.getMessage)
+  }
 
-    futureTryJson.flatMap {
-      case Failure(exception) => {
-        val exceptionMessage = exception.getMessage
-        Logger.error(exceptionMessage)
-        Logger.error(exception.getStackTrace.toString)
-        Future.successful(InternalServerError(exceptionMessage))
-      }
-      case Success(json) => {
-        Logger.warn("Sending " + json) // Left in as a reminder on how to produce logs - only warn and error are currently visible during local deployment
-        rnrbConnector.send(json).map {
-          (rnrbTry: Try[CalculationResult] with Product with Serializable) => Ok(results(appConfig, rnrbTry))
+  private def getAnswers(implicit hc: HeaderCarrier) = sessionConnector.fetch().map {
+    case Some(answers) => Success(answers)
+    case None => Failure(new NoCacheMapException("Unable to retrieve cache map from SessionConnector"))
+  }
+
+  private def getParams(tryAnswers: Try[CacheMap]) = tryAnswers match {
+    case Success(answers) => jsonBuilder.buildFromCacheMap(answers)
+    case Failure(ex) => Future.successful(Failure(ex))
+  }
+
+  private def getResult(tryParams: Try[JsValue]) = tryParams match {
+    case Success(params) => rnrbConnector.send(params)
+    case Failure(ex) => Future.successful(Failure(ex))
+  }
+
+  def onPageLoad = Action.async {
+    implicit request => {
+      for {
+        tryAnswers <- getAnswers
+        tryParams <- getParams(tryAnswers)
+        tryResult <- getResult(tryParams)
+      } yield {
+        (tryResult, tryAnswers) match {
+          case (_, Failure(ex)) => fail(ex)
+          case (Failure(ex), _) => fail(ex)
+          case (Success(result), Success(answers)) => {
+            val messages = messagesApi.preferred(request)
+            Ok(results(appConfig, DisplayResults(result, AnswerRows(answers, messages))(messages)))
+          }
         }
       }
     }
-  }}
+  }
 }

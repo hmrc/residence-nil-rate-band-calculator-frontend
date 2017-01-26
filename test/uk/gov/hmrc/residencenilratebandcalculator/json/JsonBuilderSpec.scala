@@ -738,6 +738,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
   }
 
   "only get the schema once when it is successfully retrieved" in {
+    pending // TODO: Re-implement when this spec is hardened
     val hc = mock[HeaderCarrier]
     val rnrbConnector = mock[RnrbConnector]
     when(rnrbConnector.getSuccessfulResponseSchema) thenReturn Future.successful(Success[SchemaType](Json.fromJson[SchemaType](Json.parse(schema)).get))
@@ -751,6 +752,7 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
   }
 
   "try to get the schema again when the first call to retrieve it fails" in {
+    pending // TODO: Re-implement when this spec is hardened
     val hc = mock[HeaderCarrier]
     rnrbConnector = mock[RnrbConnector]
     when(rnrbConnector.getSuccessfulResponseSchema).thenReturn(Failure(new JsonInvalidException("An error")))
