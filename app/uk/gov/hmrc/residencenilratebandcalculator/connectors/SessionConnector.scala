@@ -48,17 +48,21 @@ import scala.concurrent.Future
 
 @Singleton
 class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
-  def cache[A](key: String, value: A)(implicit wts: Writes[A], hc: HeaderCarrier): Future[Boolean] = {
+  var funcMap: Map[String, CacheMap => CacheMap] = Map()
+
+  def cache[A](key: String, value: A)(implicit wts: Writes[A], hc: HeaderCarrier) = {
     hc.sessionId match {
       case None => {
         val newcacheMap = new CacheMap(hc.sessionId.toString, Map(key -> Json.toJson(value)))
-        sessionRepository().upsert(newcacheMap)
+        sessionRepository().upsert(newcacheMap).map {_ => newcacheMap}
+
       }
       case Some(id) => {
         sessionRepository().get(id.toString).flatMap { optionalCacheMap =>
-          optionalCacheMap.fold(Future(false)) { cm =>
-            val newCacheMap: CacheMap = cm copy (data = cm.data - key)
-            sessionRepository().upsert(newCacheMap)
+          optionalCacheMap.fold(Future(new CacheMap(id.toString, Map()))) { cm =>
+            //val newCacheMap: CacheMap = cm copy (data = cm.data + (key -> Json.toJson(value)))
+            val newCacheMap = funcMap.get(key).fold(cm copy (data = cm.data + (key -> Json.toJson(value)))) { fn => fn(cm)}
+            sessionRepository().upsert(newCacheMap).map { _ => newCacheMap}
           }
         }
       }
@@ -90,6 +94,10 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
         cm.getEntry(key)
       }
     }
+  }
+
+  def associateFunc(key: String, fn: CacheMap => CacheMap) = {
+    funcMap = funcMap + (key -> fn)
   }
 }
 
