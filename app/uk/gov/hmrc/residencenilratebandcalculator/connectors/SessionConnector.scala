@@ -24,6 +24,7 @@ import javax.inject.{Inject, Singleton}
 
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.HeaderCarrier
+import uk.gov.hmrc.residencenilratebandcalculator
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.repositories.SessionRepository
 
@@ -32,13 +33,28 @@ import scala.concurrent.Future
 
 @Singleton
 class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
-  var funcMap: Map[String, (JsValue, CacheMap) => CacheMap] = Map(Constants.propertyValueId -> ((v, cm) => propertyValueClearance(v, cm)))
+  var funcMap: Map[String, (JsValue, CacheMap) => CacheMap] =
+    Map(
+      Constants.propertyValueId -> ((v, cm) => propertyValueClearance(v, cm)),
+      Constants.percentageCloselyInheritedId -> ((v, cm ) => percentageCloselyInheritedClearance(v, cm)),
+      Constants.anyExemptionId -> ((v, cm) => anyExemptionClearance(v, cm)))
 
   private def propertyValueClearance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
     val keysToRemove = Set(Constants.percentageCloselyInheritedId, Constants.anyExemptionId, Constants.propertyValueAfterExemptionId)
     val mapWithDeletedKeys = cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemove.contains(s)))
-    val xxxx = mapWithDeletedKeys copy (data = mapWithDeletedKeys.data + (Constants.propertyValueId -> Json.toJson(value)))
-    xxxx
+    mapWithDeletedKeys copy (data = mapWithDeletedKeys.data + (Constants.propertyValueId -> Json.toJson(value)))
+  }
+
+  private def percentageCloselyInheritedClearance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
+    val keysToRemove = Set(Constants.anyExemptionId, Constants.propertyValueAfterExemptionId)
+    val mapWithDeletedKeys = cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemove.contains(s)))
+    mapWithDeletedKeys copy (data = mapWithDeletedKeys.data + (Constants.percentageCloselyInheritedId -> Json.toJson(value)))
+  }
+
+  private def anyExemptionClearance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
+    val keysToRemove = Set(Constants.propertyValueAfterExemptionId)
+    val mapWithDeletedKeys = cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemove.contains(s)))
+    mapWithDeletedKeys copy (data = mapWithDeletedKeys.data + (Constants.anyExemptionId -> Json.toJson(value)))
   }
 
   private def updateCacheMap[A](key: String, value: A, originalCacheMap: CacheMap)(implicit wts: Writes[A]): Future[CacheMap] = {
