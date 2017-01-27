@@ -20,23 +20,6 @@ import javax.inject.Inject
 
 import play.api.libs.json.Reads
 import uk.gov.hmrc.http.cache.client.{CacheMap, SessionCache}
-
-import scala.util.parsing.json.JSON
-
-//import uk.gov.hmrc.play.config.{AppName, ServicesConfig}
-//import uk.gov.hmrc.play.http.HeaderCarrier
-//import uk.gov.hmrc.residencenilratebandcalculator.WSHttp
-//import uk.gov.hmrc.residencenilratebandcalculator.repositories.SessionRepository
-//
-//class SessionConnector @Inject()(wshttp: WSHttp) extends SessionCache with ServicesConfig with AppName {
-//  override lazy val http: WSHttp = wshttp
-//  override lazy val defaultSource: String = appName
-//  override lazy val baseUri: String = baseUrl("session")
-//  override lazy val domain: String =
-//    getConfString("session.domain", throw new Exception(s"Could not find config 'session.domain'"))
-//
-//}
-
 import javax.inject.{Inject, Singleton}
 import play.api.libs.json.{Json, Writes}
 import uk.gov.hmrc.http.cache.client.CacheMap
@@ -50,18 +33,18 @@ import scala.concurrent.Future
 class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
   var funcMap: Map[String, CacheMap => CacheMap] = Map()
 
+  private def updateCacheMap[A](key: String, value: A, originalCacheMap: CacheMap)(implicit wts: Writes[A]): Future[CacheMap] = {
+    val newCacheMap = funcMap.get(key).fold(originalCacheMap copy (data = originalCacheMap.data + (key -> Json.toJson(value)))) { fn => fn(originalCacheMap)}
+    sessionRepository().upsert(newCacheMap).map {_ => newCacheMap}
+  }
+
   def cache[A](key: String, value: A)(implicit wts: Writes[A], hc: HeaderCarrier) = {
     hc.sessionId match {
-      case None => {
-        val newcacheMap = new CacheMap(hc.sessionId.toString, Map(key -> Json.toJson(value)))
-        sessionRepository().upsert(newcacheMap).map {_ => newcacheMap}
-
-      }
+      case None => updateCacheMap(key, value, new CacheMap(hc.sessionId.toString, Map(key -> Json.toJson(value))))
       case Some(id) => {
         sessionRepository().get(id.toString).flatMap { optionalCacheMap =>
-          optionalCacheMap.fold(Future(new CacheMap(id.toString, Map()))) { cm =>
-            val newCacheMap = funcMap.get(key).fold(cm copy (data = cm.data + (key -> Json.toJson(value)))) { fn => fn(cm)}
-            sessionRepository().upsert(newCacheMap).map { _ => newCacheMap}
+          optionalCacheMap.fold(updateCacheMap(key, value, new CacheMap(id.toString, Map()))) { cm =>
+            updateCacheMap(key, value, cm)
           }
         }
       }
@@ -83,12 +66,15 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
   }
 
   def fetch()(implicit hc: HeaderCarrier): Future[Option[CacheMap]] = {
-    sessionRepository().get(hc.sessionId.toString)
+    hc.sessionId match {
+      case None => Future.successful(None)
+      case Some(id) => sessionRepository().get(id.toString)
+    }
   }
 
   def fetchAndGetEntry[A](key: String)(implicit hc: HeaderCarrier, rds: Reads[A]): Future[Option[A]] = {
     val futureOptionCacheMap = fetch()
-    futureOptionCacheMap.map { (optionalCacheMap: Option[CacheMap]) =>
+    futureOptionCacheMap.map {optionalCacheMap =>
       optionalCacheMap.flatMap { cm =>
         cm.getEntry(key)
       }

@@ -24,7 +24,6 @@ import reactivemongo.api.DefaultDB
 import reactivemongo.bson.{BSONDocument, BSONObjectID}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.mongo.ReactiveRepository
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 

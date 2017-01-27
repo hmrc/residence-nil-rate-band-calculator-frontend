@@ -56,8 +56,10 @@ trait SimpleControllerBase[A] extends FrontendController with I18nSupport {
       (formWithErrors: Form[A]) => Future.successful(BadRequest(view(Some(formWithErrors)))),
       (value) => validate(value).flatMap {
         case Some(error) => Future.successful(BadRequest(view(Some(form().fill(value).withError(error)))))
-        case None => sessionConnector.cache[A](controllerId, value).map(cacheMap =>
-          Redirect(navigator.nextPage(controllerId)(cacheMap)))
+        case None => {
+          sessionConnector.cache[A](controllerId, value).map(cacheMap =>
+            Redirect(navigator.nextPage(controllerId)(cacheMap)))
+        }
       })
   }
 
