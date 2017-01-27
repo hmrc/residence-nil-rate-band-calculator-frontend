@@ -170,6 +170,8 @@ results.link_to_exit_questionnaire.text = Complete a short survey
 results.allowance = Allowance
 results.amount = Amount
 results.answers = Your answers
+results.question_header = Question
+results.amount_header = Amount
 
 service.no_thanks = No thanks
 
