@@ -14,19 +14,22 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.forms
+package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
-import uk.gov.hmrc.residencenilratebandcalculator.utils.Transformers._
+import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.purpose_of_use
 
-import scala.util.{Success, Try}
+import scala.language.reflectiveCalls
 
-object FormValidators {
+class PurposeOfUseViewSpec extends ViewSpecBase {
 
-  def isValidDate(day: Int, month: Int, year: Int): Boolean = Try(constructDate(day, month, year)) match {
-    case Success(_) => true
-    case _ => false
+  val messageKeyPrefix = "purpose_of_use"
+
+  def createView(form: Option[Form[String]] = None) = purpose_of_use(frontendAppConfig, backUrl, form)(request, messages)
+
+  "Purpose of Use View" must {
+
+    behave like rnrbPage[String](createView, messageKeyPrefix)
+
   }
-
-  def isValidPurposeOfUse(value: String) = Constants.purposeOfUseOptions.exists(x => x.value == value)
 }

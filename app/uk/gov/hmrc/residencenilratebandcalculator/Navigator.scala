@@ -46,7 +46,8 @@ class Navigator @Inject()() {
       Constants.assetsPassingToDirectDescendantsId -> (_ => AnyBroughtForwardAllowanceOnDisposalController.onPageLoad()),
       Constants.anyBroughtForwardAllowanceOnDisposalId -> (cm => getAnyBroughtForwardAllowanceOnDisposalRoute(cm)),
       Constants.broughtForwardAllowanceOnDisposalId -> (_ => CheckAnswersController.onPageLoad()),
-      Constants.checkAnswersId -> (_ => ResultsController.onPageLoad())
+      Constants.checkAnswersId -> (_ => ResultsController.onPageLoad()),
+      Constants.purposeOfUseId -> (cm => getPurposeOfUseRoute(cm))
     )
   }
 
@@ -140,6 +141,13 @@ class Navigator @Inject()() {
       case Some(true) => AssetsPassingToDirectDescendantsController.onPageLoad()
       case Some(false) => CheckAnswersController.onPageLoad()
       case None => HomeController.onPageLoad()
+    }
+  }
+
+  private def getPurposeOfUseRoute(cacheMap: CacheMap) = {
+    cacheMap.getEntry[String](Constants.purposeOfUseId) match {
+      case Some(value) if Constants.purposeOfUseOptions.exists(x => x.value == value) => DateOfDeathController.onPageLoad()
+      case _ => HomeController.onPageLoad()
     }
   }
 

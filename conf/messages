@@ -157,6 +157,14 @@ property_value_after_exemption.value_closely_inherited.guidance = This is the va
 property_value_after_exemption.greater_than_property_value.error = Property Value after exemptions cannot be greater than the Property Value
 property_value_after_exemption.value_closely_inherited_greater_than_value.error = Value Closely Inherited cannot be greater than the Property Value
 
+purpose_of_use.question_number = Before you start
+purpose_of_use.browser_title = Question page
+purpose_of_use.title = What are you using this service for?
+purpose_of_use.label =
+purpose_of_use.dealing_with_estate = I’m responsible for someone’s estate and want to calculate the Inheritance Tax threshold
+purpose_of_use.planning = I’m planning for my future and want to see the different options
+
+
 results.browser_title = Final calculation
 results.title = The Residence Nil Rate Amount available for this estate&nbsp;is {0}
 results.header = What happens next?
