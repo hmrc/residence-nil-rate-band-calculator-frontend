@@ -146,8 +146,8 @@ class Navigator @Inject()() {
 
   private def getPurposeOfUseRoute(cacheMap: CacheMap) = {
     cacheMap.getEntry[String](Constants.purposeOfUseId) match {
-      case Some(value) if value == Constants.dealingWithEstate => DateOfDeathController.onPageLoad()
-      case Some(value) if value == Constants.planning => PlanningController.onPageLoad()
+      case Some(Constants.dealingWithEstate) => DateOfDeathController.onPageLoad()
+      case Some(Constants.planning) => PlanningController.onPageLoad()
       case _ => HomeController.onPageLoad()
     }
   }
