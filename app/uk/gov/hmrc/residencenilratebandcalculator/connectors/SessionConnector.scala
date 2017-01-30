@@ -24,6 +24,7 @@ import javax.inject.{Inject, Singleton}
 
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.HeaderCarrier
+import uk.gov.hmrc.residencenilratebandcalculator
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.repositories.SessionRepository
 
@@ -34,23 +35,49 @@ import scala.concurrent.Future
 class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
   var funcMap: Map[String, (JsValue, CacheMap) => CacheMap] =
     Map(
-      Constants.propertyValueId -> ((v, cm) => propertyValueClearance(v, cm)),
-      Constants.percentageCloselyInheritedId -> ((v, cm ) => percentageCloselyInheritedClearance(v, cm)),
-      Constants.anyExemptionId -> ((v, cm) => anyExemptionClearance(v, cm)))
+      Constants.estateHasPropertyId -> ((v, cm) => estateHasProperty(v, cm)),
+      Constants.anyExemptionId -> ((v, cm) => anyExemptionClearance(v, cm)),
+      Constants.anyBroughtForwardAllowanceId -> ((v, cm) => anyBroughtForwardAllowance(v, cm)),
+      Constants.anyDownsizingAllowanceId -> ((v, cm) => anyDownsizingAllowance(v, cm)),
+      Constants.anyAssetsPassingToDirectDescendantsId -> ((v, cm) => anyAssetsPassingToDirectDescendants(v, cm)),
+      Constants.anyBroughtForwardAllowanceOnDisposalId -> ((v, cm) => anyBroughtForwardAllowanceOnDisposal(v, cm)))
 
   private def clearance[A](key: String, value: A, keysToRemove: Set[String], cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
     val mapWithDeletedKeys = cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemove.contains(s)))
     mapWithDeletedKeys copy (data = mapWithDeletedKeys.data + (key -> Json.toJson(value)))
   }
-  
-  private def propertyValueClearance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearance(Constants.propertyValueId, value, Set(Constants.percentageCloselyInheritedId, Constants.anyExemptionId, Constants.propertyValueAfterExemptionId), cacheMap)
 
-  private def percentageCloselyInheritedClearance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearance(Constants.percentageCloselyInheritedId, value, Set(Constants.anyExemptionId, Constants.propertyValueAfterExemptionId), cacheMap)
+  private def estateHasProperty[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+    clearance(Constants.estateHasPropertyId, value, Set(Constants.propertyValueId, Constants.percentageCloselyInheritedId, Constants.anyExemptionId, Constants.propertyValueAfterExemptionId), cacheMap)
 
   private def anyExemptionClearance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
     clearance(Constants.anyExemptionId, value, Set(Constants.propertyValueAfterExemptionId), cacheMap)
+
+  private def anyBroughtForwardAllowance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+    clearance(Constants.anyBroughtForwardAllowanceId, value, Set(Constants.broughtForwardAllowanceId), cacheMap)
+
+  private def anyDownsizingAllowance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+    clearance(Constants.anyDownsizingAllowanceId,
+     value,
+     Set(
+       Constants.dateOfDisposalId,
+       Constants.valueOfDisposedPropertyId,
+       Constants.anyAssetsPassingToDirectDescendantsId,
+       Constants.assetsPassingToDirectDescendantsId,
+       Constants.anyBroughtForwardAllowanceOnDisposalId,
+       Constants.broughtForwardAllowanceOnDisposalId),
+     cacheMap)
+
+  private def anyAssetsPassingToDirectDescendants[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+    clearance(Constants.anyAssetsPassingToDirectDescendantsId, value,
+      Set(
+        Constants.assetsPassingToDirectDescendantsId,
+        Constants.anyBroughtForwardAllowanceOnDisposalId,
+        Constants.broughtForwardAllowanceOnDisposalId),
+      cacheMap)
+
+  private def anyBroughtForwardAllowanceOnDisposal[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+    clearance(Constants.anyBroughtForwardAllowanceId, value, Set(Constants.anyBroughtForwardAllowanceOnDisposalId), cacheMap)
 
   private def updateCacheMap[A](key: String, value: A, originalCacheMap: CacheMap)(implicit wts: Writes[A]): Future[CacheMap] = {
     val newCacheMap = funcMap.get(key).fold(originalCacheMap copy (data = originalCacheMap.data + (key -> Json.toJson(value)))) { fn => fn(Json.toJson(value), originalCacheMap)}
