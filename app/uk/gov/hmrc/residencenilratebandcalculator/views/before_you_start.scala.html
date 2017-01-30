@@ -1,0 +1,63 @@
+@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
+
+@(appConfig: FrontendAppConfig)(implicit request: Request[_], messages: Messages)
+
+@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+    title = messages("before_you_start.browser_title"),
+    appConfig = appConfig,
+    bodyClasses = None) {
+
+    <h1>@messages("before_you_start.title")</h1>
+
+    <p>@messages("before_you_start.guidance1")</p>
+    <ul class="list list-bullet">
+        <li>@messages("before_you_start.guidance1.bullet1")</li>
+        <li>@messages("before_you_start.guidance1.bullet2")</li>
+    </ul>
+
+    <p>@messages("before_you_start.guidance2")</p>
+    <ul class="list list-bullet">
+        <li>@messages("before_you_start.guidance2.bullet1")</li>
+    </ul>
+
+    <h2 class="heading-medium">@messages("before_you_start.sub_heading")</h2>
+
+    <p>@messages("before_you_start.guidance3")</p>
+
+    <h3 class="heading-small">@messages("before_you_start.guidance4")</h3>
+    <ul class="list list-bullet">
+        <li>@messages("before_you_start.guidance4.bullet1")</li>
+        <li>@messages("before_you_start.guidance4.bullet2")</li>
+        <li>@messages("before_you_start.guidance4.bullet3")</li>
+        <li>@messages("before_you_start.guidance4.bullet4")</li>
+        <li>@messages("before_you_start.guidance4.bullet5")</li>
+        <li>@messages("before_you_start.guidance4.bullet6")</li>
+        <li>@messages("before_you_start.guidance4.bullet7")</li>
+    </ul>
+
+    <p>@messages("before_you_start.guidance5")</p>
+
+    <h3 class="heading-small">@messages("before_you_start.guidance6")</h3>
+    <ul class="list list-bullet">
+        <li>@messages("before_you_start.guidance6.bullet1")</li>
+        <li>@messages("before_you_start.guidance6.bullet2")</li>
+        <li>@messages("before_you_start.guidance6.bullet3")</li>
+        <li>@messages("before_you_start.guidance6.bullet4")</li>
+        <li>@messages("before_you_start.guidance6.bullet5")</li>
+    </ul>
+
+    <p>@messages("before_you_start.guidance7")</p>
+
+    <h3 class="heading-small">@messages("before_you_start.guidance8")</h3>
+    <ul class="list list-bullet">
+        <li>@messages("before_you_start.guidance8.bullet1")</li>
+        <li>@messages("before_you_start.guidance8.bullet2")</li>
+    </ul>
+
+    <p>@messages("before_you_start.guidance9")</p>
+
+    <p>
+        <a href="@routes.PurposeOfUseController.onPageLoad().url" class="button" id="start">@messages("site.start")</a>
+    </p>
+}
