@@ -17,17 +17,14 @@
 package uk.gov.hmrc.residencenilratebandcalculator.connectors
 
 import javax.inject.Inject
-
+import play.api.mvc.Results._
 import play.api.libs.json.{JsValue, Json, Reads, Writes}
-import uk.gov.hmrc.http.cache.client.{CacheMap, SessionCache}
+import play.api.Logger
 import javax.inject.{Inject, Singleton}
-
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.HeaderCarrier
-import uk.gov.hmrc.residencenilratebandcalculator
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.repositories.SessionRepository
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
@@ -42,9 +39,12 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
       Constants.anyAssetsPassingToDirectDescendantsId -> ((v, cm) => anyAssetsPassingToDirectDescendants(v, cm)),
       Constants.anyBroughtForwardAllowanceOnDisposalId -> ((v, cm) => anyBroughtForwardAllowanceOnDisposal(v, cm)))
 
+  private def store[A](key:String, value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]) =
+    cacheMap copy (data = cacheMap.data + (key -> Json.toJson(value)))
+
   private def clearance[A](key: String, value: A, keysToRemove: Set[String], cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
     val mapWithDeletedKeys = cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemove.contains(s)))
-    mapWithDeletedKeys copy (data = mapWithDeletedKeys.data + (key -> Json.toJson(value)))
+    store(key, value, mapWithDeletedKeys)
   }
 
   private def estateHasProperty[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
@@ -77,16 +77,20 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
       cacheMap)
 
   private def anyBroughtForwardAllowanceOnDisposal[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearance(Constants.anyBroughtForwardAllowanceOnDisposalId, value, Set(Constants.anyBroughtForwardAllowanceOnDisposalId), cacheMap)
+    clearance(Constants.anyBroughtForwardAllowanceOnDisposalId, value, Set(Constants.broughtForwardAllowanceOnDisposalId), cacheMap)
 
   private def updateCacheMap[A](key: String, value: A, originalCacheMap: CacheMap)(implicit wts: Writes[A]): Future[CacheMap] = {
-    val newCacheMap = funcMap.get(key).fold(originalCacheMap copy (data = originalCacheMap.data + (key -> Json.toJson(value)))) { fn => fn(Json.toJson(value), originalCacheMap)}
+    val newCacheMap = funcMap.get(key).fold(store(key, value, originalCacheMap)) { fn => fn(Json.toJson(value), originalCacheMap)}
     sessionRepository().upsert(newCacheMap).map {_ => newCacheMap}
   }
 
   def cache[A](key: String, value: A)(implicit wts: Writes[A], hc: HeaderCarrier) = {
     hc.sessionId match {
-      case None => updateCacheMap(key, value, new CacheMap(hc.sessionId.toString, Map(key -> Json.toJson(value))))
+      case None => {
+         val msg = "Unable to find session with id " + hc.sessionId + "while caching " + key + " = " + value
+         Logger.error(msg)
+         throw new RuntimeException(msg)
+      }
       case Some(id) => {
         sessionRepository().get(id.toString).flatMap { optionalCacheMap =>
           optionalCacheMap.fold(updateCacheMap(key, value, new CacheMap(id.toString, Map()))) { cm =>
