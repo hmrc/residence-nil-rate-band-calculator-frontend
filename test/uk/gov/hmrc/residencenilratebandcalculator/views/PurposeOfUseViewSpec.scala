@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.purpose_of_use
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 
 import scala.language.reflectiveCalls
 
@@ -31,5 +32,19 @@ class PurposeOfUseViewSpec extends ViewSpecBase {
 
     behave like rnrbPage[String](createView, messageKeyPrefix)
 
+    behave like questionPage[String](createView, messageKeyPrefix, PurposeOfUseController.onSubmit().url)
+
+  }
+
+  "Purpose of Use View" when {
+
+    "rendered" must {
+
+      "contain radio buttons for the value" in {
+        val doc = asDocument(createView(None))
+        assertContainsRadioButton(doc, "purpose_of_use.planning", "value", "planning", false)
+        assertContainsRadioButton(doc, "purpose_of_use.dealing_with_estate", "value", "dealing_with_estate", false)
+      }
+    }
   }
 }
