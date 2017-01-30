@@ -79,6 +79,11 @@ class ResultsViewSpec extends HtmlSpec {
         assertContainsText(f.doc, "260")
       }
 
+      "contain headers for your answers" in {
+        val f = thisFixture()
+        assertContainsMessages(f.doc, "results.question_header", "results.amount_header")
+      }
+
       "contain a link to the exit questionnaire" in {
         val f = thisFixture()
         val links = f.doc.getElementsByAttributeValue("href", routes.ExitQuestionnaireController.onPageLoad().url)
