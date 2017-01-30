@@ -205,6 +205,7 @@ site.continue = Continue
 site.back = Back
 site.change = Change
 site.hidden-change = Change details about {0}
+site.start = Start
 site.textarea.char_limit = (Limit is 1200 characters)
 
 thank_you.browser_title = Thank You

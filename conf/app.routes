@@ -76,3 +76,5 @@ GET        /what-are-you-using-this-service-for         uk.gov.hmrc.residencenil
 POST       /what-are-you-using-this-service-for         uk.gov.hmrc.residencenilratebandcalculator.controllers.PurposeOfUseController.onSubmit
 
 GET        /planning                                    uk.gov.hmrc.residencenilratebandcalculator.controllers.PlanningController.onPageLoad
+
+GET        /before_you_start                            uk.gov.hmrc.residencenilratebandcalculator.controllers.BeforeYouStartController.onPageLoad
