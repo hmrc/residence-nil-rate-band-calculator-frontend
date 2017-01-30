@@ -17,16 +17,122 @@
 package uk.gov.hmrc.residencenilratebandcalculator.connectors
 
 import javax.inject.Inject
+import play.api.mvc.Results._
+import play.api.libs.json.{JsValue, Json, Reads, Writes}
+import play.api.Logger
+import javax.inject.{Inject, Singleton}
+import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.play.http.HeaderCarrier
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import uk.gov.hmrc.residencenilratebandcalculator.repositories.SessionRepository
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
-import uk.gov.hmrc.http.cache.client.SessionCache
-import uk.gov.hmrc.play.config.{AppName, ServicesConfig}
-import uk.gov.hmrc.residencenilratebandcalculator.WSHttp
+@Singleton
+class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
+  var funcMap: Map[String, (JsValue, CacheMap) => CacheMap] =
+    Map(
+      Constants.estateHasPropertyId -> ((v, cm) => estateHasProperty(v, cm)),
+      Constants.anyExemptionId -> ((v, cm) => anyExemptionClearance(v, cm)),
+      Constants.anyBroughtForwardAllowanceId -> ((v, cm) => anyBroughtForwardAllowance(v, cm)),
+      Constants.anyDownsizingAllowanceId -> ((v, cm) => anyDownsizingAllowance(v, cm)),
+      Constants.anyAssetsPassingToDirectDescendantsId -> ((v, cm) => anyAssetsPassingToDirectDescendants(v, cm)),
+      Constants.anyBroughtForwardAllowanceOnDisposalId -> ((v, cm) => anyBroughtForwardAllowanceOnDisposal(v, cm)))
 
-class SessionConnector @Inject()(wshttp: WSHttp) extends SessionCache with ServicesConfig with AppName {
-  override lazy val http: WSHttp = wshttp
-  override lazy val defaultSource: String = appName
-  override lazy val baseUri: String = baseUrl("session")
-  override lazy val domain: String =
-    getConfString("session.domain", throw new Exception(s"Could not find config 'session.domain'"))
+  private def store[A](key:String, value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]) =
+    cacheMap copy (data = cacheMap.data + (key -> Json.toJson(value)))
 
+  private def clearance[A](key: String, value: A, keysToRemove: Set[String], cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
+    val mapWithDeletedKeys = cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemove.contains(s)))
+    store(key, value, mapWithDeletedKeys)
+  }
+
+  private def estateHasProperty[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+    clearance(Constants.estateHasPropertyId, value, Set(Constants.propertyValueId, Constants.percentageCloselyInheritedId, Constants.anyExemptionId, Constants.propertyValueAfterExemptionId), cacheMap)
+
+  private def anyExemptionClearance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+    clearance(Constants.anyExemptionId, value, Set(Constants.propertyValueAfterExemptionId), cacheMap)
+
+  private def anyBroughtForwardAllowance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+    clearance(Constants.anyBroughtForwardAllowanceId, value, Set(Constants.broughtForwardAllowanceId), cacheMap)
+
+  private def anyDownsizingAllowance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+    clearance(Constants.anyDownsizingAllowanceId,
+     value,
+     Set(
+       Constants.dateOfDisposalId,
+       Constants.valueOfDisposedPropertyId,
+       Constants.anyAssetsPassingToDirectDescendantsId,
+       Constants.assetsPassingToDirectDescendantsId,
+       Constants.anyBroughtForwardAllowanceOnDisposalId,
+       Constants.broughtForwardAllowanceOnDisposalId),
+     cacheMap)
+
+  private def anyAssetsPassingToDirectDescendants[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+    clearance(Constants.anyAssetsPassingToDirectDescendantsId, value,
+      Set(
+        Constants.assetsPassingToDirectDescendantsId,
+        Constants.anyBroughtForwardAllowanceOnDisposalId,
+        Constants.broughtForwardAllowanceOnDisposalId),
+      cacheMap)
+
+  private def anyBroughtForwardAllowanceOnDisposal[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+    clearance(Constants.anyBroughtForwardAllowanceOnDisposalId, value, Set(Constants.broughtForwardAllowanceOnDisposalId), cacheMap)
+
+  private def updateCacheMap[A](key: String, value: A, originalCacheMap: CacheMap)(implicit wts: Writes[A]): Future[CacheMap] = {
+    val newCacheMap = funcMap.get(key).fold(store(key, value, originalCacheMap)) { fn => fn(Json.toJson(value), originalCacheMap)}
+    sessionRepository().upsert(newCacheMap).map {_ => newCacheMap}
+  }
+
+  def cache[A](key: String, value: A)(implicit wts: Writes[A], hc: HeaderCarrier) = {
+    hc.sessionId match {
+      case None => {
+         val msg = "Unable to find session with id " + hc.sessionId + "while caching " + key + " = " + value
+         Logger.error(msg)
+         throw new RuntimeException(msg)
+      }
+      case Some(id) => {
+        sessionRepository().get(id.toString).flatMap { optionalCacheMap =>
+          optionalCacheMap.fold(updateCacheMap(key, value, new CacheMap(id.toString, Map()))) { cm =>
+            updateCacheMap(key, value, cm)
+          }
+        }
+      }
+    }
+  }
+
+  def delete(key: String)(implicit hc: HeaderCarrier): Future[Boolean] = {
+    hc.sessionId match {
+      case None => Future(false)
+      case Some(id) => {
+        sessionRepository().get(id.toString).flatMap { optionalCacheMap =>
+          optionalCacheMap.fold(Future(false)) { cm =>
+            val newCacheMap: CacheMap = cm copy (data = cm.data - key)
+            sessionRepository().upsert(newCacheMap)
+          }
+        }
+      }
+    }
+  }
+
+  def fetch()(implicit hc: HeaderCarrier): Future[Option[CacheMap]] = {
+    hc.sessionId match {
+      case None => Future.successful(None)
+      case Some(id) => sessionRepository().get(id.toString)
+    }
+  }
+
+  def fetchAndGetEntry[A](key: String)(implicit hc: HeaderCarrier, rds: Reads[A]): Future[Option[A]] = {
+    val futureOptionCacheMap = fetch()
+    futureOptionCacheMap.map {optionalCacheMap =>
+      optionalCacheMap.flatMap { cm =>
+        cm.getEntry(key)
+      }
+    }
+  }
+
+  def associateFunc(key: String, fn: (JsValue, CacheMap) => CacheMap) = {
+    funcMap = funcMap + (key -> fn)
+  }
 }
+
