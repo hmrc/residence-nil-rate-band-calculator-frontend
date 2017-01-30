@@ -77,7 +77,7 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
       cacheMap)
 
   private def anyBroughtForwardAllowanceOnDisposal[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearance(Constants.anyBroughtForwardAllowanceId, value, Set(Constants.anyBroughtForwardAllowanceOnDisposalId), cacheMap)
+    clearance(Constants.anyBroughtForwardAllowanceOnDisposalId, value, Set(Constants.anyBroughtForwardAllowanceOnDisposalId), cacheMap)
 
   private def updateCacheMap[A](key: String, value: A, originalCacheMap: CacheMap)(implicit wts: Writes[A]): Future[CacheMap] = {
     val newCacheMap = funcMap.get(key).fold(originalCacheMap copy (data = originalCacheMap.data + (key -> Json.toJson(value)))) { fn => fn(Json.toJson(value), originalCacheMap)}

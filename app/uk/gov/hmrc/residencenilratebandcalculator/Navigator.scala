@@ -96,6 +96,7 @@ class Navigator @Inject()() {
   }
 
   private def getAnyBroughtForwardAllowanceOnDisposalRoute(cacheMap: CacheMap) = {
+    println("################ getAnyBroughtForwardAllowanceOnDisposalRoute CACHE IS " + cacheMap)
     cacheMap.getEntry[Boolean](Constants.anyBroughtForwardAllowanceOnDisposalId) match {
       case Some(true) => BroughtForwardAllowanceOnDisposalController.onPageLoad()
       case Some(false) => CheckAnswersController.onPageLoad()
