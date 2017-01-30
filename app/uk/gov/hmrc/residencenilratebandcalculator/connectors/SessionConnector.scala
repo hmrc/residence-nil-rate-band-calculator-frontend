@@ -24,7 +24,6 @@ import javax.inject.{Inject, Singleton}
 
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.HeaderCarrier
-import uk.gov.hmrc.residencenilratebandcalculator
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.repositories.SessionRepository
 
@@ -39,23 +38,19 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
       Constants.percentageCloselyInheritedId -> ((v, cm ) => percentageCloselyInheritedClearance(v, cm)),
       Constants.anyExemptionId -> ((v, cm) => anyExemptionClearance(v, cm)))
 
-  private def propertyValueClearance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
-    val keysToRemove = Set(Constants.percentageCloselyInheritedId, Constants.anyExemptionId, Constants.propertyValueAfterExemptionId)
+  private def clearance[A](key: String, value: A, keysToRemove: Set[String], cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
     val mapWithDeletedKeys = cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemove.contains(s)))
-    mapWithDeletedKeys copy (data = mapWithDeletedKeys.data + (Constants.propertyValueId -> Json.toJson(value)))
+    mapWithDeletedKeys copy (data = mapWithDeletedKeys.data + (key -> Json.toJson(value)))
   }
+  
+  private def propertyValueClearance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+    clearance(Constants.propertyValueId, value, Set(Constants.percentageCloselyInheritedId, Constants.anyExemptionId, Constants.propertyValueAfterExemptionId), cacheMap)
 
-  private def percentageCloselyInheritedClearance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
-    val keysToRemove = Set(Constants.anyExemptionId, Constants.propertyValueAfterExemptionId)
-    val mapWithDeletedKeys = cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemove.contains(s)))
-    mapWithDeletedKeys copy (data = mapWithDeletedKeys.data + (Constants.percentageCloselyInheritedId -> Json.toJson(value)))
-  }
+  private def percentageCloselyInheritedClearance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+    clearance(Constants.percentageCloselyInheritedId, value, Set(Constants.anyExemptionId, Constants.propertyValueAfterExemptionId), cacheMap)
 
-  private def anyExemptionClearance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
-    val keysToRemove = Set(Constants.propertyValueAfterExemptionId)
-    val mapWithDeletedKeys = cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemove.contains(s)))
-    mapWithDeletedKeys copy (data = mapWithDeletedKeys.data + (Constants.anyExemptionId -> Json.toJson(value)))
-  }
+  private def anyExemptionClearance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+    clearance(Constants.anyExemptionId, value, Set(Constants.propertyValueAfterExemptionId), cacheMap)
 
   private def updateCacheMap[A](key: String, value: A, originalCacheMap: CacheMap)(implicit wts: Writes[A]): Future[CacheMap] = {
     val newCacheMap = funcMap.get(key).fold(originalCacheMap copy (data = originalCacheMap.data + (key -> Json.toJson(value)))) { fn => fn(Json.toJson(value), originalCacheMap)}
