@@ -70,7 +70,9 @@ class RnrbConnectorSpec extends UnitSpec with WithFakeApplication with MockitoSu
       val applicableNilRateBandAmount = 100
       val carryForwardAmount = 100
       val defaultAllowanceAmount = 100
-      val calculationResult = CalculationResult(residenceNilRateAmount, applicableNilRateBandAmount, carryForwardAmount, defaultAllowanceAmount)
+      val adjustedAllowanceAmount = 100
+      val calculationResult = CalculationResult(residenceNilRateAmount, applicableNilRateBandAmount, carryForwardAmount,
+        defaultAllowanceAmount, adjustedAllowanceAmount)
 
       val result = await(new RnrbConnector(getHttpMock(Json.toJson(calculationResult))).send(minimalJson))
 
@@ -85,7 +87,7 @@ class RnrbConnectorSpec extends UnitSpec with WithFakeApplication with MockitoSu
       result match {
         case Failure(exception) => {
           exception shouldBe a[JsonInvalidException]
-          exception.getMessage() shouldBe List.fill(4)("JSON error: error.path.missing\n").mkString("")
+          exception.getMessage() shouldBe List.fill(5)("JSON error: error.path.missing\n").mkString("")
         }
         case Success(_) => fail
       }

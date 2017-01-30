@@ -208,6 +208,7 @@ results.explanation_title = How this is calculated?
 results.applicableNilRateBandAmount.label = Residential Enhancement at the date of death is
 results.defaultAllowanceAmount.label = Default Allowance at the date of death is therefore
 results.carryForwardAmount.label = Amount of unused Residence Nil Rate Band available to be carried forward is
+results.adjustedAllowanceAmount.label = Adjusted allowance after taking tapering into consideration
 results.link_to_exit_questionnaire.text = Complete a short survey
 results.allowance = Allowance
 results.amount = Amount

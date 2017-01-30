@@ -19,7 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.models
 import play.api.libs.json.{Json, OFormat}
 
 case class CalculationResult (residenceNilRateAmount: Int, applicableNilRateBandAmount: Int,
-                              carryForwardAmount: Int, defaultAllowanceAmount: Int) {}
+                              carryForwardAmount: Int, defaultAllowanceAmount: Int, adjustedAllowanceAmount: Int) {}
 
 object CalculationResult {
   implicit val formats: OFormat[CalculationResult] = Json.format[CalculationResult]
