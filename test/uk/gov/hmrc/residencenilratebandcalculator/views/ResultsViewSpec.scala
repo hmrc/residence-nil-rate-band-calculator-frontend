@@ -26,7 +26,7 @@ import scala.language.reflectiveCalls
 
 class ResultsViewSpec extends HtmlSpec {
   def fixture() = new {
-    val view = results(frontendAppConfig, DisplayResults(CalculationResult(10, 50, 300, 260), Nil)(messages))(request, messages)
+    val view = results(frontendAppConfig, DisplayResults(CalculationResult(10, 50, 300, 260, 15), Nil)(messages))(request, messages)
     val doc = asDocument(view)
   }
 
@@ -77,6 +77,16 @@ class ResultsViewSpec extends HtmlSpec {
       "contain an amount for the default allowance amount" in {
         val f = thisFixture()
         assertContainsText(f.doc, "260")
+      }
+
+      "contain a label for the adjusted allowance" in {
+        val f = thisFixture()
+        assertContainsMessages(f.doc, "results.adjustedAllowanceAmount.label")
+      }
+
+      "contain an amount for the adjusted allowance" in {
+        val f = thisFixture()
+        assertContainsText(f.doc, "15")
       }
 
       "contain headers for your answers" in {
