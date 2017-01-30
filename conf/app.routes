@@ -74,3 +74,5 @@ POST       /value-of-disposed-property                  uk.gov.hmrc.residencenil
 
 GET        /what-are-you-using-this-service-for         uk.gov.hmrc.residencenilratebandcalculator.controllers.PurposeOfUseController.onPageLoad
 POST       /what-are-you-using-this-service-for         uk.gov.hmrc.residencenilratebandcalculator.controllers.PurposeOfUseController.onSubmit
+
+GET        /planning                                    uk.gov.hmrc.residencenilratebandcalculator.controllers.PlanningController.onPageLoad

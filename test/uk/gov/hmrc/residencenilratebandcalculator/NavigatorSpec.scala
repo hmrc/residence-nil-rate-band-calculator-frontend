@@ -264,10 +264,10 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.checkAnswersId)(mock[CacheMap]) shouldBe routes.ResultsController.onPageLoad()
     }
 
-    "return a call to the date of death controller from the Purpose of Use controller when the value is 'planning'" in {
+    "return a call to the planning controller from the Purpose of Use controller when the value is 'planning'" in {
       val mockCacheMap = mock[CacheMap]
       when(mockCacheMap.getEntry[String](matches(Constants.purposeOfUseId))(any())) thenReturn Some(Constants.planning)
-      navigator.nextPage(Constants.purposeOfUseId)(mockCacheMap) shouldBe routes.DateOfDeathController.onPageLoad()
+      navigator.nextPage(Constants.purposeOfUseId)(mockCacheMap) shouldBe routes.PlanningController.onPageLoad()
     }
 
     "return a call to the date of death controller from the Purpose of Use controller when the value is 'dealing_with_estate'" in {
