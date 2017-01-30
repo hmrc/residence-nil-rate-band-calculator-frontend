@@ -28,5 +28,5 @@ object FormValidators {
     case _ => false
   }
 
-  def isValidPurposeOfUse(value: String) = Constants.purposeOfUseOptions.exists(x => x.value == value)
+  def isValidPurposeOfUse(value: String) = Constants.purposeOfUseOptions.exists(radioOption => radioOption.value == value)
 }
