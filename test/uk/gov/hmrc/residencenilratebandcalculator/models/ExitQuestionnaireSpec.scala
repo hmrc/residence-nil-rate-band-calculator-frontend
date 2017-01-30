@@ -23,21 +23,21 @@ class ExitQuestionnaireSpec extends UnitSpec {
   "Exit Questionnaire" must {
     "give the correct options for service difficulty" in {
       ExitQuestionnaire.serviceDifficultyOptions shouldBe Seq(
-        QuestionnaireOption("service_difficulty.very_easy", "very_easy", "service_difficulty.very_easy"),
-        QuestionnaireOption("service_difficulty.easy", "easy", "service_difficulty.easy"),
-        QuestionnaireOption("service_difficulty.neither", "neither", "service_difficulty.neither"),
-        QuestionnaireOption("service_difficulty.difficult", "difficult", "service_difficulty.difficult"),
-        QuestionnaireOption("service_difficulty.very_difficult", "very_difficult", "service_difficulty.very_difficult")
+        RadioOption("service_difficulty.very_easy", "very_easy", "service_difficulty.very_easy"),
+        RadioOption("service_difficulty.easy", "easy", "service_difficulty.easy"),
+        RadioOption("service_difficulty.neither", "neither", "service_difficulty.neither"),
+        RadioOption("service_difficulty.difficult", "difficult", "service_difficulty.difficult"),
+        RadioOption("service_difficulty.very_difficult", "very_difficult", "service_difficulty.very_difficult")
       )
     }
 
     "give the correct options for service feel" in {
       ExitQuestionnaire.serviceFeelOptions shouldBe Seq(
-        QuestionnaireOption("service_feel.very_satisfied", "very_satisfied", "service_feel.very_satisfied"),
-        QuestionnaireOption("service_feel.satisfied", "satisfied", "service_feel.satisfied"),
-        QuestionnaireOption("service_feel.neither", "neither", "service_feel.neither"),
-        QuestionnaireOption("service_feel.dissatisfied", "dissatisfied", "service_feel.dissatisfied"),
-        QuestionnaireOption("service_feel.very_dissatisfied", "very_dissatisfied", "service_feel.very_dissatisfied")
+        RadioOption("service_feel.very_satisfied", "very_satisfied", "service_feel.very_satisfied"),
+        RadioOption("service_feel.satisfied", "satisfied", "service_feel.satisfied"),
+        RadioOption("service_feel.neither", "neither", "service_feel.neither"),
+        RadioOption("service_feel.dissatisfied", "dissatisfied", "service_feel.dissatisfied"),
+        RadioOption("service_feel.very_dissatisfied", "very_dissatisfied", "service_feel.very_dissatisfied")
       )
     }
   }

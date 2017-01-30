@@ -14,19 +14,15 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.forms
+package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
-import uk.gov.hmrc.residencenilratebandcalculator.utils.Transformers._
+import uk.gov.hmrc.play.test.UnitSpec
 
-import scala.util.{Success, Try}
+class RadioOptionSpec extends UnitSpec {
 
-object FormValidators {
-
-  def isValidDate(day: Int, month: Int, year: Int): Boolean = Try(constructDate(day, month, year)) match {
-    case Success(_) => true
-    case _ => false
+  "Radio Option" must {
+    "build correctly using the apply method" in {
+      RadioOption("prefix", "option") shouldBe RadioOption("prefix.option", "option", "prefix.option")
+    }
   }
-
-  def isValidPurposeOfUse(value: String) = Constants.purposeOfUseOptions.exists(radioOption => radioOption.value == value)
 }

@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator
 
 import org.joda.time.LocalDate
+import uk.gov.hmrc.residencenilratebandcalculator.models.RadioOption
 
 object Constants {
   val anyAssetsPassingToDirectDescendantsId = "AnyAssetsPassingToDirectDescendants"
@@ -39,6 +40,7 @@ object Constants {
   val percentageCloselyInheritedId = "PercentageCloselyInherited"
   val propertyValueAfterExemptionId = "PropertyValueAfterExemption"
   val propertyValueId = "PropertyValue"
+  val purposeOfUseId = "PurposeOfUse"
   val valueOfDisposedPropertyId = "ValueOfDisposedProperty"
 
   val jsonKeys = Map(
@@ -56,5 +58,12 @@ object Constants {
     valueOfDisposedPropertyId -> "valueOfDisposedProperty",
     assetsPassingToDirectDescendantsId -> "valueCloselyInherited",
     broughtForwardAllowanceOnDisposalId -> "broughtForwardAllowanceAtDisposal"
+  )
+
+  val planning = "planning"
+  val dealingWithEstate = "dealing_with_estate"
+  val purposeOfUseOptions = Seq(
+    RadioOption("purpose_of_use", dealingWithEstate),
+    RadioOption("purpose_of_use", planning)
   )
 }

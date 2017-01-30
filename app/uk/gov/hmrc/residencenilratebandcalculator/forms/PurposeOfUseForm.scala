@@ -16,17 +16,12 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
-import uk.gov.hmrc.residencenilratebandcalculator.utils.Transformers._
+import play.api.data.Form
+import play.api.data.Forms._
+import play.api.data.format.Formats._
+import uk.gov.hmrc.residencenilratebandcalculator.forms.FormValidators._
 
-import scala.util.{Success, Try}
+object PurposeOfUseForm {
 
-object FormValidators {
-
-  def isValidDate(day: Int, month: Int, year: Int): Boolean = Try(constructDate(day, month, year)) match {
-    case Success(_) => true
-    case _ => false
-  }
-
-  def isValidPurposeOfUse(value: String) = Constants.purposeOfUseOptions.exists(radioOption => radioOption.value == value)
+  def apply(): Form[String] = Form(single("value" -> of[String]).verifying("error.invalid_purpose_of_use", value => isValidPurposeOfUse(value)))
 }

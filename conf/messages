@@ -136,6 +136,11 @@ percentage_closely_inherited.guidance = This is the percentage share of the prop
 percentage_closely_inherited.label =
 percentage_closely_inherited.summary =
 
+planning.question_number = Before you start
+planning.browser_title = Planning
+planning.title = Use the ''dealing with the estate'' service to plan your estate
+planning.guidance = You can add estimates to the service to understand how this may affect your estate.
+
 property_value.question_number = Question 5
 property_value.browser_title = Question page
 property_value.title = What is the value of any Qualifying Residential Interest at the date of death?
@@ -156,6 +161,13 @@ property_value_after_exemption.value_closely_inherited.label =
 property_value_after_exemption.value_closely_inherited.guidance = This is the value that is taken into account for inheritance tax purposes in respect of the part of the property which is inherited by a direct descendant. For example if the property is worth £400,000 and half passes to the surviving spouse and half to a child, the figure to include here would be £200,000.
 property_value_after_exemption.greater_than_property_value.error = Property Value after exemptions cannot be greater than the Property Value
 property_value_after_exemption.value_closely_inherited_greater_than_value.error = Value Closely Inherited cannot be greater than the Property Value
+
+purpose_of_use.question_number = Before you start
+purpose_of_use.browser_title = Question page
+purpose_of_use.title = What are you using this service for?
+purpose_of_use.label =
+purpose_of_use.dealing_with_estate = I’m responsible for someone’s estate and want to calculate the Inheritance Tax threshold
+purpose_of_use.planning = I’m planning for my future and want to see the different options
 
 results.browser_title = Final calculation
 results.title = The Residence Nil Rate Amount available for this estate&nbsp;is {0}

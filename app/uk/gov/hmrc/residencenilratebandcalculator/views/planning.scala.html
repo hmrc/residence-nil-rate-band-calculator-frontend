@@ -1,0 +1,18 @@
+@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
+
+@(appConfig: FrontendAppConfig)(implicit request: Request[_], messages: Messages)
+
+@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+    title = messages("planning.browser_title"),
+    appConfig = appConfig,
+    bodyClasses = None) {
+
+    @rnrbHelpers.heading_with_pre_text("planning.title", "planning.question_number")
+
+    <p>@messages("planning.guidance")</p>
+
+    <p>
+        <a href="@routes.DateOfDeathController.onPageLoad().url" class="button" id="continue">@messages("site.continue")</a>
+    </p>
+}
