@@ -106,7 +106,7 @@ date_of_death.question_number = Question 1
 date_of_death.browser_title = Question page
 date_of_death.title = What is the date of death for the deceased?
 date_of_death.guidance = If the date of death is before 6 April 2017 RNRB is not due
-date_of_death.example = For example, 31 3 1980
+date_of_death.example = For example, 6 4 2017
 date_of_death.label = Date of death
 date_of_death.summary = Date of death for the deceased
 
@@ -114,7 +114,7 @@ date_of_disposal.question_number = Question 12
 date_of_disposal.browser_title = Question page
 date_of_disposal.title = What was the date the property interest was disposed of?
 date_of_disposal.guidance = Include the date of the disposal that you wish to take into account. If there has been more than one disposal connected with the same property, for example a gift of a half share followed by a further gift of the remaining half share on a different day, only one disposal can be taken into account.
-date_of_disposal.hint = For example, 31 3 1980
+date_of_disposal.hint = For example, 6 4 2017
 date_of_disposal.label =
 date_of_disposal.summary = Date the property interest was disposed of
 
