@@ -16,15 +16,15 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.connectors
 
-import javax.inject.Inject
-import play.api.mvc.Results._
-import play.api.libs.json.{JsValue, Json, Reads, Writes}
+import play.api.libs.json._
 import play.api.Logger
 import javax.inject.{Inject, Singleton}
+
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.repositories.SessionRepository
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
@@ -42,22 +42,25 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
   private def store[A](key:String, value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]) =
     cacheMap copy (data = cacheMap.data + (key -> Json.toJson(value)))
 
-  private def clearance[A](key: String, value: A, keysToRemove: Set[String], cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
-    val mapWithDeletedKeys = cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemove.contains(s)))
-    store(key, value, mapWithDeletedKeys)
+  private def clearIfFalse[A](key: String, value: A, keysToRemove: Set[String], cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
+    val mapToStore = value match {
+      case JsBoolean(false) => cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemove.contains(s)))
+      case _ => cacheMap
+    }
+    store(key, value, mapToStore)
   }
 
   private def estateHasProperty[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearance(Constants.estateHasPropertyId, value, Set(Constants.propertyValueId, Constants.percentageCloselyInheritedId, Constants.anyExemptionId, Constants.propertyValueAfterExemptionId), cacheMap)
+    clearIfFalse(Constants.estateHasPropertyId, value, Set(Constants.propertyValueId, Constants.percentageCloselyInheritedId, Constants.anyExemptionId, Constants.propertyValueAfterExemptionId), cacheMap)
 
   private def anyExemptionClearance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearance(Constants.anyExemptionId, value, Set(Constants.propertyValueAfterExemptionId), cacheMap)
+    clearIfFalse(Constants.anyExemptionId, value, Set(Constants.propertyValueAfterExemptionId), cacheMap)
 
   private def anyBroughtForwardAllowance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearance(Constants.anyBroughtForwardAllowanceId, value, Set(Constants.broughtForwardAllowanceId), cacheMap)
+    clearIfFalse(Constants.anyBroughtForwardAllowanceId, value, Set(Constants.broughtForwardAllowanceId), cacheMap)
 
   private def anyDownsizingAllowance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearance(Constants.anyDownsizingAllowanceId,
+    clearIfFalse(Constants.anyDownsizingAllowanceId,
      value,
      Set(
        Constants.dateOfDisposalId,
@@ -69,7 +72,7 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
      cacheMap)
 
   private def anyAssetsPassingToDirectDescendants[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearance(Constants.anyAssetsPassingToDirectDescendantsId, value,
+    clearIfFalse(Constants.anyAssetsPassingToDirectDescendantsId, value,
       Set(
         Constants.assetsPassingToDirectDescendantsId,
         Constants.anyBroughtForwardAllowanceOnDisposalId,
@@ -77,7 +80,7 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
       cacheMap)
 
   private def anyBroughtForwardAllowanceOnDisposal[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearance(Constants.anyBroughtForwardAllowanceOnDisposalId, value, Set(Constants.broughtForwardAllowanceOnDisposalId), cacheMap)
+    clearIfFalse(Constants.anyBroughtForwardAllowanceOnDisposalId, value, Set(Constants.broughtForwardAllowanceOnDisposalId), cacheMap)
 
   private def updateCacheMap[A](key: String, value: A, originalCacheMap: CacheMap)(implicit wts: Writes[A]): Future[CacheMap] = {
     val newCacheMap = funcMap.get(key).fold(store(key, value, originalCacheMap)) { fn => fn(Json.toJson(value), originalCacheMap)}
