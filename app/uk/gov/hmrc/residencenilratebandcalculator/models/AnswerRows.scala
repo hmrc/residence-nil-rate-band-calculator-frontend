@@ -124,7 +124,8 @@ object AnswerRows {
                           answerRowFns: Map[String, JsValue => Messages => AnswerRow],
                           rowOrder: Map[String, Int],
                           messages: Messages): Seq[AnswerRow] = {
-    cacheMap.data.toSeq.sortWith { case ((key1, _), (key2, _)) => rowOrder(key1) < rowOrder(key2) }.map {
+    val dataToInclude = cacheMap.data.filterKeys(key => answerRowFns.keys.toSeq contains key).toSeq
+    dataToInclude.sortWith { case ((key1, _), (key2, _)) => rowOrder(key1) < rowOrder(key2) }.map {
       case (key, value) => answerRowFns(key)(value)(messages)
     }
   }
