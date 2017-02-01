@@ -1,3 +1,4 @@
+@import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 @()(implicit request: Request[_])
 
 <!DOCTYPE html>
@@ -228,6 +229,7 @@
 
                                 <h2 id="how-to-calculate-and-apply-the-rnrb">How to calculate and apply the <abbr title="residence nil rate band">RNRB</abbr>
                                 </h2>
+                                <p style="margin-top: 30px; margin-bottom: 30px;  background-color: #dee0e2; padding: 15px;">You can <a href="@routes.PurposeOfUseController.onPageLoad().url">calculate the the available RNRB online</a>.</p>
 
                                 <h3 id="case-study-1-how-to-apply-the-rnrb-and-nrb-to-an-estate">Case study 1: how to apply the <abbr title="residence nil rate band">RNRB</abbr> and <abbr title="nil rate band">NRB</abbr> to an estate</h3>
 
