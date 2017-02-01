@@ -38,10 +38,10 @@ any_exemption.summary =
 
 assets_passing_to_direct_descendants.question_number = Question 15
 assets_passing_to_direct_descendants.browser_title = Question page
-assets_passing_to_direct_descendants.title = What is the value of the property passing to direct descendants referred to in Question 14?
+assets_passing_to_direct_descendants.title = What is the value of the property or other assets passing to direct descendants referred to in Question 14?
 assets_passing_to_direct_descendants.guidance = This is the value that is taken into account for inheritance tax purposes. So if, for example, grossing up under s.38 IHTA, or interaction under s.39A IHTA applies which affects the value that is taken into account for inheritance tax purposes, you need to include that adjusted value here.
 assets_passing_to_direct_descendants.label =
-assets_passing_to_direct_descendants.summary = Value of the property passing to direct descendants
+assets_passing_to_direct_descendants.summary = Value of the property or other assets passing to direct descendants
 
 before_you_start.browser_title = Before you start
 before_you_start.title = Calculate what Residential Nil Rate Band (RNRB) is available for an estate
