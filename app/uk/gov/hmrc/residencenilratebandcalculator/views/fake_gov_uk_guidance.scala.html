@@ -1,3 +1,4 @@
+@import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 @()(implicit request: Request[_])
 <!DOCTYPE html>
 <!--[if lt IE 9]><html class="lte-ie8" lang="en"><![endif]--><!--[if gt IE 8]><!--><html lang="en">
@@ -303,6 +304,7 @@
 
                                 <h2 id="how-to-calculate-and-apply-the-rnrb">How to calculate and apply the <abbr title="residence nil rate band">RNRB</abbr>
 </h2>
+                                <p style="margin-top: 30px; margin-bottom: 30px;  background-color: #dee0e2; padding: 15px;">You can <a href="@routes.PurposeOfUseController.onPageLoad().url">calculate the the available RNRB online</a>.</p>
 
                                 <p>The <abbr title="residence nil rate band">RNRB</abbr> applies in addition to the <a href="https://www.gov.uk/guidance/inheritance-tax-transfer-of-threshold">existing nil rate band (<abbr title="nil rate band">NRB</abbr>) or threshold</a> (currently £325,000) if the individual and estate meet the qualifying conditions. The <abbr title="residence nil rate band">RNRB</abbr> doesn’t mean that the home is exempt for <abbr title="Inheritance Tax">IHT</abbr> purposes but that could be the result of the new rules in some cases.</p>
 

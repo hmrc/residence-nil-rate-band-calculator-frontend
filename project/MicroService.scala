@@ -34,7 +34,7 @@ trait MicroService {
     .settings(
       ScoverageKeys.coverageExcludedFiles := "<empty>;Reverse.*;.*AuthService.*;models/.data/..*;.*filters.*;.*handlers.*;.*components.*;" +
         ".*BuildInfo.*;.*javascript.*;.*FrontendAuditConnector.*;.*Routes.*;.*GuiceInjector;.*SessionConnector;.*frontendAppConfig;" +
-        ".*ControllerConfiguration;.*RnrbConnector.*;.*StyleGuide;.*basic_template.*;.*landing_page.*",
+        ".*ControllerConfiguration;.*RnrbConnector.*;.*FakeGovUkController.*;.*StyleGuide;.*main_template.*;.*basic_template.*;.*guidance.*;.*case_studies.*",
       ScoverageKeys.coverageMinimum := 90,
       ScoverageKeys.coverageFailOnMinimum := true,
       ScoverageKeys.coverageHighlighting := true,

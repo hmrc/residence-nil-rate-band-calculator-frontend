@@ -46,8 +46,6 @@ POST       /exit-questionnaire                          uk.gov.hmrc.residencenil
 GET        /gross-estate-value                          uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onPageLoad
 POST       /gross-estate-value                          uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onSubmit
 
-GET        /landing-page                                uk.gov.hmrc.residencenilratebandcalculator.controllers.LandingPageController.onPageLoad
-
 GET        /not-found                                   uk.gov.hmrc.residencenilratebandcalculator.controllers.PageNotFoundController.onPageLoad
 
 GET        /not-possible-to-use-calculator              uk.gov.hmrc.residencenilratebandcalculator.controllers.TransitionOutController.onPageLoad
@@ -78,3 +76,7 @@ POST       /what-are-you-using-this-service-for         uk.gov.hmrc.residencenil
 GET        /planning                                    uk.gov.hmrc.residencenilratebandcalculator.controllers.PlanningController.onPageLoad
 
 GET        /before-you-start                            uk.gov.hmrc.residencenilratebandcalculator.controllers.BeforeYouStartController.onPageLoad
+
+# Fake GOV.UK pages to assist user testing
+GET        /case-studies                                uk.gov.hmrc.residencenilratebandcalculator.controllers.FakeGovUkController.caseStudies
+GET        /guidance                                    uk.gov.hmrc.residencenilratebandcalculator.controllers.FakeGovUkController.guidance

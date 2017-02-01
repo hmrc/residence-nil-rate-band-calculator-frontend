@@ -22,14 +22,18 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.Action
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.landing_page
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.{fake_gov_uk_case_studies, fake_gov_uk_guidance}
 import scala.concurrent.Future
 
 @Singleton
-class LandingPageController @Inject()(val appConfig: FrontendAppConfig,
-                                      val messagesApi: MessagesApi) extends FrontendController with I18nSupport {
+class FakeGovUkController @Inject()(val appConfig: FrontendAppConfig,
+                                    val messagesApi: MessagesApi) extends FrontendController with I18nSupport {
 
-  def onPageLoad = Action.async { implicit request =>
-    Future.successful(Ok(landing_page()))
+  def caseStudies = Action.async { implicit request =>
+    Future.successful(Ok(fake_gov_uk_case_studies()))
+  }
+
+  def guidance = Action.async { implicit request =>
+    Future.successful(Ok(fake_gov_uk_guidance()))
   }
 }
