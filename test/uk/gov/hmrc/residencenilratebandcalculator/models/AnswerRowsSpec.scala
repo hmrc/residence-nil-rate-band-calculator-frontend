@@ -123,5 +123,24 @@ class AnswerRowSpecs extends UnitSpec with WithFakeApplication with MockSessionC
       an[RuntimeException] should be thrownBy
         AnswerRows.propertyValueAfterExemptionAnswerRowFn("check_answers.title", "", () => Call("", ""))(JsString(""))(messages)
     }
+
+    "ignore data in the cache map which does not have a corresponding key in the answer rows function map" in {
+      val cacheMap = CacheMap("", Map[String, JsValue](
+        "id1" -> JsBoolean(true),
+        "id2" -> JsNumber(1000)
+      ))
+      setCacheMap(cacheMap)
+
+      val answerRowFns = Map[String, JsValue => Messages => AnswerRow](
+        "id1" -> ((_: JsValue) => (_: Messages) => AnswerRow("title1", "Yes", "http://example.com/one"))
+      )
+      val rowOrder = Map[String, Int](
+        "id1" -> 1
+      )
+
+      val result = AnswerRows.constructAnswerRows(cacheMap, answerRowFns, rowOrder, messages)
+
+      result shouldBe Seq(AnswerRow("title1", "Yes", "http://example.com/one"))
+    }
   }
 }
