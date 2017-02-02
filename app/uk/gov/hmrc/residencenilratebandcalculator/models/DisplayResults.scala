@@ -23,12 +23,16 @@ import play.api.i18n.Messages
 case class DisplayResults(residenceNilRateAmount: String, resultsRows: Seq[ResultsRow], answerRows: Seq[AnswerRow])
 
 object DisplayResults {
-  def apply(calculationResult: CalculationResult, answers: Seq[AnswerRow])(messages: Messages): DisplayResults =
+  def apply(calculationResult: CalculationResult, answers: Seq[AnswerRow])(messages: Messages): DisplayResults = {
+    val adjustedAllowanceRow =
+      if (calculationResult.defaultAllowanceAmount == calculationResult.adjustedAllowanceAmount) { Seq() }
+      else { Seq(ResultsRow("results.adjustedAllowanceAmount.label", calculationResult.adjustedAllowanceAmount)(messages)) }
     DisplayResults(NumberFormat.getCurrencyInstance.format(calculationResult.residenceNilRateAmount),
       Seq(
         ResultsRow("results.applicableNilRateBandAmount.label", calculationResult.applicableNilRateBandAmount)(messages),
         ResultsRow("results.defaultAllowanceAmount.label", calculationResult.defaultAllowanceAmount)(messages),
         ResultsRow("results.carryForwardAmount.label", calculationResult.carryForwardAmount)(messages)
-      ),
+      ) ++ adjustedAllowanceRow,
       answers)
+  }
 }

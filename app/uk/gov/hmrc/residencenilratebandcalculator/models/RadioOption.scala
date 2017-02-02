@@ -16,11 +16,12 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import play.api.libs.json.{Json, OFormat}
+case class RadioOption(id: String, value: String, messageKey: String)
 
-case class CalculationResult (residenceNilRateAmount: Int, applicableNilRateBandAmount: Int,
-                              carryForwardAmount: Int, defaultAllowanceAmount: Int, adjustedAllowanceAmount: Int) {}
-
-object CalculationResult {
-  implicit val formats: OFormat[CalculationResult] = Json.format[CalculationResult]
+object RadioOption {
+  def apply(keyPrefix: String, option: String): RadioOption = RadioOption(
+    s"$keyPrefix.$option",
+    option,
+    s"$keyPrefix.$option"
+  )
 }

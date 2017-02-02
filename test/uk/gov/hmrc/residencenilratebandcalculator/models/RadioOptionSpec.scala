@@ -16,11 +16,13 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import play.api.libs.json.{Json, OFormat}
+import uk.gov.hmrc.play.test.UnitSpec
 
-case class CalculationResult (residenceNilRateAmount: Int, applicableNilRateBandAmount: Int,
-                              carryForwardAmount: Int, defaultAllowanceAmount: Int, adjustedAllowanceAmount: Int) {}
+class RadioOptionSpec extends UnitSpec {
 
-object CalculationResult {
-  implicit val formats: OFormat[CalculationResult] = Json.format[CalculationResult]
+  "Radio Option" must {
+    "build correctly using the apply method" in {
+      RadioOption("prefix", "option") shouldBe RadioOption("prefix.option", "option", "prefix.option")
+    }
+  }
 }

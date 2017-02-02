@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.utils.Transformers._
 
 import scala.util.{Success, Try}
@@ -26,4 +27,6 @@ object FormValidators {
     case Success(_) => true
     case _ => false
   }
+
+  def isValidPurposeOfUse(value: String) = Constants.purposeOfUseOptions.exists(radioOption => radioOption.value == value)
 }

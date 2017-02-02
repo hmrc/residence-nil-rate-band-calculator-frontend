@@ -38,10 +38,40 @@ any_exemption.summary =
 
 assets_passing_to_direct_descendants.question_number = Question 15
 assets_passing_to_direct_descendants.browser_title = Question page
-assets_passing_to_direct_descendants.title = What is the value of the property passing to direct descendants referred to in Question 14?
+assets_passing_to_direct_descendants.title = What is the value of the property or other assets passing to direct descendants referred to in Question 14?
 assets_passing_to_direct_descendants.guidance = This is the value that is taken into account for inheritance tax purposes. So if, for example, grossing up under s.38 IHTA, or interaction under s.39A IHTA applies which affects the value that is taken into account for inheritance tax purposes, you need to include that adjusted value here.
 assets_passing_to_direct_descendants.label =
-assets_passing_to_direct_descendants.summary = Value of the property passing to direct descendants
+assets_passing_to_direct_descendants.summary = Value of the property or other assets passing to direct descendants
+
+before_you_start.browser_title = Before you start
+before_you_start.title = Calculate what Residential Nil Rate Band (RNRB) is available for an estate
+before_you_start.guidance1 = You can claim an allowance for either:
+before_you_start.guidance1.bullet1 = a property in the deceased’s estate
+before_you_start.guidance1.bullet2 = a property that was sold or downsized by the deceased
+before_you_start.guidance2 = You may be able to add on an additional allowance if:
+before_you_start.guidance2.bullet1 = the deceased had a spouse or civil partner who died before them
+before_you_start.sub_heading = Before you start
+before_you_start.guidance3 = You’ll need the following information to get an accurate figure using the calculator.
+before_you_start.guidance4 = Claim an allowance for a property in the deceased’s estate
+before_you_start.guidance4.bullet1 = When the deceased died - if they died before 6 April 2017 then you won’t be able to claim this allowance
+before_you_start.guidance4.bullet2 = If the estate includes a property that the deceased owned and was their home, and/or the deceased owned a property that was their home - if not then you won’t be able to claim this allowance
+before_you_start.guidance4.bullet3 = If any part of the property is being left to direct descendents - if not you won’t be able to claim this allowance
+before_you_start.guidance4.bullet4 = The value of the assets in the estate - if it was over £2 million you won’t be able to claim the full allowance. You’ll calculate this using the IHT-700 form
+before_you_start.guidance4.bullet5 = What exemptions and debts are in the estate. You’ll calculate this using IHT-700
+before_you_start.guidance4.bullet6 = The open market value of the property at date of death, minus any mortgages
+before_you_start.guidance4.bullet7 = If the property is also eligible for any form of inheritance tax exemption or tax relief, and if so how much. You’ll get this from the s.38IHTA or s.39IHTA grossing up calculator
+before_you_start.guidance5 = If the estate is eligible for this allowance, you’ll need to put this figure on the IHT-435 form and the grossing-up calculators.
+before_you_start.guidance6 = Claim the allowance for a property that was sold or downsized
+before_you_start.guidance6.bullet1 = If any parts of the estate are being inherited by a direct descendent - if there is nothing you won’t be able to claim this allowance
+before_you_start.guidance6.bullet2 = If the property was the deceased's home that they owned and disposed of in their lifetime - if this doesn’t apply you won’t be able to claim this allowance
+before_you_start.guidance6.bullet3 = When it was sold or downsized - if it was before 8 July 2015 then you won’t be able to claim this allowance.
+before_you_start.guidance6.bullet4 = The value of the property when it was sold (or open market value on the date it was given away), minus any mortgages
+before_you_start.guidance6.bullet5 = The value of the assets being inherited by direct descendents (you’ll get this from the s.38IHTA or s.39IHTA grossing up calculator)
+before_you_start.guidance7 = If the estate is eligible for this allowance, you’ll need to add this figure to the IHT-435 form.
+before_you_start.guidance8 = If the deceased had a spouse or civil partner who died before them and you want to add on their allowance
+before_you_start.guidance8.bullet1 = When the spouse or civil partner died - if you’re claiming downsizing allowance only and they died on or before 5 April 2017 you won’t be able to use this allowance
+before_you_start.guidance8.bullet2 = The value of the estate when they died without including inheritance tax exemptions or reliefs - if it was over £2 million you won’t be able to claim the full allowance. You’ll get this from either their IHT-205 or IHT-400 form.
+before_you_start.guidance9 = If the estate is eligible for this allowance, you’ll need to also fill out the IHT-436 form.
 
 brought_forward_allowance.question_number = Question 10
 brought_forward_allowance.browser_title = Question page
@@ -76,7 +106,7 @@ date_of_death.question_number = Question 1
 date_of_death.browser_title = Question page
 date_of_death.title = What is the date of death for the deceased?
 date_of_death.guidance = If the date of death is before 6 April 2017 RNRB is not due
-date_of_death.example = For example, 31 3 1980
+date_of_death.example = For example, 6 4 2017
 date_of_death.label = Date of death
 date_of_death.summary = Date of death for the deceased
 
@@ -84,7 +114,7 @@ date_of_disposal.question_number = Question 12
 date_of_disposal.browser_title = Question page
 date_of_disposal.title = What was the date the property interest was disposed of?
 date_of_disposal.guidance = Include the date of the disposal that you wish to take into account. If there has been more than one disposal connected with the same property, for example a gift of a half share followed by a further gift of the remaining half share on a different day, only one disposal can be taken into account.
-date_of_disposal.hint = For example, 31 3 1980
+date_of_disposal.hint = For example, 6 4 2017
 date_of_disposal.label =
 date_of_disposal.summary = Date the property interest was disposed of
 
@@ -136,6 +166,11 @@ percentage_closely_inherited.guidance = This is the percentage share of the prop
 percentage_closely_inherited.label =
 percentage_closely_inherited.summary =
 
+planning.question_number = Before you start
+planning.browser_title = Planning
+planning.title = Use the ''dealing with the estate'' service to plan your estate
+planning.guidance = You can add estimates to the service to understand how this may affect your estate.
+
 property_value.question_number = Question 5
 property_value.browser_title = Question page
 property_value.title = What is the value of any Qualifying Residential Interest at the date of death?
@@ -157,6 +192,13 @@ property_value_after_exemption.value_closely_inherited.guidance = This is the va
 property_value_after_exemption.greater_than_property_value.error = Property Value after exemptions cannot be greater than the Property Value
 property_value_after_exemption.value_closely_inherited_greater_than_value.error = Value Closely Inherited cannot be greater than the Property Value
 
+purpose_of_use.question_number = Before you start
+purpose_of_use.browser_title = Question page
+purpose_of_use.title = What are you using this service for?
+purpose_of_use.label =
+purpose_of_use.dealing_with_estate = I’m responsible for someone’s estate and want to calculate the Inheritance Tax threshold
+purpose_of_use.planning = I’m planning for my future and want to see the different options
+
 results.browser_title = Final calculation
 results.title = The Residence Nil Rate Amount available for this estate&nbsp;is {0}
 results.header = What happens next?
@@ -166,6 +208,7 @@ results.explanation_title = How this is calculated?
 results.applicableNilRateBandAmount.label = Residential Enhancement at the date of death is
 results.defaultAllowanceAmount.label = Default Allowance at the date of death is therefore
 results.carryForwardAmount.label = Amount of unused Residence Nil Rate Band available to be carried forward is
+results.adjustedAllowanceAmount.label = Adjusted allowance after taking tapering into consideration
 results.link_to_exit_questionnaire.text = Complete a short survey
 results.allowance = Allowance
 results.amount = Amount
@@ -193,6 +236,7 @@ site.continue = Continue
 site.back = Back
 site.change = Change
 site.hidden-change = Change details about {0}
+site.start = Start
 site.textarea.char_limit = (Limit is 1200 characters)
 
 thank_you.browser_title = Thank You

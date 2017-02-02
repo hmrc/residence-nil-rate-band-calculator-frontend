@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.models
+package uk.gov.hmrc.residencenilratebandcalculator.forms
 
-import play.api.libs.json.{Json, OFormat}
+import play.api.data.Form
+import play.api.data.Forms._
+import play.api.data.format.Formats._
+import uk.gov.hmrc.residencenilratebandcalculator.forms.FormValidators._
 
-case class CalculationResult (residenceNilRateAmount: Int, applicableNilRateBandAmount: Int,
-                              carryForwardAmount: Int, defaultAllowanceAmount: Int, adjustedAllowanceAmount: Int) {}
+object PurposeOfUseForm {
 
-object CalculationResult {
-  implicit val formats: OFormat[CalculationResult] = Json.format[CalculationResult]
+  def apply(): Form[String] = Form(single("value" -> of[String]).verifying("error.invalid_purpose_of_use", value => isValidPurposeOfUse(value)))
 }
