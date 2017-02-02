@@ -37,7 +37,9 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
       Constants.anyBroughtForwardAllowanceId -> ((v, cm) => anyBroughtForwardAllowance(v, cm)),
       Constants.anyDownsizingAllowanceId -> ((v, cm) => anyDownsizingAllowance(v, cm)),
       Constants.anyAssetsPassingToDirectDescendantsId -> ((v, cm) => anyAssetsPassingToDirectDescendants(v, cm)),
-      Constants.anyBroughtForwardAllowanceOnDisposalId -> ((v, cm) => anyBroughtForwardAllowanceOnDisposal(v, cm)))
+      Constants.anyBroughtForwardAllowanceOnDisposalId -> ((v, cm) => anyBroughtForwardAllowanceOnDisposal(v, cm)),
+      Constants.percentageCloselyInheritedId -> ((v, cm) => percentageCloselyInherited(v, cm))
+    )
 
   private def store[A](key:String, value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]) =
     cacheMap copy (data = cacheMap.data + (key -> Json.toJson(value)))
@@ -45,6 +47,14 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
   private def clearIfFalse[A](key: String, value: A, keysToRemove: Set[String], cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
     val mapToStore = value match {
       case JsBoolean(false) => cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemove.contains(s)))
+      case _ => cacheMap
+    }
+    store(key, value, mapToStore)
+  }
+
+  private def clearIfZero[A](key: String, value: A, keysToRemove: Set[String], cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
+    val mapToStore = value match {
+      case JsNumber(x) if x == 0 => cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemove.contains(s)))
       case _ => cacheMap
     }
     store(key, value, mapToStore)
@@ -81,6 +91,9 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
 
   private def anyBroughtForwardAllowanceOnDisposal[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
     clearIfFalse(Constants.anyBroughtForwardAllowanceOnDisposalId, value, Set(Constants.broughtForwardAllowanceOnDisposalId), cacheMap)
+
+  private def percentageCloselyInherited[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+    clearIfZero(Constants.percentageCloselyInheritedId, value, Set(Constants.anyExemptionId, Constants.propertyValueAfterExemptionId), cacheMap)
 
   private def updateCacheMap[A](key: String, value: A, originalCacheMap: CacheMap)(implicit wts: Writes[A]): Future[CacheMap] = {
     val newCacheMap = funcMap.get(key).fold(store(key, value, originalCacheMap)) { fn => fn(Json.toJson(value), originalCacheMap)}
