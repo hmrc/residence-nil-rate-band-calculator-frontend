@@ -18,14 +18,14 @@
     <section class="section">
         <h2 class="heading-medium">@messages("results.header")</h2>
         <p>@messages("results.guidance")</p>
-        <a>@messages("results.link_to_print")</a>
+        <a class="u--no-print print-link print-hidden js-visible" href="javascript:window.print()">@messages("results.link_to_print")</a>
     </section>
 
     <section class="section">
         <h2 class="heading-medium">@messages("results.explanation_title")</h2>
         @rnrbHelpers.summary(calculationResult.resultsRows)
 
-        <details>
+        <details id="your-answers">
             <summary>@messages("results.answers")</summary>
             <div class="panel-indent panel-indent--gutter">
                 @rnrbHelpers.answer_rows(calculationResult.answerRows, false, true)
@@ -34,6 +34,6 @@
     </section>
 
     <p>
-        <a href="@routes.ExitQuestionnaireController.onPageLoad().url">@messages("results.link_to_exit_questionnaire.text")</a>
+        <a class="u--no-print" href="@routes.ExitQuestionnaireController.onPageLoad().url">@messages("results.link_to_exit_questionnaire.text")</a>
     </p>
 }
