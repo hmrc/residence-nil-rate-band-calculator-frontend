@@ -26,7 +26,7 @@ class AnyPropertyCloselyInheritedControllerSpec extends SimpleControllerSpecBase
   "Any Property Closely Inherited Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
-      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfDisposedPropertyController.onPageLoad().url
+      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyValueController.onPageLoad().url
 
       value match {
         case None => any_property_closely_inherited(frontendAppConfig, url)(fakeRequest, messages)

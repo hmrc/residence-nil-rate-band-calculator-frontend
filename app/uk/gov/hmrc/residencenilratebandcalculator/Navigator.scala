@@ -33,8 +33,9 @@ class Navigator @Inject()() {
       Constants.grossEstateValueId -> (_ => ChargeableTransferAmountController.onPageLoad()),
       Constants.chargeableTransferAmountId -> (_ => EstateHasPropertyController.onPageLoad()),
       Constants.estateHasPropertyId -> (cm => getEstateHasPropertyRoute(cm)),
-      Constants.propertyValueId -> (_ => PercentageCloselyInheritedController.onPageLoad()),
-      Constants.percentageCloselyInheritedId -> (cm => getPercentageCloselyInheritedRoute(cm)),
+      Constants.propertyValueId -> (_ => AnyPropertyCloselyInheritedController.onPageLoad()),
+      Constants.anyPropertyCloselyInheritedId -> (cm => getAnyPropertyCloselyInheritedRoute(cm)),
+      Constants.percentageCloselyInheritedId -> (_ => AnyExemptionController.onPageLoad()),
       Constants.anyBroughtForwardAllowanceId -> (cm => getAnyBroughtForwardAllowanceRoute(cm)),
       Constants.broughtForwardAllowanceId -> (_ => AnyDownsizingAllowanceController.onPageLoad()),
       Constants.anyDownsizingAllowanceId -> (cm => getAnyDownsizingAllowanceRoute(cm)),
@@ -57,7 +58,8 @@ class Navigator @Inject()() {
       Constants.chargeableTransferAmountId -> (() => GrossEstateValueController.onPageLoad()),
       Constants.estateHasPropertyId -> (() => ChargeableTransferAmountController.onPageLoad()),
       Constants.propertyValueId -> (() => EstateHasPropertyController.onPageLoad()),
-      Constants.percentageCloselyInheritedId -> (() => PropertyValueController.onPageLoad()),
+      Constants.anyPropertyCloselyInheritedId -> (() => PropertyValueController.onPageLoad()),
+      Constants.percentageCloselyInheritedId -> (() => AnyPropertyCloselyInheritedController.onPageLoad()),
       Constants.anyExemptionId -> (() => PercentageCloselyInheritedController.onPageLoad()),
       Constants.propertyValueAfterExemptionId -> (() => AnyExemptionController.onPageLoad()),
       Constants.anyBroughtForwardAllowanceId -> (() => PropertyValueAfterExemptionController.onPageLoad()),
@@ -120,10 +122,10 @@ class Navigator @Inject()() {
     }
   }
 
-  private def getPercentageCloselyInheritedRoute(cacheMap: CacheMap) = {
-    cacheMap.getEntry[Int](Constants.percentageCloselyInheritedId) match {
-      case Some(x) if x == 0 => AnyBroughtForwardAllowanceController.onPageLoad()
-      case Some(_) => AnyExemptionController.onPageLoad()
+  private def getAnyPropertyCloselyInheritedRoute(cacheMap: CacheMap) = {
+    cacheMap.getEntry[Boolean](Constants.anyPropertyCloselyInheritedId) match {
+      case Some(true) => PercentageCloselyInheritedController.onPageLoad()
+      case Some(false) => AnyBroughtForwardAllowanceController.onPageLoad()
       case None => HomeController.onPageLoad()
     }
   }
