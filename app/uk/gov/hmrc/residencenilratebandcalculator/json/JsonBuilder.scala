@@ -107,6 +107,7 @@ class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
     dataWithCorrectKeys ++
       handleBroughtForwardAllowance(cacheMap) ++
       handleEstateHasProperty(cacheMap) ++
+      handlePropertyCloselyInherited(cacheMap) ++
       constructDownsizingDetails(cacheMap)
   }
 
@@ -124,6 +125,14 @@ class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
         jsonKeys(Constants.propertyValueId) -> JsNumber(0),
         jsonKeys(Constants.percentageCloselyInheritedId) -> JsNumber(0)
       )
+    } else {
+      Map()
+    }
+  }
+
+  def handlePropertyCloselyInherited(cacheMap: CacheMap) = {
+    if (cacheMap.data.get(Constants.anyPropertyCloselyInheritedId).contains(JsBoolean(false))) {
+      Map(jsonKeys(Constants.percentageCloselyInheritedId) -> JsNumber(0))
     } else {
       Map()
     }
