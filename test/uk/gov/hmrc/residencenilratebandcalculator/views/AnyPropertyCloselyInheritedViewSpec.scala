@@ -17,24 +17,23 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_closely_inherited
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_property_closely_inherited
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
-import uk.gov.hmrc.residencenilratebandcalculator.forms.PercentForm
 
 import scala.language.reflectiveCalls
 
-class PercentageCloselyInheritedViewSpec extends IntViewSpecBase {
+class AnyPropertyCloselyInheritedViewSpec extends BooleanViewSpecBase {
 
-  val messageKeyPrefix = "percentage_closely_inherited"
+  val messageKeyPrefix = "any_property_closely_inherited"
 
-  def createView(form: Option[Form[Int]] = None) = percentage_closely_inherited(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = any_property_closely_inherited(frontendAppConfig, backUrl, form)(request, messages)
 
-  "Percentage Closely Inherited View" must {
+  "Any Property Closely Inherited View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix)
+    behave like rnrbPage[Boolean](createView, messageKeyPrefix)
 
-    behave like pageWithBackLink[Int](createView)
+    behave like pageWithBackLink[Boolean](createView)
 
-    behave like intPage(createView, messageKeyPrefix, PercentageCloselyInheritedController.onSubmit().url, PercentForm())
+    behave like booleanPage(createView, messageKeyPrefix, AnyAssetsPassingToDirectDescendantsController.onSubmit().url)
   }
 }

@@ -37,6 +37,20 @@ any_exemption.guidance2 = For the property to qualify for any relief, you should
 any_exemption.label =
 any_exemption.summary =
 
+any_property_closely_inherited.question_number = 6
+any_property_closely_inherited.browser_title = Question page
+any_property_closely_inherited.title = Does any part of the property that you have just given the value of pass to a direct descendant or their spouse or civil partner?
+any_property_closely_inherited.guidance = A person’s direct descendant is:
+any_property_closely_inherited.guidance.bullet1 = a child, grandchild or great grandchild, including any of their children
+any_property_closely_inherited.guidance.bullet2 = the spouse or civil partner of a child, grandchild or great grandchild, including any of their children
+any_property_closely_inherited.guidance.bullet3 = a widow, widower or surviving civil partner of a child, grandchild or great grandchild, including any of their children
+any_property_closely_inherited.guidance.bullet4 = a child who is, or was at any part of their life, their step-child
+any_property_closely_inherited.guidance.bullet5 = an adopted child
+any_property_closely_inherited.guidance.bullet6 = a child who they fostered at any time
+any_property_closely_inherited.guidance.bullet7 = a child who they were appointed as a guardian or special guardian of when that child was under 18
+any_property_closely_inherited.label =
+any_property_closely_inherited.summary =
+
 assets_passing_to_direct_descendants.question_number = Question 15
 assets_passing_to_direct_descendants.browser_title = Question page
 assets_passing_to_direct_descendants.title = What is the value of these assets being left to any direct descendants?
@@ -166,15 +180,7 @@ not_possible_to_use_service.guidance = Lorem ipsum dolor sit amet, consectetur a
 
 percentage_closely_inherited.question_number = Question 6
 percentage_closely_inherited.browser_title = Question page
-percentage_closely_inherited.title = Does any part of the property that you have just given the value of pass to a direct descendant or their spouse or civil partner?
-percentage_closely_inherited.guidance = A person’s direct descendant is:
-percentage_closely_inherited.guidance.bullet1 = a child, grandchild or great grandchild, including any of their children
-percentage_closely_inherited.guidance.bullet2 = the spouse or civil partner of a child, grandchild or great grandchild, including any of their children
-percentage_closely_inherited.guidance.bullet3 = a widow, widower or surviving civil partner of a child, grandchild or great grandchild, including any of their children
-percentage_closely_inherited.guidance.bullet4 = a child who is, or was at any part of their life, their step-child
-percentage_closely_inherited.guidance.bullet5 = an adopted child
-percentage_closely_inherited.guidance.bullet6 = a child who they fostered at any time
-percentage_closely_inherited.guidance.bullet7 = a child who they were appointed as a guardian or special guardian of when that child was under 18
+percentage_closely_inherited.title = What percentage of the property that you have just given the value of pass to a direct descendant or their spouse or civil partner?
 percentage_closely_inherited.label =
 percentage_closely_inherited.summary =
 
