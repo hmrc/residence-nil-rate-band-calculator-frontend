@@ -85,7 +85,7 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
     clearIfFalse(Constants.anyBroughtForwardAllowanceOnDisposalId, value, Set(Constants.broughtForwardAllowanceOnDisposalId), cacheMap)
 
   private def anyPropertyCloselyInherited[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearIfFalse(Constants.percentageCloselyInheritedId, value, Set(Constants.anyExemptionId, Constants.propertyValueAfterExemptionId), cacheMap)
+    clearIfFalse(Constants.anyPropertyCloselyInheritedId, value, Set(Constants.anyExemptionId, Constants.propertyValueAfterExemptionId), cacheMap)
 
   private def updateCacheMap[A](key: String, value: A, originalCacheMap: CacheMap)(implicit wts: Writes[A]): Future[CacheMap] = {
     val newCacheMap = funcMap.get(key).fold(store(key, value, originalCacheMap)) { fn => fn(Json.toJson(value), originalCacheMap)}

@@ -34,6 +34,6 @@ class AnyPropertyCloselyInheritedViewSpec extends BooleanViewSpecBase {
 
     behave like pageWithBackLink[Boolean](createView)
 
-    behave like booleanPage(createView, messageKeyPrefix, AnyAssetsPassingToDirectDescendantsController.onSubmit().url)
+    behave like booleanPage(createView, messageKeyPrefix, AnyPropertyCloselyInheritedController.onSubmit().url)
   }
 }

@@ -37,7 +37,7 @@ any_exemption.guidance2 = For the property to qualify for any relief, you should
 any_exemption.label =
 any_exemption.summary =
 
-any_property_closely_inherited.question_number = 6
+any_property_closely_inherited.question_number = Question 6
 any_property_closely_inherited.browser_title = Question page
 any_property_closely_inherited.title = Does any part of the property that you have just given the value of pass to a direct descendant or their spouse or civil partner?
 any_property_closely_inherited.guidance = A person’s direct descendant is:
