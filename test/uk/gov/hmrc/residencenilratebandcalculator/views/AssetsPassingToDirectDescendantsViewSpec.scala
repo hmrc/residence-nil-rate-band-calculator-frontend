@@ -31,7 +31,7 @@ class AssetsPassingToDirectDescendantsViewSpec extends IntViewSpecBase {
 
   "Assets Passing to Direct Descendants View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance")
+    behave like rnrbPage[Int](createView, messageKeyPrefix)
 
     behave like pageWithBackLink[Int](createView)
 

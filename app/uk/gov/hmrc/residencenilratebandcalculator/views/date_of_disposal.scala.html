@@ -18,7 +18,9 @@
 
     @rnrbHelpers.heading_with_pre_text("date_of_disposal.title", "date_of_disposal.question_number")
 
-    <p>@messages("date_of_disposal.guidance")</p>
+    <p>@messages("date_of_disposal.guidance1")</p>
+
+    <p>@messages("date_of_disposal.guidance2")</p>
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDisposalController.onSubmit(), 'autoComplete -> "off") {
 
