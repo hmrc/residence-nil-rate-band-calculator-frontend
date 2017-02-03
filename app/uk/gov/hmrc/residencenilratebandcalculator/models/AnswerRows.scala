@@ -112,7 +112,7 @@ object AnswerRows {
         "Brought forward allowance on disposal",
         routes.BroughtForwardAllowanceOnDisposalController.onPageLoad),
     Constants.anyPropertyCloselyInheritedId ->
-      boolAnswerRowFn("any_property_closely_inherited", "Any property closely inherited", routes.AnyPropertyCloselyInheritedController.onPageLoad),
+      boolAnswerRowFn("any_property_closely_inherited.summary", "Any property closely inherited", routes.AnyPropertyCloselyInheritedController.onPageLoad),
     Constants.percentageCloselyInheritedId ->
       percentAnswerRowFn("percentage_closely_inherited.summary", "Percentage closely inherited", routes.PercentageCloselyInheritedController.onPageLoad),
     Constants.propertyValueId ->

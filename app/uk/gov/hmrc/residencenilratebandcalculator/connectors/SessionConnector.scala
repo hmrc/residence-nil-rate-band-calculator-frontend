@@ -53,7 +53,17 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
   }
 
   private def estateHasProperty[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearIfFalse(Constants.estateHasPropertyId, value, Set(Constants.propertyValueId, Constants.percentageCloselyInheritedId, Constants.anyExemptionId, Constants.propertyValueAfterExemptionId), cacheMap)
+    clearIfFalse(Constants.estateHasPropertyId, value,
+      Set(
+        Constants.propertyValueId,
+        Constants.anyPropertyCloselyInheritedId,
+        Constants.percentageCloselyInheritedId,
+        Constants.anyExemptionId,
+        Constants.propertyValueAfterExemptionId),
+      cacheMap)
+
+  private def anyPropertyCloselyInherited[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+    clearIfFalse(Constants.anyPropertyCloselyInheritedId, value, Set(Constants.anyExemptionId, Constants.propertyValueAfterExemptionId), cacheMap)
 
   private def anyExemptionClearance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
     clearIfFalse(Constants.anyExemptionId, value, Set(Constants.propertyValueAfterExemptionId), cacheMap)
@@ -83,9 +93,6 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
 
   private def anyBroughtForwardAllowanceOnDisposal[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
     clearIfFalse(Constants.anyBroughtForwardAllowanceOnDisposalId, value, Set(Constants.broughtForwardAllowanceOnDisposalId), cacheMap)
-
-  private def anyPropertyCloselyInherited[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearIfFalse(Constants.anyPropertyCloselyInheritedId, value, Set(Constants.anyExemptionId, Constants.propertyValueAfterExemptionId), cacheMap)
 
   private def updateCacheMap[A](key: String, value: A, originalCacheMap: CacheMap)(implicit wts: Writes[A]): Future[CacheMap] = {
     val newCacheMap = funcMap.get(key).fold(store(key, value, originalCacheMap)) { fn => fn(Json.toJson(value), originalCacheMap)}
