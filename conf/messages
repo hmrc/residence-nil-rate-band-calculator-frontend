@@ -180,7 +180,7 @@ not_possible_to_use_service.guidance = Lorem ipsum dolor sit amet, consectetur a
 
 percentage_closely_inherited.question_number = Question 6
 percentage_closely_inherited.browser_title = Question page
-percentage_closely_inherited.title = What percentage of the property that you have just given the value of pass to a direct descendant or their spouse or civil partner?
+percentage_closely_inherited.title = What percentage of the property that you have just given the value of passes to a direct descendant or their spouse or civil partner?
 percentage_closely_inherited.label =
 percentage_closely_inherited.summary =
 
