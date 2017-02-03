@@ -18,7 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
-import uk.gov.hmrc.residencenilratebandcalculator.forms.PercentForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.PositivePercentForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_closely_inherited
 
 class PercentageCloselyInheritedControllerSpec extends SimpleControllerSpecBase {
@@ -30,7 +30,7 @@ class PercentageCloselyInheritedControllerSpec extends SimpleControllerSpecBase 
 
       value match {
         case None => percentage_closely_inherited(frontendAppConfig, url)(fakeRequest, messages)
-        case Some(v) => percentage_closely_inherited(frontendAppConfig, url, Some(PercentForm().bind(v)))(fakeRequest, messages)
+        case Some(v) => percentage_closely_inherited(frontendAppConfig, url, Some(PositivePercentForm().bind(v)))(fakeRequest, messages)
       }
     }
 

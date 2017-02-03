@@ -19,7 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_closely_inherited
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
-import uk.gov.hmrc.residencenilratebandcalculator.forms.PercentForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.PositivePercentForm
 
 import scala.language.reflectiveCalls
 
@@ -35,6 +35,6 @@ class PercentageCloselyInheritedViewSpec extends IntViewSpecBase {
 
     behave like pageWithBackLink[Int](createView)
 
-    behave like intPage(createView, messageKeyPrefix, PercentageCloselyInheritedController.onSubmit().url, PercentForm())
+    behave like intPage(createView, messageKeyPrefix, PercentageCloselyInheritedController.onSubmit().url, PositivePercentForm())
   }
 }
