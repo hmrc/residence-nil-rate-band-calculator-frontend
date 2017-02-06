@@ -31,7 +31,7 @@ class ChargeableTransferAmountViewSpec extends IntViewSpecBase {
 
   "Chargeable Transfer Amount View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance")
+    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance3")
 
     behave like pageWithBackLink[Int](createView)
 

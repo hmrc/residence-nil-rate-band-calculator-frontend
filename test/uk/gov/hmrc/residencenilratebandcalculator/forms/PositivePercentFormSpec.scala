@@ -16,43 +16,48 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
-class PercentFormSpec extends FormSpec {
+class PositivePercentFormSpec extends FormSpec {
 
-  "Percent Int Form" must {
+  "Positive Percent Int Form" must {
 
     "bind positive numbers" in {
-      val form = PercentForm().bind(Map("value" -> "1"))
+      val form = PositivePercentForm().bind(Map("value" -> "1"))
       form.get shouldBe 1
     }
 
     "bind numbers as high as 100" in {
-      val form = PercentForm().bind(Map("value" -> "100"))
+      val form = PositivePercentForm().bind(Map("value" -> "100"))
       form.get shouldBe 100
     }
 
     "fail to bind negative numbers" in {
       val expectedError = error("value", "error.min")
-      checkForError(PercentForm(), Map("value" -> "-1"), expectedError)
+      checkForError(PositivePercentForm(), Map("value" -> "-1"), expectedError)
+    }
+
+    "fail to bind zero" in {
+      val expectedError = error("value", "error.min")
+      checkForError(PositivePercentForm(), Map("value" -> "0"), expectedError)
     }
 
     "fail to bind numbers greater than 100" in {
       val expectedError = error("value", "error.max")
-      checkForError(PercentForm(), Map("value" -> "101"), expectedError)
+      checkForError(PositivePercentForm(), Map("value" -> "101"), expectedError)
     }
 
     "fail to bind non-numerics" in {
       val expectedError = error("value", "error.number")
-      checkForError(PercentForm(), Map("value" -> "not a number"), expectedError)
+      checkForError(PositivePercentForm(), Map("value" -> "not a number"), expectedError)
     }
 
     "fail to bind a blank value" in {
       val expectedError = error("value", "error.number")
-      checkForError(PercentForm(), Map("value" -> ""), expectedError)
+      checkForError(PositivePercentForm(), Map("value" -> ""), expectedError)
     }
 
     "fail to bind when value is omitted" in {
       val expectedError = error("value", "error.required")
-      checkForError(PercentForm(), emptyForm, expectedError)
+      checkForError(PositivePercentForm(), emptyForm, expectedError)
     }
   }
 }

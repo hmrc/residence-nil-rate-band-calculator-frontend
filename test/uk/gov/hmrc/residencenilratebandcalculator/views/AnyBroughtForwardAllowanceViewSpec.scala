@@ -30,7 +30,7 @@ class AnyBroughtForwardAllowanceViewSpec extends BooleanViewSpecBase {
 
   "Any Brought Forward Allowance View" must {
 
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance")
+    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")
 
     behave like pageWithBackLink[Boolean](createView)
 

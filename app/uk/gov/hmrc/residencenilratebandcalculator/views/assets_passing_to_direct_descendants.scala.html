@@ -13,8 +13,6 @@
 
     @rnrbHelpers.heading_with_pre_text("assets_passing_to_direct_descendants.title", "assets_passing_to_direct_descendants.question_number")
 
-    <p>@messages("assets_passing_to_direct_descendants.guidance")</p>
-
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AssetsPassingToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))

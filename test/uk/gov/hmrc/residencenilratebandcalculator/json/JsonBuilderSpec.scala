@@ -792,6 +792,30 @@ class JsonBuilderSpec extends UnitSpec with MockitoSugar with Matchers with With
     }
   }
 
+  "handlePropertyCloselyInherited" must {
+    val cacheMapId = "aaaa"
+    val jsonBuilder = new JsonBuilder(rnrbConnector)
+
+    "return an empty map when anyPropertyCloselyInherited is not present in the cache map" in {
+      val cacheMap = CacheMap(id = cacheMapId, data = Map())
+      jsonBuilder.handlePropertyCloselyInherited(cacheMap) shouldBe Map()
+    }
+
+    "return an empty map when anyPropertyCloselyInherited is true" in {
+      val cacheMap = CacheMap(id = cacheMapId, data = Map(
+        Constants.anyPropertyCloselyInheritedId -> JsBoolean(true)
+      ))
+      jsonBuilder.handlePropertyCloselyInherited(cacheMap) shouldBe Map()
+    }
+
+    "return a map containing percentageCloselyInherited with a value of 0 when anyPropertyCloselyInherited is false" in {
+      val cacheMap = CacheMap(id = cacheMapId, data = Map(
+        Constants.anyPropertyCloselyInheritedId -> JsBoolean(false)
+      ))
+      jsonBuilder.handlePropertyCloselyInherited(cacheMap) shouldBe Map(Constants.jsonKeys(Constants.percentageCloselyInheritedId) -> JsNumber(0))
+    }
+  }
+
   "handleAssetsPassingToDirectDescendants" must {
     val cacheMapId = "aaaa"
     val jsonBuilder = new JsonBuilder(rnrbConnector)

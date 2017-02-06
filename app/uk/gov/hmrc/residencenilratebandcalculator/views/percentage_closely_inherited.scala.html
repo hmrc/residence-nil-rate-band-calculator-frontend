@@ -13,8 +13,6 @@
 
     @rnrbHelpers.heading_with_pre_text("percentage_closely_inherited.title", "percentage_closely_inherited.question_number")
 
-    <p>@messages("percentage_closely_inherited.guidance")</p>
-
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PercentageCloselyInheritedController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))

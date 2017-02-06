@@ -17,24 +17,23 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_property_closely_inherited
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
-import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_disposed_property
 
 import scala.language.reflectiveCalls
 
-class ValueOfDisposedPropertyViewSpec extends IntViewSpecBase {
+class AnyPropertyCloselyInheritedViewSpec extends BooleanViewSpecBase {
 
-  val messageKeyPrefix = "value_of_disposed_property"
+  val messageKeyPrefix = "any_property_closely_inherited"
 
-  def createView(form: Option[Form[Int]] = None) = value_of_disposed_property(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = any_property_closely_inherited(frontendAppConfig, backUrl, form)(request, messages)
 
-  "Value of Disposed Property View" must {
+  "Any Property Closely Inherited View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance3")
+    behave like rnrbPage[Boolean](createView, messageKeyPrefix)
 
-    behave like pageWithBackLink[Int](createView)
+    behave like pageWithBackLink[Boolean](createView)
 
-    behave like intPage(createView, messageKeyPrefix, ValueOfDisposedPropertyController.onSubmit().url, NonNegativeIntForm())
+    behave like booleanPage(createView, messageKeyPrefix, AnyPropertyCloselyInheritedController.onSubmit().url)
   }
 }

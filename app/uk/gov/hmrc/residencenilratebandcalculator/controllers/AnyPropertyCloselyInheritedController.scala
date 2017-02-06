@@ -16,28 +16,29 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import javax.inject.Inject
+import javax.inject.{Inject, Singleton}
 
 import play.api.data.Form
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
+import play.twirl.api.HtmlFormat._
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.forms.PositivePercentForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_closely_inherited
+import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_property_closely_inherited
 
-class PercentageCloselyInheritedController  @Inject()(override val appConfig: FrontendAppConfig,
+@Singleton
+class AnyPropertyCloselyInheritedController @Inject()(override val appConfig: FrontendAppConfig,
                                                       val messagesApi: MessagesApi,
                                                       override val sessionConnector: SessionConnector,
-                                                      override val navigator: Navigator) extends SimpleControllerBase[Int] {
+                                                      override val navigator: Navigator) extends SimpleControllerBase[Boolean] {
 
+  override val controllerId: String = Constants.anyPropertyCloselyInheritedId
 
-  override val controllerId = Constants.percentageCloselyInheritedId
+  override def form: () => Form[Boolean] = () => BooleanForm()
 
-  override def form = () => PositivePercentForm()
-
-  override def view(form: Option[Form[Int]])(implicit request: Request[_]) = {
+  override def view(form: Option[Form[Boolean]])(implicit request: Request[_]): Appendable = {
     val backUrl = navigator.lastPage(controllerId)().url
-    percentage_closely_inherited(appConfig, backUrl, form)
+    any_property_closely_inherited(appConfig, backUrl, form)
   }
 }

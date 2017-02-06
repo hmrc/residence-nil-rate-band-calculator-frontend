@@ -31,7 +31,7 @@ class DateOfDisposalViewSpec  extends DateViewSpecBase {
 
   "Date of Disposal View" must {
 
-    behave like rnrbPage[Date](createView, messageKeyPrefix, "guidance")
+    behave like rnrbPage[Date](createView, messageKeyPrefix, "guidance1", "guidance2")
 
     behave like pageWithBackLink[Date](createView)
 

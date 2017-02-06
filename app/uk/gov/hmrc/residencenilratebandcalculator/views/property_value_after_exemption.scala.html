@@ -12,11 +12,21 @@
 
     @rnrbHelpers.back_link(backUrl)
 
-    @rnrbHelpers.heading_with_pre_text("property_value_after_exemption.title", "property_value_after_exemption.question_number")
-
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyValueAfterExemptionController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
+        <h1 class="heading-medium">@messages("property_value_after_exemption.value_closely_inherited.title")</h1>
+        <p>@messages("property_value_after_exemption.value_closely_inherited.guidance")</p>
+
+        @rnrbHelpers.input_text(
+            id = "valueCloselyInherited",
+            name = "valueCloselyInherited",
+            value = Some(PropertyValueAfterExemptionFormHelper.getValueByKey(form, ValueCloselyInherited).toString),
+            label = messages("property_value_after_exemption.value_closely_inherited.label"),
+            secondaryLabel = Some("currency"),
+            errorKey = FormHelpers.getErrorByKey(form, "valueCloselyInherited")
+        )
 
         <h2>@messages("property_value_after_exemption.value.title")</h2>
         <p>@messages("property_value_after_exemption.value.guidance")</p>
@@ -28,18 +38,6 @@
             label = messages("property_value_after_exemption.value.label"),
             secondaryLabel = Some("currency"),
             errorKey = FormHelpers.getErrorByKey(form, "value")
-        )
-
-        <h2>@messages("property_value_after_exemption.value_closely_inherited.title")</h2>
-        <p>@messages("property_value_after_exemption.value_closely_inherited.guidance")</p>
-
-        @rnrbHelpers.input_text(
-            id = "valueCloselyInherited",
-            name = "valueCloselyInherited",
-            value = Some(PropertyValueAfterExemptionFormHelper.getValueByKey(form, ValueCloselyInherited).toString),
-            label = messages("property_value_after_exemption.value_closely_inherited.label"),
-            secondaryLabel = Some("currency"),
-            errorKey = FormHelpers.getErrorByKey(form, "valueCloselyInherited")
         )
 
         @rnrbHelpers.submit_button()

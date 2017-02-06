@@ -41,6 +41,7 @@ object AnswerRows {
     Constants.assetsPassingToDirectDescendantsId -> 115,
     Constants.broughtForwardAllowanceId -> 110,
     Constants.broughtForwardAllowanceOnDisposalId -> 117,
+    Constants.anyPropertyCloselyInheritedId -> 118,
     Constants.percentageCloselyInheritedId -> 106,
     Constants.propertyValueId -> 105,
     Constants.propertyValueAfterExemptionId -> 108
@@ -110,6 +111,8 @@ object AnswerRows {
       intAnswerRowFn("brought_forward_allowance_on_disposal.summary",
         "Brought forward allowance on disposal",
         routes.BroughtForwardAllowanceOnDisposalController.onPageLoad),
+    Constants.anyPropertyCloselyInheritedId ->
+      boolAnswerRowFn("any_property_closely_inherited.summary", "Any property closely inherited", routes.AnyPropertyCloselyInheritedController.onPageLoad),
     Constants.percentageCloselyInheritedId ->
       percentAnswerRowFn("percentage_closely_inherited.summary", "Percentage closely inherited", routes.PercentageCloselyInheritedController.onPageLoad),
     Constants.propertyValueId ->

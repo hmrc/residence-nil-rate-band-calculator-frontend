@@ -69,20 +69,26 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     }
 
     "when the PropertyValue is used at the class id, the navigator must return a function that when executed against any" +
-      "parameter goes to the PercentageCloselyInherited controller" in {
-      navigator.nextPage(Constants.propertyValueId)(mock[CacheMap]) shouldBe routes.PercentageCloselyInheritedController.onPageLoad()
+      "parameter goes to the Any Property Closely Inherited controller" in {
+      navigator.nextPage(Constants.propertyValueId)(mock[CacheMap]) shouldBe routes.AnyPropertyCloselyInheritedController.onPageLoad()
     }
 
-    "return a function that goes to the Any Exemption controller when given PercentageCloselyInherited greater than 0" in {
+    "return a function that goes to the Percentage Closely Inherited controller when given Any Property CLosely Inherited with a value of true" in {
+      val mockCacheMap = mock[CacheMap]
+      when(mockCacheMap.getEntry[Boolean](matches(Constants.anyPropertyCloselyInheritedId))(any())) thenReturn Some(true)
+      navigator.nextPage(Constants.anyPropertyCloselyInheritedId)(mockCacheMap) shouldBe routes.PercentageCloselyInheritedController.onPageLoad()
+    }
+
+    "return a function that goes to the Any Brought Forward Allowance controller when given Any Property CLosely Inherited with a value of false" in {
+      val mockCacheMap = mock[CacheMap]
+      when(mockCacheMap.getEntry[Boolean](matches(Constants.anyPropertyCloselyInheritedId))(any())) thenReturn Some(false)
+      navigator.nextPage(Constants.anyPropertyCloselyInheritedId)(mockCacheMap) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
+    }
+
+    "return a function that goes to the Any Exemption controller when given PercentageCloselyInherited" in {
       val mockCacheMap = mock[CacheMap]
       when(mockCacheMap.getEntry[Int](matches(Constants.percentageCloselyInheritedId))(any())) thenReturn Some(1)
       navigator.nextPage(Constants.percentageCloselyInheritedId)(mockCacheMap) shouldBe routes.AnyExemptionController.onPageLoad()
-    }
-
-    "return a function that goes to the Any Brought Forward Allowance controller when given PercentageCloselyInherited of 0" in {
-      val mockCacheMap = mock[CacheMap]
-      when(mockCacheMap.getEntry[Int](matches(Constants.percentageCloselyInheritedId))(any())) thenReturn Some(0)
-      navigator.nextPage(Constants.percentageCloselyInheritedId)(mockCacheMap) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
     }
 
     "return a call to the PropertyValueController onPageLoad method when there is a property in the estate" in {
@@ -151,8 +157,12 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.propertyValueId)() shouldBe routes.EstateHasPropertyController.onPageLoad()
     }
 
-    "return a call to the Property Value when back linking from the Percentage Closely Inherited page" in {
-      navigator.lastPage(Constants.percentageCloselyInheritedId)() shouldBe routes.PropertyValueController.onPageLoad()
+    "return a call to the Property Value when back linking from the Any Property Closely Inherited page" in {
+      navigator.lastPage(Constants.anyPropertyCloselyInheritedId)() shouldBe routes.PropertyValueController.onPageLoad()
+    }
+
+    "return a call to the Any Property Closely Inherited when back linking from the Percentage Closely Inherited page" in {
+      navigator.lastPage(Constants.percentageCloselyInheritedId)() shouldBe routes.AnyPropertyCloselyInheritedController.onPageLoad()
     }
 
     "return a call to the Percentage Closely Inherited when back linking from the Any Exemption page" in {

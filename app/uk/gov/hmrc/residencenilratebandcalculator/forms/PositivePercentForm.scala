@@ -19,8 +19,8 @@ package uk.gov.hmrc.residencenilratebandcalculator.forms
 import play.api.data.Form
 import play.api.data.Forms._
 
-object PercentForm {
+object PositivePercentForm {
 
-  def apply(): Form[Int] = Form(single("value" -> number(min=0, max=100)))
+  def apply(): Form[Int] = Form(single("value" -> number(min=1, max=100)))
 
 }

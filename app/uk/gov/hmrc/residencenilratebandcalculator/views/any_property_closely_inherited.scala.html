@@ -1,0 +1,41 @@
+@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@import uk.gov.hmrc.play.views.html._
+@import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
+
+@(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[Boolean]] = None)(implicit request: Request[_], messages: Messages)
+
+@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+    title = messages("any_property_closely_inherited.browser_title"),
+    appConfig = appConfig,
+    bodyClasses = None) {
+
+    @rnrbHelpers.back_link(backUrl)
+
+    @rnrbHelpers.heading_with_pre_text("any_property_closely_inherited.title", "any_property_closely_inherited.question_number")
+
+    <p>@messages("any_property_closely_inherited.guidance")</p>
+    <ul class="list list-bullet">
+        <li>@messages("any_property_closely_inherited.guidance.bullet1")</li>
+        <li>@messages("any_property_closely_inherited.guidance.bullet2")</li>
+        <li>@messages("any_property_closely_inherited.guidance.bullet3")</li>
+        <li>@messages("any_property_closely_inherited.guidance.bullet4")</li>
+        <li>@messages("any_property_closely_inherited.guidance.bullet5")</li>
+        <li>@messages("any_property_closely_inherited.guidance.bullet6")</li>
+        <li>@messages("any_property_closely_inherited.guidance.bullet7")</li>
+    </ul>
+
+    @helpers.form(action = AnyPropertyCloselyInheritedController.onSubmit(), 'autoComplete -> "off") {
+
+        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
+        @rnrbHelpers.input_yes_no(
+            id = "value",
+            label = messages("any_property_closely_inherited.label"),
+            errorKey = FormHelpers.getErrorByKey(form, "value"),
+            value = Some(FormHelpers.getYesNo(form))
+        )
+
+        @rnrbHelpers.submit_button()
+    }
+}

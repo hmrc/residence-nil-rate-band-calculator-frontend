@@ -15,11 +15,11 @@
     @rnrbHelpers.heading_with_pre_text("any_downsizing_allowance.title", "any_downsizing_allowance.question_number")
 
     <p>@messages("any_downsizing_allowance.guidance")</p>
-    <ol>
-        <li>@messages("any_downsizing_allowance.guidance1")</li>
-        <li>@messages("any_downsizing_allowance.guidance2")</li>
-        <li>@messages("any_downsizing_allowance.guidance3")</li>
-    </ol>
+    <ul class="list list-bullet">
+        <li>@messages("any_downsizing_allowance.guidance.bullet1")</li>
+        <li>@messages("any_downsizing_allowance.guidance.bullet2")</li>
+        <li>@messages("any_downsizing_allowance.guidance.bullet3")</li>
+    </ul>
 
     @helpers.form(action = AnyDownsizingAllowanceController.onSubmit(), 'autoComplete -> "off") {
 
