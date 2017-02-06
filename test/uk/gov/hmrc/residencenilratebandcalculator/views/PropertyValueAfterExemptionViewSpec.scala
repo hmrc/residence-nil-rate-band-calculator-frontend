@@ -37,14 +37,40 @@ class PropertyValueAfterExemptionViewSpec extends ViewSpecBase {
 
   "Property Value After Exemption View" must {
 
-    behave like rnrbPage[PropertyValueAfterExemption](createView, messageKeyPrefix)
-
     behave like pageWithBackLink[PropertyValueAfterExemption](createView)
-
-    behave like questionPage[PropertyValueAfterExemption](createView, messageKeyPrefix, routes.PropertyValueAfterExemptionController.onSubmit().url)
 
     "behave correctly" when {
       "rendered" must {
+
+        "display the correct browser title" in {
+          val doc = asDocument(createView(None))
+          assertEqualsMessage(doc, "title", s"$messageKeyPrefix.browser_title")
+        }
+
+        "display the correct page title" in {
+          val doc = asDocument(createView(None))
+          assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.value_closely_inherited.title")
+        }
+
+        "display the correct guidance" in {
+          val doc = asDocument(createView(None))
+          val expectedGuidanceKeys = Seq("value_closely_inherited.guidance", "value.guidance")
+          for (key <- expectedGuidanceKeys) assertContainsText(doc, messages(s"$messageKeyPrefix.$key"))
+        }
+
+        "contain a form that POSTs to the correct action" in {
+          val doc = asDocument(createView(None))
+          val forms = doc.getElementsByTag("form")
+          forms.size shouldBe 1
+          val form = forms.first
+          form.attr("method") shouldBe "POST"
+          form.attr("action") shouldBe routes.PropertyValueAfterExemptionController.onSubmit().url
+        }
+
+        "contain a submit button" in {
+          val doc = asDocument(createView(None))
+          val input = assertRenderedByCssSelector(doc, "input[type=submit]")
+        }
 
         "contain a title for the value" in {
           val doc = asDocument(createView(None))

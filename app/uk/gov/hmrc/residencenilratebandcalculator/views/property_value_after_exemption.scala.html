@@ -12,13 +12,11 @@
 
     @rnrbHelpers.back_link(backUrl)
 
-    @rnrbHelpers.heading_with_pre_text("property_value_after_exemption.title", "property_value_after_exemption.question_number")
-
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyValueAfterExemptionController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
 
-        <h2>@messages("property_value_after_exemption.value_closely_inherited.title")</h2>
+        <h1>@messages("property_value_after_exemption.value_closely_inherited.title")</h1>
         <p>@messages("property_value_after_exemption.value_closely_inherited.guidance")</p>
 
         @rnrbHelpers.input_text(
