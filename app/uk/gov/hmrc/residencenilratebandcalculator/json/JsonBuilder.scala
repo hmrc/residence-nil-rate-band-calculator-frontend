@@ -64,27 +64,23 @@ class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
     }
   }
 
-  def buildFromCacheMap(cacheMap: CacheMap): Future[Try[JsValue]] = {
-    getSchema.map {
-      case Success(schema) => {
-        val incomingJson = Json.toJson(constructDataFromCacheMap(cacheMap))
-        val validationResult = validator.validate(schema, incomingJson).asEither
-        validationResult match {
-          case Left(error) => {
-            Failure(new JsonInvalidException(JsonErrorProcessor(error)))
+  def buildFromCacheMap(cacheMap: CacheMap): Future[Try[JsValue]] = getSchema.map {
+    case Success(schema) =>
+      val incomingJson = Json.toJson(constructDataFromCacheMap(cacheMap))
+      val validationResult = validator.validate(schema, incomingJson).asEither
+      validationResult match {
+        case Left(error) =>
+          Failure(new JsonInvalidException(JsonErrorProcessor(error)))
+        case Right(json) =>
+          if (dateOfDeathIsIneligible(cacheMap)) {
+            Failure(new JsonInvalidException("JSON error: Date of death is before eligibility date\n"))
+          } else {
+            Success(json)
           }
-          case Right(json) => {
-            if (dateOfDeathIsIneligible(cacheMap)) {
-              Failure(new JsonInvalidException("JSON error: Date of death is before eligibility date\n"))
-            } else {
-              Success(json)
-            }
-          }
-        }
       }
-      case Failure(exception) => Failure(exception)
-    }
+    case Failure(exception) => Failure(exception)
   }
+
 
   def build(sessionConnector: SessionConnector)(implicit headerCarrier: HeaderCarrier) = {
     sessionConnector.fetch.flatMap {
@@ -111,35 +107,25 @@ class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
       constructDownsizingDetails(cacheMap)
   }
 
-  def handleBroughtForwardAllowance(cacheMap: CacheMap) = {
-    if (cacheMap.data.get(Constants.anyBroughtForwardAllowanceId).contains(JsBoolean(false))) {
-      Map(jsonKeys(Constants.broughtForwardAllowanceId) -> JsNumber(0))
-    } else {
-      Map()
-    }
+  def handleBroughtForwardAllowance(cacheMap: CacheMap) = cacheMap.data.get(Constants.anyBroughtForwardAllowanceId) match {
+    case Some(JsBoolean(false)) => Map(jsonKeys(Constants.broughtForwardAllowanceId) -> JsNumber(0))
+    case _ => Map()
   }
 
-  def handleEstateHasProperty(cacheMap: CacheMap) = {
-    if (cacheMap.data.get(Constants.estateHasPropertyId).contains(JsBoolean(false))) {
-      Map(
-        jsonKeys(Constants.propertyValueId) -> JsNumber(0),
-        jsonKeys(Constants.percentageCloselyInheritedId) -> JsNumber(0)
-      )
-    } else {
-      Map()
-    }
+  def handleEstateHasProperty(cacheMap: CacheMap) = cacheMap.data.get(Constants.estateHasPropertyId) match {
+    case Some(JsBoolean(false)) => Map(
+      jsonKeys(Constants.propertyValueId) -> JsNumber(0),
+      jsonKeys(Constants.percentageCloselyInheritedId) -> JsNumber(0))
+    case _ => Map()
   }
 
-  def handlePropertyCloselyInherited(cacheMap: CacheMap) = {
-    if (cacheMap.data.get(Constants.anyPropertyCloselyInheritedId).contains(JsBoolean(false))) {
-      Map(jsonKeys(Constants.percentageCloselyInheritedId) -> JsNumber(0))
-    } else {
-      Map()
-    }
+  def handlePropertyCloselyInherited(cacheMap: CacheMap) = cacheMap.data.get(Constants.anyPropertyCloselyInheritedId) match {
+    case Some(JsBoolean(false)) => Map(jsonKeys(Constants.percentageCloselyInheritedId) -> JsNumber(0))
+    case _ => Map()
   }
 
-  def constructDownsizingDetails(cacheMap: CacheMap) = {
-    if (cacheMap.data.get(Constants.anyDownsizingAllowanceId).contains(JsBoolean(true))) {
+  def constructDownsizingDetails(cacheMap: CacheMap) = cacheMap.data.get(Constants.anyDownsizingAllowanceId) match {
+    case Some(JsBoolean(true)) =>
       def keyIsRecognised(key: String) = downsizingKeys.keySet.contains(key)
 
       val usableEntries = for {
@@ -153,18 +139,12 @@ class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
       val allData = dataWithCorrectKeys ++ handleAssetsPassingToDirectDescendants(cacheMap) ++ handleBroughtForwardAllowanceOnDisposal(cacheMap)
 
       Map(Constants.downsizingDetails -> Json.toJson(allData))
-    }
-    else {
-      Map()
-    }
+    case _ => Map()
   }
 
-  def handleAssetsPassingToDirectDescendants(cacheMap: CacheMap) = {
-    if (cacheMap.data.get(Constants.anyAssetsPassingToDirectDescendantsId).contains(JsBoolean(false))) {
-      Map(downsizingKeys(Constants.assetsPassingToDirectDescendantsId) -> JsNumber(0))
-    } else {
-      Map()
-    }
+  def handleAssetsPassingToDirectDescendants(cacheMap: CacheMap) = cacheMap.data.get(Constants.anyAssetsPassingToDirectDescendantsId) match {
+    case Some(JsBoolean(false)) => Map(downsizingKeys(Constants.assetsPassingToDirectDescendantsId) -> JsNumber(0))
+    case _ => Map()
   }
 
   def handleBroughtForwardAllowanceOnDisposal(cacheMap: CacheMap) = {
