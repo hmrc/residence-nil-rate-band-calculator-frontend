@@ -25,6 +25,7 @@ import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
+import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 import scala.concurrent.Future
@@ -58,7 +59,7 @@ trait SimpleControllerBase[A] extends FrontendController with I18nSupport {
         case Some(error) => Future.successful(BadRequest(view(Some(form().fill(value).withError(error)))))
         case None => {
           sessionConnector.cache[A](controllerId, value).map(cacheMap =>
-            Redirect(navigator.nextPage(controllerId)(cacheMap)))
+            Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
         }
       })
   }
