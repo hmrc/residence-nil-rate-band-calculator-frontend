@@ -18,21 +18,61 @@ package uk.gov.hmrc.residencenilratebandcalculator.repositories
 
 import javax.inject.{Inject, Singleton}
 
-import play.api.libs.json.Json
+import org.joda.time.{DateTime, DateTimeZone}
+import play.api.{Configuration, Logger}
+import play.api.libs.json.{JsValue, Json}
 import play.modules.reactivemongo.MongoDbConnection
 import reactivemongo.api.DefaultDB
+import reactivemongo.api.indexes.{Index, IndexType}
 import reactivemongo.bson.{BSONDocument, BSONObjectID}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.mongo.ReactiveRepository
+import uk.gov.hmrc.mongo.json.ReactiveMongoFormats
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class ReactiveMongoRepository(mongo: () => DefaultDB)
-  extends ReactiveRepository[CacheMap, BSONObjectID]("residenceNilRateBand", mongo, CacheMap.formats) {
+case class DatedCacheMap(id: String,
+                         data: Map[String, JsValue],
+                         createdAt: DateTime = DateTime.now(DateTimeZone.UTC))
+
+object DatedCacheMap {
+  implicit val dateFormat = ReactiveMongoFormats.dateTimeFormats
+  implicit val formats = Json.format[DatedCacheMap]
+
+  def apply(cacheMap: CacheMap): DatedCacheMap = DatedCacheMap(cacheMap.id, cacheMap.data)
+}
+
+class ReactiveMongoRepository(config: Configuration, mongo: () => DefaultDB)
+  extends ReactiveRepository[DatedCacheMap, BSONObjectID](config.getString("appName").get, mongo, DatedCacheMap.formats) {
+
+  val fieldName = "createdAt"
+  val createdIndexName = "calculationResponseExpiry"
+  val expireAfterSeconds = "expireAfterSeconds"
+  val timeToLiveInSeconds: Int = config.getInt("mongodb.timeToLiveInSeconds").get
+
+  createIndex(fieldName, createdIndexName, timeToLiveInSeconds)
+
+  private def createIndex(field: String, indexName: String, ttl: Int): Future[Boolean] = {
+    collection.indexesManager.ensure(Index(Seq((field, IndexType.Ascending)), Some(indexName),
+      options = BSONDocument(expireAfterSeconds -> ttl))) map {
+      result => {
+        // $COVERAGE-OFF$
+        Logger.debug(s"set [$indexName] with value $ttl -> result : $result")
+        // $COVERAGE-ON$
+        result
+      }
+    } recover {
+      // $COVERAGE-OFF$
+      case e => Logger.error("Failed to set TTL index", e)
+        false
+      // $COVERAGE-ON$
+    }
+  }
 
   def upsert(cm: CacheMap): Future[Boolean] = {
     val selector = BSONDocument("id" -> cm.id)
-    val cmDocument = Json.toJson(cm)
+    val cmDocument = Json.toJson(DatedCacheMap(cm))
     val modifier = BSONDocument("$set" -> cmDocument)
 
     collection.update(selector, modifier, upsert = true).map { lastError =>
@@ -52,11 +92,11 @@ class ReactiveMongoRepository(mongo: () => DefaultDB)
 }
 
 @Singleton
-class SessionRepository @Inject()() {
+class SessionRepository @Inject()(config: Configuration) {
 
   class DbConnection extends MongoDbConnection
 
-  private lazy val sessionRepository = new ReactiveMongoRepository(new DbConnection().db)
+  private lazy val sessionRepository = new ReactiveMongoRepository(config, new DbConnection().db)
 
   def apply(): ReactiveMongoRepository = sessionRepository
 }
