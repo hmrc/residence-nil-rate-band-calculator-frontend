@@ -36,8 +36,7 @@ class GrossEstateValueController @Inject()(override val appConfig: FrontendAppCo
 
   override def form = () => NonNegativeIntForm()
 
-  override def view(form: Option[Form[Int]])(implicit request: Request[_]) = {
-    val backUrl = navigator.lastPage(controllerId)().url
+  override def view(form: Option[Form[Int]], backUrl: String)(implicit request: Request[_]) = {
     gross_estate_value(appConfig, backUrl, form)
   }
 }

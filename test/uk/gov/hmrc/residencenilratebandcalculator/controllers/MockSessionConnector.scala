@@ -22,11 +22,12 @@ import org.mockito.Mockito._
 import org.mockito.Matchers._
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.{BeforeAndAfter, Matchers}
-import play.api.libs.json.{JsValue, Writes}
+import play.api.libs.json.{JsValue, Reads, Writes}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.test.UnitSpec
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
+import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 
 import scala.concurrent.Future
 import scala.reflect.ClassTag
@@ -43,6 +44,9 @@ trait MockSessionConnector extends UnitSpec with MockitoSugar with Matchers with
   before {
     mockCacheMap = mock[CacheMap]
     when(mockCacheMap.data) thenReturn Map[String, JsValue]()
+    when(mockCacheMap.getEntry[Boolean](anyString())(ArgumentCaptor.forClass(classOf[Reads[Boolean]]).capture())) thenReturn None
+    when(mockCacheMap.getEntry[Int](anyString())(ArgumentCaptor.forClass(classOf[Reads[Int]]).capture())) thenReturn None
+    when(mockCacheMap.getEntry[Date](anyString())(ArgumentCaptor.forClass(classOf[Reads[Date]]).capture())) thenReturn None
 
     mockSessionConnector = mock[SessionConnector]
     when(mockSessionConnector.cache(anyString(), anyInt())(any(), any[HeaderCarrier])) thenReturn Future.successful(mockCacheMap)
@@ -64,7 +68,7 @@ trait MockSessionConnector extends UnitSpec with MockitoSugar with Matchers with
     valueCaptor.getValue shouldBe value
   }
 
-  def verifyValueIsNotCached() = verifyZeroInteractions(mockSessionConnector)
+  def verifyValueIsNotCached() = verify(mockSessionConnector, never()).cache(anyString(), any())(any(), any[HeaderCarrier])
 
   def setCacheValue[A](key: String, value: A) = {
     when(mockSessionConnector.fetchAndGetEntry[A](matches(key))(any[HeaderCarrier], any())) thenReturn Future.successful(Some(value))

@@ -51,31 +51,9 @@ class Navigator @Inject()() {
     )
   }
 
-  private val reverseRouteMap: Map[String, () => Call] = {
-    Map(
-      Constants.grossEstateValueId -> (() => DateOfDeathController.onPageLoad()),
-      Constants.chargeableTransferAmountId -> (() => GrossEstateValueController.onPageLoad()),
-      Constants.estateHasPropertyId -> (() => ChargeableTransferAmountController.onPageLoad()),
-      Constants.propertyValueId -> (() => EstateHasPropertyController.onPageLoad()),
-      Constants.anyPropertyCloselyInheritedId -> (() => PropertyValueController.onPageLoad()),
-      Constants.percentageCloselyInheritedId -> (() => AnyPropertyCloselyInheritedController.onPageLoad()),
-      Constants.anyExemptionId -> (() => PercentageCloselyInheritedController.onPageLoad()),
-      Constants.propertyValueAfterExemptionId -> (() => AnyExemptionController.onPageLoad()),
-      Constants.anyBroughtForwardAllowanceId -> (() => PropertyValueAfterExemptionController.onPageLoad()),
-      Constants.broughtForwardAllowanceId -> (() => AnyBroughtForwardAllowanceController.onPageLoad()),
-      Constants.anyDownsizingAllowanceId -> (() => BroughtForwardAllowanceController.onPageLoad()),
-      Constants.dateOfDisposalId -> (() => AnyDownsizingAllowanceController.onPageLoad()),
-      Constants.valueOfDisposedPropertyId -> (() => DateOfDisposalController.onPageLoad()),
-      Constants.anyAssetsPassingToDirectDescendantsId -> (() => ValueOfDisposedPropertyController.onPageLoad()),
-      Constants.assetsPassingToDirectDescendantsId -> (() => AnyAssetsPassingToDirectDescendantsController.onPageLoad()),
-      Constants.anyBroughtForwardAllowanceOnDisposalId -> (() => AssetsPassingToDirectDescendantsController.onPageLoad()),
-      Constants.broughtForwardAllowanceOnDisposalId -> (() => AnyBroughtForwardAllowanceOnDisposalController.onPageLoad())
-    )
-  }
-
-  private def getDateOfDeathRoute(userAnswers: UserAnswers) = userAnswers.dateOfDeath match {
-    case Some(d) if d isBefore Constants.eligibilityDate => TransitionOutController.onPageLoad()
-    case Some(_) => GrossEstateValueController.onPageLoad()
+  private def getDateOfDeathRoute(cacheData: UserAnswers) = cacheData.dateOfDeath match {
+    case Some(d) if (d isEqual Constants.eligibilityDate) || (d isAfter Constants.eligibilityDate) => GrossEstateValueController.onPageLoad()
+    case Some(_) => TransitionOutController.onPageLoad()
     case None => HomeController.onPageLoad()
   }
 
@@ -137,7 +115,47 @@ class Navigator @Inject()() {
     routeMap.getOrElse(controllerId, _ => PageNotFoundController.onPageLoad())
   }
 
-  def lastPage(controllerId: String): () => Call = {
-    reverseRouteMap.getOrElse(controllerId, () => PageNotFoundController.onPageLoad())
+  private val reverseRouteMap: Map[String, UserAnswers => Call] = {
+    Map(
+      Constants.grossEstateValueId -> (_ => DateOfDeathController.onPageLoad()),
+      Constants.chargeableTransferAmountId -> (_ => GrossEstateValueController.onPageLoad()),
+      Constants.estateHasPropertyId -> (_ => ChargeableTransferAmountController.onPageLoad()),
+      Constants.propertyValueId -> (_ => EstateHasPropertyController.onPageLoad()),
+      Constants.anyPropertyCloselyInheritedId -> (_ => PropertyValueController.onPageLoad()),
+      Constants.percentageCloselyInheritedId -> (_ => AnyPropertyCloselyInheritedController.onPageLoad()),
+      Constants.anyExemptionId -> (_ => PercentageCloselyInheritedController.onPageLoad()),
+      Constants.propertyValueAfterExemptionId -> (_ => AnyExemptionController.onPageLoad()),
+      Constants.anyBroughtForwardAllowanceId -> (ua => getAnyBroughtForwardAllowanceReverseRoute(ua)),
+      Constants.broughtForwardAllowanceId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
+      Constants.anyDownsizingAllowanceId -> (ua => getAnyDownsizingAllowanceReverseRoute(ua)),
+      Constants.dateOfDisposalId -> (_ => AnyDownsizingAllowanceController.onPageLoad()),
+      Constants.valueOfDisposedPropertyId -> (_ => DateOfDisposalController.onPageLoad()),
+      Constants.anyAssetsPassingToDirectDescendantsId -> (_ => ValueOfDisposedPropertyController.onPageLoad()),
+      Constants.assetsPassingToDirectDescendantsId -> (_ => AnyAssetsPassingToDirectDescendantsController.onPageLoad()),
+      Constants.anyBroughtForwardAllowanceOnDisposalId -> (_ => AssetsPassingToDirectDescendantsController.onPageLoad()),
+      Constants.broughtForwardAllowanceOnDisposalId -> (_ => AnyBroughtForwardAllowanceOnDisposalController.onPageLoad())
+    )
+  }
+
+  private def goToPageNotFound: UserAnswers => Call = _ => PageNotFoundController.onPageLoad()
+
+  private def getAnyBroughtForwardAllowanceReverseRoute(userAnswers: UserAnswers) = userAnswers.anyExemption match {
+    case Some(true) => PropertyValueAfterExemptionController.onPageLoad()
+    case _ => userAnswers.anyPropertyCloselyInherited match {
+      case Some(true) => PercentageCloselyInheritedController.onPageLoad()
+      case _ => userAnswers.estateHasProperty match {
+        case Some(true) => PropertyValueController.onPageLoad()
+        case _ => EstateHasPropertyController.onPageLoad()
+      }
+    }
+  }
+
+  private def getAnyDownsizingAllowanceReverseRoute(userAnswers: UserAnswers) = userAnswers.anyBroughtForwardAllowance match {
+    case Some(true) => BroughtForwardAllowanceController.onPageLoad()
+    case _ => AnyBroughtForwardAllowanceController.onPageLoad()
+  }
+
+  def lastPage(controllerId: String): UserAnswers => Call = {
+    reverseRouteMap.getOrElse(controllerId, goToPageNotFound)
   }
 }
