@@ -180,12 +180,40 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.EstateHasPropertyController.onPageLoad()
     }
 
+    "return a call to the Property Value After Exemption when back linking from the Any Brought Forward Allowance page" +
+      "when the user has positively answered Any Exemption" in {
+      val userAnswers = mock[UserAnswers]
+      when(userAnswers.anyExemption) thenReturn Some(true)
+      navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.PropertyValueAfterExemptionController.onPageLoad()
+    }
+
+    "return a call to the Percent Closely Inherited when back linking from the Any Brought Forward Allowance page" +
+      "when the user has positively answered Percentage Closely Inherited" in {
+      val userAnswers = mock[UserAnswers]
+      when(userAnswers.anyPropertyCloselyInherited) thenReturn Some(true)
+      navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.PercentageCloselyInheritedController.onPageLoad()
+    }
+
+    "return a call to the Property Value when back linking from the Any Brought Forward Allowance page" +
+      "when the user has positively answered Estate Has Property" in {
+      val userAnswers = mock[UserAnswers]
+      when(userAnswers.estateHasProperty) thenReturn Some(true)
+      navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.PropertyValueController.onPageLoad()
+    }
+
     "return a call to the Any Brought Forward Allowance After Exemption when back linking from the Brought Forward Allowance page" in {
       navigator.lastPage(Constants.broughtForwardAllowanceId)(userAnswers) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
     }
 
-    "return a call to the Any Brought Forward Allowance After Exemption when back linking from the Any Downsizing Allowance page" in {
+    "return a call to the Any Brought Forward Allowance when back linking from the Any Downsizing Allowance page" in {
       navigator.lastPage(Constants.anyDownsizingAllowanceId)(userAnswers) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
+    }
+
+    "return a call to the Brought Forward Allowance when back linking from the Any Downsizing Allowance page when the" +
+      "user has positively answered Any Brought Forward Allowance" in {
+      val userAnswers = mock[UserAnswers]
+      when(userAnswers.anyBroughtForwardAllowance) thenReturn Some(true)
+      navigator.lastPage(Constants.anyDownsizingAllowanceId)(userAnswers) shouldBe routes.BroughtForwardAllowanceController.onPageLoad()
     }
 
     "return a call to the Any Downsizing Allowance After Exemption when back linking from the Date of Disposal page" in {
