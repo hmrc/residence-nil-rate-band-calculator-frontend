@@ -18,37 +18,36 @@ package uk.gov.hmrc.residencenilratebandcalculator
 
 import javax.inject.{Inject, Singleton}
 
-import org.joda.time.LocalDate
 import play.api.mvc.Call
-import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 
 
 @Singleton
 class Navigator @Inject()() {
-  private val routeMap: Map[String, CacheMap => Call] = {
+  private val routeMap: Map[String, UserAnswers => Call] = {
 
     Map(
-      Constants.dateOfDeathId -> (cm => getDateOfDeathRoute(cm)),
+      Constants.dateOfDeathId -> (ua => getDateOfDeathRoute(ua)),
       Constants.grossEstateValueId -> (_ => ChargeableTransferAmountController.onPageLoad()),
       Constants.chargeableTransferAmountId -> (_ => EstateHasPropertyController.onPageLoad()),
-      Constants.estateHasPropertyId -> (cm => getEstateHasPropertyRoute(cm)),
+      Constants.estateHasPropertyId -> (ua => getEstateHasPropertyRoute(ua)),
       Constants.propertyValueId -> (_ => AnyPropertyCloselyInheritedController.onPageLoad()),
-      Constants.anyPropertyCloselyInheritedId -> (cm => getAnyPropertyCloselyInheritedRoute(cm)),
+      Constants.anyPropertyCloselyInheritedId -> (ua => getAnyPropertyCloselyInheritedRoute(ua)),
       Constants.percentageCloselyInheritedId -> (_ => AnyExemptionController.onPageLoad()),
-      Constants.anyBroughtForwardAllowanceId -> (cm => getAnyBroughtForwardAllowanceRoute(cm)),
+      Constants.anyBroughtForwardAllowanceId -> (ua => getAnyBroughtForwardAllowanceRoute(ua)),
       Constants.broughtForwardAllowanceId -> (_ => AnyDownsizingAllowanceController.onPageLoad()),
-      Constants.anyDownsizingAllowanceId -> (cm => getAnyDownsizingAllowanceRoute(cm)),
-      Constants.dateOfDisposalId -> (cm => getDateOfDisposalRoute(cm)),
-      Constants.anyExemptionId -> (cm => getAnyExemptionRoute(cm)),
+      Constants.anyDownsizingAllowanceId -> (ua => getAnyDownsizingAllowanceRoute(ua)),
+      Constants.dateOfDisposalId -> (ua => getDateOfDisposalRoute(ua)),
+      Constants.anyExemptionId -> (ua => getAnyExemptionRoute(ua)),
       Constants.propertyValueAfterExemptionId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
       Constants.valueOfDisposedPropertyId -> (_ => AnyAssetsPassingToDirectDescendantsController.onPageLoad()),
-      Constants.anyAssetsPassingToDirectDescendantsId -> (cm => getAnyAssetsPassingToDirectDescendantsRoute(cm)),
+      Constants.anyAssetsPassingToDirectDescendantsId -> (ua => getAnyAssetsPassingToDirectDescendantsRoute(ua)),
       Constants.assetsPassingToDirectDescendantsId -> (_ => AnyBroughtForwardAllowanceOnDisposalController.onPageLoad()),
-      Constants.anyBroughtForwardAllowanceOnDisposalId -> (cm => getAnyBroughtForwardAllowanceOnDisposalRoute(cm)),
+      Constants.anyBroughtForwardAllowanceOnDisposalId -> (ua => getAnyBroughtForwardAllowanceOnDisposalRoute(ua)),
       Constants.broughtForwardAllowanceOnDisposalId -> (_ => CheckAnswersController.onPageLoad()),
       Constants.checkAnswersId -> (_ => ResultsController.onPageLoad()),
-      Constants.purposeOfUseId -> (cm => getPurposeOfUseRoute(cm))
+      Constants.purposeOfUseId -> (ua => getPurposeOfUseRoute(ua))
     )
   }
 
@@ -74,87 +73,67 @@ class Navigator @Inject()() {
     )
   }
 
-  private def getDateOfDeathRoute(cacheMap: CacheMap) = {
-    cacheMap.getEntry[LocalDate](Constants.dateOfDeathId) match {
-      case Some(d) if (d isEqual Constants.eligibilityDate) || (d isAfter Constants.eligibilityDate) => GrossEstateValueController.onPageLoad()
-      case Some(_) => TransitionOutController.onPageLoad()
-      case None => HomeController.onPageLoad()
-    }
+  private def getDateOfDeathRoute(userAnswers: UserAnswers) = userAnswers.dateOfDeath match {
+    case Some(d) if d isBefore Constants.eligibilityDate => TransitionOutController.onPageLoad()
+    case Some(_) => GrossEstateValueController.onPageLoad()
+    case None => HomeController.onPageLoad()
   }
 
-  private def getEstateHasPropertyRoute(cacheMap: CacheMap) = {
-    cacheMap.getEntry[Boolean](Constants.estateHasPropertyId) match {
-      case Some(true) => PropertyValueController.onPageLoad()
-      case Some(false) => AnyBroughtForwardAllowanceController.onPageLoad()
-      case None => HomeController.onPageLoad()
-    }
+  private def getEstateHasPropertyRoute(userAnswers: UserAnswers) = userAnswers.estateHasProperty match {
+    case Some(true) => PropertyValueController.onPageLoad()
+    case Some(false) => AnyBroughtForwardAllowanceController.onPageLoad()
+    case None => HomeController.onPageLoad()
   }
 
-  private def getAnyBroughtForwardAllowanceRoute(cacheMap: CacheMap) = {
-    cacheMap.getEntry[Boolean](Constants.anyBroughtForwardAllowanceId) match {
-      case Some(true) => BroughtForwardAllowanceController.onPageLoad()
-      case Some(false) => AnyDownsizingAllowanceController.onPageLoad()
-      case None => HomeController.onPageLoad()
-    }
+  private def getAnyBroughtForwardAllowanceRoute(userAnswers: UserAnswers) = userAnswers.anyBroughtForwardAllowance match {
+    case Some(true) => BroughtForwardAllowanceController.onPageLoad()
+    case Some(false) => AnyDownsizingAllowanceController.onPageLoad()
+    case None => HomeController.onPageLoad()
   }
 
-  private def getAnyBroughtForwardAllowanceOnDisposalRoute(cacheMap: CacheMap) = {
-    cacheMap.getEntry[Boolean](Constants.anyBroughtForwardAllowanceOnDisposalId) match {
-      case Some(true) => BroughtForwardAllowanceOnDisposalController.onPageLoad()
-      case Some(false) => CheckAnswersController.onPageLoad()
-      case None => HomeController.onPageLoad()
-    }
+  private def getAnyBroughtForwardAllowanceOnDisposalRoute(userAnswers: UserAnswers) = userAnswers.anyBroughtForwardAllowanceOnDisposal match {
+    case Some(true) => BroughtForwardAllowanceOnDisposalController.onPageLoad()
+    case Some(false) => CheckAnswersController.onPageLoad()
+    case None => HomeController.onPageLoad()
   }
 
-  private def getAnyDownsizingAllowanceRoute(cacheMap: CacheMap) = {
-    cacheMap.getEntry[Boolean](Constants.anyDownsizingAllowanceId) match {
-      case Some(true) => DateOfDisposalController.onPageLoad()
-      case Some(false) => CheckAnswersController.onPageLoad()
-      case None => HomeController.onPageLoad()
-    }
+  private def getAnyDownsizingAllowanceRoute(userAnswers: UserAnswers) = userAnswers.anyDownsizingAllowance match {
+    case Some(true) => DateOfDisposalController.onPageLoad()
+    case Some(false) => CheckAnswersController.onPageLoad()
+    case None => HomeController.onPageLoad()
   }
 
-  private def getDateOfDisposalRoute(cacheMap: CacheMap) = {
-    cacheMap.getEntry[LocalDate](Constants.dateOfDisposalId) match {
-      case Some(d) if (d isEqual Constants.downsizingEligibilityDate) || (d isAfter Constants.downsizingEligibilityDate) => ValueOfDisposedPropertyController.onPageLoad()
-      case Some(_) => TransitionOutController.onPageLoad()
-      case None => HomeController.onPageLoad()
-    }
+  private def getDateOfDisposalRoute(userAnswers: UserAnswers) = userAnswers.dateOfDisposal match {
+    case Some(d) if d isBefore Constants.downsizingEligibilityDate => TransitionOutController.onPageLoad()
+    case Some(_) => ValueOfDisposedPropertyController.onPageLoad()
+    case None => HomeController.onPageLoad()
   }
 
-  private def getAnyPropertyCloselyInheritedRoute(cacheMap: CacheMap) = {
-    cacheMap.getEntry[Boolean](Constants.anyPropertyCloselyInheritedId) match {
-      case Some(true) => PercentageCloselyInheritedController.onPageLoad()
-      case Some(false) => AnyBroughtForwardAllowanceController.onPageLoad()
-      case None => HomeController.onPageLoad()
-    }
+  private def getAnyPropertyCloselyInheritedRoute(userAnswers: UserAnswers) = userAnswers.anyPropertyCloselyInherited match {
+    case Some(true) => PercentageCloselyInheritedController.onPageLoad()
+    case Some(false) => AnyBroughtForwardAllowanceController.onPageLoad()
+    case None => HomeController.onPageLoad()
   }
 
-  private def getAnyExemptionRoute(cacheMap: CacheMap) = {
-    cacheMap.getEntry[Boolean](Constants.anyExemptionId) match {
-      case Some(true) => PropertyValueAfterExemptionController.onPageLoad()
-      case Some(false) => AnyBroughtForwardAllowanceController.onPageLoad()
-      case None => HomeController.onPageLoad()
-    }
+  private def getAnyExemptionRoute(userAnswers: UserAnswers) = userAnswers.anyExemption match {
+    case Some(true) => PropertyValueAfterExemptionController.onPageLoad()
+    case Some(false) => AnyBroughtForwardAllowanceController.onPageLoad()
+    case None => HomeController.onPageLoad()
   }
 
-  private def getAnyAssetsPassingToDirectDescendantsRoute(cacheMap: CacheMap) = {
-    cacheMap.getEntry[Boolean](Constants.anyAssetsPassingToDirectDescendantsId) match {
-      case Some(true) => AssetsPassingToDirectDescendantsController.onPageLoad()
-      case Some(false) => CheckAnswersController.onPageLoad()
-      case None => HomeController.onPageLoad()
-    }
+  private def getAnyAssetsPassingToDirectDescendantsRoute(userAnswers: UserAnswers) = userAnswers.anyAssetsPassingToDirectDescendants match {
+    case Some(true) => AssetsPassingToDirectDescendantsController.onPageLoad()
+    case Some(false) => CheckAnswersController.onPageLoad()
+    case None => HomeController.onPageLoad()
   }
 
-  private def getPurposeOfUseRoute(cacheMap: CacheMap) = {
-    cacheMap.getEntry[String](Constants.purposeOfUseId) match {
-      case Some(Constants.dealingWithEstate) => DateOfDeathController.onPageLoad()
-      case Some(Constants.planning) => PlanningController.onPageLoad()
-      case _ => HomeController.onPageLoad()
-    }
+  private def getPurposeOfUseRoute(userAnswers: UserAnswers) = userAnswers.purposeOfUse match {
+    case Some(Constants.dealingWithEstate) => DateOfDeathController.onPageLoad()
+    case Some(Constants.planning) => PlanningController.onPageLoad()
+    case _ => HomeController.onPageLoad()
   }
 
-  def nextPage(controllerId: String): CacheMap => Call = {
+  def nextPage(controllerId: String): UserAnswers => Call = {
     routeMap.getOrElse(controllerId, _ => PageNotFoundController.onPageLoad())
   }
 

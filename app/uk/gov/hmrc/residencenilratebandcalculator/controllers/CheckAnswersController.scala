@@ -22,7 +22,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.Action
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRows
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.check_answers
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
@@ -37,11 +37,11 @@ class CheckAnswersController @Inject()(val appConfig: FrontendAppConfig,
     implicit request => {
       sessionConnector.fetch.map {
         cacheMapOption => {
-          cacheMapOption.fold(throw new RuntimeException("No cache unavailable")) {
+          cacheMapOption.fold(throw new RuntimeException("No cache available")) {
             cacheMap =>
               Ok(check_answers(appConfig,
                 AnswerRows(cacheMap, messagesApi.preferred(request)),
-                navigator.nextPage(Constants.checkAnswersId)(cacheMap)))
+                navigator.nextPage(Constants.checkAnswersId)(new UserAnswers(cacheMap))))
           }
         }
       }
