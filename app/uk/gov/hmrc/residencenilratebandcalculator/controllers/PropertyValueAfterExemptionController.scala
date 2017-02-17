@@ -41,8 +41,7 @@ class PropertyValueAfterExemptionController @Inject()(override val appConfig: Fr
 
   override def form = () => PropertyValueAfterExemptionForm()
 
-  override def view(form: Option[Form[PropertyValueAfterExemption]])(implicit request: Request[_]) = {
-    val backUrl = navigator.lastPage(controllerId)().url
+  override def view(form: Option[Form[PropertyValueAfterExemption]], backUrl: String)(implicit request: Request[_]) = {
     property_value_after_exemption(appConfig, backUrl, form)
   }
 

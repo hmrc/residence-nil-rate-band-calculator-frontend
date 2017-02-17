@@ -142,72 +142,102 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.propertyValueAfterExemptionId)(mock[UserAnswers]) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
     }
 
+    val userAnswers = new UserAnswers(CacheMap("", Map()))
+
     "return a call to the Date Of Death when back linking from the Gross Estate Value page" in {
-      navigator.lastPage(Constants.grossEstateValueId)() shouldBe routes.DateOfDeathController.onPageLoad()
+      navigator.lastPage(Constants.grossEstateValueId)(userAnswers) shouldBe routes.DateOfDeathController.onPageLoad()
     }
 
     "return a call to the Gross Estate Value when back linking from the Chargeable Transfer Amount page" in {
-      navigator.lastPage(Constants.chargeableTransferAmountId)() shouldBe routes.GrossEstateValueController.onPageLoad()
+      navigator.lastPage(Constants.chargeableTransferAmountId)(userAnswers) shouldBe routes.GrossEstateValueController.onPageLoad()
     }
 
     "return a call to the Chargeable Transfer Amount when back linking from the Estate Has Property page" in {
-      navigator.lastPage(Constants.estateHasPropertyId)() shouldBe routes.ChargeableTransferAmountController.onPageLoad()
+      navigator.lastPage(Constants.estateHasPropertyId)(userAnswers) shouldBe routes.ChargeableTransferAmountController.onPageLoad()
     }
 
     "return a call to the Estate Has Property when back linking from the Property Value page" in {
-      navigator.lastPage(Constants.propertyValueId)() shouldBe routes.EstateHasPropertyController.onPageLoad()
+      navigator.lastPage(Constants.propertyValueId)(userAnswers) shouldBe routes.EstateHasPropertyController.onPageLoad()
     }
 
     "return a call to the Property Value when back linking from the Any Property Closely Inherited page" in {
-      navigator.lastPage(Constants.anyPropertyCloselyInheritedId)() shouldBe routes.PropertyValueController.onPageLoad()
+      navigator.lastPage(Constants.anyPropertyCloselyInheritedId)(userAnswers) shouldBe routes.PropertyValueController.onPageLoad()
     }
 
     "return a call to the Any Property Closely Inherited when back linking from the Percentage Closely Inherited page" in {
-      navigator.lastPage(Constants.percentageCloselyInheritedId)() shouldBe routes.AnyPropertyCloselyInheritedController.onPageLoad()
+      navigator.lastPage(Constants.percentageCloselyInheritedId)(userAnswers) shouldBe routes.AnyPropertyCloselyInheritedController.onPageLoad()
     }
 
     "return a call to the Percentage Closely Inherited when back linking from the Any Exemption page" in {
-      navigator.lastPage(Constants.anyExemptionId)() shouldBe routes.PercentageCloselyInheritedController.onPageLoad()
+      navigator.lastPage(Constants.anyExemptionId)(userAnswers) shouldBe routes.PercentageCloselyInheritedController.onPageLoad()
     }
 
     "return a call to the Any Exemption when back linking from the Property Value After Exemption page" in {
-      navigator.lastPage(Constants.propertyValueAfterExemptionId)() shouldBe routes.AnyExemptionController.onPageLoad()
+      navigator.lastPage(Constants.propertyValueAfterExemptionId)(userAnswers) shouldBe routes.AnyExemptionController.onPageLoad()
     }
 
-    "return a call to the Property Value After Exemption when back linking from the Any Brought Forward Allowance page" in {
-      navigator.lastPage(Constants.anyBroughtForwardAllowanceId)() shouldBe routes.PropertyValueAfterExemptionController.onPageLoad()
+    "return a call to the Estate Has Property when back linking from the Any Brought Forward Allowance page" in {
+      navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.EstateHasPropertyController.onPageLoad()
+    }
+
+    "return a call to the Property Value After Exemption when back linking from the Any Brought Forward Allowance page" +
+      "when the user has positively answered Any Exemption" in {
+      val userAnswers = mock[UserAnswers]
+      when(userAnswers.anyExemption) thenReturn Some(true)
+      navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.PropertyValueAfterExemptionController.onPageLoad()
+    }
+
+    "return a call to the Any Exemption when back linking from the Any Brought Forward Allowance page" +
+      "when the user has positively answered Property Closely Inherited" in {
+      val userAnswers = mock[UserAnswers]
+      when(userAnswers.anyPropertyCloselyInherited) thenReturn Some(true)
+      navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.AnyExemptionController.onPageLoad()
+    }
+
+    "return a call to the Property Value when back linking from the Any Brought Forward Allowance page" +
+      "when the user has positively answered Estate Has Property" in {
+      val userAnswers = mock[UserAnswers]
+      when(userAnswers.estateHasProperty) thenReturn Some(true)
+      navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.PropertyValueController.onPageLoad()
     }
 
     "return a call to the Any Brought Forward Allowance After Exemption when back linking from the Brought Forward Allowance page" in {
-      navigator.lastPage(Constants.broughtForwardAllowanceId)() shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
+      navigator.lastPage(Constants.broughtForwardAllowanceId)(userAnswers) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
     }
 
-    "return a call to the Brought Forward Allowance After Exemption when back linking from the Any Downsizing Allowance page" in {
-      navigator.lastPage(Constants.anyDownsizingAllowanceId)() shouldBe routes.BroughtForwardAllowanceController.onPageLoad()
+    "return a call to the Any Brought Forward Allowance when back linking from the Any Downsizing Allowance page" in {
+      navigator.lastPage(Constants.anyDownsizingAllowanceId)(userAnswers) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
+    }
+
+    "return a call to the Brought Forward Allowance when back linking from the Any Downsizing Allowance page when the" +
+      "user has positively answered Any Brought Forward Allowance" in {
+      val userAnswers = mock[UserAnswers]
+      when(userAnswers.anyBroughtForwardAllowance) thenReturn Some(true)
+      navigator.lastPage(Constants.anyDownsizingAllowanceId)(userAnswers) shouldBe routes.BroughtForwardAllowanceController.onPageLoad()
     }
 
     "return a call to the Any Downsizing Allowance After Exemption when back linking from the Date of Disposal page" in {
-      navigator.lastPage(Constants.dateOfDisposalId)() shouldBe routes.AnyDownsizingAllowanceController.onPageLoad()
+      navigator.lastPage(Constants.dateOfDisposalId)(userAnswers) shouldBe routes.AnyDownsizingAllowanceController.onPageLoad()
     }
 
     "return a call to the Date of Disposal After Exemption when back linking from the Value Of Disposed Property page" in {
-      navigator.lastPage(Constants.valueOfDisposedPropertyId)() shouldBe routes.DateOfDisposalController.onPageLoad()
+      navigator.lastPage(Constants.valueOfDisposedPropertyId)(userAnswers) shouldBe routes.DateOfDisposalController.onPageLoad()
     }
 
     "return a call to the Value Of Disposed Property when back linking from the Any Assets Passing To Direct Decendants page" in {
-      navigator.lastPage(Constants.anyAssetsPassingToDirectDescendantsId)() shouldBe routes.ValueOfDisposedPropertyController.onPageLoad()
+      navigator.lastPage(Constants.anyAssetsPassingToDirectDescendantsId)(userAnswers) shouldBe routes.ValueOfDisposedPropertyController.onPageLoad()
     }
 
     "return a call to the Any Assets Passing To Direct Descendants when back linking from the Assets Passing To Direct Decendants page" in {
-      navigator.lastPage(Constants.assetsPassingToDirectDescendantsId)() shouldBe routes.AnyAssetsPassingToDirectDescendantsController.onPageLoad()
+      navigator.lastPage(Constants.assetsPassingToDirectDescendantsId)(userAnswers) shouldBe routes.AnyAssetsPassingToDirectDescendantsController.onPageLoad()
     }
 
     "return a call to the Assets Passing To Direct Descendants when back linking from the Any Brought Forward Allowance On Disposal page" in {
-      navigator.lastPage(Constants.anyBroughtForwardAllowanceOnDisposalId)() shouldBe routes.AssetsPassingToDirectDescendantsController.onPageLoad()
+      navigator.lastPage(Constants.anyBroughtForwardAllowanceOnDisposalId)(userAnswers) shouldBe routes.AssetsPassingToDirectDescendantsController.onPageLoad()
     }
 
     "return a call to the Any Brought Forward Allowance On Disposal when back linking from the Brought Forward Allowance On Disposal page" in {
-      navigator.lastPage(Constants.broughtForwardAllowanceOnDisposalId)() shouldBe routes.AnyBroughtForwardAllowanceOnDisposalController.onPageLoad()
+      navigator.lastPage(Constants.broughtForwardAllowanceOnDisposalId)(userAnswers) shouldBe routes.AnyBroughtForwardAllowanceOnDisposalController.onPageLoad()
     }
 
     "return a call to the check answers Controller onPageLoad method when there is no downsizing allowance" in {

@@ -22,8 +22,10 @@ import play.api.i18n.I18nSupport
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc._
 import play.twirl.api.HtmlFormat
+import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.play.http.HeaderCarrier
+import uk.gov.hmrc.play.http.logging.SessionId
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
@@ -40,23 +42,40 @@ trait SimpleControllerBase[A] extends FrontendController with I18nSupport {
 
   def form: () => Form[A]
 
-  def view(form: Option[Form[A]])(implicit request: Request[_]): HtmlFormat.Appendable
+  def view(form: Option[Form[A]], backUrl: String)(implicit request: Request[_]): HtmlFormat.Appendable
 
   val navigator: Navigator
 
   def onPageLoad(implicit rds: Reads[A]) = Action.async { implicit request =>
-    sessionConnector.fetchAndGetEntry[A](controllerId).map(
-      cachedValue => {
-        Ok(view(cachedValue.map(value => form().fill(value))))
+    sessionConnector.fetch().map(
+      optionalCacheMap => {
+        val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
+        Ok(view(
+          cacheMap.getEntry(controllerId).map(value => form().fill(value)),
+          navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
       })
   }
 
   def onSubmit(implicit wts: Writes[A]) = Action.async { implicit request =>
     val boundForm = form().bindFromRequest()
     boundForm.fold(
-      (formWithErrors: Form[A]) => Future.successful(BadRequest(view(Some(formWithErrors)))),
+      (formWithErrors: Form[A]) => {
+        sessionConnector.fetch().map {
+          optionalCacheMap => {
+            val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
+            BadRequest(view(Some(formWithErrors), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
+          }
+        }
+      },
       (value) => validate(value).flatMap {
-        case Some(error) => Future.successful(BadRequest(view(Some(form().fill(value).withError(error)))))
+        case Some(error) => {
+          sessionConnector.fetch().map {
+            optionalCacheMap => {
+              val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
+              BadRequest(view(Some(form().fill(value).withError(error)), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
+            }
+          }
+        }
         case None => {
           sessionConnector.cache[A](controllerId, value).map(cacheMap =>
             Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))

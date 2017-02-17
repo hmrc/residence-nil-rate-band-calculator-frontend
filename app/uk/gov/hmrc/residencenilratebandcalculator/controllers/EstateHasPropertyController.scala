@@ -37,8 +37,7 @@ class EstateHasPropertyController @Inject()(override val appConfig: FrontendAppC
 
   override def form: () => Form[Boolean] = () => BooleanForm()
 
-  override def view(form: Option[Form[Boolean]])(implicit request: Request[_]): Appendable = {
-    val backUrl = navigator.lastPage(controllerId)().url
+  override def view(form: Option[Form[Boolean]], backUrl: String)(implicit request: Request[_]): Appendable = {
     estate_has_property(appConfig, backUrl, form)
   }
 }

@@ -37,8 +37,7 @@ class PurposeOfUseController @Inject()(override val appConfig: FrontendAppConfig
 
   override def form: () => Form[String] = () => PurposeOfUseForm()
 
-  override def view(form: Option[Form[String]])(implicit request: Request[_]): Appendable = {
-    val backUrl = navigator.lastPage(controllerId)().url
+  override def view(form: Option[Form[String]], backUrl: String)(implicit request: Request[_]): Appendable = {
     purpose_of_use(appConfig, backUrl, form)
   }
 }

@@ -37,5 +37,5 @@ class DateOfDeathController @Inject()(override val appConfig: FrontendAppConfig,
 
   override def form = () => DateForm()
 
-  override def view(form: Option[Form[Date]])(implicit request: Request[_]) = date_of_death(appConfig, form)
+  override def view(form: Option[Form[Date]], backUrl: String)(implicit request: Request[_]) = date_of_death(appConfig, form)
 }

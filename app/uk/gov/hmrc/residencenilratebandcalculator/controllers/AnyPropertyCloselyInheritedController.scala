@@ -37,8 +37,7 @@ class AnyPropertyCloselyInheritedController @Inject()(override val appConfig: Fr
 
   override def form: () => Form[Boolean] = () => BooleanForm()
 
-  override def view(form: Option[Form[Boolean]])(implicit request: Request[_]): Appendable = {
-    val backUrl = navigator.lastPage(controllerId)().url
+  override def view(form: Option[Form[Boolean]], backUrl: String)(implicit request: Request[_]): Appendable = {
     any_property_closely_inherited(appConfig, backUrl, form)
   }
 }
