@@ -34,7 +34,7 @@ import scala.concurrent.Future
 
 case class DatedCacheMap(id: String,
                          data: Map[String, JsValue],
-                         createdAt: DateTime = DateTime.now(DateTimeZone.UTC))
+                         lastUpdated: DateTime = DateTime.now(DateTimeZone.UTC))
 
 object DatedCacheMap {
   implicit val dateFormat = ReactiveMongoFormats.dateTimeFormats
@@ -46,7 +46,7 @@ object DatedCacheMap {
 class ReactiveMongoRepository(config: Configuration, mongo: () => DefaultDB)
   extends ReactiveRepository[DatedCacheMap, BSONObjectID](config.getString("appName").get, mongo, DatedCacheMap.formats) {
 
-  val fieldName = "createdAt"
+  val fieldName = "lastUpdated"
   val createdIndexName = "calculationResponseExpiry"
   val expireAfterSeconds = "expireAfterSeconds"
   val timeToLiveInSeconds: Int = config.getInt("mongodb.timeToLiveInSeconds").get
