@@ -51,7 +51,7 @@ class Navigator @Inject()() {
     )
   }
 
-  private def getDateOfDeathRoute(cacheData: UserAnswers) = cacheData.dateOfDeath match {
+  private def getDateOfDeathRoute(userAnswers: UserAnswers) = userAnswers.dateOfDeath match {
     case Some(d) if d isBefore Constants.eligibilityDate => TransitionOutController.onPageLoad()
     case Some(_) => GrossEstateValueController.onPageLoad()
     case None => HomeController.onPageLoad()
