@@ -52,8 +52,8 @@ class Navigator @Inject()() {
   }
 
   private def getDateOfDeathRoute(cacheData: UserAnswers) = cacheData.dateOfDeath match {
-    case Some(d) if (d isEqual Constants.eligibilityDate) || (d isAfter Constants.eligibilityDate) => GrossEstateValueController.onPageLoad()
-    case Some(_) => TransitionOutController.onPageLoad()
+    case Some(d) if d isBefore Constants.eligibilityDate => TransitionOutController.onPageLoad()
+    case Some(_) => GrossEstateValueController.onPageLoad()
     case None => HomeController.onPageLoad()
   }
 
@@ -142,7 +142,7 @@ class Navigator @Inject()() {
   private def getAnyBroughtForwardAllowanceReverseRoute(userAnswers: UserAnswers) = userAnswers.anyExemption match {
     case Some(true) => PropertyValueAfterExemptionController.onPageLoad()
     case _ => userAnswers.anyPropertyCloselyInherited match {
-      case Some(true) => PercentageCloselyInheritedController.onPageLoad()
+      case Some(true) => AnyExemptionController.onPageLoad()
       case _ => userAnswers.estateHasProperty match {
         case Some(true) => PropertyValueController.onPageLoad()
         case _ => EstateHasPropertyController.onPageLoad()
