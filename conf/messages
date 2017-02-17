@@ -78,7 +78,7 @@ before_you_start.guidance6 = When you have finished this service and have any al
 brought_forward_allowance.question_number = Question 10
 brought_forward_allowance.browser_title = Question page
 brought_forward_allowance.title = What is the value of the brought-forward allowance being claimed?
-brought_forward_allowance.guidance = You can find this in box 33 on the IHT-436 form.
+brought_forward_allowance.guidance = You can find this in box 15 or 21 on the IHT-436 form.
 brought_forward_allowance.label =
 brought_forward_allowance.summary =
 
