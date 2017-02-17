@@ -25,8 +25,8 @@ case class CalculationInput(dateOfDeath: LocalDate,
                             propertyValue: Int,
                             percentageCloselyInherited: Int,
                             broughtForwardAllowance: Int,
-                            propertyValueAfterExemption: Option[PropertyValueAfterExemption] = None,
-                            downsizingDetails: Option[DownsizingDetails] = None)
+                            propertyValueAfterExemption: Option[PropertyValueAfterExemption],
+                            downsizingDetails: Option[DownsizingDetails])
 
 object CalculationInput {
   implicit val formats: OFormat[CalculationInput] = Json.format[CalculationInput]
@@ -39,7 +39,7 @@ object CalculationInput {
       getPropertyValue(userAnswers),
       getPercentageCloselyInherited(userAnswers),
       getBroughtForwardAllowance(userAnswers),
-      None,
+      userAnswers.propertyValueAfterExemption,
       None
     )
   }
@@ -50,7 +50,7 @@ object CalculationInput {
   }
 
   private def getPercentageCloselyInherited(userAnswers: UserAnswers) = userAnswers.estateHasProperty.get match {
-    case true => userAnswers.percentageCloselyInherited.get
+    case true if userAnswers.anyPropertyCloselyInherited.get => userAnswers.percentageCloselyInherited.get
     case _ => 0
   }
 

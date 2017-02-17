@@ -33,6 +33,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
   val percentageCloselyInherited = 4
   val broughtForwardAllowance = 5
   val dateOfDisposal = new LocalDate(2018, 2, 2)
+  val propertyValueAfterExemption = PropertyValueAfterExemption(6, 7)
 
   var userAnswers: UserAnswers = _
 
@@ -83,15 +84,62 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
 
   "Calculation Input" when {
 
-    "constructing from a valid cache map" must {
+    "the user's answers are in a consistent state" must {
 
-      "construct correctly from a cache map with no property or downsizing" in {
+      "construct correctly when there is no property, brought forward allowance or downsizing" in {
         setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
           estateHasProperty = Some(false), anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(false))
-        
+
         val calculationInput = CalculationInput(userAnswers)
 
         calculationInput shouldBe CalculationInput(dateOfDeath, grossEstateValue, chargeableTransferAmount, 0, 0, 0, None, None)
+      }
+
+      "construct correctly when there is a property, none of which is closely inherited, and no brought forward allowance or downsizing" in {
+        setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
+          estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(false),
+          anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(false))
+
+        val calculationInput = CalculationInput(userAnswers)
+
+        calculationInput shouldBe CalculationInput(dateOfDeath, grossEstateValue, chargeableTransferAmount, propertyValue, 0, 0, None, None)
+      }
+
+      "construct correctly when there is a property, some of which is closely inherited, and no exemptions, brought forward allowance or downsizing" in {
+        setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
+          estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(true),
+          percentageCloselyInherited = Some(percentageCloselyInherited), anyExemption = Some(false),
+          anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(false))
+
+        val calculationInput = CalculationInput(userAnswers)
+
+        calculationInput shouldBe CalculationInput(dateOfDeath, grossEstateValue, chargeableTransferAmount,
+          propertyValue, percentageCloselyInherited, 0, None, None)
+      }
+
+      "construct correctly when there is a property, some of which is closely inherited, some exemptions, and no brought forward allowance or downsizing" in {
+        setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
+          estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(true),
+          percentageCloselyInherited = Some(percentageCloselyInherited), anyExemption = Some(true),
+          propertyValueAfterExemption = Some(propertyValueAfterExemption),
+          anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(false))
+
+        val calculationInput = CalculationInput(userAnswers)
+
+        calculationInput shouldBe CalculationInput(dateOfDeath, grossEstateValue, chargeableTransferAmount,
+          propertyValue, percentageCloselyInherited, 0, Some(propertyValueAfterExemption), None)
+      }
+
+      "construct correctly when there is a property, some of which is closely inherited, no exemptions, some brought forward allowance and no downsizing" in {
+        setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
+          estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(true),
+          percentageCloselyInherited = Some(percentageCloselyInherited), anyExemption = Some(false),
+          anyBroughtForwardAllowance = Some(true), broughtForwardAllowance = Some(broughtForwardAllowance), anyDownsizingAllowance = Some(false))
+
+        val calculationInput = CalculationInput(userAnswers)
+
+        calculationInput shouldBe CalculationInput(dateOfDeath, grossEstateValue, chargeableTransferAmount,
+          propertyValue, percentageCloselyInherited, broughtForwardAllowance, None, None)
       }
     }
   }
