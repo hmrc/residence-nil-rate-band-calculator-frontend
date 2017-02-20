@@ -32,6 +32,20 @@ object CalculationInput {
   implicit val formats: OFormat[CalculationInput] = Json.format[CalculationInput]
 
   def apply(userAnswers: UserAnswers): CalculationInput = {
+    require(userAnswers.dateOfDeath.isDefined, "Date of Death was not answered")
+    require(userAnswers.grossEstateValue.isDefined, "Gross Estate Value was not answered")
+    require(userAnswers.chargeableTransferAmount.isDefined, "Chargeable Transfer Amount was not answered")
+    require(userAnswers.estateHasProperty.isDefined, "Estate Has Property was not answered")
+    require(!userAnswers.estateHasProperty.get || userAnswers.propertyValue.isDefined, "Property Value was not answered")
+    require(!userAnswers.estateHasProperty.get || userAnswers.anyPropertyCloselyInherited.isDefined, "Any Property Closely Inherited was not answered")
+    require(userAnswers.anyPropertyCloselyInherited.isEmpty ||
+      !userAnswers.anyPropertyCloselyInherited.get ||
+      userAnswers.percentageCloselyInherited.isDefined,
+      "Percentage Closely Inherited was not answered")
+    require(userAnswers.anyBroughtForwardAllowance.isDefined, "Any Brought Forward Allowance was not answered")
+    require(!userAnswers.anyBroughtForwardAllowance.get || userAnswers.broughtForwardAllowance.isDefined, "Brought Forward Allowance was not answered")
+    require(userAnswers.anyDownsizingAllowance.isDefined, "Any Downsizing Allowance was not answered")
+
     CalculationInput(
       userAnswers.dateOfDeath.get,
       userAnswers.grossEstateValue.get,
@@ -40,7 +54,7 @@ object CalculationInput {
       getPercentageCloselyInherited(userAnswers),
       getBroughtForwardAllowance(userAnswers),
       userAnswers.propertyValueAfterExemption,
-      None
+      getDownsizingDetails(userAnswers)
     )
   }
 
@@ -50,13 +64,18 @@ object CalculationInput {
   }
 
   private def getPercentageCloselyInherited(userAnswers: UserAnswers) = userAnswers.estateHasProperty.get match {
-    case true if userAnswers.anyPropertyCloselyInherited.get => userAnswers.percentageCloselyInherited.get
-    case _ => 0
-  }
+      case true if userAnswers.anyPropertyCloselyInherited.get => userAnswers.percentageCloselyInherited.get
+      case _ => 0
+    }
 
   private def getBroughtForwardAllowance(userAnswers: UserAnswers) = userAnswers.anyBroughtForwardAllowance.get match {
     case true => userAnswers.broughtForwardAllowance.get
     case _ => 0
+  }
+
+  private def getDownsizingDetails(userAnswers: UserAnswers) = userAnswers.anyDownsizingAllowance.get match {
+    case true => Some(DownsizingDetails(userAnswers))
+    case _ => None
   }
 }
 
@@ -69,6 +88,32 @@ object DownsizingDetails {
   implicit val formats: OFormat[DownsizingDetails] = Json.format[DownsizingDetails]
 
   def apply(userAnswers: UserAnswers): DownsizingDetails = {
-    ???
+    require(userAnswers.dateOfDisposal.isDefined, "Date of Disposal was not answered")
+    require(userAnswers.valueOfDisposedProperty.isDefined, "Value of Disposed Property was not answered")
+    require(userAnswers.anyAssetsPassingToDirectDescendants.isDefined, "Any Assets Passing to Direct Descendants was not answered")
+    require(!userAnswers.anyAssetsPassingToDirectDescendants.get || userAnswers.assetsPassingToDirectDescendants.isDefined,
+      "Assets Passing to Direct Descendants was not answered")
+    require(!userAnswers.anyAssetsPassingToDirectDescendants.get || userAnswers.anyBroughtForwardAllowanceOnDisposal.isDefined,
+      "Any Brought Forward Allowance on Disposal was not answered")
+    require(!userAnswers.anyAssetsPassingToDirectDescendants.get ||
+      !userAnswers.anyBroughtForwardAllowanceOnDisposal.get ||
+      userAnswers.broughtForwardAllowanceOnDisposal.isDefined,
+      "Brought Forward Allowance on Disposal was not answered")
+
+    DownsizingDetails(
+      userAnswers.dateOfDisposal.get,
+      userAnswers.valueOfDisposedProperty.get,
+      getValueCloselyInherited(userAnswers),
+      getBroughtForwardAllowanceOnDisposal(userAnswers))
+  }
+
+  private def getValueCloselyInherited(userAnswers: UserAnswers) = userAnswers.anyAssetsPassingToDirectDescendants.get match {
+    case true => userAnswers.assetsPassingToDirectDescendants.get
+    case _ => 0
+  }
+
+  private def getBroughtForwardAllowanceOnDisposal(userAnswers: UserAnswers) = userAnswers.anyAssetsPassingToDirectDescendants.get match {
+    case true if userAnswers.anyBroughtForwardAllowanceOnDisposal.get => userAnswers.broughtForwardAllowanceOnDisposal.get
+    case _ => 0
   }
 }
