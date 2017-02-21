@@ -24,7 +24,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_downsizing_allo
 class AnyDownsizingAllowanceControllerSpec extends SimpleControllerSpecBase {
 
   def createView = (value: Option[Map[String, String]]) => {
-    val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.BroughtForwardAllowanceController.onPageLoad().url
+    val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyBroughtForwardAllowanceController.onPageLoad().url
 
     value match {
       case None => any_downsizing_allowance(frontendAppConfig, url)(fakeRequest, messages)

@@ -18,14 +18,16 @@ package uk.gov.hmrc.residencenilratebandcalculator.forms
 
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.data.validation.Constraints
 import uk.gov.hmrc.residencenilratebandcalculator.models.PropertyValueAfterExemption
+import uk.gov.hmrc.residencenilratebandcalculator.forms.LargeIntFormatter.largeIntFormat
 
 object PropertyValueAfterExemptionForm {
 
   def apply(): Form[PropertyValueAfterExemption] = Form(
     mapping(
-      "value" -> number(min=0),
-      "valueCloselyInherited" -> number(min=0)
+      "value" -> of[Int].verifying(Constraints.min(0)),
+      "valueCloselyInherited" -> of[Int].verifying(Constraints.min(0))
     )(PropertyValueAfterExemption.apply)(PropertyValueAfterExemption.unapply)
       verifying("property_value_after_exemption.value_closely_inherited_greater_than_value.error", x => x.valueCloselyInherited <= x.value)
   )

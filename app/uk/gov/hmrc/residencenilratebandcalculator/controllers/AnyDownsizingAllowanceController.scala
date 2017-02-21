@@ -36,8 +36,7 @@ class AnyDownsizingAllowanceController @Inject()(override val appConfig: Fronten
 
   override def form: () => Form[Boolean] = () => BooleanForm()
 
-  override def view(form: Option[Form[Boolean]])(implicit request: Request[_]) = {
-    val backUrl = navigator.lastPage(controllerId)().url
+  override def view(form: Option[Form[Boolean]], backUrl: String)(implicit request: Request[_]) = {
     any_downsizing_allowance(appConfig, backUrl, form)
   }
 

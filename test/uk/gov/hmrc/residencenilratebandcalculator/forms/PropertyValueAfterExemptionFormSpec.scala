@@ -34,6 +34,11 @@ class PropertyValueAfterExemptionFormSpec extends FormSpec {
       form.get shouldBe PropertyValueAfterExemption(2, 1)
     }
 
+    "bind positive, comma separated numbers when value is greater than value closely inherited" in {
+      val form = PropertyValueAfterExemptionForm().bind(values("20,000", "10,000"))
+      form.get shouldBe PropertyValueAfterExemption(20000, 10000)
+    }
+
     "fail to bind when value closely inherited is greater than value" in {
       val expectedError = error("", "property_value_after_exemption.value_closely_inherited_greater_than_value.error")
       checkForError(PropertyValueAfterExemptionForm(), values("1", "2"), expectedError)

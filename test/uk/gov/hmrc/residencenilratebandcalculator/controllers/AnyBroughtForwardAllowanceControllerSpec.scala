@@ -26,7 +26,7 @@ class AnyBroughtForwardAllowanceControllerSpec extends SimpleControllerSpecBase 
   "Any Brought Forward Allowance Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
-      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyValueAfterExemptionController.onPageLoad().url
+      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.EstateHasPropertyController.onPageLoad().url
 
       value match {
         case None => any_brought_forward_allowance(frontendAppConfig, url)(fakeRequest, messages)

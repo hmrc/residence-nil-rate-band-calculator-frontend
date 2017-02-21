@@ -36,8 +36,7 @@ class AssetsPassingToDirectDescendantsController @Inject()(override val appConfi
 
   override def form = () => NonNegativeIntForm()
 
-  override def view(form: Option[Form[Int]])(implicit request: Request[_]) = {
-    val backUrl = navigator.lastPage(controllerId)().url
+  override def view(form: Option[Form[Int]], backUrl: String)(implicit request: Request[_]) = {
     assets_passing_to_direct_descendants(appConfig, backUrl, form)
   }
 }
