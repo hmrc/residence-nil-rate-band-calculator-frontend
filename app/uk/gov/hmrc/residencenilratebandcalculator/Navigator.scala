@@ -18,7 +18,9 @@ package uk.gov.hmrc.residencenilratebandcalculator
 
 import javax.inject.{Inject, Singleton}
 
-import play.api.mvc.Call
+import play.api.libs.json.Reads
+import play.api.mvc.{Action, AnyContent, Call}
+import org.joda.time.LocalDate
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 
@@ -51,59 +53,44 @@ class Navigator @Inject()() {
     )
   }
 
-  private def getDateOfDeathRoute(userAnswers: UserAnswers) = userAnswers.dateOfDeath match {
-    case Some(d) if d isBefore Constants.eligibilityDate => TransitionOutController.onPageLoad()
-    case Some(_) => GrossEstateValueController.onPageLoad()
+  private def getRouteForOptionalBoolean(optionalProperty: Option[Boolean], onTrue: Call, onFalse: Call) = optionalProperty match {
+    case Some(true) => onTrue
+    case Some(false) => onFalse
     case None => HomeController.onPageLoad()
   }
 
-  private def getEstateHasPropertyRoute(userAnswers: UserAnswers) = userAnswers.estateHasProperty match {
-    case Some(true) => PropertyValueController.onPageLoad()
-    case Some(false) => AnyBroughtForwardAllowanceController.onPageLoad()
+  private def getRouteForOptionalLocalDate(optionalDate: Option[LocalDate], transitionDate: LocalDate, otherwise: Call) = optionalDate match {
+    case Some(d) if d isBefore transitionDate => TransitionOutController.onPageLoad()
+    case Some(_) => otherwise
     case None => HomeController.onPageLoad()
   }
 
-  private def getAnyBroughtForwardAllowanceRoute(userAnswers: UserAnswers) = userAnswers.anyBroughtForwardAllowance match {
-    case Some(true) => BroughtForwardAllowanceController.onPageLoad()
-    case Some(false) => AnyDownsizingAllowanceController.onPageLoad()
-    case None => HomeController.onPageLoad()
-  }
+  private def getDateOfDeathRoute(userAnswers: UserAnswers) =
+    getRouteForOptionalLocalDate(userAnswers.dateOfDeath , Constants.eligibilityDate, GrossEstateValueController.onPageLoad())
 
-  private def getAnyBroughtForwardAllowanceOnDisposalRoute(userAnswers: UserAnswers) = userAnswers.anyBroughtForwardAllowanceOnDisposal match {
-    case Some(true) => BroughtForwardAllowanceOnDisposalController.onPageLoad()
-    case Some(false) => CheckAnswersController.onPageLoad()
-    case None => HomeController.onPageLoad()
-  }
+  private def getEstateHasPropertyRoute(userAnswers: UserAnswers) =
+    getRouteForOptionalBoolean(userAnswers.estateHasProperty, PropertyValueController.onPageLoad(), AnyBroughtForwardAllowanceController.onPageLoad())
 
-  private def getAnyDownsizingAllowanceRoute(userAnswers: UserAnswers) = userAnswers.anyDownsizingAllowance match {
-    case Some(true) => DateOfDisposalController.onPageLoad()
-    case Some(false) => CheckAnswersController.onPageLoad()
-    case None => HomeController.onPageLoad()
-  }
+  private def getAnyBroughtForwardAllowanceRoute(userAnswers: UserAnswers) =
+    getRouteForOptionalBoolean(userAnswers.anyBroughtForwardAllowance, BroughtForwardAllowanceController.onPageLoad(), AnyDownsizingAllowanceController.onPageLoad())
 
-  private def getDateOfDisposalRoute(userAnswers: UserAnswers) = userAnswers.dateOfDisposal match {
-    case Some(d) if d isBefore Constants.downsizingEligibilityDate => TransitionOutController.onPageLoad()
-    case Some(_) => ValueOfDisposedPropertyController.onPageLoad()
-    case None => HomeController.onPageLoad()
-  }
+  private def getAnyBroughtForwardAllowanceOnDisposalRoute(userAnswers: UserAnswers) =
+    getRouteForOptionalBoolean(userAnswers.anyBroughtForwardAllowanceOnDisposal,BroughtForwardAllowanceOnDisposalController.onPageLoad(), CheckAnswersController.onPageLoad())
 
-  private def getAnyPropertyCloselyInheritedRoute(userAnswers: UserAnswers) = userAnswers.anyPropertyCloselyInherited match {
-    case Some(true) => PercentageCloselyInheritedController.onPageLoad()
-    case Some(false) => AnyBroughtForwardAllowanceController.onPageLoad()
-    case None => HomeController.onPageLoad()
-  }
+  private def getAnyDownsizingAllowanceRoute(userAnswers: UserAnswers) =
+    getRouteForOptionalBoolean(userAnswers.anyDownsizingAllowance, DateOfDisposalController.onPageLoad(), CheckAnswersController.onPageLoad())
 
-  private def getAnyExemptionRoute(userAnswers: UserAnswers) = userAnswers.anyExemption match {
-    case Some(true) => PropertyValueAfterExemptionController.onPageLoad()
-    case Some(false) => AnyBroughtForwardAllowanceController.onPageLoad()
-    case None => HomeController.onPageLoad()
-  }
+  private def getDateOfDisposalRoute(userAnswers: UserAnswers) =
+    getRouteForOptionalLocalDate(userAnswers.dateOfDisposal, Constants.downsizingEligibilityDate, ValueOfDisposedPropertyController.onPageLoad())
 
-  private def getAnyAssetsPassingToDirectDescendantsRoute(userAnswers: UserAnswers) = userAnswers.anyAssetsPassingToDirectDescendants match {
-    case Some(true) => AssetsPassingToDirectDescendantsController.onPageLoad()
-    case Some(false) => CheckAnswersController.onPageLoad()
-    case None => HomeController.onPageLoad()
-  }
+  private def getAnyPropertyCloselyInheritedRoute(userAnswers: UserAnswers) =
+    getRouteForOptionalBoolean(userAnswers.anyPropertyCloselyInherited, PercentageCloselyInheritedController.onPageLoad(), AnyBroughtForwardAllowanceController.onPageLoad())
+
+  private def getAnyExemptionRoute(userAnswers: UserAnswers) =
+    getRouteForOptionalBoolean(userAnswers.anyExemption, PropertyValueAfterExemptionController.onPageLoad(), AnyBroughtForwardAllowanceController.onPageLoad())
+
+  private def getAnyAssetsPassingToDirectDescendantsRoute(userAnswers: UserAnswers) =
+    getRouteForOptionalBoolean(userAnswers.anyAssetsPassingToDirectDescendants, AssetsPassingToDirectDescendantsController.onPageLoad(), CheckAnswersController.onPageLoad())
 
   private def getPurposeOfUseRoute(userAnswers: UserAnswers) = userAnswers.purposeOfUse match {
     case Some(Constants.dealingWithEstate) => DateOfDeathController.onPageLoad()
