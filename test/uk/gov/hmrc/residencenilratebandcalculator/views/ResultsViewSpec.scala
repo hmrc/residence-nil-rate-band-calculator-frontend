@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import java.text.NumberFormat
+import java.util.Locale
 
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationResult, DisplayResults}
@@ -41,7 +42,7 @@ class ResultsViewSpec extends HtmlSpec {
 
       "display the correct page title" in {
         val f = thisFixture()
-        assertPageTitleEqualsMessage(f.doc, "results.title", NumberFormat.getCurrencyInstance.format(10))
+        assertPageTitleEqualsMessage(f.doc, "results.title", NumberFormat.getCurrencyInstance(Locale.UK).format(10))
       }
 
       "display the correct guidance" in {

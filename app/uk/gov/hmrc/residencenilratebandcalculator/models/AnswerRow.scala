@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import java.text.NumberFormat
+import java.util.Locale
 
 import org.joda.time.LocalDate
 import play.api.i18n.Messages
@@ -26,7 +27,7 @@ case class AnswerRow(title: String, data: String, url: String)
 
 object AnswerRow {
   def apply(titleKey: String, amount: Int, url: Call)(messages: Messages): AnswerRow =
-    AnswerRow(messages(titleKey), NumberFormat.getCurrencyInstance.format(amount), url.url)
+    AnswerRow(messages(titleKey), NumberFormat.getCurrencyInstance(Locale.UK).format(amount), url.url)
 
   def apply(titleKey: String, yesNo: Boolean, url: Call)(messages: Messages): AnswerRow =
     AnswerRow(messages(titleKey), if (yesNo) messages("site.yes") else messages("site.no"), url.url)
@@ -38,8 +39,8 @@ object AnswerRow {
     AnswerRow(messages(titleKey), s"$percent%", url.url)
 
   def apply(titleKey: String, data: PropertyValueAfterExemption, url: Call)(messages: Messages): AnswerRow = {
-    val value = NumberFormat.getCurrencyInstance.format(data.value)
-    val valueCloselyInherited = NumberFormat.getCurrencyInstance.format(data.valueCloselyInherited)
+    val value = NumberFormat.getCurrencyInstance(Locale.UK).format(data.value)
+    val valueCloselyInherited = NumberFormat.getCurrencyInstance(Locale.UK).format(data.valueCloselyInherited)
     AnswerRow(messages(titleKey), s"$value \n$valueCloselyInherited", url.url)
   }
 }
