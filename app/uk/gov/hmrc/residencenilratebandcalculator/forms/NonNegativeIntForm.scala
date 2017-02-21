@@ -18,9 +18,9 @@ package uk.gov.hmrc.residencenilratebandcalculator.forms
 
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.data.validation.Constraints
+import uk.gov.hmrc.residencenilratebandcalculator.forms.LargeIntFormatter.largeIntFormat
 
 object NonNegativeIntForm {
-
-  def apply(): Form[Int] = Form(single("value" -> number(min=0)))
-
+  def apply(): Form[Int] = Form(single("value" -> of[Int].verifying(Constraints.min(0))))
 }
