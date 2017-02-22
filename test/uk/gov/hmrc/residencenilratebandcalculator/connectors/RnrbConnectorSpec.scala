@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.connectors
 
 import com.eclipsesource.schema.SchemaType
+import org.joda.time.LocalDate
 import org.mockito.ArgumentCaptor
 import org.mockito.Matchers._
 import org.mockito.Mockito.{verify, when}
@@ -27,7 +28,7 @@ import uk.gov.hmrc.play.http.{HeaderCarrier, HttpReads, HttpResponse}
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.WSHttp
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.JsonInvalidException
-import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
+import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, CalculationResult}
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
@@ -44,70 +45,127 @@ class RnrbConnectorSpec extends UnitSpec with WithFakeApplication with MockitoSu
 
   val minimalJson = JsObject(Map[String, JsValue]())
 
-  "RNRB Connector" must {
+  val dateOfDeath = new LocalDate(2020, 1, 1)
+  val grossEstateValue = 1
+  val chargeableTransferAmount = 2
+  val calculationInput = CalculationInput(dateOfDeath, grossEstateValue, chargeableTransferAmount, 0, 0, 0, None, None)
 
-    "call the Microservice with the given JSON" in {
-      implicit val headerCarrierNapper = ArgumentCaptor.forClass(classOf[HeaderCarrier])
-      implicit val httpReadsNapper = ArgumentCaptor.forClass(classOf[HttpReads[Any]])
-      implicit val jsonWritesNapper = ArgumentCaptor.forClass(classOf[Writes[Any]])
-      val urlCaptor = ArgumentCaptor.forClass(classOf[String])
-      val bodyCaptor = ArgumentCaptor.forClass(classOf[JsValue])
-      val headersCaptor = ArgumentCaptor.forClass(classOf[Seq[(String, String)]])
-      val httpMock = getHttpMock(minimalJson)
+  "RNRB Connector" when {
 
-      val connector = new RnrbConnector(httpMock)
-      await(connector.send(minimalJson))
+    "provided with a Calculation Input" must {
+      "call the Microservice with the given JSON" in {
+        implicit val headerCarrierNapper = ArgumentCaptor.forClass(classOf[HeaderCarrier])
+        implicit val httpReadsNapper = ArgumentCaptor.forClass(classOf[HttpReads[Any]])
+        implicit val jsonWritesNapper = ArgumentCaptor.forClass(classOf[Writes[Any]])
+        val urlCaptor = ArgumentCaptor.forClass(classOf[String])
+        val bodyCaptor = ArgumentCaptor.forClass(classOf[JsValue])
+        val headersCaptor = ArgumentCaptor.forClass(classOf[Seq[(String, String)]])
+        val httpMock = getHttpMock(minimalJson)
 
-      verify(httpMock).POST(urlCaptor.capture, bodyCaptor.capture, headersCaptor.capture)(jsonWritesNapper.capture,
-        httpReadsNapper.capture, headerCarrierNapper.capture)
-      urlCaptor.getValue should endWith(s"${connector.baseSegment}calculate")
-      bodyCaptor.getValue shouldBe minimalJson
-      headersCaptor.getValue shouldBe Seq(connector.jsonContentTypeHeader)
-    }
+        val connector = new RnrbConnector(httpMock)
+        await(connector.send(calculationInput))
 
-    "return a case class representing the received JSON when the send method is successful" in {
-      val residenceNilRateAmount = 100
-      val applicableNilRateBandAmount = 100
-      val carryForwardAmount = 100
-      val defaultAllowanceAmount = 100
-      val adjustedAllowanceAmount = 100
-      val calculationResult = CalculationResult(residenceNilRateAmount, applicableNilRateBandAmount, carryForwardAmount,
-        defaultAllowanceAmount, adjustedAllowanceAmount)
+        verify(httpMock).POST(urlCaptor.capture, bodyCaptor.capture, headersCaptor.capture)(jsonWritesNapper.capture,
+          httpReadsNapper.capture, headerCarrierNapper.capture)
+        urlCaptor.getValue should endWith(s"${connector.baseSegment}calculate")
+        bodyCaptor.getValue shouldBe Json.toJson(calculationInput)
+        headersCaptor.getValue shouldBe Seq(connector.jsonContentTypeHeader)
+      }
 
-      val result = await(new RnrbConnector(getHttpMock(Json.toJson(calculationResult))).send(minimalJson))
+      "return a case class representing the received JSON when the send method is successful" in {
+        val residenceNilRateAmount = 100
+        val applicableNilRateBandAmount = 100
+        val carryForwardAmount = 100
+        val defaultAllowanceAmount = 100
+        val adjustedAllowanceAmount = 100
+        val calculationResult = CalculationResult(residenceNilRateAmount, applicableNilRateBandAmount, carryForwardAmount,
+          defaultAllowanceAmount, adjustedAllowanceAmount)
 
-      result.get shouldBe calculationResult
-    }
+        val result = await(new RnrbConnector(getHttpMock(Json.toJson(calculationResult))).send(calculationInput))
 
-    "return a string representing the error when send method fails" in {
-      val errorResponse = JsString("Something went wrong!")
+        result.get shouldBe calculationResult
+      }
 
-      val result = await(new RnrbConnector(getHttpMock(errorResponse)).send(minimalJson))
+      "return a string representing the error when send method fails" in {
+        val errorResponse = JsString("Something went wrong!")
 
-      result match {
-        case Failure(exception) => {
-          exception shouldBe a[JsonInvalidException]
-          exception.getMessage() shouldBe List.fill(5)("JSON error: error.path.missing\n").mkString("")
+        val result = await(new RnrbConnector(getHttpMock(errorResponse)).send(calculationInput))
+
+        result match {
+          case Failure(exception) => {
+            exception shouldBe a[JsonInvalidException]
+            exception.getMessage() shouldBe List.fill(5)("JSON error: error.path.missing\n").mkString("")
+          }
+          case Success(_) => fail
         }
-        case Success(_) => fail
       }
     }
 
-    "return a schema when JSON representing a schema is received" in {
-      val result = await(new RnrbConnector(getHttpMock(minimalJson)).getSuccessfulResponseSchema)
+    "provided with JSON directly" must {
 
-      result shouldBe Success(Json.fromJson[SchemaType](minimalJson).get)
-    }
+      "call the Microservice with the given JSON" in {
+        implicit val headerCarrierNapper = ArgumentCaptor.forClass(classOf[HeaderCarrier])
+        implicit val httpReadsNapper = ArgumentCaptor.forClass(classOf[HttpReads[Any]])
+        implicit val jsonWritesNapper = ArgumentCaptor.forClass(classOf[Writes[Any]])
+        val urlCaptor = ArgumentCaptor.forClass(classOf[String])
+        val bodyCaptor = ArgumentCaptor.forClass(classOf[JsValue])
+        val headersCaptor = ArgumentCaptor.forClass(classOf[Seq[(String, String)]])
+        val httpMock = getHttpMock(minimalJson)
 
-    "return an error when JSON not representing a schema is received" in {
-      val result = await(new RnrbConnector(getHttpMock(Json.parse("{\"type\": 0}"))).getSuccessfulResponseSchema)
+        val connector = new RnrbConnector(httpMock)
+        await(connector.sendJson(minimalJson))
 
-      result match {
-        case Failure(exception) => {
-          exception shouldBe a [JsonInvalidException]
-          exception.getMessage shouldBe "Invalid JSON schema"
+        verify(httpMock).POST(urlCaptor.capture, bodyCaptor.capture, headersCaptor.capture)(jsonWritesNapper.capture,
+          httpReadsNapper.capture, headerCarrierNapper.capture)
+        urlCaptor.getValue should endWith(s"${connector.baseSegment}calculate")
+        bodyCaptor.getValue shouldBe minimalJson
+        headersCaptor.getValue shouldBe Seq(connector.jsonContentTypeHeader)
+      }
+
+      "return a case class representing the received JSON when the send method is successful" in {
+        val residenceNilRateAmount = 100
+        val applicableNilRateBandAmount = 100
+        val carryForwardAmount = 100
+        val defaultAllowanceAmount = 100
+        val adjustedAllowanceAmount = 100
+        val calculationResult = CalculationResult(residenceNilRateAmount, applicableNilRateBandAmount, carryForwardAmount,
+          defaultAllowanceAmount, adjustedAllowanceAmount)
+
+        val result = await(new RnrbConnector(getHttpMock(Json.toJson(calculationResult))).sendJson(minimalJson))
+
+        result.get shouldBe calculationResult
+      }
+
+      "return a string representing the error when send method fails" in {
+        val errorResponse = JsString("Something went wrong!")
+
+        val result = await(new RnrbConnector(getHttpMock(errorResponse)).sendJson(minimalJson))
+
+        result match {
+          case Failure(exception) => {
+            exception shouldBe a[JsonInvalidException]
+            exception.getMessage() shouldBe List.fill(5)("JSON error: error.path.missing\n").mkString("")
+          }
+          case Success(_) => fail
         }
-        case Success(json) => fail
+      }
+
+      "return a schema when JSON representing a schema is received" in {
+        val result = await(new RnrbConnector(getHttpMock(minimalJson)).getSuccessfulResponseSchema)
+
+        result shouldBe Success(Json.fromJson[SchemaType](minimalJson).get)
+      }
+
+      "return an error when JSON not representing a schema is received" in {
+        val result = await(new RnrbConnector(getHttpMock(Json.parse("{\"type\": 0}"))).getSuccessfulResponseSchema)
+
+        result match {
+          case Failure(exception) => {
+            exception shouldBe a[JsonInvalidException]
+            exception.getMessage shouldBe "Invalid JSON schema"
+          }
+          case Success(json) => fail
+        }
       }
     }
   }

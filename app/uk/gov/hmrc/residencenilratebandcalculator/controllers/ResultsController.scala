@@ -20,7 +20,6 @@ import javax.inject.{Inject, Singleton}
 
 import play.Logger
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.libs.json.JsValue
 import play.api.mvc._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.frontend.controller.FrontendController
@@ -28,8 +27,7 @@ import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
-import uk.gov.hmrc.residencenilratebandcalculator.json.JsonBuilder
-import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, DisplayResults}
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CalculationInput, DisplayResults, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.results
 
 import scala.concurrent.Future
@@ -37,7 +35,7 @@ import scala.util.{Failure, Success, Try}
 
 @Singleton
 class ResultsController @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi,
-                                  rnrbConnector: RnrbConnector, sessionConnector: SessionConnector, jsonBuilder: JsonBuilder)
+                                  rnrbConnector: RnrbConnector, sessionConnector: SessionConnector)
   extends FrontendController with I18nSupport {
 
   private def fail(ex: Throwable) = {
@@ -52,13 +50,13 @@ class ResultsController @Inject()(appConfig: FrontendAppConfig, val messagesApi:
     case None => Failure(new NoCacheMapException("Unable to retrieve cache map from SessionConnector"))
   }
 
-  private def getParams(tryAnswers: Try[CacheMap]) = tryAnswers match {
-    case Success(answers) => jsonBuilder.buildFromCacheMap(answers)
+  private def getInput(tryAnswers: Try[CacheMap]) = tryAnswers match {
+    case Success(answers) => Future.successful(Try(CalculationInput(new UserAnswers(answers))))
     case Failure(ex) => Future.successful(Failure(ex))
   }
 
-  private def getResult(tryParams: Try[JsValue]) = tryParams match {
-    case Success(params) => rnrbConnector.send(params)
+  private def getResult(tryInput: Try[CalculationInput]) = tryInput match {
+    case Success(input) => rnrbConnector.send(input)
     case Failure(ex) => Future.successful(Failure(ex))
   }
 
@@ -66,16 +64,15 @@ class ResultsController @Inject()(appConfig: FrontendAppConfig, val messagesApi:
     implicit request => {
       for {
         tryAnswers <- getAnswers
-        tryParams <- getParams(tryAnswers)
-        tryResult <- getResult(tryParams)
+        tryInput <- getInput(tryAnswers)
+        tryResult <- getResult(tryInput)
       } yield {
         (tryResult, tryAnswers) match {
           case (_, Failure(ex)) => fail(ex)
           case (Failure(ex), _) => fail(ex)
-          case (Success(result), Success(answers)) => {
+          case (Success(result), Success(answers)) =>
             val messages = messagesApi.preferred(request)
             Ok(results(appConfig, DisplayResults(result, AnswerRows(answers, messages))(messages)))
-          }
         }
       }
     }
