@@ -51,6 +51,8 @@ POST       /gross-estate-value                          uk.gov.hmrc.residencenil
 
 GET        /not-found                                   uk.gov.hmrc.residencenilratebandcalculator.controllers.PageNotFoundController.onPageLoad
 
+GET        /expired                                     uk.gov.hmrc.residencenilratebandcalculator.controllers.SessionExpiredController.onPageLoad
+
 GET        /not-possible-to-use-calculator              uk.gov.hmrc.residencenilratebandcalculator.controllers.TransitionOutController.onPageLoad
 
 GET        /percentage-closely-inherited                uk.gov.hmrc.residencenilratebandcalculator.controllers.PercentageCloselyInheritedController.onPageLoad

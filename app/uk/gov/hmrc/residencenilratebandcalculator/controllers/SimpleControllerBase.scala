@@ -46,14 +46,25 @@ trait SimpleControllerBase[A] extends FrontendController with I18nSupport {
 
   val navigator: Navigator
 
+//  def onPageLoad(implicit rds: Reads[A]) = Action.async { implicit request =>
+//    sessionConnector.fetch().map(
+//      optionalCacheMap => {
+//        val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
+//        Ok(view(
+//          cacheMap.getEntry(controllerId).map(value => form().fill(value)),
+//          navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
+//      })
+//  }
+
   def onPageLoad(implicit rds: Reads[A]) = Action.async { implicit request =>
-    sessionConnector.fetch().map(
-      optionalCacheMap => {
-        val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
-        Ok(view(
-          cacheMap.getEntry(controllerId).map(value => form().fill(value)),
-          navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
-      })
+    sessionConnector.fetch().map {
+      optionalCacheMap => optionalCacheMap match {
+        case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
+        case Some(cacheMap) => {
+          Ok(view(cacheMap.getEntry(controllerId).map(value => form().fill(value)),  navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
+        }
+      }
+    }
   }
 
   def onSubmit(implicit wts: Writes[A]) = Action.async { implicit request =>

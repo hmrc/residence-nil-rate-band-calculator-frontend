@@ -16,6 +16,9 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import play.api.http.Status
+import play.api.libs.json.{Reads, Writes}
+import play.api.test.Helpers._
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
@@ -31,6 +34,15 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase {
     }
 
     def createController = () => new DateOfDeathController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
+
+    "On a page load with an empty cache, return an OK" in {
+      expireSessionConnector()
+
+      val rds = Date.dateReads
+
+      val result = createController().onPageLoad(rds)(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
 
     behave like rnrbController(createController, createView, Constants.dateOfDeathId)(Date.dateReads, Date.dateWrites)
   }

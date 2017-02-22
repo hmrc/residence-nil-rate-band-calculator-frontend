@@ -103,5 +103,12 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
       val result = createController().onPageLoad(rds)(fakeRequest)
       contentAsString(result) shouldBe createView(Some(Map("value" -> testValue.toString))).toString
     }
+
+    "On a page load with an expired session, return an redirect to an expired session page" in {
+      expireSessionConnector()
+      val result = createController().onPageLoad(rds)(fakeRequest)
+      status(result) shouldBe Status.SEE_OTHER
+      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
+    }
   }
 }
