@@ -24,12 +24,12 @@ import uk.gov.hmrc.play.config.ServicesConfig
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.WSHttp
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.JsonInvalidException
-import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationResult
+import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, CalculationResult}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import uk.gov.hmrc.residencenilratebandcalculator.json.JsonErrorProcessor
 
-import scala.util.{Failure, Success, Try}
+import scala.util.{Failure, Success}
 
 @Singleton
 class RnrbConnector @Inject()(http: WSHttp) extends ServicesConfig {
@@ -41,7 +41,9 @@ class RnrbConnector @Inject()(http: WSHttp) extends ServicesConfig {
 
   def getStyleGuide = http.GET(s"$serviceUrl${baseSegment}style-guide")
 
-  def send(json: JsValue) =
+  def send(input: CalculationInput) = sendJson(Json.toJson(input))
+
+  def sendJson(json: JsValue) =
     http.POST(s"$serviceUrl${baseSegment}calculate", json, Seq(jsonContentTypeHeader))
     .map {
       response => Json.fromJson[CalculationResult](response.json) match {
