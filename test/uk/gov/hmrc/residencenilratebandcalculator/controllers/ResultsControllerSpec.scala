@@ -33,7 +33,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, CalculationResult}
 
 import scala.concurrent.Future
-import scala.util.{Failure, Success}
+import scala.util.Success
 
 class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar with Matchers {
 
