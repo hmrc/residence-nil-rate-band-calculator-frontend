@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import java.text.NumberFormat
+import java.util.Locale
 
 import play.api.i18n.Messages
 
@@ -27,7 +28,7 @@ object DisplayResults {
     val adjustedAllowanceRow =
       if (calculationResult.defaultAllowanceAmount == calculationResult.adjustedAllowanceAmount) { Seq() }
       else { Seq(ResultsRow("results.adjustedAllowanceAmount.label", calculationResult.adjustedAllowanceAmount)(messages)) }
-    DisplayResults(NumberFormat.getCurrencyInstance.format(calculationResult.residenceNilRateAmount),
+    DisplayResults(NumberFormat.getCurrencyInstance(Locale.UK).format(calculationResult.residenceNilRateAmount),
       Seq(
         ResultsRow("results.applicableNilRateBandAmount.label", calculationResult.applicableNilRateBandAmount)(messages),
         ResultsRow("results.defaultAllowanceAmount.label", calculationResult.defaultAllowanceAmount)(messages),

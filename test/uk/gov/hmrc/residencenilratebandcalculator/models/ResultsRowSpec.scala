@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import java.text.NumberFormat
+import java.util.Locale
 
 import play.api.i18n.MessagesApi
 import play.api.test.FakeRequest
@@ -34,7 +35,7 @@ class ResultsRowSpec extends UnitSpec with WithFakeApplication {
   "Results Row" must {
     "create a properly formatted ResultsRow" in {
       ResultsRow("results.applicableNilRateBandAmount.label", 1000)(messages) shouldBe
-        ResultsRow(messages("results.applicableNilRateBandAmount.label"), NumberFormat.getCurrencyInstance.format(1000))
+        ResultsRow(messages("results.applicableNilRateBandAmount.label"), NumberFormat.getCurrencyInstance(Locale.UK).format(1000))
     }
   }
 }

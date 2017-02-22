@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import java.text.NumberFormat
+import java.util.Locale
 
 import org.joda.time.LocalDate
 import org.mockito.ArgumentCaptor
@@ -105,28 +106,28 @@ class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar w
       setCacheMap(cacheMap)
       val result = resultsController().onPageLoad()(fakeRequest)
       val contents = contentAsString(result)
-      contents should include(NumberFormat.getCurrencyInstance.format(expectedResidenceNilRateAmount))
+      contents should include(NumberFormat.getCurrencyInstance(Locale.UK).format(expectedResidenceNilRateAmount))
     }
 
     "display the carry forward amount if the Microservice successfully returns it" in {
       setCacheMap(cacheMap)
       val result = resultsController().onPageLoad()(fakeRequest)
       val contents = contentAsString(result)
-      contents should include(NumberFormat.getCurrencyInstance.format(expectedCarriedForwardAmount))
+      contents should include(NumberFormat.getCurrencyInstance(Locale.UK).format(expectedCarriedForwardAmount))
     }
 
     "display the applicable nil rate band if the Microservice successfully returns it" in {
       setCacheMap(cacheMap)
       val result = resultsController().onPageLoad()(fakeRequest)
       val contents = contentAsString(result)
-      contents should include(NumberFormat.getCurrencyInstance.format(expectedApplicableNilRateBandAmount))
+      contents should include(NumberFormat.getCurrencyInstance(Locale.UK).format(expectedApplicableNilRateBandAmount))
     }
 
     "display the default allowance if the Microservice successfully returns it" in {
       setCacheMap(cacheMap)
       val result = resultsController().onPageLoad()(fakeRequest)
       val contents = contentAsString(result)
-      contents should include(NumberFormat.getCurrencyInstance.format(expectedDefaultAllowance))
+      contents should include(NumberFormat.getCurrencyInstance(Locale.UK).format(expectedDefaultAllowance))
     }
   }
 }
