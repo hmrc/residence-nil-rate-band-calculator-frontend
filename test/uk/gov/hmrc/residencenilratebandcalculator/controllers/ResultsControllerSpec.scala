@@ -28,13 +28,9 @@ import play.api.http.Status
 import play.api.libs.json._
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
-import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
-import uk.gov.hmrc.residencenilratebandcalculator.json.JsonBuilder
-import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, CalculationInput, CalculationResult, DisplayResults}
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.results
+import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, CalculationResult}
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
