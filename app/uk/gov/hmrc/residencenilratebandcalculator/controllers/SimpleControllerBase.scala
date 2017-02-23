@@ -57,33 +57,6 @@ trait SimpleControllerBase[A] extends FrontendController with I18nSupport {
     }
   }
 
-  //  def onSubmit(implicit wts: Writes[A]) = Action.async { implicit request =>
-  //    val boundForm = form().bindFromRequest()
-  //    boundForm.fold(
-  //      (formWithErrors: Form[A]) => {
-  //        sessionConnector.fetch().map {
-  //          optionalCacheMap => {
-  //            val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
-  //            BadRequest(view(Some(formWithErrors), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
-  //          }
-  //        }
-  //      },
-  //      (value) => validate(value).flatMap {
-  //        case Some(error) => {
-  //          sessionConnector.fetch().map {
-  //            optionalCacheMap => {
-  //              val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
-  //              BadRequest(view(Some(form().fill(value).withError(error)), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
-  //            }
-  //          }
-  //        }
-  //        case None => {
-  //          sessionConnector.cache[A](controllerId, value).map(cacheMap =>
-  //            Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
-  //        }
-  //      })
-  //  }
-
   def onSubmit(implicit wts: Writes[A]) = Action.async { implicit request =>
     val boundForm = form().bindFromRequest()
     boundForm.fold(
