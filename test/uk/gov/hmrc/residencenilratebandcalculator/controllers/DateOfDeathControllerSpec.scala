@@ -35,15 +35,6 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase {
 
     def createController = () => new DateOfDeathController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
-//    "On a page load with an empty cache, return an OK" in {
-//      expireSessionConnector()
-//
-//      val rds = Date.dateReads
-//
-//      val result = createController().onPageLoad(rds)(fakeRequest)
-//      status(result) shouldBe Status.OK
-//    }
-
     behave like rnrbController(createController, createView, Constants.dateOfDeathId)(Date.dateReads, Date.dateWrites)
   }
 }

@@ -67,6 +67,8 @@ class JsonBuilder @Inject()(rnrbConnector: RnrbConnector) {
   def buildFromCacheMap(cacheMap: CacheMap): Future[Try[JsValue]] = getSchema.map {
     case Success(schema) =>
       val incomingJson = Json.toJson(constructDataFromCacheMap(cacheMap))
+      println("%%%%%%%%%%%%%%%JSON IS%%%%%%%%%%%%%%%%")
+      println(incomingJson)
       val validationResult = validator.validate(schema, incomingJson).asEither
       validationResult match {
         case Left(error) =>

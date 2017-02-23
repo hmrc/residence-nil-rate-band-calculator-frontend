@@ -40,6 +40,6 @@ class AnyPropertyCloselyInheritedControllerSpec extends SimpleControllerSpecBase
 
     behave like rnrbController[Boolean](createController, createView, Constants.anyPropertyCloselyInheritedId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
 
-    behave like nonStartingController[Boolean](createController)(Reads.BooleanReads)
+    behave like nonStartingController[Boolean](createController)(Reads.BooleanReads, Writes.BooleanWrites)
   }
 }

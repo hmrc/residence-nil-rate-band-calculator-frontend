@@ -26,7 +26,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PurposeOfUseForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.purpose_of_use
-import play.api.libs.json.Reads
+import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 import play.api.mvc._
 import uk.gov.hmrc.http.cache.client.CacheMap
@@ -51,6 +51,33 @@ class PurposeOfUseController @Inject()(override val appConfig: FrontendAppConfig
       optionalCacheMap => {
         val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
         Ok(view(cacheMap.getEntry(controllerId).map(value => form().fill(value)), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
+      })
+  }
+
+  override def onSubmit(implicit wts: Writes[String]) = Action.async { implicit request =>
+    val boundForm = form().bindFromRequest()
+    boundForm.fold(
+      (formWithErrors: Form[String]) => {
+        sessionConnector.fetch().map {
+          optionalCacheMap => {
+            val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
+            BadRequest(view(Some(formWithErrors), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
+          }
+        }
+      },
+      (value) => validate(value).flatMap {
+        case Some(error) => {
+          sessionConnector.fetch().map {
+            optionalCacheMap => {
+              val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
+              BadRequest(view(Some(form().fill(value).withError(error)), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
+            }
+          }
+        }
+        case None => {
+          sessionConnector.cache[String](controllerId, value).map(cacheMap =>
+            Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
+        }
       })
   }
 }

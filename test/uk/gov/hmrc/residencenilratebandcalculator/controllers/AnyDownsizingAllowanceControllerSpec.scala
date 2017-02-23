@@ -38,5 +38,5 @@ class AnyDownsizingAllowanceControllerSpec extends SimpleControllerSpecBase {
 
   behave like rnrbController(createController, createView, Constants.anyDownsizingAllowanceId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
 
-  behave like nonStartingController[Boolean](createController)(Reads.BooleanReads)
+  behave like nonStartingController[Boolean](createController)(Reads.BooleanReads, Writes.BooleanWrites)
 }

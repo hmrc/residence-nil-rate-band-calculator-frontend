@@ -105,11 +105,18 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
     }
   }
 
-  def nonStartingController[A: ClassTag](createController: () => SimpleControllerBase[A])(rds: Reads[A]) = {
+  def nonStartingController[A: ClassTag](createController: () => SimpleControllerBase[A])(rds: Reads[A], wts: Writes[A]) = {
 
     "On a page load with an expired session, return an redirect to an expired session page" in {
       expireSessionConnector()
       val result = createController().onPageLoad(rds)(fakeRequest)
+      status(result) shouldBe Status.SEE_OTHER
+      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
+    }
+
+    "On a page submit with an expired session, return an redirect to an expired session page" in {
+      expireSessionConnector()
+      val result = createController().onSubmit(wts)(fakeRequest)
       status(result) shouldBe Status.SEE_OTHER
       redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
     }

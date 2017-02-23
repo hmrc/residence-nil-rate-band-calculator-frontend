@@ -40,7 +40,7 @@ class ValueOfDisposedPropertyControllerSpec extends SimpleControllerSpecBase {
 
     behave like rnrbController(createController, createView, Constants.valueOfDisposedPropertyId, testValue)(Reads.IntReads, Writes.IntWrites)
 
-    behave like nonStartingController[Int](createController)(Reads.IntReads)
+    behave like nonStartingController[Int](createController)(Reads.IntReads, Writes.IntWrites)
 
   }
 }

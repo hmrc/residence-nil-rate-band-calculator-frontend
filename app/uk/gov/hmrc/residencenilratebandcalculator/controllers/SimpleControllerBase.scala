@@ -46,50 +46,69 @@ trait SimpleControllerBase[A] extends FrontendController with I18nSupport {
 
   val navigator: Navigator
 
-//  def onPageLoad(implicit rds: Reads[A]) = Action.async { implicit request =>
-//    sessionConnector.fetch().map(
-//      optionalCacheMap => {
-//        val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
-//        Ok(view(
-//          cacheMap.getEntry(controllerId).map(value => form().fill(value)),
-//          navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
-//      })
-//  }
-
   def onPageLoad(implicit rds: Reads[A]) = Action.async { implicit request =>
     sessionConnector.fetch().map {
       optionalCacheMap => optionalCacheMap match {
         case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
         case Some(cacheMap) => {
-          Ok(view(cacheMap.getEntry(controllerId).map(value => form().fill(value)),  navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
+          Ok(view(cacheMap.getEntry(controllerId).map(value => form().fill(value)), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
         }
       }
     }
   }
+
+  //  def onSubmit(implicit wts: Writes[A]) = Action.async { implicit request =>
+  //    val boundForm = form().bindFromRequest()
+  //    boundForm.fold(
+  //      (formWithErrors: Form[A]) => {
+  //        sessionConnector.fetch().map {
+  //          optionalCacheMap => {
+  //            val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
+  //            BadRequest(view(Some(formWithErrors), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
+  //          }
+  //        }
+  //      },
+  //      (value) => validate(value).flatMap {
+  //        case Some(error) => {
+  //          sessionConnector.fetch().map {
+  //            optionalCacheMap => {
+  //              val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
+  //              BadRequest(view(Some(form().fill(value).withError(error)), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
+  //            }
+  //          }
+  //        }
+  //        case None => {
+  //          sessionConnector.cache[A](controllerId, value).map(cacheMap =>
+  //            Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
+  //        }
+  //      })
+  //  }
 
   def onSubmit(implicit wts: Writes[A]) = Action.async { implicit request =>
     val boundForm = form().bindFromRequest()
     boundForm.fold(
       (formWithErrors: Form[A]) => {
         sessionConnector.fetch().map {
-          optionalCacheMap => {
-            val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
+          case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
+          case Some(cacheMap) =>
             BadRequest(view(Some(formWithErrors), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
-          }
         }
       },
       (value) => validate(value).flatMap {
         case Some(error) => {
           sessionConnector.fetch().map {
-            optionalCacheMap => {
-              val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
+            case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
+            case Some(cacheMap) =>
               BadRequest(view(Some(form().fill(value).withError(error)), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
-            }
           }
         }
         case None => {
-          sessionConnector.cache[A](controllerId, value).map(cacheMap =>
-            Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
+          sessionConnector.fetch().flatMap {
+            case None => Future.successful(Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad()))
+            case Some(cacheMap) =>
+            sessionConnector.cache[A](controllerId, value).map(cacheMap =>
+              Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
+          }
         }
       })
   }
