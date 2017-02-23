@@ -39,5 +39,7 @@ class EstateHasPropertyControllerSpec extends SimpleControllerSpecBase {
     val testValue = true
 
     behave like rnrbController[Boolean](createController, createView, Constants.estateHasPropertyId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+
+    behave like nonStartingController[Boolean](createController)(Reads.BooleanReads, Writes.BooleanWrites)
   }
 }

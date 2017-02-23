@@ -39,5 +39,7 @@ class PercentageCloselyInheritedControllerSpec extends SimpleControllerSpecBase 
     val testValue = 50
 
     behave like rnrbController[Int](createController, createView, Constants.percentageCloselyInheritedId, testValue)(Reads.IntReads, Writes.IntWrites)
+
+    behave like nonStartingController[Int](createController)(Reads.IntReads, Writes.IntWrites)
   }
 }

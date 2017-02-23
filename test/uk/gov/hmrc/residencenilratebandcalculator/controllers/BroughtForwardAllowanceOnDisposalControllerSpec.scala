@@ -38,5 +38,7 @@ class BroughtForwardAllowanceOnDisposalControllerSpec extends SimpleControllerSp
     val testValue = 123
 
     behave like rnrbController(createController, createView, Constants.broughtForwardAllowanceOnDisposalId, testValue)(Reads.IntReads, Writes.IntWrites)
+
+    behave like nonStartingController[Int](createController)(Reads.IntReads, Writes.IntWrites)
   }
 }

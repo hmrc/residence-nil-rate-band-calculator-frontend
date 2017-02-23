@@ -24,9 +24,9 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
+import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, Navigator}
 
 trait DateControllerSpecBase extends UnitSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
 
@@ -101,6 +101,16 @@ trait DateControllerSpecBase extends UnitSpec with WithFakeApplication with Http
 
       val valueMap = Map("day" -> day.toString, "month" -> month.toString, "year" -> year.toString)
       contentAsString(result) shouldBe createView(Some(valueMap)).toString
+    }
+
+    "On a page load with an expired session, return a redirect to an expired session page" in {
+      expireSessionConnector()
+
+      val rds = Date.dateReads
+
+      val result = createController().onPageLoad(rds)(fakeRequest)
+      status(result) shouldBe Status.SEE_OTHER
+      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
     }
   }
 }

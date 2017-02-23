@@ -20,24 +20,53 @@ import javax.inject.{Inject, Singleton}
 
 import play.api.data.Form
 import play.api.i18n.MessagesApi
-import play.api.mvc.Request
+import play.api.libs.json.{Reads, Writes}
+import play.api.mvc.{Request, _}
 import play.twirl.api.HtmlFormat._
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.play.http.logging.SessionId
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PurposeOfUseForm
+import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.purpose_of_use
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 @Singleton
-class PurposeOfUseController @Inject()(override val appConfig: FrontendAppConfig,
+class PurposeOfUseController @Inject()(val appConfig: FrontendAppConfig,
                                        val messagesApi: MessagesApi,
-                                       override val sessionConnector: SessionConnector,
-                                       override val navigator: Navigator) extends SimpleControllerBase[String] {
+                                       val sessionConnector: SessionConnector,
+                                       val navigator: Navigator) extends ControllerBase[String] {
 
-  override val controllerId: String = Constants.purposeOfUseId
+  val controllerId: String = Constants.purposeOfUseId
 
-  override def form: () => Form[String] = () => PurposeOfUseForm()
+  def form: () => Form[String] = () => PurposeOfUseForm()
 
-  override def view(form: Option[Form[String]], backUrl: String)(implicit request: Request[_]): Appendable = {
+  def view(form: Option[Form[String]], backUrl: String)(implicit request: Request[_]): Appendable = {
     purpose_of_use(appConfig, backUrl, form)
+  }
+
+  def onPageLoad(implicit rds: Reads[String]) = Action.async { implicit request =>
+    sessionConnector.fetch().map(
+      optionalCacheMap => {
+        val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
+        Ok(view(cacheMap.getEntry(controllerId).map(value => form().fill(value)), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
+      })
+  }
+
+  def onSubmit(implicit wts: Writes[String]) = Action.async { implicit request =>
+    val boundForm = form().bindFromRequest()
+    boundForm.fold(
+      (formWithErrors: Form[String]) => {
+        sessionConnector.fetch().map {
+          optionalCacheMap => {
+            val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
+            BadRequest(view(Some(formWithErrors), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
+          }
+        }
+      },
+      (value) =>
+          sessionConnector.cache[String](controllerId, value).map(cacheMap =>
+            Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
+    )
   }
 }

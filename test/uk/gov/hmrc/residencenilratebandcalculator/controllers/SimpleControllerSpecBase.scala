@@ -44,7 +44,7 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
 
   def messages = messagesApi.preferred(fakeRequest)
 
-  def rnrbController[A: ClassTag](createController: () => SimpleControllerBase[A],
+  def rnrbController[A: ClassTag](createController: () => ControllerBase[A],
                         createView: (Option[Map[String, String]]) => HtmlFormat.Appendable,
                         cacheKey: String,
                         testValue: A,
@@ -102,6 +102,23 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
       setCacheValue(cacheKey, testValue)
       val result = createController().onPageLoad(rds)(fakeRequest)
       contentAsString(result) shouldBe createView(Some(Map("value" -> testValue.toString))).toString
+    }
+  }
+
+  def nonStartingController[A: ClassTag](createController: () => SimpleControllerBase[A])(rds: Reads[A], wts: Writes[A]) = {
+
+    "On a page load with an expired session, return an redirect to an expired session page" in {
+      expireSessionConnector()
+      val result = createController().onPageLoad(rds)(fakeRequest)
+      status(result) shouldBe Status.SEE_OTHER
+      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
+    }
+
+    "On a page submit with an expired session, return an redirect to an expired session page" in {
+      expireSessionConnector()
+      val result = createController().onSubmit(wts)(fakeRequest)
+      status(result) shouldBe Status.SEE_OTHER
+      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
     }
   }
 }

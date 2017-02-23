@@ -21,11 +21,11 @@ import play.api.i18n.MessagesApi
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
-import uk.gov.hmrc.residencenilratebandcalculator.forms.{NonNegativeIntForm, PropertyValueAfterExemptionForm}
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.forms.PropertyValueAfterExemptionForm
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.models.PropertyValueAfterExemption
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_value_after_exemption
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 class PropertyValueAfterExemptionControllerSpec extends UnitSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
 
@@ -123,6 +123,13 @@ class PropertyValueAfterExemptionControllerSpec extends UnitSpec with WithFakeAp
       setCacheValue(Constants.propertyValueId, propertyValue - 1)
       val result = createController().onSubmit(writes)(fakePostRequest)
       status(result) shouldBe Status.BAD_REQUEST
+    }
+
+    "On a page load with an expired session, return an redirect to an expired session page" in {
+      expireSessionConnector()
+      val result = createController().onPageLoad(reads)(fakeRequest)
+      status(result) shouldBe Status.SEE_OTHER
+      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
     }
   }
 }

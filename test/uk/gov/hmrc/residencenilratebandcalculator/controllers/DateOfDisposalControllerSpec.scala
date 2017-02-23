@@ -22,7 +22,6 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_disposal
 
 class DateOfDisposalControllerSpec extends DateControllerSpecBase {
-
   "Date Of Disposal Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
