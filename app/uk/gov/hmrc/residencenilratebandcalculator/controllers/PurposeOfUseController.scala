@@ -35,7 +35,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 class PurposeOfUseController @Inject()(val appConfig: FrontendAppConfig,
                                        val messagesApi: MessagesApi,
                                        val sessionConnector: SessionConnector,
-                                       val navigator: Navigator) extends LoadableSubmittable[String] {
+                                       val navigator: Navigator) extends ControllerBase[String] {
 
   val controllerId: String = Constants.purposeOfUseId
 
