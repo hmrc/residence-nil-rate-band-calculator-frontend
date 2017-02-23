@@ -32,7 +32,12 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 
 import scala.concurrent.Future
 
-trait SimpleControllerBase[A] extends FrontendController with I18nSupport {
+trait LoadableSubmittable[A] extends FrontendController with I18nSupport {
+  def onPageLoad(implicit rds: Reads[A]): Action[AnyContent]
+  def onSubmit(implicit wts: Writes[A]): Action[AnyContent]
+}
+
+trait SimpleControllerBase[A] extends LoadableSubmittable[A] {
 
   val appConfig: FrontendAppConfig
 
@@ -46,13 +51,11 @@ trait SimpleControllerBase[A] extends FrontendController with I18nSupport {
 
   val navigator: Navigator
 
-  def onPageLoad(implicit rds: Reads[A]) = Action.async { implicit request =>
+  override def onPageLoad(implicit rds: Reads[A]): Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.fetch().map {
-      optionalCacheMap => optionalCacheMap match {
-        case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
-        case Some(cacheMap) => {
-          Ok(view(cacheMap.getEntry(controllerId).map(value => form().fill(value)), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
-        }
+      case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
+      case Some(cacheMap) => {
+        Ok(view(cacheMap.getEntry(controllerId).map(value => form().fill(value)), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
       }
     }
   }
@@ -79,8 +82,8 @@ trait SimpleControllerBase[A] extends FrontendController with I18nSupport {
           sessionConnector.fetch().flatMap {
             case None => Future.successful(Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad()))
             case Some(cacheMap) =>
-            sessionConnector.cache[A](controllerId, value).map(cacheMap =>
-              Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
+              sessionConnector.cache[A](controllerId, value).map(cacheMap =>
+                Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
           }
         }
       })

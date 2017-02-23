@@ -44,7 +44,7 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
 
   def messages = messagesApi.preferred(fakeRequest)
 
-  def rnrbController[A: ClassTag](createController: () => SimpleControllerBase[A],
+  def rnrbController[A: ClassTag](createController: () => LoadableSubmittable[A],
                         createView: (Option[Map[String, String]]) => HtmlFormat.Appendable,
                         cacheKey: String,
                         testValue: A,
