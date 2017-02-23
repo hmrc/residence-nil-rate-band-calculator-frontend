@@ -43,11 +43,11 @@ class DateOfDeathController @Inject()(override val appConfig: FrontendAppConfig,
 
   override def view(form: Option[Form[Date]], backUrl: String)(implicit request: Request[_]) = date_of_death(appConfig, form)
 
-  override def onPageLoad(implicit rds: Reads[Date]) = Action.async { implicit request =>
-    sessionConnector.fetch().map(
-      optionalCacheMap => {
-        val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
-        Ok(view(cacheMap.getEntry(controllerId).map(value => form().fill(value)), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
-      })
-  }
+//  override def onPageLoad(implicit rds: Reads[Date]) = Action.async { implicit request =>
+//    sessionConnector.fetch().map(
+//      optionalCacheMap => {
+//        val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
+//        Ok(view(cacheMap.getEntry(controllerId).map(value => form().fill(value)), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
+//      })
+//  }
 }

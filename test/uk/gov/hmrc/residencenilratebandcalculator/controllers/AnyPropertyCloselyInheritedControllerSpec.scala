@@ -39,5 +39,7 @@ class AnyPropertyCloselyInheritedControllerSpec extends SimpleControllerSpecBase
     val testValue = true
 
     behave like rnrbController[Boolean](createController, createView, Constants.anyPropertyCloselyInheritedId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+
+    behave like nonStartingController[Boolean](createController)(Reads.BooleanReads)
   }
 }

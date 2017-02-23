@@ -37,16 +37,6 @@ class DateOfDisposalControllerSpec extends DateControllerSpecBase {
 
     def createController = () => new DateOfDisposalController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
-    "On a page load with an expired session, return an redirect to an expired session page" in {
-      expireSessionConnector()
-
-      val rds = Date.dateReads
-
-      val result = createController().onPageLoad(rds)(fakeRequest)
-      status(result) shouldBe Status.SEE_OTHER
-      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
-    }
-
     behave like rnrbController(createController, createView, Constants.dateOfDisposalId)(Date.dateReads, Date.dateWrites)
   }
 

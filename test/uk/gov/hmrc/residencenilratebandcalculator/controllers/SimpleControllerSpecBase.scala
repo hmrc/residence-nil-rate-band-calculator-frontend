@@ -103,6 +103,9 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
       val result = createController().onPageLoad(rds)(fakeRequest)
       contentAsString(result) shouldBe createView(Some(Map("value" -> testValue.toString))).toString
     }
+  }
+
+  def nonStartingController[A: ClassTag](createController: () => SimpleControllerBase[A])(rds: Reads[A]) = {
 
     "On a page load with an expired session, return an redirect to an expired session page" in {
       expireSessionConnector()

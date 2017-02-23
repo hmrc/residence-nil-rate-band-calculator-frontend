@@ -39,5 +39,7 @@ class AnyAssetsPassingToDirectDescendantsControllerSpec extends SimpleController
     val testValue = true
 
     behave like rnrbController[Boolean](createController, createView, Constants.anyAssetsPassingToDirectDescendantsId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+
+    behave like nonStartingController[Boolean](createController)(Reads.BooleanReads)
   }
 }

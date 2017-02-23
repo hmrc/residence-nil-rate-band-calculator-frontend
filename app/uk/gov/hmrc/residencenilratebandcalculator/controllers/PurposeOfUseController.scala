@@ -26,6 +26,11 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PurposeOfUseForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.purpose_of_use
+import play.api.libs.json.Reads
+import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
+import play.api.mvc._
+import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.play.http.logging.SessionId
 
 @Singleton
 class PurposeOfUseController @Inject()(override val appConfig: FrontendAppConfig,
@@ -39,5 +44,13 @@ class PurposeOfUseController @Inject()(override val appConfig: FrontendAppConfig
 
   override def view(form: Option[Form[String]], backUrl: String)(implicit request: Request[_]): Appendable = {
     purpose_of_use(appConfig, backUrl, form)
+  }
+
+  override def onPageLoad(implicit rds: Reads[String]) = Action.async { implicit request =>
+    sessionConnector.fetch().map(
+      optionalCacheMap => {
+        val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
+        Ok(view(cacheMap.getEntry(controllerId).map(value => form().fill(value)), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
+      })
   }
 }

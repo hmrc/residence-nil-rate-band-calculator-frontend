@@ -39,5 +39,7 @@ class AnyBroughtForwardAllowanceOnDisposalControllerSpec extends SimpleControlle
     val testValue = true
 
     behave like rnrbController(createController, createView, Constants.anyBroughtForwardAllowanceOnDisposalId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+
+    behave like nonStartingController[Boolean](createController)(Reads.BooleanReads)
   }
 }

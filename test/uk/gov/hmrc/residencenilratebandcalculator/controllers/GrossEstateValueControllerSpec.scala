@@ -39,5 +39,7 @@ class GrossEstateValueControllerSpec extends SimpleControllerSpecBase {
     val testValue = 123
 
     behave like rnrbController[Int](createController, createView, Constants.grossEstateValueId, testValue)(Reads.IntReads, Writes.IntWrites)
+
+    behave like nonStartingController[Int](createController)(Reads.IntReads)
   }
 }
