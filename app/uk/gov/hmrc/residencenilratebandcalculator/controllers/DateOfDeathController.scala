@@ -19,17 +19,13 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import javax.inject.{Inject, Singleton}
 
 import play.api.data.Form
-import play.api.libs.json.{Reads, Writes}
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
-import play.api.mvc._
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{Date, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
-import uk.gov.hmrc.play.http.logging.SessionId
-import uk.gov.hmrc.http.cache.client.CacheMap
 
 @Singleton
 class DateOfDeathController @Inject()(override val appConfig: FrontendAppConfig,
@@ -42,12 +38,4 @@ class DateOfDeathController @Inject()(override val appConfig: FrontendAppConfig,
   override def form = () => DateForm()
 
   override def view(form: Option[Form[Date]], backUrl: String)(implicit request: Request[_]) = date_of_death(appConfig, form)
-
-//  override def onPageLoad(implicit rds: Reads[Date]) = Action.async { implicit request =>
-//    sessionConnector.fetch().map(
-//      optionalCacheMap => {
-//        val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
-//        Ok(view(cacheMap.getEntry(controllerId).map(value => form().fill(value)), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
-//      })
-//  }
 }
