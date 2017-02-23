@@ -21,11 +21,11 @@ import play.api.i18n.MessagesApi
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
-import uk.gov.hmrc.residencenilratebandcalculator.forms.{NonNegativeIntForm, PropertyValueAfterExemptionForm}
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.forms.PropertyValueAfterExemptionForm
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
-import uk.gov.hmrc.residencenilratebandcalculator.models.{Date, PropertyValueAfterExemption}
+import uk.gov.hmrc.residencenilratebandcalculator.models.PropertyValueAfterExemption
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_value_after_exemption
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 class PropertyValueAfterExemptionControllerSpec extends UnitSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
 

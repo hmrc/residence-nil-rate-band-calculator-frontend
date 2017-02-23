@@ -16,9 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import play.api.http.Status
-import play.api.libs.json.Reads
-import play.api.test.Helpers._
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
