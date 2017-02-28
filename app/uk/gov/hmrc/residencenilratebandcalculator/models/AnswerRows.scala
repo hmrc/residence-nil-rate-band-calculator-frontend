@@ -77,6 +77,10 @@ object AnswerRows {
   val answerRowFns = Map[String, JsValue => Messages => AnswerRow](
     Constants.dateOfDeathId ->
       dateAnswerRowFn("date_of_death.title", "Date of death", routes.DateOfDeathController.onPageLoad),
+    Constants.anyEstatePassedToDescendantsId ->
+      boolAnswerRowFn("any_estate_passed_to_descendants.title",
+        "Any estate passed to descendants",
+        routes.AnyEstatePassedToDescendantsController.onPageLoad),
     Constants.grossEstateValueId ->
       intAnswerRowFn("gross_estate_value.title", "Gross estate value", routes.GrossEstateValueController.onPageLoad),
     Constants.chargeableTransferAmountId ->
@@ -91,7 +95,7 @@ object AnswerRows {
       intAnswerRowFn("value_of_disposed_property.title", "Vale of disposed property", routes.ValueOfDisposedPropertyController.onPageLoad),
     Constants.anyAssetsPassingToDirectDescendantsId ->
       boolAnswerRowFn("any_assets_passing_to_direct_descendants.title",
-        "Any assets passing to direct descentdants",
+        "Any assets passing to direct descendants",
         routes.AnyAssetsPassingToDirectDescendantsController.onPageLoad),
     Constants.anyBroughtForwardAllowanceId ->
       boolAnswerRowFn("any_brought_forward_allowance.title", "Any brought forward allowance", routes.AnyBroughtForwardAllowanceController.onPageLoad),
