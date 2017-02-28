@@ -60,7 +60,4 @@ object Constants {
     assetsPassingToDirectDescendantsId -> "valueCloselyInherited",
     broughtForwardAllowanceOnDisposalId -> "broughtForwardAllowanceAtDisposal"
   )
-
-  val planning = "planning"
-  val dealingWithEstate = "dealing_with_estate"
 }
