@@ -131,6 +131,13 @@ does_grossing_up_apply.guidance =
 does_grossing_up_apply.label =
 does_grossing_up_apply.summary =
 
+does_grossing_up_apply.question_number = Question 8
+does_grossing_up_apply.browser_title = Questions page
+does_grossing_up_apply.title = Does grossing-up or interaction apply?
+does_grossing_up_apply.guidance =
+does_grossing_up_apply.label =
+does_grossing_up_apply.summary =
+
 error.invalid_date = Enter a valid date
 error.number = Please enter a valid number
 error.required = Please enter a value
