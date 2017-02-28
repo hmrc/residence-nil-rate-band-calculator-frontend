@@ -42,7 +42,6 @@ object Constants {
   val percentageCloselyInheritedId = "PercentageCloselyInherited"
   val propertyValueAfterExemptionId = "PropertyValueAfterExemption"
   val propertyValueId = "PropertyValue"
-  val purposeOfUseId = "PurposeOfUse"
   val valueOfDisposedPropertyId = "ValueOfDisposedProperty"
 
   val jsonKeys = Map(
@@ -64,8 +63,4 @@ object Constants {
 
   val planning = "planning"
   val dealingWithEstate = "dealing_with_estate"
-  val purposeOfUseOptions = Seq(
-    RadioOption("purpose_of_use", dealingWithEstate),
-    RadioOption("purpose_of_use", planning)
-  )
 }

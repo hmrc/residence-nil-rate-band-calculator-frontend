@@ -61,7 +61,6 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
                 percentageCloselyInherited: Option[Int] = None,
                 propertyValueAfterExemption: Option[PropertyValueAfterExemption] = None,
                 propertyValue: Option[Int] = None,
-                purposeOfUse: Option[String] = None,
                 valueOfDisposedProperty: Option[Int] = None
                ) = {
     when(userAnswers.anyAssetsPassingToDirectDescendants) thenReturn anyAssetsPassingToDirectDescendants
@@ -81,7 +80,6 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
     when(userAnswers.percentageCloselyInherited) thenReturn percentageCloselyInherited
     when(userAnswers.propertyValueAfterExemption) thenReturn propertyValueAfterExemption
     when(userAnswers.propertyValue) thenReturn propertyValue
-    when(userAnswers.purposeOfUse) thenReturn purposeOfUse
     when(userAnswers.valueOfDisposedProperty) thenReturn valueOfDisposedProperty
   }
 

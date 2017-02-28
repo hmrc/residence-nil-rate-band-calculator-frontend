@@ -62,7 +62,5 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def propertyValue = cacheMap.getEntry[Int](Constants.propertyValueId)
 
-  def purposeOfUse = cacheMap.getEntry[String](Constants.purposeOfUseId)
-
   def valueOfDisposedProperty = cacheMap.getEntry[Int](Constants.valueOfDisposedPropertyId)
 }
