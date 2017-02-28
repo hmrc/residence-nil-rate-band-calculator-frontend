@@ -138,12 +138,6 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.propertyValueAfterExemption shouldBe Some(PropertyValueAfterExemption(1, 2))
       }
 
-      "return the correct answer for Purpose Of Use" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.purposeOfUseId -> JsString(Constants.planning)))
-        val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.purposeOfUse shouldBe Some(Constants.planning)
-      }
-
       "return the correct answer for Value Of Disposed Property" in {
         val cacheMap = CacheMap(cacheMapKey, Map(Constants.valueOfDisposedPropertyId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
@@ -237,11 +231,6 @@ class UserAnswersSpec extends UnitSpec {
       "return None for Property Value After Exemption" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
         userAnswers.propertyValueAfterExemption shouldBe None
-      }
-
-      "return None for Purpose Of Use" in {
-        val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.purposeOfUse shouldBe None
       }
 
       "return None for Value Of Disposed Property" in {

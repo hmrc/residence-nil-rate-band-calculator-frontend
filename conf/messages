@@ -181,11 +181,6 @@ percentage_closely_inherited.title = What percentage of the property that you ha
 percentage_closely_inherited.label =
 percentage_closely_inherited.summary =
 
-planning.question_number = Before you start
-planning.browser_title = Planning
-planning.title = Use the ''dealing with the estate'' service to plan your estate
-planning.guidance = You can add estimates to the service to understand how this may affect your estate.
-
 property_value.question_number = Question 5
 property_value.browser_title = Question page
 property_value.title = What was the value of the property on the date of death after any debts have been taken off?
@@ -208,13 +203,6 @@ property_value_after_exemption.value_closely_inherited.label =
 property_value_after_exemption.value_closely_inherited.guidance = If the value of the property that you gave earlier was £500,000 and £240,000 of it was passing to a spouse or civil partner, you would give a value of £260,000 below.
 property_value_after_exemption.greater_than_property_value.error = Property Value after exemptions cannot be greater than the Property Value
 property_value_after_exemption.value_closely_inherited_greater_than_value.error = Value Closely Inherited cannot be greater than the Property Value
-
-purpose_of_use.question_number = Before you start
-purpose_of_use.browser_title = Question page
-purpose_of_use.title = What are you using this service for?
-purpose_of_use.label =
-purpose_of_use.dealing_with_estate = I’m responsible for someone’s estate and want to calculate the Inheritance Tax threshold
-purpose_of_use.planning = I’m planning for my future and want to see the different options
 
 results.browser_title = Final calculation
 results.title = The Residence Nil Rate Amount available for this estate&nbsp;is {0}

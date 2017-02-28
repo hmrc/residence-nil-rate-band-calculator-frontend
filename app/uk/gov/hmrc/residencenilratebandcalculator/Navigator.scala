@@ -49,8 +49,7 @@ class Navigator @Inject()() {
       Constants.assetsPassingToDirectDescendantsId -> (_ => AnyBroughtForwardAllowanceOnDisposalController.onPageLoad()),
       Constants.anyBroughtForwardAllowanceOnDisposalId -> (ua => getAnyBroughtForwardAllowanceOnDisposalRoute(ua)),
       Constants.broughtForwardAllowanceOnDisposalId -> (_ => CheckAnswersController.onPageLoad()),
-      Constants.checkAnswersId -> (_ => ResultsController.onPageLoad()),
-      Constants.purposeOfUseId -> (ua => getPurposeOfUseRoute(ua))
+      Constants.checkAnswersId -> (_ => ResultsController.onPageLoad())
     )
   }
 
@@ -96,11 +95,6 @@ class Navigator @Inject()() {
   private def getAnyAssetsPassingToDirectDescendantsRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.anyAssetsPassingToDirectDescendants, AssetsPassingToDirectDescendantsController.onPageLoad(), CheckAnswersController.onPageLoad())
 
-  private def getPurposeOfUseRoute(userAnswers: UserAnswers) = userAnswers.purposeOfUse match {
-    case Some(Constants.dealingWithEstate) => DateOfDeathController.onPageLoad()
-    case Some(Constants.planning) => PlanningController.onPageLoad()
-    case _ => HomeController.onPageLoad()
-  }
 
   def nextPage(controllerId: String): UserAnswers => Call = {
     routeMap.getOrElse(controllerId, _ => PageNotFoundController.onPageLoad())
