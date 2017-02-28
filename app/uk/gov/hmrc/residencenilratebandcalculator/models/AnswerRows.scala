@@ -49,76 +49,76 @@ object AnswerRows {
 
   private def errorString(title: String) = s"$title unavailable from cache"
 
-  def intAnswerRowFn(summaryKey: String, title: String, url: () => Call) =
+  def intAnswerRowFn(titleKey: String, title: String, url: () => Call) =
     (jsValue: JsValue) => Json.fromJson[Int](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
-      value => AnswerRow(summaryKey, value, url()) _
+      value => AnswerRow(titleKey, value, url()) _
     })
 
-  def boolAnswerRowFn(summaryKey: String, title: String, url: () => Call) =
+  def boolAnswerRowFn(titleKey: String, title: String, url: () => Call) =
     (jsValue: JsValue) => Json.fromJson[Boolean](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
-      value => AnswerRow(summaryKey, value, url()) _
+      value => AnswerRow(titleKey, value, url()) _
     })
 
-  def dateAnswerRowFn(summaryKey: String, title: String, url: () => Call) =
+  def dateAnswerRowFn(titleKey: String, title: String, url: () => Call) =
     (jsValue: JsValue) => Json.fromJson[LocalDate](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
-      value => AnswerRow(summaryKey, value, url()) _
+      value => AnswerRow(titleKey, value, url()) _
     })
 
-  def percentAnswerRowFn(summaryKey: String, title: String, url: () => Call) =
+  def percentAnswerRowFn(titleKey: String, title: String, url: () => Call) =
     (jsValue: JsValue) => Json.fromJson[Double](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
-      value => AnswerRow(summaryKey, value, url()) _
+      value => AnswerRow(titleKey, value, url()) _
     })
 
-  def propertyValueAfterExemptionAnswerRowFn(summaryKey: String, title: String, url: () => Call) =
+  def propertyValueAfterExemptionAnswerRowFn(titleKey: String, title: String, url: () => Call) =
     (jsValue: JsValue) => Json.fromJson[PropertyValueAfterExemption](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
-      value => AnswerRow(summaryKey, value, url()) _
+      value => AnswerRow(titleKey, value, url()) _
     })
 
   val answerRowFns = Map[String, JsValue => Messages => AnswerRow](
     Constants.dateOfDeathId ->
-      dateAnswerRowFn("date_of_death.summary", "Date of death", routes.DateOfDeathController.onPageLoad),
+      dateAnswerRowFn("date_of_death.title", "Date of death", routes.DateOfDeathController.onPageLoad),
     Constants.grossEstateValueId ->
-      intAnswerRowFn("gross_estate_value.summary", "Gross estate value", routes.GrossEstateValueController.onPageLoad),
+      intAnswerRowFn("gross_estate_value.title", "Gross estate value", routes.GrossEstateValueController.onPageLoad),
     Constants.chargeableTransferAmountId ->
-      intAnswerRowFn("chargeable_transfer_amount.summary", "Chargeable transfer amount", routes.ChargeableTransferAmountController.onPageLoad),
+      intAnswerRowFn("chargeable_transfer_amount.title", "Chargeable transfer amount", routes.ChargeableTransferAmountController.onPageLoad),
     Constants.estateHasPropertyId ->
-      boolAnswerRowFn("estate_has_property.summary", "Estate has property", routes.EstateHasPropertyController.onPageLoad),
+      boolAnswerRowFn("estate_has_property.title", "Estate has property", routes.EstateHasPropertyController.onPageLoad),
     Constants.anyDownsizingAllowanceId ->
-      boolAnswerRowFn("any_downsizing_allowance.summary", "Any downsizing allowance", routes.AnyDownsizingAllowanceController.onPageLoad),
+      boolAnswerRowFn("any_downsizing_allowance.title", "Any downsizing allowance", routes.AnyDownsizingAllowanceController.onPageLoad),
     Constants.dateOfDisposalId ->
-      dateAnswerRowFn("date_of_disposal.summary", "Date of disposal", routes.DateOfDisposalController.onPageLoad),
+      dateAnswerRowFn("date_of_disposal.title", "Date of disposal", routes.DateOfDisposalController.onPageLoad),
     Constants.valueOfDisposedPropertyId ->
-      intAnswerRowFn("value_of_disposed_property.summary", "Vale of disposed property", routes.ValueOfDisposedPropertyController.onPageLoad),
+      intAnswerRowFn("value_of_disposed_property.title", "Vale of disposed property", routes.ValueOfDisposedPropertyController.onPageLoad),
     Constants.anyAssetsPassingToDirectDescendantsId ->
-      boolAnswerRowFn("any_assets_passing_to_direct_descendants.summary",
+      boolAnswerRowFn("any_assets_passing_to_direct_descendants.title",
         "Any assets passing to direct descentdants",
         routes.AnyAssetsPassingToDirectDescendantsController.onPageLoad),
     Constants.anyBroughtForwardAllowanceId ->
-      boolAnswerRowFn("any_brought_forward_allowance.summary", "Any brought forward allowance", routes.AnyBroughtForwardAllowanceController.onPageLoad),
+      boolAnswerRowFn("any_brought_forward_allowance.title", "Any brought forward allowance", routes.AnyBroughtForwardAllowanceController.onPageLoad),
     Constants.anyBroughtForwardAllowanceOnDisposalId ->
-      boolAnswerRowFn("any_brought_forward_allowance_on_disposal.summary",
+      boolAnswerRowFn("any_brought_forward_allowance_on_disposal.title",
         "Any brought forward allowance on disposal",
         routes.AnyBroughtForwardAllowanceOnDisposalController.onPageLoad),
     Constants.anyExemptionId ->
-      boolAnswerRowFn("any_exemption.summary", "Any exemption", routes.AnyExemptionController.onPageLoad),
+      boolAnswerRowFn("any_exemption.title", "Any exemption", routes.AnyExemptionController.onPageLoad),
     Constants.assetsPassingToDirectDescendantsId ->
-      intAnswerRowFn("assets_passing_to_direct_descendants.summary",
+      intAnswerRowFn("assets_passing_to_direct_descendants.title",
         "Assets passing to direct descendants",
         routes.AssetsPassingToDirectDescendantsController.onPageLoad),
     Constants.broughtForwardAllowanceId ->
-      intAnswerRowFn("brought_forward_allowance.summary", "Brought forward allowance", routes.BroughtForwardAllowanceController.onPageLoad),
+      intAnswerRowFn("brought_forward_allowance.title", "Brought forward allowance", routes.BroughtForwardAllowanceController.onPageLoad),
     Constants.broughtForwardAllowanceOnDisposalId ->
-      intAnswerRowFn("brought_forward_allowance_on_disposal.summary",
+      intAnswerRowFn("brought_forward_allowance_on_disposal.title",
         "Brought forward allowance on disposal",
         routes.BroughtForwardAllowanceOnDisposalController.onPageLoad),
     Constants.anyPropertyCloselyInheritedId ->
-      boolAnswerRowFn("any_property_closely_inherited.summary", "Any property closely inherited", routes.AnyPropertyCloselyInheritedController.onPageLoad),
+      boolAnswerRowFn("any_property_closely_inherited.title", "Any property closely inherited", routes.AnyPropertyCloselyInheritedController.onPageLoad),
     Constants.percentageCloselyInheritedId ->
-      percentAnswerRowFn("percentage_closely_inherited.summary", "Percentage closely inherited", routes.PercentageCloselyInheritedController.onPageLoad),
+      percentAnswerRowFn("percentage_closely_inherited.title", "Percentage closely inherited", routes.PercentageCloselyInheritedController.onPageLoad),
     Constants.propertyValueId ->
-      intAnswerRowFn("property_value.summary", "Property value", routes.PropertyValueController.onPageLoad),
+      intAnswerRowFn("property_value.title", "Property value", routes.PropertyValueController.onPageLoad),
     Constants.propertyValueAfterExemptionId ->
-      propertyValueAfterExemptionAnswerRowFn("property_value_after_exemption.summary",
+      propertyValueAfterExemptionAnswerRowFn("property_value_after_exemption.title",
         "Property value after exemption",
         routes.PropertyValueAfterExemptionController.onPageLoad)
   )
