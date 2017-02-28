@@ -40,7 +40,7 @@ trait DateControllerSpecBase extends UnitSpec with WithFakeApplication with Http
   def messagesApi = injector.instanceOf[MessagesApi]
   def messages = messagesApi.preferred(fakeRequest)
 
-  def rnrbController(createController: () => SimpleControllerBase[Date],
+  def rnrbDateController(createController: () => ControllerBase[Date],
                      createView: (Option[Map[String, String]]) => HtmlFormat.Appendable,
                      cacheKey: String)(rds: Reads[Date], wts: Writes[Date]) = {
 
@@ -102,7 +102,9 @@ trait DateControllerSpecBase extends UnitSpec with WithFakeApplication with Http
       val valueMap = Map("day" -> day.toString, "month" -> month.toString, "year" -> year.toString)
       contentAsString(result) shouldBe createView(Some(valueMap)).toString
     }
+  }
 
+  def nonStartingDateController(createController: () => ControllerBase[Date])(rds: Reads[Date]) = {
     "On a page load with an expired session, return a redirect to an expired session page" in {
       expireSessionConnector()
 

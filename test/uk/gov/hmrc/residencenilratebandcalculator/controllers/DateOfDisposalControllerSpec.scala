@@ -34,7 +34,9 @@ class DateOfDisposalControllerSpec extends DateControllerSpecBase {
 
     def createController = () => new DateOfDisposalController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
-    behave like rnrbController(createController, createView, Constants.dateOfDisposalId)(Date.dateReads, Date.dateWrites)
+    behave like rnrbDateController(createController, createView, Constants.dateOfDisposalId)(Date.dateReads, Date.dateWrites)
+
+    behave like nonStartingDateController(createController)(Date.dateReads)
   }
 
 }

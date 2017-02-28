@@ -20,22 +20,50 @@ import javax.inject.{Inject, Singleton}
 
 import play.api.data.Form
 import play.api.i18n.MessagesApi
-import play.api.mvc.Request
+import play.api.libs.json.{Reads, Writes}
+import play.api.mvc.{Action, Request}
+import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.play.http.logging.SessionId
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm
-import uk.gov.hmrc.residencenilratebandcalculator.models.Date
+import uk.gov.hmrc.residencenilratebandcalculator.models.{Date, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 @Singleton
-class DateOfDeathController @Inject()(override val appConfig: FrontendAppConfig,
+class DateOfDeathController @Inject()(val appConfig: FrontendAppConfig,
                                       val messagesApi: MessagesApi,
-                                      override val sessionConnector: SessionConnector,
-                                      override val navigator: Navigator) extends SimpleControllerBase[Date] {
+                                      val sessionConnector: SessionConnector,
+                                      val navigator: Navigator) extends ControllerBase[Date] {
 
-  override val controllerId = Constants.dateOfDeathId
+  val controllerId = Constants.dateOfDeathId
 
-  override def form = () => DateForm()
+  def form = () => DateForm()
 
-  override def view(form: Option[Form[Date]], backUrl: String)(implicit request: Request[_]) = date_of_death(appConfig, form)
+  def view(form: Option[Form[Date]], backUrl: String)(implicit request: Request[_]) = date_of_death(appConfig, form)
+
+  def onPageLoad(implicit rds: Reads[Date]) = Action.async { implicit request =>
+    sessionConnector.fetch().map(
+      optionalCacheMap => {
+        val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
+        Ok(view(cacheMap.getEntry(controllerId).map(value => form().fill(value)), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
+      })
+  }
+
+  def onSubmit(implicit wts: Writes[Date]) = Action.async { implicit request =>
+    val boundForm = form().bindFromRequest()
+    boundForm.fold(
+      (formWithErrors: Form[Date]) => {
+        sessionConnector.fetch().map {
+          optionalCacheMap => {
+            val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
+            BadRequest(view(Some(formWithErrors), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
+          }
+        }
+      },
+      (value) =>
+        sessionConnector.cache[Date](controllerId, value).map(cacheMap =>
+          Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
+    )
+  }
 }
