@@ -29,6 +29,13 @@ any_downsizing_allowance.guidance.bullet3 = then no longer owned during their li
 any_downsizing_allowance.label =
 any_downsizing_allowance.summary = Are you claiming any Downsizing Allowance?
 
+any_estate_passed_to_descendants.question_number = Question 2
+any_estate_passed_to_descendants.browser_title = Question pages
+any_estate_passed_to_descendants.title = Does any of the estate pass to the deceased''s children or other direct descendants?
+any_estate_passed_to_descendants.guidance = If you have answered ''No'' you can't claim RNRB
+any_estate_passed_to_descendants.label =
+any_estate_passed_to_descendants.summary =
+
 any_exemption.question_number = Question 7
 any_exemption.browser_title = Question page
 any_exemption.title = Was any part of this property exempt from Inheritance Tax or qualify for relief?
