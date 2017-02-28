@@ -50,6 +50,8 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def dateOfDisposal = cacheMap.getEntry[LocalDate](Constants.dateOfDisposalId)
 
+  def doesGrossingUpApply = cacheMap.getEntry[Boolean](Constants.doesGrossingUpApplyId)
+
   def downsizingDetails = cacheMap.getEntry[Date](Constants.downsizingDetails)
 
   def estateHasProperty = cacheMap.getEntry[Boolean](Constants.estateHasPropertyId)

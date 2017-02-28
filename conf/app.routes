@@ -22,6 +22,9 @@ POST       /any-estate-passed-to-descendants            uk.gov.hmrc.residencenil
 GET        /any-exemption                               uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyExemptionController.onPageLoad
 POST       /any-exemption                               uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyExemptionController.onSubmit
 
+GET        /does-grossing-up-apply                      uk.gov.hmrc.residencenilratebandcalculator.controllers.DoesGrossingUpApplyController.onPageLoad
+POST       /does-grossing-up-apply                      uk.gov.hmrc.residencenilratebandcalculator.controllers.DoesGrossingUpApplyController.onSubmit
+
 GET        /any-property-closely-inherited              uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyPropertyCloselyInheritedController.onPageLoad
 POST       /any-property-closely-inherited              uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyPropertyCloselyInheritedController.onSubmit
 
