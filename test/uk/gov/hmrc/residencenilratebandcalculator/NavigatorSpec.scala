@@ -34,10 +34,22 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage("")(mock[UserAnswers]) shouldBe routes.PageNotFoundController.onPageLoad()
     }
 
-    "return a function that goes to the Gross Estate Value controller when given DateOfDeath, and the date of death is after 5 April 2017" in {
+    "return a function that goes to the Any Estate Passed To Descendants controller when given DateOfDeath, and the date of death is after 5 April 2017" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.dateOfDeath) thenReturn Some(new LocalDate(2017, 4, 6))
-      navigator.nextPage(Constants.dateOfDeathId)(mockCacheMap) shouldBe routes.GrossEstateValueController.onPageLoad()
+      navigator.nextPage(Constants.dateOfDeathId)(mockCacheMap) shouldBe routes.AnyEstatePassedToDescendantsController.onPageLoad()
+    }
+
+    "return a function that goes to the Gross Estate Value controller when given Any Estate Passed To Descendants with a value of true" in {
+      val mockCacheMap = mock[UserAnswers]
+      when(mockCacheMap.anyEstatePassedToDescendants) thenReturn Some(true)
+      navigator.nextPage(Constants.anyEstatePassedToDescendantsId)(mockCacheMap) shouldBe routes.GrossEstateValueController.onPageLoad()
+    }
+
+    "return a function that goes to the Transition Out Controller controller when given Any Estate Passed To Descendants with a value of false" in {
+      val mockCacheMap = mock[UserAnswers]
+      when(mockCacheMap.anyEstatePassedToDescendants) thenReturn Some(false)
+      navigator.nextPage(Constants.anyEstatePassedToDescendantsId)(mockCacheMap) shouldBe routes.TransitionOutController.onPageLoad()
     }
 
     "return a function that goes to the Transition controller when given DateOfDeath, and the date of death is 5 April 2017" in {
@@ -74,13 +86,13 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.propertyValueId)(mock[UserAnswers]) shouldBe routes.AnyPropertyCloselyInheritedController.onPageLoad()
     }
 
-    "return a function that goes to the Percentage Closely Inherited controller when given Any Property CLosely Inherited with a value of true" in {
+    "return a function that goes to the Percentage Closely Inherited controller when given Any Property Closely Inherited with a value of true" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.anyPropertyCloselyInherited) thenReturn Some(true)
       navigator.nextPage(Constants.anyPropertyCloselyInheritedId)(mockCacheMap) shouldBe routes.PercentageCloselyInheritedController.onPageLoad()
     }
 
-    "return a function that goes to the Any Brought Forward Allowance controller when given Any Property CLosely Inherited with a value of false" in {
+    "return a function that goes to the Any Brought Forward Allowance controller when given Any Property Closely Inherited with a value of false" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.anyPropertyCloselyInherited) thenReturn Some(false)
       navigator.nextPage(Constants.anyPropertyCloselyInheritedId)(mockCacheMap) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
@@ -144,8 +156,12 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
 
     val userAnswers = new UserAnswers(CacheMap("", Map()))
 
-    "return a call to the Date Of Death when back linking from the Gross Estate Value page" in {
-      navigator.lastPage(Constants.grossEstateValueId)(userAnswers) shouldBe routes.DateOfDeathController.onPageLoad()
+    "return a call to the Date Of Death when back linking from the Any Estate Passed To Descendant page" in {
+      navigator.lastPage(Constants.anyEstatePassedToDescendantsId)(userAnswers) shouldBe routes.DateOfDeathController.onPageLoad()
+    }
+
+    "return a call to the Any Estate Passed To Descendants when back linking from the Gross Estate Value page" in {
+      navigator.lastPage(Constants.grossEstateValueId)(userAnswers) shouldBe routes.AnyEstatePassedToDescendantsController.onPageLoad()
     }
 
     "return a call to the Gross Estate Value when back linking from the Chargeable Transfer Amount page" in {

@@ -1,0 +1,31 @@
+@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@import uk.gov.hmrc.play.views.html._
+@import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyEstatePassedToDescendantsController
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
+
+@(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[Boolean]] = None)(implicit request: Request[_], messages: Messages)
+
+@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+    title = messages("any_estate_passed_to_descendants.browser_title"),
+    appConfig = appConfig,
+    bodyClasses = None) {
+
+    @rnrbHelpers.back_link(backUrl)
+
+    @rnrbHelpers.heading_with_pre_text("any_estate_passed_to_descendants.title", "any_estate_passed_to_descendants.question_number")
+
+    <p>@messages("any_estate_passed_to_descendants.guidance")</p>
+
+    @helpers.form(action = AnyEstatePassedToDescendantsController.onSubmit(), 'autoComplete -> "off") {
+
+    @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
+    @rnrbHelpers.input_yes_no(
+        id = "value",
+        label = messages("any_estate_passed_to_descendants.label"),
+        errorKey = FormHelpers.getErrorByKey(form, "value"),
+        value = Some(FormHelpers.getYesNo(form)))
+
+        @rnrbHelpers.submit_button()
+    }
+}
