@@ -31,6 +31,7 @@ class Navigator @Inject()() {
 
     Map(
       Constants.dateOfDeathId -> (ua => getDateOfDeathRoute(ua)),
+      Constants.anyEstatePassedToDescendantsId -> (ua => getAnyEstatePassedToDescendantsRoute(ua)),
       Constants.grossEstateValueId -> (_ => ChargeableTransferAmountController.onPageLoad()),
       Constants.chargeableTransferAmountId -> (_ => EstateHasPropertyController.onPageLoad()),
       Constants.estateHasPropertyId -> (ua => getEstateHasPropertyRoute(ua)),
@@ -65,7 +66,10 @@ class Navigator @Inject()() {
   }
 
   private def getDateOfDeathRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalLocalDate(userAnswers.dateOfDeath , Constants.eligibilityDate, GrossEstateValueController.onPageLoad())
+    getRouteForOptionalLocalDate(userAnswers.dateOfDeath, Constants.eligibilityDate, AnyEstatePassedToDescendantsController.onPageLoad())
+
+  private def getAnyEstatePassedToDescendantsRoute(userAnswers: UserAnswers) =
+    getRouteForOptionalBoolean(userAnswers.anyEstatePassedToDescendants, GrossEstateValueController.onPageLoad(), TransitionOutController.onPageLoad())
 
   private def getEstateHasPropertyRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.estateHasProperty, PropertyValueController.onPageLoad(), AnyBroughtForwardAllowanceController.onPageLoad())
@@ -98,7 +102,8 @@ class Navigator @Inject()() {
 
   private val reverseRouteMap: Map[String, UserAnswers => Call] = {
     Map(
-      Constants.grossEstateValueId -> (_ => DateOfDeathController.onPageLoad()),
+      Constants.anyEstatePassedToDescendantsId -> (_ => DateOfDeathController.onPageLoad()),
+      Constants.grossEstateValueId -> (_ => AnyEstatePassedToDescendantsController.onPageLoad()),
       Constants.chargeableTransferAmountId -> (_ => GrossEstateValueController.onPageLoad()),
       Constants.estateHasPropertyId -> (_ => ChargeableTransferAmountController.onPageLoad()),
       Constants.propertyValueId -> (_ => EstateHasPropertyController.onPageLoad()),

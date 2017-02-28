@@ -30,6 +30,8 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def anyDownsizingAllowance = cacheMap.getEntry[Boolean](Constants.anyDownsizingAllowanceId)
 
+  def anyEstatePassedToDescendants = cacheMap.getEntry[Boolean](Constants.anyEstatePassedToDescendantsId)
+
   def anyExemption = cacheMap.getEntry[Boolean](Constants.anyExemptionId)
 
   def anyPropertyCloselyInherited = cacheMap.getEntry[Boolean](Constants.anyPropertyCloselyInheritedId)

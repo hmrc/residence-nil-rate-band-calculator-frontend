@@ -16,6 +16,9 @@ POST       /any-brought-forward-allowance-on-disposal   uk.gov.hmrc.residencenil
 GET        /any-downsizing-allowance                    uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyDownsizingAllowanceController.onPageLoad
 POST       /any-downsizing-allowance                    uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyDownsizingAllowanceController.onSubmit
 
+GET        /any-estate-passed-to-descendants            uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyEstatePassedToDescendantsController.onPageLoad
+POST       /any-estate-passed-to-descendants            uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyEstatePassedToDescendantsController.onSubmit
+
 GET        /any-exemption                               uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyExemptionController.onPageLoad
 POST       /any-exemption                               uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyExemptionController.onSubmit
 
