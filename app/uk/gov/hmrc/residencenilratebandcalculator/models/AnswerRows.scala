@@ -27,24 +27,24 @@ import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 object AnswerRows {
   val rowOrder = Map[String, Int](
     Constants.dateOfDeathId -> 1,
-    Constants.grossEstateValueId -> 2,
-    Constants.chargeableTransferAmountId -> 3,
-    Constants.estateHasPropertyId -> 4,
-    Constants.anyDownsizingAllowanceId -> 5,
-    Constants.dateOfDisposalId -> 6,
-    Constants.valueOfDisposedPropertyId -> 7,
-    Constants.anyAssetsPassingToDirectDescendantsId -> 8,
-    // Not obvious where the following rows are going to be in the page
-    Constants.anyBroughtForwardAllowanceId -> 109,
-    Constants.anyBroughtForwardAllowanceOnDisposalId -> 116,
-    Constants.anyExemptionId -> 107,
-    Constants.assetsPassingToDirectDescendantsId -> 115,
-    Constants.broughtForwardAllowanceId -> 110,
-    Constants.broughtForwardAllowanceOnDisposalId -> 117,
-    Constants.anyPropertyCloselyInheritedId -> 118,
-    Constants.percentageCloselyInheritedId -> 106,
-    Constants.propertyValueId -> 105,
-    Constants.propertyValueAfterExemptionId -> 108
+    Constants.anyEstatePassedToDescendantsId -> 2,
+    Constants.grossEstateValueId -> 3,
+    Constants.chargeableTransferAmountId -> 4,
+    Constants.estateHasPropertyId -> 5,
+    Constants.propertyValueId -> 6,
+    Constants.anyPropertyCloselyInheritedId -> 7,
+    Constants.percentageCloselyInheritedId -> 8,
+    Constants.anyExemptionId -> 9,
+    Constants.propertyValueAfterExemptionId -> 10,
+    Constants.anyBroughtForwardAllowanceId -> 11,
+    Constants.broughtForwardAllowanceId -> 12,
+    Constants.anyDownsizingAllowanceId -> 13,
+    Constants.dateOfDisposalId -> 14,
+    Constants.valueOfDisposedPropertyId -> 15,
+    Constants.anyAssetsPassingToDirectDescendantsId -> 16,
+    Constants.assetsPassingToDirectDescendantsId -> 17,
+    Constants.anyBroughtForwardAllowanceOnDisposalId -> 18,
+    Constants.broughtForwardAllowanceOnDisposalId -> 19
   )
 
   private def errorString(title: String) = s"$title unavailable from cache"
