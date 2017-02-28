@@ -2,7 +2,6 @@ any_assets_passing_to_direct_descendants.question_number = Question 14
 any_assets_passing_to_direct_descendants.browser_title = Question page
 any_assets_passing_to_direct_descendants.title = Not including the property, were any other assets in the estate left to a direct descendant?
 any_assets_passing_to_direct_descendants.label =
-any_assets_passing_to_direct_descendants.summary = Was anything else, other than any property mentioned at Question 4 above, inherited by the direct descendants on the death?
 
 any_brought_forward_allowance.question_number = Question 9
 any_brought_forward_allowance.browser_title = Question pages
@@ -10,14 +9,12 @@ any_brought_forward_allowance.title = If the deceased was married or in a civil 
 any_brought_forward_allowance.guidance1 = You will need to complete an IHT-436 form to make a claim for any brought-forward allowance.
 any_brought_forward_allowance.guidance2 = If you are claiming a brought-forward allowance, you must fill in an IHT-436 form now as you’ll need the value being claimed on the next page.
 any_brought_forward_allowance.label =
-any_brought_forward_allowance.summary =
 
 any_brought_forward_allowance_on_disposal.question_number = Question 16
 any_brought_forward_allowance_on_disposal.browser_title = Question page
 any_brought_forward_allowance_on_disposal.title = Is the date of the deceased’s spouse or civil partner who died before them, and which you are claiming the brought-forward allowance of, before the date you gave for the downsizing allowance to be taken from?
 any_brought_forward_allowance_on_disposal.guidance = If the date you gave for downnsizing was on or before 5 April 2017 there would not have been any brought-forward allowance available and you should answer no.
 any_brought_forward_allowance_on_disposal.label =
-any_brought_forward_allowance_on_disposal.summary =
 
 any_downsizing_allowance.question_number = Question 11
 any_downsizing_allowance.browser_title = Question pages
@@ -27,14 +24,12 @@ any_downsizing_allowance.guidance.bullet1 = owned and which has been given as pa
 any_downsizing_allowance.guidance.bullet2 = lived in while they owned it
 any_downsizing_allowance.guidance.bullet3 = then no longer owned during their lifetime
 any_downsizing_allowance.label =
-any_downsizing_allowance.summary = Are you claiming any Downsizing Allowance?
 
 any_estate_passed_to_descendants.question_number = Question 2
 any_estate_passed_to_descendants.browser_title = Question pages
 any_estate_passed_to_descendants.title = Does any of the estate pass to the deceased’s children or other direct descendants?
-any_estate_passed_to_descendants.guidance = If you have answered ''No'' you can't claim RNRB
+any_estate_passed_to_descendants.guidance = If you have answered ''No'' you can’t claim RNRB
 any_estate_passed_to_descendants.label =
-any_estate_passed_to_descendants.summary =
 
 any_exemption.question_number = Question 7
 any_exemption.browser_title = Question page
@@ -42,7 +37,6 @@ any_exemption.title = Was any part of this property exempt from Inheritance Tax 
 any_exemption.guidance1 = For some of the property to be exempt from Inheritance Tax it needs to be passing to the deceased’s spouse or civil partner, a charity or to another qualifying body.
 any_exemption.guidance2 = For the property to qualify for any relief, you should be claiming agricultural relief on an IHT-400 form.
 any_exemption.label =
-any_exemption.summary =
 
 any_property_closely_inherited.question_number = Question 6
 any_property_closely_inherited.browser_title = Question page
@@ -56,13 +50,11 @@ any_property_closely_inherited.guidance.bullet5 = an adopted child
 any_property_closely_inherited.guidance.bullet6 = a child who they fostered at any time
 any_property_closely_inherited.guidance.bullet7 = a child who they were appointed as a guardian or special guardian of when that child was under 18
 any_property_closely_inherited.label =
-any_property_closely_inherited.summary =
 
 assets_passing_to_direct_descendants.question_number = Question 15
 assets_passing_to_direct_descendants.browser_title = Question page
 assets_passing_to_direct_descendants.title = What is the value of these assets being left to any direct descendants?
 assets_passing_to_direct_descendants.label =
-assets_passing_to_direct_descendants.summary = Value of the property or other assets passing to direct descendants
 
 before_you_start.browser_title = Before you start
 before_you_start.title = Calculate the Residential Nil Rate Band (RNRB) for an estate
@@ -87,14 +79,12 @@ brought_forward_allowance.browser_title = Question page
 brought_forward_allowance.title = What is the value of the brought-forward allowance being claimed?
 brought_forward_allowance.guidance = You can find this in box 15 or 21 on the IHT-436 form.
 brought_forward_allowance.label =
-brought_forward_allowance.summary =
 
 brought_forward_allowance_on_disposal.question_number = Question 17
 brought_forward_allowance_on_disposal.browser_title = Question page
 brought_forward_allowance_on_disposal.title = Using the date you gave for downsizing, what would the value of the brought-forward allowance have been if the deceased’s spouse or civil partner had died on that same date?
 brought_forward_allowance_on_disposal.guidance = If the date you gave for downnsizing was on or before 5 April 2017 there would not have been any brought-forward allowance available and you should give the value as 0.
 brought_forward_allowance_on_disposal.label =
-brought_forward_allowance_on_disposal.summary =
 
 chargeable_transfer_amount.question_number = Question 3
 chargeable_transfer_amount.browser_title = Question page
@@ -103,7 +93,6 @@ chargeable_transfer_amount.guidance1 = Start with the value of assets in the est
 chargeable_transfer_amount.guidance2 = Estate exemptions are the total value of assets left in a will to a spouse or civil partner, a charity or another qualifying body. Relief that can be claimed against an estate includes business and agricultural relief.
 chargeable_transfer_amount.guidance3 = If you have done an online estate report, you’ll only need to take off any estate exemptions. If you have done an IHT-400 form, you might have estate exemptions and any relief that is being claimed against the estate.
 chargeable_transfer_amount.label =
-chargeable_transfer_amount.summary = Amount of the chargeable transfer on death
 
 check_answers.browser_title = Check your answers
 check_answers.title = Check your answers
@@ -119,7 +108,6 @@ date_of_death.title = What was the date of death?
 date_of_death.guidance = Residence Nil Rate Band (RNRB) started on 6 April 2017. If the date of death is before this date, there’s no increase to the Inheritance Tax threshold.
 date_of_death.example = For example, 6 4 2017
 date_of_death.label = Date of death
-date_of_death.summary = Date of death for the deceased
 
 date_of_disposal.question_number = Question 12
 date_of_disposal.browser_title = Question page
@@ -128,7 +116,6 @@ date_of_disposal.guidance1 = This is the date when the deceased stopped owning t
 date_of_disposal.guidance2 = If there is more than 1 date, like a half share was given away and then later on another share was given away, only 1 of those dates can be given.
 date_of_disposal.hint = For example, 6 4 2017
 date_of_disposal.label =
-date_of_disposal.summary = Date the property interest was disposed of
 
 error.invalid_date = Enter a valid date
 error.number = Please enter a valid number
@@ -141,7 +128,6 @@ estate_has_property.browser_title = Question page
 estate_has_property.title = Does the estate include a house that the deceased ever lived at?
 estate_has_property.guidance = The deceased could have lived at this property at any time in their life and it doesn’t have to have been left to a direct descendent in their will.
 estate_has_property.label =
-estate_has_property.summary = Does the deceased’s estate include any residential property that has ever been the deceased’s residence while they owned that property?
 
 exit_questionnaire.browser_title = Survey
 exit_questionnaire.title = Survey
@@ -163,7 +149,6 @@ gross_estate_value.guidance1 = You can find these values on the online estate re
 gross_estate_value.guidance2 = If you have not worked out the total value of assets and debts, you’ll need to do this before you continue to work out the RNRB for this estate.
 gross_estate_value.guidance3 = You’ll need to write this value down because you’ll need it later.
 gross_estate_value.label =
-gross_estate_value.summary = Total value of the estate at the date of death
 
 index.browser_title = Residence Nil-rate Band Calculator
 index.title = Residence Nil-rate Band Calculator
@@ -179,7 +164,6 @@ percentage_closely_inherited.question_number = Question 6
 percentage_closely_inherited.browser_title = Question page
 percentage_closely_inherited.title = What percentage of the property that you have just given the value of passes to a direct descendant or their spouse or civil partner?
 percentage_closely_inherited.label =
-percentage_closely_inherited.summary =
 
 planning.question_number = Before you start
 planning.browser_title = Planning
@@ -193,7 +177,6 @@ property_value.guidance1 = This is the value of the property that you have given
 property_value.guidance2 = You must take off the remaining mortgage value on that property at the date of death, which you will have given on the estate report or IHT-400 form. If there were any other debts secured against the property, these should also be taken off the value.
 property_value.guidance3 = If there was more than one property in the estate that can be used here, whoever is responsible for the deceased’s estate should pick 1 to use.
 property_value.label =
-property_value.summary =
 property_value.greater_than_gross_estate_value.error = Property Value cannot be greater than the Gross Estate Value
 
 property_value_after_exemption.question_number = Question 8
@@ -202,7 +185,6 @@ property_value_after_exemption.title = Values
 property_value_after_exemption.value.title = What is the value of the property that you have already given minus the amount that is being left to a direct descendant?
 property_value_after_exemption.value.label =
 property_value_after_exemption.value.guidance = If the value of the property that you gave earlier was £500,000 and £260,000 of it was being left to a direct descendant, you would give a value of £240,000 below.
-property_value_after_exemption.summary =
 property_value_after_exemption.value_closely_inherited.title = What is the value of the property that you have already given minus the amount that is passing to a spouse or civil partner, a charity or another qualifying body?
 property_value_after_exemption.value_closely_inherited.label =
 property_value_after_exemption.value_closely_inherited.guidance = If the value of the property that you gave earlier was £500,000 and £240,000 of it was passing to a spouse or civil partner, you would give a value of £260,000 below.
@@ -266,4 +248,3 @@ value_of_disposed_property.guidance1 = If the deceased sold the property, give t
 value_of_disposed_property.guidance2 = Where only part of the property stopped being owned by the deceased, like when they have given a share of it away to someone, give the open market value of that share minus any mortgage owed on that date.
 value_of_disposed_property.guidance3 = Do not take off any solicitor’s or estate agent’s fees.
 value_of_disposed_property.label =
-value_of_disposed_property.summary = Value of the property interest disposed of
