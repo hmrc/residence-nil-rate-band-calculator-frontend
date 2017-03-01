@@ -25,7 +25,7 @@ class ChargeableValueOfResidenceControllerSpec extends SimpleControllerSpecBase 
 
 
   "Chargeable Value of Residence Controller" must {
-    val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DoesGrossingUpApplyController.onPageLoad().url
+    val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DoesGrossingUpApplyToResidenceController.onPageLoad().url
 
     def createView = (value: Option[Map[String, String]]) => value match {
       case None => chargeable_value_of_residence(frontendAppConfig, url)(fakeRequest, messages)
@@ -36,7 +36,7 @@ class ChargeableValueOfResidenceControllerSpec extends SimpleControllerSpecBase 
 
     val testValue = 123
 
-    val valuesToCacheBeforeSubmission = Map(Constants.doesGrossingUpApplyId -> testValue)
+    val valuesToCacheBeforeSubmission = Map(Constants.doesGrossingUpApplyToResidenceId -> testValue)
 
     behave like rnrbController(createController, createView, Constants.chargeableValueOfResidenceId,
       testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)

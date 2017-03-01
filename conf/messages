@@ -129,12 +129,19 @@ date_of_disposal.guidance2 = If there is more than 1 date, like a half share was
 date_of_disposal.hint = For example, 6 4 2017
 date_of_disposal.label =
 
-does_grossing_up_apply.question_number = Question 8
-does_grossing_up_apply.browser_title = Questions page
-does_grossing_up_apply.title = Does grossing-up or interaction apply?
-does_grossing_up_apply.guidance =
-does_grossing_up_apply.label =
-does_grossing_up_apply.summary =
+does_grossing_up_apply_to_other_property.question_number = Question 15
+does_grossing_up_apply_to_other_property.browser_title = Questions page
+does_grossing_up_apply_to_other_property.title = Does grossing-up or interaction apply?
+does_grossing_up_apply_to_other_property.guidance =
+does_grossing_up_apply_to_other_property.label =
+does_grossing_up_apply_to_other_property.summary =
+
+does_grossing_up_apply_to_residence.question_number = Question 8
+does_grossing_up_apply_to_residence.browser_title = Questions page
+does_grossing_up_apply_to_residence.title = Does grossing-up or interaction apply?
+does_grossing_up_apply_to_residence.guidance =
+does_grossing_up_apply_to_residence.label =
+does_grossing_up_apply_to_residence.summary =
 
 error.invalid_date = Enter a valid date
 error.number = Please enter a valid number
