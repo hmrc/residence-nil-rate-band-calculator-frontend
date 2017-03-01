@@ -16,12 +16,13 @@ any_brought_forward_allowance_on_disposal.guidance = If the date you gave for do
 any_brought_forward_allowance_on_disposal.label =
 
 any_downsizing_allowance.question_number = Question 11
-any_downsizing_allowance.browser_title = Question pages
-any_downsizing_allowance.title = Did the deceased downsize their property after 7 July 2015 and you are claiming a downsizing allowance?
-any_downsizing_allowance.guidance = In order to claim a downsizing allowance, the deceased must have had a property that they:
-any_downsizing_allowance.guidance.bullet1 = owned and which has been given as part of their estate on the estate report or IHT-400 form
-any_downsizing_allowance.guidance.bullet2 = lived in while they owned it
-any_downsizing_allowance.guidance.bullet3 = then no longer owned during their lifetime
+any_downsizing_allowance.browser_title = Are you claiming any downsizing allowance?
+any_downsizing_allowance.title = Are you claiming any downsizing allowance?
+any_downsizing_allowance.guidance1 = In order to claim downsizing allowance:
+any_downsizing_allowance.guidance1.bullet1 = the deceased must have disposed of a former home and either downsized to a less valuable home, or ceased to own a home, on or after 8 July 2015
+any_downsizing_allowance.guidance1.bullet2 = the former home would have qualified for the RNRB if it had been kept until death
+any_downsizing_allowance.guidance1.bullet3 = at least some of the estate is inherited by the deceased’s direct descendants
+any_downsizing_allowance.guidance2 = The downsizing addition can’t exceed the maximum amount of RNRB that would have been available if the disposal or downsizing hadn’t happened.
 any_downsizing_allowance.label =
 
 any_estate_passed_to_descendants.question_number = Question 2

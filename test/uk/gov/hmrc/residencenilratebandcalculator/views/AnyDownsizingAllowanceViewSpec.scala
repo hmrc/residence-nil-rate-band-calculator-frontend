@@ -30,7 +30,12 @@ class AnyDownsizingAllowanceViewSpec extends BooleanViewSpecBase {
 
   "Any Downsizing Allowance View" must {
 
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance", "guidance.bullet1", "guidance.bullet2", "guidance.bullet3")
+    behave like rnrbPage[Boolean](createView, messageKeyPrefix,
+      "guidance1",
+      "guidance1.bullet1",
+      "guidance1.bullet2",
+      "guidance1.bullet3",
+      "guidance2")
 
     behave like pageWithBackLink[Boolean](createView)
 
