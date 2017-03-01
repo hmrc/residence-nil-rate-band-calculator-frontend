@@ -95,10 +95,11 @@ chargeable_transfer_amount.guidance3 = If you have done an online estate report,
 chargeable_transfer_amount.label =
 
 chargeable_value_of_residence.browser_title = Question page
+chargeable_value_of_residence.question_number =
 chargeable_value_of_residence.title = What is the value of the property that you have already given minus the amount that is being left to a direct descendant?
-chargeable_value_of_residence.value.title = What is the value of the property that you have already given minus the amount that is being left to a direct descendant?
-chargeable_value_of_residence.value.label =
-chargeable_value_of_residence.value.guidance = If the value of the property that you gave earlier was £500,000 and £260,000 of it was being left to a direct descendant, you would give a value of £240,000 below.
+chargeable_value_of_residence.label =
+chargeable_value_of_residence.guidance = If the value of the property that you gave earlier was £500,000 and £260,000 of it was being left to a direct descendant, you would give a value of £240,000 below.
+chargeable_value_of_residence_closely_inherited.question_number =
 chargeable_value_of_residence_closely_inherited.title = What is the value of the property that you have already given minus the amount that is passing to a spouse or civil partner, a charity or another qualifying body?
 chargeable_value_of_residence_closely_inherited.label =
 chargeable_value_of_residence_closely_inherited.guidance = If the value of the property that you gave earlier was £500,000 and £240,000 of it was passing to a spouse or civil partner, you would give a value of £260,000 below.

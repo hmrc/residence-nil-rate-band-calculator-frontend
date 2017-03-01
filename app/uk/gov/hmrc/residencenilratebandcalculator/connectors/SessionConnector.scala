@@ -59,7 +59,8 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
         Constants.anyPropertyCloselyInheritedId,
         Constants.percentageCloselyInheritedId,
         Constants.anyExemptionId,
-        Constants.chargeableValueOfResidenceId),
+        Constants.chargeableValueOfResidenceId,
+        Constants.chargeableValueOfResidenceCloselyInheritedId),
       cacheMap)
 
   private def anyPropertyCloselyInherited[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
@@ -67,13 +68,15 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
       Set(
         Constants.percentageCloselyInheritedId,
         Constants.anyExemptionId,
-        Constants.chargeableValueOfResidenceId),
+        Constants.chargeableValueOfResidenceId,
+        Constants.chargeableValueOfResidenceCloselyInheritedId),
       cacheMap)
 
   private def anyExemptionClearance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
     clearIfFalse(Constants.anyExemptionId, value,
       Set(
         Constants.chargeableValueOfResidenceId,
+        Constants.chargeableValueOfResidenceCloselyInheritedId,
         Constants.doesGrossingUpApplyId),
       cacheMap)
 

@@ -1,6 +1,6 @@
+@import uk.gov.hmrc.play.views.html._
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
-@import uk.gov.hmrc.play.views.html._
 
 @(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[Int]] = None)(implicit request: Request[_], messages: Messages)
 
@@ -14,6 +14,9 @@
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeableValueOfResidenceCloselyInheritedController.onSubmit(),
         'autoComplete -> "off") {
 
+        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
+        <h1 class="pre-heading">@messages("chargeable_value_of_residence_closely_inherited.question_number")</h1>
         <h1>@messages("chargeable_value_of_residence_closely_inherited.title")</h1>
         <p>@messages("chargeable_value_of_residence_closely_inherited.guidance")</p>
 

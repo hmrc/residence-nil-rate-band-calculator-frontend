@@ -14,14 +14,17 @@
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeableValueOfResidenceController.onSubmit(),
         'autoComplete -> "off") {
 
-        <h1>@messages("chargeable_value_of_residence.value.title")</h1>
-        <p>@messages("chargeable_value_of_residence.value.guidance")</p>
+        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
+        <h1 class="pre-heading">@messages("chargeable_value_of_residence.question_number")</h1>
+        <h1>@messages("chargeable_value_of_residence.title")</h1>
+        <p>@messages("chargeable_value_of_residence.guidance")</p>
 
         @rnrbHelpers.input_text(
             id = "value",
             name = "value",
             value = Some(FormHelpers.getValue[Int](form).toString),
-            label = messages("chargeable_value_of_residence.value.label"),
+            label = messages("chargeable_value_of_residence.label"),
             secondaryLabel = Some("currency"),
             errorKey = FormHelpers.getErrorByKey(form, "value")
         )
