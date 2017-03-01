@@ -96,10 +96,8 @@ brought_forward_allowance_on_disposal.label =
 
 chargeable_transfer_amount.question_number = Question 3
 chargeable_transfer_amount.browser_title = Question page
-chargeable_transfer_amount.title = What is the value that you have just given minus any estate exemptions claimed?
-chargeable_transfer_amount.guidance1 = Start with the value of assets in the estate minus debts owed, which you have just given. Then take off any estate exemptions and relief that is being claimed against the estate.
-chargeable_transfer_amount.guidance2 = Estate exemptions are the total value of assets left in a will to a spouse or civil partner, a charity or another qualifying body. Relief that can be claimed against an estate includes business and agricultural relief.
-chargeable_transfer_amount.guidance3 = If you have done an online estate report, you’ll only need to take off any estate exemptions. If you have done an IHT-400 form, you might have estate exemptions and any relief that is being claimed against the estate.
+chargeable_transfer_amount.title = What is the amount of the total chargeable estate on death?
+chargeable_transfer_amount.guidance = IHT400, box 108.
 chargeable_transfer_amount.label =
 
 check_answers.browser_title = Check your answers
