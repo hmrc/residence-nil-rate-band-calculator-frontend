@@ -39,15 +39,15 @@ any_estate_passed_to_descendants.guidance2.bullet4 = if the deceased was an appo
 any_estate_passed_to_descendants.guidance3 = For RNRB purposes a ‘child’ does not have to be under 18 at the deceased’s date of death, and a ‘step-child’ is limited to someone whose parent is, or was, the spouse or civil partner of the deceased.
 any_estate_passed_to_descendants.guidance4 = A direct descendant also includes:
 any_estate_passed_to_descendants.guidance4.bullet1 = spouse or civil partner of the child
-any_estate_passed_to_descendants.guidance4.bullet2 = grandchild or great-grandchild, etc. (including their widow, widower or surviving civil partner, provided that the widow, widower or surviving civilpartner had not remarried or entered into a new civil partnership before the deceased’s date of death)
+any_estate_passed_to_descendants.guidance4.bullet2 = grandchild or great-grandchild, etc. (including their widow, widower or surviving civil partner, provided that the widow, widower or surviving civil partner had not remarried or entered into a new civil partnership before the deceased’s date of death)
 any_estate_passed_to_descendants.guidance5 = Direct descendants do not include nephews, nieces, siblings or other relatives not included in the list above.
 any_estate_passed_to_descendants.label =
 
 any_exemption.question_number = Question 7
-any_exemption.browser_title = Question page
-any_exemption.title = Was any part of this property exempt from Inheritance Tax or qualify for relief?
-any_exemption.guidance1 = For some of the property to be exempt from Inheritance Tax it needs to be passing to the deceased’s spouse or civil partner, a charity or to another qualifying body.
-any_exemption.guidance2 = For the property to qualify for any relief, you should be claiming agricultural relief on an IHT-400 form.
+any_exemption.browser_title = Is any part of the residence exempt from inheritance tax, or does any part of it qualify for any relief on the death?
+any_exemption.title = Is any part of the residence exempt from inheritance tax, or does any part of it qualify for any relief on the death?
+any_exemption.guidance1 = If any part of the residence passes to an exempt beneficiary, such as the deceased's spouse or civil partner or to a charity, or if a relief, such as agricultural relief, applies to any part of that property answer ‘yes’.
+any_exemption.guidance2 = If the residence falls into the residue of the estate and part of the residue passes to an exempt beneficiary, answer ‘yes’ to this question.
 any_exemption.label =
 
 any_property_closely_inherited.question_number = Question 6
