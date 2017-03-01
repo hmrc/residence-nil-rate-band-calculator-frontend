@@ -35,7 +35,7 @@ object AnswerRows {
     Constants.anyPropertyCloselyInheritedId -> 7,
     Constants.percentageCloselyInheritedId -> 8,
     Constants.anyExemptionId -> 9,
-    Constants.doesGrossingUpApplyId -> 10,
+    Constants.doesGrossingUpApplyToResidenceId -> 10,
     Constants.propertyValueAfterExemptionId -> 11,
     Constants.anyBroughtForwardAllowanceId -> 12,
     Constants.broughtForwardAllowanceId -> 13,
@@ -43,9 +43,10 @@ object AnswerRows {
     Constants.dateOfDisposalId -> 15,
     Constants.valueOfDisposedPropertyId -> 16,
     Constants.anyAssetsPassingToDirectDescendantsId -> 17,
-    Constants.assetsPassingToDirectDescendantsId -> 18,
-    Constants.anyBroughtForwardAllowanceOnDisposalId -> 19,
-    Constants.broughtForwardAllowanceOnDisposalId -> 20
+    Constants.doesGrossingUpApplyToOtherPropertyId -> 18,
+    Constants.assetsPassingToDirectDescendantsId -> 19,
+    Constants.anyBroughtForwardAllowanceOnDisposalId -> 20,
+    Constants.broughtForwardAllowanceOnDisposalId -> 21
   )
 
   private def errorString(title: String) = s"$title unavailable from cache"
@@ -106,7 +107,6 @@ object AnswerRows {
         routes.AnyBroughtForwardAllowanceOnDisposalController.onPageLoad),
     Constants.anyExemptionId ->
       boolAnswerRowFn("any_exemption.title", "Any exemption", routes.AnyExemptionController.onPageLoad),
-    Constants.doesGrossingUpApplyId -> boolAnswerRowFn("does_grossing_up_apply.title", "Does grossing up apply", routes.GrossEstateValueController.onPageLoad),
     Constants.assetsPassingToDirectDescendantsId ->
       intAnswerRowFn("assets_passing_to_direct_descendants.title",
         "Assets passing to direct descendants",
@@ -119,6 +119,14 @@ object AnswerRows {
         routes.BroughtForwardAllowanceOnDisposalController.onPageLoad),
     Constants.anyPropertyCloselyInheritedId ->
       boolAnswerRowFn("any_property_closely_inherited.title", "Any property closely inherited", routes.AnyPropertyCloselyInheritedController.onPageLoad),
+    Constants.doesGrossingUpApplyToOtherPropertyId ->
+      boolAnswerRowFn("does_grossing_up_apply_to_other_property.title",
+        "Does grossing up apply to other property",
+        routes.DoesGrossingUpApplyToOtherPropertyController.onPageLoad),
+    Constants.doesGrossingUpApplyToResidenceId ->
+      boolAnswerRowFn("does_grossing_up_apply_to_residence.title",
+        "Does grossing up apply to residence",
+        routes.DoesGrossingUpApplyToResidenceController.onPageLoad),
     Constants.percentageCloselyInheritedId ->
       percentAnswerRowFn("percentage_closely_inherited.title", "Percentage closely inherited", routes.PercentageCloselyInheritedController.onPageLoad),
     Constants.propertyValueId ->
