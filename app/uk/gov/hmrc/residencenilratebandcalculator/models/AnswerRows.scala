@@ -120,7 +120,7 @@ object AnswerRows {
     Constants.anyPropertyCloselyInheritedId ->
       boolAnswerRowFn("any_property_closely_inherited.title", "Any property closely inherited", routes.AnyPropertyCloselyInheritedController.onPageLoad),
     Constants.doesGrossingUpApplyToOtherPropertyId ->
-      boolAnswerRowFn("does_grossing_up_apply_to_other_property",
+      boolAnswerRowFn("does_grossing_up_apply_to_other_property.title",
         "Does grossing up apply to other property",
         routes.DoesGrossingUpApplyToOtherPropertyController.onPageLoad),
     Constants.doesGrossingUpApplyToResidenceId ->
