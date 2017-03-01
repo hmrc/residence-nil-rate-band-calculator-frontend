@@ -31,7 +31,7 @@ class PropertyValueViewSpec extends IntViewSpecBase {
 
   "Property Value View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance3")
+    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance3", "guidance4")
 
     behave like pageWithBackLink[Int](createView)
 

@@ -177,11 +177,12 @@ percentage_closely_inherited.title = What percentage of the property that you ha
 percentage_closely_inherited.label =
 
 property_value.question_number = Question 5
-property_value.browser_title = Question page
-property_value.title = What was the value of the property on the date of death after any debts have been taken off?
-property_value.guidance1 = This is the value of the property that you have given on either the online estate report or the IHT-400 form and that the deceased lived in at any time during their life.
-property_value.guidance2 = You must take off the remaining mortgage value on that property at the date of death, which you will have given on the estate report or IHT-400 form. If there were any other debts secured against the property, these should also be taken off the value.
-property_value.guidance3 = If there was more than one property in the estate that can be used here, whoever is responsible for the deceased’s estate should pick 1 to use.
+property_value.browser_title = What is the value of the residence at the date of death?
+property_value.title = What is the value of the residence at the date of death?
+property_value.guidance1 = You need to include the value of the deceased’s interest in the residence here.
+property_value.guidance2 = Deduct any mortgages or other debts charged on the residence from the gross value and include the net value in this box.
+property_value.guidance3 = This is the value that you can claim RNRB on.
+property_value.guidance4 = If there was more than one residence in the estate at the date of death, only one residence can be taken into account. You can nominate which residence you want to claim RNRB on.
 property_value.label =
 property_value.greater_than_gross_estate_value.error = Property Value cannot be greater than the Gross Estate Value
 
