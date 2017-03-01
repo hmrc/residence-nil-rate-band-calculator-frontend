@@ -51,16 +51,9 @@ any_exemption.guidance2 = For the property to qualify for any relief, you should
 any_exemption.label =
 
 any_property_closely_inherited.question_number = Question 6
-any_property_closely_inherited.browser_title = Question page
-any_property_closely_inherited.title = Does any part of the property that you have just given the value of pass to a direct descendant or their spouse or civil partner?
-any_property_closely_inherited.guidance = A person’s direct descendant is:
-any_property_closely_inherited.guidance.bullet1 = a child, grandchild or great grandchild, including any of their children
-any_property_closely_inherited.guidance.bullet2 = the spouse or civil partner of a child, grandchild or great grandchild, including any of their children
-any_property_closely_inherited.guidance.bullet3 = a widow, widower or surviving civil partner of a child, grandchild or great grandchild, including any of their children
-any_property_closely_inherited.guidance.bullet4 = a child who is, or was at any part of their life, their step-child
-any_property_closely_inherited.guidance.bullet5 = an adopted child
-any_property_closely_inherited.guidance.bullet6 = a child who they fostered at any time
-any_property_closely_inherited.guidance.bullet7 = a child who they were appointed as a guardian or special guardian of when that child was under 18
+any_property_closely_inherited.browser_title = Did any part of this residence pass to a direct descendant or their spouse or civil partner?
+any_property_closely_inherited.title = Did any part of this residence pass to a direct descendant or their spouse or civil partner?
+any_property_closely_inherited.guidance = This will be listed in the will of the person who has died.
 any_property_closely_inherited.label =
 
 assets_passing_to_direct_descendants.question_number = Question 15
