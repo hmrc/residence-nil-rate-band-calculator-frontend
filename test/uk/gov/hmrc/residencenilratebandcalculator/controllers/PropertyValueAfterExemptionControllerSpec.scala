@@ -52,7 +52,7 @@ class PropertyValueAfterExemptionControllerSpec extends UnitSpec with WithFakeAp
   def createController = () => new PropertyValueAfterExemptionController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
   def createView = (values: Option[PropertyValueAfterExemption]) => {
-    val backUrl = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DoesGrossingUpApplyController.onPageLoad().url
+    val backUrl = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DoesGrossingUpApplyToResidenceController.onPageLoad().url
 
     values match {
       case None => property_value_after_exemption(frontendAppConfig, backUrl)(fakeRequest, messages)

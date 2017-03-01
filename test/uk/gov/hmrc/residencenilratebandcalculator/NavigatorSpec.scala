@@ -144,22 +144,22 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.anyExemptionId)(mockCacheMap) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
     }
 
-    "return a call to the Does Grossing Up Apply onPageLoad method when exemptions apply to the property" in {
+    "return a call to the Does Grossing Up Apply To Residence onPageLoad method when exemptions apply to the property" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.anyExemption) thenReturn Some(true)
-      navigator.nextPage(Constants.anyExemptionId)(mockCacheMap) shouldBe routes.DoesGrossingUpApplyController.onPageLoad()
+      navigator.nextPage(Constants.anyExemptionId)(mockCacheMap) shouldBe routes.DoesGrossingUpApplyToResidenceController.onPageLoad()
     }
 
-    "return a call to Property Value After Exemption onPageLoad method when grossing up does not apply" in {
+    "return a call to Property Value After Exemption onPageLoad method when grossing up does not apply to the residence" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.doesGrossingUpApply) thenReturn Some(false)
-      navigator.nextPage(Constants.doesGrossingUpApplyId)(mockCacheMap) shouldBe routes.PropertyValueAfterExemptionController.onPageLoad()
+      when(mockCacheMap.doesGrossingUpApplyToResidence) thenReturn Some(false)
+      navigator.nextPage(Constants.doesGrossingUpApplyToResidenceId)(mockCacheMap) shouldBe routes.PropertyValueAfterExemptionController.onPageLoad()
     }
 
-    "return a call to Transition Out onPageLoad method when grossing up does apply" in {
+    "return a call to Transition Out onPageLoad method when grossing up does apply to the residence" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.doesGrossingUpApply) thenReturn Some(true)
-      navigator.nextPage(Constants.doesGrossingUpApplyId)(mockCacheMap) shouldBe routes.TransitionOutController.onPageLoad()
+      when(mockCacheMap.doesGrossingUpApplyToResidence) thenReturn Some(true)
+      navigator.nextPage(Constants.doesGrossingUpApplyToResidenceId)(mockCacheMap) shouldBe routes.TransitionOutController.onPageLoad()
     }
 
     "return a call to the Any Brought Forward Allowance onPageLoad method from the Property Value After Exemption controller" in {
@@ -200,12 +200,12 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.anyExemptionId)(userAnswers) shouldBe routes.PercentageCloselyInheritedController.onPageLoad()
     }
 
-    "return a call to the Any Exemptions when back linking from the Does Grossing Up Apply page" in {
-      navigator.lastPage(Constants.doesGrossingUpApplyId)(userAnswers) shouldBe routes.AnyExemptionController.onPageLoad()
+    "return a call to the Any Exemptions when back linking from the Does Grossing Up Apply To Residence page" in {
+      navigator.lastPage(Constants.doesGrossingUpApplyToResidenceId)(userAnswers) shouldBe routes.AnyExemptionController.onPageLoad()
     }
 
-    "return a call to the Does Grossing Up Apply when back linking from the Property Value After Exemption page" in {
-      navigator.lastPage(Constants.propertyValueAfterExemptionId)(userAnswers) shouldBe routes.DoesGrossingUpApplyController.onPageLoad()
+    "return a call to the Does Grossing Up Apply To Residence when back linking from the Property Value After Exemption page" in {
+      navigator.lastPage(Constants.propertyValueAfterExemptionId)(userAnswers) shouldBe routes.DoesGrossingUpApplyToResidenceController.onPageLoad()
     }
 
     "return a call to the Estate Has Property when back linking from the Any Brought Forward Allowance page" in {

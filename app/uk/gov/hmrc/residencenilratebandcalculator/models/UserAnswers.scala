@@ -50,7 +50,7 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def dateOfDisposal = cacheMap.getEntry[LocalDate](Constants.dateOfDisposalId)
 
-  def doesGrossingUpApply = cacheMap.getEntry[Boolean](Constants.doesGrossingUpApplyId)
+  def doesGrossingUpApplyToResidence = cacheMap.getEntry[Boolean](Constants.doesGrossingUpApplyToResidenceId)
 
   def downsizingDetails = cacheMap.getEntry[Date](Constants.downsizingDetails)
 
