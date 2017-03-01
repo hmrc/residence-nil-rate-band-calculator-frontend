@@ -58,8 +58,9 @@ any_property_closely_inherited.guidance = This will be listed in the will of the
 any_property_closely_inherited.label =
 
 assets_passing_to_direct_descendants.question_number = Question 15
-assets_passing_to_direct_descendants.browser_title = Question page
-assets_passing_to_direct_descendants.title = What is the value of these assets being left to any direct descendants?
+assets_passing_to_direct_descendants.browser_title = What is the total value of the other assets passing to direct descendants?
+assets_passing_to_direct_descendants.title = What is the total value of the other assets passing to direct descendants?
+assets_passing_to_direct_descendants.guidance = This is the value that is taken into account for Inheritance Tax purposes of the other assets.
 assets_passing_to_direct_descendants.label =
 
 before_you_start.browser_title = Calculate the Residential Nil Rate Band (RNRB) for the estate of someone who has died
