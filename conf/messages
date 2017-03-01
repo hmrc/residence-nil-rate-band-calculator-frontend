@@ -1,6 +1,7 @@
 any_assets_passing_to_direct_descendants.question_number = Question 14
-any_assets_passing_to_direct_descendants.browser_title = Question page
-any_assets_passing_to_direct_descendants.title = Not including the property, were any other assets in the estate left to a direct descendant?
+any_assets_passing_to_direct_descendants.browser_title = Other than the property that you are claiming RNRB on, does any other assets pass to a direct descendant following the death?
+any_assets_passing_to_direct_descendants.title = Other than the property that you are claiming RNRB on, does any other assets pass to a direct descendant following the death?
+any_assets_passing_to_direct_descendants.guidance = If there are no other assets passing to direct descendants, other than the property you have already mentioned, there won’t be any downsizing allowance.
 any_assets_passing_to_direct_descendants.label =
 
 any_brought_forward_allowance.question_number = Question 9
