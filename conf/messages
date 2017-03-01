@@ -4,10 +4,9 @@ any_assets_passing_to_direct_descendants.title = Not including the property, wer
 any_assets_passing_to_direct_descendants.label =
 
 any_brought_forward_allowance.question_number = Question 9
-any_brought_forward_allowance.browser_title = Question pages
-any_brought_forward_allowance.title = If the deceased was married or in a civil partnership during their life and their spouse or civil partner died first, is there a claim being made for a brought-forward allowance from that estate?
-any_brought_forward_allowance.guidance1 = You will need to complete an IHT-436 form to make a claim for any brought-forward allowance.
-any_brought_forward_allowance.guidance2 = If you are claiming a brought-forward allowance, you must fill in an IHT-436 form now as you’ll need the value being claimed on the next page.
+any_brought_forward_allowance.browser_title = Do you wish to transfer any unused residence nil rate band (TRNRB) from the estate of a pre-deceased spouse or civil partner of the deceased?
+any_brought_forward_allowance.title = Do you wish to transfer any unused residence nil rate band (TRNRB) from the estate of a pre-deceased spouse or civil partner of the deceased?
+any_brought_forward_allowance.guidance = If you answer ‘yes’ you will need to complete form IHT436 ‘Claim to transfer any unused residence nil rate band’ (TRNRB).
 any_brought_forward_allowance.label =
 
 any_brought_forward_allowance_on_disposal.question_number = Question 16
