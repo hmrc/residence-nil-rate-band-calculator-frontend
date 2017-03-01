@@ -36,8 +36,8 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
   val assetsPassingToDirectDescendants = 7
   val broughtForwardAllowanceOnDisposal = 8
   val dateOfDisposal = new LocalDate(2018, 2, 2)
-  val propertyValueAfterExemption = 9
-  val propertyValueAfterExemptionCloselyInherited = 10
+  val chargeableValueOfResidence = 9
+  val chargeableValueOfResidenceCloselyInherited = 9
 
   var userAnswers: UserAnswers = _
 
@@ -60,8 +60,8 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
                 estateHasProperty: Option[Boolean] = None,
                 grossEstateValue: Option[Int] = None,
                 percentageCloselyInherited: Option[Int] = None,
-                propertyValueAfterExemption: Option[Int] = None,
-                propertyValueAfterExemptionCloselyInherited: Option[Int] = None,
+                chargeableValueOfResidence: Option[Int] = None,
+                chargeableValueOfResidenceCloselyInherited: Option[Int] = None,
                 propertyValue: Option[Int] = None,
                 valueOfDisposedProperty: Option[Int] = None
                ) = {
@@ -80,8 +80,8 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
     when(userAnswers.estateHasProperty) thenReturn estateHasProperty
     when(userAnswers.grossEstateValue) thenReturn grossEstateValue
     when(userAnswers.percentageCloselyInherited) thenReturn percentageCloselyInherited
-    when(userAnswers.propertyValueAfterExemption) thenReturn propertyValueAfterExemption
-    when(userAnswers.propertyValueAfterExemptionCloselyInherited) thenReturn propertyValueAfterExemptionCloselyInherited
+    when(userAnswers.chargeableValueOfResidence) thenReturn chargeableValueOfResidence
+    when(userAnswers.chargeableValueOfResidenceCloselyInherited) thenReturn chargeableValueOfResidenceCloselyInherited
     when(userAnswers.propertyValue) thenReturn propertyValue
     when(userAnswers.valueOfDisposedProperty) thenReturn valueOfDisposedProperty
   }
@@ -176,15 +176,15 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
         estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(true),
         percentageCloselyInherited = Some(percentageCloselyInherited), anyExemption = Some(true),
-        propertyValueAfterExemption = Some(propertyValueAfterExemption),
-        propertyValueAfterExemptionCloselyInherited = Some(propertyValueAfterExemption),
+        chargeableValueOfResidence = Some(chargeableValueOfResidence),
+        chargeableValueOfResidenceCloselyInherited = Some(chargeableValueOfResidenceCloselyInherited),
         anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(false))
 
       "construct correctly from user answers" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
         calculationInput shouldBe CalculationInput(dateOfDeath, grossEstateValue, chargeableTransferAmount,
-          propertyValue, percentageCloselyInherited, 0, Some(PropertyValueAfterExemption(9,9)), None)
+          propertyValue, percentageCloselyInherited, 0, Some(ChargeableValueOfResidence(9,9)), None)
       }
 
       "render to JSON" in {

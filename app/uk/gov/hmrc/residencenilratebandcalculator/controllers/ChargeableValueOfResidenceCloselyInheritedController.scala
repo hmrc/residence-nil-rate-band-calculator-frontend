@@ -31,7 +31,7 @@ class ChargeableValueOfResidenceCloselyInheritedController @Inject()(override va
                                                                      override val sessionConnector: SessionConnector,
                                                                      override val navigator: Navigator) extends SimpleControllerBase[Int] {
 
-  override val controllerId: String = Constants.propertyValueAfterExemptionCloselyInheritedId
+  override val controllerId: String = Constants.chargeableValueOfResidenceCloselyInheritedId
 
   override def form: () => Form[Int] = () => NonNegativeIntForm()
 

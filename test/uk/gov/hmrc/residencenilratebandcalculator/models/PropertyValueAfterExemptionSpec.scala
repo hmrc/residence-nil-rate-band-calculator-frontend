@@ -24,11 +24,11 @@ class PropertyValueAfterExemptionSpec extends UnitSpec {
   "Proeprty Values After Exemption model" must {
 
     "be parsable as JSON" in {
-      Json.toJson(PropertyValueAfterExemption(1, 2)) shouldBe Json.parse("""{"value":1,"valueCloselyInherited":2}""")
+      Json.toJson(ChargeableValueOfResidence(1, 2)) shouldBe Json.parse("""{"value":1,"valueCloselyInherited":2}""")
     }
 
     "give an error when trying to contruct itself from invalid JSON" in {
-      Json.fromJson[PropertyValueAfterExemption](JsString("invalid data")) shouldBe a [JsError]
+      Json.fromJson[ChargeableValueOfResidence](JsString("invalid data")) shouldBe a [JsError]
     }
   }
 }

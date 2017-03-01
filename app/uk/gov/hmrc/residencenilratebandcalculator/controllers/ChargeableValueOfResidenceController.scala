@@ -32,7 +32,7 @@ class ChargeableValueOfResidenceController @Inject()(override val appConfig: Fro
                                            override val sessionConnector: SessionConnector,
                                            override val navigator: Navigator) extends SimpleControllerBase[Int] {
 
-  override val controllerId: String = Constants.propertyValueAfterExemptionId
+  override val controllerId: String = Constants.chargeableValueOfResidenceId
 
   override def form: () => Form[Int] = () => NonNegativeIntForm()
 

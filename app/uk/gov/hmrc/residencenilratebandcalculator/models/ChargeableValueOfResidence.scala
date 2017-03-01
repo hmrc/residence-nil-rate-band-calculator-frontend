@@ -21,23 +21,23 @@ import play.api.libs.json.Writes._
 import play.api.libs.json.Reads._
 import play.api.libs.functional.syntax._
 
-case class PropertyValueAfterExemption(value: Int, valueCloselyInherited: Int)
+case class ChargeableValueOfResidence(value: Int, valueCloselyInherited: Int)
 
-object PropertyValueAfterExemption {
-  val propertyValueAfterExemptionReads: Reads[PropertyValueAfterExemption] = (
+object ChargeableValueOfResidence {
+  val propertyValueAfterExemptionReads: Reads[ChargeableValueOfResidence] = (
     (__ \ "value").read[Int] and
     (__ \ "valueCloselyInherited").read[Int]
-  )(PropertyValueAfterExemption.apply _)
+  )(ChargeableValueOfResidence.apply _)
 
-  val propertyValueAfterExemptionWrites: Writes[PropertyValueAfterExemption] = (
+  val propertyValueAfterExemptionWrites: Writes[ChargeableValueOfResidence] = (
     (__ \ "value").write[Int] and
     (__ \ "valueCloselyInherited").write[Int]
-  )(unlift(PropertyValueAfterExemption.unapply _))
+  )(unlift(ChargeableValueOfResidence.unapply _))
 
-  implicit val propertyValueAfterExemptionFormat: Format[PropertyValueAfterExemption] =
+  implicit val propertyValueAfterExemptionFormat: Format[ChargeableValueOfResidence] =
     Format(propertyValueAfterExemptionReads, propertyValueAfterExemptionWrites)
 }
 
-sealed abstract class PropertyValueAfterExemptionKey
-case object Value extends PropertyValueAfterExemptionKey
-case object ValueCloselyInherited extends PropertyValueAfterExemptionKey
+sealed abstract class ChargeableValueOfResidenceKey
+case object Value extends ChargeableValueOfResidenceKey
+case object ValueCloselyInherited extends ChargeableValueOfResidenceKey

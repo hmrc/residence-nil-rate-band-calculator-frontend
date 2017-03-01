@@ -30,8 +30,6 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 class Navigator @Inject()() {
   private val routeMap: Map[String, UserAnswers => Call] = {
 
-    // TODO: Insert correct page before propertyValueAfterExemptionId page - this is being built
-
     Map(
       Constants.dateOfDeathId -> (ua => getDateOfDeathRoute(ua)),
       Constants.anyEstatePassedToDescendantsId -> (ua => getAnyEstatePassedToDescendantsRoute(ua)),
@@ -47,14 +45,14 @@ class Navigator @Inject()() {
       Constants.dateOfDisposalId -> (ua => getDateOfDisposalRoute(ua)),
       Constants.anyExemptionId -> (ua => getAnyExemptionRoute(ua)),
       Constants.doesGrossingUpApplyId -> (ua => getDoesGrossingUpApplyRoute(ua)),
-      Constants.propertyValueAfterExemptionId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
+      Constants.chargeableValueOfResidenceId -> (_ => ChargeableValueOfResidenceCloselyInheritedController.onPageLoad()),
+      Constants.chargeableValueOfResidenceCloselyInheritedId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
       Constants.valueOfDisposedPropertyId -> (_ => AnyAssetsPassingToDirectDescendantsController.onPageLoad()),
       Constants.anyAssetsPassingToDirectDescendantsId -> (ua => getAnyAssetsPassingToDirectDescendantsRoute(ua)),
       Constants.assetsPassingToDirectDescendantsId -> (_ => AnyBroughtForwardAllowanceOnDisposalController.onPageLoad()),
       Constants.anyBroughtForwardAllowanceOnDisposalId -> (ua => getAnyBroughtForwardAllowanceOnDisposalRoute(ua)),
       Constants.broughtForwardAllowanceOnDisposalId -> (_ => CheckAnswersController.onPageLoad()),
-      Constants.checkAnswersId -> (_ => ResultsController.onPageLoad()),
-      Constants.purposeOfUseId -> (ua => getPurposeOfUseRoute(ua))
+      Constants.checkAnswersId -> (_ => ResultsController.onPageLoad())
     )
   }
 
@@ -98,22 +96,14 @@ class Navigator @Inject()() {
     getRouteForOptionalBoolean(userAnswers.anyExemption, DoesGrossingUpApplyController.onPageLoad(), AnyBroughtForwardAllowanceController.onPageLoad())
 
   private def getDoesGrossingUpApplyRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.doesGrossingUpApply, TransitionOutController.onPageLoad(), PropertyValueAfterExemptionController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.doesGrossingUpApply, TransitionOutController.onPageLoad(), ChargeableValueOfResidenceController.onPageLoad())
 
   private def getAnyAssetsPassingToDirectDescendantsRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.anyAssetsPassingToDirectDescendants, AssetsPassingToDirectDescendantsController.onPageLoad(), CheckAnswersController.onPageLoad())
 
-  private def getPurposeOfUseRoute(userAnswers: UserAnswers) = userAnswers.purposeOfUse match {
-    case Some(Constants.dealingWithEstate) => DateOfDeathController.onPageLoad()
-    case Some(Constants.planning) => PlanningController.onPageLoad()
-    case _ => HomeController.onPageLoad()
-  }
-
   def nextPage(controllerId: String): UserAnswers => Call = {
     routeMap.getOrElse(controllerId, _ => PageNotFoundController.onPageLoad())
   }
-
-  // TODO: Insert correct pages before property value after exemption pages...
 
   private val reverseRouteMap: Map[String, UserAnswers => Call] = {
     Map(
@@ -126,7 +116,8 @@ class Navigator @Inject()() {
       Constants.percentageCloselyInheritedId -> (_ => AnyPropertyCloselyInheritedController.onPageLoad()),
       Constants.anyExemptionId -> (_ => PercentageCloselyInheritedController.onPageLoad()),
       Constants.doesGrossingUpApplyId -> (_ => AnyExemptionController.onPageLoad()),
-      Constants.propertyValueAfterExemptionId -> (_ => DoesGrossingUpApplyController.onPageLoad()),
+      Constants.chargeableValueOfResidenceId -> (_ => DoesGrossingUpApplyController.onPageLoad()),
+      Constants.chargeableValueOfResidenceCloselyInheritedId -> (_ => ChargeableValueOfResidenceController.onPageLoad()),
       Constants.anyBroughtForwardAllowanceId -> (ua => getAnyBroughtForwardAllowanceReverseRoute(ua)),
       Constants.broughtForwardAllowanceId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
       Constants.anyDownsizingAllowanceId -> (ua => getAnyDownsizingAllowanceReverseRoute(ua)),
@@ -141,10 +132,8 @@ class Navigator @Inject()() {
 
   private def goToPageNotFound: UserAnswers => Call = _ => PageNotFoundController.onPageLoad()
 
-  // TODO: Update this
-
   private def getAnyBroughtForwardAllowanceReverseRoute(userAnswers: UserAnswers) = userAnswers.anyExemption match {
-    case Some(true) => PropertyValueAfterExemptionController.onPageLoad()
+    case Some(true) => ChargeableValueOfResidenceCloselyInheritedController.onPageLoad()
     case _ => userAnswers.anyPropertyCloselyInherited match {
       case Some(true) => AnyExemptionController.onPageLoad()
       case _ => userAnswers.estateHasProperty match {

@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import play.api.http.Status
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
@@ -26,7 +25,7 @@ class ChargeableValueOfResidenceControllerSpec extends SimpleControllerSpecBase 
 
 
   "Chargeable Value of Residence Controller" must {
-    val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyExemptionController.onPageLoad().url
+    val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DoesGrossingUpApplyController.onPageLoad().url
 
     def createView = (value: Option[Map[String, String]]) => value match {
       case None => chargeable_value_of_residence(frontendAppConfig, url)(fakeRequest, messages)
@@ -37,9 +36,9 @@ class ChargeableValueOfResidenceControllerSpec extends SimpleControllerSpecBase 
 
     val testValue = 123
 
-    val valuesToCacheBeforeSubmission = Map(Constants.anyExemptionId -> testValue)
+    val valuesToCacheBeforeSubmission = Map(Constants.doesGrossingUpApplyId -> testValue)
 
-    behave like rnrbController(createController, createView, Constants.propertyValueAfterExemptionId,
+    behave like rnrbController(createController, createView, Constants.chargeableValueOfResidenceId,
       testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
 
   }

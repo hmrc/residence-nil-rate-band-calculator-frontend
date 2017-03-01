@@ -150,10 +150,10 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.anyExemptionId)(mockCacheMap) shouldBe routes.DoesGrossingUpApplyController.onPageLoad()
     }
 
-    "return a call to Property Value After Exemption onPageLoad method when grossing up does not apply" in {
+    "return a call to Chargeable Value Of Residence onPageLoad method when grossing up does not apply" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.doesGrossingUpApply) thenReturn Some(false)
-      navigator.nextPage(Constants.doesGrossingUpApplyId)(mockCacheMap) shouldBe routes.PropertyValueAfterExemptionController.onPageLoad()
+      navigator.nextPage(Constants.doesGrossingUpApplyId)(mockCacheMap) shouldBe routes.ChargeableValueOfResidenceController.onPageLoad()
     }
 
     "return a call to Transition Out onPageLoad method when grossing up does apply" in {
@@ -162,8 +162,9 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.doesGrossingUpApplyId)(mockCacheMap) shouldBe routes.TransitionOutController.onPageLoad()
     }
 
-    "return a call to the Any Brought Forward Allowance onPageLoad method from the Property Value After Exemption controller" in {
-      navigator.nextPage(Constants.propertyValueAfterExemptionId)(mock[UserAnswers]) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
+    "return a call to the Any Brought Forward Allowance onPageLoad method from the " +
+      "Chargeable Value Of Residence Closely Inherited controller" in {
+      navigator.nextPage(Constants.chargeableValueOfResidenceCloselyInheritedId)(mock[UserAnswers]) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
     }
 
     val userAnswers = new UserAnswers(CacheMap("", Map()))
@@ -205,18 +206,18 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     }
 
     "return a call to the Does Grossing Up Apply when back linking from the Property Value After Exemption page" in {
-      navigator.lastPage(Constants.propertyValueAfterExemptionId)(userAnswers) shouldBe routes.DoesGrossingUpApplyController.onPageLoad()
+      navigator.lastPage(Constants.chargeableValueOfResidenceId)(userAnswers) shouldBe routes.DoesGrossingUpApplyController.onPageLoad()
     }
 
     "return a call to the Estate Has Property when back linking from the Any Brought Forward Allowance page" in {
       navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.EstateHasPropertyController.onPageLoad()
     }
 
-    "return a call to the Property Value After Exemption when back linking from the Any Brought Forward Allowance page" +
+    "return a call to the Chargeable Value Of Residence Closely Inherited when back linking from the Any Brought Forward Allowance page" +
       "when the user has positively answered Any Exemption" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.anyExemption) thenReturn Some(true)
-      navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.PropertyValueAfterExemptionController.onPageLoad()
+      navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.ChargeableValueOfResidenceCloselyInheritedController.onPageLoad()
     }
 
     "return a call to the Any Exemption when back linking from the Any Brought Forward Allowance page" +
@@ -337,16 +338,5 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.checkAnswersId)(mock[UserAnswers]) shouldBe routes.ResultsController.onPageLoad()
     }
 
-    "return a call to the planning controller from the Purpose of Use controller when the value is 'planning'" in {
-      val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.purposeOfUse) thenReturn Some(Constants.planning)
-      navigator.nextPage(Constants.purposeOfUseId)(mockCacheMap) shouldBe routes.PlanningController.onPageLoad()
-    }
-
-    "return a call to the date of death controller from the Purpose of Use controller when the value is 'dealing_with_estate'" in {
-      val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.purposeOfUse) thenReturn Some(Constants.dealingWithEstate)
-      navigator.nextPage(Constants.purposeOfUseId)(mockCacheMap) shouldBe routes.DateOfDeathController.onPageLoad()
-    }
   }
 }

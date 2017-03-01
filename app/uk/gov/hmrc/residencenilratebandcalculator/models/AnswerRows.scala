@@ -36,16 +36,17 @@ object AnswerRows {
     Constants.percentageCloselyInheritedId -> 8,
     Constants.anyExemptionId -> 9,
     Constants.doesGrossingUpApplyId -> 10,
-    Constants.propertyValueAfterExemptionId -> 11,
-    Constants.anyBroughtForwardAllowanceId -> 12,
-    Constants.broughtForwardAllowanceId -> 13,
-    Constants.anyDownsizingAllowanceId -> 14,
-    Constants.dateOfDisposalId -> 15,
-    Constants.valueOfDisposedPropertyId -> 16,
-    Constants.anyAssetsPassingToDirectDescendantsId -> 17,
-    Constants.assetsPassingToDirectDescendantsId -> 18,
-    Constants.anyBroughtForwardAllowanceOnDisposalId -> 19,
-    Constants.broughtForwardAllowanceOnDisposalId -> 20
+    Constants.chargeableValueOfResidenceId -> 11,
+    Constants.chargeableValueOfResidenceCloselyInheritedId -> 12,
+    Constants.anyBroughtForwardAllowanceId -> 13,
+    Constants.broughtForwardAllowanceId -> 14,
+    Constants.anyDownsizingAllowanceId -> 15,
+    Constants.dateOfDisposalId -> 16,
+    Constants.valueOfDisposedPropertyId -> 17,
+    Constants.anyAssetsPassingToDirectDescendantsId -> 18,
+    Constants.assetsPassingToDirectDescendantsId -> 19,
+    Constants.anyBroughtForwardAllowanceOnDisposalId -> 20,
+    Constants.broughtForwardAllowanceOnDisposalId -> 21
   )
 
   private def errorString(title: String) = s"$title unavailable from cache"
@@ -67,11 +68,6 @@ object AnswerRows {
 
   def percentAnswerRowFn(titleKey: String, title: String, url: () => Call) =
     (jsValue: JsValue) => Json.fromJson[Double](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
-      value => AnswerRow(titleKey, value, url()) _
-    })
-
-  def propertyValueAfterExemptionAnswerRowFn(titleKey: String, title: String, url: () => Call) =
-    (jsValue: JsValue) => Json.fromJson[PropertyValueAfterExemption](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
       value => AnswerRow(titleKey, value, url()) _
     })
 
@@ -123,10 +119,14 @@ object AnswerRows {
       percentAnswerRowFn("percentage_closely_inherited.title", "Percentage closely inherited", routes.PercentageCloselyInheritedController.onPageLoad),
     Constants.propertyValueId ->
       intAnswerRowFn("property_value.title", "Property value", routes.PropertyValueController.onPageLoad),
-    Constants.propertyValueAfterExemptionId ->
-      propertyValueAfterExemptionAnswerRowFn("property_value_after_exemption.title",
-        "Property value after exemption",
-        routes.PropertyValueAfterExemptionController.onPageLoad)
+    Constants.chargeableValueOfResidenceId ->
+      intAnswerRowFn("chargeable_value_of_residence.title",
+        "Chargeable value of residence",
+        routes.ChargeableValueOfResidenceController.onPageLoad),
+    Constants.chargeableValueOfResidenceCloselyInheritedId ->
+      intAnswerRowFn("chargeable_value_of_residence_closely_inherited.title",
+      "Chargeable value of residence closely inherited",
+      routes.ChargeableValueOfResidenceCloselyInheritedController.onPageLoad)
   )
 
   def constructAnswerRows(cacheMap: CacheMap,

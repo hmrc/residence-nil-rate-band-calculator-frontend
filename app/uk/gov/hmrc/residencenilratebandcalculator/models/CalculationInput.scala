@@ -25,13 +25,13 @@ case class CalculationInput(dateOfDeath: LocalDate,
                             propertyValue: Int,
                             percentageCloselyInherited: Int,
                             broughtForwardAllowance: Int,
-                            propertyValueAfterExemption: Option[PropertyValueAfterExemption],
+                            propertyValueAfterExemption: Option[ChargeableValueOfResidence],
                             downsizingDetails: Option[DownsizingDetails])
 
 object CalculationInput {
   implicit val formats: OFormat[CalculationInput] = Json.format[CalculationInput]
 
-  // TODO: add some requires that check propertyValueAfterExemption
+  // TODO: additional requires for chargeable value of residence
 
   def apply(userAnswers: UserAnswers): CalculationInput = {
     require(userAnswers.dateOfDeath.isDefined, "Date of Death was not answered")
@@ -55,18 +55,16 @@ object CalculationInput {
       getPropertyValue(userAnswers),
       getPercentageCloselyInherited(userAnswers),
       getBroughtForwardAllowance(userAnswers),
-      getPropertyValueAfterExemption(userAnswers),
+      getChargeableValueOfResidence(userAnswers),
       getDownsizingDetails(userAnswers)
     )
   }
 
-  // TODO: Amend what is matched against to refer to the previous page
-
-  def getPropertyValueAfterExemption(userAnswers: UserAnswers): Option[PropertyValueAfterExemption] =
-    userAnswers.propertyValueAfterExemption.isDefined match {
-    case true => Some(PropertyValueAfterExemption(
-      userAnswers.propertyValueAfterExemption.get,
-      userAnswers.propertyValueAfterExemptionCloselyInherited.get
+  def getChargeableValueOfResidence(userAnswers: UserAnswers): Option[ChargeableValueOfResidence] =
+    userAnswers.chargeableValueOfResidence.isDefined match {
+    case true => Some(ChargeableValueOfResidence(
+      userAnswers.chargeableValueOfResidence.get,
+      userAnswers.chargeableValueOfResidenceCloselyInherited.get
     ))
     case _ => None
   }

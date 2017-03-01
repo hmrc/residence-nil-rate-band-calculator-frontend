@@ -36,9 +36,9 @@ class ChargeableValueOfResidenceCloselyInheritedControllerSpec extends SimpleCon
 
   val testValue = 123
 
-  val valuesToCacheBeforeSubmission = Map(Constants.propertyValueAfterExemptionId -> testValue)
+  val valuesToCacheBeforeSubmission = Map(Constants.chargeableValueOfResidenceId -> testValue)
 
-  behave like rnrbController(createController, createView, Constants.propertyValueAfterExemptionCloselyInheritedId,
+  behave like rnrbController(createController, createView, Constants.chargeableValueOfResidenceCloselyInheritedId,
     testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
 
 }

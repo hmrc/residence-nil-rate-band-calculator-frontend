@@ -112,16 +112,15 @@ class AnswerRowSpecs extends UnitSpec with WithFakeApplication with MockSessionC
         AnswerRows.percentAnswerRowFn("check_answers.title", "", () => Call("", ""))(JsString(""))(messages)
     }
 
-    "correctly create property value after exemptions AnswerRows" in {
-      val data = PropertyValueAfterExemption(1000, 5000)
-      AnswerRows.propertyValueAfterExemptionAnswerRowFn("check_answers.title", "",
-        () => Call("", "http://example.com"))(Json.toJson[PropertyValueAfterExemption](data))(messages) shouldBe
-        AnswerRow(messages("check_answers.title"), "£1,000.00 \n£5,000.00", "http://example.com")
-    }
+    "correctly create Chargeable Value of Residence AnswerRows" in {
+      val data = ChargeableValueOfResidence(1000, 5000)
+      AnswerRows.intAnswerRowFn("check_answers.title", "",
+        () => Call("", "http://example.com"))(JsNumber(data.value))(messages) shouldBe
+        AnswerRow(messages("check_answers.title"), "£1,000.00", "http://example.com")
 
-    "throw an exception when propertyValueAfterExemptionAnswerRowFn not passed a PropertyValueAfterExemption" in {
-      an[RuntimeException] should be thrownBy
-        AnswerRows.propertyValueAfterExemptionAnswerRowFn("check_answers.title", "", () => Call("", ""))(JsString(""))(messages)
+      AnswerRows.intAnswerRowFn("check_answers.title", "",
+        () => Call("", "http://example.com"))(JsNumber(data.valueCloselyInherited))(messages) shouldBe
+        AnswerRow(messages("check_answers.title"), "£5,000.00", "http://example.com")
     }
 
     "ignore data in the cache map which does not have a corresponding key in the answer rows function map" in {

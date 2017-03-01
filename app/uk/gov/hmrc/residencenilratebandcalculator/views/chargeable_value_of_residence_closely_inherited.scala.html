@@ -14,14 +14,14 @@
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeableValueOfResidenceCloselyInheritedController.onSubmit(),
         'autoComplete -> "off") {
 
-        <h1>@messages("property_value_after_exemption.value_closely_inherited.title")</h1>
-        <p>@messages("property_value_after_exemption.value_closely_inherited.guidance")</p>
+        <h1>@messages("chargeable_value_of_residence_closely_inherited.title")</h1>
+        <p>@messages("chargeable_value_of_residence_closely_inherited.guidance")</p>
 
         @rnrbHelpers.input_text(
             id = "value",
             name = "value",
             value = Some(FormHelpers.getValue[Int](form).toString),
-            label = messages("property_value_after_exemption.value_closely_inherited.label"),
+            label = messages("chargeable_value_of_residence_closely_inherited.label"),
             secondaryLabel = Some("currency"),
             errorKey = FormHelpers.getErrorByKey(form, "value")
         )
