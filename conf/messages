@@ -11,9 +11,11 @@ any_brought_forward_allowance.guidance = If you answer ‘yes’ you will need t
 any_brought_forward_allowance.label =
 
 any_brought_forward_allowance_on_disposal.question_number = Question 16
-any_brought_forward_allowance_on_disposal.browser_title = Question page
-any_brought_forward_allowance_on_disposal.title = Is the date of the deceased’s spouse or civil partner who died before them, and which you are claiming the brought-forward allowance of, before the date you gave for the downsizing allowance to be taken from?
-any_brought_forward_allowance_on_disposal.guidance = If the date you gave for downnsizing was on or before 5 April 2017 there would not have been any brought-forward allowance available and you should answer no.
+any_brought_forward_allowance_on_disposal.browser_title = If a valid claim for RNRB had been made at the date of disposal would any transferable residence nil rate band have been available at that time?
+any_brought_forward_allowance_on_disposal.title = If a valid claim for RNRB had been made at the date of disposal would any transferable residence nil rate band have been available at that time?
+any_brought_forward_allowance_on_disposal.guidance1 = If there is no claim for transferable residence nil rate band at death then a claim would not have been possible when the disposal occurred and the answer here will be ‘no’.
+any_brought_forward_allowance_on_disposal.guidance2 = If the disposal was made on or before 5 April 2017, transferable residence nil rate band would not have been available and the answer will be ‘no’.
+any_brought_forward_allowance_on_disposal.guidance3 = The answer will be ‘yes’ if the disposal took place on or after 6 April 2017 and after the earlier death of any spouse or civil partner of the deceased who’s estate had not used the full RNRB available at that time.
 any_brought_forward_allowance_on_disposal.label =
 
 any_downsizing_allowance.question_number = Question 11
