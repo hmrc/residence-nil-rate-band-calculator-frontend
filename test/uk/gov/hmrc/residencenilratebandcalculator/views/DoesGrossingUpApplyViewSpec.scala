@@ -28,7 +28,7 @@ class DoesGrossingUpApplyViewSpec extends BooleanViewSpecBase {
 
   "Does Grossing Up Apply View" must {
 
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance")
+    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance", "guidance.bullet1", "guidance.bullet2")
 
     behave like pageWithBackLink[Boolean](createView)
 

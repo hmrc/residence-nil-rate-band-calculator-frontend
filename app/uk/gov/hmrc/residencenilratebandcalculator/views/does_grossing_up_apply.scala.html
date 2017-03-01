@@ -15,7 +15,10 @@
     @rnrbHelpers.heading_with_pre_text("does_grossing_up_apply.title", "does_grossing_up_apply.question_number")
 
     <p>@messages("does_grossing_up_apply.guidance")</p>
-
+    <ul class="list list-bullet">
+        <li>@messages("does_grossing_up_apply.guidance.bullet1")</li>
+        <li>@messages("does_grossing_up_apply.guidance.bullet2")</li>
+    </ul>
     @helpers.form(action = DoesGrossingUpApplyController.onSubmit(), 'autoComplete -> "off") {
 
     @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))

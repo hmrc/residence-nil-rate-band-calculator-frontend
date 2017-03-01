@@ -117,9 +117,11 @@ date_of_disposal.hint = For example, 6 4 2017
 date_of_disposal.label =
 
 does_grossing_up_apply.question_number = Question 8
-does_grossing_up_apply.browser_title = Questions page
+does_grossing_up_apply.browser_title = Does grossing-up or interaction apply?
 does_grossing_up_apply.title = Does grossing-up or interaction apply?
-does_grossing_up_apply.guidance =
+does_grossing_up_apply.guidance = Grossing-up will apply if Inheritance Tax is due, and:
+does_grossing_up_apply.guidance.bullet1 = the will makes any gifts that are ''free of tax''
+does_grossing_up_apply.guidance.bullet2 = any part of the residue is exempt (because, for example it passes to charity or the deceased's spouse or civil partner). The residue is what is left in the estate after you have paid all debts, legacies and taxes
 does_grossing_up_apply.label =
 
 error.invalid_date = Enter a valid date
