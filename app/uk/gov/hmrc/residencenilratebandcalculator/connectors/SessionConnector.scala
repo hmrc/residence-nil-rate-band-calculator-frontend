@@ -74,7 +74,7 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
     clearIfFalse(Constants.anyExemptionId, value,
       Set(
         Constants.propertyValueAfterExemptionId,
-        Constants.doesGrossingUpApplyId),
+        Constants.doesGrossingUpApplyToResidenceId),
       cacheMap)
 
   private def anyBroughtForwardAllowance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
@@ -89,6 +89,7 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
        Constants.anyAssetsPassingToDirectDescendantsId,
        Constants.assetsPassingToDirectDescendantsId,
        Constants.anyBroughtForwardAllowanceOnDisposalId,
+       Constants.doesGrossingUpApplyToOtherPropertyId,
        Constants.broughtForwardAllowanceOnDisposalId),
      cacheMap)
 
@@ -97,6 +98,7 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
       Set(
         Constants.assetsPassingToDirectDescendantsId,
         Constants.anyBroughtForwardAllowanceOnDisposalId,
+        Constants.doesGrossingUpApplyToOtherPropertyId,
         Constants.broughtForwardAllowanceOnDisposalId),
       cacheMap)
 

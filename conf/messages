@@ -121,13 +121,21 @@ date_of_disposal.guidance2 = Enter the date of the disposal that you wish to tak
 date_of_disposal.hint = For example, 6 4 2017
 date_of_disposal.label =
 
-does_grossing_up_apply.question_number = Question 8
-does_grossing_up_apply.browser_title = Does grossing-up or interaction apply?
-does_grossing_up_apply.title = Does grossing-up or interaction apply?
-does_grossing_up_apply.guidance = Grossing-up will apply if Inheritance Tax is due, and:
-does_grossing_up_apply.guidance.bullet1 = the will makes any gifts that are ‘free of tax’
-does_grossing_up_apply.guidance.bullet2 = any part of the residue is exempt (because, for example it passes to charity or the deceased’s spouse or civil partner). The residue is what is left in the estate after you have paid all debts, legacies and taxes
-does_grossing_up_apply.label =
+does_grossing_up_apply_to_other_property.question_number = Question 15
+does_grossing_up_apply_to_other_property.browser_title = Does grossing-up or interaction apply?
+does_grossing_up_apply_to_other_property.title = Does grossing-up or interaction apply?
+does_grossing_up_apply_to_other_property.guidance = Grossing-up will apply if Inheritance Tax is due, and:
+does_grossing_up_apply_to_other_property.guidance.bullet1 = the will makes any gifts that are ‘free of tax’
+does_grossing_up_apply_to_other_property.guidance.bullet2 = any part of the residue is exempt (because, for example it passes to charity or the deceased’s spouse or civil partner). The residue is what is left in the estate after you have paid all debts, legacies and taxes
+does_grossing_up_apply_to_other_property.label =
+
+does_grossing_up_apply_to_residence.question_number = Question 8
+does_grossing_up_apply_to_residence.browser_title = Does grossing-up or interaction apply?
+does_grossing_up_apply_to_residence.title = Does grossing-up or interaction apply?
+does_grossing_up_apply_to_residence.guidance = Grossing-up will apply if Inheritance Tax is due, and:
+does_grossing_up_apply_to_residence.guidance.bullet1 = the will makes any gifts that are ‘free of tax’
+does_grossing_up_apply_to_residence.guidance.bullet2 = any part of the residue is exempt (because, for example it passes to charity or the deceased’s spouse or civil partner). The residue is what is left in the estate after you have paid all debts, legacies and taxes
+does_grossing_up_apply_to_residence.label =
 
 error.invalid_date = Enter a valid date
 error.number = Please enter a valid number

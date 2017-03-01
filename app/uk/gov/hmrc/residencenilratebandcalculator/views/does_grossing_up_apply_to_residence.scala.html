@@ -1,0 +1,35 @@
+@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@import uk.gov.hmrc.play.views.html._
+@import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DoesGrossingUpApplyToResidenceController
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
+
+@(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[Boolean]] = None)(implicit request: Request[_], messages: Messages)
+
+@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+    title = messages("does_grossing_up_apply_to_residence.browser_title"),
+    appConfig = appConfig,
+    bodyClasses = None) {
+
+    @rnrbHelpers.back_link(backUrl)
+
+    @rnrbHelpers.heading_with_pre_text("does_grossing_up_apply_to_residence.title", "does_grossing_up_apply_to_residence.question_number")
+
+    <p>@messages("does_grossing_up_apply_to_residence.guidance")</p>
+    <ul class="list list-bullet">
+        <li>@messages("does_grossing_up_apply_to_residence.guidance.bullet1")</li>
+        <li>@messages("does_grossing_up_apply_to_residence.guidance.bullet2")</li>
+    </ul>
+
+    @helpers.form(action = DoesGrossingUpApplyToResidenceController.onSubmit(), 'autoComplete -> "off") {
+
+    @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
+    @rnrbHelpers.input_yes_no(
+        id = "value",
+        label = messages("does_grossing_up_apply_to_residence.label"),
+        errorKey = FormHelpers.getErrorByKey(form, "value"),
+        value = Some(FormHelpers.getYesNo(form)))
+
+        @rnrbHelpers.submit_button()
+    }
+}
