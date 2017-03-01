@@ -1,0 +1,32 @@
+@import uk.gov.hmrc.play.views.html._
+@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
+
+@(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[Int]] = None)(implicit request: Request[_], messages: Messages)
+
+@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+    title = messages("property_value_after_exemption.browser_title"),
+    appConfig = appConfig,
+    bodyClasses = None) {
+
+    @rnrbHelpers.back_link(backUrl)
+
+    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeableValueOfResidenceController.onSubmit(),
+        'autoComplete -> "off") {
+
+        <h1>@messages("property_value_after_exemption.value.title")</h1>
+        <p>@messages("property_value_after_exemption.value.guidance")</p>
+
+        @rnrbHelpers.input_text(
+            id = "value",
+            name = "value",
+            value = Some(FormHelpers.getValue[Int](form).toString),
+            label = messages("property_value_after_exemption.value.label"),
+            secondaryLabel = Some("currency"),
+            errorKey = FormHelpers.getErrorByKey(form, "value")
+        )
+
+        @rnrbHelpers.submit_button()
+
+    }
+}

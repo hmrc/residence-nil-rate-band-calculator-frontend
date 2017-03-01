@@ -58,7 +58,9 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def percentageCloselyInherited = cacheMap.getEntry[Int](Constants.percentageCloselyInheritedId)
 
-  def propertyValueAfterExemption = cacheMap.getEntry[PropertyValueAfterExemption](Constants.propertyValueAfterExemptionId)
+  def propertyValueAfterExemption = cacheMap.getEntry[Int](Constants.propertyValueAfterExemptionId)
+
+  def propertyValueAfterExemptionCloselyInherited = cacheMap.getEntry[Int](Constants.propertyValueAfterExemptionCloselyInheritedId)
 
   def propertyValue = cacheMap.getEntry[Int](Constants.propertyValueId)
 

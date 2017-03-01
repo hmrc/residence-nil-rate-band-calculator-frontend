@@ -31,6 +31,8 @@ case class CalculationInput(dateOfDeath: LocalDate,
 object CalculationInput {
   implicit val formats: OFormat[CalculationInput] = Json.format[CalculationInput]
 
+  // TODO: add some requires that check propertyValueAfterExemption
+
   def apply(userAnswers: UserAnswers): CalculationInput = {
     require(userAnswers.dateOfDeath.isDefined, "Date of Death was not answered")
     require(userAnswers.grossEstateValue.isDefined, "Gross Estate Value was not answered")
@@ -53,9 +55,20 @@ object CalculationInput {
       getPropertyValue(userAnswers),
       getPercentageCloselyInherited(userAnswers),
       getBroughtForwardAllowance(userAnswers),
-      userAnswers.propertyValueAfterExemption,
+      getPropertyValueAfterExemption(userAnswers),
       getDownsizingDetails(userAnswers)
     )
+  }
+
+  // TODO: Amend what is matched against to refer to the previous page
+
+  def getPropertyValueAfterExemption(userAnswers: UserAnswers): Option[PropertyValueAfterExemption] =
+    userAnswers.propertyValueAfterExemption.isDefined match {
+    case true => Some(PropertyValueAfterExemption(
+      userAnswers.propertyValueAfterExemption.get,
+      userAnswers.propertyValueAfterExemptionCloselyInherited.get
+    ))
+    case _ => None
   }
 
   private def getPropertyValue(userAnswers: UserAnswers) = userAnswers.estateHasProperty.get match {

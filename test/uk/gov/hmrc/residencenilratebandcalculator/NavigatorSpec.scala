@@ -147,11 +147,15 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     "return a call to the Property Value After Exemption onPageLoad method when exemptions apply to the property" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.anyExemption) thenReturn Some(true)
-      navigator.nextPage(Constants.anyExemptionId)(mockCacheMap) shouldBe routes.PropertyValueAfterExemptionController.onPageLoad()
+      navigator.nextPage(Constants.anyExemptionId)(mockCacheMap) shouldBe routes.ChargeableValueOfResidenceController.onPageLoad()
     }
 
-    "return a call to the Any Brought Forward Allowance onPageLoad method from the Property Value After Exemption controller" in {
-      navigator.nextPage(Constants.propertyValueAfterExemptionId)(mock[UserAnswers]) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
+    "return a call to theProperty Value After Exemption Closely Inherited onPageLoad method from the Property Value After Exemption controller" in {
+      navigator.nextPage(Constants.propertyValueAfterExemptionId)(mock[UserAnswers]) shouldBe routes.ChargeableValueOfResidenceCloselyInheritedController.onPageLoad()
+    }
+
+    "return a call to the Any Brought Forward Allowance onPageLoad method from the Property Value After Exemption Closely Inherited controller" in {
+      navigator.nextPage(Constants.propertyValueAfterExemptionCloselyInheritedId)(mock[UserAnswers]) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
     }
 
     val userAnswers = new UserAnswers(CacheMap("", Map()))
