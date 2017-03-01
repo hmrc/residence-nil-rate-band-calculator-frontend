@@ -56,23 +56,19 @@ assets_passing_to_direct_descendants.browser_title = Question page
 assets_passing_to_direct_descendants.title = What is the value of these assets being left to any direct descendants?
 assets_passing_to_direct_descendants.label =
 
-before_you_start.browser_title = Before you start
-before_you_start.title = Calculate the Residential Nil Rate Band (RNRB) for an estate
-before_you_start.guidance1 = This service will work out any RNRB allowance which will increase the Inheritance Tax threshold for a person who has died.
-before_you_start.guidance2 = You can claim an RNRB allowance for either:
-before_you_start.guidance2.bullet1 = a home in the estate of someone who has died
-before_you_start.guidance2.bullet2 = a home that was sold or downsized by the person who has died
-before_you_start.guidance3 = You may be able to claim additional allowance if:
-before_you_start.guidance3.bullet1 = the person who has died had been married during their lifetime and their spouse or civil partner died before them
-before_you_start.sub_heading = Before you start
-before_you_start.guidance4 = You’ll need to have certain details to work out the RNRB allowance for the estate.
-before_you_start.guidance5 = You’ll need to have details of:
-before_you_start.guidance5.bullet1 = any homes owned by the person who died
-before_you_start.guidance5.bullet2 = the will and what was left to anyone from the estate
-before_you_start.guidance5.bullet3 = what the person who has died owned and any debts that are being paid out of their estate, along with the values of these
-before_you_start.guidance5.bullet4 = any home that the person who has died used to own but sold and downsized to a cheaper home before their death
-before_you_start.guidance5.bullet5 = he estate of any spouse or civil partner if their death was before the person who has died and you are transferring any of their unused RNRB allowance - you will also need a completed IHT-436 form to claim this
-before_you_start.guidance6 = When you have finished this service and have any allowance to claim, you will need to fill in an IHT-435 form.
+before_you_start.browser_title = Calculate the Residential Nil Rate Band (RNRB) for the estate of someone who has died
+before_you_start.title = Calculate the Residential Nil Rate Band (RNRB) for the estate of someone who has died
+before_you_start.guidance1 = If there is any RNRB available, this will be added to the Inheritance Tax threshold and might mean there is less tax to pay.
+before_you_start.guidance2 = This service will calculate how much allowance is available to add to the threshold. It should you no more than 30 minutes to complete the service.
+before_you_start.guidance3 = You will need to:
+before_you_start.guidance3.bullet1 = fill in an IHT-435 form to claim the allowance on an estate and you'll be given a copy after using the service with the details you have given already added
+before_you_start.guidance3.bullet2 = have a copy of the IHT-400 from that you have been filling in as details will be needed to help work out the allowance available
+before_you_start.guidance3.bullet3 = have details of any properties owned by the person who has died, including the values of the property and of any debts owed against it
+before_you_start.guidance3.bullet4 = know who was left property from the estate if it was passed in a will
+before_you_start.guidance4 = The RNRB allowance can be increased if the person who has died had downsized or disposed of their home before their death, or if they had been married during their lifetime and their spouse or civil partner died first. To claim any extra allowance for these reasons you'll need to have:
+before_you_start.guidance4.bullet1 = details of the home sold by the person who died
+before_you_start.guidance4.bullet2 = details of any other assets left in the will to a direct descendant, including the value of these assets
+before_you_start.guidance4.bullet3 = a completed IHT-436 form with the value of transferable residential nil rate band being claimed if the person who has died was married during their lifetime and their spouse or civil partner died first
 
 brought_forward_allowance.question_number = Question 10
 brought_forward_allowance.browser_title = Question page
@@ -116,20 +112,6 @@ date_of_disposal.guidance1 = This is the date when the deceased stopped owning t
 date_of_disposal.guidance2 = If there is more than 1 date, like a half share was given away and then later on another share was given away, only 1 of those dates can be given.
 date_of_disposal.hint = For example, 6 4 2017
 date_of_disposal.label =
-
-does_grossing_up_apply.question_number = Question 8
-does_grossing_up_apply.browser_title = Questions page
-does_grossing_up_apply.title = Does grossing-up or interaction apply?
-does_grossing_up_apply.guidance =
-does_grossing_up_apply.label =
-does_grossing_up_apply.summary =
-
-does_grossing_up_apply.question_number = Question 8
-does_grossing_up_apply.browser_title = Questions page
-does_grossing_up_apply.title = Does grossing-up or interaction apply?
-does_grossing_up_apply.guidance =
-does_grossing_up_apply.label =
-does_grossing_up_apply.summary =
 
 does_grossing_up_apply.question_number = Question 8
 does_grossing_up_apply.browser_title = Questions page

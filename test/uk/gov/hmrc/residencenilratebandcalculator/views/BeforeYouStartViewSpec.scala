@@ -40,19 +40,15 @@ class BeforeYouStartViewSpec extends ViewSpecBase {
         doc,
         s"$messageKeyPrefix.guidance1",
         s"$messageKeyPrefix.guidance2",
-        s"$messageKeyPrefix.guidance2.bullet1",
-        s"$messageKeyPrefix.guidance2.bullet2",
         s"$messageKeyPrefix.guidance3",
         s"$messageKeyPrefix.guidance3.bullet1",
-        s"$messageKeyPrefix.sub_heading",
+        s"$messageKeyPrefix.guidance3.bullet2",
+        s"$messageKeyPrefix.guidance3.bullet3",
+        s"$messageKeyPrefix.guidance3.bullet4",
         s"$messageKeyPrefix.guidance4",
-        s"$messageKeyPrefix.guidance5",
-        s"$messageKeyPrefix.guidance5.bullet1",
-        s"$messageKeyPrefix.guidance5.bullet2",
-        s"$messageKeyPrefix.guidance5.bullet3",
-        s"$messageKeyPrefix.guidance5.bullet4",
-        s"$messageKeyPrefix.guidance5.bullet5",
-        s"$messageKeyPrefix.guidance6"
+        s"$messageKeyPrefix.guidance4.bullet1",
+        s"$messageKeyPrefix.guidance4.bullet2",
+        s"$messageKeyPrefix.guidance4.bullet3"
       )
     }
 
