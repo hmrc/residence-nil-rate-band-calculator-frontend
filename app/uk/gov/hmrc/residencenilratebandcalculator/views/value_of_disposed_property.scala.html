@@ -17,8 +17,6 @@
 
     <p>@messages("value_of_disposed_property.guidance2")</p>
 
-    <p>@messages("value_of_disposed_property.guidance3")</p>
-
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfDisposedPropertyController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))

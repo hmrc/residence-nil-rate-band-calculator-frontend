@@ -239,9 +239,8 @@ thank_you.browser_title = Thank You
 thank_you.title = Thank You
 
 value_of_disposed_property.question_number = Question 13
-value_of_disposed_property.title = What was the value of the property minus any mortgage owed on it on the date that you have given?
-value_of_disposed_property.browser_title = Question page
-value_of_disposed_property.guidance1 = If the deceased sold the property, give the sale price minus any mortgage that was still owed on that date.
-value_of_disposed_property.guidance2 = Where only part of the property stopped being owned by the deceased, like when they have given a share of it away to someone, give the open market value of that share minus any mortgage owed on that date.
-value_of_disposed_property.guidance3 = Do not take off any solicitor’s or estate agent’s fees.
+value_of_disposed_property.title = What was the value of the deceased’s interest in the property at the date it was disposed of?
+value_of_disposed_property.browser_title = What was the value of the deceased’s interest in the property at the date it was disposed of?
+value_of_disposed_property.guidance1 = Enter the open market value of the deceased’s interest in the property disposed of at the date of disposal.
+value_of_disposed_property.guidance2 = If there was a mortgage on the property when it was sold, deduct the mortgage from the sale price, but do not deduct the costs of selling the property, such as solicitor or estate agent's fees.
 value_of_disposed_property.label =
