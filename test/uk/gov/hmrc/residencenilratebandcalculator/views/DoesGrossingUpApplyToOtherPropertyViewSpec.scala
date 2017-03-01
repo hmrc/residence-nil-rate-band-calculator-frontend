@@ -17,21 +17,21 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.does_grossing_up_apply_to_residence
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.does_grossing_up_apply_to_other_property
 
-class DoesGrossingUpApplyToResidenceViewSpec extends BooleanViewSpecBase {
+class DoesGrossingUpApplyToOtherPropertyViewSpec extends BooleanViewSpecBase {
 
-  val messageKeyPrefix = "does_grossing_up_apply_to_residence"
+  val messageKeyPrefix = "does_grossing_up_apply_to_other_property"
 
-  def createView(form: Option[Form[Boolean]] = None) = does_grossing_up_apply_to_residence(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = does_grossing_up_apply_to_other_property(frontendAppConfig, backUrl, form)(request, messages)
 
-  "Does Grossing Up Apply To Residence View" must {
+  "Does Grossing Up Apply To Other PropertyView" must {
 
     behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance")
 
     behave like pageWithBackLink[Boolean](createView)
 
-    behave like booleanPage(createView, messageKeyPrefix, DoesGrossingUpApplyToResidenceController.onSubmit().url)
+    behave like booleanPage(createView, messageKeyPrefix, DoesGrossingUpApplyToOtherPropertyController.onSubmit().url)
   }
 }

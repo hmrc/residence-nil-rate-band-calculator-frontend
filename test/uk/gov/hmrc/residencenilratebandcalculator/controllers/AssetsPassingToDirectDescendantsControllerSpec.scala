@@ -26,11 +26,11 @@ class AssetsPassingToDirectDescendantsControllerSpec extends SimpleControllerSpe
   "Assets Passing to Direct Descendants Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
-      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyAssetsPassingToDirectDescendantsController.onPageLoad().url
+      val backUrl = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DoesGrossingUpApplyToOtherPropertyController.onPageLoad().url
 
       value match {
-        case None => assets_passing_to_direct_descendants(frontendAppConfig, url)(fakeRequest, messages)
-        case Some(v) => assets_passing_to_direct_descendants(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)))(fakeRequest, messages)
+        case None => assets_passing_to_direct_descendants(frontendAppConfig, backUrl)(fakeRequest, messages)
+        case Some(v) => assets_passing_to_direct_descendants(frontendAppConfig, backUrl, Some(NonNegativeIntForm().bind(v)))(fakeRequest, messages)
       }
     }
 

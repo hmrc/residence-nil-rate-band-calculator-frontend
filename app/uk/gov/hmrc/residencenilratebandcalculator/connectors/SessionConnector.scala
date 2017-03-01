@@ -89,6 +89,7 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
        Constants.anyAssetsPassingToDirectDescendantsId,
        Constants.assetsPassingToDirectDescendantsId,
        Constants.anyBroughtForwardAllowanceOnDisposalId,
+       Constants.doesGrossingUpApplyToOtherPropertyId,
        Constants.broughtForwardAllowanceOnDisposalId),
      cacheMap)
 
@@ -97,6 +98,7 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
       Set(
         Constants.assetsPassingToDirectDescendantsId,
         Constants.anyBroughtForwardAllowanceOnDisposalId,
+        Constants.doesGrossingUpApplyToOtherPropertyId,
         Constants.broughtForwardAllowanceOnDisposalId),
       cacheMap)
 

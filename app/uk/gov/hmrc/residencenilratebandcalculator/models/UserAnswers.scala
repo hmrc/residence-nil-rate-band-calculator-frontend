@@ -52,6 +52,8 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def doesGrossingUpApplyToResidence = cacheMap.getEntry[Boolean](Constants.doesGrossingUpApplyToResidenceId)
 
+  def doesGrossingUpApplyToOtherProperty = cacheMap.getEntry[Boolean](Constants.doesGrossingUpApplyToOtherPropertyId)
+
   def downsizingDetails = cacheMap.getEntry[Date](Constants.downsizingDetails)
 
   def estateHasProperty = cacheMap.getEntry[Boolean](Constants.estateHasPropertyId)
