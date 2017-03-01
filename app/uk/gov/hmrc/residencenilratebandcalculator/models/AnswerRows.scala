@@ -35,16 +35,17 @@ object AnswerRows {
     Constants.anyPropertyCloselyInheritedId -> 7,
     Constants.percentageCloselyInheritedId -> 8,
     Constants.anyExemptionId -> 9,
-    Constants.propertyValueAfterExemptionId -> 10,
-    Constants.anyBroughtForwardAllowanceId -> 11,
-    Constants.broughtForwardAllowanceId -> 12,
-    Constants.anyDownsizingAllowanceId -> 13,
-    Constants.dateOfDisposalId -> 14,
-    Constants.valueOfDisposedPropertyId -> 15,
-    Constants.anyAssetsPassingToDirectDescendantsId -> 16,
-    Constants.assetsPassingToDirectDescendantsId -> 17,
-    Constants.anyBroughtForwardAllowanceOnDisposalId -> 18,
-    Constants.broughtForwardAllowanceOnDisposalId -> 19
+    Constants.doesGrossingUpApplyId -> 10,
+    Constants.propertyValueAfterExemptionId -> 11,
+    Constants.anyBroughtForwardAllowanceId -> 12,
+    Constants.broughtForwardAllowanceId -> 13,
+    Constants.anyDownsizingAllowanceId -> 14,
+    Constants.dateOfDisposalId -> 15,
+    Constants.valueOfDisposedPropertyId -> 16,
+    Constants.anyAssetsPassingToDirectDescendantsId -> 17,
+    Constants.assetsPassingToDirectDescendantsId -> 18,
+    Constants.anyBroughtForwardAllowanceOnDisposalId -> 19,
+    Constants.broughtForwardAllowanceOnDisposalId -> 20
   )
 
   private def errorString(title: String) = s"$title unavailable from cache"
@@ -105,6 +106,7 @@ object AnswerRows {
         routes.AnyBroughtForwardAllowanceOnDisposalController.onPageLoad),
     Constants.anyExemptionId ->
       boolAnswerRowFn("any_exemption.title", "Any exemption", routes.AnyExemptionController.onPageLoad),
+    Constants.doesGrossingUpApplyId -> boolAnswerRowFn("does_grossing_up_apply.title", "Does grossing up apply", routes.GrossEstateValueController.onPageLoad),
     Constants.assetsPassingToDirectDescendantsId ->
       intAnswerRowFn("assets_passing_to_direct_descendants.title",
         "Assets passing to direct descendants",
