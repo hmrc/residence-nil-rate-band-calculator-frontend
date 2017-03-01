@@ -31,7 +31,7 @@ class GrossEstateValueViewSpec extends IntViewSpecBase {
 
   "Gross Estate Value View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance3")
+    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance")
 
     behave like pageWithBackLink[Int](createView)
 

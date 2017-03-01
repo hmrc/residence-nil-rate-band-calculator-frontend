@@ -13,13 +13,8 @@
 
     @rnrbHelpers.heading_with_pre_text("gross_estate_value.title", "gross_estate_value.question_number")
 
-    <p>@messages("gross_estate_value.guidance1")</p>
-
-    <p>@messages("gross_estate_value.guidance2")</p>
-
-    <p>@messages("gross_estate_value.guidance3")</p>
-
-
+    <p>@messages("gross_estate_value.guidance")</p>
+    
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.GrossEstateValueController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))

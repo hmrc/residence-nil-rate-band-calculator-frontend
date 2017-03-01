@@ -158,10 +158,8 @@ exit_questionnaire.user_research.guidance = This will help improve the service. 
 
 gross_estate_value.question_number = Question 2
 gross_estate_value.browser_title = Question page
-gross_estate_value.title = What was the total value of assets in the estate minus the value of debts being paid out from the estate?
-gross_estate_value.guidance1 = You can find these values on the online estate report that is sent to HMRC or on an IHT-400 form.
-gross_estate_value.guidance2 = If you have not worked out the total value of assets and debts, you’ll need to do this before you continue to work out the RNRB for this estate.
-gross_estate_value.guidance3 = You’ll need to write this value down because you’ll need it later.
+gross_estate_value.title = What is the total value of the estate before deducting any reliefs or exemptions?
+gross_estate_value.guidance = The total of IHT400 box 91, IHT403 box 12, box 10 and box 15 for each form IHT418.
 gross_estate_value.label =
 
 index.browser_title = Residence Nil-rate Band Calculator
