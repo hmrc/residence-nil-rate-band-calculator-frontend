@@ -21,6 +21,7 @@ import javax.inject.{Inject, Singleton}
 import play.api.libs.json.Reads
 import play.api.mvc.{Action, AnyContent, Call}
 import org.joda.time.LocalDate
+import play.api.mvc.Call
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 
@@ -45,8 +46,8 @@ class Navigator @Inject()() {
       Constants.anyDownsizingAllowanceId -> (ua => getAnyDownsizingAllowanceRoute(ua)),
       Constants.dateOfDisposalId -> (ua => getDateOfDisposalRoute(ua)),
       Constants.anyExemptionId -> (ua => getAnyExemptionRoute(ua)),
-      Constants.propertyValueAfterExemptionId -> (_ => ChargeableValueOfResidenceCloselyInheritedController.onPageLoad()),
-      Constants.propertyValueAfterExemptionCloselyInheritedId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
+      Constants.doesGrossingUpApplyId -> (ua => getDoesGrossingUpApplyRoute(ua)),
+      Constants.propertyValueAfterExemptionId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
       Constants.valueOfDisposedPropertyId -> (_ => AnyAssetsPassingToDirectDescendantsController.onPageLoad()),
       Constants.anyAssetsPassingToDirectDescendantsId -> (ua => getAnyAssetsPassingToDirectDescendantsRoute(ua)),
       Constants.assetsPassingToDirectDescendantsId -> (_ => AnyBroughtForwardAllowanceOnDisposalController.onPageLoad()),
@@ -94,7 +95,10 @@ class Navigator @Inject()() {
     getRouteForOptionalBoolean(userAnswers.anyPropertyCloselyInherited, PercentageCloselyInheritedController.onPageLoad(), AnyBroughtForwardAllowanceController.onPageLoad())
 
   private def getAnyExemptionRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.anyExemption, ChargeableValueOfResidenceController.onPageLoad(), AnyBroughtForwardAllowanceController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.anyExemption, DoesGrossingUpApplyController.onPageLoad(), AnyBroughtForwardAllowanceController.onPageLoad())
+
+  private def getDoesGrossingUpApplyRoute(userAnswers: UserAnswers) =
+    getRouteForOptionalBoolean(userAnswers.doesGrossingUpApply, TransitionOutController.onPageLoad(), PropertyValueAfterExemptionController.onPageLoad())
 
   private def getAnyAssetsPassingToDirectDescendantsRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.anyAssetsPassingToDirectDescendants, AssetsPassingToDirectDescendantsController.onPageLoad(), CheckAnswersController.onPageLoad())
@@ -121,8 +125,8 @@ class Navigator @Inject()() {
       Constants.anyPropertyCloselyInheritedId -> (_ => PropertyValueController.onPageLoad()),
       Constants.percentageCloselyInheritedId -> (_ => AnyPropertyCloselyInheritedController.onPageLoad()),
       Constants.anyExemptionId -> (_ => PercentageCloselyInheritedController.onPageLoad()),
-      Constants.propertyValueAfterExemptionId -> (_ => AnyExemptionController.onPageLoad()),
-      Constants.propertyValueAfterExemptionCloselyInheritedId -> (_ => ChargeableValueOfResidenceController.onPageLoad()),
+      Constants.doesGrossingUpApplyId -> (_ => AnyExemptionController.onPageLoad()),
+      Constants.propertyValueAfterExemptionId -> (_ => DoesGrossingUpApplyController.onPageLoad()),
       Constants.anyBroughtForwardAllowanceId -> (ua => getAnyBroughtForwardAllowanceReverseRoute(ua)),
       Constants.broughtForwardAllowanceId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
       Constants.anyDownsizingAllowanceId -> (ua => getAnyDownsizingAllowanceReverseRoute(ua)),

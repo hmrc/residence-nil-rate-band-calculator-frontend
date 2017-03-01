@@ -71,7 +71,11 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
       cacheMap)
 
   private def anyExemptionClearance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearIfFalse(Constants.anyExemptionId, value, Set(Constants.propertyValueAfterExemptionId), cacheMap)
+    clearIfFalse(Constants.anyExemptionId, value,
+      Set(
+        Constants.propertyValueAfterExemptionId,
+        Constants.doesGrossingUpApplyId),
+      cacheMap)
 
   private def anyBroughtForwardAllowance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
     clearIfFalse(Constants.anyBroughtForwardAllowanceId, value, Set(Constants.broughtForwardAllowanceId), cacheMap)

@@ -29,8 +29,6 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 
 class PropertyValueAfterExemptionControllerSpec extends UnitSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
 
-  val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyExemptionController.onPageLoad().url
-
   val propertyValue = 456
 
   val propertyValueCloselyInherited = 123
@@ -53,9 +51,13 @@ class PropertyValueAfterExemptionControllerSpec extends UnitSpec with WithFakeAp
 
   def createController = () => new PropertyValueAfterExemptionController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
-  def createView = (values: Option[PropertyValueAfterExemption]) => values match {
-    case None => property_value_after_exemption(frontendAppConfig, url)(fakeRequest, messages)
-    case Some(v) => property_value_after_exemption(frontendAppConfig, url, Some(PropertyValueAfterExemptionForm().fill(v)))(fakeRequest, messages)
+  def createView = (values: Option[PropertyValueAfterExemption]) => {
+    val backUrl = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DoesGrossingUpApplyController.onPageLoad().url
+
+    values match {
+      case None => property_value_after_exemption(frontendAppConfig, backUrl)(fakeRequest, messages)
+      case Some(v) => property_value_after_exemption(frontendAppConfig, backUrl, Some(PropertyValueAfterExemptionForm().fill(v)))(fakeRequest, messages)
+    }
   }
 
   def reads = PropertyValueAfterExemption.propertyValueAfterExemptionReads

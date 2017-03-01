@@ -22,6 +22,9 @@ POST       /any-estate-passed-to-descendants            uk.gov.hmrc.residencenil
 GET        /any-exemption                               uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyExemptionController.onPageLoad
 POST       /any-exemption                               uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyExemptionController.onSubmit
 
+GET        /does-grossing-up-apply                      uk.gov.hmrc.residencenilratebandcalculator.controllers.DoesGrossingUpApplyController.onPageLoad
+POST       /does-grossing-up-apply                      uk.gov.hmrc.residencenilratebandcalculator.controllers.DoesGrossingUpApplyController.onSubmit
+
 GET        /any-property-closely-inherited              uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyPropertyCloselyInheritedController.onPageLoad
 POST       /any-property-closely-inherited              uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyPropertyCloselyInheritedController.onSubmit
 
@@ -83,11 +86,6 @@ GET        /thank-you                                   uk.gov.hmrc.residencenil
 
 GET        /value-of-disposed-property                  uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfDisposedPropertyController.onPageLoad
 POST       /value-of-disposed-property                  uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfDisposedPropertyController.onSubmit
-
-GET        /what-are-you-using-this-service-for         uk.gov.hmrc.residencenilratebandcalculator.controllers.PurposeOfUseController.onPageLoad
-POST       /what-are-you-using-this-service-for         uk.gov.hmrc.residencenilratebandcalculator.controllers.PurposeOfUseController.onSubmit
-
-GET        /planning                                    uk.gov.hmrc.residencenilratebandcalculator.controllers.PlanningController.onPageLoad
 
 GET        /before-you-start                            uk.gov.hmrc.residencenilratebandcalculator.controllers.BeforeYouStartController.onPageLoad
 

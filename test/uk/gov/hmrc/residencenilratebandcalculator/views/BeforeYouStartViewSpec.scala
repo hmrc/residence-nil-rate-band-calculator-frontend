@@ -56,11 +56,11 @@ class BeforeYouStartViewSpec extends ViewSpecBase {
       )
     }
 
-    "display a Start button linking to the 'What are you using this service for' page" in {
+    "display a Start button linking to the 'Date Of Death' page" in {
       val doc = asDocument(before_you_start(frontendAppConfig)(request, messages))
       val startLink = doc.getElementById("start")
       startLink.className shouldBe "button"
-      startLink.attr("href") shouldBe routes.PurposeOfUseController.onPageLoad().url
+      startLink.attr("href") shouldBe routes.DateOfDeathController.onPageLoad().url
       startLink.text shouldBe messages("site.start")
     }
   }

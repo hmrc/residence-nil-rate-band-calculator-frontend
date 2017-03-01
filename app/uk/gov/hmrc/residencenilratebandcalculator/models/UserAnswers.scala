@@ -50,6 +50,8 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def dateOfDisposal = cacheMap.getEntry[LocalDate](Constants.dateOfDisposalId)
 
+  def doesGrossingUpApply = cacheMap.getEntry[Boolean](Constants.doesGrossingUpApplyId)
+
   def downsizingDetails = cacheMap.getEntry[Date](Constants.downsizingDetails)
 
   def estateHasProperty = cacheMap.getEntry[Boolean](Constants.estateHasPropertyId)
@@ -63,8 +65,6 @@ class UserAnswers(cacheMap: CacheMap) {
   def propertyValueAfterExemptionCloselyInherited = cacheMap.getEntry[Int](Constants.propertyValueAfterExemptionCloselyInheritedId)
 
   def propertyValue = cacheMap.getEntry[Int](Constants.propertyValueId)
-
-  def purposeOfUse = cacheMap.getEntry[String](Constants.purposeOfUseId)
 
   def valueOfDisposedProperty = cacheMap.getEntry[Int](Constants.valueOfDisposedPropertyId)
 }
