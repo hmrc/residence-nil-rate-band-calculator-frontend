@@ -165,8 +165,9 @@ not_possible_to_use_service.title = Not possible to use this Calculator
 not_possible_to_use_service.guidance = Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
 
 percentage_closely_inherited.question_number = Question 6
-percentage_closely_inherited.browser_title = Question page
-percentage_closely_inherited.title = What percentage of the property that you have just given the value of passes to a direct descendant or their spouse or civil partner?
+percentage_closely_inherited.browser_title = What percentage of the residence passes to direct descendants following the deceased’s death?
+percentage_closely_inherited.title = What percentage of the residence passes to direct descendants following the deceased’s death?
+percentage_closely_inherited.guidance = What share of the residence passes to a direct descendant? For example, if the children get 50% of the residue and the residence is in the residue, then the percentage is 50%.
 percentage_closely_inherited.label =
 
 property_value.question_number = Question 5
