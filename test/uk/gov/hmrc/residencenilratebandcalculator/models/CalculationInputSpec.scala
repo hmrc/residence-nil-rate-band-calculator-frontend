@@ -119,7 +119,8 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
 
     "there is a property, none of which is closely inherited, and no brought forward allowance or downsizing" must {
 
-      def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
+      def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue),
+        chargeableTransferAmount = Some(chargeableTransferAmount),
         estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(false),
         anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(false))
 
@@ -146,7 +147,8 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
 
     "there is a property, some of which is closely inherited, and no exemptions, brought forward allowance or downsizing" must {
 
-      def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
+      def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue),
+        chargeableTransferAmount = Some(chargeableTransferAmount),
         estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(true),
         percentageCloselyInherited = Some(percentageCloselyInherited), anyExemption = Some(false),
         anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(false))
@@ -175,7 +177,8 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
 
     "there is a property, some of which is closely inherited, some exemptions, and no brought forward allowance or downsizing" must {
 
-      def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
+      def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue),
+        chargeableTransferAmount = Some(chargeableTransferAmount),
         estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(true),
         percentageCloselyInherited = Some(percentageCloselyInherited), anyExemption = Some(true), doesGrossingUpApplyToResidence = Some(false),
         chargeableValueOfResidence = Some(chargeableValueOfResidence),
@@ -211,7 +214,8 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
 
     "there is a property, some of which is closely inherited, no exemptions, some brought forward allowance and no downsizing" must {
 
-      def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
+      def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue),
+        chargeableTransferAmount = Some(chargeableTransferAmount),
         estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(true),
         percentageCloselyInherited = Some(percentageCloselyInherited), anyExemption = Some(false),
         anyBroughtForwardAllowance = Some(true), broughtForwardAllowance = Some(broughtForwardAllowance), anyDownsizingAllowance = Some(false))
@@ -240,7 +244,8 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
 
     "there is a property, some of which is closely inherited, no exemptions, no brought forward allowance and downsizing" must {
 
-      def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
+      def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue),
+        chargeableTransferAmount = Some(chargeableTransferAmount),
         estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(true),
         percentageCloselyInherited = Some(percentageCloselyInherited), anyExemption = Some(false),
         anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(true), dateOfDisposal = Some(dateOfDisposal),
@@ -277,7 +282,8 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
     "there is a property, some of which is closely inherited, no exemptions, no brought forward allowance, " +
       "downsizing and other assets left to a direct descendant" must {
 
-      def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
+      def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue),
+        chargeableTransferAmount = Some(chargeableTransferAmount),
         estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(true),
         percentageCloselyInherited = Some(percentageCloselyInherited), anyExemption = Some(false),
         anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(true), dateOfDisposal = Some(dateOfDisposal),
@@ -315,7 +321,8 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
     "there is a property, some of which is closely inherited, no exemptions, brought forward allowance, downsizing and " +
       "other assets left to a direct descendant" must {
 
-      def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
+      def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue),
+        chargeableTransferAmount = Some(chargeableTransferAmount),
         estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(true),
         percentageCloselyInherited = Some(percentageCloselyInherited), anyExemption = Some(false),
         anyBroughtForwardAllowance = Some(true), broughtForwardAllowance = Some(broughtForwardAllowance), anyDownsizingAllowance = Some(true),
@@ -356,7 +363,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       "throw an exception" in {
         val exception = intercept[IllegalArgumentException] {
           setupMock()
-          val calculationInput = CalculationInput(userAnswers)
+          CalculationInput(userAnswers)
         }
 
         exception.getMessage shouldBe "requirement failed: Date of Death was not answered"
@@ -367,7 +374,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       "throw an exception" in {
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath))
-          val calculationInput = CalculationInput(userAnswers)
+          CalculationInput(userAnswers)
         }
 
         exception.getMessage shouldBe "requirement failed: Gross Estate Value was not answered"
@@ -378,7 +385,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       "throw an exception" in {
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue))
-          val calculationInput = CalculationInput(userAnswers)
+          CalculationInput(userAnswers)
         }
 
         exception.getMessage shouldBe "requirement failed: Chargeable Transfer Amount was not answered"
@@ -389,7 +396,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       "throw an exception" in {
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount))
-          val calculationInput = CalculationInput(userAnswers)
+          CalculationInput(userAnswers)
         }
 
         exception.getMessage shouldBe "requirement failed: Estate Has Property was not answered"
@@ -401,7 +408,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
             estateHasProperty = Some(true))
-          val calculationInput = CalculationInput(userAnswers)
+          CalculationInput(userAnswers)
         }
 
         exception.getMessage shouldBe "requirement failed: Property Value was not answered"
@@ -413,7 +420,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
             estateHasProperty = Some(true), propertyValue = Some(propertyValue))
-          val calculationInput = CalculationInput(userAnswers)
+          CalculationInput(userAnswers)
         }
 
         exception.getMessage shouldBe "requirement failed: Any Property Closely Inherited was not answered"
@@ -425,7 +432,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
             estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(true))
-          val calculationInput = CalculationInput(userAnswers)
+          CalculationInput(userAnswers)
         }
 
         exception.getMessage shouldBe "requirement failed: Percentage Closely Inherited was not answered"
@@ -438,7 +445,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
           setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
             estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(true),
             percentageCloselyInherited = Some(percentageCloselyInherited))
-          val calculationInput = CalculationInput(userAnswers)
+          CalculationInput(userAnswers)
         }
 
         exception.getMessage shouldBe "requirement failed: Any Exemptions was not answered"
@@ -451,7 +458,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
           setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
             estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(true),
             percentageCloselyInherited = Some(percentageCloselyInherited), anyExemption = Some(true))
-          val calculationInput = CalculationInput(userAnswers)
+          CalculationInput(userAnswers)
         }
 
         exception.getMessage shouldBe "requirement failed: Does Grossing Up Apply to Residence was not answered"
@@ -464,7 +471,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
           setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
             estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(true),
             percentageCloselyInherited = Some(percentageCloselyInherited), anyExemption = Some(true), doesGrossingUpApplyToResidence = Some(false))
-          val calculationInput = CalculationInput(userAnswers)
+          CalculationInput(userAnswers)
         }
 
         exception.getMessage shouldBe "requirement failed: Chargeable Value of Residence was not answered"
@@ -478,7 +485,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(true),
             percentageCloselyInherited = Some(percentageCloselyInherited), anyExemption = Some(true), doesGrossingUpApplyToResidence = Some(false),
             chargeableValueOfResidence = Some(chargeableValueOfResidence))
-          val calculationInput = CalculationInput(userAnswers)
+          CalculationInput(userAnswers)
         }
 
         exception.getMessage shouldBe "requirement failed: Chargeable Value of Residence Closely Inherited was not answered"
@@ -490,7 +497,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
             estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(false))
-          val calculationInput = CalculationInput(userAnswers)
+          CalculationInput(userAnswers)
         }
 
         exception.getMessage shouldBe "requirement failed: Any Brought Forward Allowance was not answered"
@@ -503,7 +510,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
           setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
             estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(false),
             anyBroughtForwardAllowance = Some(true))
-          val calculationInput = CalculationInput(userAnswers)
+          CalculationInput(userAnswers)
         }
 
         exception.getMessage shouldBe "requirement failed: Brought Forward Allowance was not answered"
@@ -516,7 +523,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
           setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
             estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(false),
             anyBroughtForwardAllowance = Some(false))
-          val calculationInput = CalculationInput(userAnswers)
+          CalculationInput(userAnswers)
         }
 
         exception.getMessage shouldBe "requirement failed: Any Downsizing Allowance was not answered"
@@ -529,7 +536,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
           setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
             estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(false),
             anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(true))
-          val calculationInput = CalculationInput(userAnswers)
+          CalculationInput(userAnswers)
         }
 
         exception.getMessage shouldBe "requirement failed: Date of Disposal was not answered"
@@ -542,7 +549,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
           setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
             estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(false),
             anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(true), dateOfDisposal = Some(dateOfDisposal))
-          val calculationInput = CalculationInput(userAnswers)
+          CalculationInput(userAnswers)
         }
 
         exception.getMessage shouldBe "requirement failed: Value of Disposed Property was not answered"
@@ -556,7 +563,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(false),
             anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(true), dateOfDisposal = Some(dateOfDisposal),
             valueOfDisposedProperty = Some(valueOfDisposedProperty))
-          val calculationInput = CalculationInput(userAnswers)
+          CalculationInput(userAnswers)
         }
 
         exception.getMessage shouldBe "requirement failed: Any Assets Passing to Direct Descendants was not answered"
@@ -571,7 +578,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(false),
             anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(true), dateOfDisposal = Some(dateOfDisposal),
             valueOfDisposedProperty = Some(valueOfDisposedProperty), anyAssetsPassingToDirectDescendants = Some(true))
-          val calculationInput = CalculationInput(userAnswers)
+          CalculationInput(userAnswers)
         }
 
         exception.getMessage shouldBe "requirement failed: Assets Passing to Direct Descendants was not answered"
@@ -587,7 +594,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(true), dateOfDisposal = Some(dateOfDisposal),
             valueOfDisposedProperty = Some(valueOfDisposedProperty), anyAssetsPassingToDirectDescendants = Some(true),
             assetsPassingToDirectDescendants = Some(assetsPassingToDirectDescendants))
-          val calculationInput = CalculationInput(userAnswers)
+          CalculationInput(userAnswers)
         }
 
         exception.getMessage shouldBe "requirement failed: Any Brought Forward Allowance on Disposal was not answered"
@@ -603,7 +610,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(true), dateOfDisposal = Some(dateOfDisposal),
             valueOfDisposedProperty = Some(valueOfDisposedProperty), anyAssetsPassingToDirectDescendants = Some(true),
             assetsPassingToDirectDescendants = Some(assetsPassingToDirectDescendants), anyBroughtForwardAllowanceOnDisposal = Some(true))
-          val calculationInput = CalculationInput(userAnswers)
+          CalculationInput(userAnswers)
         }
 
         exception.getMessage shouldBe "requirement failed: Brought Forward Allowance on Disposal was not answered"
