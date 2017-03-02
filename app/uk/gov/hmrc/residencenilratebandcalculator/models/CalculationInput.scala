@@ -31,8 +31,6 @@ case class CalculationInput(dateOfDeath: LocalDate,
 object CalculationInput {
   implicit val formats: OFormat[CalculationInput] = Json.format[CalculationInput]
 
-  // TODO: additional requires for chargeable value of residence
-
   def apply(userAnswers: UserAnswers): CalculationInput = {
     require(userAnswers.dateOfDeath.isDefined, "Date of Death was not answered")
     require(userAnswers.grossEstateValue.isDefined, "Gross Estate Value was not answered")
