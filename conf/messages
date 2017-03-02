@@ -103,8 +103,8 @@ chargeable_value_of_residence_closely_inherited.question_number =
 chargeable_value_of_residence_closely_inherited.title = What is the value of the property that you have already given minus the amount that is passing to a spouse or civil partner, a charity or another qualifying body?
 chargeable_value_of_residence_closely_inherited.label =
 chargeable_value_of_residence_closely_inherited.guidance = If the value of the property that you gave earlier was £500,000 and £240,000 of it was passing to a spouse or civil partner, you would give a value of £260,000 below.
-chargeable_value_of_residence.greater_than_property_value.error = Property Value after exemptions cannot be greater than the Property Value
-chargeable_value_of_residence_closely_inherited.value_closely_inherited_greater_than_value.error = Value Closely Inherited cannot be greater than the Property Value
+chargeable_value_of_residence.greater_than_property_value.error = Chargeable Value cannot be greater than the Property Value
+chargeable_value_of_residence_closely_inherited.greater_than_chargeable_value_of_residence.error = Value Closely Inherited cannot be greater than the Chargeable Value
 
 check_answers.browser_title = Check your answers
 check_answers.title = Check your answers

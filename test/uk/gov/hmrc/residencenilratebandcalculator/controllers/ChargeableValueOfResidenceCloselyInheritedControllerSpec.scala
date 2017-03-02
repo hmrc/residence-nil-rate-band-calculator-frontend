@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import play.api.http.Status
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
@@ -27,20 +28,27 @@ class ChargeableValueOfResidenceCloselyInheritedControllerSpec extends SimpleCon
 
     val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeableValueOfResidenceController.onPageLoad().url
 
-  def createView = (value: Option[Map[String, String]]) => value match {
-    case None => chargeable_value_of_residence_closely_inherited(frontendAppConfig, url)(fakeRequest, messages)
-    case Some(v) => chargeable_value_of_residence_closely_inherited(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)))(fakeRequest, messages)
+    def createView = (value: Option[Map[String, String]]) => value match {
+      case None => chargeable_value_of_residence_closely_inherited(frontendAppConfig, url)(fakeRequest, messages)
+      case Some(v) => chargeable_value_of_residence_closely_inherited(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)))(fakeRequest, messages)
+    }
+
+    def createController = () => new ChargeableValueOfResidenceCloselyInheritedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
+
+    val testValue = 123
+
+    val valuesToCacheBeforeSubmission = Map(Constants.chargeableValueOfResidenceId -> testValue)
+
+    behave like rnrbController(createController, createView, Constants.chargeableValueOfResidenceCloselyInheritedId,
+      testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
+
+    behave like nonStartingController[Int](createController)(Reads.IntReads, Writes.IntWrites)
+
+    "return bad request on submit with a value greater than the previously saved Chargeable Value of Residence" in {
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))
+      setCacheValue(Constants.chargeableValueOfResidenceId, testValue - 1)
+      val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
+      status(result) shouldBe Status.BAD_REQUEST
+    }
   }
-
-  def createController = () => new ChargeableValueOfResidenceCloselyInheritedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
-
-  val testValue = 123
-
-  val valuesToCacheBeforeSubmission = Map(Constants.chargeableValueOfResidenceId -> testValue)
-
-  behave like rnrbController(createController, createView, Constants.chargeableValueOfResidenceCloselyInheritedId,
-    testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
-
-}
-
 }
