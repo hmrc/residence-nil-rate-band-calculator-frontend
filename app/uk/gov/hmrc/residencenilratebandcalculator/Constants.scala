@@ -42,7 +42,8 @@ object Constants {
   val estateHasPropertyId = "EstateHasProperty"
   val grossEstateValueId = "GrossEstateValue"
   val percentageCloselyInheritedId = "PercentageCloselyInherited"
-  val propertyValueAfterExemptionId = "PropertyValueAfterExemption"
+  val chargeableValueOfResidenceId = "ChargeableValueOfResidence"
+  val chargeableValueOfResidenceCloselyInheritedId = "ChargeableValueOfResidenceCloselyInherited"
   val propertyValueId = "PropertyValue"
   val valueOfDisposedPropertyId = "ValueOfDisposedProperty"
 
@@ -53,7 +54,8 @@ object Constants {
     grossEstateValueId -> "grossEstateValue",
     propertyValueId -> "propertyValue",
     percentageCloselyInheritedId -> "percentageCloselyInherited",
-    propertyValueAfterExemptionId -> "propertyValueAfterExemption"
+    chargeableValueOfResidenceId -> "chargeableValueOfResidence",
+    chargeableValueOfResidenceCloselyInheritedId -> "chargeableValueOfResidenceCloselyInherited"
   )
 
   val downsizingKeys = Map(
