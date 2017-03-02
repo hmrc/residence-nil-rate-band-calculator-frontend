@@ -98,15 +98,17 @@ chargeable_transfer_amount.title = What is the amount of the total chargeable es
 chargeable_transfer_amount.guidance = IHT400, box 108.
 chargeable_transfer_amount.label =
 
-chargeable_value_of_residence.browser_title = Question page
+chargeable_value_of_residence.browser_title = What is the chargeable value of the residence for inheritance tax purposes?
 chargeable_value_of_residence.question_number =
-chargeable_value_of_residence.title = What is the value of the property that you have already given minus the amount that is being left to a direct descendant?
+chargeable_value_of_residence.title = What is the chargeable value of the residence for inheritance tax purposes?
 chargeable_value_of_residence.label =
-chargeable_value_of_residence.guidance = If the value of the property that you gave earlier was £500,000 and £260,000 of it was being left to a direct descendant, you would give a value of £240,000 below.
+chargeable_value_of_residence.guidance = This is the value for inheritance tax purposes for the whole of the deceased’s interest in the property.
 chargeable_value_of_residence_closely_inherited.question_number =
-chargeable_value_of_residence_closely_inherited.title = What is the value of the property that you have already given minus the amount that is passing to a spouse or civil partner, a charity or another qualifying body?
+chargeable_value_of_residence_closely_inherited.browser_title = What is the chargeable value of the residence that passes to direct descendents?
+chargeable_value_of_residence_closely_inherited.title = What is the chargeable value of the residence that passes to direct descendents?
 chargeable_value_of_residence_closely_inherited.label =
-chargeable_value_of_residence_closely_inherited.guidance = If the value of the property that you gave earlier was £500,000 and £240,000 of it was passing to a spouse or civil partner, you would give a value of £260,000 below.
+chargeable_value_of_residence_closely_inherited.guidance1 = This is the value for inheritance tax purposes of the part of the property inherited by a direct descendant.
+chargeable_value_of_residence_closely_inherited.guidance2 = For example if the property is worth £400,000 and half passes to the surviving spouse and half to a child, the figure to include here would be £200,000 for the part passing to the child.
 chargeable_value_of_residence.greater_than_property_value.error = Property Value after exemptions cannot be greater than the Property Value
 chargeable_value_of_residence_closely_inherited.value_closely_inherited_greater_than_value.error = Value Closely Inherited cannot be greater than the Property Value
 

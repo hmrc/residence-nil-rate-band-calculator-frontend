@@ -16,8 +16,8 @@
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
 
-        <h1 class="pre-heading">@messages("chargeable_value_of_residence.question_number")</h1>
-        <h1>@messages("chargeable_value_of_residence.title")</h1>
+        @rnrbHelpers.heading_with_pre_text("chargeable_value_of_residence.title", "chargeable_value_of_residence.question_number")
+
         <p>@messages("chargeable_value_of_residence.guidance")</p>
 
         @rnrbHelpers.input_text(

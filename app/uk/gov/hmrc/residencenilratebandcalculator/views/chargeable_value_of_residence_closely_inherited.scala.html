@@ -16,9 +16,11 @@
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
 
-        <h1 class="pre-heading">@messages("chargeable_value_of_residence_closely_inherited.question_number")</h1>
-        <h1>@messages("chargeable_value_of_residence_closely_inherited.title")</h1>
-        <p>@messages("chargeable_value_of_residence_closely_inherited.guidance")</p>
+        @rnrbHelpers.heading_with_pre_text("chargeable_value_of_residence_closely_inherited.title", "chargeable_value_of_residence_closely_inherited.question_number")
+
+        <p>@messages("chargeable_value_of_residence_closely_inherited.guidance1")</p>
+
+        <p>@messages("chargeable_value_of_residence_closely_inherited.guidance2")</p>
 
         @rnrbHelpers.input_text(
             id = "value",
