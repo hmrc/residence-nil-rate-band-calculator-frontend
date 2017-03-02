@@ -38,30 +38,9 @@ object CalculationInput {
     require(userAnswers.grossEstateValue.isDefined, "Gross Estate Value was not answered")
     require(userAnswers.chargeableTransferAmount.isDefined, "Chargeable Transfer Amount was not answered")
     require(userAnswers.estateHasProperty.isDefined, "Estate Has Property was not answered")
-    require(!userAnswers.estateHasProperty.get || userAnswers.propertyValue.isDefined, "Property Value was not answered")
-    require(!userAnswers.estateHasProperty.get || userAnswers.anyPropertyCloselyInherited.isDefined, "Any Property Closely Inherited was not answered")
-    require(userAnswers.anyPropertyCloselyInherited.isEmpty ||
-      !userAnswers.anyPropertyCloselyInherited.get ||
-      userAnswers.percentageCloselyInherited.isDefined,
-      "Percentage Closely Inherited was not answered")
-    require(userAnswers.anyPropertyCloselyInherited.isEmpty ||
-      !userAnswers.anyPropertyCloselyInherited.get ||
-      userAnswers.anyExemption.isDefined,
-      "Any Exemptions was not answered")
-    require(userAnswers.anyExemption.isEmpty ||
-      !userAnswers.anyExemption.get ||
-      userAnswers.doesGrossingUpApplyToResidence.isDefined,
-      "Does Grossing Up Apply to Residence was not answered")
-    require(userAnswers.doesGrossingUpApplyToResidence.isEmpty ||
-      userAnswers.doesGrossingUpApplyToResidence.get ||
-      userAnswers.chargeableValueOfResidence.isDefined,
-      "Chargeable Value of Residence was not answered")
-    require(userAnswers.doesGrossingUpApplyToResidence.isEmpty ||
-      userAnswers.doesGrossingUpApplyToResidence.get ||
-      userAnswers.chargeableValueOfResidenceCloselyInherited.isDefined,
-      "Chargeable Value of Residence Closely Inherited was not answered")
+    if (userAnswers.estateHasProperty.get) requireEstateHasPropertyDependancies(userAnswers)
     require(userAnswers.anyBroughtForwardAllowance.isDefined, "Any Brought Forward Allowance was not answered")
-    require(!userAnswers.anyBroughtForwardAllowance.get || userAnswers.broughtForwardAllowance.isDefined, "Brought Forward Allowance was not answered")
+    if (userAnswers.anyBroughtForwardAllowance.get) requireBroughtForwardAllowanceDependancies(userAnswers)
     require(userAnswers.anyDownsizingAllowance.isDefined, "Any Downsizing Allowance was not answered")
 
     CalculationInput(
@@ -104,6 +83,31 @@ object CalculationInput {
     case true => Some(DownsizingDetails(userAnswers))
     case _ => None
   }
+
+  private def requireEstateHasPropertyDependancies(userAnswers: UserAnswers) = {
+    require(userAnswers.propertyValue.isDefined, "Property Value was not answered")
+    require(userAnswers.anyPropertyCloselyInherited.isDefined, "Any Property Closely Inherited was not answered")
+    if(userAnswers.anyPropertyCloselyInherited.get) requirePropertyCloselyInheritedDependancies(userAnswers)
+  }
+
+  private def requirePropertyCloselyInheritedDependancies(userAnswers: UserAnswers) = {
+    require(userAnswers.percentageCloselyInherited.isDefined, "Percentage Closely Inherited was not answered")
+    require(userAnswers.anyExemption.isDefined, "Any Exemptions was not answered")
+    if(userAnswers.anyExemption.get) requireExemptionsDependancies(userAnswers)
+  }
+
+  private def requireExemptionsDependancies(userAnswers: UserAnswers) = {
+    require(userAnswers.doesGrossingUpApplyToResidence.isDefined, "Does Grossing Up Apply to Residence was not answered")
+    if (!userAnswers.doesGrossingUpApplyToResidence.get) requireNoGrossingUpDependancies(userAnswers)
+  }
+
+  private def requireNoGrossingUpDependancies(userAnswers: UserAnswers) = {
+    require(userAnswers.chargeableValueOfResidence.isDefined, "Chargeable Value of Residence was not answered")
+    require(userAnswers.chargeableValueOfResidenceCloselyInherited.isDefined, "Chargeable Value of Residence Closely Inherited was not answered")
+  }
+
+  private def requireBroughtForwardAllowanceDependancies(userAnswers: UserAnswers) =
+    require(userAnswers.broughtForwardAllowance.isDefined, "Brought Forward Allowance was not answered")
 }
 
 case class DownsizingDetails(dateOfDisposal: LocalDate,
@@ -118,14 +122,7 @@ object DownsizingDetails {
     require(userAnswers.dateOfDisposal.isDefined, "Date of Disposal was not answered")
     require(userAnswers.valueOfDisposedProperty.isDefined, "Value of Disposed Property was not answered")
     require(userAnswers.anyAssetsPassingToDirectDescendants.isDefined, "Any Assets Passing to Direct Descendants was not answered")
-    require(!userAnswers.anyAssetsPassingToDirectDescendants.get || userAnswers.assetsPassingToDirectDescendants.isDefined,
-      "Assets Passing to Direct Descendants was not answered")
-    require(!userAnswers.anyAssetsPassingToDirectDescendants.get || userAnswers.anyBroughtForwardAllowanceOnDisposal.isDefined,
-      "Any Brought Forward Allowance on Disposal was not answered")
-    require(!userAnswers.anyAssetsPassingToDirectDescendants.get ||
-      !userAnswers.anyBroughtForwardAllowanceOnDisposal.get ||
-      userAnswers.broughtForwardAllowanceOnDisposal.isDefined,
-      "Brought Forward Allowance on Disposal was not answered")
+    if (userAnswers.anyAssetsPassingToDirectDescendants.get) requireAssetsPassingToDirectDescendantsDependancies(userAnswers)
 
     DownsizingDetails(
       userAnswers.dateOfDisposal.get,
@@ -143,4 +140,13 @@ object DownsizingDetails {
     case true if userAnswers.anyBroughtForwardAllowanceOnDisposal.get => userAnswers.broughtForwardAllowanceOnDisposal.get
     case _ => 0
   }
+
+  private def requireAssetsPassingToDirectDescendantsDependancies(userAnswers: UserAnswers) = {
+    require(userAnswers.assetsPassingToDirectDescendants.isDefined, "Assets Passing to Direct Descendants was not answered")
+    require(userAnswers.anyBroughtForwardAllowanceOnDisposal.isDefined, "Any Brought Forward Allowance on Disposal was not answered")
+    if (userAnswers.anyBroughtForwardAllowanceOnDisposal.get) requireBroughtForwardAllowanceOnDisposalDependancies(userAnswers)
+  }
+
+  private def requireBroughtForwardAllowanceOnDisposalDependancies(userAnswers: UserAnswers) =
+    require(userAnswers.broughtForwardAllowanceOnDisposal.isDefined, "Brought Forward Allowance on Disposal was not answered")
 }
