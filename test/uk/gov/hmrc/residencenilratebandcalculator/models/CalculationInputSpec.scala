@@ -37,7 +37,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
   val broughtForwardAllowanceOnDisposal = 8
   val dateOfDisposal = new LocalDate(2018, 2, 2)
   val chargeableValueOfResidence = 9
-  val chargeableValueOfResidenceCloselyInherited = 9
+  val chargeableValueOfResidenceCloselyInherited = 10
 
   var userAnswers: UserAnswers = _
 
@@ -60,6 +60,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
                 estateHasProperty: Option[Boolean] = None,
                 grossEstateValue: Option[Int] = None,
                 percentageCloselyInherited: Option[Int] = None,
+                doesGrossingUpApplyToResidence: Option[Boolean] = None,
                 chargeableValueOfResidence: Option[Int] = None,
                 chargeableValueOfResidenceCloselyInherited: Option[Int] = None,
                 propertyValue: Option[Int] = None,
@@ -80,6 +81,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
     when(userAnswers.estateHasProperty) thenReturn estateHasProperty
     when(userAnswers.grossEstateValue) thenReturn grossEstateValue
     when(userAnswers.percentageCloselyInherited) thenReturn percentageCloselyInherited
+    when(userAnswers.doesGrossingUpApplyToResidence) thenReturn doesGrossingUpApplyToResidence
     when(userAnswers.chargeableValueOfResidence) thenReturn chargeableValueOfResidence
     when(userAnswers.chargeableValueOfResidenceCloselyInherited) thenReturn chargeableValueOfResidenceCloselyInherited
     when(userAnswers.propertyValue) thenReturn propertyValue
@@ -175,7 +177,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
 
       def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
         estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(true),
-        percentageCloselyInherited = Some(percentageCloselyInherited), anyExemption = Some(true),
+        percentageCloselyInherited = Some(percentageCloselyInherited), anyExemption = Some(true), doesGrossingUpApplyToResidence = Some(false),
         chargeableValueOfResidence = Some(chargeableValueOfResidence),
         chargeableValueOfResidenceCloselyInherited = Some(chargeableValueOfResidenceCloselyInherited),
         anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(false))
@@ -184,7 +186,8 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
         calculationInput shouldBe CalculationInput(dateOfDeath, grossEstateValue, chargeableTransferAmount,
-          propertyValue, percentageCloselyInherited, 0, Some(ChargeableValueOfResidence(9,9)), None)
+          propertyValue, percentageCloselyInherited, 0,
+          Some(PropertyValueAfterExemption(chargeableValueOfResidence, chargeableValueOfResidenceCloselyInherited)), None)
       }
 
       "render to JSON" in {
@@ -200,7 +203,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             |"broughtForwardAllowance":0,
             |"propertyValueAfterExemption":{
             |  "value":9,
-            |  "valueCloselyInherited":9
+            |  "valueCloselyInherited":10
             |  }
             |}""".stripMargin.replaceAll("\\s+", "")
       }
@@ -426,6 +429,59 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         }
 
         exception.getMessage shouldBe "requirement failed: Percentage Closely Inherited was not answered"
+      }
+    }
+
+    "'any property closely inherited' is true but there is no value for 'any exemptions'" must {
+      "throw an exception" in {
+        val exception = intercept[IllegalArgumentException] {
+          setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
+            estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(true),
+            percentageCloselyInherited = Some(percentageCloselyInherited))
+          val calculationInput = CalculationInput(userAnswers)
+        }
+
+        exception.getMessage shouldBe "requirement failed: Any Exemptions was not answered"
+      }
+    }
+
+    "'any property closely inherited' is true and 'any exemptions' is true but there is no value for 'does grossing up apply to residence'" must {
+      "throw an exception" in {
+        val exception = intercept[IllegalArgumentException] {
+          setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
+            estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(true),
+            percentageCloselyInherited = Some(percentageCloselyInherited), anyExemption = Some(true))
+          val calculationInput = CalculationInput(userAnswers)
+        }
+
+        exception.getMessage shouldBe "requirement failed: Does Grossing Up Apply to Residence was not answered"
+      }
+    }
+
+    "'does grossing up apply to residence' is fals and there is no value for 'chargeable value of residence'" must {
+      "throw an exception" in {
+        val exception = intercept[IllegalArgumentException] {
+          setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
+            estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(true),
+            percentageCloselyInherited = Some(percentageCloselyInherited), anyExemption = Some(true), doesGrossingUpApplyToResidence = Some(false))
+          val calculationInput = CalculationInput(userAnswers)
+        }
+
+        exception.getMessage shouldBe "requirement failed: Chargeable Value of Residence was not answered"
+      }
+    }
+
+    "'does grossing up apply to residence' is fals and there is no value for 'chargeable value of residence closely inhertied'" must {
+      "throw an exception" in {
+        val exception = intercept[IllegalArgumentException] {
+          setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue), chargeableTransferAmount = Some(chargeableTransferAmount),
+            estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(true),
+            percentageCloselyInherited = Some(percentageCloselyInherited), anyExemption = Some(true), doesGrossingUpApplyToResidence = Some(false),
+            chargeableValueOfResidence = Some(chargeableValueOfResidence))
+          val calculationInput = CalculationInput(userAnswers)
+        }
+
+        exception.getMessage shouldBe "requirement failed: Chargeable Value of Residence Closely Inherited was not answered"
       }
     }
 

@@ -35,7 +35,7 @@ object AnswerRows {
     Constants.anyPropertyCloselyInheritedId -> 7,
     Constants.percentageCloselyInheritedId -> 8,
     Constants.anyExemptionId -> 9,
-  Constants.doesGrossingUpApplyToResidenceId -> 10,
+    Constants.doesGrossingUpApplyToResidenceId -> 10,
     Constants.chargeableValueOfResidenceId -> 11,
     Constants.chargeableValueOfResidenceCloselyInheritedId -> 12,
     Constants.anyBroughtForwardAllowanceId -> 13,

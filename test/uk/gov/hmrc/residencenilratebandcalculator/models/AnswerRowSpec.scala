@@ -51,10 +51,6 @@ class AnswerRowSpec extends UnitSpec with WithFakeApplication {
       AnswerRow("", false, mockCall)(messages).data shouldBe messages("site.no")
     }
 
-    "correctly format a PropertyValueAfterExemption as two lots of money" in {
-      AnswerRow("", ChargeableValueOfResidence(1000, 5000), mockCall)(messages).data shouldBe "£1,000.00 \n£5,000.00"
-    }
-
     "pull the title from the messages file" in {
       AnswerRow("site.yes", true, mockCall)(messages).title shouldBe messages("site.yes")
     }

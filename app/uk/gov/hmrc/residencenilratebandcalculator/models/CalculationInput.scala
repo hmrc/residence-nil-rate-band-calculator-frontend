@@ -25,7 +25,7 @@ case class CalculationInput(dateOfDeath: LocalDate,
                             propertyValue: Int,
                             percentageCloselyInherited: Int,
                             broughtForwardAllowance: Int,
-                            propertyValueAfterExemption: Option[ChargeableValueOfResidence],
+                            propertyValueAfterExemption: Option[PropertyValueAfterExemption],
                             downsizingDetails: Option[DownsizingDetails])
 
 object CalculationInput {
@@ -44,6 +44,22 @@ object CalculationInput {
       !userAnswers.anyPropertyCloselyInherited.get ||
       userAnswers.percentageCloselyInherited.isDefined,
       "Percentage Closely Inherited was not answered")
+    require(userAnswers.anyPropertyCloselyInherited.isEmpty ||
+      !userAnswers.anyPropertyCloselyInherited.get ||
+      userAnswers.anyExemption.isDefined,
+      "Any Exemptions was not answered")
+    require(userAnswers.anyExemption.isEmpty ||
+      !userAnswers.anyExemption.get ||
+      userAnswers.doesGrossingUpApplyToResidence.isDefined,
+      "Does Grossing Up Apply to Residence was not answered")
+    require(userAnswers.doesGrossingUpApplyToResidence.isEmpty ||
+      userAnswers.doesGrossingUpApplyToResidence.get ||
+      userAnswers.chargeableValueOfResidence.isDefined,
+      "Chargeable Value of Residence was not answered")
+    require(userAnswers.doesGrossingUpApplyToResidence.isEmpty ||
+      userAnswers.doesGrossingUpApplyToResidence.get ||
+      userAnswers.chargeableValueOfResidenceCloselyInherited.isDefined,
+      "Chargeable Value of Residence Closely Inherited was not answered")
     require(userAnswers.anyBroughtForwardAllowance.isDefined, "Any Brought Forward Allowance was not answered")
     require(!userAnswers.anyBroughtForwardAllowance.get || userAnswers.broughtForwardAllowance.isDefined, "Brought Forward Allowance was not answered")
     require(userAnswers.anyDownsizingAllowance.isDefined, "Any Downsizing Allowance was not answered")
@@ -60,9 +76,9 @@ object CalculationInput {
     )
   }
 
-  def getChargeableValueOfResidence(userAnswers: UserAnswers): Option[ChargeableValueOfResidence] =
+  def getChargeableValueOfResidence(userAnswers: UserAnswers): Option[PropertyValueAfterExemption] =
     userAnswers.chargeableValueOfResidence.isDefined match {
-    case true => Some(ChargeableValueOfResidence(
+    case true => Some(PropertyValueAfterExemption(
       userAnswers.chargeableValueOfResidence.get,
       userAnswers.chargeableValueOfResidenceCloselyInherited.get
     ))
