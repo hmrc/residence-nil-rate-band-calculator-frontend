@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import play.api.http.Status
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
@@ -36,11 +37,18 @@ class ChargeableValueOfResidenceControllerSpec extends SimpleControllerSpecBase 
 
     val testValue = 123
 
-    val valuesToCacheBeforeSubmission = Map(Constants.doesGrossingUpApplyToResidenceId -> testValue)
+    val valuesToCacheBeforeSubmission = Map(Constants.propertyValueId -> testValue)
 
     behave like rnrbController(createController, createView, Constants.chargeableValueOfResidenceId,
       testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
 
-  }
+    behave like nonStartingController[Int](createController)(Reads.IntReads, Writes.IntWrites)
 
+    "return bad request on submit with a value greater than the previously saved Property Value" in {
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))
+      setCacheValue(Constants.propertyValueId, testValue - 1)
+      val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
+      status(result) shouldBe Status.BAD_REQUEST
+    }
+  }
 }

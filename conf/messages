@@ -109,8 +109,8 @@ chargeable_value_of_residence_closely_inherited.title = What is the chargeable v
 chargeable_value_of_residence_closely_inherited.label =
 chargeable_value_of_residence_closely_inherited.guidance1 = This is the value for inheritance tax purposes of the part of the property inherited by a direct descendant.
 chargeable_value_of_residence_closely_inherited.guidance2 = For example if the property is worth £400,000 and half passes to the surviving spouse and half to a child, the figure to include here would be £200,000 for the part passing to the child.
-chargeable_value_of_residence.greater_than_property_value.error = Property Value after exemptions cannot be greater than the Property Value
-chargeable_value_of_residence_closely_inherited.value_closely_inherited_greater_than_value.error = Value Closely Inherited cannot be greater than the Property Value
+chargeable_value_of_residence.greater_than_property_value.error = Chargeable Value cannot be greater than the Property Value
+chargeable_value_of_residence_closely_inherited.greater_than_chargeable_value_of_residence.error = Value Closely Inherited cannot be greater than the Chargeable Value
 
 check_answers.browser_title = Check your answers
 check_answers.title = Check your answers
