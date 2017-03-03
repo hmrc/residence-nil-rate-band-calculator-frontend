@@ -94,6 +94,18 @@ chargeable_transfer_amount.guidance2 = Estate exemptions are the total value of 
 chargeable_transfer_amount.guidance3 = If you have done an online estate report, you’ll only need to take off any estate exemptions. If you have done an IHT-400 form, you might have estate exemptions and any relief that is being claimed against the estate.
 chargeable_transfer_amount.label =
 
+chargeable_value_of_residence.browser_title = Question page
+chargeable_value_of_residence.question_number =
+chargeable_value_of_residence.title = What is the value of the property that you have already given minus the amount that is being left to a direct descendant?
+chargeable_value_of_residence.label =
+chargeable_value_of_residence.guidance = If the value of the property that you gave earlier was £500,000 and £260,000 of it was being left to a direct descendant, you would give a value of £240,000 below.
+chargeable_value_of_residence_closely_inherited.question_number =
+chargeable_value_of_residence_closely_inherited.title = What is the value of the property that you have already given minus the amount that is passing to a spouse or civil partner, a charity or another qualifying body?
+chargeable_value_of_residence_closely_inherited.label =
+chargeable_value_of_residence_closely_inherited.guidance = If the value of the property that you gave earlier was £500,000 and £240,000 of it was passing to a spouse or civil partner, you would give a value of £260,000 below.
+chargeable_value_of_residence.greater_than_property_value.error = Chargeable Value cannot be greater than the Property Value
+chargeable_value_of_residence_closely_inherited.greater_than_chargeable_value_of_residence.error = Value Closely Inherited cannot be greater than the Chargeable Value
+
 check_answers.browser_title = Check your answers
 check_answers.title = Check your answers
 check_answers.button_text = See results
@@ -187,18 +199,6 @@ property_value.guidance2 = You must take off the remaining mortgage value on tha
 property_value.guidance3 = If there was more than one property in the estate that can be used here, whoever is responsible for the deceased’s estate should pick 1 to use.
 property_value.label =
 property_value.greater_than_gross_estate_value.error = Property Value cannot be greater than the Gross Estate Value
-
-property_value_after_exemption.question_number = Question 8
-property_value_after_exemption.browser_title = Question page
-property_value_after_exemption.title = Values
-property_value_after_exemption.value.title = What is the value of the property that you have already given minus the amount that is being left to a direct descendant?
-property_value_after_exemption.value.label =
-property_value_after_exemption.value.guidance = If the value of the property that you gave earlier was £500,000 and £260,000 of it was being left to a direct descendant, you would give a value of £240,000 below.
-property_value_after_exemption.value_closely_inherited.title = What is the value of the property that you have already given minus the amount that is passing to a spouse or civil partner, a charity or another qualifying body?
-property_value_after_exemption.value_closely_inherited.label =
-property_value_after_exemption.value_closely_inherited.guidance = If the value of the property that you gave earlier was £500,000 and £240,000 of it was passing to a spouse or civil partner, you would give a value of £260,000 below.
-property_value_after_exemption.greater_than_property_value.error = Property Value after exemptions cannot be greater than the Property Value
-property_value_after_exemption.value_closely_inherited_greater_than_value.error = Value Closely Inherited cannot be greater than the Property Value
 
 results.browser_title = Final calculation
 results.title = The Residence Nil Rate Amount available for this estate&nbsp;is {0}

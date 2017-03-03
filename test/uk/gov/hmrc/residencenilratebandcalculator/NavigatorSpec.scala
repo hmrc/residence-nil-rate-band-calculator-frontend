@@ -17,7 +17,6 @@
 package uk.gov.hmrc.residencenilratebandcalculator
 
 import org.joda.time.LocalDate
-import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.scalatest.Matchers
 import org.scalatest.mock.MockitoSugar
@@ -150,10 +149,10 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.anyExemptionId)(mockCacheMap) shouldBe routes.DoesGrossingUpApplyToResidenceController.onPageLoad()
     }
 
-    "return a call to Property Value After Exemption onPageLoad method when grossing up does not apply to the residence" in {
+    "return a call to Chargeable Value Of Residence onPageLoad method when grossing up does not apply" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.doesGrossingUpApplyToResidence) thenReturn Some(false)
-      navigator.nextPage(Constants.doesGrossingUpApplyToResidenceId)(mockCacheMap) shouldBe routes.PropertyValueAfterExemptionController.onPageLoad()
+      navigator.nextPage(Constants.doesGrossingUpApplyToResidenceId)(mockCacheMap) shouldBe routes.ChargeableValueOfResidenceController.onPageLoad()
     }
 
     "return a call to Transition Out onPageLoad method when grossing up does apply to the residence" in {
@@ -162,8 +161,9 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.doesGrossingUpApplyToResidenceId)(mockCacheMap) shouldBe routes.TransitionOutController.onPageLoad()
     }
 
-    "return a call to the Any Brought Forward Allowance onPageLoad method from the Property Value After Exemption controller" in {
-      navigator.nextPage(Constants.propertyValueAfterExemptionId)(mock[UserAnswers]) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
+    "return a call to the Any Brought Forward Allowance onPageLoad method from the " +
+      "Chargeable Value Of Residence Closely Inherited controller" in {
+      navigator.nextPage(Constants.chargeableValueOfResidenceCloselyInheritedId)(mock[UserAnswers]) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
     }
 
     val userAnswers = new UserAnswers(CacheMap("", Map()))
@@ -204,19 +204,19 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.doesGrossingUpApplyToResidenceId)(userAnswers) shouldBe routes.AnyExemptionController.onPageLoad()
     }
 
-    "return a call to the Does Grossing Up Apply To Residence when back linking from the Property Value After Exemption page" in {
-      navigator.lastPage(Constants.propertyValueAfterExemptionId)(userAnswers) shouldBe routes.DoesGrossingUpApplyToResidenceController.onPageLoad()
+    "return a call to the Does Grossing Up Apply when back linking from the Property Value After Exemption page" in {
+      navigator.lastPage(Constants.chargeableValueOfResidenceId)(userAnswers) shouldBe routes.DoesGrossingUpApplyToResidenceController.onPageLoad()
     }
 
     "return a call to the Estate Has Property when back linking from the Any Brought Forward Allowance page" in {
       navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.EstateHasPropertyController.onPageLoad()
     }
 
-    "return a call to the Property Value After Exemption when back linking from the Any Brought Forward Allowance page" +
+    "return a call to the Chargeable Value Of Residence Closely Inherited when back linking from the Any Brought Forward Allowance page" +
       "when the user has positively answered Any Exemption" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.anyExemption) thenReturn Some(true)
-      navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.PropertyValueAfterExemptionController.onPageLoad()
+      navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.ChargeableValueOfResidenceCloselyInheritedController.onPageLoad()
     }
 
     "return a call to the Any Exemption when back linking from the Any Brought Forward Allowance page" +
@@ -352,5 +352,6 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     "return a call to the results controller onPageLoad method from the CheckAnswers controller" in {
       navigator.nextPage(Constants.checkAnswersId)(mock[UserAnswers]) shouldBe routes.ResultsController.onPageLoad()
     }
+
   }
 }
