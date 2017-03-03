@@ -13,11 +13,7 @@
 
     @rnrbHelpers.heading_with_pre_text("chargeable_transfer_amount.title", "chargeable_transfer_amount.question_number")
 
-    <p>@messages("chargeable_transfer_amount.guidance1")</p>
-
-    <p>@messages("chargeable_transfer_amount.guidance2")</p>
-
-    <p>@messages("chargeable_transfer_amount.guidance3")</p>
+    <p>@messages("chargeable_transfer_amount.guidance")</p>
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeableTransferAmountController.onSubmit(), 'autoComplete -> "off") {
 

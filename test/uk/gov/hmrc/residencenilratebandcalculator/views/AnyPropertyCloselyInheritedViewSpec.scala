@@ -30,7 +30,7 @@ class AnyPropertyCloselyInheritedViewSpec extends BooleanViewSpecBase {
 
   "Any Property Closely Inherited View" must {
 
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix)
+    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance")
 
     behave like pageWithBackLink[Boolean](createView)
 

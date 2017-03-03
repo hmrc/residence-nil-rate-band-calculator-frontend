@@ -15,6 +15,10 @@
     @rnrbHelpers.heading_with_pre_text("does_grossing_up_apply_to_other_property.title", "does_grossing_up_apply_to_other_property.question_number")
 
     <p>@messages("does_grossing_up_apply_to_other_property.guidance")</p>
+    <ul class="list list-bullet">
+        <li>@messages("does_grossing_up_apply_to_other_property.guidance.bullet1")</li>
+        <li>@messages("does_grossing_up_apply_to_other_property.guidance.bullet2")</li>
+    </ul>
 
     @helpers.form(action = DoesGrossingUpApplyToOtherPropertyController.onSubmit(), 'autoComplete -> "off") {
 

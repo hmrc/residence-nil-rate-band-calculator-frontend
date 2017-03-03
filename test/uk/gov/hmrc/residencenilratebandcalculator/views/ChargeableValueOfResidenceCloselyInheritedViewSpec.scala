@@ -31,6 +31,8 @@ class ChargeableValueOfResidenceCloselyInheritedViewSpec extends IntViewSpecBase
 
   "Chargeable Value Of Residence Closely Inherited View" must {
 
+    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2")
+
     behave like pageWithBackLink[Int](createView)
 
     behave like intPage(createView, messageKeyPrefix, ChargeableValueOfResidenceCloselyInheritedController.onSubmit().url, NonNegativeIntForm())

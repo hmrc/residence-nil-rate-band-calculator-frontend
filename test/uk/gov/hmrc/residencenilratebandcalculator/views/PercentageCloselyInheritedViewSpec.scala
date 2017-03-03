@@ -31,7 +31,7 @@ class PercentageCloselyInheritedViewSpec extends IntViewSpecBase {
 
   "Percentage Closely Inherited View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix)
+    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance")
 
     behave like pageWithBackLink[Int](createView)
 

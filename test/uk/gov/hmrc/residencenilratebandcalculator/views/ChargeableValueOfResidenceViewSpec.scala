@@ -31,6 +31,8 @@ class ChargeableValueOfResidenceViewSpec extends IntViewSpecBase {
 
   "Chargeable Value Of Residence View" must {
 
+    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance")
+
     behave like pageWithBackLink[Int](createView)
 
     behave like intPage(createView, messageKeyPrefix, ChargeableValueOfResidenceController.onSubmit().url, NonNegativeIntForm())

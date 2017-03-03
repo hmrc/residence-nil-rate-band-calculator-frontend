@@ -14,9 +14,11 @@
 
     @rnrbHelpers.heading_with_pre_text("estate_has_property.title", "estate_has_property.question_number")
 
-        <p>@messages("estate_has_property.guidance")</p>
+    <p>@messages("estate_has_property.guidance1")</p>
 
-        @helpers.form(action = EstateHasPropertyController.onSubmit(), 'autoComplete -> "off") {
+    <p>@messages("estate_has_property.guidance2")</p>
+
+    @helpers.form(action = EstateHasPropertyController.onSubmit(), 'autoComplete -> "off") {
 
             @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
 

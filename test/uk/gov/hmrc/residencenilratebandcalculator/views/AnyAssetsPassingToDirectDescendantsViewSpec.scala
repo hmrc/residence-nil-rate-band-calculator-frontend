@@ -30,7 +30,7 @@ class AnyAssetsPassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
 
   "Any Assets Passing to Direct Descendants View" must {
 
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix)
+    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance")
 
     behave like pageWithBackLink[Boolean](createView)
 
