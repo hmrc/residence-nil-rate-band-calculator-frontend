@@ -16,17 +16,13 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
-import uk.gov.hmrc.residencenilratebandcalculator.utils.Transformers._
+import play.api.data.Form
+import play.api.data.Forms._
+import play.api.data.format.Formats._
+import uk.gov.hmrc.residencenilratebandcalculator.forms.FormValidators._
 
-import scala.util.{Success, Try}
+object AnyPropertyCloselyInheritedForm {
 
-object FormValidators {
-
-  def isValidDate(day: Int, month: Int, year: Int): Boolean = Try(constructDate(day, month, year)) match {
-    case Success(_) => true
-    case _ => false
-  }
-
-  def isValidPropertyCloselyInheritedOption(value: String) = Constants.anyPropertyCloselyInheritedOptions.exists(radioOption => radioOption.value == value)
+  def apply(): Form[String] =
+    Form(single("value" -> of[String]).verifying("error.invalid_closely_inherited_property_option", value => isValidPropertyCloselyInheritedOption(value)))
 }
