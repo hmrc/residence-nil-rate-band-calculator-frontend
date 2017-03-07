@@ -146,6 +146,37 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       }
     }
 
+    "there is a property, all of which is closely inherited, and no exemptions, brought forward allowance or downsizing" must {
+
+      def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue),
+        chargeableTransferAmount = Some(chargeableTransferAmount),
+        estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(Constants.all),
+        percentageCloselyInherited = Some(percentageCloselyInherited), anyExemption = Some(false),
+        anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(false))
+
+      "construct correctly from user answers" in {
+        buildAnswers
+        val calculationInput = CalculationInput(userAnswers)
+        calculationInput shouldBe CalculationInput(dateOfDeath, grossEstateValue, chargeableTransferAmount,
+          propertyValue, 100, 0, None, None)
+      }
+
+      "render to JSON" in {
+        buildAnswers
+        val calculationInput = CalculationInput(userAnswers)
+        Json.toJson(calculationInput).toString shouldBe
+          """{
+            |"dateOfDeath":"2020-01-01",
+            |"grossEstateValue":1,
+            |"chargeableTransferAmount":2,
+            |"propertyValue":3,
+            |"percentageCloselyInherited":100,
+            |"broughtForwardAllowance":0
+            |}""".stripMargin.replaceAll("\\s+", "")
+      }
+    }
+
+
     "there is a property, some of which is closely inherited, and no exemptions, brought forward allowance or downsizing" must {
 
       def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue),
