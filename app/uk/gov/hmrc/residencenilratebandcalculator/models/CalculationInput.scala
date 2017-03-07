@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import org.joda.time.LocalDate
 import play.api.libs.json.{Json, OFormat}
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 case class CalculationInput(dateOfDeath: LocalDate,
                             grossEstateValue: Int,
@@ -68,7 +69,8 @@ object CalculationInput {
   }
 
   private def getPercentageCloselyInherited(userAnswers: UserAnswers) = userAnswers.estateHasProperty.get match {
-      case true if userAnswers.anyPropertyCloselyInherited.get => userAnswers.percentageCloselyInherited.get
+      case true if userAnswers.anyPropertyCloselyInherited.get == Constants.all => 100
+      case true if userAnswers.anyPropertyCloselyInherited.get == Constants.some => userAnswers.percentageCloselyInherited.get
       case _ => 0
     }
 
@@ -82,14 +84,18 @@ object CalculationInput {
     case _ => None
   }
 
+  // TODO: Refactor
   private def requireEstateHasPropertyDependancies(userAnswers: UserAnswers) = {
     require(userAnswers.propertyValue.isDefined, "Property Value was not answered")
     require(userAnswers.anyPropertyCloselyInherited.isDefined, "Any Property Closely Inherited was not answered")
-    if(userAnswers.anyPropertyCloselyInherited.get) requirePropertyCloselyInheritedDependancies(userAnswers)
+
+    if(userAnswers.anyPropertyCloselyInherited.get == Constants.some) {
+      require(userAnswers.percentageCloselyInherited.isDefined, "Percentage Closely Inherited was not answered")
+    }
+    if (userAnswers.anyPropertyCloselyInherited.get != Constants.none) requirePropertyCloselyInheritedDependancies(userAnswers)
   }
 
   private def requirePropertyCloselyInheritedDependancies(userAnswers: UserAnswers) = {
-    require(userAnswers.percentageCloselyInherited.isDefined, "Percentage Closely Inherited was not answered")
     require(userAnswers.anyExemption.isDefined, "Any Exemptions was not answered")
     if(userAnswers.anyExemption.get) requireExemptionsDependancies(userAnswers)
   }

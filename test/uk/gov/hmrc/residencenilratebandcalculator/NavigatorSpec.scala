@@ -85,15 +85,21 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.propertyValueId)(mock[UserAnswers]) shouldBe routes.AnyPropertyCloselyInheritedController.onPageLoad()
     }
 
-    "return a function that goes to the Percentage Closely Inherited controller when given Any Property Closely Inherited with a value of true" in {
+    "return a function that goes to the Any Exemptions controller when given Any Property Closely Inherited with a value of all" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.anyPropertyCloselyInherited) thenReturn Some(true)
+      when(mockCacheMap.anyPropertyCloselyInherited) thenReturn Some(Constants.all)
+      navigator.nextPage(Constants.anyPropertyCloselyInheritedId)(mockCacheMap) shouldBe routes.AnyExemptionController.onPageLoad()
+    }
+
+    "return a function that goes to the Percentage Closely Inherited controller when given Any Property Closely Inherited with a value of some" in {
+      val mockCacheMap = mock[UserAnswers]
+      when(mockCacheMap.anyPropertyCloselyInherited) thenReturn Some(Constants.some)
       navigator.nextPage(Constants.anyPropertyCloselyInheritedId)(mockCacheMap) shouldBe routes.PercentageCloselyInheritedController.onPageLoad()
     }
 
-    "return a function that goes to the Any Brought Forward Allowance controller when given Any Property Closely Inherited with a value of false" in {
+    "return a function that goes to the Any Brought Forward Allowance controller when given Any Property Closely Inherited with a value of none" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.anyPropertyCloselyInherited) thenReturn Some(false)
+      when(mockCacheMap.anyPropertyCloselyInherited) thenReturn Some(Constants.none)
       navigator.nextPage(Constants.anyPropertyCloselyInheritedId)(mockCacheMap) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
     }
 
@@ -220,9 +226,16 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     }
 
     "return a call to the Any Exemption when back linking from the Any Brought Forward Allowance page" +
-      "when the user has positively answered Property Closely Inherited" in {
+      "when the user has answered Property Closely Inherited as all" in {
       val userAnswers = mock[UserAnswers]
-      when(userAnswers.anyPropertyCloselyInherited) thenReturn Some(true)
+      when(userAnswers.anyPropertyCloselyInherited) thenReturn Some(Constants.all)
+      navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.AnyExemptionController.onPageLoad()
+    }
+
+    "return a call to the Any Exemption when back linking from the Any Brought Forward Allowance page" +
+      "when the user has answered Property Closely Inherited as some" in {
+      val userAnswers = mock[UserAnswers]
+      when(userAnswers.anyPropertyCloselyInherited) thenReturn Some(Constants.some)
       navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.AnyExemptionController.onPageLoad()
     }
 

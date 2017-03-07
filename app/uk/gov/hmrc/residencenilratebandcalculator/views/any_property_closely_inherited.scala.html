@@ -2,8 +2,9 @@
 @import uk.gov.hmrc.play.views.html._
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
+@import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
-@(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[Boolean]] = None)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[String]] = None)(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("any_property_closely_inherited.browser_title"),
@@ -20,11 +21,11 @@
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
 
-        @rnrbHelpers.input_yes_no(
-            id = "value",
-            label = messages("any_property_closely_inherited.label"),
+        @rnrbHelpers.input_radio(
+            name = "value",
+            legend = messages("any_property_closely_inherited.label"),
             errorKey = FormHelpers.getErrorByKey(form, "value"),
-            value = Some(FormHelpers.getYesNo(form))
+            inputs = Constants.anyPropertyCloselyInheritedOptions
         )
 
         @rnrbHelpers.submit_button()

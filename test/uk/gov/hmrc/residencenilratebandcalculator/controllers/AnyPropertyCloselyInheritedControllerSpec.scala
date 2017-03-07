@@ -18,7 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
-import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.AnyPropertyCloselyInheritedForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_property_closely_inherited
 
 class AnyPropertyCloselyInheritedControllerSpec extends SimpleControllerSpecBase {
@@ -30,16 +30,16 @@ class AnyPropertyCloselyInheritedControllerSpec extends SimpleControllerSpecBase
 
       value match {
         case None => any_property_closely_inherited(frontendAppConfig, url)(fakeRequest, messages)
-        case Some(v) => any_property_closely_inherited(frontendAppConfig, url, Some(BooleanForm().bind(v)))(fakeRequest, messages)
+        case Some(v) => any_property_closely_inherited(frontendAppConfig, url, Some(AnyPropertyCloselyInheritedForm().bind(v)))(fakeRequest, messages)
       }
     }
 
     def createController = () => new AnyPropertyCloselyInheritedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
-    val testValue = true
+    val testValue = Constants.all
 
-    behave like rnrbController[Boolean](createController, createView, Constants.anyPropertyCloselyInheritedId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+    behave like rnrbController[String](createController, createView, Constants.anyPropertyCloselyInheritedId, testValue)(Reads.StringReads, Writes.StringWrites)
 
-    behave like nonStartingController[Boolean](createController)(Reads.BooleanReads, Writes.BooleanWrites)
+    behave like nonStartingController[String](createController)(Reads.StringReads, Writes.StringWrites)
   }
 }

@@ -90,8 +90,12 @@ class Navigator @Inject()() {
   private def getDateOfDisposalRoute(userAnswers: UserAnswers) =
     getRouteForOptionalLocalDate(userAnswers.dateOfDisposal, Constants.downsizingEligibilityDate, ValueOfDisposedPropertyController.onPageLoad())
 
-  private def getAnyPropertyCloselyInheritedRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.anyPropertyCloselyInherited, PercentageCloselyInheritedController.onPageLoad(), AnyBroughtForwardAllowanceController.onPageLoad())
+  private def getAnyPropertyCloselyInheritedRoute(userAnswers: UserAnswers) = userAnswers.anyPropertyCloselyInherited match {
+    case Some(Constants.all) => AnyExemptionController.onPageLoad()
+    case Some(Constants.some) => PercentageCloselyInheritedController.onPageLoad()
+    case Some(_) => AnyBroughtForwardAllowanceController.onPageLoad()
+    case _ => HomeController.onPageLoad()
+  }
 
   private def getAnyExemptionRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.anyExemption, DoesGrossingUpApplyToResidenceController.onPageLoad(), AnyBroughtForwardAllowanceController.onPageLoad())
@@ -140,7 +144,7 @@ class Navigator @Inject()() {
   private def getAnyBroughtForwardAllowanceReverseRoute(userAnswers: UserAnswers) = userAnswers.anyExemption match {
     case Some(true) => ChargeableValueOfResidenceCloselyInheritedController.onPageLoad()
     case _ => userAnswers.anyPropertyCloselyInherited match {
-      case Some(true) => AnyExemptionController.onPageLoad()
+      case Some(_) => AnyExemptionController.onPageLoad()
       case _ => userAnswers.estateHasProperty match {
         case Some(true) => PropertyValueController.onPageLoad()
         case _ => EstateHasPropertyController.onPageLoad()

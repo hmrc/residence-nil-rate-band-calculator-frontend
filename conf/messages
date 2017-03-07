@@ -53,6 +53,9 @@ any_exemption.guidance1 = If any part of the residence passes to an exempt benef
 any_exemption.guidance2 = If the residence falls into the residue of the estate and part of the residue passes to an exempt beneficiary, answer ‘yes’ to this question.
 any_exemption.label =
 
+any_property_closely_inherited.all = Yes, all of it passed
+any_property_closely_inherited.some = Yes, some of it passed
+any_property_closely_inherited.none = No
 any_property_closely_inherited.question_number = Question 6
 any_property_closely_inherited.browser_title = Did any part of this residence pass to a direct descendant or their spouse or civil partner?
 any_property_closely_inherited.title = Did any part of this residence pass to a direct descendant or their spouse or civil partner?
