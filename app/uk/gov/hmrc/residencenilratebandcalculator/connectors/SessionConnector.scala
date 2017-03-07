@@ -63,14 +63,21 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
         Constants.chargeableValueOfResidenceCloselyInheritedId),
       cacheMap)
 
-  private def anyPropertyCloselyInherited[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearIfFalse(Constants.anyPropertyCloselyInheritedId, value,
-      Set(
-        Constants.percentageCloselyInheritedId,
-        Constants.anyExemptionId,
-        Constants.chargeableValueOfResidenceId,
-        Constants.chargeableValueOfResidenceCloselyInheritedId),
-      cacheMap)
+  private def anyPropertyCloselyInherited[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
+    val keysToRemoveWhenNone = Set(
+      Constants.percentageCloselyInheritedId,
+      Constants.anyExemptionId,
+      Constants.chargeableValueOfResidenceId,
+      Constants.chargeableValueOfResidenceCloselyInheritedId
+    )
+
+    val mapToStore = value match {
+      case JsString(Constants.none) => cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemoveWhenNone.contains(s)))
+      case JsString(Constants.all) => cacheMap copy (data = cacheMap.data - Constants.percentageCloselyInheritedId)
+      case _ => cacheMap
+    }
+    store(Constants.anyPropertyCloselyInheritedId, value, mapToStore)
+  }
 
   private def anyExemptionClearance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
     clearIfFalse(Constants.anyExemptionId, value,
