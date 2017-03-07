@@ -144,6 +144,7 @@ class Navigator @Inject()() {
   private def getAnyBroughtForwardAllowanceReverseRoute(userAnswers: UserAnswers) = userAnswers.anyExemption match {
     case Some(true) => ChargeableValueOfResidenceCloselyInheritedController.onPageLoad()
     case _ => userAnswers.anyPropertyCloselyInherited match {
+      case Some(Constants.none) => AnyPropertyCloselyInheritedController.onPageLoad()
       case Some(_) => AnyExemptionController.onPageLoad()
       case _ => userAnswers.estateHasProperty match {
         case Some(true) => PropertyValueController.onPageLoad()

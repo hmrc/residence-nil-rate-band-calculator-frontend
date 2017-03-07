@@ -256,6 +256,13 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.AnyExemptionController.onPageLoad()
     }
 
+    "return a call to the Any Property Closely Inherited when back linking from the Any Brought Forward Allowance page" +
+      "when the user has answered Property Closely Inherited as none" in {
+      val userAnswers = mock[UserAnswers]
+      when(userAnswers.anyPropertyCloselyInherited) thenReturn Some(Constants.none)
+      navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.AnyPropertyCloselyInheritedController.onPageLoad()
+    }
+
     "return a call to the Property Value when back linking from the Any Brought Forward Allowance page" +
       "when the user has positively answered Estate Has Property" in {
       val userAnswers = mock[UserAnswers]
