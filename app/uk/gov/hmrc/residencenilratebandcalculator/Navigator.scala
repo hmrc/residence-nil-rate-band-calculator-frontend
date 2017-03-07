@@ -122,7 +122,7 @@ class Navigator @Inject()() {
       Constants.propertyValueId -> (_ => EstateHasPropertyController.onPageLoad()),
       Constants.anyPropertyCloselyInheritedId -> (_ => PropertyValueController.onPageLoad()),
       Constants.percentageCloselyInheritedId -> (_ => AnyPropertyCloselyInheritedController.onPageLoad()),
-      Constants.anyExemptionId -> (_ => PercentageCloselyInheritedController.onPageLoad()),
+      Constants.anyExemptionId -> (ua => getAnyExemptionReverseRoute(ua)),
       Constants.chargeableValueOfResidenceId -> (_ => DoesGrossingUpApplyToResidenceController.onPageLoad()),
       Constants.chargeableValueOfResidenceCloselyInheritedId -> (_ => ChargeableValueOfResidenceController.onPageLoad()),
       Constants.doesGrossingUpApplyToResidenceId -> (_ => AnyExemptionController.onPageLoad()),
@@ -150,6 +150,11 @@ class Navigator @Inject()() {
         case _ => EstateHasPropertyController.onPageLoad()
       }
     }
+  }
+
+  private def getAnyExemptionReverseRoute(userAnswers: UserAnswers) = userAnswers.anyPropertyCloselyInherited match {
+    case Some(Constants.some) => PercentageCloselyInheritedController.onPageLoad()
+    case _ => AnyPropertyCloselyInheritedController.onPageLoad()
   }
 
   private def getAnyDownsizingAllowanceReverseRoute(userAnswers: UserAnswers) = userAnswers.anyBroughtForwardAllowance match {

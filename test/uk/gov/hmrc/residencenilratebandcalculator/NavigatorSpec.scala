@@ -202,8 +202,25 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.percentageCloselyInheritedId)(userAnswers) shouldBe routes.AnyPropertyCloselyInheritedController.onPageLoad()
     }
 
-    "return a call to the Percentage Closely Inherited when back linking from the Any Exemption page" in {
+    "return a call to Any Property Closely Inherited when back linking from the Any Exemption page " +
+      "when the user has given an answer of 'all' for 'Any Property Closely Inherited'" in {
+      val userAnswers = mock[UserAnswers]
+      when(userAnswers.anyPropertyCloselyInherited) thenReturn Some(Constants.all)
+      navigator.lastPage(Constants.anyExemptionId)(userAnswers) shouldBe routes.AnyPropertyCloselyInheritedController.onPageLoad()
+    }
+
+    "return a call to the Percentage Closely Inherited when back linking from the Any Exemption page " +
+      "when the user has given an answer of 'some' for 'Any Property Closely Inherited'" in {
+      val userAnswers = mock[UserAnswers]
+      when(userAnswers.anyPropertyCloselyInherited) thenReturn Some(Constants.some)
       navigator.lastPage(Constants.anyExemptionId)(userAnswers) shouldBe routes.PercentageCloselyInheritedController.onPageLoad()
+    }
+
+    "return a call to Any Property Closely Inherited when back linking from the Any Exemption page " +
+      "when the user has given an answer of 'none' for 'Any Property Closely Inherited'" in {
+      val userAnswers = mock[UserAnswers]
+      when(userAnswers.anyPropertyCloselyInherited) thenReturn Some(Constants.none)
+      navigator.lastPage(Constants.anyExemptionId)(userAnswers) shouldBe routes.AnyPropertyCloselyInheritedController.onPageLoad()
     }
 
     "return a call to the Any Exemptions when back linking from the Does Grossing Up Apply To Residence page" in {
