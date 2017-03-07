@@ -51,6 +51,10 @@ class AnswerRowSpec extends UnitSpec with WithFakeApplication {
       AnswerRow("", false, mockCall)(messages).data shouldBe messages("site.no")
     }
 
+    "correctly format a string" in {
+      AnswerRow("", "abc", mockCall)(messages).data shouldBe "abc"
+    }
+
     "pull the title from the messages file" in {
       AnswerRow("site.yes", true, mockCall)(messages).title shouldBe messages("site.yes")
     }

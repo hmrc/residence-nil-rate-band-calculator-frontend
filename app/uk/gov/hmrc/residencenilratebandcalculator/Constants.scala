@@ -64,4 +64,13 @@ object Constants {
     assetsPassingToDirectDescendantsId -> "valueCloselyInherited",
     broughtForwardAllowanceOnDisposalId -> "broughtForwardAllowanceAtDisposal"
   )
+
+  val all = "all"
+  val some = "some"
+  val none = "none"
+  val anyPropertyCloselyInheritedOptions = Seq(
+    RadioOption("any_property_closely_inherited", all),
+    RadioOption("any_property_closely_inherited", some),
+    RadioOption("any_property_closely_inherited", none)
+  )
 }

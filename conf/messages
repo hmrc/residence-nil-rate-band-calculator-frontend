@@ -47,6 +47,9 @@ any_exemption.guidance1 = If any part of the residence passes to an exempt benef
 any_exemption.guidance2 = If the residence falls into the residue of the estate and part of the residue passes to an exempt beneficiary, answer ‘yes’ to this question.
 any_exemption.label =
 
+any_property_closely_inherited.all = Yes, all of it passed
+any_property_closely_inherited.some = Yes, some of it passed
+any_property_closely_inherited.none = No
 any_property_closely_inherited.browser_title = Did any part of this residence pass to a direct descendant or their spouse or civil partner?
 any_property_closely_inherited.title = Did any part of this residence pass to a direct descendant or their spouse or civil partner?
 any_property_closely_inherited.guidance = This will be listed in the will of the person who has died.
@@ -134,6 +137,7 @@ does_grossing_up_apply_to_residence.guidance.bullet1 = the will makes any gifts 
 does_grossing_up_apply_to_residence.guidance.bullet2 = any part of the residue is exempt (because, for example it passes to charity or the deceased’s spouse or civil partner). The residue is what is left in the estate after you have paid all debts, legacies and taxes
 does_grossing_up_apply_to_residence.label =
 
+error.invalid_closely_inherited_property_option = Please choose an option
 error.invalid_date = Enter a valid date
 error.number = Please enter a valid number
 error.required = Please enter a value
