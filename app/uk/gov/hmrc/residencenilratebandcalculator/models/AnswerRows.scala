@@ -72,6 +72,11 @@ object AnswerRows {
       value => AnswerRow(titleKey, value, url()) _
     })
 
+  def anyPropertyCloselyInheritedAnswerRowFn(titleKey: String, title: String, url: () => Call) =
+    (jsValue: JsValue) => Json.fromJson[String](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
+      value => AnswerRow(title, s"any_property_closely_inherited.$value", url()) _
+    })
+
   val answerRowFns = Map[String, JsValue => Messages => AnswerRow](
     Constants.dateOfDeathId ->
       dateAnswerRowFn("date_of_death.title", "Date of death", routes.DateOfDeathController.onPageLoad),
@@ -114,7 +119,8 @@ object AnswerRows {
         "Brought forward allowance on disposal",
         routes.BroughtForwardAllowanceOnDisposalController.onPageLoad),
     Constants.anyPropertyCloselyInheritedId ->
-      boolAnswerRowFn("any_property_closely_inherited.title", "Any property closely inherited", routes.AnyPropertyCloselyInheritedController.onPageLoad),
+      anyPropertyCloselyInheritedAnswerRowFn("any_property_closely_inherited.title",
+        "Any property closely inherited", routes.AnyPropertyCloselyInheritedController.onPageLoad),
     Constants.doesGrossingUpApplyToOtherPropertyId ->
       boolAnswerRowFn("does_grossing_up_apply_to_other_property.title",
         "Does grossing up apply to other property",

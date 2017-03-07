@@ -37,4 +37,7 @@ object AnswerRow {
 
   def apply(titleKey: String, percent: Double, url: Call)(messages: Messages): AnswerRow =
     AnswerRow(messages(titleKey), s"$percent%", url.url)
+
+  def apply(titleKey: String, valueKey: String, url: Call)(messages: Messages): AnswerRow =
+    AnswerRow(messages(titleKey), messages(valueKey), url.url)
 }
