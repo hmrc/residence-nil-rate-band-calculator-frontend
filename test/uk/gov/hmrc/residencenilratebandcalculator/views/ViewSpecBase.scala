@@ -72,13 +72,6 @@ trait ViewSpecBase extends HtmlSpec {
 
     "behave like a page with a question" when {
       "rendered" must {
-        "contain the correct question designator" in {
-          val doc = asDocument(createView(None))
-          val questionDesignators = doc.getElementsByClass("pre-heading")
-          questionDesignators.size shouldBe 1
-          questionDesignators.first.text shouldBe messages(s"$messageKeyPrefix.question_number")
-        }
-
         "contain a form that POSTs to the correct action" in {
           val doc = asDocument(createView(None))
           val forms = doc.getElementsByTag("form")
