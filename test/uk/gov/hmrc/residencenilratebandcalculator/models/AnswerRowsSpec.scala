@@ -23,6 +23,7 @@ import play.api.mvc.Call
 import play.api.test.FakeRequest
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.MockSessionConnector
 
 class AnswerRowSpecs extends UnitSpec with WithFakeApplication with MockSessionConnector {
@@ -121,6 +122,12 @@ class AnswerRowSpecs extends UnitSpec with WithFakeApplication with MockSessionC
       AnswerRows.intAnswerRowFn("check_answers.title", "",
         () => Call("", "http://example.com"))(JsNumber(data.valueCloselyInherited))(messages) shouldBe
         AnswerRow(messages("check_answers.title"), "£5,000.00", "http://example.com")
+    }
+
+    "correctly create Any Property Closely Inherited AnswerRow" in {
+      val data = Constants.all
+      AnswerRows.anyPropertyCloselyInheritedAnswerRowFn("check_answers.title", "", () => Call("", "http://example.com"))(JsString(data))(messages) shouldBe
+        AnswerRow(messages("check_answers.title"), messages("any_property_closely_inherited.all"), "http://example.com")
     }
 
     "throw an exception when anyPropertyCloselyInheritedAnswerRowFn is not passed a string" in {

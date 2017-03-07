@@ -74,7 +74,7 @@ object AnswerRows {
 
   def anyPropertyCloselyInheritedAnswerRowFn(titleKey: String, title: String, url: () => Call) =
     (jsValue: JsValue) => Json.fromJson[String](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
-      value => AnswerRow(title, s"any_property_closely_inherited.$value", url()) _
+      value => AnswerRow(titleKey, s"any_property_closely_inherited.$value", url()) _
     })
 
   val answerRowFns = Map[String, JsValue => Messages => AnswerRow](
