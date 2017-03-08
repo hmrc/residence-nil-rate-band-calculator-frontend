@@ -126,6 +126,17 @@ class AnswerRowSpecs extends UnitSpec with WithFakeApplication with MockSessionC
         AnswerRow(messages("check_answers.title"), "£5,000.00", "http://example.com")
     }
 
+    "correctly create Any Property Closely Inherited AnswerRow" in {
+      val data = Constants.all
+      AnswerRows.anyPropertyCloselyInheritedAnswerRowFn("check_answers.title", "", () => Call("", "http://example.com"))(JsString(data))(messages) shouldBe
+        AnswerRow(messages("check_answers.title"), messages("any_property_closely_inherited.all"), "http://example.com")
+    }
+
+    "throw an exception when anyPropertyCloselyInheritedAnswerRowFn is not passed a string" in {
+      an[RuntimeException] should be thrownBy
+        AnswerRows.anyPropertyCloselyInheritedAnswerRowFn("check_answers.title", "", () => Call("", ""))(JsBoolean(true))(messages)
+    }
+
     "ignore data in the cache map which does not have a corresponding key in the answer rows function map" in {
       val cacheMap = CacheMap("", Map[String, JsValue](
         "id1" -> JsBoolean(true),

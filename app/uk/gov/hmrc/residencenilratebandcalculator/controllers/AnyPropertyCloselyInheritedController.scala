@@ -24,7 +24,7 @@ import play.api.mvc.Request
 import play.twirl.api.HtmlFormat._
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.AnyPropertyCloselyInheritedForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_property_closely_inherited
 
@@ -32,13 +32,13 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_property_closel
 class AnyPropertyCloselyInheritedController @Inject()(override val appConfig: FrontendAppConfig,
                                                       val messagesApi: MessagesApi,
                                                       override val sessionConnector: SessionConnector,
-                                                      override val navigator: Navigator) extends SimpleControllerBase[Boolean] {
+                                                      override val navigator: Navigator) extends SimpleControllerBase[String] {
 
   override val controllerId: String = Constants.anyPropertyCloselyInheritedId
 
-  override def form: () => Form[Boolean] = () => BooleanForm()
+  override def form: () => Form[String] = () => AnyPropertyCloselyInheritedForm()
 
-  override def view(form: Option[Form[Boolean]], backUrl: String, answerRows: Seq[AnswerRow])(implicit request: Request[_]): Appendable = {
+  override def view(form: Option[Form[String]], backUrl: String, answerRows: Seq[AnswerRow])(implicit request: Request[_]): Appendable = {
     any_property_closely_inherited(appConfig, backUrl, form, answerRows)
   }
 }

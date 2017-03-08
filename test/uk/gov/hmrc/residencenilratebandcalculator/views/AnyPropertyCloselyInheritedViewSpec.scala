@@ -19,6 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_property_closely_inherited
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.forms.AnyPropertyCloselyInheritedForm
 
 import scala.language.reflectiveCalls
 
@@ -26,14 +27,57 @@ class AnyPropertyCloselyInheritedViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "any_property_closely_inherited"
 
-  def createView(form: Option[Form[Boolean]] = None) = any_property_closely_inherited(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[String]] = None) = any_property_closely_inherited(frontendAppConfig, backUrl, form)(request, messages)
 
   "Any Property Closely Inherited View" must {
 
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance")
+    behave like rnrbPage[String](createView, messageKeyPrefix, "guidance")
 
-    behave like pageWithBackLink[Boolean](createView)
+    behave like pageWithBackLink[String](createView)
 
-    behave like booleanPage(createView, messageKeyPrefix, AnyPropertyCloselyInheritedController.onSubmit().url)
+    behave like questionPage[String](createView, messageKeyPrefix, AnyPropertyCloselyInheritedController.onSubmit().url)
+  }
+
+  "Any Property Closely Inherited View" when {
+
+    "rendered" must {
+
+      "contain radio buttons for the value" in {
+        val doc = asDocument(createView(None))
+        assertContainsRadioButton(doc, "any_property_closely_inherited.all", "value", "all", false)
+        assertContainsRadioButton(doc, "any_property_closely_inherited.some", "value", "some", false)
+        assertContainsRadioButton(doc, "any_property_closely_inherited.none", "value", "none", false)
+      }
+    }
+
+    "rendered with a value of 'all'" must {
+
+      "have the 'all' radion button selected" in {
+        val doc = asDocument(createView(Some(AnyPropertyCloselyInheritedForm().bind(Map("value" -> "all")))))
+        assertContainsRadioButton(doc, "any_property_closely_inherited.all", "value", "all", true)
+        assertContainsRadioButton(doc, "any_property_closely_inherited.some", "value", "some", false)
+        assertContainsRadioButton(doc, "any_property_closely_inherited.none", "value", "none", false)
+      }
+    }
+
+    "rendered with a value of 'some'" must {
+
+      "have the 'some' radion button selected" in {
+        val doc = asDocument(createView(Some(AnyPropertyCloselyInheritedForm().bind(Map("value" -> "some")))))
+        assertContainsRadioButton(doc, "any_property_closely_inherited.all", "value", "all", false)
+        assertContainsRadioButton(doc, "any_property_closely_inherited.some", "value", "some", true)
+        assertContainsRadioButton(doc, "any_property_closely_inherited.none", "value", "none", false)
+      }
+    }
+
+    "rendered with a value of 'none'" must {
+
+      "have the 'none' radion button selected" in {
+        val doc = asDocument(createView(Some(AnyPropertyCloselyInheritedForm().bind(Map("value" -> "none")))))
+        assertContainsRadioButton(doc, "any_property_closely_inherited.all", "value", "all", false)
+        assertContainsRadioButton(doc, "any_property_closely_inherited.some", "value", "some", false)
+        assertContainsRadioButton(doc, "any_property_closely_inherited.none", "value", "none", true)
+      }
+    }
   }
 }

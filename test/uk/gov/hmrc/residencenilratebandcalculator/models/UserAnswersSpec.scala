@@ -61,9 +61,9 @@ class UserAnswersSpec extends UnitSpec {
       }
 
       "return the correct answer for Any Property Closely Inherited" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.anyPropertyCloselyInheritedId -> JsBoolean(true)))
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.anyPropertyCloselyInheritedId -> JsString("abc")))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.anyPropertyCloselyInherited shouldBe Some(true)
+        userAnswers.anyPropertyCloselyInherited shouldBe Some("abc")
       }
 
       "return the correct answer for Assets Passing To Direct Descendant" in {
