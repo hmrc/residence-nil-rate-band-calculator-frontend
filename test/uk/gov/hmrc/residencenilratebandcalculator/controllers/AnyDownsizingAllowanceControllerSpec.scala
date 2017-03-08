@@ -27,8 +27,8 @@ class AnyDownsizingAllowanceControllerSpec extends SimpleControllerSpecBase {
     val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyBroughtForwardAllowanceController.onPageLoad().url
 
     value match {
-      case None => any_downsizing_allowance(frontendAppConfig, url)(fakeRequest, messages)
-      case Some(v) => any_downsizing_allowance(frontendAppConfig, url, Some(BooleanForm().bind(v)))(fakeRequest, messages)
+      case None => any_downsizing_allowance(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
+      case Some(v) => any_downsizing_allowance(frontendAppConfig, url, Some(BooleanForm().bind(v)), Seq())(fakeRequest, messages)
     }
   }
 

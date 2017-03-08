@@ -29,8 +29,8 @@ class AssetsPassingToDirectDescendantsControllerSpec extends SimpleControllerSpe
       val backUrl = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DoesGrossingUpApplyToOtherPropertyController.onPageLoad().url
 
       value match {
-        case None => assets_passing_to_direct_descendants(frontendAppConfig, backUrl)(fakeRequest, messages)
-        case Some(v) => assets_passing_to_direct_descendants(frontendAppConfig, backUrl, Some(NonNegativeIntForm().bind(v)))(fakeRequest, messages)
+        case None => assets_passing_to_direct_descendants(frontendAppConfig, backUrl, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => assets_passing_to_direct_descendants(frontendAppConfig, backUrl, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

@@ -29,8 +29,8 @@ class ChargeableValueOfResidenceCloselyInheritedControllerSpec extends SimpleCon
     val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeableValueOfResidenceController.onPageLoad().url
 
     def createView = (value: Option[Map[String, String]]) => value match {
-      case None => chargeable_value_of_residence_closely_inherited(frontendAppConfig, url)(fakeRequest, messages)
-      case Some(v) => chargeable_value_of_residence_closely_inherited(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)))(fakeRequest, messages)
+      case None => chargeable_value_of_residence_closely_inherited(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
+      case Some(v) => chargeable_value_of_residence_closely_inherited(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
     }
 
     def createController = () => new ChargeableValueOfResidenceCloselyInheritedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)

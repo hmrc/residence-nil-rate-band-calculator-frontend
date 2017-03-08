@@ -24,7 +24,7 @@ class DoesGrossingUpApplyToResidenceViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "does_grossing_up_apply_to_residence"
 
-  def createView(form: Option[Form[Boolean]] = None) = does_grossing_up_apply_to_residence(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = does_grossing_up_apply_to_residence(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
   "Does Grossing Up Apply To Residence View" must {
 

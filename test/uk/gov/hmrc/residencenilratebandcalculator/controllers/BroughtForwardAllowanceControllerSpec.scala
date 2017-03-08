@@ -29,8 +29,8 @@ class BroughtForwardAllowanceControllerSpec extends SimpleControllerSpecBase {
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyBroughtForwardAllowanceController.onPageLoad().url
 
       value match {
-        case None => brought_forward_allowance(frontendAppConfig, url)(fakeRequest, messages)
-        case Some(v) => brought_forward_allowance(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)))(fakeRequest, messages)
+        case None => brought_forward_allowance(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => brought_forward_allowance(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

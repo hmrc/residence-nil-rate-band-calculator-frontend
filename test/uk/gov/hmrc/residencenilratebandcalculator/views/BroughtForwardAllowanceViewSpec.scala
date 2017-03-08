@@ -27,7 +27,7 @@ class BroughtForwardAllowanceViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "brought_forward_allowance"
 
-  def createView(form: Option[Form[Int]] = None) = brought_forward_allowance(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Int]] = None) = brought_forward_allowance(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
   "Brought Forward Allowance View" must {
 

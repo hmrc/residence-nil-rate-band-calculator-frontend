@@ -27,7 +27,7 @@ class GrossEstateValueViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "gross_estate_value"
 
-  def createView(form: Option[Form[Int]] = None) = gross_estate_value(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Int]] = None) = gross_estate_value(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
   "Gross Estate Value View" must {
 

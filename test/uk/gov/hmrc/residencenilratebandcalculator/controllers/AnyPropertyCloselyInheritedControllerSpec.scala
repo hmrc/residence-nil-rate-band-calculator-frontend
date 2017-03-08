@@ -29,8 +29,8 @@ class AnyPropertyCloselyInheritedControllerSpec extends SimpleControllerSpecBase
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyValueController.onPageLoad().url
 
       value match {
-        case None => any_property_closely_inherited(frontendAppConfig, url)(fakeRequest, messages)
-        case Some(v) => any_property_closely_inherited(frontendAppConfig, url, Some(AnyPropertyCloselyInheritedForm().bind(v)))(fakeRequest, messages)
+        case None => any_property_closely_inherited(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => any_property_closely_inherited(frontendAppConfig, url, Some(AnyPropertyCloselyInheritedForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

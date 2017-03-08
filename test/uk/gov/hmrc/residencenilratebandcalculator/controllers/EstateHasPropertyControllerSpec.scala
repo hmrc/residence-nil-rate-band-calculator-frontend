@@ -29,8 +29,8 @@ class EstateHasPropertyControllerSpec extends SimpleControllerSpecBase {
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeableTransferAmountController.onPageLoad().url
 
       value match {
-        case None => estate_has_property(frontendAppConfig, url)(fakeRequest, messages)
-        case Some(v) => estate_has_property(frontendAppConfig, url, Some(BooleanForm().bind(v)))(fakeRequest, messages)
+        case None => estate_has_property(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => estate_has_property(frontendAppConfig, url, Some(BooleanForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

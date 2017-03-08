@@ -181,8 +181,7 @@ class AnswerRowSpecs extends UnitSpec with WithFakeApplication with MockSessionC
       val result = AnswerRows.truncateAndLocateInCacheMap(Constants.grossEstateValueId, cacheMap)
 
       result.data shouldBe Map(Constants.dateOfDeathId -> JsNumber(0),
-        Constants.anyEstatePassedToDescendantsId -> JsNumber(1),
-        Constants.grossEstateValueId -> JsNumber(2))
+        Constants.anyEstatePassedToDescendantsId -> JsNumber(1))
     }
 
     "truncateAndLocateInCacheMap should return map of values from cache map which keyed by this " +
@@ -196,8 +195,7 @@ class AnswerRowSpecs extends UnitSpec with WithFakeApplication with MockSessionC
 
       val result = AnswerRows.truncateAndLocateInCacheMap(Constants.grossEstateValueId, cacheMap)
 
-      result.data shouldBe Map(Constants.dateOfDeathId -> JsNumber(0),
-        Constants.grossEstateValueId -> JsNumber(2))
+      result.data shouldBe Map(Constants.dateOfDeathId -> JsNumber(0))
     }
 
     "create answer rows when given truncated data" in {
@@ -229,8 +227,7 @@ class AnswerRowSpecs extends UnitSpec with WithFakeApplication with MockSessionC
 
       result shouldBe Seq(
         AnswerRow("title1", "Yes", "http://example.com/one"),
-        AnswerRow("title2", "£1,000.00", "http://example.com/two"),
-        AnswerRow("title3", "1 June 2017", "http://example.com/three"))
+        AnswerRow("title2", "£1,000.00", "http://example.com/two"))
     }
 
   }

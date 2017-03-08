@@ -26,7 +26,7 @@ class AnyExemptionViewSpec  extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "any_exemption"
 
-  def createView(form: Option[Form[Boolean]] = None) = any_exemption(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = any_exemption(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
   "Any Exemption View" must {
 

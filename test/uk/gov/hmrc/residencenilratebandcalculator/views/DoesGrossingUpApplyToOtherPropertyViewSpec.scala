@@ -24,7 +24,7 @@ class DoesGrossingUpApplyToOtherPropertyViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "does_grossing_up_apply_to_other_property"
 
-  def createView(form: Option[Form[Boolean]] = None) = does_grossing_up_apply_to_other_property(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = does_grossing_up_apply_to_other_property(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
   "Does Grossing Up Apply To Other PropertyView" must {
 

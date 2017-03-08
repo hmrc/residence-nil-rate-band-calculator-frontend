@@ -29,8 +29,8 @@ class DoesGrossingUpApplyToResidenceControllerSpec extends SimpleControllerSpecB
       val backUrl = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyExemptionController.onPageLoad().url
 
       value match {
-        case None => does_grossing_up_apply_to_residence(frontendAppConfig, backUrl)(fakeRequest, messages)
-        case Some(v) => does_grossing_up_apply_to_residence(frontendAppConfig, backUrl, Some(BooleanForm().bind(v)))(fakeRequest, messages)
+        case None => does_grossing_up_apply_to_residence(frontendAppConfig, backUrl, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => does_grossing_up_apply_to_residence(frontendAppConfig, backUrl, Some(BooleanForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

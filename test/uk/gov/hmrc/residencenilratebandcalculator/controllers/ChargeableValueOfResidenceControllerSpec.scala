@@ -29,8 +29,8 @@ class ChargeableValueOfResidenceControllerSpec extends SimpleControllerSpecBase 
     val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DoesGrossingUpApplyToResidenceController.onPageLoad().url
 
     def createView = (value: Option[Map[String, String]]) => value match {
-      case None => chargeable_value_of_residence(frontendAppConfig, url)(fakeRequest, messages)
-      case Some(v) => chargeable_value_of_residence(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)))(fakeRequest, messages)
+      case None => chargeable_value_of_residence(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
+      case Some(v) => chargeable_value_of_residence(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
     }
 
     def createController = () => new ChargeableValueOfResidenceController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)

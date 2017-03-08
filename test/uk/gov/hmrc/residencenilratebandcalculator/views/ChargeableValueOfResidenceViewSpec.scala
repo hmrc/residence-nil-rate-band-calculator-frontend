@@ -27,7 +27,7 @@ class ChargeableValueOfResidenceViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "chargeable_value_of_residence"
 
-  def createView(form: Option[Form[Int]] = None) = chargeable_value_of_residence(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Int]] = None) = chargeable_value_of_residence(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
   "Chargeable Value Of Residence View" must {
 

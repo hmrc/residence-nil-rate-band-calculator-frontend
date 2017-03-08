@@ -27,7 +27,7 @@ class AnyBroughtForwardAllowanceOnDisposalViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "any_brought_forward_allowance_on_disposal"
 
-  def createView(form: Option[Form[Boolean]] = None) = any_brought_forward_allowance_on_disposal(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = any_brought_forward_allowance_on_disposal(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
   "Any Brought Forward Allowance on Disposal View" must {
 

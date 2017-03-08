@@ -26,7 +26,7 @@ class AnyDownsizingAllowanceViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "any_downsizing_allowance"
 
-  def createView(form: Option[Form[Boolean]] = None) = any_downsizing_allowance(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = any_downsizing_allowance(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
   "Any Downsizing Allowance View" must {
 

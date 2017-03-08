@@ -27,7 +27,7 @@ class ChargeableValueOfResidenceCloselyInheritedViewSpec extends IntViewSpecBase
 
   val messageKeyPrefix = "chargeable_value_of_residence_closely_inherited"
 
-  def createView(form: Option[Form[Int]] = None) = chargeable_value_of_residence_closely_inherited(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Int]] = None) = chargeable_value_of_residence_closely_inherited(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
   "Chargeable Value Of Residence Closely Inherited View" must {
 

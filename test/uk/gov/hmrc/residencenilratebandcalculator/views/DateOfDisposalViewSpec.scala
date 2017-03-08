@@ -27,7 +27,7 @@ class DateOfDisposalViewSpec  extends DateViewSpecBase {
 
   val messageKeyPrefix = "date_of_disposal"
 
-  def createView(form: Option[Form[Date]] = None) = date_of_disposal(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Date]] = None) = date_of_disposal(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
   "Date of Disposal View" must {
 

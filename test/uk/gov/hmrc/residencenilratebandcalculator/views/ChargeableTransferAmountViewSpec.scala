@@ -27,7 +27,7 @@ class ChargeableTransferAmountViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "chargeable_transfer_amount"
 
-  def createView(form: Option[Form[Int]] = None) = chargeable_transfer_amount(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Int]] = None) = chargeable_transfer_amount(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
   "Chargeable Transfer Amount View" must {
 

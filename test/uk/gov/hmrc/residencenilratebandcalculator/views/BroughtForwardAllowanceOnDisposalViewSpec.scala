@@ -27,7 +27,7 @@ class BroughtForwardAllowanceOnDisposalViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "brought_forward_allowance_on_disposal"
 
-  def createView(form: Option[Form[Int]] = None) = brought_forward_allowance_on_disposal(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Int]] = None) = brought_forward_allowance_on_disposal(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
   "Brought Forward Allowance On Disposal View" must {
 
