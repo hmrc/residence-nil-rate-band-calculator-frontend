@@ -36,5 +36,8 @@ class AssetsPassingToDirectDescendantsViewSpec extends IntViewSpecBase {
     behave like pageWithBackLink[Int](createView)
 
     behave like intPage(createView, messageKeyPrefix, AssetsPassingToDirectDescendantsController.onSubmit().url, NonNegativeIntForm())
+
+    behave like pageContainingPreviousAnswers(createView)
+
   }
 }

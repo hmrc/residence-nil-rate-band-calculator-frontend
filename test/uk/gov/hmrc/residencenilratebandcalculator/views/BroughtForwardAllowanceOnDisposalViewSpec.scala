@@ -36,5 +36,8 @@ class BroughtForwardAllowanceOnDisposalViewSpec extends IntViewSpecBase {
     behave like pageWithBackLink[Int](createView)
 
     behave like intPage(createView, messageKeyPrefix, BroughtForwardAllowanceOnDisposalController.onSubmit().url, NonNegativeIntForm())
+
+    behave like pageContainingPreviousAnswers(createView)
+
   }
 }

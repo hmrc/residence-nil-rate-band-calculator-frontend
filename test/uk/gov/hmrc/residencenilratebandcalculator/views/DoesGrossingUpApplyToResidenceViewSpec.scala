@@ -33,5 +33,8 @@ class DoesGrossingUpApplyToResidenceViewSpec extends BooleanViewSpecBase {
     behave like pageWithBackLink[Boolean](createView)
 
     behave like booleanPage(createView, messageKeyPrefix, DoesGrossingUpApplyToResidenceController.onSubmit().url)
+
+    behave like pageContainingPreviousAnswers(createView)
+
   }
 }

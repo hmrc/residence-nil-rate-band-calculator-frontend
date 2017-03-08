@@ -35,5 +35,8 @@ class AnyExemptionViewSpec  extends BooleanViewSpecBase {
     behave like pageWithBackLink[Boolean](createView)
 
     behave like booleanPage(createView, messageKeyPrefix, AnyExemptionController.onSubmit().url)
+
+    behave like pageContainingPreviousAnswers(createView)
+
   }
 }

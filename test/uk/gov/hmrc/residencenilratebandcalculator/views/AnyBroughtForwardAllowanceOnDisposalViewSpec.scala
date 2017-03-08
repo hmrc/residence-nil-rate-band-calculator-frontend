@@ -36,5 +36,8 @@ class AnyBroughtForwardAllowanceOnDisposalViewSpec extends BooleanViewSpecBase {
     behave like pageWithBackLink[Boolean](createView)
 
     behave like booleanPage(createView, messageKeyPrefix, AnyBroughtForwardAllowanceOnDisposalController.onSubmit().url)
+
+    behave like pageContainingPreviousAnswers(createView)
+
   }
 }

@@ -22,6 +22,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc._
 import play.twirl.api.HtmlFormat
+import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
@@ -50,35 +51,39 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
 
   val navigator: Navigator
 
+  def answerRows(cacheMap: CacheMap, request: Request[_]): Seq[AnswerRow] = AnswerRows.constructAnswerRows(
+    AnswerRows.truncateAndLocateInCacheMap(controllerId, cacheMap),
+    AnswerRows.answerRowFns,
+    AnswerRows.rowOrder,
+    messagesApi.preferred(request)
+  )
+
   override def onPageLoad(implicit rds: Reads[A]): Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.fetch().map {
       case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
       case Some(cacheMap) => {
-        val answerRows: Seq[AnswerRow] = AnswerRows.constructAnswerRows(
-          AnswerRows.truncateAndLocateInCacheMap(controllerId, cacheMap),
-          AnswerRows.answerRowFns,
-          AnswerRows.rowOrder,
-          messagesApi.preferred(request)
-        )
-        Ok(view(cacheMap.getEntry(controllerId).map(value => form().fill(value)), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url, answerRows))
+        val previousAnswers = answerRows(cacheMap, request)
+        Ok(view(cacheMap.getEntry(controllerId).map(value => form().fill(value)),
+          navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url, previousAnswers))
       }
     }
   }
 
   def onSubmit(implicit wts: Writes[A]) = Action.async { implicit request =>
-    val answerRows: Seq[AnswerRow] = Seq()
+
     sessionConnector.fetch().flatMap {
       case None => Future.successful(Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad()))
       case Some(cacheMap) => {
+        val previousAnswers = answerRows(cacheMap, request)
         val boundForm = form().bindFromRequest()
         boundForm.fold(
           (formWithErrors: Form[A]) =>
             Future.successful(BadRequest(view(Some(formWithErrors),
-              navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url, answerRows))),
+              navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url, previousAnswers))),
           (value) => validate(value).flatMap {
             case Some(error) => {
               Future.successful(BadRequest(view(Some(form().fill(value).withError(error)),
-                navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url, answerRows)))
+                navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url, previousAnswers)))
             }
             case None =>
               sessionConnector.cache[A](controllerId, value).map(cacheMap =>

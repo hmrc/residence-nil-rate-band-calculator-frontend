@@ -36,6 +36,9 @@ class ChargeableValueOfResidenceCloselyInheritedViewSpec extends IntViewSpecBase
     behave like pageWithBackLink[Int](createView)
 
     behave like intPage(createView, messageKeyPrefix, ChargeableValueOfResidenceCloselyInheritedController.onSubmit().url, NonNegativeIntForm())
+
+    behave like pageContainingPreviousAnswers(createView)
+
   }
 
 }

@@ -36,6 +36,9 @@ class AnyPropertyCloselyInheritedViewSpec extends BooleanViewSpecBase {
     behave like pageWithBackLink[String](createView)
 
     behave like questionPage[String](createView, messageKeyPrefix, AnyPropertyCloselyInheritedController.onSubmit().url)
+
+    behave like pageContainingPreviousAnswers(createView)
+
   }
 
   "Any Property Closely Inherited View" when {

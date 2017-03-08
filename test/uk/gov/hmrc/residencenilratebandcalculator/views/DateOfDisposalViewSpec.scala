@@ -36,5 +36,8 @@ class DateOfDisposalViewSpec  extends DateViewSpecBase {
     behave like pageWithBackLink[Date](createView)
 
     behave like datePage(createView, messageKeyPrefix, DateOfDisposalController.onSubmit().url)
+
+    behave like pageContainingPreviousAnswers(createView)
+
   }
 }
