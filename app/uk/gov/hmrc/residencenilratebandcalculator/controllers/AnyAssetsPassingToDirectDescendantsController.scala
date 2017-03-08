@@ -25,6 +25,7 @@ import play.twirl.api.HtmlFormat._
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
+import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_assets_passing_to_direct_descendants
 
 @Singleton
@@ -37,7 +38,7 @@ class AnyAssetsPassingToDirectDescendantsController @Inject()(override val appCo
 
   override def form: () => Form[Boolean] = () => BooleanForm()
 
-  override def view(form: Option[Form[Boolean]], backUrl: String)(implicit request: Request[_]): Appendable = {
-    any_assets_passing_to_direct_descendants(appConfig, backUrl, form)
+  override def view(form: Option[Form[Boolean]], backUrl: String, answerRows: Seq[AnswerRow])(implicit request: Request[_]): Appendable = {
+    any_assets_passing_to_direct_descendants(appConfig, backUrl, form, answerRows)
   }
 }

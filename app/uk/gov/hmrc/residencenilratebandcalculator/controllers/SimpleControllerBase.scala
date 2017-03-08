@@ -31,7 +31,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, Navigator}
 import scala.concurrent.Future
 
 trait ControllerBase[A] extends FrontendController with I18nSupport {
-  def onPageLoad(implicit rds: Reads[A], messagesApi: MessagesApi): Action[AnyContent]
+  def onPageLoad(implicit rds: Reads[A]): Action[AnyContent]
 
   def onSubmit(implicit wts: Writes[A]): Action[AnyContent]
 }
@@ -50,7 +50,7 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
 
   val navigator: Navigator
 
-  override def onPageLoad(implicit rds: Reads[A], messagesApi: MessagesApi): Action[AnyContent] = Action.async { implicit request =>
+  override def onPageLoad(implicit rds: Reads[A]): Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.fetch().map {
       case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
       case Some(cacheMap) => {

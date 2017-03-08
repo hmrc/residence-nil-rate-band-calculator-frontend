@@ -38,6 +38,6 @@ class AnyEstatePassedToDescendantsController @Inject()(override val appConfig: F
   override def form: () => Form[Boolean] = () => BooleanForm()
 
   override def view(form: Option[Form[Boolean]], backUrl: String, answerRows: Seq[AnswerRow])(implicit request: Request[_]) = {
-    any_estate_passed_to_descendants(appConfig, backUrl, form)
+    any_estate_passed_to_descendants(appConfig, backUrl, form, answerRows)
   }
 }

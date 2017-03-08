@@ -3,7 +3,8 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyBroughtForwardAllowanceController
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 
-@(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[Boolean]] = None)(implicit request: Request[_], messages: Messages)
+@import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+@(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[Boolean]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("any_brought_forward_allowance.browser_title"),
