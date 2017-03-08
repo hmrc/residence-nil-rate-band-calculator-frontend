@@ -106,6 +106,12 @@ check_answers.browser_title = Check your answers
 check_answers.title = Check your answers
 check_answers.button_text = See results
 
+cannot_claim_RNRB.browser_title = You can't claim any RNRB allowance
+cannot_claim_RNRB.title = You can't claim any RNRB allowance
+cannot_claim_RNRB.guidance = You might still be able to claim a downsizing allowance or transfer residence nil rate band if the person who has died was married during their lifetime and their spouse or civil partner died first.
+cannot_claim_RNRB.no_property_reason = This is because the estate doesn't include a property that the person who died lived in at any time while they also owned it
+cannot_claim_RNRB.not_closely_inherited_reason = This is because none of the house passed to a direct descendant, or the spouse or civil partner of a direct descendant
+
 date.day = Day
 date.month = Month
 date.year = Year

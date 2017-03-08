@@ -32,6 +32,7 @@ object Constants {
   val broughtForwardAllowanceOnDisposalId = "BroughtForwardAllowanceOnDisposal"
   val chargeableTransferAmountId = "ChargeableTransferAmount"
   val checkAnswersId = "CheckAnswers"
+  val cannotClaimRNRB = "CannotClaimRNRB"
   val dateOfDeathId = "DateOfDeath"
   val dateOfDisposalId = "DateOfDisposal"
   val doesGrossingUpApplyToResidenceId = "DoesGrossingUpApplyToResidence"

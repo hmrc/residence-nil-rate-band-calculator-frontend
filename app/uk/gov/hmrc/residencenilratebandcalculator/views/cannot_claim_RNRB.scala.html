@@ -1,0 +1,20 @@
+@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@import uk.gov.hmrc.play.views.html._
+
+@(appConfig: FrontendAppConfig, reasonKey: String, nextPage: Call)(implicit request: Request[_], messages: Messages)
+
+@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+    title = messages("cannot_claim_RNRB.browser_title"),
+    appConfig = appConfig,
+    bodyClasses = None) {
+
+    <h1>@messages("cannot_claim_RNRB.title")</h1>
+
+    <div class="panel panel-border-wide">
+        <p>@messages(reasonKey)</p>
+    </div>
+
+    <p>@messages("cannot_claim_RNRB.guidance")</p>
+
+    <a href="@nextPage.url" class="button u--no-print">@messages("site.continue")</a>
+}

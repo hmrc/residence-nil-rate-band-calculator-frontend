@@ -43,6 +43,8 @@ POST       /chargeable-value-of-residence               uk.gov.hmrc.residencenil
 GET        /chargeable-value-closely-inherited          uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableValueOfResidenceCloselyInheritedController.onPageLoad
 POST       /chargeable-value-closely-inherited          uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableValueOfResidenceCloselyInheritedController.onSubmit
 
+GET        /cannot-claim-rnrb                           uk.gov.hmrc.residencenilratebandcalculator.controllers.CannotClaimRNRBController.onPageLoad
+
 GET        /date-of-death                               uk.gov.hmrc.residencenilratebandcalculator.controllers.DateOfDeathController.onPageLoad
 POST       /date-of-death                               uk.gov.hmrc.residencenilratebandcalculator.controllers.DateOfDeathController.onSubmit
 
