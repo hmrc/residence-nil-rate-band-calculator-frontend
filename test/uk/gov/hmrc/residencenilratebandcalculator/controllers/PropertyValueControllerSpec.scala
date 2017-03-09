@@ -28,8 +28,8 @@ class PropertyValueControllerSpec extends SimpleControllerSpecBase {
    val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.EstateHasPropertyController.onPageLoad().url
 
     def createView = (value: Option[Map[String, String]]) => value match {
-      case None => property_value(frontendAppConfig, url)(fakeRequest, messages)
-      case Some(v) => property_value(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)))(fakeRequest, messages)
+      case None => property_value(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
+      case Some(v) => property_value(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
     }
 
     def createController = () => new PropertyValueController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)

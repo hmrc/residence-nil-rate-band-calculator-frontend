@@ -29,8 +29,8 @@ class PercentageCloselyInheritedControllerSpec extends SimpleControllerSpecBase 
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyPropertyCloselyInheritedController.onPageLoad().url
 
       value match {
-        case None => percentage_closely_inherited(frontendAppConfig, url)(fakeRequest, messages)
-        case Some(v) => percentage_closely_inherited(frontendAppConfig, url, Some(PositivePercentForm().bind(v)))(fakeRequest, messages)
+        case None => percentage_closely_inherited(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => percentage_closely_inherited(frontendAppConfig, url, Some(PositivePercentForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

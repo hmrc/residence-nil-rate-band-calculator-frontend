@@ -29,8 +29,8 @@ class AnyAssetsPassingToDirectDescendantsControllerSpec extends SimpleController
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfDisposedPropertyController.onPageLoad().url
 
       value match {
-        case None => any_assets_passing_to_direct_descendants(frontendAppConfig, url)(fakeRequest, messages)
-        case Some(v) => any_assets_passing_to_direct_descendants(frontendAppConfig, url, Some(BooleanForm().bind(v)))(fakeRequest, messages)
+        case None => any_assets_passing_to_direct_descendants(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => any_assets_passing_to_direct_descendants(frontendAppConfig, url, Some(BooleanForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

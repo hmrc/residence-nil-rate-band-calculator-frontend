@@ -29,8 +29,8 @@ class ChargeableTransferAmountControllerSpec extends SimpleControllerSpecBase {
     def createView = (value: Option[Map[String, String]]) => {
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.GrossEstateValueController.onPageLoad().url
       value match {
-        case None => chargeable_transfer_amount(frontendAppConfig, url)(fakeRequest, messages)
-        case Some(v) => chargeable_transfer_amount(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)))(fakeRequest, messages)
+        case None => chargeable_transfer_amount(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => chargeable_transfer_amount(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

@@ -29,8 +29,8 @@ class AnyBroughtForwardAllowanceOnDisposalControllerSpec extends SimpleControlle
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AssetsPassingToDirectDescendantsController.onPageLoad().url
 
       value match {
-        case None => any_brought_forward_allowance_on_disposal(frontendAppConfig, url)(fakeRequest, messages)
-        case Some(v) => any_brought_forward_allowance_on_disposal(frontendAppConfig, url, Some(BooleanForm().bind(v)))(fakeRequest, messages)
+        case None => any_brought_forward_allowance_on_disposal(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => any_brought_forward_allowance_on_disposal(frontendAppConfig, url, Some(BooleanForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

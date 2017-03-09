@@ -27,7 +27,7 @@ class PropertyValueViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "property_value"
 
-  def createView(form: Option[Form[Int]] = None) = property_value(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Int]] = None) = property_value(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
   "Property Value View" must {
 
@@ -36,5 +36,8 @@ class PropertyValueViewSpec extends IntViewSpecBase {
     behave like pageWithBackLink[Int](createView)
 
     behave like intPage(createView, messageKeyPrefix, PropertyValueController.onSubmit().url, NonNegativeIntForm())
+
+    behave like pageContainingPreviousAnswers(createView)
+
   }
 }

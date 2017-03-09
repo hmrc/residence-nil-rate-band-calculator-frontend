@@ -27,8 +27,8 @@ class DateOfDisposalControllerSpec extends DateControllerSpecBase {
     def createView = (value: Option[Map[String, String]]) => {
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyDownsizingAllowanceController.onPageLoad().url
       value match {
-        case None => date_of_disposal(frontendAppConfig, url)(fakeRequest, messages)
-        case Some(v) => date_of_disposal(frontendAppConfig, url, Some(DateForm().bind(v)))(fakeRequest, messages)
+        case None => date_of_disposal(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => date_of_disposal(frontendAppConfig, url, Some(DateForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

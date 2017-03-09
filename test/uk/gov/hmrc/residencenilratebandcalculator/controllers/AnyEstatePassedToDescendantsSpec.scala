@@ -29,8 +29,8 @@ class AnyEstatePassedToDescendantsSpec extends SimpleControllerSpecBase {
       val backUrl = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onPageLoad().url
 
       value match {
-        case None => any_estate_passed_to_descendants(frontendAppConfig, backUrl)(fakeRequest, messages)
-        case Some(v) => any_estate_passed_to_descendants(frontendAppConfig, backUrl, Some(BooleanForm().bind(v)))(fakeRequest, messages)
+        case None => any_estate_passed_to_descendants(frontendAppConfig, backUrl, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => any_estate_passed_to_descendants(frontendAppConfig, backUrl, Some(BooleanForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

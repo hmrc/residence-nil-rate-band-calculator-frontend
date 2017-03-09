@@ -26,7 +26,7 @@ class AnyBroughtForwardAllowanceViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "any_brought_forward_allowance"
 
-  def createView(form: Option[Form[Boolean]] = None) = any_brought_forward_allowance(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = any_brought_forward_allowance(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
   "Any Brought Forward Allowance View" must {
 
@@ -35,5 +35,8 @@ class AnyBroughtForwardAllowanceViewSpec extends BooleanViewSpecBase {
     behave like pageWithBackLink[Boolean](createView)
 
     behave like booleanPage(createView, messageKeyPrefix, AnyBroughtForwardAllowanceController.onSubmit().url)
+
+    behave like pageContainingPreviousAnswers(createView)
+
   }
 }

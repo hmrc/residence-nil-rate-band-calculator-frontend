@@ -24,6 +24,7 @@ import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
+import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_downsizing_allowance
 
 @Singleton
@@ -36,8 +37,8 @@ class AnyDownsizingAllowanceController @Inject()(override val appConfig: Fronten
 
   override def form: () => Form[Boolean] = () => BooleanForm()
 
-  override def view(form: Option[Form[Boolean]], backUrl: String)(implicit request: Request[_]) = {
-    any_downsizing_allowance(appConfig, backUrl, form)
+  override def view(form: Option[Form[Boolean]], backUrl: String, answerRows: Seq[AnswerRow])(implicit request: Request[_]) = {
+    any_downsizing_allowance(appConfig, backUrl, form, answerRows)
   }
 
 }

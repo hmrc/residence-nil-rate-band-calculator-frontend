@@ -24,6 +24,7 @@ import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
+import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.brought_forward_allowance
 
 @Singleton
@@ -36,7 +37,7 @@ class BroughtForwardAllowanceController @Inject()(override val appConfig: Fronte
 
   override def form = () => NonNegativeIntForm()
 
-  override def view(form: Option[Form[Int]], backUrl: String)(implicit request: Request[_]) = {
-    brought_forward_allowance(appConfig, backUrl, form)
+  override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow])(implicit request: Request[_]) = {
+    brought_forward_allowance(appConfig, backUrl, form, answerRows)
   }
 }
