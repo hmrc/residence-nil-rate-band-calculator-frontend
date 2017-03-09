@@ -17,17 +17,15 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.http.Status
-import play.api.libs.json.{Reads, Writes}
 import play.api.i18n._
-import play.api.mvc.Result
+import play.api.libs.json.{Reads, Writes}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
-import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
+import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, Navigator}
 
-import scala.concurrent.Future
 import scala.reflect.ClassTag
 
 trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
@@ -45,11 +43,11 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
   def messages = messagesApi.preferred(fakeRequest)
 
   def rnrbController[A: ClassTag](createController: () => ControllerBase[A],
-                        createView: (Option[Map[String, String]]) => HtmlFormat.Appendable,
-                        cacheKey: String,
-                        testValue: A,
-                        valuesToCacheBeforeSubmission: Map[String, A] = Map[String, A]())
-                       (rds: Reads[A], wts: Writes[A]) = {
+                                  createView: (Option[Map[String, String]]) => HtmlFormat.Appendable,
+                                  cacheKey: String,
+                                  testValue: A,
+                                  valuesToCacheBeforeSubmission: Map[String, A] = Map[String, A]())
+                                 (rds: Reads[A], wts: Writes[A]) = {
 
     "return 200 for a GET" in {
       val result = createController().onPageLoad(rds)(fakeRequest)
@@ -73,7 +71,7 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))
       for (v <- valuesToCacheBeforeSubmission) setCacheValue(v._1, v._2)
       setCacheValue(cacheKey, testValue)
-      await (createController().onSubmit(wts)(fakePostRequest))
+      await(createController().onSubmit(wts)(fakePostRequest))
       verifyValueIsCached(cacheKey, testValue)
     }
 
