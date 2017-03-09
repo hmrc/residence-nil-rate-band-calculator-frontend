@@ -36,5 +36,12 @@ class BroughtForwardAllowanceViewSpec extends IntViewSpecBase {
     behave like pageWithBackLink[Int](createView)
 
     behave like intPage(createView, messageKeyPrefix, BroughtForwardAllowanceController.onSubmit().url, NonNegativeIntForm())
+
+    "contain the appropriate maximum value of transferable residence nil rate band" in {
+      val doc = asDocument(createView(None))
+      val maxValue = ???
+      assertContainsMessages(doc, "brought_forward_allowance.guidance3", maxValue)
+    }
+
   }
 }

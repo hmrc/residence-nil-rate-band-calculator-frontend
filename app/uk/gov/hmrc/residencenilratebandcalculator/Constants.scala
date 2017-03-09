@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator
 
 import org.joda.time.LocalDate
+import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.models.RadioOption
 
 object Constants {
@@ -73,4 +74,7 @@ object Constants {
     RadioOption("any_property_closely_inherited", some),
     RadioOption("any_property_closely_inherited", none)
   )
+
+  val invalidCacheMap = CacheMap("", Map())
+  val invalidDate = ""
 }

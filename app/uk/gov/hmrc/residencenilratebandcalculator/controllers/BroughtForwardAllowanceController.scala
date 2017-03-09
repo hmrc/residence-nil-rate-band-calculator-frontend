@@ -18,25 +18,94 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
 
-import play.api.data.Form
+import play.api.data.{Form, FormError}
 import play.api.i18n.MessagesApi
-import play.api.mvc.Request
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
-import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
+import play.api.libs.json.{Reads, Writes}
+import play.api.mvc.{Action, Request}
+import uk.gov.hmrc.play.frontend.controller.FrontendController
+import uk.gov.hmrc.play.http.HeaderCarrier
+import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
+import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.brought_forward_allowance
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+
+import scala.concurrent.Future
 
 @Singleton
-class BroughtForwardAllowanceController @Inject()(override val appConfig: FrontendAppConfig,
+class BroughtForwardAllowanceController @Inject()(val appConfig: FrontendAppConfig,
                                            val messagesApi: MessagesApi,
-                                           override val sessionConnector: SessionConnector,
-                                           override val navigator: Navigator) extends SimpleControllerBase[Int] {
+                                           val sessionConnector: SessionConnector,
+                                           val navigator: Navigator, val rnrbConnector: RnrbConnector) extends FrontendController {
 
-  override val controllerId = Constants.broughtForwardAllowanceId
+  val controllerId = Constants.broughtForwardAllowanceId
 
-  override def form = () => NonNegativeIntForm()
+  def form = () => NonNegativeIntForm()
 
-  override def view(form: Option[Form[Int]], backUrl: String)(implicit request: Request[_]) = {
-    brought_forward_allowance(appConfig, backUrl, form)
+  def view(form: Option[Form[Int]], backUrl: String, nilRateBand: String)(implicit request: Request[_]) = {
+    implicit val messages = messagesApi.preferred(request)
+    brought_forward_allowance(appConfig, backUrl, nilRateBand, form)
   }
+
+  private def getDateOfDeath(implicit hc: HeaderCarrier) = sessionConnector.fetch().map {
+    case Some(cacheMap) => cacheMap.data(Constants.dateOfDeathId).toString()
+    case None => Constants.invalidDate
+  }
+
+  private def getCacheMap(implicit hc: HeaderCarrier) = sessionConnector.fetch().map {
+    case Some(cacheMap) => cacheMap
+    case None => Constants.invalidCacheMap
+  }
+
+  def onPageLoad(implicit rds: Reads[Int]) = Action.async {
+    implicit request => {
+      for {
+        dateOfDeath <- getDateOfDeath
+        nilRateValueJson <- rnrbConnector.getNilRateBand(dateOfDeath)
+        cacheMap <- getCacheMap
+      } yield {
+        (nilRateValueJson, cacheMap) match {
+          case (_, Constants.invalidCacheMap) => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
+          case (nilRateValueJson, cacheMap) => {
+            val nilRateBand = nilRateValueJson.json.toString()
+            Ok(view(
+              cacheMap.getEntry(controllerId).map(value => form().fill(value)),
+              navigator.lastPage(controllerId).toString(),
+              nilRateBand))
+          }
+        }
+      }
+    }
+  }
+
+  def onSubmit(implicit wts: Writes[Int]) = Action.async { implicit request =>
+    sessionConnector.fetch().flatMap {
+      case None => Future.successful(Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad()))
+      case Some(cacheMap) => {
+        val boundForm = form().bindFromRequest()
+        boundForm.fold(
+          (formWithErrors: Form[Int]) =>
+            Future.successful(BadRequest(
+              view(
+                Some(formWithErrors),
+                navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url,
+                ""))),
+          (value) => validate(value).flatMap {
+            case Some(error) =>
+              Future.successful(BadRequest(
+                view(
+                  Some(form().fill(value).withError(error)),
+                  navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url,
+                "")))
+            case None =>
+              sessionConnector.cache[Int](controllerId, value).map(cacheMap =>
+                Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
+          }
+        )
+      }
+    }
+  }
+
+  def validate(value: Int)(implicit hc: HeaderCarrier): Future[Option[FormError]] = Future.successful(None)
+
 }

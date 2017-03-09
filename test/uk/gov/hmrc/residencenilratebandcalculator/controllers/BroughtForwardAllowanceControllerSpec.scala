@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import play.api.http.Status
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
@@ -41,5 +42,13 @@ class BroughtForwardAllowanceControllerSpec extends SimpleControllerSpecBase {
     behave like rnrbController[Int](createController, createView, Constants.broughtForwardAllowanceId, testValue)(Reads.IntReads, Writes.IntWrites)
 
     behave like nonStartingController[Int](createController)(Reads.IntReads, Writes.IntWrites)
+
+    "return a Bad Request if a value higher than the maximum transferable residence nil rate band is entered" in {
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))
+      setCacheValue(Constants.broughtForwardAllowanceId, testValue - 1)
+      val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
+      status(result) shouldBe Status.BAD_REQUEST
+    }
+
   }
 }
