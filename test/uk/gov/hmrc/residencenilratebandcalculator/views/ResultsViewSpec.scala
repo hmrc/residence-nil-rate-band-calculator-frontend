@@ -91,6 +91,7 @@ class ResultsViewSpec extends HtmlSpec {
       }
 
       "contain headers for your answers" in {
+        /* This test will be removed when the Check your answers page is removed from the service */
         pending
         val f = thisFixture()
         assertContainsMessages(f.doc, "results.question_header", "results.amount_header")

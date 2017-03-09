@@ -157,7 +157,7 @@ object AnswerRows {
   }
 
   def truncateAndLocateInCacheMap(id: String, cacheMap: CacheMap): CacheMap = {
-    val truncatedList = rowOrderList.takeWhile(x => x != id)
+    val truncatedList = rowOrderList.takeWhile(_ != id)
     CacheMap(cacheMap.id, cacheMap.data.filterKeys(x => truncatedList.contains(x)))
   }
 
