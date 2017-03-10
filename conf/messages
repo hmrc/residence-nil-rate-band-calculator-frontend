@@ -151,8 +151,8 @@ error.summary.text = Optional description of the errors and how to correct them
 
 estate_has_property.browser_title = Does the estate include any residential property that the deceased owned and lived in?
 estate_has_property.title = Does the estate include any residential property that the deceased owned and lived in?
-estate_has_property.guidance1 = Answer ‘Yes’ if the deceased’s estate includes a property that they ever lived in as their residence while they owned that property.
-estate_has_property.guidance2 = This does not need to be a residence that is being left to the deceased’s children or remoter descendants.
+estate_has_property.guidance1 = This can be any property that the person who has died owned and also lived in during their lifetime.
+estate_has_property.guidance2 = This property does not need to be one that has been left to a direct descendant.
 estate_has_property.label =
 
 exit_questionnaire.browser_title = Survey
