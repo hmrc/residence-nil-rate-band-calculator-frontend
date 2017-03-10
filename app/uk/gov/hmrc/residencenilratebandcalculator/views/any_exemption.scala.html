@@ -15,9 +15,12 @@
 
     @rnrbHelpers.heading("any_exemption.title")
 
-    <p>@messages("any_exemption.guidance1")</p>
-
-    <p>@messages("any_exemption.guidance2")</p>
+    <p>@messages("any_exemption.guidance")</p>
+    <ul class="list list-bullet">
+        <li>@messages("any_exemption.guidance.bullet1")</li>
+        <li>@messages("any_exemption.guidance.bullet2")</li>
+        <li>@messages("any_exemption.guidance.bullet3")</li>
+    </ul>
 
     @helpers.form(action = AnyExemptionController.onSubmit(), 'autoComplete -> "off") {
 

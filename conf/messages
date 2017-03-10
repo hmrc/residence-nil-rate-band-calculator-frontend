@@ -41,8 +41,10 @@ any_estate_passed_to_descendants.label =
 
 any_exemption.browser_title = Is any part of the residence exempt from inheritance tax, or does any part of it qualify for any relief on the death?
 any_exemption.title = Is any part of the residence exempt from inheritance tax, or does any part of it qualify for any relief on the death?
-any_exemption.guidance1 = If any part of the residence passes to an exempt beneficiary, such as the deceased’s spouse or civil partner or to a charity, or if a relief, such as agricultural relief, applies to any part of that property answer ‘yes’.
-any_exemption.guidance2 = If the residence falls into the residue of the estate and part of the residue passes to an exempt beneficiary, answer ‘yes’ to this question.
+any_exemption.guidance = Answer yes if any part of the property is exempt from Inheritance Tax because:
+any_exemption.guidance.bullet1 = it passed to a spouse or civil partner
+any_exemption.guidance.bullet2 = it passed to a charity
+any_exemption.guidance.bullet3 = relief, like agriculture relief, applies
 any_exemption.label =
 
 any_property_closely_inherited.all = Yes, all of it passed
