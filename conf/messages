@@ -168,9 +168,14 @@ exit_questionnaire.guidance = Please complete this short survey to help us impro
 exit_questionnaire.user_research.title = We’re looking for people to help us with user research.
 exit_questionnaire.user_research.guidance = This will help improve the service. If you would like to be contacted with more details about the user research, enter your name and contact details below.
 
-gross_estate_value.browser_title = Question page
+gross_estate_value.browser_title = What is the total value of the estate before deducting any reliefs or exemptions?
 gross_estate_value.title = What is the total value of the estate before deducting any reliefs or exemptions?
-gross_estate_value.guidance = The total of IHT400 box 91, IHT403 box 12, box 10 and box 15 for each form IHT418.
+gross_estate_value.guidance1 = Add together the values that you have given in:
+gross_estate_value.guidance1.bullet1 = box 91 on the IHT-400 form
+gross_estate_value.guidance1.bullet2 = box 12 on the IHT-403 schedule
+gross_estate_value.guidance1.bullet3 = box 10 on the IHT-418 schedule
+gross_estate_value.guidance1.bullet4 = box 15 on the IHT-418 schedule
+gross_estate_value.guidance2 = The IHT-403 and IHT-418 schedules are only completed if the estate included values for gifts given away and for assets held in trust.
 gross_estate_value.label =
 
 index.browser_title = Residence Nil-rate Band Calculator
