@@ -41,9 +41,9 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
 
   val appConfig: FrontendAppConfig
 
-  def sessionConnector: SessionConnector
-
   val controllerId: String
+
+  def sessionConnector: SessionConnector
 
   def form: () => Form[A]
 

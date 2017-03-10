@@ -54,7 +54,7 @@ class CannotClaimRNRBControllerSpec extends UnitSpec with WithFakeApplication wi
 
       val result = controller.onPageLoad(fakeRequest)
       contentAsString(result) shouldBe
-        cannot_claim_RNRB(frontendAppConfig, "cannot_claim_RNRB.no_property_reason", routes.AnyBroughtForwardAllowanceController.onPageLoad)(fakeRequest, messages).toString
+        cannot_claim_RNRB(frontendAppConfig, "cannot_claim_RNRB.no_property_reason", routes.AnyBroughtForwardAllowanceController.onPageLoad, Seq())(fakeRequest, messages).toString
     }
 
     "throw an exception when the cache is unavailable" in {

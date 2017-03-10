@@ -19,10 +19,11 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import javax.inject.{Inject, Singleton}
 
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, AnyContent}
+import play.api.mvc.{Action, AnyContent, Request}
+import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.models.{GetCannotClaimRNRBReasonKey, UserAnswers}
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, GetCannotClaimRNRBReasonKey, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.cannot_claim_RNRB
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
@@ -36,10 +37,27 @@ class CannotClaimRNRBController @Inject()(val appConfig: FrontendAppConfig,
     implicit request =>
       sessionConnector.fetch().map {
         case Some(cacheMap) => {
+          val previousAnswers = answerRows(cacheMap, request)
           val userAnswers = new UserAnswers(cacheMap)
-          Ok(cannot_claim_RNRB(appConfig, GetCannotClaimRNRBReasonKey(userAnswers), navigator.nextPage(Constants.cannotClaimRNRB)(userAnswers)))
+          Ok(cannot_claim_RNRB(appConfig, GetCannotClaimRNRBReasonKey(userAnswers), navigator.nextPage(Constants.cannotClaimRNRB)(userAnswers), previousAnswers))
         }
         case None => throw new RuntimeException("No cacheMap available")
       }
   }
+
+  def answerRows(cacheMap: CacheMap, request: Request[_]): Seq[AnswerRow] = {
+    val reasonKey: String = GetCannotClaimRNRBReasonKey(userAnswers = new UserAnswers(cacheMap))
+    val controllerId = reasonKey match {
+      case ("cannot_claim_RNRB.not_closely_inherited_reason") => Constants.anyPropertyCloselyInheritedId
+      case _ => Constants.estateHasPropertyId
+    }
+    AnswerRows.constructAnswerRows(
+      AnswerRows.truncateAndAddCurrentLocateInCacheMap(controllerId, cacheMap),
+      AnswerRows.answerRowFns,
+      AnswerRows.rowOrder,
+      messagesApi.preferred(request)
+    )
+  }
+
+
 }
