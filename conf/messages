@@ -50,7 +50,8 @@ any_property_closely_inherited.some = Yes, some of it passed
 any_property_closely_inherited.none = No
 any_property_closely_inherited.browser_title = Did any part of this residence pass to a direct descendant or their spouse or civil partner?
 any_property_closely_inherited.title = Did any part of this residence pass to a direct descendant or their spouse or civil partner?
-any_property_closely_inherited.guidance = This will be listed in the will of the person who has died.
+any_property_closely_inherited.guidance1 = This will be listed in the will of the person who has died.
+any_property_closely_inherited.guidance2 = Answer yes if any part of the property was left in the will to a direct descendant or to a spouse of civil partner of one.
 any_property_closely_inherited.label =
 
 assets_passing_to_direct_descendants.browser_title = What is the total value of the other assets passing to direct descendants?
