@@ -3,9 +3,10 @@ any_assets_passing_to_direct_descendants.title = Other than the property that yo
 any_assets_passing_to_direct_descendants.guidance = If there are no other assets passing to direct descendants, other than the property you have already mentioned, there won’t be any downsizing allowance.
 any_assets_passing_to_direct_descendants.label =
 
-any_brought_forward_allowance.browser_title = Do you wish to transfer any unused residence nil rate band (TRNRB) from the estate of a pre-deceased spouse or civil partner of the deceased?
-any_brought_forward_allowance.title = Do you wish to transfer any unused residence nil rate band (TRNRB) from the estate of a pre-deceased spouse or civil partner of the deceased?
-any_brought_forward_allowance.guidance = If you answer ‘yes’ you will need to complete form IHT436 ‘Claim to transfer any unused residence nil rate band’ (TRNRB).
+any_brought_forward_allowance.browser_title = Do you wish to transfer any unused residence nil rate band?
+any_brought_forward_allowance.title = Do you wish to transfer any unused residence nil rate band?
+any_brought_forward_allowance.guidance1 = This transfer will be from the estate of a spouse of civil partner who died before the person who you are claiming an allowance for.
+any_brought_forward_allowance.guidance2 = You will need a completed copy of the IHT-436 form if you are transferring any unused allowance from somebody else’s estate.
 any_brought_forward_allowance.label =
 
 any_brought_forward_allowance_on_disposal.browser_title = If a valid claim for RNRB had been made at the date of disposal would any transferable residence nil rate band have been available at that time?
