@@ -20,7 +20,7 @@
         </div>
     </li>
     }
-    @for(row <- rows) {
+    @for(row <- rows.reverse) {
         <li class="tabular-data__entry tabular-data__entry--grouped divider--bottom">
             <div class="tabular-data__data tabular-data__data--6-12">
                 @row.title
