@@ -195,10 +195,10 @@ percentage_closely_inherited.label =
 
 property_value.browser_title = What is the value of the residence at the date of death?
 property_value.title = What is the value of the residence at the date of death?
-property_value.guidance1 = You need to include the value of the deceased’s interest in the residence here.
-property_value.guidance2 = Deduct any mortgages or other debts charged on the residence from the gross value and include the net value in this box.
-property_value.guidance3 = This is the value that you can claim RNRB on.
-property_value.guidance4 = If there was more than one residence in the estate at the date of death, only one residence can be taken into account. You can nominate which residence you want to claim RNRB on.
+property_value.guidance1 = Debts that are owed on the property would include the value of the mortgage that was owed along with any loans that had been taken out and secured against that home.
+property_value.guidance2 = You would have included the value of a home and what debts were owed on it on the IHT-400 form when working out the estate value.
+property_value.guidance3 = If the person who has died jointly owned their home with someone else, only include the value that they owned. If the IHT-400 form allowed you to take a discount off the value of the home, you can include that discount here before you take off any debts.
+property_value.guidance4 = If there was more than one property in the estate that the person who has died owned and had lived at, you must choose only one of them to give the value of and to answer more questions about.
 property_value.label =
 property_value.greater_than_gross_estate_value.error = Property Value cannot be greater than the Gross Estate Value
 
