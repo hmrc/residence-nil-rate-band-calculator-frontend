@@ -16,28 +16,26 @@
     @rnrbHelpers.heading("any_estate_passed_to_descendants.title")
 
     <p>@messages("any_estate_passed_to_descendants.guidance1")</p>
-    <ul class="list list-bullet">
-        <li>@messages("any_estate_passed_to_descendants.guidance1.bullet1")</li>
-        <li>@messages("any_estate_passed_to_descendants.guidance1.bullet2")</li>
-    </ul>
 
-    <p>@messages("any_estate_passed_to_descendants.guidance2")</p>
-    <ul class="list list-bullet">
-        <li>@messages("any_estate_passed_to_descendants.guidance2.bullet1")</li>
-        <li>@messages("any_estate_passed_to_descendants.guidance2.bullet2")</li>
-        <li>@messages("any_estate_passed_to_descendants.guidance2.bullet3")</li>
-        <li>@messages("any_estate_passed_to_descendants.guidance2.bullet4")</li>
-    </ul>
+    <section class="section">
 
-    <p>@messages("any_estate_passed_to_descendants.guidance3")</p>
-
-    <p>@messages("any_estate_passed_to_descendants.guidance4")</p>
-    <ul class="list list-bullet">
-        <li>@messages("any_estate_passed_to_descendants.guidance4.bullet1")</li>
-        <li>@messages("any_estate_passed_to_descendants.guidance4.bullet2")</li>
-    </ul>
-
-    <p>@messages("any_estate_passed_to_descendants.guidance5")</p>
+        <details>
+            <summary>@messages("any_estate_passed_to_descendants.reveal_title")</summary>
+            <div class="panel-indent panel-indent--gutter">
+                <p>@messages("any_estate_passed_to_descendants.guidance2")</p>
+                <ul class="list list-bullet">
+                    <li>@messages("any_estate_passed_to_descendants.guidance2.bullet1")</li>
+                    <li>@messages("any_estate_passed_to_descendants.guidance2.bullet2")</li>
+                    <li>@messages("any_estate_passed_to_descendants.guidance2.bullet3")</li>
+                    <li>@messages("any_estate_passed_to_descendants.guidance2.bullet4")</li>
+                    <li>@messages("any_estate_passed_to_descendants.guidance2.bullet5")</li>
+                    <li>@messages("any_estate_passed_to_descendants.guidance2.bullet6")</li>
+                    <li>@messages("any_estate_passed_to_descendants.guidance2.bullet7")</li>
+                </ul>
+                <p>@messages("any_estate_passed_to_descendants.guidance3")</p>
+            </div>
+        </details>
+    </section>
 
     @helpers.form(action = AnyEstatePassedToDescendantsController.onSubmit(), 'autoComplete -> "off") {
 
