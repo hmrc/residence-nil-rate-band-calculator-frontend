@@ -31,7 +31,7 @@ class BroughtForwardAllowanceViewSpec extends IntViewSpecBase {
 
   "Brought Forward Allowance View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2")
+    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance3")
 
     behave like pageWithBackLink[Int](createView)
 

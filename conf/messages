@@ -79,8 +79,9 @@ before_you_start.sub_heading = Before you start
 
 brought_forward_allowance.browser_title = How much transferable residence nil rate band are you claiming?
 brought_forward_allowance.title = How much transferable residence nil rate band are you claiming?
-brought_forward_allowance.guidance1 = This is the figure from either box 15 or box 21 form IHT436.
-brought_forward_allowance.guidance2 = If you are claiming TRNRB from more than one pre-deceased spouse or civil partner, you need to add up the figures from box 15 or 21 from each IHT436, but the total is limited to the maximum RNRB for the year of death.
+brought_forward_allowance.guidance1 = This is the number in either box 15 or box 21 on the IHT-436 form.
+brought_forward_allowance.guidance2 = If the person who you are claiming an allowance for had been married or in a civil partnership more than once during their lifetime and their spouse or civil partner died first, you can transfer more than one unused allowance. Add together the numbers in either box 15 or box 21 on each IHT-436 form.
+brought_forward_allowance.guidance3 = You cannot transfer more than £175,000.
 brought_forward_allowance.label =
 
 brought_forward_allowance_on_disposal.browser_title = What would the amount of transferable residence nil rate band have been at the date of disposal?
