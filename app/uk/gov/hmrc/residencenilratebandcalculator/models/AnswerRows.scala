@@ -161,5 +161,11 @@ object AnswerRows {
     CacheMap(cacheMap.id, cacheMap.data.filterKeys(x => truncatedList.contains(x)))
   }
 
+  def truncateAndAddCurrentLocateInCacheMap(id: String, cacheMap: CacheMap) = {
+    val truncatedList = rowOrderList.takeWhile(_ != id) :+ id
+    CacheMap(cacheMap.id, cacheMap.data.filterKeys(x => truncatedList.contains(x)))
+  }
+
+
   def apply(cacheMap: CacheMap, messages: Messages) = constructAnswerRows(cacheMap, answerRowFns, rowOrder, messages)
 }
