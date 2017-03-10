@@ -48,16 +48,17 @@ class BeforeYouStartViewSpec extends ViewSpecBase {
         s"$messageKeyPrefix.guidance4",
         s"$messageKeyPrefix.guidance4.bullet1",
         s"$messageKeyPrefix.guidance4.bullet2",
-        s"$messageKeyPrefix.guidance4.bullet3"
+        s"$messageKeyPrefix.guidance4.bullet3",
+        s"$messageKeyPrefix.sub_heading"
       )
     }
 
     "display a Start button linking to the 'Date Of Death' page" in {
       val doc = asDocument(before_you_start(frontendAppConfig)(request, messages))
       val startLink = doc.getElementById("start")
-      startLink.className shouldBe "button"
+      startLink.className shouldBe "button button--get-started"
       startLink.attr("href") shouldBe routes.DateOfDeathController.onPageLoad().url
-      startLink.text shouldBe messages("site.start")
+      startLink.text shouldBe messages("site.start_now")
     }
   }
 }

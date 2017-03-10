@@ -60,19 +60,20 @@ assets_passing_to_direct_descendants.title = What is the total value of the othe
 assets_passing_to_direct_descendants.guidance = This is the value that is taken into account for Inheritance Tax purposes of the other assets.
 assets_passing_to_direct_descendants.label =
 
-before_you_start.browser_title = Calculate the Residential Nil Rate Band (RNRB) for the estate of someone who has died
-before_you_start.title = Calculate the Residential Nil Rate Band (RNRB) for the estate of someone who has died
+before_you_start.browser_title = Calculate the residence nil rate band (RNRB) for the estate of someone who has died
+before_you_start.title = Calculate the residence nil rate band (RNRB) for the estate of someone who has died
 before_you_start.guidance1 = If there is any RNRB available, this will be added to the Inheritance Tax threshold and might mean there is less tax to pay.
-before_you_start.guidance2 = This service will calculate how much allowance is available to add to the threshold. It should you no more than 30 minutes to complete the service.
-before_you_start.guidance3 = You will need to:
+before_you_start.guidance2 = This service will calculate how much allowance is available to add to the threshold. It should take you no more than 30 minutes to complete the service.
+before_you_start.guidance3 = You’ll need to:
 before_you_start.guidance3.bullet1 = fill in an IHT-435 form to claim the allowance on an estate and you’ll be given a copy after using the service with the details you have given already added
-before_you_start.guidance3.bullet2 = have a copy of the IHT-400 from that you have been filling in as details will be needed to help work out the allowance available
+before_you_start.guidance3.bullet2 = have a copy of the IHT-400 form that you have been filling in as details will be needed to help work out the available allowance
 before_you_start.guidance3.bullet3 = have details of any properties owned by the person who has died, including the values of the property and of any debts owed against it
 before_you_start.guidance3.bullet4 = know who was left property from the estate if it was passed in a will
-before_you_start.guidance4 = The RNRB allowance can be increased if the person who has died had downsized or disposed of their home before their death, or if they had been married during their lifetime and their spouse or civil partner died first. To claim any extra allowance for these reasons you’ll need to have:
+before_you_start.guidance4 = The RNRB allowance can be increased if the person who has died had downsized their home before their death, or if they had been married during their lifetime and their spouse or civil partner died first. To claim any extra allowance you’ll need to have:
 before_you_start.guidance4.bullet1 = details of the home sold by the person who died
 before_you_start.guidance4.bullet2 = details of any other assets left in the will to a direct descendant, including the value of these assets
 before_you_start.guidance4.bullet3 = a completed IHT-436 form with the value of transferable residential nil rate band being claimed if the person who has died was married during their lifetime and their spouse or civil partner died first
+before_you_start.sub_heading = Before you start
 
 brought_forward_allowance.browser_title = How much transferable residence nil rate band are you claiming?
 brought_forward_allowance.title = How much transferable residence nil rate band are you claiming?
@@ -239,6 +240,7 @@ site.show_previous_answers = Show previous answers
 site.previous_answers = Previous answers
 site.start = Start
 site.start_again = Start again
+site.start_now = Start now
 site.textarea.char_limit = (Limit is 1200 characters)
 
 thank_you.browser_title = Thank You
