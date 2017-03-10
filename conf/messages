@@ -95,7 +95,8 @@ chargeable_transfer_amount.label =
 chargeable_value_of_residence.browser_title = What is the chargeable value of the residence for inheritance tax purposes?
 chargeable_value_of_residence.title = What is the chargeable value of the residence for inheritance tax purposes?
 chargeable_value_of_residence.label =
-chargeable_value_of_residence.guidance = This is the value for inheritance tax purposes for the whole of the deceased’s interest in the property.
+chargeable_value_of_residence.guidance1 = This is the value of the property owned by the person who has died. This will either be the total value if they owned the property on their own, or the value of the part of the property that they owned.
+chargeable_value_of_residence.guidance2 = If the person who has died owned 50% of a property which was valued at £500,000 on the date of death, the value of their share would be £250,000.
 chargeable_value_of_residence_closely_inherited.browser_title = What is the chargeable value of the residence that passes to direct descendants?
 chargeable_value_of_residence_closely_inherited.title = What is the chargeable value of the residence that passes to direct descendants?
 chargeable_value_of_residence_closely_inherited.label =
@@ -140,9 +141,10 @@ does_grossing_up_apply_to_other_property.label =
 
 does_grossing_up_apply_to_residence.browser_title = Does grossing-up or interaction apply?
 does_grossing_up_apply_to_residence.title = Does grossing-up or interaction apply?
-does_grossing_up_apply_to_residence.guidance = Grossing-up will apply if Inheritance Tax is due, and:
-does_grossing_up_apply_to_residence.guidance.bullet1 = the will makes any gifts that are ‘free of tax’
-does_grossing_up_apply_to_residence.guidance.bullet2 = any part of the residue is exempt (because, for example it passes to charity or the deceased’s spouse or civil partner). The residue is what is left in the estate after you have paid all debts, legacies and taxes
+does_grossing_up_apply_to_residence.guidance1 = This is against the property you have given the value of.
+does_grossing_up_apply_to_residence.guidance2 = Grossing-up will apply if Inheritance Tax is due, and:
+does_grossing_up_apply_to_residence.guidance2.bullet1 = the will makes any gifts that are ‘free of tax’
+does_grossing_up_apply_to_residence.guidance2.bullet2 = any part of the residue is exempt (because, for example it passes to charity or the deceased’s spouse or civil partner). The residue is what is left in the estate after you have paid all debts, legacies and taxes
 does_grossing_up_apply_to_residence.label =
 
 error.invalid_closely_inherited_property_option = Please choose an option

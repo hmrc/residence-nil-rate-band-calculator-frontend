@@ -15,10 +15,12 @@
 
     @rnrbHelpers.heading("does_grossing_up_apply_to_residence.title")
 
-    <p>@messages("does_grossing_up_apply_to_residence.guidance")</p>
+    <p>@messages("does_grossing_up_apply_to_residence.guidance1")</p>
+
+    <p>@messages("does_grossing_up_apply_to_residence.guidance2")</p>
     <ul class="list list-bullet">
-        <li>@messages("does_grossing_up_apply_to_residence.guidance.bullet1")</li>
-        <li>@messages("does_grossing_up_apply_to_residence.guidance.bullet2")</li>
+        <li>@messages("does_grossing_up_apply_to_residence.guidance2.bullet1")</li>
+        <li>@messages("does_grossing_up_apply_to_residence.guidance2.bullet2")</li>
     </ul>
 
     @helpers.form(action = DoesGrossingUpApplyToResidenceController.onSubmit(), 'autoComplete -> "off") {
