@@ -191,7 +191,7 @@ not_possible_to_use_service.guidance = Lorem ipsum dolor sit amet, consectetur a
 
 percentage_closely_inherited.browser_title = What percentage of the residence passes to direct descendants following the deceased’s death?
 percentage_closely_inherited.title = What percentage of the residence passes to direct descendants following the deceased’s death?
-percentage_closely_inherited.guidance = What share of the residence passes to a direct descendant? For example, if the children get 50% of the residue and the residence is in the residue, then the percentage is 50%.
+percentage_closely_inherited.guidance = If half of the property has been left to a direct descendant, the percentage to give is 50%.
 percentage_closely_inherited.label =
 
 property_value.browser_title = What is the value of the residence at the date of death?
