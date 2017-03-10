@@ -16,12 +16,13 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views.rnrbHelpers
 
+import org.jsoup.select.Elements
 import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.rnrbHelpers.answer_rows
 
-class RowsViewSpec extends HtmlSpec {
-  "Rows View Spec" when {
+class AnswerRowsViewSpec extends HtmlSpec {
+  "Answer Rows View Spec" when {
     "rendered" must {
 
       "contain two rows when passed a seq containing a single row" in {
@@ -50,6 +51,16 @@ class RowsViewSpec extends HtmlSpec {
         assertContainsText(doc, row2.title)
         assertContainsText(doc, row2.data)
         assertContainsText(doc, row2.url)
+      }
+
+      "display the last item in the Answer Rows collection as the first (non-heading) item in the previous answers" in {
+        val row1 = AnswerRow("Title1", "Data1", "http://www.example.com/1")
+        val row2 = AnswerRow("Title2", "Data2", "http://www.example.com/2")
+        val partial = answer_rows(Seq[AnswerRow](row1, row2))(messages)
+        val doc = asDocument(partial)
+        assertEqualsValue(doc, "details ul li:first-child div", messages("site.previous_answers"))
+        assertEqualsValue(doc, "details ul li:nth-child(2) div", row2.title)
+        assertEqualsValue(doc, "details ul li:nth-child(3) div", row1.title)
       }
     }
   }
