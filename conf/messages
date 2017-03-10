@@ -100,8 +100,8 @@ chargeable_value_of_residence.guidance2 = If the person who has died owned 50% o
 chargeable_value_of_residence_closely_inherited.browser_title = What is the chargeable value of the residence that passes to direct descendants?
 chargeable_value_of_residence_closely_inherited.title = What is the chargeable value of the residence that passes to direct descendants?
 chargeable_value_of_residence_closely_inherited.label =
-chargeable_value_of_residence_closely_inherited.guidance1 = This is the value for inheritance tax purposes of the part of the property inherited by a direct descendant.
-chargeable_value_of_residence_closely_inherited.guidance2 = For example if the property is worth £400,000 and half passes to the surviving spouse and half to a child, the figure to include here would be £200,000 for the part passing to the child.
+chargeable_value_of_residence_closely_inherited.guidance1 = This is the value of the property that is being passed to a direct descendant. If all of the property is being passed, give the full value of that property on the date of death.
+chargeable_value_of_residence_closely_inherited.guidance2 = If only part of the property is being left to a direct descendant, you should work out the value of only what is being passed. If half of the property is being passed to a direct descendant and the full value at the date of death is £500,000, the value of what the direct descendant receives would be £250,000.
 chargeable_value_of_residence.greater_than_property_value.error = Chargeable Value cannot be greater than the Property Value
 chargeable_value_of_residence_closely_inherited.greater_than_chargeable_value_of_residence.error = Value Closely Inherited cannot be greater than the Chargeable Value
 
