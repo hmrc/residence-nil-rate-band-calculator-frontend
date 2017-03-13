@@ -259,6 +259,7 @@ thank_you.title = Thank You
 
 value_of_disposed_property.title = What was the value of the deceased’s interest in the property at the date it was disposed of?
 value_of_disposed_property.browser_title = What was the value of the deceased’s interest in the property at the date it was disposed of?
-value_of_disposed_property.guidance1 = Enter the open market value of the deceased’s interest in the property disposed of at the date of disposal.
-value_of_disposed_property.guidance2 = If there was a mortgage on the property when it was sold, deduct the mortgage from the sale price, but do not deduct the costs of selling the property, such as solicitor or estate agent’s fees.
+value_of_disposed_property.guidance1 = This is the value of what the person who has died owned. If they owned all of the property when they sold it or gave it away, deduct any mortgage owed from the sale price and give that value.
+value_of_disposed_property.guidance2 = If the person who has died owned half of the property, you should half the sale price and deduct the value of the mortgage that the person who has died was responsible for paying and then give that value.
+value_of_disposed_property.guidance3 = Do not deduct any solicitor or estate agent fees from the values.
 value_of_disposed_property.label =
