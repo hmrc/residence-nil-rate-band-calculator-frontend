@@ -376,10 +376,10 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.anyAssetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.DoesGrossingUpApplyToOtherPropertyController.onPageLoad()
     }
 
-    "return a call to the check answers onPageLoad method when there are no assets passing to the direct descendant" in {
+    "return a call to the Cannot Claim Downsizing onPageLoad method when there are no assets passing to the direct descendant" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.anyAssetsPassingToDirectDescendants) thenReturn Some(false)
-      navigator.nextPage(Constants.anyAssetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.CheckAnswersController.onPageLoad()
+      navigator.nextPage(Constants.anyAssetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.CannotClaimDownsizingController.onPageLoad()
     }
 
     "return a call to the Any Brought Forward Allowance On Disposal controller onPageLoad method from the AssetsPassingToDirectDescendants controller" in {
