@@ -80,11 +80,16 @@ object CalculationInput {
   }
 
   private def getDownsizingDetails(userAnswers: UserAnswers) = userAnswers.anyDownsizingAllowance.get match {
-    case true => Some(DownsizingDetails(userAnswers))
+    case true =>
+      require(userAnswers.dateOfDisposal.isDefined, "Date of Disposal was not answered")
+
+      userAnswers.dateOfDisposal match {
+        case Some(d) if d isBefore Constants.downsizingEligibilityDate => None
+        case Some(_) => Some(DownsizingDetails(userAnswers))
+      }
     case _ => None
   }
 
-  // TODO: Refactor
   private def requireEstateHasPropertyDependancies(userAnswers: UserAnswers) = {
     require(userAnswers.propertyValue.isDefined, "Property Value was not answered")
     require(userAnswers.anyPropertyCloselyInherited.isDefined, "Any Property Closely Inherited was not answered")
