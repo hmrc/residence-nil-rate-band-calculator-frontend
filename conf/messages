@@ -130,8 +130,8 @@ date_of_death.label = Date of death
 
 date_of_disposal.browser_title = What was the date the property was disposed of?
 date_of_disposal.title = What was the date the property was disposed of?
-date_of_disposal.guidance1 = If there has been more than one disposal connected with the same property, for example a gift of a half share followed by a further gift of the remaining half share on a different day, only one disposal can be taken into account, but you can choose which one.
-date_of_disposal.guidance2 = Enter the date of the disposal that you wish to take into account.
+date_of_disposal.guidance1 = This is the date that the person who has died sold their home or gave it away.
+date_of_disposal.guidance2 = The person who has died might have given away different parts of their home at different times. If this happened, choose one date only for the downsizing date.
 date_of_disposal.hint = For example, 6 4 2017
 date_of_disposal.label =
 
