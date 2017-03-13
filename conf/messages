@@ -176,6 +176,9 @@ exit_questionnaire.guidance = Please complete this short survey to help us impro
 exit_questionnaire.user_research.title = We’re looking for people to help us with user research.
 exit_questionnaire.user_research.guidance = This will help improve the service. If you would like to be contacted with more details about the user research, enter your name and contact details below.
 
+session_expired.browser_title = Timed out
+session_expired.title = Your session has timed out
+
 gross_estate_value.browser_title = What is the total value of the estate before deducting any reliefs or exemptions?
 gross_estate_value.title = What is the total value of the estate before deducting any reliefs or exemptions?
 gross_estate_value.guidance1 = Add together the values that you have given in:
