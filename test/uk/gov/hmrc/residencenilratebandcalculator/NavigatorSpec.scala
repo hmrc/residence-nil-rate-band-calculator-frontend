@@ -115,6 +115,10 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.cannotClaimRNRB)(mockCacheMap) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
     }
 
+    "return a call to the Results onPageLoad method when we're on the Cannot Claim Downsizing page" in {
+      navigator.nextPage(Constants.cannotClaimDownsizingId)(mock[UserAnswers]) shouldBe routes.ResultsController.onPageLoad()
+    }
+
     "return a function that goes to the Any Exemption controller when given PercentageCloselyInherited" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.percentageCloselyInherited) thenReturn Some(1)

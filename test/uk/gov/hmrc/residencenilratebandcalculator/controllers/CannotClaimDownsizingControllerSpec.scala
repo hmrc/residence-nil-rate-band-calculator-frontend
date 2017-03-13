@@ -55,7 +55,7 @@ class CannotClaimDownsizingControllerSpec extends UnitSpec with WithFakeApplicat
       val result = controller.onPageLoad(fakeRequest)
       contentAsString(result) shouldBe
         cannot_claim_downsizing(frontendAppConfig, "cannot_claim_downsizing.date_of_disposal_too_early_reason",
-          routes.PageNotFoundController.onPageLoad, Seq())(fakeRequest, messages).toString
+          routes.ResultsController.onPageLoad, Seq())(fakeRequest, messages).toString
     }
 
     "throw an exception when the cache is unavailable" in {
