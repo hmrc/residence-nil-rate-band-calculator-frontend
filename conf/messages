@@ -18,11 +18,12 @@ any_brought_forward_allowance_on_disposal.label =
 
 any_downsizing_allowance.browser_title = Are you claiming any downsizing allowance?
 any_downsizing_allowance.title = Are you claiming any downsizing allowance?
-any_downsizing_allowance.guidance1 = In order to claim downsizing allowance:
-any_downsizing_allowance.guidance1.bullet1 = the deceased must have disposed of a former home and either downsized to a less valuable home, or ceased to own a home, on or after 8 July 2015
-any_downsizing_allowance.guidance1.bullet2 = the former home would have qualified for the RNRB if it had been kept until death
-any_downsizing_allowance.guidance1.bullet3 = at least some of the estate is inherited by the deceased’s direct descendants
-any_downsizing_allowance.guidance2 = The downsizing addition can’t exceed the maximum amount of RNRB that would have been available if the disposal or downsizing hadn’t happened.
+any_downsizing_allowance.guidance1 = You can claim extra allowance for the estate if the person who has died:
+any_downsizing_allowance.guidance1.bullet1 = downsized their home on or after 8 July 2015 by either selling it and buying a cheaper home or selling it and not buying another home
+any_downsizing_allowance.guidance1.bullet2 = gave any part of their home away, like giving half of it away to a direct descendant
+any_downsizing_allowance.guidance1.bullet3 = had a home that would have qualified for residence nil rate band allowance if they had not sold it and had kept it until they died
+any_downsizing_allowance.guidance1.bullet4 = left anything in their estate to a direct descendant
+any_downsizing_allowance.guidance2 = The value of the downsizing allowance that is available cannot be more than [WORK OUT ADDITIONAL ALLOWANCE LIMIT FOR THE ESTATE].
 any_downsizing_allowance.label =
 
 any_estate_passed_to_descendants.browser_title = Does any of the estate pass to the deceased’s children or other direct descendants?
