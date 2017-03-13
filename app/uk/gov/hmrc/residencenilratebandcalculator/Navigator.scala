@@ -63,14 +63,15 @@ class Navigator @Inject()() {
     case None => HomeController.onPageLoad()
   }
 
-  private def getRouteForOptionalLocalDate(optionalDate: Option[LocalDate], transitionDate: LocalDate, otherwise: Call) = optionalDate match {
-    case Some(d) if d isBefore transitionDate => TransitionOutController.onPageLoad()
+  private def getRouteForOptionalLocalDate(optionalDate: Option[LocalDate], transitionDate: LocalDate, transitionCall: Call, otherwise: Call) = optionalDate match {
+    case Some(d) if d isBefore transitionDate => transitionCall
     case Some(_) => otherwise
     case None => HomeController.onPageLoad()
   }
 
   private def getDateOfDeathRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalLocalDate(userAnswers.dateOfDeath, Constants.eligibilityDate, AnyEstatePassedToDescendantsController.onPageLoad())
+    getRouteForOptionalLocalDate(userAnswers.dateOfDeath, Constants.eligibilityDate,
+      TransitionOutController.onPageLoad(), AnyEstatePassedToDescendantsController.onPageLoad())
 
   private def getAnyEstatePassedToDescendantsRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.anyEstatePassedToDescendants, GrossEstateValueController.onPageLoad(), TransitionOutController.onPageLoad())
@@ -88,7 +89,8 @@ class Navigator @Inject()() {
     getRouteForOptionalBoolean(userAnswers.anyDownsizingAllowance, DateOfDisposalController.onPageLoad(), CheckAnswersController.onPageLoad())
 
   private def getDateOfDisposalRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalLocalDate(userAnswers.dateOfDisposal, Constants.downsizingEligibilityDate, ValueOfDisposedPropertyController.onPageLoad())
+    getRouteForOptionalLocalDate(userAnswers.dateOfDisposal, Constants.downsizingEligibilityDate,
+      CannotClaimDownsizingController.onPageLoad(), ValueOfDisposedPropertyController.onPageLoad())
 
   private def getAnyPropertyCloselyInheritedRoute(userAnswers: UserAnswers) = userAnswers.anyPropertyCloselyInherited match {
     case Some(Constants.all) => AnyExemptionController.onPageLoad()

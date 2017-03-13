@@ -341,11 +341,11 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.anyDownsizingAllowanceId)(mockCacheMap) shouldBe routes.DateOfDisposalController.onPageLoad()
     }
 
-    "return a call to the TransitionOutController Controller onPageLoad method when a date before 8th July 2015 is" +
+    "return a call to the Cannot Claim Downsizing Controller onPageLoad method when a date before 8th July 2015 is" +
       "supplied as the Date of Disposal " in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.dateOfDisposal) thenReturn Some(new LocalDate(2015, 7, 7))
-      navigator.nextPage(Constants.dateOfDisposalId)(mockCacheMap) shouldBe routes.TransitionOutController.onPageLoad()
+      navigator.nextPage(Constants.dateOfDisposalId)(mockCacheMap) shouldBe routes.CannotClaimDownsizingController.onPageLoad()
     }
 
     "return a call to the Value of Disposed Property Controller onPageLoad method when a date on or after 8th July 2015 is supplied as the Date of Disposal" in {
