@@ -108,7 +108,7 @@ check_answers.button_text = See results
 
 cannot_claim_downsizing.browser_title = There is no downsizing allowance available for the estate
 cannot_claim_downsizing.title = There is no downsizing allowance available for the estate
-cannot_claim_downsizing.date_of_disposal_too_early_reason =
+cannot_claim_downsizing.date_of_disposal_too_early_reason = This is because the person who died downsized their home before 8 July 2015.
 cannot_claim_downsizing.no_assets_passing_to_direct_descendants_reason = This is because no other assets are being left to a direct descendant.
 
 cannot_claim_RNRB.browser_title = You can't claim any RNRB allowance
