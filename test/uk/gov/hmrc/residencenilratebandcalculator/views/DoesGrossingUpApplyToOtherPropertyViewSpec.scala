@@ -28,7 +28,7 @@ class DoesGrossingUpApplyToOtherPropertyViewSpec extends BooleanViewSpecBase {
 
   "Does Grossing Up Apply To Other PropertyView" must {
 
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance", "guidance.bullet1", "guidance.bullet2")
+    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance2.bullet1", "guidance2.bullet2")
 
     behave like pageWithBackLink[Boolean](createView)
 
