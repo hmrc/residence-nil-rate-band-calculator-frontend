@@ -115,6 +115,10 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.cannotClaimRNRB)(mockCacheMap) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
     }
 
+    "return a call to the Results onPageLoad method when we're on the Cannot Claim Downsizing page" in {
+      navigator.nextPage(Constants.cannotClaimDownsizingId)(mock[UserAnswers]) shouldBe routes.ResultsController.onPageLoad()
+    }
+
     "return a function that goes to the Any Exemption controller when given PercentageCloselyInherited" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.percentageCloselyInherited) thenReturn Some(1)
@@ -337,11 +341,11 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.anyDownsizingAllowanceId)(mockCacheMap) shouldBe routes.DateOfDisposalController.onPageLoad()
     }
 
-    "return a call to the TransitionOutController Controller onPageLoad method when a date before 8th July 2015 is" +
+    "return a call to the Cannot Claim Downsizing Controller onPageLoad method when a date before 8th July 2015 is" +
       "supplied as the Date of Disposal " in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.dateOfDisposal) thenReturn Some(new LocalDate(2015, 7, 7))
-      navigator.nextPage(Constants.dateOfDisposalId)(mockCacheMap) shouldBe routes.TransitionOutController.onPageLoad()
+      navigator.nextPage(Constants.dateOfDisposalId)(mockCacheMap) shouldBe routes.CannotClaimDownsizingController.onPageLoad()
     }
 
     "return a call to the Value of Disposed Property Controller onPageLoad method when a date on or after 8th July 2015 is supplied as the Date of Disposal" in {
@@ -372,10 +376,10 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.anyAssetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.DoesGrossingUpApplyToOtherPropertyController.onPageLoad()
     }
 
-    "return a call to the check answers onPageLoad method when there are no assets passing to the direct descendant" in {
+    "return a call to the Cannot Claim Downsizing onPageLoad method when there are no assets passing to the direct descendant" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.anyAssetsPassingToDirectDescendants) thenReturn Some(false)
-      navigator.nextPage(Constants.anyAssetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.CheckAnswersController.onPageLoad()
+      navigator.nextPage(Constants.anyAssetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.CannotClaimDownsizingController.onPageLoad()
     }
 
     "return a call to the Any Brought Forward Allowance On Disposal controller onPageLoad method from the AssetsPassingToDirectDescendants controller" in {

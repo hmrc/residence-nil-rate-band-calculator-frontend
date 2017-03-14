@@ -391,6 +391,38 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       }
     }
 
+    "there is a property, some of which is closely inherited, no exemptions, brought forward allowance, downsizing is claimed " +
+      "but the date of disposal is before the eligibility date" must {
+
+      def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), grossEstateValue = Some(grossEstateValue),
+        chargeableTransferAmount = Some(chargeableTransferAmount),
+        estateHasProperty = Some(true), propertyValue = Some(propertyValue), anyPropertyCloselyInherited = Some(Constants.some),
+        percentageCloselyInherited = Some(percentageCloselyInherited), anyExemption = Some(false),
+        anyBroughtForwardAllowance = Some(true), broughtForwardAllowance = Some(broughtForwardAllowance), anyDownsizingAllowance = Some(true),
+        dateOfDisposal = Some(Constants.downsizingEligibilityDate.minusDays(1)))
+
+      "construct correctly from user answers" in {
+        buildAnswers
+        val calculationInput = CalculationInput(userAnswers)
+        calculationInput shouldBe CalculationInput(dateOfDeath, grossEstateValue, chargeableTransferAmount, propertyValue, percentageCloselyInherited,
+          broughtForwardAllowance, None, None)
+      }
+
+      "render to JSON" in {
+        buildAnswers
+        val calculationInput = CalculationInput(userAnswers)
+        Json.toJson(calculationInput).toString shouldBe
+          """{
+            |"dateOfDeath":"2020-01-01",
+            |"grossEstateValue":1,
+            |"chargeableTransferAmount":2,
+            |"propertyValue":3,
+            |"percentageCloselyInherited":4,
+            |"broughtForwardAllowance":5
+            |}""".stripMargin.replaceAll("\\s+", "")
+      }
+    }
+
     "there is no value for 'date of death'" must {
       "throw an exception" in {
         val exception = intercept[IllegalArgumentException] {

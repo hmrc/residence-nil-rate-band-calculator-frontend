@@ -20,6 +20,7 @@ import play.api.libs.json._
 import play.api.Logger
 import javax.inject.{Inject, Singleton}
 
+import org.joda.time.LocalDate
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
@@ -27,6 +28,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.repositories.SessionRepository
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.util.{Failure, Success, Try}
 
 @Singleton
 class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
@@ -38,7 +40,8 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
       Constants.anyDownsizingAllowanceId -> ((v, cm) => anyDownsizingAllowance(v, cm)),
       Constants.anyAssetsPassingToDirectDescendantsId -> ((v, cm) => anyAssetsPassingToDirectDescendants(v, cm)),
       Constants.anyBroughtForwardAllowanceOnDisposalId -> ((v, cm) => anyBroughtForwardAllowanceOnDisposal(v, cm)),
-      Constants.anyPropertyCloselyInheritedId -> ((v, cm) => anyPropertyCloselyInherited(v, cm))
+      Constants.anyPropertyCloselyInheritedId -> ((v, cm) => anyPropertyCloselyInherited(v, cm)),
+      Constants.dateOfDisposalId -> ((v, cm) => dateOfDisposal(v, cm))
     )
 
   private def store[A](key:String, value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]) =
@@ -114,6 +117,33 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
 
   private def anyBroughtForwardAllowanceOnDisposal[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
     clearIfFalse(Constants.anyBroughtForwardAllowanceOnDisposalId, value, Set(Constants.broughtForwardAllowanceOnDisposalId), cacheMap)
+
+  private def dateOfDisposal[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
+    val keysToRemoveWhenDateTooEarly = Set(
+      Constants.valueOfDisposedPropertyId,
+      Constants.anyAssetsPassingToDirectDescendantsId,
+      Constants.doesGrossingUpApplyToOtherPropertyId,
+      Constants.assetsPassingToDirectDescendantsId,
+      Constants.anyBroughtForwardAllowanceOnDisposalId,
+      Constants.broughtForwardAllowanceOnDisposalId
+    )
+
+    val mapToStore = value match {
+      case JsString(d) =>
+        Try(LocalDate.parse(d)) match {
+          case Success(parsedDate) if parsedDate isBefore Constants.downsizingEligibilityDate =>
+            cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemoveWhenDateTooEarly.contains(s)))
+          case Failure(e) =>
+            val msg = s"Unable to parse value $value as the date of disposal"
+            Logger.error(msg)
+            throw new RuntimeException(msg)
+          case _ => cacheMap
+        }
+      case _ => cacheMap
+    }
+
+    store(Constants.dateOfDisposalId, value, mapToStore)
+  }
 
   private def updateCacheMap[A](key: String, value: A, originalCacheMap: CacheMap)(implicit wts: Writes[A]): Future[CacheMap] = {
     val newCacheMap = funcMap.get(key).fold(store(key, value, originalCacheMap)) { fn => fn(Json.toJson(value), originalCacheMap)}
