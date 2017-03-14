@@ -196,8 +196,18 @@ index.guidance = Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliqua
 nav.title =
 
 not_possible_to_use_service.browser_title = Not possible to use this Calculator
-not_possible_to_use_service.title = Not possible to use this Calculator
-not_possible_to_use_service.guidance = Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
+
+not_possible_to_use_service.date_of_death.title = There is no RNRB allowance available for the estate
+not_possible_to_use_service.date_of_death.reason = This is because the date of death of the person who has died was before 6 April 2017.
+not_possible_to_use_service.date_of_death.guidance =
+
+not_possible_to_use_service.direct_descendant.title = There is no RNRB allowance available for the estate
+not_possible_to_use_service.direct_descendant.reason = This is because none of the estate is being left to a direct descendant.
+not_possible_to_use_service.direct_descendant.guidance =
+
+not_possible_to_use_service.grossing_up.title = You cannot get a calculation using this service
+not_possible_to_use_service.grossing_up.reason = This is because the estate includes grossing up.
+not_possible_to_use_service.grossing_up.guidance = HMRC will calculate the allowance for you.
 
 percentage_closely_inherited.browser_title = What percentage of the residence passes to direct descendants following the deceased’s death?
 percentage_closely_inherited.title = What percentage of the residence passes to direct descendants following the deceased’s death?
@@ -256,6 +266,7 @@ site.start = Start
 site.start_again = Start again
 site.start_now = Start now
 site.textarea.char_limit = (Limit is 1200 characters)
+site.finish = Finish
 
 thank_you.browser_title = Thank You
 thank_you.title = Thank You
