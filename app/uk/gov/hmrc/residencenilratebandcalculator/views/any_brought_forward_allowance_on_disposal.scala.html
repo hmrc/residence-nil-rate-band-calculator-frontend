@@ -2,8 +2,9 @@
 @import uk.gov.hmrc.play.views.html._
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
+@import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 
-@(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[Boolean]] = None)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[Boolean]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("any_brought_forward_allowance_on_disposal.browser_title"),
@@ -14,11 +15,7 @@
 
     @rnrbHelpers.heading("any_brought_forward_allowance_on_disposal.title")
 
-    <p>@messages("any_brought_forward_allowance_on_disposal.guidance1")</p>
-
-    <p>@messages("any_brought_forward_allowance_on_disposal.guidance2")</p>
-
-    <p>@messages("any_brought_forward_allowance_on_disposal.guidance3")</p>
+    <p>@messages("any_brought_forward_allowance_on_disposal.guidance")</p>
 
     @helpers.form(action = AnyBroughtForwardAllowanceOnDisposalController.onSubmit(), 'autoComplete -> "off") {
 
@@ -33,4 +30,5 @@
 
         @rnrbHelpers.submit_button()
     }
+    @rnrbHelpers.answer_rows(answerRows)
 }

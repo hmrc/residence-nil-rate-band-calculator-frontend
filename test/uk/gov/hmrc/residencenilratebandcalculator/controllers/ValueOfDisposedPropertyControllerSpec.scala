@@ -29,8 +29,8 @@ class ValueOfDisposedPropertyControllerSpec extends SimpleControllerSpecBase {
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDisposalController.onPageLoad().url
 
       value match {
-        case None => value_of_disposed_property(frontendAppConfig, url)(fakeRequest, messages)
-        case Some(v) => value_of_disposed_property(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)))(fakeRequest, messages)
+        case None => value_of_disposed_property(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => value_of_disposed_property(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

@@ -27,14 +27,17 @@ class AssetsPassingToDirectDescendantsViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "assets_passing_to_direct_descendants"
 
-  def createView(form: Option[Form[Int]] = None) = assets_passing_to_direct_descendants(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Int]] = None) = assets_passing_to_direct_descendants(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
   "Assets Passing to Direct Descendants View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance")
+    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2")
 
     behave like pageWithBackLink[Int](createView)
 
     behave like intPage(createView, messageKeyPrefix, AssetsPassingToDirectDescendantsController.onSubmit().url, NonNegativeIntForm())
+
+    behave like pageContainingPreviousAnswers(createView)
+
   }
 }

@@ -24,7 +24,7 @@ import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.not_possible_to_use_service
 
-class TransitionOutControllerSpec extends UnitSpec with WithFakeApplication {
+class TransitionOutControllerSpec extends UnitSpec with WithFakeApplication with MockSessionConnector {
 
   val fakeRequest = FakeRequest("", "")
 
@@ -36,13 +36,14 @@ class TransitionOutControllerSpec extends UnitSpec with WithFakeApplication {
 
   "Transition controller" must {
     "return 200 for a GET" in {
-      val result = new TransitionOutController(frontendAppConfig, messagesApi).onPageLoad()(fakeRequest)
+      val result = new TransitionOutController(frontendAppConfig, messagesApi, mockSessionConnector).onPageLoad()(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return the Not Possible to use Calculator view for a GET" in {
-      val result = new TransitionOutController(frontendAppConfig, messagesApi).onPageLoad()(fakeRequest)
-      contentAsString(result) shouldBe not_possible_to_use_service(frontendAppConfig)(fakeRequest, messages).toString
+      val result = new TransitionOutController(frontendAppConfig, messagesApi, mockSessionConnector).onPageLoad()(fakeRequest)
+      contentAsString(result) shouldBe
+        not_possible_to_use_service(frontendAppConfig, "not_possible_to_use_service.grossing_up", Seq())(fakeRequest, messages).toString
     }
   }
 }

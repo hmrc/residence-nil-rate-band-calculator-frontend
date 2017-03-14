@@ -27,15 +27,18 @@ class AnyPropertyCloselyInheritedViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "any_property_closely_inherited"
 
-  def createView(form: Option[Form[String]] = None) = any_property_closely_inherited(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[String]] = None) = any_property_closely_inherited(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
   "Any Property Closely Inherited View" must {
 
-    behave like rnrbPage[String](createView, messageKeyPrefix, "guidance")
+    behave like rnrbPage[String](createView, messageKeyPrefix, "guidance1", "guidance2")
 
     behave like pageWithBackLink[String](createView)
 
     behave like questionPage[String](createView, messageKeyPrefix, AnyPropertyCloselyInheritedController.onSubmit().url)
+
+    behave like pageContainingPreviousAnswers(createView)
+
   }
 
   "Any Property Closely Inherited View" when {

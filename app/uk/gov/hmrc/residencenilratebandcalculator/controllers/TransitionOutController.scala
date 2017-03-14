@@ -19,18 +19,43 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import javax.inject.{Inject, Singleton}
 
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, AnyContent}
+import play.api.mvc.{Action, AnyContent, Request}
+import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.frontend.controller.FrontendController
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
+import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, GetTransitionOutPrefix, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.not_possible_to_use_service
 
-import scala.concurrent.Future
-
 @Singleton
-class TransitionOutController @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi)
+class TransitionOutController @Inject()(appConfig: FrontendAppConfig,
+                                        val messagesApi: MessagesApi,
+                                        val sessionConnector: SessionConnector)
   extends FrontendController with I18nSupport {
 
+  private def answerRows(cacheMap: CacheMap, request: Request[_]): Seq[AnswerRow] = {
+    val userAnswers = new UserAnswers(cacheMap)
+    val controllerId = (userAnswers.dateOfDeath, userAnswers.anyEstatePassedToDescendants, userAnswers.doesGrossingUpApplyToResidence) match {
+      case (Some(dateOfDeath), _, _) if dateOfDeath isBefore Constants.eligibilityDate => Constants.dateOfDeathId
+      case (_, Some(false), _) => Constants.anyEstatePassedToDescendantsId
+      case (_, _, Some(true)) => Constants.doesGrossingUpApplyToResidenceId
+      case _ => Constants.doesGrossingUpApplyToOtherPropertyId
+    }
+    AnswerRows.constructAnswerRows(
+      AnswerRows.truncateAndAddCurrentLocateInCacheMap(controllerId, cacheMap),
+      AnswerRows.answerRowFns,
+      AnswerRows.rowOrder,
+      messagesApi.preferred(request)
+    )
+  }
+
   def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(not_possible_to_use_service(appConfig)))
+    sessionConnector.fetch().map {
+      case Some(cacheMap) => {
+        val transitionOutPrefix = GetTransitionOutPrefix(new UserAnswers(cacheMap))
+        Ok(not_possible_to_use_service(appConfig, transitionOutPrefix, answerRows(cacheMap, request)))
+      }
+      case None => throw new RuntimeException("No cacheMap available")
+    }
   }
 }

@@ -25,30 +25,33 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 
 object AnswerRows {
-  val rowOrder = Map[String, Int](
-    Constants.dateOfDeathId -> 1,
-    Constants.anyEstatePassedToDescendantsId -> 2,
-    Constants.grossEstateValueId -> 3,
-    Constants.chargeableTransferAmountId -> 4,
-    Constants.estateHasPropertyId -> 5,
-    Constants.propertyValueId -> 6,
-    Constants.anyPropertyCloselyInheritedId -> 7,
-    Constants.percentageCloselyInheritedId -> 8,
-    Constants.anyExemptionId -> 9,
-    Constants.doesGrossingUpApplyToResidenceId -> 10,
-    Constants.chargeableValueOfResidenceId -> 11,
-    Constants.chargeableValueOfResidenceCloselyInheritedId -> 12,
-    Constants.anyBroughtForwardAllowanceId -> 13,
-    Constants.broughtForwardAllowanceId -> 14,
-    Constants.anyDownsizingAllowanceId -> 15,
-    Constants.dateOfDisposalId -> 16,
-    Constants.valueOfDisposedPropertyId -> 17,
-    Constants.anyAssetsPassingToDirectDescendantsId -> 18,
-    Constants.doesGrossingUpApplyToOtherPropertyId -> 19,
-    Constants.assetsPassingToDirectDescendantsId -> 20,
-    Constants.anyBroughtForwardAllowanceOnDisposalId -> 21,
-    Constants.broughtForwardAllowanceOnDisposalId -> 22
+
+  private val rowOrderList = List[String](
+    Constants.dateOfDeathId,
+    Constants.anyEstatePassedToDescendantsId,
+    Constants.grossEstateValueId,
+    Constants.chargeableTransferAmountId,
+    Constants.estateHasPropertyId,
+    Constants.propertyValueId,
+    Constants.anyPropertyCloselyInheritedId,
+    Constants.percentageCloselyInheritedId,
+    Constants.anyExemptionId,
+    Constants.doesGrossingUpApplyToResidenceId,
+    Constants.chargeableValueOfResidenceId,
+    Constants.chargeableValueOfResidenceCloselyInheritedId,
+    Constants.anyBroughtForwardAllowanceId,
+    Constants.broughtForwardAllowanceId,
+    Constants.anyDownsizingAllowanceId,
+    Constants.dateOfDisposalId,
+    Constants.valueOfDisposedPropertyId,
+    Constants.anyAssetsPassingToDirectDescendantsId,
+    Constants.doesGrossingUpApplyToOtherPropertyId,
+    Constants.assetsPassingToDirectDescendantsId,
+    Constants.anyBroughtForwardAllowanceOnDisposalId,
+    Constants.broughtForwardAllowanceOnDisposalId
   )
+
+  val rowOrder = rowOrderList.zipWithIndex.toMap
 
   private def errorString(title: String) = s"$title unavailable from cache"
 
@@ -152,6 +155,17 @@ object AnswerRows {
       case (key, value) => answerRowFns(key)(value)(messages)
     }
   }
+
+  def truncateAndLocateInCacheMap(id: String, cacheMap: CacheMap): CacheMap = {
+    val truncatedList = rowOrderList.takeWhile(_ != id)
+    CacheMap(cacheMap.id, cacheMap.data.filterKeys(x => truncatedList.contains(x)))
+  }
+
+  def truncateAndAddCurrentLocateInCacheMap(id: String, cacheMap: CacheMap) = {
+    val truncatedList = rowOrderList.takeWhile(_ != id) :+ id
+    CacheMap(cacheMap.id, cacheMap.data.filterKeys(x => truncatedList.contains(x)))
+  }
+
 
   def apply(cacheMap: CacheMap, messages: Messages) = constructAnswerRows(cacheMap, answerRowFns, rowOrder, messages)
 }

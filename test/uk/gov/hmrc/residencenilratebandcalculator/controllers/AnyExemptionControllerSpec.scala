@@ -29,8 +29,8 @@ class AnyExemptionControllerSpec extends SimpleControllerSpecBase {
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyPropertyCloselyInheritedController.onPageLoad().url
 
       value match {
-        case None => any_exemption(frontendAppConfig, url)(fakeRequest, messages)
-        case Some(v) => any_exemption(frontendAppConfig, url, Some(BooleanForm().bind(v)))(fakeRequest, messages)
+        case None => any_exemption(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => any_exemption(frontendAppConfig, url, Some(BooleanForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

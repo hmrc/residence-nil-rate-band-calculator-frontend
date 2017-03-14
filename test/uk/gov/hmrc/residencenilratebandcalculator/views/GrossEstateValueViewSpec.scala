@@ -27,14 +27,24 @@ class GrossEstateValueViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "gross_estate_value"
 
-  def createView(form: Option[Form[Int]] = None) = gross_estate_value(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Int]] = None) = gross_estate_value(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
   "Gross Estate Value View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance")
+    behave like rnrbPage[Int](createView, messageKeyPrefix,
+      "guidance1",
+      "guidance1.bullet1",
+      "guidance1.bullet2",
+      "guidance1.bullet3",
+      "guidance1.bullet4",
+      "guidance2"
+    )
 
     behave like pageWithBackLink[Int](createView)
 
     behave like intPage(createView, messageKeyPrefix, GrossEstateValueController.onSubmit().url, NonNegativeIntForm())
+
+    behave like pageContainingPreviousAnswers(createView)
+
   }
 }

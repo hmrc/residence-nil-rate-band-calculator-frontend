@@ -26,29 +26,29 @@ class AnyEstatePassedToDescendantsViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "any_estate_passed_to_descendants"
 
-  def createView(form: Option[Form[Boolean]] = None) = any_estate_passed_to_descendants(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = any_estate_passed_to_descendants(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
   "Any Estate Passed To Descendants View" must {
 
     behave like rnrbPage[Boolean](createView, messageKeyPrefix,
       "guidance1",
-      "guidance1.bullet1",
-      "guidance1.bullet2",
+      "reveal_title",
       "guidance2",
       "guidance2.bullet1",
       "guidance2.bullet2",
       "guidance2.bullet3",
       "guidance2.bullet4",
-      "guidance3",
-      "guidance4",
-      "guidance4.bullet1",
-      "guidance4.bullet2",
-      "guidance5"
+      "guidance2.bullet5",
+      "guidance2.bullet6",
+      "guidance2.bullet7",
+      "guidance3"
     )
 
     behave like pageWithBackLink[Boolean](createView)
 
     behave like booleanPage(createView, messageKeyPrefix, AnyEstatePassedToDescendantsController.onSubmit().url)
+
+    behave like pageContainingPreviousAnswers(createView)
   }
 
 }

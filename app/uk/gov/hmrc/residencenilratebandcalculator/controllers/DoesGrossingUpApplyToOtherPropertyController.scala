@@ -24,6 +24,7 @@ import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
+import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.does_grossing_up_apply_to_other_property
 
 @Singleton
@@ -36,7 +37,7 @@ class DoesGrossingUpApplyToOtherPropertyController @Inject()(override val appCon
 
   override def form: () => Form[Boolean] = () => BooleanForm()
 
-  override def view(form: Option[Form[Boolean]], backUrl: String)(implicit request: Request[_]) = {
-    does_grossing_up_apply_to_other_property(appConfig, backUrl, form)
+  override def view(form: Option[Form[Boolean]], backUrl: String, answerRows: Seq[AnswerRow])(implicit request: Request[_]) = {
+    does_grossing_up_apply_to_other_property(appConfig, backUrl, form, answerRows)
   }
 }

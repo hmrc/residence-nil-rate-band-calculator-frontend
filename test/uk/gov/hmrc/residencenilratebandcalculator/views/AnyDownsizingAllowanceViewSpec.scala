@@ -26,7 +26,7 @@ class AnyDownsizingAllowanceViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "any_downsizing_allowance"
 
-  def createView(form: Option[Form[Boolean]] = None) = any_downsizing_allowance(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = any_downsizing_allowance(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
   "Any Downsizing Allowance View" must {
 
@@ -35,10 +35,14 @@ class AnyDownsizingAllowanceViewSpec extends BooleanViewSpecBase {
       "guidance1.bullet1",
       "guidance1.bullet2",
       "guidance1.bullet3",
+      "guidance1.bullet4",
       "guidance2")
 
     behave like pageWithBackLink[Boolean](createView)
 
     behave like booleanPage(createView, messageKeyPrefix, AnyDownsizingAllowanceController.onSubmit().url)
+
+    behave like pageContainingPreviousAnswers(createView)
+
   }
 }

@@ -27,7 +27,7 @@ class PercentageCloselyInheritedViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "percentage_closely_inherited"
 
-  def createView(form: Option[Form[Int]] = None) = percentage_closely_inherited(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Int]] = None) = percentage_closely_inherited(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
   "Percentage Closely Inherited View" must {
 
@@ -36,5 +36,8 @@ class PercentageCloselyInheritedViewSpec extends IntViewSpecBase {
     behave like pageWithBackLink[Int](createView)
 
     behave like intPage(createView, messageKeyPrefix, PercentageCloselyInheritedController.onSubmit().url, PositivePercentForm())
+
+    behave like pageContainingPreviousAnswers(createView)
+
   }
 }

@@ -27,14 +27,17 @@ class ValueOfDisposedPropertyViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "value_of_disposed_property"
 
-  def createView(form: Option[Form[Int]] = None) = value_of_disposed_property(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Int]] = None) = value_of_disposed_property(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
   "Value of Disposed Property View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2")
+    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance3")
 
     behave like pageWithBackLink[Int](createView)
 
     behave like intPage(createView, messageKeyPrefix, ValueOfDisposedPropertyController.onSubmit().url, NonNegativeIntForm())
+
+    behave like pageContainingPreviousAnswers(createView)
+
   }
 }

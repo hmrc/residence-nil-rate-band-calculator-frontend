@@ -27,7 +27,7 @@ class DateOfDisposalViewSpec  extends DateViewSpecBase {
 
   val messageKeyPrefix = "date_of_disposal"
 
-  def createView(form: Option[Form[Date]] = None) = date_of_disposal(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Date]] = None) = date_of_disposal(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
   "Date of Disposal View" must {
 
@@ -36,5 +36,8 @@ class DateOfDisposalViewSpec  extends DateViewSpecBase {
     behave like pageWithBackLink[Date](createView)
 
     behave like datePage(createView, messageKeyPrefix, DateOfDisposalController.onSubmit().url)
+
+    behave like pageContainingPreviousAnswers(createView)
+
   }
 }

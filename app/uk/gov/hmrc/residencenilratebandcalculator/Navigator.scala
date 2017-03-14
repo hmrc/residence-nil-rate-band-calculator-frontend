@@ -18,8 +18,6 @@ package uk.gov.hmrc.residencenilratebandcalculator
 
 import javax.inject.{Inject, Singleton}
 
-import play.api.libs.json.Reads
-import play.api.mvc.{Action, AnyContent, Call}
 import org.joda.time.LocalDate
 import play.api.mvc.Call
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
@@ -36,6 +34,7 @@ class Navigator @Inject()() {
       Constants.grossEstateValueId -> (_ => ChargeableTransferAmountController.onPageLoad()),
       Constants.chargeableTransferAmountId -> (_ => EstateHasPropertyController.onPageLoad()),
       Constants.estateHasPropertyId -> (ua => getEstateHasPropertyRoute(ua)),
+      Constants.cannotClaimRNRB -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
       Constants.propertyValueId -> (_ => AnyPropertyCloselyInheritedController.onPageLoad()),
       Constants.anyPropertyCloselyInheritedId -> (ua => getAnyPropertyCloselyInheritedRoute(ua)),
       Constants.percentageCloselyInheritedId -> (_ => AnyExemptionController.onPageLoad()),
@@ -76,13 +75,13 @@ class Navigator @Inject()() {
     getRouteForOptionalBoolean(userAnswers.anyEstatePassedToDescendants, GrossEstateValueController.onPageLoad(), TransitionOutController.onPageLoad())
 
   private def getEstateHasPropertyRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.estateHasProperty, PropertyValueController.onPageLoad(), AnyBroughtForwardAllowanceController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.estateHasProperty, PropertyValueController.onPageLoad(), CannotClaimRNRBController.onPageLoad())
 
   private def getAnyBroughtForwardAllowanceRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.anyBroughtForwardAllowance, BroughtForwardAllowanceController.onPageLoad(), AnyDownsizingAllowanceController.onPageLoad())
 
   private def getAnyBroughtForwardAllowanceOnDisposalRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.anyBroughtForwardAllowanceOnDisposal,BroughtForwardAllowanceOnDisposalController.onPageLoad(), CheckAnswersController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.anyBroughtForwardAllowanceOnDisposal, BroughtForwardAllowanceOnDisposalController.onPageLoad(), CheckAnswersController.onPageLoad())
 
   private def getAnyDownsizingAllowanceRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.anyDownsizingAllowance, DateOfDisposalController.onPageLoad(), CheckAnswersController.onPageLoad())
@@ -93,7 +92,7 @@ class Navigator @Inject()() {
   private def getAnyPropertyCloselyInheritedRoute(userAnswers: UserAnswers) = userAnswers.anyPropertyCloselyInherited match {
     case Some(Constants.all) => AnyExemptionController.onPageLoad()
     case Some(Constants.some) => PercentageCloselyInheritedController.onPageLoad()
-    case Some(_) => AnyBroughtForwardAllowanceController.onPageLoad()
+    case Some(_) => CannotClaimRNRBController.onPageLoad()
     case _ => HomeController.onPageLoad()
   }
 

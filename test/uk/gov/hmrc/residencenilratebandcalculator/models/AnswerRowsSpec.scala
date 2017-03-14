@@ -32,6 +32,12 @@ class AnswerRowSpecs extends UnitSpec with WithFakeApplication with MockSessionC
 
   val injector = fakeApplication.injector
 
+  val cacheMap = CacheMap("", Map[String, JsValue](
+    "id1" -> JsBoolean(true),
+    "id2" -> JsNumber(1000),
+    "id3" -> Json.toJson(new LocalDate(2017, 6, 1))
+  ))
+
   def messagesApi = injector.instanceOf[MessagesApi]
 
   def messages = messagesApi.preferred(fakeRequest)
@@ -39,11 +45,7 @@ class AnswerRowSpecs extends UnitSpec with WithFakeApplication with MockSessionC
   "Answer Rows" must {
 
     "correct create answer rows when given valid data" in {
-      val cacheMap = CacheMap("", Map[String, JsValue](
-        "id1" -> JsBoolean(true),
-        "id2" -> JsNumber(1000),
-        "id3" -> Json.toJson(new LocalDate(2017, 6, 1))
-      ))
+
       setCacheMap(cacheMap)
 
       val answerRowFns = Map[String, JsValue => Messages => AnswerRow](
@@ -153,5 +155,80 @@ class AnswerRowSpecs extends UnitSpec with WithFakeApplication with MockSessionC
 
       result shouldBe Seq(AnswerRow("title1", "Yes", "http://example.com/one"))
     }
+
+    "truncateAndLocateInCacheMap should return an empty map when the id does not exist in the rowOrder list" in {
+      val result = AnswerRows.truncateAndLocateInCacheMap("this ID does not exist", cacheMap)
+
+      result.data shouldBe Map()
+    }
+
+    "truncateAndLocateInCacheMap should return an empty map when the id is valid but the cache map is empty" in {
+      val result = AnswerRows.truncateAndLocateInCacheMap("id1", CacheMap("", Map()))
+
+      result.data shouldBe Map()
+    }
+
+    "truncateAndLocateInCacheMap should return map of values from cache map which keyed by this " +
+      "constant and previous constants in the list" in {
+
+      val cacheMap = CacheMap("", Map(
+        Constants.dateOfDeathId -> JsNumber(0),
+        Constants.anyEstatePassedToDescendantsId -> JsNumber(1),
+        Constants.grossEstateValueId -> JsNumber(2),
+        Constants.chargeableTransferAmountId -> JsNumber(3)
+      ))
+
+      val result = AnswerRows.truncateAndLocateInCacheMap(Constants.grossEstateValueId, cacheMap)
+
+      result.data shouldBe Map(Constants.dateOfDeathId -> JsNumber(0),
+        Constants.anyEstatePassedToDescendantsId -> JsNumber(1))
+    }
+
+    "truncateAndLocateInCacheMap should return map of values from cache map which keyed by this " +
+      "constant and previous constants, not including any with no values" in {
+
+      val cacheMap = CacheMap("", Map(
+        Constants.dateOfDeathId -> JsNumber(0),
+        Constants.grossEstateValueId -> JsNumber(2),
+        Constants.chargeableTransferAmountId -> JsNumber(3)
+      ))
+
+      val result = AnswerRows.truncateAndLocateInCacheMap(Constants.grossEstateValueId, cacheMap)
+
+      result.data shouldBe Map(Constants.dateOfDeathId -> JsNumber(0))
+    }
+
+    "create answer rows when given truncated data" in {
+
+      val cacheMap = CacheMap("", Map(
+        Constants.dateOfDeathId -> JsNumber(0),
+        Constants.anyEstatePassedToDescendantsId -> JsNumber(1),
+        Constants.grossEstateValueId -> JsNumber(2),
+        Constants.chargeableTransferAmountId -> JsNumber(3)
+      ))
+
+      setCacheMap(cacheMap)
+
+      val answerRowFns = Map[String, JsValue => Messages => AnswerRow](
+        Constants.dateOfDeathId -> ((_: JsValue) => (_: Messages) => AnswerRow("title1", "Yes", "http://example.com/one")),
+        Constants.anyEstatePassedToDescendantsId -> ((_: JsValue) => (_: Messages) => AnswerRow("title2", "£1,000.00", "http://example.com/two")),
+        Constants.grossEstateValueId -> ((_: JsValue) => (_: Messages) => AnswerRow("title3", "1 June 2017", "http://example.com/three"))
+      )
+      val rowOrder = Map[String, Int](
+        Constants.dateOfDeathId -> 0,
+        Constants.anyEstatePassedToDescendantsId -> 1,
+        Constants.grossEstateValueId -> 2,
+        Constants.chargeableTransferAmountId -> 3
+      )
+
+      val result = AnswerRows.constructAnswerRows(AnswerRows.truncateAndLocateInCacheMap(
+        Constants.grossEstateValueId, cacheMap),
+        answerRowFns, rowOrder, messages)
+
+      result shouldBe Seq(
+        AnswerRow("title1", "Yes", "http://example.com/one"),
+        AnswerRow("title2", "£1,000.00", "http://example.com/two"))
+    }
+
   }
 }

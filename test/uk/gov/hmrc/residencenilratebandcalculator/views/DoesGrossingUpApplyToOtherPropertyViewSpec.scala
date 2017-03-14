@@ -24,14 +24,17 @@ class DoesGrossingUpApplyToOtherPropertyViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "does_grossing_up_apply_to_other_property"
 
-  def createView(form: Option[Form[Boolean]] = None) = does_grossing_up_apply_to_other_property(frontendAppConfig, backUrl, form)(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = does_grossing_up_apply_to_other_property(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
   "Does Grossing Up Apply To Other PropertyView" must {
 
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance", "guidance.bullet1", "guidance.bullet2")
+    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance2.bullet1", "guidance2.bullet2")
 
     behave like pageWithBackLink[Boolean](createView)
 
     behave like booleanPage(createView, messageKeyPrefix, DoesGrossingUpApplyToOtherPropertyController.onSubmit().url)
+
+    behave like pageContainingPreviousAnswers(createView)
+
   }
 }
