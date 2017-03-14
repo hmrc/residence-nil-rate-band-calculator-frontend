@@ -86,7 +86,7 @@ brought_forward_allowance.label =
 
 brought_forward_allowance_on_disposal.browser_title = What would the amount of transferable residence nil rate band have been at the date of disposal?
 brought_forward_allowance_on_disposal.title = What would the amount of transferable residence nil rate band have been at the date of disposal?
-brought_forward_allowance_on_disposal.guidance = This is the amount of transferable residence nil rate band that would have been available to thedeceased at the date of disposal, as if that date had been the deceased’s date of death.
+brought_forward_allowance_on_disposal.guidance = This is the amount of transferable residence nil rate band that would have been available to the deceased at the date of disposal, as if that date had been the deceased’s date of death.
 brought_forward_allowance_on_disposal.label =
 
 chargeable_transfer_amount.browser_title = What is the amount of the total chargeable estate on death?
@@ -116,10 +116,10 @@ cannot_claim_downsizing.title = There is no downsizing allowance available for t
 cannot_claim_downsizing.date_of_disposal_too_early_reason = This is because the person who died downsized their home before 8 July 2015.
 cannot_claim_downsizing.no_assets_passing_to_direct_descendants_reason = This is because no other assets are being left to a direct descendant.
 
-cannot_claim_RNRB.browser_title = You can't claim any RNRB allowance
-cannot_claim_RNRB.title = You can't claim any RNRB allowance
+cannot_claim_RNRB.browser_title = You can’t claim any RNRB allowance
+cannot_claim_RNRB.title = You can’t claim any RNRB allowance
 cannot_claim_RNRB.guidance = You might still be able to claim a downsizing allowance or transfer residence nil rate band if the person who has died was married during their lifetime and their spouse or civil partner died first.
-cannot_claim_RNRB.no_property_reason = This is because the estate doesn't include a property that the person who died lived in at any time while they also owned it
+cannot_claim_RNRB.no_property_reason = This is because the estate doesn’t include a property that the person who died lived in at any time while they also owned it
 cannot_claim_RNRB.not_closely_inherited_reason = This is because none of the house passed to a direct descendant, or the spouse or civil partner of a direct descendant
 
 date.day = Day
