@@ -14,7 +14,15 @@
 
     @rnrbHelpers.heading("gross_estate_value.title")
 
-    <p>@messages("gross_estate_value.guidance")</p>
+    <p>@messages("gross_estate_value.guidance1")</p>
+    <ul class="list list-bullet">
+        <li>@messages("gross_estate_value.guidance1.bullet1")</li>
+        <li>@messages("gross_estate_value.guidance1.bullet2")</li>
+        <li>@messages("gross_estate_value.guidance1.bullet3")</li>
+        <li>@messages("gross_estate_value.guidance1.bullet4")</li>
+    </ul>
+
+    <p>@messages("gross_estate_value.guidance2")</p>
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.GrossEstateValueController.onSubmit(), 'autoComplete -> "off") {
 
@@ -29,10 +37,7 @@
         )
 
         @rnrbHelpers.submit_button()
-
     }
 
     @rnrbHelpers.answer_rows(answerRows)
-
-
 }

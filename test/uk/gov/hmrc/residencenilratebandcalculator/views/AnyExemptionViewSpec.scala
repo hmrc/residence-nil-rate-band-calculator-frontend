@@ -30,7 +30,7 @@ class AnyExemptionViewSpec  extends BooleanViewSpecBase {
 
   "Any Exemption View" must {
 
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")
+    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance", "guidance.bullet1", "guidance.bullet2", "guidance.bullet3")
 
     behave like pageWithBackLink[Boolean](createView)
 

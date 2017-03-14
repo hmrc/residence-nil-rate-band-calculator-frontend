@@ -31,7 +31,7 @@ class ChargeableValueOfResidenceViewSpec extends IntViewSpecBase {
 
   "Chargeable Value Of Residence View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance")
+    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2")
 
     behave like pageWithBackLink[Int](createView)
 

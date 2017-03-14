@@ -1,50 +1,50 @@
-any_assets_passing_to_direct_descendants.browser_title = Other than the property that you are claiming RNRB on, does any other assets pass to a direct descendant following the death?
-any_assets_passing_to_direct_descendants.title = Other than the property that you are claiming RNRB on, does any other assets pass to a direct descendant following the death?
-any_assets_passing_to_direct_descendants.guidance = If there are no other assets passing to direct descendants, other than the property you have already mentioned, there won’t be any downsizing allowance.
+any_assets_passing_to_direct_descendants.browser_title = Other than the property that you are claiming residence nil rate band allowance on, do any other assets pass to a direct descendant following the death?
+any_assets_passing_to_direct_descendants.title = Other than the property that you are claiming residence nil rate band allowance on, do any other assets pass to a direct descendant following the death?
+any_assets_passing_to_direct_descendants.guidance = This doesn’t include the property worth [VALUE]. A direct descendant must have received other assets from the estate for the downsizing allowance to be claimed.
 any_assets_passing_to_direct_descendants.label =
 
-any_brought_forward_allowance.browser_title = Do you wish to transfer any unused residence nil rate band (TRNRB) from the estate of a pre-deceased spouse or civil partner of the deceased?
-any_brought_forward_allowance.title = Do you wish to transfer any unused residence nil rate band (TRNRB) from the estate of a pre-deceased spouse or civil partner of the deceased?
-any_brought_forward_allowance.guidance = If you answer ‘yes’ you will need to complete form IHT436 ‘Claim to transfer any unused residence nil rate band’ (TRNRB).
+any_brought_forward_allowance.browser_title = Do you wish to transfer any unused residence nil rate band?
+any_brought_forward_allowance.title = Do you wish to transfer any unused residence nil rate band?
+any_brought_forward_allowance.guidance1 = This transfer will be from the estate of a spouse of civil partner who died before the person who you are claiming an allowance for.
+any_brought_forward_allowance.guidance2 = You will need a completed copy of the IHT-436 form if you are transferring any unused allowance from somebody else’s estate.
 any_brought_forward_allowance.label =
 
 any_brought_forward_allowance_on_disposal.browser_title = If a valid claim for RNRB had been made at the date of disposal would any transferable residence nil rate band have been available at that time?
 any_brought_forward_allowance_on_disposal.title = If a valid claim for RNRB had been made at the date of disposal would any transferable residence nil rate band have been available at that time?
-any_brought_forward_allowance_on_disposal.guidance1 = If there is no claim for transferable residence nil rate band at death then a claim would not have been possible when the disposal occurred and the answer here will be ‘no’.
-any_brought_forward_allowance_on_disposal.guidance2 = If the disposal was made on or before 5 April 2017, transferable residence nil rate band would not have been available and the answer will be ‘no’.
-any_brought_forward_allowance_on_disposal.guidance3 = The answer will be ‘yes’ if the disposal took place on or after 6 April 2017 and after the earlier death of any spouse or civil partner of the deceased who’s estate had not used the full RNRB available at that time.
+any_brought_forward_allowance_on_disposal.guidance = Answer yes if the date that the person who has died sold or gave away their home was after the date that their spouse or civil partner died.
 any_brought_forward_allowance_on_disposal.label =
 
 any_downsizing_allowance.browser_title = Are you claiming any downsizing allowance?
 any_downsizing_allowance.title = Are you claiming any downsizing allowance?
-any_downsizing_allowance.guidance1 = In order to claim downsizing allowance:
-any_downsizing_allowance.guidance1.bullet1 = the deceased must have disposed of a former home and either downsized to a less valuable home, or ceased to own a home, on or after 8 July 2015
-any_downsizing_allowance.guidance1.bullet2 = the former home would have qualified for the RNRB if it had been kept until death
-any_downsizing_allowance.guidance1.bullet3 = at least some of the estate is inherited by the deceased’s direct descendants
-any_downsizing_allowance.guidance2 = The downsizing addition can’t exceed the maximum amount of RNRB that would have been available if the disposal or downsizing hadn’t happened.
+any_downsizing_allowance.guidance1 = You can claim extra allowance for the estate if the person who has died:
+any_downsizing_allowance.guidance1.bullet1 = downsized their home on or after 8 July 2015 by either selling it and buying a cheaper home or selling it and not buying another home
+any_downsizing_allowance.guidance1.bullet2 = gave any part of their home away, like giving half of it away to a direct descendant
+any_downsizing_allowance.guidance1.bullet3 = had a home that would have qualified for residence nil rate band allowance if they had not sold it and had kept it until they died
+any_downsizing_allowance.guidance1.bullet4 = left anything in their estate to a direct descendant
+any_downsizing_allowance.guidance2 = The value of the downsizing allowance that is available cannot be more than [WORK OUT ADDITIONAL ALLOWANCE LIMIT FOR THE ESTATE].
 any_downsizing_allowance.label =
 
-any_estate_passed_to_descendants.browser_title = Question pages
+any_estate_passed_to_descendants.browser_title = Does any of the estate pass to the deceased’s children or other direct descendants?
 any_estate_passed_to_descendants.title = Does any of the estate pass to the deceased’s children or other direct descendants?
-any_estate_passed_to_descendants.guidance1 = A direct descendant is:
-any_estate_passed_to_descendants.guidance1.bullet1 = a child, grandchild
-any_estate_passed_to_descendants.guidance1.bullet2 = great-grandchild or great-great grandchild, etc. of the deceased
-any_estate_passed_to_descendants.guidance2 = And for the purpose of RNRB a ‘child’ includes:
-any_estate_passed_to_descendants.guidance2.bullet1 = a child who is, or was the deceased’s step-child
-any_estate_passed_to_descendants.guidance2.bullet2 = an adopted child is a child of the deceased
-any_estate_passed_to_descendants.guidance2.bullet3 = a foster child is treated as a child of the deceased
-any_estate_passed_to_descendants.guidance2.bullet4 = if the deceased was an appointed guardian or special guardian for a child who was under 18 at that time, the child is treated as a child of the deceased
-any_estate_passed_to_descendants.guidance3 = For RNRB purposes a ‘child’ does not have to be under 18 at the deceased’s date of death, and a ‘step-child’ is limited to someone whose parent is, or was, the spouse or civil partner of the deceased.
-any_estate_passed_to_descendants.guidance4 = A direct descendant also includes:
-any_estate_passed_to_descendants.guidance4.bullet1 = spouse or civil partner of the child
-any_estate_passed_to_descendants.guidance4.bullet2 = grandchild or great-grandchild, etc. (including their widow, widower or surviving civil partner, provided that the widow, widower or surviving civil partner had not remarried or entered into a new civil partnership before the deceased’s date of death)
-any_estate_passed_to_descendants.guidance5 = Direct descendants do not include nephews, nieces, siblings or other relatives not included in the list above.
+any_estate_passed_to_descendants.guidance1 = Check the will to find out what the person who has died has left to people. Answer yes if the person who has died left something to a direct descendant or the spouse or civil partner of one.
+any_estate_passed_to_descendants.reveal_title = Who is a direct descendant?
+any_estate_passed_to_descendants.guidance2 = A person’s direct descendant is:
+any_estate_passed_to_descendants.guidance2.bullet1 = a child, grandchild or great grandchild, including any of their children
+any_estate_passed_to_descendants.guidance2.bullet2 = the spouse or civil partner of a child, grandchild or great grandchild, including any of their children
+any_estate_passed_to_descendants.guidance2.bullet3 = a widow, widower or surviving civil partner of a child, grandchild or great grandchild, including any of their children
+any_estate_passed_to_descendants.guidance2.bullet4 = a child who is, or was at any part of their life, their step-child
+any_estate_passed_to_descendants.guidance2.bullet5 = an adopted child
+any_estate_passed_to_descendants.guidance2.bullet6 = a child who they fostered at any time
+any_estate_passed_to_descendants.guidance2.bullet7 = a child who they were appointed as a guardian or special guardian of when that child was under 18
+any_estate_passed_to_descendants.guidance3 = Direct descendants do not include nephews, nieces, siblings or other relatives not included above.
 any_estate_passed_to_descendants.label =
 
 any_exemption.browser_title = Is any part of the residence exempt from inheritance tax, or does any part of it qualify for any relief on the death?
 any_exemption.title = Is any part of the residence exempt from inheritance tax, or does any part of it qualify for any relief on the death?
-any_exemption.guidance1 = If any part of the residence passes to an exempt beneficiary, such as the deceased’s spouse or civil partner or to a charity, or if a relief, such as agricultural relief, applies to any part of that property answer ‘yes’.
-any_exemption.guidance2 = If the residence falls into the residue of the estate and part of the residue passes to an exempt beneficiary, answer ‘yes’ to this question.
+any_exemption.guidance = Answer yes if any part of the property is exempt from Inheritance Tax because:
+any_exemption.guidance.bullet1 = it passed to a spouse or civil partner
+any_exemption.guidance.bullet2 = it passed to a charity
+any_exemption.guidance.bullet3 = relief, like agriculture relief, applies
 any_exemption.label =
 
 any_property_closely_inherited.all = Yes, all of it passed
@@ -52,32 +52,36 @@ any_property_closely_inherited.some = Yes, some of it passed
 any_property_closely_inherited.none = No
 any_property_closely_inherited.browser_title = Did any part of this residence pass to a direct descendant or their spouse or civil partner?
 any_property_closely_inherited.title = Did any part of this residence pass to a direct descendant or their spouse or civil partner?
-any_property_closely_inherited.guidance = This will be listed in the will of the person who has died.
+any_property_closely_inherited.guidance1 = This will be listed in the will of the person who has died.
+any_property_closely_inherited.guidance2 = Answer yes if any part of the property was left in the will to a direct descendant or to a spouse of civil partner of one.
 any_property_closely_inherited.label =
 
 assets_passing_to_direct_descendants.browser_title = What is the total value of the other assets passing to direct descendants?
 assets_passing_to_direct_descendants.title = What is the total value of the other assets passing to direct descendants?
-assets_passing_to_direct_descendants.guidance = This is the value that is taken into account for Inheritance Tax purposes of the other assets.
+assets_passing_to_direct_descendants.guidance1 = You will need the will and the value of assets to work this out.
+assets_passing_to_direct_descendants.guidance2 = Find out what was left to a direct descendant then add the values of each asset up to get the total value of assets passing to a direct descendant.
 assets_passing_to_direct_descendants.label =
 
-before_you_start.browser_title = Calculate the Residential Nil Rate Band (RNRB) for the estate of someone who has died
-before_you_start.title = Calculate the Residential Nil Rate Band (RNRB) for the estate of someone who has died
+before_you_start.browser_title = Calculate the residence nil rate band (RNRB) for the estate of someone who has died
+before_you_start.title = Calculate the residence nil rate band (RNRB) for the estate of someone who has died
 before_you_start.guidance1 = If there is any RNRB available, this will be added to the Inheritance Tax threshold and might mean there is less tax to pay.
-before_you_start.guidance2 = This service will calculate how much allowance is available to add to the threshold. It should you no more than 30 minutes to complete the service.
-before_you_start.guidance3 = You will need to:
+before_you_start.guidance2 = This service will calculate how much allowance is available to add to the threshold. It should take you no more than 30 minutes to complete the service.
+before_you_start.guidance3 = You’ll need to:
 before_you_start.guidance3.bullet1 = fill in an IHT-435 form to claim the allowance on an estate and you’ll be given a copy after using the service with the details you have given already added
-before_you_start.guidance3.bullet2 = have a copy of the IHT-400 from that you have been filling in as details will be needed to help work out the allowance available
+before_you_start.guidance3.bullet2 = have a copy of the IHT-400 form that you have been filling in as details will be needed to help work out the available allowance
 before_you_start.guidance3.bullet3 = have details of any properties owned by the person who has died, including the values of the property and of any debts owed against it
 before_you_start.guidance3.bullet4 = know who was left property from the estate if it was passed in a will
-before_you_start.guidance4 = The RNRB allowance can be increased if the person who has died had downsized or disposed of their home before their death, or if they had been married during their lifetime and their spouse or civil partner died first. To claim any extra allowance for these reasons you’ll need to have:
+before_you_start.guidance4 = The RNRB allowance can be increased if the person who has died had downsized their home before their death, or if they had been married during their lifetime and their spouse or civil partner died first. To claim any extra allowance you’ll need to have:
 before_you_start.guidance4.bullet1 = details of the home sold by the person who died
 before_you_start.guidance4.bullet2 = details of any other assets left in the will to a direct descendant, including the value of these assets
 before_you_start.guidance4.bullet3 = a completed IHT-436 form with the value of transferable residential nil rate band being claimed if the person who has died was married during their lifetime and their spouse or civil partner died first
+before_you_start.sub_heading = Before you start
 
 brought_forward_allowance.browser_title = How much transferable residence nil rate band are you claiming?
 brought_forward_allowance.title = How much transferable residence nil rate band are you claiming?
-brought_forward_allowance.guidance1 = This is the figure from either box 15 or box 21 form IHT436.
-brought_forward_allowance.guidance2 = If you are claiming TRNRB from more than one pre-deceased spouse or civil partner, you need to add up the figures from box 15 or 21 from each IHT436, but the total is limited to the maximum RNRB for the year of death.
+brought_forward_allowance.guidance1 = This is the number in either box 15 or box 21 on the IHT-436 form.
+brought_forward_allowance.guidance2 = If the person who you are claiming an allowance for had been married or in a civil partnership more than once during their lifetime and their spouse or civil partner died first, you can transfer more than one unused allowance. Add together the numbers in either box 15 or box 21 on each IHT-436 form.
+brought_forward_allowance.guidance3 = You cannot transfer more than £175,000.
 brought_forward_allowance.label =
 
 brought_forward_allowance_on_disposal.browser_title = What would the amount of transferable residence nil rate band have been at the date of disposal?
@@ -85,20 +89,21 @@ brought_forward_allowance_on_disposal.title = What would the amount of transfera
 brought_forward_allowance_on_disposal.guidance = This is the amount of transferable residence nil rate band that would have been available to thedeceased at the date of disposal, as if that date had been the deceased’s date of death.
 brought_forward_allowance_on_disposal.label =
 
-chargeable_transfer_amount.browser_title = Question page
+chargeable_transfer_amount.browser_title = What is the amount of the total chargeable estate on death?
 chargeable_transfer_amount.title = What is the amount of the total chargeable estate on death?
-chargeable_transfer_amount.guidance = IHT400, box 108.
+chargeable_transfer_amount.guidance = Enter the value you have given in box 108 on the IHT-400 form.
 chargeable_transfer_amount.label =
 
 chargeable_value_of_residence.browser_title = What is the chargeable value of the residence for inheritance tax purposes?
 chargeable_value_of_residence.title = What is the chargeable value of the residence for inheritance tax purposes?
 chargeable_value_of_residence.label =
-chargeable_value_of_residence.guidance = This is the value for inheritance tax purposes for the whole of the deceased’s interest in the property.
+chargeable_value_of_residence.guidance1 = This is the value of the property owned by the person who has died. This will either be the total value if they owned the property on their own, or the value of the part of the property that they owned.
+chargeable_value_of_residence.guidance2 = If the person who has died owned 50% of a property which was valued at £500,000 on the date of death, the value of their share would be £250,000.
 chargeable_value_of_residence_closely_inherited.browser_title = What is the chargeable value of the residence that passes to direct descendants?
 chargeable_value_of_residence_closely_inherited.title = What is the chargeable value of the residence that passes to direct descendants?
 chargeable_value_of_residence_closely_inherited.label =
-chargeable_value_of_residence_closely_inherited.guidance1 = This is the value for inheritance tax purposes of the part of the property inherited by a direct descendant.
-chargeable_value_of_residence_closely_inherited.guidance2 = For example if the property is worth £400,000 and half passes to the surviving spouse and half to a child, the figure to include here would be £200,000 for the part passing to the child.
+chargeable_value_of_residence_closely_inherited.guidance1 = This is the value of the property that is being passed to a direct descendant. If all of the property is being passed, give the full value of that property on the date of death.
+chargeable_value_of_residence_closely_inherited.guidance2 = If only part of the property is being left to a direct descendant, you should work out the value of only what is being passed. If half of the property is being passed to a direct descendant and the full value at the date of death is £500,000, the value of what the direct descendant receives would be £250,000.
 chargeable_value_of_residence.greater_than_property_value.error = Chargeable Value cannot be greater than the Property Value
 chargeable_value_of_residence_closely_inherited.greater_than_chargeable_value_of_residence.error = Value Closely Inherited cannot be greater than the Chargeable Value
 
@@ -118,29 +123,31 @@ date.year = Year
 
 date_of_death.browser_title = What was the date of death?
 date_of_death.title = What was the date of death?
-date_of_death.guidance = This is the same date as you have given on the IHT-400 form in box 2.
+date_of_death.guidance = Enter the date you have given in box 2 of the IHT-400 form.
 date_of_death.example = For example, 6 4 2017
 date_of_death.label = Date of death
 
 date_of_disposal.browser_title = What was the date the property was disposed of?
 date_of_disposal.title = What was the date the property was disposed of?
-date_of_disposal.guidance1 = If there has been more than one disposal connected with the same property, for example a gift of a half share followed by a further gift of the remaining half share on a different day, only one disposal can be taken into account, but you can choose which one.
-date_of_disposal.guidance2 = Enter the date of the disposal that you wish to take into account.
+date_of_disposal.guidance1 = This is the date that the person who has died sold their home or gave it away.
+date_of_disposal.guidance2 = The person who has died might have given away different parts of their home at different times. If this happened, choose one date only for the downsizing date.
 date_of_disposal.hint = For example, 6 4 2017
 date_of_disposal.label =
 
 does_grossing_up_apply_to_other_property.browser_title = Does grossing-up or interaction apply?
 does_grossing_up_apply_to_other_property.title = Does grossing-up or interaction apply?
-does_grossing_up_apply_to_other_property.guidance = Grossing-up will apply if Inheritance Tax is due, and:
-does_grossing_up_apply_to_other_property.guidance.bullet1 = the will makes any gifts that are ‘free of tax’
-does_grossing_up_apply_to_other_property.guidance.bullet2 = any part of the residue is exempt (because, for example it passes to charity or the deceased’s spouse or civil partner). The residue is what is left in the estate after you have paid all debts, legacies and taxes
+does_grossing_up_apply_to_other_property.guidance1 = This is against the assets in the estate of the person who has died.
+does_grossing_up_apply_to_other_property.guidance2 = Grossing-up will apply if Inheritance Tax is due, and:
+does_grossing_up_apply_to_other_property.guidance2.bullet1 = the will makes any gifts that are ‘free of tax’
+does_grossing_up_apply_to_other_property.guidance2.bullet2 = any part of the residue is exempt (because, for example it passes to charity or the deceased’s spouse or civil partner). The residue is what is left in the estate after you have paid all debts, legacies and taxes
 does_grossing_up_apply_to_other_property.label =
 
 does_grossing_up_apply_to_residence.browser_title = Does grossing-up or interaction apply?
 does_grossing_up_apply_to_residence.title = Does grossing-up or interaction apply?
-does_grossing_up_apply_to_residence.guidance = Grossing-up will apply if Inheritance Tax is due, and:
-does_grossing_up_apply_to_residence.guidance.bullet1 = the will makes any gifts that are ‘free of tax’
-does_grossing_up_apply_to_residence.guidance.bullet2 = any part of the residue is exempt (because, for example it passes to charity or the deceased’s spouse or civil partner). The residue is what is left in the estate after you have paid all debts, legacies and taxes
+does_grossing_up_apply_to_residence.guidance1 = This is against the property you have given the value of.
+does_grossing_up_apply_to_residence.guidance2 = Grossing-up will apply if Inheritance Tax is due, and:
+does_grossing_up_apply_to_residence.guidance2.bullet1 = the will makes any gifts that are ‘free of tax’
+does_grossing_up_apply_to_residence.guidance2.bullet2 = any part of the residue is exempt (because, for example it passes to charity or the deceased’s spouse or civil partner). The residue is what is left in the estate after you have paid all debts, legacies and taxes
 does_grossing_up_apply_to_residence.label =
 
 error.invalid_closely_inherited_property_option = Please choose an option
@@ -152,8 +159,8 @@ error.summary.text = Optional description of the errors and how to correct them
 
 estate_has_property.browser_title = Does the estate include any residential property that the deceased owned and lived in?
 estate_has_property.title = Does the estate include any residential property that the deceased owned and lived in?
-estate_has_property.guidance1 = Answer ‘Yes’ if the deceased’s estate includes a property that they ever lived in as their residence while they owned that property.
-estate_has_property.guidance2 = This does not need to be a residence that is being left to the deceased’s children or remoter descendants.
+estate_has_property.guidance1 = This can be any property that the person who has died owned and also lived in during their lifetime.
+estate_has_property.guidance2 = This property does not need to be one that has been left to a direct descendant.
 estate_has_property.label =
 
 exit_questionnaire.browser_title = Survey
@@ -169,9 +176,17 @@ exit_questionnaire.guidance = Please complete this short survey to help us impro
 exit_questionnaire.user_research.title = We’re looking for people to help us with user research.
 exit_questionnaire.user_research.guidance = This will help improve the service. If you would like to be contacted with more details about the user research, enter your name and contact details below.
 
-gross_estate_value.browser_title = Question page
+session_expired.browser_title = Timed out
+session_expired.title = Your session has timed out
+
+gross_estate_value.browser_title = What is the total value of the estate before deducting any reliefs or exemptions?
 gross_estate_value.title = What is the total value of the estate before deducting any reliefs or exemptions?
-gross_estate_value.guidance = The total of IHT400 box 91, IHT403 box 12, box 10 and box 15 for each form IHT418.
+gross_estate_value.guidance1 = Add together the values that you have given in:
+gross_estate_value.guidance1.bullet1 = box 91 on the IHT-400 form
+gross_estate_value.guidance1.bullet2 = box 12 on the IHT-403 schedule
+gross_estate_value.guidance1.bullet3 = box 10 on the IHT-418 schedule
+gross_estate_value.guidance1.bullet4 = box 15 on the IHT-418 schedule
+gross_estate_value.guidance2 = The IHT-403 and IHT-418 schedules are only completed if the estate included values for gifts given away and for assets held in trust.
 gross_estate_value.label =
 
 index.browser_title = Residence Nil-rate Band Calculator
@@ -186,15 +201,15 @@ not_possible_to_use_service.guidance = Lorem ipsum dolor sit amet, consectetur a
 
 percentage_closely_inherited.browser_title = What percentage of the residence passes to direct descendants following the deceased’s death?
 percentage_closely_inherited.title = What percentage of the residence passes to direct descendants following the deceased’s death?
-percentage_closely_inherited.guidance = What share of the residence passes to a direct descendant? For example, if the children get 50% of the residue and the residence is in the residue, then the percentage is 50%.
+percentage_closely_inherited.guidance = If half of the property has been left to a direct descendant, the percentage to give is 50%.
 percentage_closely_inherited.label =
 
 property_value.browser_title = What is the value of the residence at the date of death?
 property_value.title = What is the value of the residence at the date of death?
-property_value.guidance1 = You need to include the value of the deceased’s interest in the residence here.
-property_value.guidance2 = Deduct any mortgages or other debts charged on the residence from the gross value and include the net value in this box.
-property_value.guidance3 = This is the value that you can claim RNRB on.
-property_value.guidance4 = If there was more than one residence in the estate at the date of death, only one residence can be taken into account. You can nominate which residence you want to claim RNRB on.
+property_value.guidance1 = Debts that are owed on the property would include the value of the mortgage that was owed along with any loans that had been taken out and secured against that home.
+property_value.guidance2 = You would have included the value of a home and what debts were owed on it on the IHT-400 form when working out the estate value.
+property_value.guidance3 = If the person who has died jointly owned their home with someone else, only include the value that they owned. If the IHT-400 form allowed you to take a discount off the value of the home, you can include that discount here before you take off any debts.
+property_value.guidance4 = If there was more than one property in the estate that the person who has died owned and had lived at, you must choose only one of them to give the value of and to answer more questions about.
 property_value.label =
 property_value.greater_than_gross_estate_value.error = Property Value cannot be greater than the Gross Estate Value
 
@@ -239,6 +254,7 @@ site.show_previous_answers = Show previous answers
 site.previous_answers = Previous answers
 site.start = Start
 site.start_again = Start again
+site.start_now = Start now
 site.textarea.char_limit = (Limit is 1200 characters)
 
 thank_you.browser_title = Thank You
@@ -246,6 +262,7 @@ thank_you.title = Thank You
 
 value_of_disposed_property.title = What was the value of the deceased’s interest in the property at the date it was disposed of?
 value_of_disposed_property.browser_title = What was the value of the deceased’s interest in the property at the date it was disposed of?
-value_of_disposed_property.guidance1 = Enter the open market value of the deceased’s interest in the property disposed of at the date of disposal.
-value_of_disposed_property.guidance2 = If there was a mortgage on the property when it was sold, deduct the mortgage from the sale price, but do not deduct the costs of selling the property, such as solicitor or estate agent’s fees.
+value_of_disposed_property.guidance1 = This is the value of what the person who has died owned. If they owned all of the property when they sold it or gave it away, deduct any mortgage owed from the sale price and give that value.
+value_of_disposed_property.guidance2 = If the person who has died owned half of the property, you should half the sale price and deduct the value of the mortgage that the person who has died was responsible for paying and then give that value.
+value_of_disposed_property.guidance3 = Do not deduct any solicitor or estate agent fees from the values.
 value_of_disposed_property.label =
