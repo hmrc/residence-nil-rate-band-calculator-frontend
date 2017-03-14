@@ -93,7 +93,7 @@ class BroughtForwardAllowanceController @Inject()(val appConfig: FrontendAppConf
           boundForm.fold(
             formWithErrors => Future.successful(BadRequest(view(Some(formWithErrors), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url, nilRateBand))),
             (value) => {
-              validate(value).flatMap {
+              validate(value, nilRateBand).flatMap {
                 case Some(error) => Future.successful(BadRequest(view(Some(form().fill(value).withError(error)), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url, nilRateBand)))
                 case None => sessionConnector.cache[Int](controllerId, value).map(cacheMap => Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
               }
@@ -110,5 +110,22 @@ class BroughtForwardAllowanceController @Inject()(val appConfig: FrontendAppConf
     }
   }
 
-  def validate(value: Int)(implicit hc: HeaderCarrier): Future[Option[FormError]] = Future.successful(None)
+  def validate(value: Int, nilRateBandStr: String)(implicit hc: HeaderCarrier): Future[Option[FormError]] = {
+    val nrb = try {
+      Integer.parseInt(nilRateBandStr)
+    } catch {
+      case e: NumberFormatException => {
+        Logger.error(e.getMessage, e)
+        throw new NumberFormatException("Bad value in nil rate band")
+      }
+    }
+
+    if(value <= nrb) {
+      Future.successful(None)
+    } else {
+      Future.successful(Some(FormError("value", "brought_forward_allowance.error")))
+    }
+  }
+
 }
+

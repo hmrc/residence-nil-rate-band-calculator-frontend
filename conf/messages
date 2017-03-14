@@ -79,6 +79,7 @@ brought_forward_allowance.title = How much transferable residence nil rate band 
 brought_forward_allowance.guidance1 = This is the figure from either box 15 or box 21 form IHT436.
 brought_forward_allowance.guidance2 = If the person who you are claiming an allowance for had been married or in a civil partnership more than once during their lifetime and their spouse of civil partner died first, you can transfer more than one unused allowance. Add together the numbers in either box 15 or box 21 on each IHT-436 form.
 brought_forward_allowance.guidance3 = You cannot transfer more than {0}
+brought_forward_allowance.error = You cannot transfer more than the maximum amount
 brought_forward_allowance.label =
 
 brought_forward_allowance_on_disposal.browser_title = What would the amount of transferable residence nil rate band have been at the date of disposal?

@@ -16,38 +16,72 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import play.api.http.Status
-import play.api.libs.json.{Reads, Writes}
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
+
+import org.mockito.Matchers.any
+import org.mockito.Mockito.when
+import play.api.data.FormError
+import play.api.libs.json.JsNumber
+import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
+import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.brought_forward_allowance
+import scala.concurrent.ExecutionContext.Implicits.global
+
+import scala.concurrent.Future
 
 class BroughtForwardAllowanceControllerSpec extends SimpleControllerSpecBase {
 
   "Brought Forward Allowance Controller" must {
 
+    def mockRnrbConnector = {
+      val mockConnector = mock[RnrbConnector]
+      when(mockConnector.getNilRateBand(any[String])) thenReturn Future.successful(HttpResponse(200, Some(JsNumber(100000))))
+      mockConnector
+    }
+
     def createView = (value: Option[Map[String, String]]) => {
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyBroughtForwardAllowanceController.onPageLoad().url
 
       value match {
-        case None => brought_forward_allowance(frontendAppConfig, url)(fakeRequest, messages)
-        case Some(v) => brought_forward_allowance(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)))(fakeRequest, messages)
+        case None => brought_forward_allowance(frontendAppConfig, url, nilRateBand = "100000")(fakeRequest, messages)
+        case Some(v) => brought_forward_allowance(frontendAppConfig, url, nilRateBand = "100000", Some(NonNegativeIntForm().bind(v)))(fakeRequest, messages)
       }
     }
 
-    def createController = () => new BroughtForwardAllowanceController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
+    def createController = () => new BroughtForwardAllowanceController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, mockRnrbConnector)
 
-    val testValue = 123
+//    behave like rnrbController[Int](createController, createView, Constants.broughtForwardAllowanceId, testValue)(Reads.IntReads, Writes.IntWrites)
+//
+//    behave like nonStartingController[Int](createController)(Reads.IntReads, Writes.IntWrites)
 
-    behave like rnrbController[Int](createController, createView, Constants.broughtForwardAllowanceId, testValue)(Reads.IntReads, Writes.IntWrites)
+    "validate" must {
 
-    behave like nonStartingController[Int](createController)(Reads.IntReads, Writes.IntWrites)
+      "return a FormError when given a value greater than the nil rate band for the year of death" in {
+        val testValue = 123000
+        val controller = createController()
+        val result = controller.validate(testValue, "100000")(new HeaderCarrier())
 
-    "return a Bad Request if a value higher than the maximum transferable residence nil rate band is entered" in {
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))
-      setCacheValue(Constants.broughtForwardAllowanceId, testValue - 1)
-      val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
-      status(result) shouldBe Status.BAD_REQUEST
+        result.map(x => x should be(Some(FormError("value", "brought_forward_allowance.error"))))
+      }
+
+      "return a None when given a value less than or equal to the nil rate band for the year of death" in {
+        val testValue = 90000
+        val controller = createController()
+        val result = controller.validate(testValue, "100000")(new HeaderCarrier())
+
+        result.map(x => x should be(None))
+      }
+
+      "throw an exception when given a nil rate band that cannot be parsed into an int" in {
+        val exception = intercept[NumberFormatException]{
+          val testValue = 90000
+          val controller = createController()
+          val result = controller.validate(testValue, "not a number")(new HeaderCarrier())
+        }
+
+        exception.getMessage shouldBe "Bad value in nil rate band"
+      }
+
     }
 
   }
