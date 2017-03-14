@@ -86,7 +86,7 @@ brought_forward_allowance.label =
 
 brought_forward_allowance_on_disposal.browser_title = What would the amount of transferable residence nil rate band have been at the date of disposal?
 brought_forward_allowance_on_disposal.title = What would the amount of transferable residence nil rate band have been at the date of disposal?
-brought_forward_allowance_on_disposal.guidance = This is the amount of transferable residence nil rate band that would have been available to thedeceased at the date of disposal, as if that date had been the deceased’s date of death.
+brought_forward_allowance_on_disposal.guidance = This is the amount of transferable residence nil rate band that would have been available to the deceased at the date of disposal, as if that date had been the deceased’s date of death.
 brought_forward_allowance_on_disposal.label =
 
 chargeable_transfer_amount.browser_title = What is the amount of the total chargeable estate on death?
