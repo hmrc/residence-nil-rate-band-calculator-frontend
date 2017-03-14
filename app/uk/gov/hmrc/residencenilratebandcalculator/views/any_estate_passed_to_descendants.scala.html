@@ -43,7 +43,8 @@
 
     @rnrbHelpers.input_yes_no(
         id = "value",
-        label = messages("any_estate_passed_to_descendants.label"),
+        label = messages("any_estate_passed_to_descendants.title"),
+        labelClass = Some("visually-hidden"),
         errorKey = FormHelpers.getErrorByKey(form, "value"),
         value = Some(FormHelpers.getYesNo(form)))
 

@@ -28,7 +28,8 @@
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
 
         @rnrbHelpers.input_date(
-            label = messages("date_of_disposal.label"),
+            label = messages("date_of_disposal.browser_title"),
+            legendClass = "visually-hidden",
             errorKey = FormHelpers.getErrorByKey(form, ""),
             valueDay = Some(FormHelpers.getDatePart(form, Day).toString),
             valueMonth = Some(FormHelpers.getDatePart(form, Month).toString),

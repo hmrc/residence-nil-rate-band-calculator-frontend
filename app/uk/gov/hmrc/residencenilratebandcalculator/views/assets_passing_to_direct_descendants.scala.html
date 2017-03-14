@@ -25,7 +25,8 @@
         @rnrbHelpers.input_text(
             id = "value",
             value = Some(FormHelpers.getValue[Int](form).toString),
-            label = messages("assets_passing_to_direct_descendants.label"),
+            label = messages("assets_passing_to_direct_descendants.title"),
+            labelClass = Some("visually-hidden"),
             secondaryLabel = Some("currency"),
             errorKey = FormHelpers.getErrorByKey(form, "value")
         )
