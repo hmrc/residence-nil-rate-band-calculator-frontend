@@ -16,43 +16,54 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-
 import org.mockito.Matchers.any
 import org.mockito.Mockito.when
 import play.api.data.FormError
-import play.api.libs.json.JsNumber
+import play.api.http.Status
+import play.api.libs.json.{JsNumber, Reads, Writes}
+import play.api.test.Helpers._
 import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.brought_forward_allowance
 import scala.concurrent.ExecutionContext.Implicits.global
-
 import scala.concurrent.Future
 
 class BroughtForwardAllowanceControllerSpec extends SimpleControllerSpecBase {
 
-  "Brought Forward Allowance Controller" must {
+  def mockRnrbConnector = {
+    val mockConnector = mock[RnrbConnector]
+    when(mockConnector.getNilRateBand(any[String])) thenReturn Future.successful(HttpResponse(200, Some(JsNumber(100000))))
+    mockConnector
+  }
 
-    def mockRnrbConnector = {
-      val mockConnector = mock[RnrbConnector]
-      when(mockConnector.getNilRateBand(any[String])) thenReturn Future.successful(HttpResponse(200, Some(JsNumber(100000))))
-      mockConnector
+  def createView = (value: Option[Map[String, String]]) => {
+    val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyBroughtForwardAllowanceController.onPageLoad().url
+    value match {
+      case None => brought_forward_allowance(frontendAppConfig, url, "100000", answerRows = Seq())(fakeRequest, messages)
+      case Some(v) => brought_forward_allowance(frontendAppConfig, url, "100000", Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
+    }
+  }
+
+  def createController = () => new BroughtForwardAllowanceController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, mockRnrbConnector)
+
+    "Brought Forward Allowance Controller" must {
+
+    // TODO: determine how to replicate the tests from the 'rnrbController' behaviour
+
+    "On a page load with an expired session, return an redirect to an expired session page" in {
+      expireSessionConnector()
+      val result = createController().onPageLoad(Reads.IntReads)(fakeRequest)
+      status(result) shouldBe Status.SEE_OTHER
+      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
     }
 
-    def createView = (value: Option[Map[String, String]]) => {
-      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyBroughtForwardAllowanceController.onPageLoad().url
-
-      value match {
-        case None => brought_forward_allowance(frontendAppConfig, url, nilRateBand = "100000")(fakeRequest, messages)
-        case Some(v) => brought_forward_allowance(frontendAppConfig, url, nilRateBand = "100000", Some(NonNegativeIntForm().bind(v)))(fakeRequest, messages)
-      }
+    "On a page submit with an expired session, return an redirect to an expired session page" in {
+      expireSessionConnector()
+      val result = createController().onSubmit(Writes.IntWrites)(fakeRequest)
+      status(result) shouldBe Status.SEE_OTHER
+      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
     }
-
-    def createController = () => new BroughtForwardAllowanceController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, mockRnrbConnector)
-
-//    behave like rnrbController[Int](createController, createView, Constants.broughtForwardAllowanceId, testValue)(Reads.IntReads, Writes.IntWrites)
-//
-//    behave like nonStartingController[Int](createController)(Reads.IntReads, Writes.IntWrites)
 
     "validate" must {
 
@@ -60,7 +71,6 @@ class BroughtForwardAllowanceControllerSpec extends SimpleControllerSpecBase {
         val testValue = 123000
         val controller = createController()
         val result = controller.validate(testValue, "100000")(new HeaderCarrier())
-
         result.map(x => x should be(Some(FormError("value", "brought_forward_allowance.error"))))
       }
 
@@ -68,7 +78,6 @@ class BroughtForwardAllowanceControllerSpec extends SimpleControllerSpecBase {
         val testValue = 90000
         val controller = createController()
         val result = controller.validate(testValue, "100000")(new HeaderCarrier())
-
         result.map(x => x should be(None))
       }
 
@@ -78,7 +87,6 @@ class BroughtForwardAllowanceControllerSpec extends SimpleControllerSpecBase {
           val controller = createController()
           val result = controller.validate(testValue, "not a number")(new HeaderCarrier())
         }
-
         exception.getMessage shouldBe "Bad value in nil rate band"
       }
 

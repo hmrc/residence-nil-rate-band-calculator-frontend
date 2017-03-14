@@ -29,7 +29,7 @@ import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.brought_forward_allowance
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
@@ -46,33 +46,35 @@ class BroughtForwardAllowanceController @Inject()(val appConfig: FrontendAppConf
 
   def form = () => NonNegativeIntForm()
 
-  def view(form: Option[Form[Int]], backUrl: String, nilRateBand: String)(implicit request: Request[_]) = {
-    implicit val messages = messagesApi.preferred(request)
-    brought_forward_allowance(appConfig, backUrl, nilRateBand, form)
-  }
-
-  private def getDateOfDeath(implicit hc: HeaderCarrier): Future[String] = sessionConnector.fetch().map {
-    case Some(cacheMap) => cacheMap.data(Constants.dateOfDeathId).toString().replaceAll("\"", "")
-    case None => throw new RuntimeException("Dod problem")
-  }
-
   private def getCacheMap(implicit hc: HeaderCarrier): Future[CacheMap] = sessionConnector.fetch().map {
     case Some(cacheMap) => cacheMap
     case None => throw new NoCacheMapException("CacheMap")
-  }
+    }
 
   def microserviceValues(implicit hc: HeaderCarrier): Future[(HttpResponse, CacheMap)] = for {
-    dateOfDeath <- getDateOfDeath
+    dateOfDeath <- getCacheMap.map(_.data(Constants.dateOfDeathId).toString().replaceAll("\"", ""))
     nilRateValueJson <- rnrbConnector.getNilRateBand(dateOfDeath)
     cacheMap <- getCacheMap
   } yield (nilRateValueJson, cacheMap)
+
+  def answerRows(cacheMap: CacheMap, request: Request[_]): Seq[AnswerRow] = AnswerRows.constructAnswerRows(
+    AnswerRows.truncateAndLocateInCacheMap(controllerId, cacheMap),
+    AnswerRows.answerRowFns,
+    AnswerRows.rowOrder,
+    messagesApi.preferred(request)
+  )
 
   def onPageLoad(implicit rds: Reads[Int]) = Action.async {
     implicit request => {
       microserviceValues.map {
         case (nilRateValueJson, cacheMap) => {
+          val previousAnswers = answerRows(cacheMap, request)
           val nilRateBand = nilRateValueJson.json.toString()
-          Ok(view(cacheMap.getEntry(controllerId).map(value => form().fill(value)), navigator.lastPage(controllerId).toString(), nilRateBand))
+          implicit val messages = messagesApi.preferred(request)
+          Ok(brought_forward_allowance(appConfig,navigator.lastPage(controllerId).toString(),
+            nilRateBand,
+            cacheMap.getEntry(controllerId).map(value => form().fill(value)),
+            previousAnswers))
         }
       } recover {
         case n: NoCacheMapException => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
@@ -90,16 +92,24 @@ class BroughtForwardAllowanceController @Inject()(val appConfig: FrontendAppConf
         case (nilRateValueJson, cacheMap) => {
           val boundForm = form().bindFromRequest()
           val nilRateBand = nilRateValueJson.json.toString()
+          val previousAnswers = answerRows(cacheMap, request)
+          implicit val messages = messagesApi.preferred(request)
           boundForm.fold(
-            formWithErrors => Future.successful(BadRequest(view(Some(formWithErrors), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url, nilRateBand))),
+            formWithErrors => Future.successful(BadRequest(brought_forward_allowance(appConfig,
+              navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url, nilRateBand, Some(formWithErrors), previousAnswers))),
             (value) => {
               validate(value, nilRateBand).flatMap {
-                case Some(error) => Future.successful(BadRequest(view(Some(form().fill(value).withError(error)), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url, nilRateBand)))
+                case Some(error) => Future.successful(BadRequest(brought_forward_allowance(appConfig,
+                  navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url,
+                  nilRateBand,
+                  Some(form().fill(value).withError(error)),
+                  previousAnswers)))
                 case None => sessionConnector.cache[Int](controllerId, value).map(cacheMap => Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
               }
             }
           )
-        } recover {
+        }
+      } recover {
           case n: NoCacheMapException => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
           case r: RuntimeException => {
             Logger.error(r.getMessage, r)
@@ -108,7 +118,7 @@ class BroughtForwardAllowanceController @Inject()(val appConfig: FrontendAppConf
         }
       }
     }
-  }
+
 
   def validate(value: Int, nilRateBandStr: String)(implicit hc: HeaderCarrier): Future[Option[FormError]] = {
     val nrb = try {
