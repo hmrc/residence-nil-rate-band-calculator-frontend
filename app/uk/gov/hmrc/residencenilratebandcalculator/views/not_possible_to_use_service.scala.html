@@ -1,14 +1,23 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ExitQuestionnaireController
+@import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 
-@(appConfig: FrontendAppConfig)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, prefix: String, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("not_possible_to_use_service.browser_title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    <h1>@messages("not_possible_to_use_service.title")</h1>
+    <h1>@messages(s"${prefix}.title")</h1>
 
-    <p>@messages("not_possible_to_use_service.guidance")</p>
+    <div class="panel panel-border-wide">
+        <p>@messages(s"${prefix}.reason")</p>
+    </div>
 
+    <p>@messages(s"${prefix}.guidance")</p>
+
+    <a href="@ExitQuestionnaireController.onPageLoad().url" class="button u--no-print">@messages("site.finish")</a>
+
+    @rnrbHelpers.answer_rows(answerRows)
 }
