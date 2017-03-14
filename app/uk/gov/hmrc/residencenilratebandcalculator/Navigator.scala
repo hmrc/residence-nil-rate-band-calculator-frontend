@@ -52,8 +52,7 @@ class Navigator @Inject()() {
       Constants.doesGrossingUpApplyToOtherPropertyId -> (ua => getDoesGrossingUpApplyToOtherPropertyRoute(ua)),
       Constants.assetsPassingToDirectDescendantsId -> (_ => AnyBroughtForwardAllowanceOnDisposalController.onPageLoad()),
       Constants.anyBroughtForwardAllowanceOnDisposalId -> (ua => getAnyBroughtForwardAllowanceOnDisposalRoute(ua)),
-      Constants.broughtForwardAllowanceOnDisposalId -> (_ => ResultsController.onPageLoad()),
-      Constants.checkAnswersId -> (_ => ResultsController.onPageLoad())
+      Constants.broughtForwardAllowanceOnDisposalId -> (_ => ResultsController.onPageLoad())
     )
   }
 
