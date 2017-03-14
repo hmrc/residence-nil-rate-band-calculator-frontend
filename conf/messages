@@ -111,6 +111,11 @@ check_answers.browser_title = Check your answers
 check_answers.title = Check your answers
 check_answers.button_text = See results
 
+cannot_claim_downsizing.browser_title = There is no downsizing allowance available for the estate
+cannot_claim_downsizing.title = There is no downsizing allowance available for the estate
+cannot_claim_downsizing.date_of_disposal_too_early_reason = This is because the person who died downsized their home before 8 July 2015.
+cannot_claim_downsizing.no_assets_passing_to_direct_descendants_reason = This is because no other assets are being left to a direct descendant.
+
 cannot_claim_RNRB.browser_title = You can’t claim any RNRB allowance
 cannot_claim_RNRB.title = You can’t claim any RNRB allowance
 cannot_claim_RNRB.guidance = You might still be able to claim a downsizing allowance or transfer residence nil rate band if the person who has died was married during their lifetime and their spouse or civil partner died first.
