@@ -25,7 +25,8 @@
 
         @rnrbHelpers.input_radio(
             name = "value",
-            legend = messages("any_property_closely_inherited.label"),
+            legend = messages("any_property_closely_inherited.title"),
+            legendClass = Some("visually-hidden"),
             errorKey = FormHelpers.getErrorByKey(form, "value"),
             inputs = Constants.anyPropertyCloselyInheritedOptions,
             value = Some(FormHelpers.getValue[String](form).toString)

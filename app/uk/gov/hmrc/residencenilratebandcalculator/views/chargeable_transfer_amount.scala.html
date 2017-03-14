@@ -23,7 +23,8 @@
         @rnrbHelpers.input_text(
             id = "value",
             errorKey = FormHelpers.getErrorByKey(form, "value"),
-            label = messages("chargeable_transfer_amount.label"),
+            label = messages("chargeable_transfer_amount.title"),
+            labelClass = Some("visually-hidden"),
             secondaryLabel = Some("currency"),
             value = Some(FormHelpers.getValue[Int](form).toString)
         )

@@ -27,7 +27,8 @@
         @rnrbHelpers.input_text(
             id = "value",
             value = Some(FormHelpers.getValue[Int](form).toString),
-            label = messages("value_of_disposed_property.label"),
+            label = messages("value_of_disposed_property.browser_title"),
+            labelClass = Some("visually-hidden"),
             secondaryLabel = Some("currency"),
             errorKey = FormHelpers.getErrorByKey(form, "value")
         )

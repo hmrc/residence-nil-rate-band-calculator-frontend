@@ -27,7 +27,8 @@
         @rnrbHelpers.input_text(
             id = "value",
             errorKey = FormHelpers.getErrorByKey(form, "value"),
-            label = messages("brought_forward_allowance.label"),
+            label = messages("brought_forward_allowance.title"),
+            labelClass = Some("visually-hidden"),
             secondaryLabel = Some("currency"),
             value = Some(FormHelpers.getValue[Int](form).toString)
         )

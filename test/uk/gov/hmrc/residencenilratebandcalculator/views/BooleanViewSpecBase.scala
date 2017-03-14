@@ -34,7 +34,7 @@ trait BooleanViewSpecBase extends ViewSpecBase {
           val doc = asDocument(createView(None))
           val legends = doc.getElementsByTag("legend")
           legends.size shouldBe 1
-          legends.first.text shouldBe messages(s"$messageKeyPrefix.label")
+          legends.first.text shouldBe messages(s"$messageKeyPrefix.title")
         }
 
         "contain an input for the value" in {

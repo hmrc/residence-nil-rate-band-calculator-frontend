@@ -31,7 +31,8 @@
 
         @rnrbHelpers.input_yes_no(
             id = "value",
-            label = messages("any_downsizing_allowance.label"),
+            label = messages("any_downsizing_allowance.title"),
+            labelClass = Some("visually-hidden"),
             errorKey = FormHelpers.getErrorByKey(form, "value"),
             value = Some(FormHelpers.getYesNo(form))
         )

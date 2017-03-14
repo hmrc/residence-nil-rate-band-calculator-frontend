@@ -6,16 +6,17 @@ value: Option[String] = None,
 secondaryLabel: Option[String] = None,
 inputClass: Option[String] = None,
 hint: Option[String] = None,
-name: String = "value"
+name: String = "value",
+labelClass: Option[String] = None
 )(implicit messages: Messages)
 
-<div class="form-field @if(errorKey != ""){form-field--error}">
-    <label class="form-label" for="@id">
+<div class="form-field @if(errorKey.nonEmpty){form-field--error}">
+    <label class="form-label @if(labelClass.nonEmpty){@labelClass}" for="@id">
         <span class="bold">@label</span>
-        @if(hint != ""){
+        @if(hint.nonEmpty){
         <span class="form-hint">@hint</span>
         }
-        @if(errorKey != ""){
+        @if(errorKey.nonEmpty){
         <span class="error-notification" id="error-message-this-input">@messages(errorKey)</span>
         }
     </label>
@@ -26,7 +27,7 @@ name: String = "value"
                 id="@id"
                 name="@name"
                 value="@value"
-                aria-describedby="error-message-this-input"
+                @if(errorKey.nonEmpty){aria-describedby="error-message-this-input"}
         />
     </div>
 </div>
