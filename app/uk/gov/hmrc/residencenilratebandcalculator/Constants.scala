@@ -74,7 +74,4 @@ object Constants {
     RadioOption("any_property_closely_inherited", some),
     RadioOption("any_property_closely_inherited", none)
   )
-
-  val invalidCacheMap = CacheMap("", Map())
-  val invalidDate = ""
 }
