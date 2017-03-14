@@ -18,6 +18,8 @@
 
     <p>@messages("brought_forward_allowance.guidance2")</p>
 
+    <p>@messages("brought_forward_allowance.guidance3")</p>
+
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.BroughtForwardAllowanceController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))

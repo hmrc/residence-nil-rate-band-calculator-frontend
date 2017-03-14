@@ -22,8 +22,10 @@ import scala.language.reflectiveCalls
 
 class NotPossibleToUseServiceViewSpec extends HtmlSpec {
 
+  val prefix = "not_possible_to_use_service.grossing_up"
+
   def fixture() = new {
-    val view = not_possible_to_use_service(frontendAppConfig)(request, messages)
+    val view = not_possible_to_use_service(frontendAppConfig, prefix, Seq())(request, messages)
     val doc = asDocument(view)
   }
 
@@ -36,12 +38,12 @@ class NotPossibleToUseServiceViewSpec extends HtmlSpec {
 
     "display the correct page title" in {
       val f = fixture()
-      assertPageTitleEqualsMessage(f.doc, "not_possible_to_use_service.title")
+      assertPageTitleEqualsMessage(f.doc, s"${prefix}.title")
     }
 
     "display the correct guidance" in {
       val f = fixture()
-      assertContainsMessages(f.doc, "not_possible_to_use_service.guidance")
+      assertContainsMessages(f.doc, s"${prefix}.guidance")
     }
   }
 }

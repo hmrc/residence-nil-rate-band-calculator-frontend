@@ -32,18 +32,16 @@ class AnyEstatePassedToDescendantsViewSpec extends BooleanViewSpecBase {
 
     behave like rnrbPage[Boolean](createView, messageKeyPrefix,
       "guidance1",
-      "guidance1.bullet1",
-      "guidance1.bullet2",
+      "reveal_title",
       "guidance2",
       "guidance2.bullet1",
       "guidance2.bullet2",
       "guidance2.bullet3",
       "guidance2.bullet4",
-      "guidance3",
-      "guidance4",
-      "guidance4.bullet1",
-      "guidance4.bullet2",
-      "guidance5"
+      "guidance2.bullet5",
+      "guidance2.bullet6",
+      "guidance2.bullet7",
+      "guidance3"
     )
 
     behave like pageWithBackLink[Boolean](createView)
