@@ -23,7 +23,7 @@ import play.api.i18n.MessagesApi
 import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm
-import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, Date}
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, Date, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_disposal
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
@@ -37,7 +37,7 @@ class DateOfDisposalController @Inject()(override val appConfig: FrontendAppConf
 
   def form: () => Form[Date] = () => DateForm()
 
-  def view(form: Option[Form[Date]], backUrl: String, answerRows: Seq[AnswerRow])(implicit request: Request[_]) = {
+  def view(form: Option[Form[Date]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
     date_of_disposal(appConfig, backUrl, form, answerRows)
   }
 }

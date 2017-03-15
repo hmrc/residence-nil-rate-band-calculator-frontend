@@ -25,7 +25,7 @@ import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_value_of_residence
 
 import scala.concurrent.Future
@@ -40,8 +40,7 @@ class ChargeableValueOfResidenceController @Inject()(override val appConfig: Fro
 
   override def form: () => Form[Int] = () => NonNegativeIntForm()
 
-  override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow])
-                   (implicit request: Request[_]): _root_.play.twirl.api.HtmlFormat.Appendable =
+  override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) =
     chargeable_value_of_residence(appConfig, backUrl, form, answerRows)
 
   override def validate(value: Int)(implicit hc: HeaderCarrier): Future[Option[FormError]] = {
