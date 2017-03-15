@@ -26,7 +26,7 @@ class AnyAssetsPassingToDirectDescendantsControllerSpec extends SimpleController
   "Any Assets Passing to Direct Descendants Controller" must {
 
     val propertyValue = 123456
-    val formattedPropertyValue = "£123,456.00"
+    val formattedPropertyValue = Some("£123,456.00")
 
     def createView = (value: Option[Map[String, String]]) => {
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfDisposedPropertyController.onPageLoad().url

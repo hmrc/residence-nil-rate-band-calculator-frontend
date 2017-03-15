@@ -29,7 +29,7 @@ class AnyAssetsPassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
   val formattedPropertyValue = "£123,456.78"
 
   def createView(form: Option[Form[Boolean]] = None) =
-    any_assets_passing_to_direct_descendants(frontendAppConfig, backUrl, form, Seq(), formattedPropertyValue)(request, messages)
+    any_assets_passing_to_direct_descendants(frontendAppConfig, backUrl, form, Seq(), None)(request, messages)
 
   "Any Assets Passing to Direct Descendants View" must {
 
@@ -40,10 +40,22 @@ class AnyAssetsPassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
     behave like booleanPage(createView, messageKeyPrefix, AnyAssetsPassingToDirectDescendantsController.onSubmit().url)
 
     behave like pageContainingPreviousAnswers(createView)
+  }
 
-    "contain guidance that includes the property value" in {
-      val doc = asDocument(createView(None))
-      assertContainsText(doc, messages("any_assets_passing_to_direct_descendants.guidance", formattedPropertyValue))
+  "Any Assets Passing to Direct Descendants View" when {
+
+    "there is a property in the estate" must {
+      "contain guidance that includes the property value" in {
+        val doc = asDocument(any_assets_passing_to_direct_descendants(frontendAppConfig, backUrl, None, Seq(), Some(formattedPropertyValue))(request, messages))
+        assertContainsText(doc, messages("any_assets_passing_to_direct_descendants.guidance", formattedPropertyValue))
+      }
+    }
+
+    "there is no property in the estate" must {
+      "contain guidance that does not include the property value" in {
+        val doc = asDocument(createView(None))
+        assertContainsText(doc, messages("any_assets_passing_to_direct_descendants.guidance_no_property"))
+      }
     }
   }
 }

@@ -20,7 +20,6 @@ import java.text.NumberFormat
 import java.util.Locale
 import javax.inject.{Inject, Singleton}
 
-import play.api.Logger
 import play.api.data.Form
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
@@ -41,12 +40,10 @@ class AnyAssetsPassingToDirectDescendantsController @Inject()(override val appCo
   override def form: () => Form[Boolean] = () => BooleanForm()
 
   override def view(form: Option[Form[Boolean]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    if (userAnswers.propertyValue.isEmpty) {
-      val msg = "Property Value is not available in the cache map"
-      Logger.error(msg)
-      throw new RuntimeException(msg)
+    val formattedPropertyValue = userAnswers.propertyValue match {
+      case Some(value) => Some(NumberFormat.getCurrencyInstance(Locale.UK).format(value))
+      case _ => None
     }
-    val formattedPropertyValue = NumberFormat.getCurrencyInstance(Locale.UK).format(userAnswers.propertyValue.get)
     any_assets_passing_to_direct_descendants(appConfig, backUrl, form, answerRows, formattedPropertyValue)
   }
 }
