@@ -62,8 +62,8 @@ class BroughtForwardAllowanceControllerSpec extends UnitSpec with WithFakeApplic
     val url = "<function1>"
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onPageLoad().url.toString)
     value match {
-      case None => brought_forward_allowance(frontendAppConfig, url, "100000", answerRows = Seq(answerRow))(fakeRequest, messages)
-      case Some(v) => brought_forward_allowance(frontendAppConfig, url, "100000", Some(NonNegativeIntForm().bind(v)), Seq(answerRow))(fakeRequest, messages)
+      case None => brought_forward_allowance(frontendAppConfig, url, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages)
+      case Some(v) => brought_forward_allowance(frontendAppConfig, url, "£100,000.00", Some(NonNegativeIntForm().bind(v)), Seq(answerRow))(fakeRequest, messages)
     }
   }
 
@@ -71,8 +71,8 @@ class BroughtForwardAllowanceControllerSpec extends UnitSpec with WithFakeApplic
     val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyBroughtForwardAllowanceController.onPageLoad().url.toString()
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onPageLoad().url.toString)
     value match {
-      case None => brought_forward_allowance(frontendAppConfig, url, "100000", answerRows = Seq(answerRow))(fakeRequest, messages)
-      case Some(v) => brought_forward_allowance(frontendAppConfig, url, "100000", Some(NonNegativeIntForm().bind(v)), Seq(answerRow))(fakeRequest, messages)
+      case None => brought_forward_allowance(frontendAppConfig, url, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages)
+      case Some(v) => brought_forward_allowance(frontendAppConfig, url, "£100,000.00", Some(NonNegativeIntForm().bind(v)), Seq(answerRow))(fakeRequest, messages)
     }
   }
 
@@ -103,14 +103,14 @@ class BroughtForwardAllowanceControllerSpec extends UnitSpec with WithFakeApplic
 
     "return a redirect on submit with valid data" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue))
-      setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"), "value" -> JsString(testValue))))
+      setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"), "value" -> JsNumber(100000))))
       val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
       status(result) shouldBe Status.SEE_OTHER
     }
 
     "store valid submitted data" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", "100000"))
-      setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"), "value" -> JsString(testValue))))
+      setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"), "value" -> JsNumber(100000))))
       await(createController().onSubmit(Writes.IntWrites)(fakePostRequest))
       verifyValueIsCached(Constants.broughtForwardAllowanceId, 100000)
     }

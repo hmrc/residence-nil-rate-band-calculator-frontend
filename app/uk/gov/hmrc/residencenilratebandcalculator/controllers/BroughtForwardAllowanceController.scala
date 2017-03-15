@@ -16,6 +16,8 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import java.text.NumberFormat
+import java.util.Locale
 import javax.inject.{Inject, Singleton}
 
 import play.api.Logger
@@ -49,7 +51,7 @@ class BroughtForwardAllowanceController @Inject()(val appConfig: FrontendAppConf
   private def getCacheMap(implicit hc: HeaderCarrier): Future[CacheMap] = sessionConnector.fetch().map {
     case Some(cacheMap) => cacheMap
     case None => throw new NoCacheMapException("CacheMap not available")
-    }
+  }
 
   def microserviceValues(implicit hc: HeaderCarrier): Future[(HttpResponse, CacheMap)] = for {
     dateOfDeath <- getCacheMap.map(_.data(Constants.dateOfDeathId).toString().replaceAll("\"", ""))
@@ -64,14 +66,19 @@ class BroughtForwardAllowanceController @Inject()(val appConfig: FrontendAppConf
     messagesApi.preferred(request)
   )
 
+  def formatJsonNumber(numberStr: String): String = {
+    val number = Integer.parseInt(numberStr)
+    NumberFormat.getCurrencyInstance(Locale.UK).format(number)
+  }
+
   def onPageLoad(implicit rds: Reads[Int]) = Action.async {
     implicit request => {
       microserviceValues.map {
         case (nilRateValueJson, cacheMap) => {
           val previousAnswers = answerRows(cacheMap, request)
-          val nilRateBand = nilRateValueJson.json.toString()
+          val nilRateBand = formatJsonNumber(nilRateValueJson.json.toString())
           implicit val messages = messagesApi.preferred(request)
-          Ok(brought_forward_allowance(appConfig,navigator.lastPage(controllerId).toString(),
+          Ok(brought_forward_allowance(appConfig, navigator.lastPage(controllerId).toString(),
             nilRateBand,
             cacheMap.getEntry(controllerId).map(value => form().fill(value)),
             previousAnswers))
@@ -92,16 +99,17 @@ class BroughtForwardAllowanceController @Inject()(val appConfig: FrontendAppConf
         case (nilRateValueJson, cacheMap) => {
           val boundForm = form().bindFromRequest()
           val nilRateBand = nilRateValueJson.json.toString()
+          val formattedNilRateBand = formatJsonNumber(nilRateBand)
           val previousAnswers = answerRows(cacheMap, request)
           implicit val messages = messagesApi.preferred(request)
           boundForm.fold(
             formWithErrors => Future.successful(BadRequest(brought_forward_allowance(appConfig,
-              navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url, nilRateBand, Some(formWithErrors), previousAnswers))),
+              navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url, formattedNilRateBand, Some(formWithErrors), previousAnswers))),
             (value) => {
               validate(value, nilRateBand).flatMap {
                 case Some(error) => Future.successful(BadRequest(brought_forward_allowance(appConfig,
                   navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url,
-                  nilRateBand,
+                  formattedNilRateBand,
                   Some(form().fill(value).withError(error)),
                   previousAnswers)))
                 case None => sessionConnector.cache[Int](controllerId, value).map(cacheMap => Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
@@ -110,14 +118,14 @@ class BroughtForwardAllowanceController @Inject()(val appConfig: FrontendAppConf
           )
         }
       } recover {
-          case n: NoCacheMapException => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
-          case r: RuntimeException => {
-            Logger.error(r.getMessage, r)
-            throw r
-          }
+        case n: NoCacheMapException => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
+        case r: RuntimeException => {
+          Logger.error(r.getMessage, r)
+          throw r
         }
       }
     }
+  }
 
 
   def validate(value: Int, nilRateBandStr: String)(implicit hc: HeaderCarrier): Future[Option[FormError]] = {
@@ -130,7 +138,7 @@ class BroughtForwardAllowanceController @Inject()(val appConfig: FrontendAppConf
       }
     }
 
-    if(value <= nrb) {
+    if (value <= nrb) {
       Future.successful(None)
     } else {
       Future.successful(Some(FormError("value", "brought_forward_allowance.error")))
