@@ -48,15 +48,18 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
                                   createView: (Option[Map[String, String]]) => HtmlFormat.Appendable,
                                   cacheKey: String,
                                   testValue: A,
-                                  valuesToCacheBeforeSubmission: Map[String, A] = Map[String, A]())
+                                  valuesToCacheBeforeSubmission: Map[String, A] = Map[String, A](),
+                                  valuesToCacheBeforeLoad: Map[String, Any] = Map[String, Any]())
                                  (rds: Reads[A], wts: Writes[A]) = {
 
     "return 200 for a GET" in {
+      for (v <- valuesToCacheBeforeLoad) setCacheValue(v._1, v._2)
       val result = createController().onPageLoad(rds)(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return the View for a GET" in {
+      for (v <- valuesToCacheBeforeLoad) setCacheValue(v._1, v._2)
       val result = createController().onPageLoad(rds)(fakeRequest)
       contentAsString(result) shouldBe createView(None).toString
     }
@@ -78,6 +81,7 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
     }
 
     "return bad request on submit with invalid data" in {
+      for (v <- valuesToCacheBeforeLoad) setCacheValue(v._1, v._2)
       val value = "invalid data"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value))
       val result = createController().onSubmit(wts)(fakePostRequest)
@@ -85,6 +89,7 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
     }
 
     "return form with errors when invalid data is submitted" in {
+      for (v <- valuesToCacheBeforeLoad) setCacheValue(v._1, v._2)
       val value = "invalid data"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value))
       val result = createController().onSubmit(wts)(fakePostRequest)
@@ -99,6 +104,7 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
     }
 
     "get a previously stored value from keystore" in {
+      for (v <- valuesToCacheBeforeLoad) setCacheValue(v._1, v._2)
       setCacheValue(cacheKey, testValue)
       val result = createController().onPageLoad(rds)(fakeRequest)
       contentAsString(result) shouldBe createView(Some(Map("value" -> testValue.toString))).toString

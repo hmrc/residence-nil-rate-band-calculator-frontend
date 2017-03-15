@@ -16,7 +16,9 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import play.api.http.Status
 import play.api.libs.json.{Reads, Writes}
+import play.api.libs.json._
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_assets_passing_to_direct_descendants
@@ -38,8 +40,20 @@ class AnyAssetsPassingToDirectDescendantsControllerSpec extends SimpleController
 
     val testValue = true
 
-    behave like rnrbController[Boolean](createController, createView, Constants.anyAssetsPassingToDirectDescendantsId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+    val valuesToCacheBeforeLoad = Map(Constants.propertyValueId -> 123)
+
+    behave like rnrbController[Boolean](createController, createView, Constants.anyAssetsPassingToDirectDescendantsId, testValue,
+      valuesToCacheBeforeLoad = valuesToCacheBeforeLoad)(Reads.BooleanReads, Writes.BooleanWrites)
 
     behave like nonStartingController[Boolean](createController)(Reads.BooleanReads, Writes.BooleanWrites)
+
+    "throw an exception if property value is not available in the cache map" in {
+      val exception = intercept[RuntimeException] {
+        val result = createController().onPageLoad(Reads.BooleanReads)(fakeRequest)
+        status(result)
+      }
+
+      exception.getMessage shouldBe "Property Value is not available in the cache map"
+    }
   }
 }
