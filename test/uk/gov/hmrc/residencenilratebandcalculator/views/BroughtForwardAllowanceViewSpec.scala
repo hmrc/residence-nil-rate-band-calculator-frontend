@@ -27,17 +27,23 @@ class BroughtForwardAllowanceViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "brought_forward_allowance"
 
-  def createView(form: Option[Form[Int]] = None) = brought_forward_allowance(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Int]] = None) = brought_forward_allowance(frontendAppConfig, backUrl, "100000", form, Seq())(request, messages)
 
   "Brought Forward Allowance View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance3")
+    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2")
 
     behave like pageWithBackLink[Int](createView)
 
     behave like intPage(createView, messageKeyPrefix, BroughtForwardAllowanceController.onSubmit().url, NonNegativeIntForm())
 
     behave like pageContainingPreviousAnswers(createView)
+
+    "contain the appropriate maximum value of transferable residence nil rate band" in {
+      val doc = asDocument(createView(None))
+      val maxValue = "100000"
+      assertContainsText(doc, maxValue)
+    }
 
   }
 }
