@@ -26,11 +26,14 @@ class AnyAssetsPassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "any_assets_passing_to_direct_descendants"
 
-  def createView(form: Option[Form[Boolean]] = None) = any_assets_passing_to_direct_descendants(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  val formattedPropertyValue = "£123,456.78"
+
+  def createView(form: Option[Form[Boolean]] = None) =
+    any_assets_passing_to_direct_descendants(frontendAppConfig, backUrl, form, Seq(), formattedPropertyValue)(request, messages)
 
   "Any Assets Passing to Direct Descendants View" must {
 
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance")
+    behave like rnrbPage[Boolean](createView, messageKeyPrefix)
 
     behave like pageWithBackLink[Boolean](createView)
 
@@ -38,5 +41,9 @@ class AnyAssetsPassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
 
     behave like pageContainingPreviousAnswers(createView)
 
+    "contain guidance that includes the property value" in {
+      val doc = asDocument(createView(None))
+      assertContainsText(doc, messages("any_assets_passing_to_direct_descendants.guidance", formattedPropertyValue))
+    }
   }
 }

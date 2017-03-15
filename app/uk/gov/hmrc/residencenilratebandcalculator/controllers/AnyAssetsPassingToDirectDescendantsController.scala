@@ -16,6 +16,8 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import java.text.NumberFormat
+import java.util.Locale
 import javax.inject.{Inject, Singleton}
 
 import play.api.Logger
@@ -44,6 +46,7 @@ class AnyAssetsPassingToDirectDescendantsController @Inject()(override val appCo
       Logger.error(msg)
       throw new RuntimeException(msg)
     }
-    any_assets_passing_to_direct_descendants(appConfig, backUrl, form, answerRows)
+    val formattedPropertyValue = NumberFormat.getCurrencyInstance(Locale.UK).format(userAnswers.propertyValue.get)
+    any_assets_passing_to_direct_descendants(appConfig, backUrl, form, answerRows, formattedPropertyValue)
   }
 }
