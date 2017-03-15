@@ -29,7 +29,8 @@
 
     @rnrbHelpers.input_yes_no(
         id = "value",
-        label = messages("does_grossing_up_apply_to_other_property.label"),
+        label = messages("does_grossing_up_apply_to_other_property.title"),
+        labelClass = Some("visually-hidden"),
         errorKey = FormHelpers.getErrorByKey(form, "value"),
         value = Some(FormHelpers.getYesNo(form)))
 

@@ -31,7 +31,8 @@
         @rnrbHelpers.input_text(
             id = "value",
             errorKey = FormHelpers.getErrorByKey(form, "value"),
-            label = messages("gross_estate_value.label"),
+            label = messages("gross_estate_value.title"),
+            labelClass = Some("visually-hidden"),
             secondaryLabel = Some("currency"),
             value = Some(FormHelpers.getValue[Int](form).toString)
         )

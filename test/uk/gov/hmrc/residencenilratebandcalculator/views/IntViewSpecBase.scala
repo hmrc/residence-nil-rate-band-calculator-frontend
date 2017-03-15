@@ -35,7 +35,7 @@ trait IntViewSpecBase extends ViewSpecBase {
 
         "contain a label for the value" in {
           val doc = asDocument(createView(None))
-          assertContainsLabel(doc, "value", messages(s"$messageKeyPrefix.label"))
+          assertContainsLabel(doc, "value", messages(s"$messageKeyPrefix.title"))
         }
         "contain an input for the value" in {
           val doc = asDocument(createView(None))

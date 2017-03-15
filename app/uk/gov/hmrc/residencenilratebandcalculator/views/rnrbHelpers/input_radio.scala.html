@@ -12,11 +12,11 @@ inputs: Seq[RadioOption]
 
 <div class="form-field">
     <fieldset class="form-group">
-        <legend class="bold-small @if(legendClass.isDefined){@{legendClass.get}}">@legend</legend>
-        @if(hint.isDefined){
+        <legend class="bold-small @if(legendClass.nonEmpty){@{legendClass.get}}">@legend</legend>
+        @if(hint.nonEmpty){
         <span class="form-hint">@{hint.get}</span>
         }
-        @if(errorKey != ""){
+        @if(errorKey.nonEmpty){
         <span class="error-notification" id="error-message-this-input">@messages(errorKey)</span>
         }
         @for(input <- inputs) {

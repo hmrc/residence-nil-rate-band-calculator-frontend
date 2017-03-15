@@ -27,7 +27,8 @@
             id = "value",
             name = "value",
             value = Some(FormHelpers.getValue[Int](form).toString),
-            label = messages("chargeable_value_of_residence.label"),
+            label = messages("chargeable_value_of_residence.title"),
+            labelClass = Some("visually-hidden"),
             secondaryLabel = Some("currency"),
             errorKey = FormHelpers.getErrorByKey(form, "value")
         )
