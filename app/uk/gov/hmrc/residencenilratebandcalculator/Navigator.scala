@@ -52,8 +52,7 @@ class Navigator @Inject()() {
       Constants.doesGrossingUpApplyToOtherPropertyId -> (ua => getDoesGrossingUpApplyToOtherPropertyRoute(ua)),
       Constants.assetsPassingToDirectDescendantsId -> (_ => AnyBroughtForwardAllowanceOnDisposalController.onPageLoad()),
       Constants.anyBroughtForwardAllowanceOnDisposalId -> (ua => getAnyBroughtForwardAllowanceOnDisposalRoute(ua)),
-      Constants.broughtForwardAllowanceOnDisposalId -> (_ => CheckAnswersController.onPageLoad()),
-      Constants.checkAnswersId -> (_ => ResultsController.onPageLoad())
+      Constants.broughtForwardAllowanceOnDisposalId -> (_ => ResultsController.onPageLoad())
     )
   }
 
@@ -83,10 +82,10 @@ class Navigator @Inject()() {
     getRouteForOptionalBoolean(userAnswers.anyBroughtForwardAllowance, BroughtForwardAllowanceController.onPageLoad(), AnyDownsizingAllowanceController.onPageLoad())
 
   private def getAnyBroughtForwardAllowanceOnDisposalRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.anyBroughtForwardAllowanceOnDisposal, BroughtForwardAllowanceOnDisposalController.onPageLoad(), CheckAnswersController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.anyBroughtForwardAllowanceOnDisposal, BroughtForwardAllowanceOnDisposalController.onPageLoad(), ResultsController.onPageLoad())
 
   private def getAnyDownsizingAllowanceRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.anyDownsizingAllowance, DateOfDisposalController.onPageLoad(), CheckAnswersController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.anyDownsizingAllowance, DateOfDisposalController.onPageLoad(), ResultsController.onPageLoad())
 
   private def getDateOfDisposalRoute(userAnswers: UserAnswers) =
     getRouteForOptionalLocalDate(userAnswers.dateOfDisposal, Constants.downsizingEligibilityDate,

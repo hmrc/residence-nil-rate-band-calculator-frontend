@@ -107,10 +107,6 @@ chargeable_value_of_residence_closely_inherited.guidance2 = If only part of the 
 chargeable_value_of_residence.greater_than_property_value.error = Chargeable Value cannot be greater than the Property Value
 chargeable_value_of_residence_closely_inherited.greater_than_chargeable_value_of_residence.error = Value Closely Inherited cannot be greater than the Chargeable Value
 
-check_answers.browser_title = Check your answers
-check_answers.title = Check your answers
-check_answers.button_text = See results
-
 cannot_claim_downsizing.browser_title = There is no downsizing allowance available for the estate
 cannot_claim_downsizing.title = There is no downsizing allowance available for the estate
 cannot_claim_downsizing.date_of_disposal_too_early_reason = This is because the person who died downsized their home before 8 July 2015.
