@@ -48,7 +48,7 @@ class BroughtForwardAllowanceController @Inject()(val appConfig: FrontendAppConf
 
   private def getCacheMap(implicit hc: HeaderCarrier): Future[CacheMap] = sessionConnector.fetch().map {
     case Some(cacheMap) => cacheMap
-    case None => throw new NoCacheMapException("CacheMap")
+    case None => throw new NoCacheMapException("CacheMap not available")
     }
 
   def microserviceValues(implicit hc: HeaderCarrier): Future[(HttpResponse, CacheMap)] = for {
