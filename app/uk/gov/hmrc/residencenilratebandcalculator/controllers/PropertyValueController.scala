@@ -45,8 +45,8 @@ class PropertyValueController @Inject()(override val appConfig: FrontendAppConfi
     property_value(appConfig, backUrl, form, answerRows)
   }
 
-  override def validate(value: Int)(implicit hc: HeaderCarrier): Future[Option[FormError]] = {
-    sessionConnector.fetchAndGetEntry[Int](Constants.grossEstateValueId).map {
+  override def validate(value: Int, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = {
+    userAnswers.grossEstateValue match {
       case None => Some(FormError("value", "property_value.greater_than_gross_estate_value.error"))
       case Some(g) if value > g => Some(FormError("value", "property_value.greater_than_gross_estate_value.error"))
       case _ => None

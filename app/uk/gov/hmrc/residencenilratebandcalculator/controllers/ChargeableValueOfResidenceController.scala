@@ -43,8 +43,8 @@ class ChargeableValueOfResidenceController @Inject()(override val appConfig: Fro
   override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) =
     chargeable_value_of_residence(appConfig, backUrl, form, answerRows)
 
-  override def validate(value: Int)(implicit hc: HeaderCarrier): Future[Option[FormError]] = {
-    sessionConnector.fetchAndGetEntry[Int](Constants.propertyValueId).map {
+  override def validate(value: Int, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = {
+    userAnswers.propertyValue match {
       case None => Some(FormError("value", "chargeable_value_of_residence.greater_than_property_value.error"))
       case Some(g) if value > g => Some(FormError("value", "chargeable_value_of_residence.greater_than_property_value.error"))
       case _ => None

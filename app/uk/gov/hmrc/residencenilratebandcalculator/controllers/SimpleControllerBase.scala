@@ -82,7 +82,7 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
           (formWithErrors: Form[A]) =>
             Future.successful(BadRequest(view(Some(formWithErrors),
               navigator.lastPage(controllerId)(userAnswers).url, previousAnswers, userAnswers))),
-          (value) => validate(value).flatMap {
+          (value) => validate(value, userAnswers) match {
             case Some(error) => {
               Future.successful(BadRequest(view(Some(form().fill(value).withError(error)),
                 navigator.lastPage(controllerId)(userAnswers).url, previousAnswers, userAnswers)))
@@ -96,5 +96,5 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
     }
   }
 
-  def validate(value: A)(implicit hc: HeaderCarrier): Future[Option[FormError]] = Future.successful(None)
+  def validate(value: A, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = None
 }

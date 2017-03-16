@@ -42,8 +42,8 @@ class ChargeableValueOfResidenceCloselyInheritedController @Inject()(override va
   override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) =
     chargeable_value_of_residence_closely_inherited(appConfig, backUrl, form, answerRows)
 
-  override def validate(value: Int)(implicit hc: HeaderCarrier): Future[Option[FormError]] = {
-    sessionConnector.fetchAndGetEntry[Int](Constants.chargeableValueOfResidenceId).map {
+  override def validate(value: Int, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = {
+    userAnswers.chargeableValueOfResidence match {
       case None => Some(FormError("value", "chargeable_value_of_residence_closely_inherited.greater_than_chargeable_value_of_residence.error"))
       case Some(g) if value > g => Some(FormError("value", "chargeable_value_of_residence_closely_inherited.greater_than_chargeable_value_of_residence.error"))
       case _ => None
