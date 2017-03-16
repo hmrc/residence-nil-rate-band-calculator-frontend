@@ -44,8 +44,6 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def chargeableTransferAmount = cacheMap.getEntry[Int](Constants.chargeableTransferAmountId)
 
-  def checkAnswers = cacheMap.getEntry[Int](Constants.checkAnswersId)
-
   def dateOfDeath = cacheMap.getEntry[LocalDate](Constants.dateOfDeathId)
 
   def dateOfDisposal = cacheMap.getEntry[LocalDate](Constants.dateOfDisposalId)

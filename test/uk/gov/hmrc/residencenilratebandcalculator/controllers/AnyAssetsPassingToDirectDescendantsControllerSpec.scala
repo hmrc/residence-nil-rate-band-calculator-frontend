@@ -49,14 +49,5 @@ class AnyAssetsPassingToDirectDescendantsControllerSpec extends SimpleController
       valuesToCacheBeforeLoad = valuesToCacheBeforeLoad)(Reads.BooleanReads, Writes.BooleanWrites)
 
     behave like nonStartingController[Boolean](createController)(Reads.BooleanReads, Writes.BooleanWrites)
-
-    "throw an exception if property value is not available in the cache map" in {
-      val exception = intercept[RuntimeException] {
-        val result = createController().onPageLoad(Reads.BooleanReads)(fakeRequest)
-        status(result)
-      }
-
-      exception.getMessage shouldBe "Property Value is not available in the cache map"
-    }
   }
 }

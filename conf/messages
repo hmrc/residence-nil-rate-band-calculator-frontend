@@ -82,7 +82,8 @@ brought_forward_allowance.browser_title = How much transferable residence nil ra
 brought_forward_allowance.title = How much transferable residence nil rate band are you claiming?
 brought_forward_allowance.guidance1 = This is the number in either box 15 or box 21 on the IHT-436 form.
 brought_forward_allowance.guidance2 = If the person who you are claiming an allowance for had been married or in a civil partnership more than once during their lifetime and their spouse or civil partner died first, you can transfer more than one unused allowance. Add together the numbers in either box 15 or box 21 on each IHT-436 form.
-brought_forward_allowance.guidance3 = You cannot transfer more than £175,000.
+brought_forward_allowance.guidance3 = You cannot transfer more than {0}
+brought_forward_allowance.error = You cannot transfer more than the maximum amount
 brought_forward_allowance.label =
 
 brought_forward_allowance_on_disposal.browser_title = What would the amount of transferable residence nil rate band have been at the date of disposal?
@@ -107,10 +108,6 @@ chargeable_value_of_residence_closely_inherited.guidance1 = This is the value of
 chargeable_value_of_residence_closely_inherited.guidance2 = If only part of the property is being left to a direct descendant, you should work out the value of only what is being passed. If half of the property is being passed to a direct descendant and the full value at the date of death is £500,000, the value of what the direct descendant receives would be £250,000.
 chargeable_value_of_residence.greater_than_property_value.error = Chargeable Value cannot be greater than the Property Value
 chargeable_value_of_residence_closely_inherited.greater_than_chargeable_value_of_residence.error = Value Closely Inherited cannot be greater than the Chargeable Value
-
-check_answers.browser_title = Check your answers
-check_answers.title = Check your answers
-check_answers.button_text = See results
 
 cannot_claim_downsizing.browser_title = There is no downsizing allowance available for the estate
 cannot_claim_downsizing.title = There is no downsizing allowance available for the estate

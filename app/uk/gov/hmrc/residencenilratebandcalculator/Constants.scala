@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator
 
 import org.joda.time.LocalDate
+import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.models.RadioOption
 
 object Constants {
@@ -31,7 +32,6 @@ object Constants {
   val broughtForwardAllowanceId = "BroughtForwardAllowance"
   val broughtForwardAllowanceOnDisposalId = "BroughtForwardAllowanceOnDisposal"
   val chargeableTransferAmountId = "ChargeableTransferAmount"
-  val checkAnswersId = "CheckAnswers"
   val cannotClaimDownsizingId = "CannotClaimDownsizing"
   val cannotClaimRNRB = "CannotClaimRNRB"
   val dateOfDeathId = "DateOfDeath"
