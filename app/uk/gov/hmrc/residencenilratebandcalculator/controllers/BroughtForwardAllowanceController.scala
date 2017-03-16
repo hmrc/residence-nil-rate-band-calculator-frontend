@@ -76,9 +76,10 @@ class BroughtForwardAllowanceController @Inject()(val appConfig: FrontendAppConf
       microserviceValues.map {
         case (nilRateValueJson, cacheMap) => {
           val previousAnswers = answerRows(cacheMap, request)
+          val userAnswers = new UserAnswers(cacheMap)
           val nilRateBand = formatJsonNumber(nilRateValueJson.json.toString())
           implicit val messages = messagesApi.preferred(request)
-          Ok(brought_forward_allowance(appConfig, navigator.lastPage(controllerId).toString(),
+          Ok(brought_forward_allowance(appConfig, navigator.lastPage(controllerId)(userAnswers).url,
             nilRateBand,
             cacheMap.getEntry(controllerId).map(value => form().fill(value)),
             previousAnswers))
@@ -101,14 +102,15 @@ class BroughtForwardAllowanceController @Inject()(val appConfig: FrontendAppConf
           val nilRateBand = nilRateValueJson.json.toString()
           val formattedNilRateBand = formatJsonNumber(nilRateBand)
           val previousAnswers = answerRows(cacheMap, request)
+          val userAnswers = new UserAnswers(cacheMap)
           implicit val messages = messagesApi.preferred(request)
           boundForm.fold(
             formWithErrors => Future.successful(BadRequest(brought_forward_allowance(appConfig,
-              navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url, formattedNilRateBand, Some(formWithErrors), previousAnswers))),
+              navigator.lastPage(controllerId)(userAnswers).url, formattedNilRateBand, Some(formWithErrors), previousAnswers))),
             (value) => {
               validate(value, nilRateBand).flatMap {
                 case Some(error) => Future.successful(BadRequest(brought_forward_allowance(appConfig,
-                  navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url,
+                  navigator.lastPage(controllerId)(userAnswers).url,
                   formattedNilRateBand,
                   Some(form().fill(value).withError(error)),
                   previousAnswers)))
