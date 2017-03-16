@@ -50,7 +50,7 @@ class Navigator @Inject()() {
       Constants.valueOfDisposedPropertyId -> (_ => AnyAssetsPassingToDirectDescendantsController.onPageLoad()),
       Constants.anyAssetsPassingToDirectDescendantsId -> (ua => getAnyAssetsPassingToDirectDescendantsRoute(ua)),
       Constants.doesGrossingUpApplyToOtherPropertyId -> (ua => getDoesGrossingUpApplyToOtherPropertyRoute(ua)),
-      Constants.assetsPassingToDirectDescendantsId -> (_ => AnyBroughtForwardAllowanceOnDisposalController.onPageLoad()),
+      Constants.assetsPassingToDirectDescendantsId -> (ua => getAssetsPassingToDirectDescendantsRoute(ua)),
       Constants.anyBroughtForwardAllowanceOnDisposalId -> (ua => getAnyBroughtForwardAllowanceOnDisposalRoute(ua)),
       Constants.broughtForwardAllowanceOnDisposalId -> (_ => ResultsController.onPageLoad())
     )
@@ -109,6 +109,11 @@ class Navigator @Inject()() {
 
   private def getDoesGrossingUpApplyToOtherPropertyRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.doesGrossingUpApplyToOtherProperty, TransitionOutController.onPageLoad(), AssetsPassingToDirectDescendantsController.onPageLoad())
+
+  private def getAssetsPassingToDirectDescendantsRoute(userAnswers: UserAnswers) = (userAnswers.anyBroughtForwardAllowance, userAnswers.dateOfDisposal) match {
+    case (Some(true), Some(d)) if !(d isBefore Constants.eligibilityDate) => AnyBroughtForwardAllowanceOnDisposalController.onPageLoad()
+    case _ => ResultsController.onPageLoad()
+  }
 
   def nextPage(controllerId: String): UserAnswers => Call = {
     routeMap.getOrElse(controllerId, _ => PageNotFoundController.onPageLoad())

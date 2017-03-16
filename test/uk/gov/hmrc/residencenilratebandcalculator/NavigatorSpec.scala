@@ -382,8 +382,28 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.anyAssetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.CannotClaimDownsizingController.onPageLoad()
     }
 
-    "return a call to the Any Brought Forward Allowance On Disposal controller onPageLoad method from the AssetsPassingToDirectDescendants controller" in {
-      navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mock[UserAnswers]) shouldBe routes.AnyBroughtForwardAllowanceOnDisposalController.onPageLoad()
+    "return a call to the Any Brought Forward Allowance On Disposal controller onPageLoad method from the AssetsPassingToDirectDescendants controller " +
+      "when there is brought forward allowance and the property was disposed on (or after) the eligibility date" in {
+      val mockCacheMap = mock[UserAnswers]
+      when(mockCacheMap.anyBroughtForwardAllowance) thenReturn Some(true)
+      when(mockCacheMap.dateOfDisposal) thenReturn Some(Constants.eligibilityDate)
+      navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.AnyBroughtForwardAllowanceOnDisposalController.onPageLoad()
+    }
+
+    "return a call to the Results controller onPageLoad method from AssetsPassingToDirectDescendants when there is no brought forward allowance, " +
+      "even though the property was disposed on the eligibility date" in {
+      val mockCacheMap = mock[UserAnswers]
+      when(mockCacheMap.anyBroughtForwardAllowance) thenReturn Some(false)
+      when(mockCacheMap.dateOfDisposal) thenReturn Some(Constants.eligibilityDate)
+      navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
+    }
+
+    "return a call to the Results controller onPageLoad method from AssetsPassingToDirectDescendants when there is brought forward allowance " +
+      "but the property was disposed before the eligibility date" in {
+      val mockCacheMap = mock[UserAnswers]
+      when(mockCacheMap.anyBroughtForwardAllowance) thenReturn Some(true)
+      when(mockCacheMap.dateOfDisposal) thenReturn Some(Constants.eligibilityDate.minusDays(1))
+      navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
     }
 
     "return a call to the Results onPageLoad method when there is no brought forward allowance on disposal" in {
