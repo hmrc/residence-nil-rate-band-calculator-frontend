@@ -146,16 +146,20 @@ object DownsizingDetails {
   }
 
   private def getBroughtForwardAllowanceOnDisposal(userAnswers: UserAnswers) = userAnswers.anyAssetsPassingToDirectDescendants.get match {
-    case true if userAnswers.anyBroughtForwardAllowanceOnDisposal.get => userAnswers.broughtForwardAllowanceOnDisposal.get
+    case true if userAnswers.anyBroughtForwardAllowanceOnDisposal.isDefined && userAnswers.anyBroughtForwardAllowanceOnDisposal.get =>
+      userAnswers.broughtForwardAllowanceOnDisposal.get
     case _ => 0
   }
 
   private def requireAssetsPassingToDirectDescendantsDependancies(userAnswers: UserAnswers) = {
     require(userAnswers.assetsPassingToDirectDescendants.isDefined, "Assets Passing to Direct Descendants was not answered")
-    require(userAnswers.anyBroughtForwardAllowanceOnDisposal.isDefined, "Any Brought Forward Allowance on Disposal was not answered")
-    if (userAnswers.anyBroughtForwardAllowanceOnDisposal.get) requireBroughtForwardAllowanceOnDisposalDependancies(userAnswers)
+    if (userAnswers.anyBroughtForwardAllowance.get && !(userAnswers.dateOfDisposal.get isBefore Constants.eligibilityDate))
+      requireAnyBroughtForwardAllowanceOnDisposalDependancies(userAnswers)
   }
 
-  private def requireBroughtForwardAllowanceOnDisposalDependancies(userAnswers: UserAnswers) =
-    require(userAnswers.broughtForwardAllowanceOnDisposal.isDefined, "Brought Forward Allowance on Disposal was not answered")
+  private def requireAnyBroughtForwardAllowanceOnDisposalDependancies(userAnswers: UserAnswers) = {
+    require(userAnswers.anyBroughtForwardAllowanceOnDisposal.isDefined, "Any Brought Forward Allowance on Disposal was not answered")
+    if (userAnswers.anyBroughtForwardAllowanceOnDisposal.get)
+      require(userAnswers.broughtForwardAllowanceOnDisposal.isDefined, "Brought Forward Allowance on Disposal was not answered")
+  }
 }

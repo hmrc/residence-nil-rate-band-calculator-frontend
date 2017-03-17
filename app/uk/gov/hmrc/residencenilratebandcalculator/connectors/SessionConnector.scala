@@ -91,7 +91,13 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
       cacheMap)
 
   private def anyBroughtForwardAllowance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearIfFalse(Constants.anyBroughtForwardAllowanceId, value, Set(Constants.broughtForwardAllowanceId), cacheMap)
+    clearIfFalse(Constants.anyBroughtForwardAllowanceId,
+      value,
+      Set(
+        Constants.broughtForwardAllowanceId,
+        Constants.anyBroughtForwardAllowanceOnDisposalId,
+        Constants.broughtForwardAllowanceOnDisposalId),
+      cacheMap)
 
   private def anyDownsizingAllowance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
     clearIfFalse(Constants.anyDownsizingAllowanceId,
@@ -119,7 +125,7 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
     clearIfFalse(Constants.anyBroughtForwardAllowanceOnDisposalId, value, Set(Constants.broughtForwardAllowanceOnDisposalId), cacheMap)
 
   private def dateOfDisposal[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
-    val keysToRemoveWhenDateTooEarly = Set(
+    val keysToRemoveWhenDateBeforeDownsizingDate = Set(
       Constants.valueOfDisposedPropertyId,
       Constants.anyAssetsPassingToDirectDescendantsId,
       Constants.doesGrossingUpApplyToOtherPropertyId,
@@ -128,11 +134,18 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
       Constants.broughtForwardAllowanceOnDisposalId
     )
 
+    val keysToRemoveWhenDateBeforeEligibilityDate = Set(
+      Constants.anyBroughtForwardAllowanceOnDisposalId,
+      Constants.broughtForwardAllowanceOnDisposalId
+    )
+
     val mapToStore = value match {
       case JsString(d) =>
         Try(LocalDate.parse(d)) match {
           case Success(parsedDate) if parsedDate isBefore Constants.downsizingEligibilityDate =>
-            cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemoveWhenDateTooEarly.contains(s)))
+            cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemoveWhenDateBeforeDownsizingDate.contains(s)))
+          case Success(parsedDate) if parsedDate isBefore Constants.eligibilityDate =>
+            cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemoveWhenDateBeforeEligibilityDate.contains(s)))
           case Failure(e) =>
             val msg = s"Unable to parse value $value as the date of disposal"
             Logger.error(msg)
