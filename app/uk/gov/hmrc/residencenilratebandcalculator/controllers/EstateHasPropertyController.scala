@@ -25,7 +25,7 @@ import play.twirl.api.HtmlFormat.Appendable
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
-import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.estate_has_property
 
 @Singleton
@@ -38,7 +38,7 @@ class EstateHasPropertyController @Inject()(override val appConfig: FrontendAppC
 
   override def form: () => Form[Boolean] = () => BooleanForm()
 
-  override def view(form: Option[Form[Boolean]], backUrl: String, answerRows: Seq[AnswerRow])(implicit request: Request[_]): Appendable = {
+  override def view(form: Option[Form[Boolean]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
     estate_has_property(appConfig, backUrl, form, answerRows)
   }
 }

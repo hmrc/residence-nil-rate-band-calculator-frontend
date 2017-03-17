@@ -1,6 +1,7 @@
 any_assets_passing_to_direct_descendants.browser_title = Other than the property that you are claiming residence nil rate band allowance on, do any other assets pass to a direct descendant following the death?
 any_assets_passing_to_direct_descendants.title = Other than the property that you are claiming residence nil rate band allowance on, do any other assets pass to a direct descendant following the death?
-any_assets_passing_to_direct_descendants.guidance = This doesn’t include the property worth [VALUE]. A direct descendant must have received other assets from the estate for the downsizing allowance to be claimed.
+any_assets_passing_to_direct_descendants.guidance = This doesn’t include the property worth {0}. A direct descendant must have received other assets from the estate for the downsizing allowance to be claimed.
+any_assets_passing_to_direct_descendants.guidance_no_property = A direct descendant must have received assets from the estate for the downsizing allowance to be claimed.
 any_assets_passing_to_direct_descendants.label =
 
 any_brought_forward_allowance.browser_title = Do you wish to transfer any unused residence nil rate band?

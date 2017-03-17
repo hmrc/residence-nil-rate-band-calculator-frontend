@@ -25,7 +25,7 @@ import play.twirl.api.HtmlFormat._
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.AnyPropertyCloselyInheritedForm
-import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_property_closely_inherited
 
 @Singleton
@@ -38,7 +38,7 @@ class AnyPropertyCloselyInheritedController @Inject()(override val appConfig: Fr
 
   override def form: () => Form[String] = () => AnyPropertyCloselyInheritedForm()
 
-  override def view(form: Option[Form[String]], backUrl: String, answerRows: Seq[AnswerRow])(implicit request: Request[_]): Appendable = {
+  override def view(form: Option[Form[String]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
     any_property_closely_inherited(appConfig, backUrl, form, answerRows)
   }
 }

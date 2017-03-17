@@ -16,16 +16,17 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import java.text.NumberFormat
+import java.util.Locale
 import javax.inject.{Inject, Singleton}
 
 import play.api.data.Form
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
-import play.twirl.api.HtmlFormat._
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
-import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_assets_passing_to_direct_descendants
 
 @Singleton
@@ -38,7 +39,11 @@ class AnyAssetsPassingToDirectDescendantsController @Inject()(override val appCo
 
   override def form: () => Form[Boolean] = () => BooleanForm()
 
-  override def view(form: Option[Form[Boolean]], backUrl: String, answerRows: Seq[AnswerRow])(implicit request: Request[_]): Appendable = {
-    any_assets_passing_to_direct_descendants(appConfig, backUrl, form, answerRows)
+  override def view(form: Option[Form[Boolean]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+    val formattedPropertyValue = userAnswers.propertyValue match {
+      case Some(value) => Some(NumberFormat.getCurrencyInstance(Locale.UK).format(value))
+      case _ => None
+    }
+    any_assets_passing_to_direct_descendants(appConfig, backUrl, form, answerRows, formattedPropertyValue)
   }
 }

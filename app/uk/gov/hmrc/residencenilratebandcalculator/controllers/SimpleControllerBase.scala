@@ -47,7 +47,7 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
 
   def form: () => Form[A]
 
-  def view(form: Option[Form[A]], backUrl: String, answerRows: Seq[AnswerRow])(implicit request: Request[_]): HtmlFormat.Appendable
+  def view(form: Option[Form[A]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]): HtmlFormat.Appendable
 
   val navigator: Navigator
 
@@ -63,8 +63,9 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
       case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
       case Some(cacheMap) => {
         val previousAnswers = answerRows(cacheMap, request)
+        val userAnswers = new UserAnswers(cacheMap)
         Ok(view(cacheMap.getEntry(controllerId).map(value => form().fill(value)),
-          navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url, previousAnswers))
+          navigator.lastPage(controllerId)(userAnswers).url, previousAnswers, userAnswers))
       }
     }
   }
@@ -75,15 +76,16 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
       case None => Future.successful(Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad()))
       case Some(cacheMap) => {
         val previousAnswers = answerRows(cacheMap, request)
+        val userAnswers = new UserAnswers(cacheMap)
         val boundForm = form().bindFromRequest()
         boundForm.fold(
           (formWithErrors: Form[A]) =>
             Future.successful(BadRequest(view(Some(formWithErrors),
-              navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url, previousAnswers))),
-          (value) => validate(value).flatMap {
+              navigator.lastPage(controllerId)(userAnswers).url, previousAnswers, userAnswers))),
+          (value) => validate(value, userAnswers) match {
             case Some(error) => {
               Future.successful(BadRequest(view(Some(form().fill(value).withError(error)),
-                navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url, previousAnswers)))
+                navigator.lastPage(controllerId)(userAnswers).url, previousAnswers, userAnswers)))
             }
             case None =>
               sessionConnector.cache[A](controllerId, value).map(cacheMap =>
@@ -94,5 +96,5 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
     }
   }
 
-  def validate(value: A)(implicit hc: HeaderCarrier): Future[Option[FormError]] = Future.successful(None)
+  def validate(value: A, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = None
 }
