@@ -20,177 +20,41 @@ import play.api.libs.json._
 import play.api.Logger
 import javax.inject.{Inject, Singleton}
 
-import org.joda.time.LocalDate
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.HeaderCarrier
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import uk.gov.hmrc.residencenilratebandcalculator.models.CascadeUpsert
 import uk.gov.hmrc.residencenilratebandcalculator.repositories.SessionRepository
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import scala.util.{Failure, Success, Try}
 
 @Singleton
-class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
-  var funcMap: Map[String, (JsValue, CacheMap) => CacheMap] =
-    Map(
-      Constants.estateHasPropertyId -> ((v, cm) => estateHasProperty(v, cm)),
-      Constants.anyExemptionId -> ((v, cm) => anyExemptionClearance(v, cm)),
-      Constants.anyBroughtForwardAllowanceId -> ((v, cm) => anyBroughtForwardAllowance(v, cm)),
-      Constants.anyDownsizingAllowanceId -> ((v, cm) => anyDownsizingAllowance(v, cm)),
-      Constants.anyAssetsPassingToDirectDescendantsId -> ((v, cm) => anyAssetsPassingToDirectDescendants(v, cm)),
-      Constants.anyBroughtForwardAllowanceOnDisposalId -> ((v, cm) => anyBroughtForwardAllowanceOnDisposal(v, cm)),
-      Constants.anyPropertyCloselyInheritedId -> ((v, cm) => anyPropertyCloselyInherited(v, cm)),
-      Constants.dateOfDisposalId -> ((v, cm) => dateOfDisposal(v, cm))
-    )
-
-  private def store[A](key:String, value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]) =
-    cacheMap copy (data = cacheMap.data + (key -> Json.toJson(value)))
-
-  private def clearIfFalse[A](key: String, value: A, keysToRemove: Set[String], cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
-    val mapToStore = value match {
-      case JsBoolean(false) => cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemove.contains(s)))
-      case _ => cacheMap
-    }
-    store(key, value, mapToStore)
-  }
-
-  private def estateHasProperty[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearIfFalse(Constants.estateHasPropertyId, value,
-      Set(
-        Constants.propertyValueId,
-        Constants.anyPropertyCloselyInheritedId,
-        Constants.percentageCloselyInheritedId,
-        Constants.anyExemptionId,
-        Constants.chargeableValueOfResidenceId,
-        Constants.chargeableValueOfResidenceCloselyInheritedId),
-      cacheMap)
-
-  private def anyPropertyCloselyInherited[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
-    val keysToRemoveWhenNone = Set(
-      Constants.percentageCloselyInheritedId,
-      Constants.anyExemptionId,
-      Constants.chargeableValueOfResidenceId,
-      Constants.chargeableValueOfResidenceCloselyInheritedId
-    )
-
-    val mapToStore = value match {
-      case JsString(Constants.none) => cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemoveWhenNone.contains(s)))
-      case JsString(Constants.all) => cacheMap copy (data = cacheMap.data - Constants.percentageCloselyInheritedId)
-      case _ => cacheMap
-    }
-    store(Constants.anyPropertyCloselyInheritedId, value, mapToStore)
-  }
-
-  private def anyExemptionClearance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearIfFalse(Constants.anyExemptionId, value,
-      Set(
-        Constants.chargeableValueOfResidenceId,
-        Constants.chargeableValueOfResidenceCloselyInheritedId,
-        Constants.doesGrossingUpApplyToResidenceId),
-      cacheMap)
-
-  private def anyBroughtForwardAllowance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearIfFalse(Constants.anyBroughtForwardAllowanceId,
-      value,
-      Set(
-        Constants.broughtForwardAllowanceId,
-        Constants.anyBroughtForwardAllowanceOnDisposalId,
-        Constants.broughtForwardAllowanceOnDisposalId),
-      cacheMap)
-
-  private def anyDownsizingAllowance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearIfFalse(Constants.anyDownsizingAllowanceId,
-     value,
-     Set(
-       Constants.dateOfDisposalId,
-       Constants.valueOfDisposedPropertyId,
-       Constants.anyAssetsPassingToDirectDescendantsId,
-       Constants.assetsPassingToDirectDescendantsId,
-       Constants.anyBroughtForwardAllowanceOnDisposalId,
-       Constants.doesGrossingUpApplyToOtherPropertyId,
-       Constants.broughtForwardAllowanceOnDisposalId),
-     cacheMap)
-
-  private def anyAssetsPassingToDirectDescendants[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearIfFalse(Constants.anyAssetsPassingToDirectDescendantsId, value,
-      Set(
-        Constants.assetsPassingToDirectDescendantsId,
-        Constants.anyBroughtForwardAllowanceOnDisposalId,
-        Constants.doesGrossingUpApplyToOtherPropertyId,
-        Constants.broughtForwardAllowanceOnDisposalId),
-      cacheMap)
-
-  private def anyBroughtForwardAllowanceOnDisposal[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearIfFalse(Constants.anyBroughtForwardAllowanceOnDisposalId, value, Set(Constants.broughtForwardAllowanceOnDisposalId), cacheMap)
-
-  private def dateOfDisposal[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
-    val keysToRemoveWhenDateBeforeDownsizingDate = Set(
-      Constants.valueOfDisposedPropertyId,
-      Constants.anyAssetsPassingToDirectDescendantsId,
-      Constants.doesGrossingUpApplyToOtherPropertyId,
-      Constants.assetsPassingToDirectDescendantsId,
-      Constants.anyBroughtForwardAllowanceOnDisposalId,
-      Constants.broughtForwardAllowanceOnDisposalId
-    )
-
-    val keysToRemoveWhenDateBeforeEligibilityDate = Set(
-      Constants.anyBroughtForwardAllowanceOnDisposalId,
-      Constants.broughtForwardAllowanceOnDisposalId
-    )
-
-    val mapToStore = value match {
-      case JsString(d) =>
-        Try(LocalDate.parse(d)) match {
-          case Success(parsedDate) if parsedDate isBefore Constants.downsizingEligibilityDate =>
-            cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemoveWhenDateBeforeDownsizingDate.contains(s)))
-          case Success(parsedDate) if parsedDate isBefore Constants.eligibilityDate =>
-            cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemoveWhenDateBeforeEligibilityDate.contains(s)))
-          case Failure(e) =>
-            val msg = s"Unable to parse value $value as the date of disposal"
-            Logger.error(msg)
-            throw new RuntimeException(msg)
-          case _ => cacheMap
-        }
-      case _ => cacheMap
-    }
-
-    store(Constants.dateOfDisposalId, value, mapToStore)
-  }
-
-  private def updateCacheMap[A](key: String, value: A, originalCacheMap: CacheMap)(implicit wts: Writes[A]): Future[CacheMap] = {
-    val newCacheMap = funcMap.get(key).fold(store(key, value, originalCacheMap)) { fn => fn(Json.toJson(value), originalCacheMap)}
-    sessionRepository().upsert(newCacheMap).map {_ => newCacheMap}
-  }
+class SessionConnector @Inject()(val sessionRepository: SessionRepository, val cascadeUpsert: CascadeUpsert) {
 
   def cache[A](key: String, value: A)(implicit wts: Writes[A], hc: HeaderCarrier) = {
     hc.sessionId match {
-      case None => {
-         val msg = "Unable to find session with id " + hc.sessionId + "while caching " + key + " = " + value
-         Logger.error(msg)
-         throw new RuntimeException(msg)
-      }
-      case Some(id) => {
+      case None =>
+       val msg = "Unable to find session with id " + hc.sessionId + "while caching " + key + " = " + value
+       Logger.error(msg)
+       throw new RuntimeException(msg)
+      case Some(id) =>
         sessionRepository().get(id.toString).flatMap { optionalCacheMap =>
-          optionalCacheMap.fold(updateCacheMap(key, value, new CacheMap(id.toString, Map()))) { cm =>
-            updateCacheMap(key, value, cm)
-          }
+          val updatedCacheMap = cascadeUpsert(key, value, optionalCacheMap.getOrElse(new CacheMap(id.toString, Map())))
+          sessionRepository().upsert(updatedCacheMap).map {_ => updatedCacheMap}
         }
-      }
     }
   }
 
   def delete(key: String)(implicit hc: HeaderCarrier): Future[Boolean] = {
     hc.sessionId match {
       case None => Future(false)
-      case Some(id) => {
+      case Some(id) =>
         sessionRepository().get(id.toString).flatMap { optionalCacheMap =>
           optionalCacheMap.fold(Future(false)) { cm =>
             val newCacheMap: CacheMap = cm copy (data = cm.data - key)
             sessionRepository().upsert(newCacheMap)
           }
         }
-      }
     }
   }
 
@@ -209,9 +73,4 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository) {
       }
     }
   }
-
-  def associateFunc(key: String, fn: (JsValue, CacheMap) => CacheMap) = {
-    funcMap = funcMap + (key -> fn)
-  }
 }
-
