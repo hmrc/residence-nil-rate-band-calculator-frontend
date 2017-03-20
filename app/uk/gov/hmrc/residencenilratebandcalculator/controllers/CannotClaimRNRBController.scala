@@ -18,46 +18,33 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
 
-import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, AnyContent, Request}
-import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.frontend.controller.FrontendController
+import play.api.i18n.MessagesApi
+import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, GetCannotClaimRNRBReasonKey, UserAnswers}
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetCannotClaimRNRBReason.{NoProperty, NotCloselyInherited}
+import uk.gov.hmrc.residencenilratebandcalculator.models._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.cannot_claim_RNRB
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 @Singleton
 class CannotClaimRNRBController @Inject()(val appConfig: FrontendAppConfig,
-                                          val messagesApi: MessagesApi,
-                                          val sessionConnector: SessionConnector,
-                                          val navigator: Navigator) extends FrontendController with I18nSupport {
+                                          override val messagesApi: MessagesApi,
+                                          override val sessionConnector: SessionConnector,
+                                          val navigator: Navigator) extends TransitionController {
 
-  def onPageLoad: Action[AnyContent] = Action.async {
-    implicit request =>
-      sessionConnector.fetch().map {
-        case Some(cacheMap) => {
-          val previousAnswers = answerRows(cacheMap, request)
-          val userAnswers = new UserAnswers(cacheMap)
-          Ok(cannot_claim_RNRB(appConfig, GetCannotClaimRNRBReasonKey(userAnswers), navigator.nextPage(Constants.cannotClaimRNRB)(userAnswers), previousAnswers))
-        }
-        case None => throw new RuntimeException("No cacheMap available")
-      }
-  }
+  val getReason = GetCannotClaimRNRBReason
 
-  def answerRows(cacheMap: CacheMap, request: Request[_]): Seq[AnswerRow] = {
-    val reasonKey: String = GetCannotClaimRNRBReasonKey(userAnswers = new UserAnswers(cacheMap))
-    val controllerId = reasonKey match {
-      case ("cannot_claim_RNRB.not_closely_inherited_reason") => Constants.anyPropertyCloselyInheritedId
+  def getControllerId(reason: Reason) =
+    reason match {
+      case NotCloselyInherited => Constants.anyPropertyCloselyInheritedId
       case _ => Constants.estateHasPropertyId
     }
-    AnswerRows.constructAnswerRows(
-      AnswerRows.truncateAndAddCurrentLocateInCacheMap(controllerId, cacheMap),
-      AnswerRows.answerRowFns,
-      AnswerRows.rowOrder,
-      messagesApi.preferred(request)
-    )
+
+  def createView(reason: Reason, userAnswers: UserAnswers, previousAnswers: Seq[AnswerRow])(implicit request: Request[_]) = {
+    val reasonKey = reason match {
+      case NotCloselyInherited => "cannot_claim_RNRB.not_closely_inherited_reason"
+      case NoProperty => "cannot_claim_RNRB.no_property_reason"
+    }
+    cannot_claim_RNRB(appConfig, reasonKey, navigator.nextPage(Constants.cannotClaimRNRB)(userAnswers), previousAnswers)
   }
-
-
 }

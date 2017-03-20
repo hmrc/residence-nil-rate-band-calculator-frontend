@@ -16,10 +16,15 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-object GetCannotClaimDownsizingReasonKey {
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
+
+object GetCannotClaimRNRBReason extends GetReason {
+  case object NotCloselyInherited extends Reason
+  case object NoProperty extends Reason
+
   def apply(userAnswers: UserAnswers) =
-    userAnswers.anyAssetsPassingToDirectDescendants match {
-      case Some(false) => "cannot_claim_downsizing.no_assets_passing_to_direct_descendants_reason"
-      case _ => "cannot_claim_downsizing.date_of_disposal_too_early_reason"
+    userAnswers.anyPropertyCloselyInherited match {
+      case Some(Constants.none) => NotCloselyInherited
+      case _ => NoProperty
     }
 }

@@ -18,45 +18,33 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
 
-import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, AnyContent, Request}
-import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.frontend.controller.FrontendController
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import play.api.i18n.MessagesApi
+import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetCannotClaimDownsizingReason.{DateOfDisposalTooEarly, NoAssetsPassingToDirectDescendants}
 import uk.gov.hmrc.residencenilratebandcalculator.models._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.cannot_claim_downsizing
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 @Singleton
 class CannotClaimDownsizingController @Inject()(val appConfig: FrontendAppConfig,
-                                                val messagesApi: MessagesApi,
-                                                val sessionConnector: SessionConnector,
-                                                val navigator: Navigator) extends FrontendController with I18nSupport {
+                                                override val messagesApi: MessagesApi,
+                                                override val sessionConnector: SessionConnector,
+                                                val navigator: Navigator) extends TransitionController {
 
-  def onPageLoad: Action[AnyContent] = Action.async {
-    implicit request =>
-      sessionConnector.fetch().map {
-        case Some(cacheMap) => {
-          val previousAnswers = answerRows(cacheMap, request)
-          val userAnswers = new UserAnswers(cacheMap)
-          Ok(cannot_claim_downsizing(appConfig, GetCannotClaimDownsizingReasonKey(userAnswers),
-            navigator.nextPage(Constants.cannotClaimDownsizingId)(userAnswers), previousAnswers))
-        }
-        case None => throw new RuntimeException("No cacheMap available")
-      }
-  }
+  val getReason = GetCannotClaimDownsizingReason
 
-  def answerRows(cacheMap: CacheMap, request: Request[_]): Seq[AnswerRow] = {
-    val reasonKey: String = GetCannotClaimDownsizingReasonKey(userAnswers = new UserAnswers(cacheMap))
-    val controllerId = reasonKey match {
-      case ("cannot_claim_downsizing.no_assets_passing_to_direct_descendants_reason") => Constants.anyAssetsPassingToDirectDescendantsId
+  def getControllerId(reason: Reason) =
+    reason match {
+      case NoAssetsPassingToDirectDescendants => Constants.anyAssetsPassingToDirectDescendantsId
       case _ => Constants.dateOfDisposalId
     }
-    AnswerRows.constructAnswerRows(
-      AnswerRows.truncateAndAddCurrentLocateInCacheMap(controllerId, cacheMap),
-      AnswerRows.answerRowFns,
-      AnswerRows.rowOrder,
-      messagesApi.preferred(request)
-    )
+
+  def createView(reason: Reason, userAnswers: UserAnswers, previousAnswers: Seq[AnswerRow])(implicit request: Request[_]) = {
+    val reasonKey = reason match {
+      case NoAssetsPassingToDirectDescendants => "cannot_claim_downsizing.no_assets_passing_to_direct_descendants_reason"
+      case DateOfDisposalTooEarly => "cannot_claim_downsizing.date_of_disposal_too_early_reason"
+    }
+    cannot_claim_downsizing(appConfig, reasonKey, navigator.nextPage(Constants.cannotClaimDownsizingId)(userAnswers), previousAnswers)
   }
 }

@@ -20,19 +20,20 @@ import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetCannotClaimDownsizingReason.{DateOfDisposalTooEarly, NoAssetsPassingToDirectDescendants}
 
-class GetCannotClaimDowisizingReasonKeySpec extends UnitSpec with WithFakeApplication with MockitoSugar {
-  "Get Cannot Claim Dowisizing Reason Key" must {
-    "get the 'no assets passing to a direct descendant' reason key when there are no assets passing to direct descendants" in {
+class GetCannotClaimDowisizingReasonSpec extends UnitSpec with WithFakeApplication with MockitoSugar {
+  "Get Cannot Claim Dowisizing Reason" must {
+    "get the 'no assets passing to a direct descendant' reason when there are no assets passing to direct descendants" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.anyAssetsPassingToDirectDescendants) thenReturn Some(false)
-      GetCannotClaimDownsizingReasonKey(userAnswers) shouldBe "cannot_claim_downsizing.no_assets_passing_to_direct_descendants_reason"
+      GetCannotClaimDownsizingReason(userAnswers) shouldBe NoAssetsPassingToDirectDescendants
     }
 
-    "get the 'date of disposal too early' reason key when the property is disposed of before 8 July 2015" in {
+    "get the 'date of disposal too early' reason when the property is disposed of before 8 July 2015" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.dateOfDisposal) thenReturn Some(Constants.downsizingEligibilityDate.minusDays(1))
-      GetCannotClaimDownsizingReasonKey(userAnswers) shouldBe "cannot_claim_downsizing.date_of_disposal_too_early_reason"
+      GetCannotClaimDownsizingReason(userAnswers) shouldBe DateOfDisposalTooEarly
     }
   }
 }

@@ -16,12 +16,10 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
+trait Reason
 
-object GetCannotClaimRNRBReasonKey {
-  def apply(userAnswers: UserAnswers) =
-    userAnswers.anyPropertyCloselyInherited match {
-      case Some(Constants.none) => "cannot_claim_RNRB.not_closely_inherited_reason"
-      case _ => "cannot_claim_RNRB.no_property_reason"
-    }
+trait GetReason {
+  def apply(userAnswers: UserAnswers): Reason
 }
+
+

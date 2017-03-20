@@ -16,13 +16,13 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
+object GetCannotClaimDownsizingReason extends GetReason {
+  case object NoAssetsPassingToDirectDescendants extends Reason
+  case object DateOfDisposalTooEarly extends Reason
 
-object GetTransitionOutPrefix {
   def apply(userAnswers: UserAnswers) =
-    (userAnswers.dateOfDeath, userAnswers.anyEstatePassedToDescendants) match {
-      case (Some(dateOfDeath), _) if dateOfDeath isBefore Constants.eligibilityDate => "not_possible_to_use_service.date_of_death"
-      case (_, Some(false)) => "not_possible_to_use_service.direct_descendant"
-      case _ => "not_possible_to_use_service.grossing_up"
+    userAnswers.anyAssetsPassingToDirectDescendants match {
+      case Some(false) => NoAssetsPassingToDirectDescendants
+      case _ => DateOfDisposalTooEarly
     }
 }

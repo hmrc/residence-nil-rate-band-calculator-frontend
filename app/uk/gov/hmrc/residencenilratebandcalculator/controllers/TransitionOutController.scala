@@ -18,44 +18,36 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
 
-import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, AnyContent, Request}
-import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.frontend.controller.FrontendController
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
+import play.api.i18n.MessagesApi
+import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, GetTransitionOutPrefix, UserAnswers}
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetTransitionOutReason.{DateOfDeath, DirectDescendant, GrossingUpForOtherProperty, GrossingUpForResidence}
+import uk.gov.hmrc.residencenilratebandcalculator.models._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.not_possible_to_use_service
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 
 @Singleton
-class TransitionOutController @Inject()(appConfig: FrontendAppConfig,
-                                        val messagesApi: MessagesApi,
-                                        val sessionConnector: SessionConnector)
-  extends FrontendController with I18nSupport {
+class TransitionOutController @Inject()(val appConfig: FrontendAppConfig,
+                                        override val messagesApi: MessagesApi,
+                                        override val sessionConnector: SessionConnector) extends TransitionController {
 
-  private def answerRows(cacheMap: CacheMap, request: Request[_]): Seq[AnswerRow] = {
-    val userAnswers = new UserAnswers(cacheMap)
-    val controllerId = (userAnswers.dateOfDeath, userAnswers.anyEstatePassedToDescendants, userAnswers.doesGrossingUpApplyToResidence) match {
-      case (Some(dateOfDeath), _, _) if dateOfDeath isBefore Constants.eligibilityDate => Constants.dateOfDeathId
-      case (_, Some(false), _) => Constants.anyEstatePassedToDescendantsId
-      case (_, _, Some(true)) => Constants.doesGrossingUpApplyToResidenceId
-      case _ => Constants.doesGrossingUpApplyToOtherPropertyId
-    }
-    AnswerRows.constructAnswerRows(
-      AnswerRows.truncateAndAddCurrentLocateInCacheMap(controllerId, cacheMap),
-      AnswerRows.answerRowFns,
-      AnswerRows.rowOrder,
-      messagesApi.preferred(request)
-    )
-  }
+  val getReason = GetTransitionOutReason
 
-  def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
-    sessionConnector.fetch().map {
-      case Some(cacheMap) => {
-        val transitionOutPrefix = GetTransitionOutPrefix(new UserAnswers(cacheMap))
-        Ok(not_possible_to_use_service(appConfig, transitionOutPrefix, answerRows(cacheMap, request)))
-      }
-      case None => throw new RuntimeException("No cacheMap available")
+  def getControllerId(reason: Reason) =
+    reason match {
+      case DateOfDeath => Constants.dateOfDeathId
+      case DirectDescendant => Constants.anyEstatePassedToDescendantsId
+      case GrossingUpForResidence => Constants.doesGrossingUpApplyToResidenceId
+      case GrossingUpForOtherProperty => Constants.doesGrossingUpApplyToOtherPropertyId
     }
+
+  def createView(reason: Reason, userAnswers: UserAnswers, previousAnswers: scala.Seq[AnswerRow])(implicit request: Request[_]) = {
+    val prefix = reason match {
+      case DateOfDeath => "not_possible_to_use_service.date_of_death"
+      case DirectDescendant => "not_possible_to_use_service.direct_descendant"
+      case GrossingUpForResidence => "not_possible_to_use_service.grossing_up"
+      case GrossingUpForOtherProperty => "not_possible_to_use_service.grossing_up"
+    }
+    not_possible_to_use_service(appConfig, prefix, previousAnswers)
   }
 }

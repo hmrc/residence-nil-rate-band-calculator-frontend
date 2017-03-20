@@ -20,31 +20,32 @@ import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetTransitionOutReason.{DateOfDeath, DirectDescendant, GrossingUpForOtherProperty, GrossingUpForResidence}
 
-class GetTransitionOutPrefixSpec extends UnitSpec with WithFakeApplication with MockitoSugar {
-  "GetTransitionOutPrefix" must {
-    "get 'Date of death' prefix if date of death is before the eligibility date" in {
+class GetTransitionOutReasonSpec extends UnitSpec with WithFakeApplication with MockitoSugar {
+  "GetTransitionOutReason" must {
+    "get DateOfDeath reason if date of death is before the eligibility date" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.dateOfDeath) thenReturn Some(Constants.eligibilityDate.minusDays(1))
-      GetTransitionOutPrefix(userAnswers) shouldBe "not_possible_to_use_service.date_of_death"
+      GetTransitionOutReason(userAnswers) shouldBe DateOfDeath
     }
 
-    "get 'Direct descendant' prefix if nothing has been left to direct descendants" in {
+    "get DirectDescendant reason if nothing has been left to direct descendants" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.anyEstatePassedToDescendants) thenReturn Some(false)
-      GetTransitionOutPrefix(userAnswers) shouldBe "not_possible_to_use_service.direct_descendant"
+      GetTransitionOutReason(userAnswers) shouldBe DirectDescendant
     }
 
-    "get 'Grossing up' prefix when grossing up is applied to the residence" in {
+    "get GrossingUpForResidence reason when grossing up is applied to the residence" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.doesGrossingUpApplyToResidence) thenReturn Some(true)
-      GetTransitionOutPrefix(userAnswers) shouldBe "not_possible_to_use_service.grossing_up"
+      GetTransitionOutReason(userAnswers) shouldBe GrossingUpForResidence
     }
 
-    "get 'Grossing up' prefix when grossing up is applied to other property" in {
+    "get GrossingUpForOtherProperty reason when grossing up is applied to other property" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.doesGrossingUpApplyToOtherProperty) thenReturn Some(true)
-      GetTransitionOutPrefix(userAnswers) shouldBe "not_possible_to_use_service.grossing_up"
+      GetTransitionOutReason(userAnswers) shouldBe GrossingUpForOtherProperty
     }
   }
 }
