@@ -41,6 +41,6 @@ class AnyEstatePassedToDescendantsSpec extends SimpleControllerSpecBase {
     behave like
       rnrbController[Boolean](createController, createView, Constants.anyEstatePassedToDescendantsId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
 
-    behave like nonStartingController[Boolean](createController)(Reads.BooleanReads, Writes.BooleanWrites)
+    behave like nonStartingController[Boolean](createController, answerRowConstants = List(Constants.dateOfDeathId))(Reads.BooleanReads, Writes.BooleanWrites)
   }
 }
