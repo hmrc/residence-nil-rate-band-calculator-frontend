@@ -59,8 +59,8 @@ class BroughtForwardAllowanceControllerSpec extends UnitSpec with WithFakeApplic
   }
 
   def createView = (value: Option[Map[String, String]]) => {
-    val url = "<function1>"
-    val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onPageLoad().url.toString)
+    val url = routes.AnyBroughtForwardAllowanceController.onPageLoad().url
+    val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
       case None => brought_forward_allowance(frontendAppConfig, url, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages)
       case Some(v) => brought_forward_allowance(frontendAppConfig, url, "£100,000.00", Some(NonNegativeIntForm().bind(v)), Seq(answerRow))(fakeRequest, messages)
@@ -68,8 +68,8 @@ class BroughtForwardAllowanceControllerSpec extends UnitSpec with WithFakeApplic
   }
 
   def createViewWithBacklink = (value: Option[Map[String, String]]) => {
-    val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyBroughtForwardAllowanceController.onPageLoad().url.toString()
-    val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onPageLoad().url.toString)
+    val url = routes.AnyBroughtForwardAllowanceController.onPageLoad().url
+    val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
       case None => brought_forward_allowance(frontendAppConfig, url, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages)
       case Some(v) => brought_forward_allowance(frontendAppConfig, url, "£100,000.00", Some(NonNegativeIntForm().bind(v)), Seq(answerRow))(fakeRequest, messages)

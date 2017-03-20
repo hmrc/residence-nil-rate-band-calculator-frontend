@@ -24,7 +24,7 @@ import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PositivePercentForm
-import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_closely_inherited
 
 class PercentageCloselyInheritedController  @Inject()(override val appConfig: FrontendAppConfig,
@@ -37,7 +37,7 @@ class PercentageCloselyInheritedController  @Inject()(override val appConfig: Fr
 
   override def form = () => PositivePercentForm()
 
-  override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow])(implicit request: Request[_]) = {
+  override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
     percentage_closely_inherited(appConfig, backUrl, form, answerRows)
   }
 }

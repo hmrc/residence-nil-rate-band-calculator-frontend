@@ -25,12 +25,17 @@ class AnyAssetsPassingToDirectDescendantsControllerSpec extends SimpleController
 
   "Any Assets Passing to Direct Descendants Controller" must {
 
+    val propertyValue = 123456
+    val formattedPropertyValue = Some("£123,456.00")
+
     def createView = (value: Option[Map[String, String]]) => {
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfDisposedPropertyController.onPageLoad().url
 
       value match {
-        case None => any_assets_passing_to_direct_descendants(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => any_assets_passing_to_direct_descendants(frontendAppConfig, url, Some(BooleanForm().bind(v)), Seq())(fakeRequest, messages)
+        case None =>
+          any_assets_passing_to_direct_descendants(frontendAppConfig, url, None, Seq(), formattedPropertyValue)(fakeRequest, messages)
+        case Some(v) =>
+          any_assets_passing_to_direct_descendants(frontendAppConfig, url, Some(BooleanForm().bind(v)), Seq(), formattedPropertyValue)(fakeRequest, messages)
       }
     }
 
@@ -38,7 +43,10 @@ class AnyAssetsPassingToDirectDescendantsControllerSpec extends SimpleController
 
     val testValue = true
 
-    behave like rnrbController[Boolean](createController, createView, Constants.anyAssetsPassingToDirectDescendantsId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+    val valuesToCacheBeforeLoad = Map(Constants.propertyValueId -> propertyValue)
+
+    behave like rnrbController[Boolean](createController, createView, Constants.anyAssetsPassingToDirectDescendantsId, testValue,
+      valuesToCacheBeforeLoad = valuesToCacheBeforeLoad)(Reads.BooleanReads, Writes.BooleanWrites)
 
     behave like nonStartingController[Boolean](createController)(Reads.BooleanReads, Writes.BooleanWrites)
   }

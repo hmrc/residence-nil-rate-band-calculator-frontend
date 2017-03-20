@@ -25,7 +25,7 @@ import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_transfer_amount
 
 import scala.concurrent.Future
@@ -41,12 +41,12 @@ class ChargeableTransferAmountController  @Inject()(override val appConfig: Fron
 
   override def form = () => NonNegativeIntForm()
 
-  override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow])(implicit request: Request[_]) = {
+  override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
     chargeable_transfer_amount(appConfig, backUrl, form, answerRows)
   }
 
-  override def validate(value: Int)(implicit hc: HeaderCarrier): Future[Option[FormError]] = {
-    sessionConnector.fetchAndGetEntry[Int](Constants.grossEstateValueId).map {
+  override def validate(value: Int, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = {
+    userAnswers.grossEstateValue match {
       case None => Some(FormError("value", "chargeable_value_of_residence.greater_than_property_value.error"))
       case Some(g) if value > g => Some(FormError("value", "chargeable_value_of_residence.greater_than_property_value.error"))
       case _ => None

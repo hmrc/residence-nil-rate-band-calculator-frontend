@@ -25,7 +25,7 @@ import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_value_of_residence_closely_inherited
 
 import scala.concurrent.Future
@@ -39,12 +39,11 @@ class ChargeableValueOfResidenceCloselyInheritedController @Inject()(override va
 
   override def form: () => Form[Int] = () => NonNegativeIntForm()
 
-  override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow])
-                   (implicit request: Request[_]): _root_.play.twirl.api.HtmlFormat.Appendable =
+  override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) =
     chargeable_value_of_residence_closely_inherited(appConfig, backUrl, form, answerRows)
 
-  override def validate(value: Int)(implicit hc: HeaderCarrier): Future[Option[FormError]] = {
-    sessionConnector.fetchAndGetEntry[Int](Constants.chargeableValueOfResidenceId).map {
+  override def validate(value: Int, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = {
+    userAnswers.chargeableValueOfResidence match {
       case None => Some(FormError("value", "chargeable_value_of_residence_closely_inherited.greater_than_chargeable_value_of_residence.error"))
       case Some(g) if value > g => Some(FormError("value", "chargeable_value_of_residence_closely_inherited.greater_than_chargeable_value_of_residence.error"))
       case _ => None
