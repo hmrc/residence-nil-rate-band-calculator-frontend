@@ -112,7 +112,7 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
     }
   }
 
-  def nonStartingController[A: ClassTag](createController: () => SimpleControllerBase[A], answerRowConstants: List[String] = List())(rds: Reads[A], wts: Writes[A]) = {
+  def nonStartingController[A: ClassTag](createController: () => SimpleControllerBase[A], answerRowConstants: List[String])(rds: Reads[A], wts: Writes[A]) = {
 
     "On a page load with an expired session, return an redirect to an expired session page" in {
       expireSessionConnector()
@@ -137,6 +137,7 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
           Constants.chargeableTransferAmountId -> JsNumber(450000),
           Constants.estateHasPropertyId -> JsBoolean(true),
           Constants.propertyValueId -> JsNumber(400000),
+          Constants.doesGrossingUpApplyToOtherPropertyId -> JsBoolean(true),
           Constants.anyPropertyCloselyInheritedId -> JsBoolean(true),
           Constants.percentageCloselyInheritedId -> JsNumber(100),
           Constants.anyBroughtForwardAllowanceId -> JsBoolean(true),
@@ -144,12 +145,17 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
           Constants.anyDownsizingAllowanceId -> JsBoolean(true),
           Constants.dateOfDisposalId -> JsString("2018-03-02"),
           Constants.valueOfDisposedPropertyId -> JsNumber(100000),
-          Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true)
+          Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true),
+          Constants.doesGrossingUpApplyToOtherPropertyId -> JsBoolean(true),
+          Constants.chargeableValueOfResidenceId -> JsNumber(50000),
+          Constants.assetsPassingToDirectDescendantsId -> JsNumber(1000),
+          Constants.anyBroughtForwardAllowanceOnDisposalId -> JsBoolean(true),
+          Constants.broughtForwardAllowanceOnDisposalId -> JsNumber(1000)
         ))
       val controllerId = createController().controllerId
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
-      answerRowConstants shouldBe (if (answerRowConstants == List()) List() else calculatedList)
+      answerRowConstants shouldBe (calculatedList)
     }
   }
 }

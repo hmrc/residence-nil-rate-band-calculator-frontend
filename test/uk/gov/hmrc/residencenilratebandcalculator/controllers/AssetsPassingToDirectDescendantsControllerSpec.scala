@@ -40,6 +40,22 @@ class AssetsPassingToDirectDescendantsControllerSpec extends SimpleControllerSpe
 
     behave like rnrbController[Int](createController, createView, Constants.assetsPassingToDirectDescendantsId, testValue)(Reads.IntReads, Writes.IntWrites)
 
-    behave like nonStartingController[Int](createController)(Reads.IntReads, Writes.IntWrites)
+    behave like nonStartingController[Int](createController,
+      List(Constants.dateOfDeathId,
+           Constants.anyEstatePassedToDescendantsId,
+           Constants.grossEstateValueId,
+           Constants.chargeableTransferAmountId,
+           Constants.estateHasPropertyId,
+           Constants.propertyValueId,
+           Constants.anyPropertyCloselyInheritedId,
+           Constants.percentageCloselyInheritedId,
+           Constants.chargeableValueOfResidenceId,
+           Constants.anyBroughtForwardAllowanceId,
+           Constants.broughtForwardAllowanceId,
+           Constants.anyDownsizingAllowanceId,
+           Constants.dateOfDisposalId,
+           Constants.valueOfDisposedPropertyId,
+           Constants.anyAssetsPassingToDirectDescendantsId,
+           Constants.doesGrossingUpApplyToOtherPropertyId))(Reads.IntReads, Writes.IntWrites)
   }
 }
