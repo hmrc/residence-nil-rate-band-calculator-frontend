@@ -19,27 +19,27 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_estate_passed_to_descendants
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.part_of_estate_passing_to_direct_descendants
 
-class AnyEstatePassedToDescendantsSpec extends SimpleControllerSpecBase {
+class PartOfEstatePassingToDirectDescendantsControllerSpec extends SimpleControllerSpecBase {
 
-  "Any Estate Passed To Descendants Controller" must {
+  "Part Of Estate Passing To Direct Descendants Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       val backUrl = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onPageLoad().url
 
       value match {
-        case None => any_estate_passed_to_descendants(frontendAppConfig, backUrl, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => any_estate_passed_to_descendants(frontendAppConfig, backUrl, Some(BooleanForm().bind(v)), Seq())(fakeRequest, messages)
+        case None => part_of_estate_passing_to_direct_descendants(frontendAppConfig, backUrl, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => part_of_estate_passing_to_direct_descendants(frontendAppConfig, backUrl, Some(BooleanForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 
-    def createController = () => new AnyEstatePassedToDescendantsController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
+    def createController = () => new PartOfEstatePassingToDirectDescendantsController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
     val testValue = true
 
     behave like
-      rnrbController[Boolean](createController, createView, Constants.anyEstatePassedToDescendantsId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+      rnrbController[Boolean](createController, createView, Constants.partOfEstatePassingToDirectDescendantsId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
 
     behave like nonStartingController[Boolean](createController)(Reads.BooleanReads, Writes.BooleanWrites)
   }

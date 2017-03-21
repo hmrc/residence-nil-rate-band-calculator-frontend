@@ -25,19 +25,19 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_estate_passed_to_descendants
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.part_of_estate_passing_to_direct_descendants
 
 @Singleton
-class AnyEstatePassedToDescendantsController @Inject()(override val appConfig: FrontendAppConfig,
-                                                       val messagesApi: MessagesApi,
-                                                       override val sessionConnector: SessionConnector,
-                                                       override val navigator: Navigator) extends SimpleControllerBase[Boolean] {
+class PartOfEstatePassingToDirectDescendantsController @Inject()(override val appConfig: FrontendAppConfig,
+                                                                 val messagesApi: MessagesApi,
+                                                                 override val sessionConnector: SessionConnector,
+                                                                 override val navigator: Navigator) extends SimpleControllerBase[Boolean] {
 
-  override val controllerId: String = Constants.anyEstatePassedToDescendantsId
+  override val controllerId: String = Constants.partOfEstatePassingToDirectDescendantsId
 
   override def form: () => Form[Boolean] = () => BooleanForm()
 
   override def view(form: Option[Form[Boolean]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    any_estate_passed_to_descendants(appConfig, backUrl, form, answerRows)
+    part_of_estate_passing_to_direct_descendants(appConfig, backUrl, form, answerRows)
   }
 }
