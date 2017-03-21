@@ -40,6 +40,11 @@ class AnyBroughtForwardAllowanceControllerSpec extends SimpleControllerSpecBase 
 
     behave like rnrbController(createController, createView, Constants.anyBroughtForwardAllowanceId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
 
-    behave like nonStartingController[Boolean](createController)(Reads.BooleanReads, Writes.BooleanWrites)
+    behave like nonStartingController[Boolean](createController,
+      List(Constants.dateOfDeathId,
+           Constants.anyEstatePassedToDescendantsId,
+           Constants.grossEstateValueId,
+           Constants.chargeableTransferAmountId,
+           Constants.estateHasPropertyId))(Reads.BooleanReads, Writes.BooleanWrites)
   }
 }
