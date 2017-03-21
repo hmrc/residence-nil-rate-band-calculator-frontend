@@ -40,6 +40,10 @@ class EstateHasPropertyControllerSpec extends SimpleControllerSpecBase {
 
     behave like rnrbController[Boolean](createController, createView, Constants.estateHasPropertyId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
 
-    behave like nonStartingController[Boolean](createController)(Reads.BooleanReads, Writes.BooleanWrites)
+    behave like nonStartingController[Boolean](createController,
+      List(Constants.dateOfDeathId,
+           Constants.anyEstatePassedToDescendantsId,
+           Constants.grossEstateValueId,
+           Constants.chargeableTransferAmountId))(Reads.BooleanReads, Writes.BooleanWrites)
   }
 }
