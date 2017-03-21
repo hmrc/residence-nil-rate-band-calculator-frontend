@@ -132,7 +132,8 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
       val filledOutCacheMap = new CacheMap("",
         Map[String, JsValue](
           Constants.dateOfDeathId -> JsString("2019-03-04"),
-          Constants.anyEstatePassedToDescendantsId -> JsBoolean(true)
+          Constants.anyEstatePassedToDescendantsId -> JsBoolean(true),
+          Constants.grossEstateValueId -> JsNumber(500000),
         ))
       val controllerId = createController().controllerId
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList

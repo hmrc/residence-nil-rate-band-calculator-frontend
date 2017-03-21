@@ -43,7 +43,10 @@ class ChargeableTransferAmountControllerSpec extends SimpleControllerSpecBase {
     behave like rnrbController(createController, createView, Constants.chargeableTransferAmountId,
       testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
 
-    behave like nonStartingController[Int](createController)(Reads.IntReads, Writes.IntWrites)
+    behave like nonStartingController[Int](createController,
+      List(Constants.dateOfDeathId,
+           Constants.anyEstatePassedToDescendantsId,
+           Constants.grossEstateValueId))(Reads.IntReads, Writes.IntWrites)
 
     "return bad request on submit with a value greater than the previously saved Gross Estate Value" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))
