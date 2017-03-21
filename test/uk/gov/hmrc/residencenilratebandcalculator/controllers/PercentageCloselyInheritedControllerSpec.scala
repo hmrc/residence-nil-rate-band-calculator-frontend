@@ -40,6 +40,13 @@ class PercentageCloselyInheritedControllerSpec extends SimpleControllerSpecBase 
 
     behave like rnrbController[Int](createController, createView, Constants.percentageCloselyInheritedId, testValue)(Reads.IntReads, Writes.IntWrites)
 
-    behave like nonStartingController[Int](createController)(Reads.IntReads, Writes.IntWrites)
+    behave like nonStartingController[Int](createController,
+      List(Constants.dateOfDeathId,
+        Constants.anyEstatePassedToDescendantsId,
+        Constants.grossEstateValueId,
+        Constants.chargeableTransferAmountId,
+        Constants.estateHasPropertyId,
+        Constants.propertyValueId,
+        Constants.anyPropertyCloselyInheritedId))(Reads.IntReads, Writes.IntWrites)
   }
 }

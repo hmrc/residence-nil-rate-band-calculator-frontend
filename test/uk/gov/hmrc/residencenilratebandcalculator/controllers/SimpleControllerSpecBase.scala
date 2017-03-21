@@ -135,7 +135,10 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
           Constants.anyEstatePassedToDescendantsId -> JsBoolean(true),
           Constants.grossEstateValueId -> JsNumber(500000),
           Constants.chargeableTransferAmountId -> JsNumber(450000),
-          Constants.estateHasPropertyId -> JsBoolean(true)
+          Constants.estateHasPropertyId -> JsBoolean(true),
+          Constants.propertyValueId -> JsNumber(400000),
+          Constants.anyPropertyCloselyInheritedId -> JsBoolean(true),
+          Constants.percentageCloselyInheritedId -> JsNumber(100)
         ))
       val controllerId = createController().controllerId
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
