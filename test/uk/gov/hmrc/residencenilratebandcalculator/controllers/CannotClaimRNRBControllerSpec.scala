@@ -27,7 +27,7 @@ import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRows
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetCannotClaimRNRBReason.{NoProperty, NotCloselyInherited}
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetCannotClaimDownsizingReason.DateOfDisposalTooEarly
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.cannot_claim_RNRB
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
@@ -108,7 +108,7 @@ class CannotClaimRNRBControllerSpec extends UnitSpec with WithFakeApplication wi
 
     "The answer constants should be the same as the calulated constants for the controller when the reason is NoProperty" in {
       val controller = new CannotClaimRNRBController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
-      val controllerId = controller.getControllerId(NoProperty)
+      val controllerId = controller.getControllerId(DateOfDisposalTooEarly)
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
       val answerList = List(Constants.dateOfDeathId,
