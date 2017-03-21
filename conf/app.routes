@@ -89,7 +89,7 @@ GET        /thank-you                                   uk.gov.hmrc.residencenil
 GET        /value-of-disposed-property                  uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfDisposedPropertyController.onPageLoad
 POST       /value-of-disposed-property                  uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfDisposedPropertyController.onSubmit
 
-GET        /before-you-start                            uk.gov.hmrc.residencenilratebandcalculator.controllers.BeforeYouStartController.onPageLoad
+GET        /calculate-threshold-increase                uk.gov.hmrc.residencenilratebandcalculator.controllers.CalculateThresholdIncreaseController.onPageLoad
 
 # Fake GOV.UK pages to assist user testing
 GET        /case-studies                                uk.gov.hmrc.residencenilratebandcalculator.controllers.FakeGovUkController.caseStudies

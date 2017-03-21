@@ -20,22 +20,22 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.before_you_start
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.calculate_threshold_increase
 
-class BeforeYouStartControllerSpec extends HtmlSpec with WithFakeApplication {
+class CalculateThresholdIncreaseControllerSpec extends HtmlSpec with WithFakeApplication {
 
   val fakeRequest = FakeRequest("", "")
 
-  "Before you Start controller" must {
+  "Calculate Threshold Increase controller" must {
 
     "return 200 for a GET" in {
-      val result = new BeforeYouStartController(frontendAppConfig, messagesApi).onPageLoad()(fakeRequest)
+      val result = new CalculateThresholdIncreaseController(frontendAppConfig, messagesApi).onPageLoad()(fakeRequest)
       status(result) shouldBe 200
     }
 
     "return the View for a GET" in {
-      val result = new BeforeYouStartController(frontendAppConfig, messagesApi).onPageLoad()(fakeRequest)
-      contentAsString(result) shouldBe before_you_start(frontendAppConfig)(fakeRequest, messages).toString
+      val result = new CalculateThresholdIncreaseController(frontendAppConfig, messagesApi).onPageLoad()(fakeRequest)
+      contentAsString(result) shouldBe calculate_threshold_increase(frontendAppConfig)(fakeRequest, messages).toString
     }
   }
 }

@@ -17,25 +17,25 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.before_you_start
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.calculate_threshold_increase
 
-class BeforeYouStartViewSpec extends ViewSpecBase {
+class CalculateThresholdIncreaseViewSpec extends ViewSpecBase {
 
-  val messageKeyPrefix = "before_you_start"
+  val messageKeyPrefix = "calculate_threshold_increase"
 
-  "Before You Start view" must {
+  "Calculate Threshold Increase view" must {
     "display the correct browser title" in {
-      val doc = asDocument(before_you_start(frontendAppConfig)(request, messages))
+      val doc = asDocument(calculate_threshold_increase(frontendAppConfig)(request, messages))
       assertEqualsMessage(doc, "title", s"$messageKeyPrefix.browser_title")
     }
 
     "display the correct title" in {
-      val doc = asDocument(before_you_start(frontendAppConfig)(request, messages))
+      val doc = asDocument(calculate_threshold_increase(frontendAppConfig)(request, messages))
       assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.title")
     }
 
     "display the correct guidance" in {
-      val doc = asDocument(before_you_start(frontendAppConfig)(request, messages))
+      val doc = asDocument(calculate_threshold_increase(frontendAppConfig)(request, messages))
       assertContainsMessages(
         doc,
         s"$messageKeyPrefix.guidance1",
@@ -54,7 +54,7 @@ class BeforeYouStartViewSpec extends ViewSpecBase {
     }
 
     "display a Start button linking to the 'Date Of Death' page" in {
-      val doc = asDocument(before_you_start(frontendAppConfig)(request, messages))
+      val doc = asDocument(calculate_threshold_increase(frontendAppConfig)(request, messages))
       val startLink = doc.getElementById("start")
       startLink.className shouldBe "button button--get-started"
       startLink.attr("href") shouldBe routes.DateOfDeathController.onPageLoad().url
