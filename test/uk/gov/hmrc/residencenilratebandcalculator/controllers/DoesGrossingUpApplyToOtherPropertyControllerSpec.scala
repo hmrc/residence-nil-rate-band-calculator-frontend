@@ -41,6 +41,20 @@ class DoesGrossingUpApplyToOtherPropertyControllerSpec extends SimpleControllerS
     behave like
       rnrbController[Boolean](createController, createView, Constants.doesGrossingUpApplyToOtherPropertyId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
 
-    behave like nonStartingController[Boolean](createController)(Reads.BooleanReads, Writes.BooleanWrites)
+    behave like nonStartingController[Boolean](createController,
+      List(Constants.dateOfDeathId,
+           Constants.anyEstatePassedToDescendantsId,
+           Constants.grossEstateValueId,
+           Constants.chargeableTransferAmountId,
+           Constants.estateHasPropertyId,
+           Constants.propertyValueId,
+           Constants.anyPropertyCloselyInheritedId,
+           Constants.percentageCloselyInheritedId,
+           Constants.anyBroughtForwardAllowanceId,
+           Constants.broughtForwardAllowanceId,
+           Constants.anyDownsizingAllowanceId,
+           Constants.dateOfDisposalId,
+           Constants.valueOfDisposedPropertyId,
+           Constants.anyAssetsPassingToDirectDescendantsId))(Reads.BooleanReads, Writes.BooleanWrites)
   }
 }

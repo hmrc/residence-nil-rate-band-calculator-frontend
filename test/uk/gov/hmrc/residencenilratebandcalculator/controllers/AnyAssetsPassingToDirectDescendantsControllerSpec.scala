@@ -48,6 +48,19 @@ class AnyAssetsPassingToDirectDescendantsControllerSpec extends SimpleController
     behave like rnrbController[Boolean](createController, createView, Constants.anyAssetsPassingToDirectDescendantsId, testValue,
       valuesToCacheBeforeLoad = valuesToCacheBeforeLoad)(Reads.BooleanReads, Writes.BooleanWrites)
 
-    behave like nonStartingController[Boolean](createController)(Reads.BooleanReads, Writes.BooleanWrites)
+    behave like nonStartingController[Boolean](createController,
+      List(Constants.dateOfDeathId,
+        Constants.anyEstatePassedToDescendantsId,
+        Constants.grossEstateValueId,
+        Constants.chargeableTransferAmountId,
+        Constants.estateHasPropertyId,
+        Constants.propertyValueId,
+        Constants.anyPropertyCloselyInheritedId,
+        Constants.percentageCloselyInheritedId,
+        Constants.anyBroughtForwardAllowanceId,
+        Constants.broughtForwardAllowanceId,
+        Constants.anyDownsizingAllowanceId,
+        Constants.dateOfDisposalId,
+        Constants.valueOfDisposedPropertyId))(Reads.BooleanReads, Writes.BooleanWrites)
   }
 }
