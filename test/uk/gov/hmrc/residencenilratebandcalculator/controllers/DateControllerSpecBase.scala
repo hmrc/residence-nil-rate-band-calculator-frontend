@@ -19,14 +19,15 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import org.joda.time.LocalDate
 import play.api.http.Status
 import play.api.i18n._
-import play.api.libs.json.{Reads, Writes}
+import play.api.libs.json._
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
+import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
-import uk.gov.hmrc.residencenilratebandcalculator.models.Date
-import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, Date}
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 trait DateControllerSpecBase extends UnitSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
 
@@ -104,7 +105,7 @@ trait DateControllerSpecBase extends UnitSpec with WithFakeApplication with Http
     }
   }
 
-  def nonStartingDateController(createController: () => ControllerBase[Date])(rds: Reads[Date]) = {
+  def nonStartingDateController(createController: () => SimpleControllerBase[Date], answerRowConstants: List[String])(rds: Reads[Date]) = {
     "On a page load with an expired session, return a redirect to an expired session page" in {
       expireSessionConnector()
 
@@ -113,6 +114,27 @@ trait DateControllerSpecBase extends UnitSpec with WithFakeApplication with Http
       val result = createController().onPageLoad(rds)(fakeRequest)
       status(result) shouldBe Status.SEE_OTHER
       redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
+    }
+
+    "The answer constants should be the same as the calulated constants for the controller" in {
+      val filledOutCacheMap = new CacheMap("",
+        Map[String, JsValue](
+          Constants.dateOfDeathId -> JsString("2019-03-04"),
+          Constants.anyEstatePassedToDescendantsId -> JsBoolean(true),
+          Constants.grossEstateValueId -> JsNumber(500000),
+          Constants.chargeableTransferAmountId -> JsNumber(450000),
+          Constants.estateHasPropertyId -> JsBoolean(true),
+          Constants.propertyValueId -> JsNumber(400000),
+          Constants.anyPropertyCloselyInheritedId -> JsBoolean(true),
+          Constants.percentageCloselyInheritedId -> JsNumber(100),
+          Constants.anyBroughtForwardAllowanceId -> JsBoolean(true),
+          Constants.broughtForwardAllowanceId -> JsNumber(50000),
+          Constants.anyDownsizingAllowanceId -> JsBoolean(true)
+        ))
+      val controllerId = createController().controllerId
+      val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
+      val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
+      answerRowConstants shouldBe (calculatedList)
     }
   }
 }
