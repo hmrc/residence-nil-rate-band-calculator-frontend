@@ -18,7 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.http.Status
 import play.api.i18n._
-import play.api.libs.json.{JsString, JsValue, Reads, Writes}
+import play.api.libs.json._
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
@@ -129,11 +129,15 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
     }
 
     "The answer constants should be the same as the calulated constants for the controller" in {
-      val filledOutCacheMap = new CacheMap("", Map[String, JsValue](Constants.dateOfDeathId -> JsString("2019-03-04")))
+      val filledOutCacheMap = new CacheMap("",
+        Map[String, JsValue](
+          Constants.dateOfDeathId -> JsString("2019-03-04"),
+          Constants.anyEstatePassedToDescendantsId -> JsBoolean(true)
+        ))
       val controllerId = createController().controllerId
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
-      answerRowConstants shouldBe(if (answerRowConstants == List()) List() else calculatedList)
+      answerRowConstants shouldBe (if (answerRowConstants == List()) List() else calculatedList)
     }
   }
 }
