@@ -153,7 +153,7 @@ does_grossing_up_apply_to_residence.guidance2.bullet1 = the will makes any gifts
 does_grossing_up_apply_to_residence.guidance2.bullet2 = any part of the residue is exempt (because, for example it passes to charity or the deceased’s spouse or civil partner). The residue is what is left in the estate after you have paid all debts, legacies and taxes
 does_grossing_up_apply_to_residence.label =
 
-error.invalid_closely_inherited_property_option = Please choose an option
+error.invalid_property_passing_to_direct_descendants_option = Please choose an option
 error.invalid_date = Enter a valid date
 error.number = Please enter a valid number
 error.required = Please enter a value

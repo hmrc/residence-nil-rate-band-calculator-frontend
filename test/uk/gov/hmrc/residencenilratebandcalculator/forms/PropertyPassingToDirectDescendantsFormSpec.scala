@@ -35,7 +35,7 @@ class PropertyPassingToDirectDescendantsFormSpec extends FormSpec {
     }
 
     "fail to bind a blank value" in {
-      val expectedError = error("", "error.invalid_closely_inherited_property_option")
+      val expectedError = error("", "error.invalid_property_passing_to_direct_descendants_option")
       checkForError(PropertyPassingToDirectDescendantsForm(), Map("value" -> ""), expectedError)
     }
 
