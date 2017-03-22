@@ -212,10 +212,10 @@ not_possible_to_use_service.grossing_up.title = You cannot get a calculation usi
 not_possible_to_use_service.grossing_up.reason = This is because the estate includes grossing up.
 not_possible_to_use_service.grossing_up.guidance = HMRC will calculate the allowance for you.
 
-percentage_closely_inherited.browser_title = What percentage of the residence passes to direct descendants following the deceased’s death?
-percentage_closely_inherited.title = What percentage of the residence passes to direct descendants following the deceased’s death?
-percentage_closely_inherited.guidance = If half of the property has been left to a direct descendant, the percentage to give is 50%.
-percentage_closely_inherited.label =
+percentage_passed_to_direct_descendants.browser_title = What percentage of the residence passes to direct descendants following the deceased’s death?
+percentage_passed_to_direct_descendants.title = What percentage of the residence passes to direct descendants following the deceased’s death?
+percentage_passed_to_direct_descendants.guidance = If half of the property has been left to a direct descendant, the percentage to give is 50%.
+percentage_passed_to_direct_descendants.label =
 
 property_value.browser_title = What is the value of the residence at the date of death?
 property_value.title = What is the value of the residence at the date of death?

@@ -74,8 +74,8 @@ GET        /expired                                     uk.gov.hmrc.residencenil
 
 GET        /not-possible-to-use-calculator              uk.gov.hmrc.residencenilratebandcalculator.controllers.TransitionOutController.onPageLoad
 
-GET        /percentage-closely-inherited                uk.gov.hmrc.residencenilratebandcalculator.controllers.PercentageCloselyInheritedController.onPageLoad
-POST       /percentage-closely-inherited                uk.gov.hmrc.residencenilratebandcalculator.controllers.PercentageCloselyInheritedController.onSubmit
+GET        /percentage-passed-to-direct-descendants     uk.gov.hmrc.residencenilratebandcalculator.controllers.PercentagePassedToDirectDescendantsController.onPageLoad
+POST       /percentage-passed-to-direct-descendants     uk.gov.hmrc.residencenilratebandcalculator.controllers.PercentagePassedToDirectDescendantsController.onSubmit
 
 GET        /property-value                              uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyValueController.onPageLoad
 POST       /property-value                              uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyValueController.onSubmit

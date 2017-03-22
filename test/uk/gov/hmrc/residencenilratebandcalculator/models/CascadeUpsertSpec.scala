@@ -37,7 +37,7 @@ class CascadeUpsertSpec extends UnitSpec {
     Constants.propertyInEstateId -> JsBoolean(true),
     Constants.propertyValueId -> JsNumber(testNumber),
     Constants.propertyPassingToDirectDescendantsId -> JsString(Constants.some),
-    Constants.percentageCloselyInheritedId -> JsNumber(testNumber),
+    Constants.percentagePassedToDirectDescendantsId -> JsNumber(testNumber),
     Constants.anyExemptionId -> JsBoolean(true),
     Constants.doesGrossingUpApplyToResidenceId -> JsBoolean(false),
     Constants.chargeableValueOfResidenceId -> JsNumber(testNumber),
@@ -68,9 +68,9 @@ class CascadeUpsertSpec extends UnitSpec {
         updatedCacheMap.data.keys should not contain Constants.propertyPassingToDirectDescendantsId
       }
 
-      "delete the existing 'Percentage Closely Inherited'" in {
+      "delete the existing 'Percentage Passed To Direct Descendants'" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.propertyInEstateId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.percentageCloselyInheritedId
+        updatedCacheMap.data.keys should not contain Constants.percentagePassedToDirectDescendantsId
       }
 
       "delete the existing 'Any Exemption' answer" in {
@@ -103,9 +103,9 @@ class CascadeUpsertSpec extends UnitSpec {
     }
 
     "asked to save the answer 'none' for Property Passing To Direct Descendants" must {
-      "delete the existing 'Percentage Closely Inherited' answer" in {
+      "delete the existing 'Percentage Passed To Direct Descendants' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.none, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.percentageCloselyInheritedId
+        updatedCacheMap.data.keys should not contain Constants.percentagePassedToDirectDescendantsId
       }
 
       "delete the existing 'Any Exemption' answer" in {
@@ -131,9 +131,9 @@ class CascadeUpsertSpec extends UnitSpec {
 
     "asked to save the answer 'all' for Property Passing To Direct Descendants" must {
 
-      "delete the existing 'Percentage Closely Inherited' answer" in {
+      "delete the existing 'Percentage Passed To Direct Descendants' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.all, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.percentageCloselyInheritedId
+        updatedCacheMap.data.keys should not contain Constants.percentagePassedToDirectDescendantsId
       }
 
       "not delete any other answers" in {

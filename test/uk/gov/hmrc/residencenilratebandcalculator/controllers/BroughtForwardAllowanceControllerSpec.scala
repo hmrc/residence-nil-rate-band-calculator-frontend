@@ -169,7 +169,7 @@ class BroughtForwardAllowanceControllerSpec extends UnitSpec with WithFakeApplic
           Constants.propertyInEstateId -> JsBoolean(true),
           Constants.propertyValueId -> JsNumber(400000),
           Constants.propertyPassingToDirectDescendantsId -> JsBoolean(true),
-          Constants.percentageCloselyInheritedId -> JsNumber(100),
+          Constants.percentagePassedToDirectDescendantsId -> JsNumber(100),
           Constants.anyBroughtForwardAllowanceId -> JsBoolean(true)
         ))
       val controllerId = createController().controllerId
@@ -183,7 +183,7 @@ class BroughtForwardAllowanceControllerSpec extends UnitSpec with WithFakeApplic
              Constants.propertyInEstateId,
              Constants.propertyValueId,
              Constants.propertyPassingToDirectDescendantsId,
-             Constants.percentageCloselyInheritedId,
+             Constants.percentagePassedToDirectDescendantsId,
              Constants.anyBroughtForwardAllowanceId))
       true shouldBe(true)
     }

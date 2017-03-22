@@ -91,10 +91,10 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.propertyPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.AnyExemptionController.onPageLoad()
     }
 
-    "return a function that goes to the Percentage Closely Inherited controller when given Property Passing To Direct Descendants with a value of some" in {
+    "return a function that goes to the Percentage Passed To Direct Descendants controller when given Property Passing To Direct Descendants with a value of some" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.propertyPassingToDirectDescendants) thenReturn Some(Constants.some)
-      navigator.nextPage(Constants.propertyPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.PercentageCloselyInheritedController.onPageLoad()
+      navigator.nextPage(Constants.propertyPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.PercentagePassedToDirectDescendantsController.onPageLoad()
     }
 
     "return a function that goes to the Cannot Claim RNRB controller when given Property Passing To Direct Descendants with a value of none" in {
@@ -119,10 +119,10 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.cannotClaimDownsizingId)(mock[UserAnswers]) shouldBe routes.ResultsController.onPageLoad()
     }
 
-    "return a function that goes to the Any Exemption controller when given PercentageCloselyInherited" in {
+    "return a function that goes to the Any Exemption controller when given PercentagePassedToDirectDescendants" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.percentageCloselyInherited) thenReturn Some(1)
-      navigator.nextPage(Constants.percentageCloselyInheritedId)(mockCacheMap) shouldBe routes.AnyExemptionController.onPageLoad()
+      when(mockCacheMap.percentagePassedToDirectDescendants) thenReturn Some(1)
+      navigator.nextPage(Constants.percentagePassedToDirectDescendantsId)(mockCacheMap) shouldBe routes.AnyExemptionController.onPageLoad()
     }
 
     "return a call to the PropertyValueController onPageLoad method when there is a property in the estate" in {
@@ -214,8 +214,8 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.propertyPassingToDirectDescendantsId)(userAnswers) shouldBe routes.PropertyValueController.onPageLoad()
     }
 
-    "return a call to the Property Passing To Direct Descendants when back linking from the Percentage Closely Inherited page" in {
-      navigator.lastPage(Constants.percentageCloselyInheritedId)(userAnswers) shouldBe routes.PropertyPassingToDirectDescendantsController.onPageLoad()
+    "return a call to the Property Passing To Direct Descendants when back linking from the Percentage Passed To Direct Descendants page" in {
+      navigator.lastPage(Constants.percentagePassedToDirectDescendantsId)(userAnswers) shouldBe routes.PropertyPassingToDirectDescendantsController.onPageLoad()
     }
 
     "return a call to Property Passing To Direct Descendants when back linking from the Any Exemption page " +
@@ -225,11 +225,11 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.anyExemptionId)(userAnswers) shouldBe routes.PropertyPassingToDirectDescendantsController.onPageLoad()
     }
 
-    "return a call to the Percentage Closely Inherited when back linking from the Any Exemption page " +
+    "return a call to the Percentage Passed To Direct Descendants when back linking from the Any Exemption page " +
       "when the user has given an answer of 'some' for 'Property Passing To Direct Descendants'" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.propertyPassingToDirectDescendants) thenReturn Some(Constants.some)
-      navigator.lastPage(Constants.anyExemptionId)(userAnswers) shouldBe routes.PercentageCloselyInheritedController.onPageLoad()
+      navigator.lastPage(Constants.anyExemptionId)(userAnswers) shouldBe routes.PercentagePassedToDirectDescendantsController.onPageLoad()
     }
 
     "return a call to Property Passing To Direct Descendants when back linking from the Any Exemption page " +

@@ -50,7 +50,7 @@ class ChargeableValueOfResidenceCloselyInheritedControllerSpec extends SimpleCon
            Constants.propertyInEstateId,
            Constants.propertyValueId,
            Constants.propertyPassingToDirectDescendantsId,
-           Constants.percentageCloselyInheritedId,
+           Constants.percentagePassedToDirectDescendantsId,
            Constants.chargeableValueOfResidenceId))(Reads.IntReads, Writes.IntWrites)
 
     "return bad request on submit with a value greater than the previously saved Chargeable Value of Residence" in {

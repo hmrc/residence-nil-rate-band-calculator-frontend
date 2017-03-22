@@ -24,7 +24,7 @@ case class CalculationInput(dateOfDeath: LocalDate,
                             valueOfEstate: Int,
                             chargeableEstateValue: Int,
                             propertyValue: Int,
-                            percentageCloselyInherited: Int,
+                            percentagePassedToDirectDescendants: Int,
                             broughtForwardAllowance: Int,
                             propertyValueAfterExemption: Option[PropertyValueAfterExemption],
                             downsizingDetails: Option[DownsizingDetails])
@@ -47,7 +47,7 @@ object CalculationInput {
       userAnswers.valueOfEstate.get,
       userAnswers.chargeableEstateValue.get,
       getPropertyValue(userAnswers),
-      getPercentageCloselyInherited(userAnswers),
+      getPercentagePassedToDirectDescendants(userAnswers),
       getBroughtForwardAllowance(userAnswers),
       getChargeableValueOfResidence(userAnswers),
       getDownsizingDetails(userAnswers)
@@ -68,9 +68,9 @@ object CalculationInput {
     case _ => 0
   }
 
-  private def getPercentageCloselyInherited(userAnswers: UserAnswers) = userAnswers.propertyInEstate.get match {
+  private def getPercentagePassedToDirectDescendants(userAnswers: UserAnswers) = userAnswers.propertyInEstate.get match {
       case true if userAnswers.propertyPassingToDirectDescendants.get == Constants.all => 100
-      case true if userAnswers.propertyPassingToDirectDescendants.get == Constants.some => userAnswers.percentageCloselyInherited.get
+      case true if userAnswers.propertyPassingToDirectDescendants.get == Constants.some => userAnswers.percentagePassedToDirectDescendants.get
       case _ => 0
     }
 
@@ -95,7 +95,7 @@ object CalculationInput {
     require(userAnswers.propertyPassingToDirectDescendants.isDefined, "Property Passing To Direct Descendants was not answered")
 
     if(userAnswers.propertyPassingToDirectDescendants.get == Constants.some) {
-      require(userAnswers.percentageCloselyInherited.isDefined, "Percentage Closely Inherited was not answered")
+      require(userAnswers.percentagePassedToDirectDescendants.isDefined, "Percentage Passed To Direct Descendants was not answered")
     }
     if (userAnswers.propertyPassingToDirectDescendants.get != Constants.none) requirePropertyCloselyInheritedDependancies(userAnswers)
   }

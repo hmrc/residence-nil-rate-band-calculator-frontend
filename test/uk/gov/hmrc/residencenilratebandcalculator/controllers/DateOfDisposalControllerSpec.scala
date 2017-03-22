@@ -44,7 +44,7 @@ class DateOfDisposalControllerSpec extends DateControllerSpecBase {
            Constants.propertyInEstateId,
            Constants.propertyValueId,
            Constants.propertyPassingToDirectDescendantsId,
-           Constants.percentageCloselyInheritedId,
+           Constants.percentagePassedToDirectDescendantsId,
            Constants.anyBroughtForwardAllowanceId,
            Constants.broughtForwardAllowanceId,
            Constants.anyDownsizingAllowanceId))(Date.dateReads)

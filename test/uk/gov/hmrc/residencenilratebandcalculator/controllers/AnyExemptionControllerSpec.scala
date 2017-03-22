@@ -48,6 +48,6 @@ class AnyExemptionControllerSpec extends SimpleControllerSpecBase {
         Constants.propertyInEstateId,
         Constants.propertyValueId,
         Constants.propertyPassingToDirectDescendantsId,
-        Constants.percentageCloselyInheritedId))(Reads.BooleanReads, Writes.BooleanWrites)
+        Constants.percentagePassedToDirectDescendantsId))(Reads.BooleanReads, Writes.BooleanWrites)
   }
 }
