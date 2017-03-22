@@ -25,7 +25,7 @@ object Constants {
   val anyBroughtForwardAllowanceId = "AnyBroughtForwardAllowance"
   val anyBroughtForwardAllowanceOnDisposalId = "AnyBroughtForwardAllowanceOnDisposal"
   val anyDownsizingAllowanceId = "AnyDownsizingAllowance"
-  val anyEstatePassedToDescendantsId = "AnyEstatePassedToDescendants"
+  val partOfEstatePassingToDirectDescendantsId = "PartOfEstatePassingToDirectDescendants"
   val anyExemptionId = "AnyExemption"
   val anyPropertyCloselyInheritedId = "AnyPropertyCloselyInherited"
   val assetsPassingToDirectDescendantsId = "AssetsPassingToDirectDescendants"

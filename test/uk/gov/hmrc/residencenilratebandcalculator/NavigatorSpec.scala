@@ -33,22 +33,22 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage("")(mock[UserAnswers]) shouldBe routes.PageNotFoundController.onPageLoad()
     }
 
-    "return a function that goes to the Any Estate Passed To Descendants controller when given DateOfDeath, and the date of death is after 5 April 2017" in {
+    "return a function that goes to the Part of Estate Passing to Direct Descendants controller when given DateOfDeath, and the date of death is after 5 April 2017" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.dateOfDeath) thenReturn Some(new LocalDate(2017, 4, 6))
-      navigator.nextPage(Constants.dateOfDeathId)(mockCacheMap) shouldBe routes.AnyEstatePassedToDescendantsController.onPageLoad()
+      navigator.nextPage(Constants.dateOfDeathId)(mockCacheMap) shouldBe routes.PartOfEstatePassingToDirectDescendantsController.onPageLoad()
     }
 
-    "return a function that goes to the Gross Estate Value controller when given Any Estate Passed To Descendants with a value of true" in {
+    "return a function that goes to the Gross Estate Value controller when given Part Of Estate Passing To Direct Descendants with a value of true" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.anyEstatePassedToDescendants) thenReturn Some(true)
-      navigator.nextPage(Constants.anyEstatePassedToDescendantsId)(mockCacheMap) shouldBe routes.GrossEstateValueController.onPageLoad()
+      when(mockCacheMap.partOfEstatePassingToDirectDescendants) thenReturn Some(true)
+      navigator.nextPage(Constants.partOfEstatePassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.GrossEstateValueController.onPageLoad()
     }
 
-    "return a function that goes to the Transition Out Controller controller when given Any Estate Passed To Descendants with a value of false" in {
+    "return a function that goes to the Transition Out Controller controller when given Part of Estate Passing to Direct Descendants with a value of false" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.anyEstatePassedToDescendants) thenReturn Some(false)
-      navigator.nextPage(Constants.anyEstatePassedToDescendantsId)(mockCacheMap) shouldBe routes.TransitionOutController.onPageLoad()
+      when(mockCacheMap.partOfEstatePassingToDirectDescendants) thenReturn Some(false)
+      navigator.nextPage(Constants.partOfEstatePassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.TransitionOutController.onPageLoad()
     }
 
     "return a function that goes to the Transition controller when given DateOfDeath, and the date of death is 5 April 2017" in {
@@ -190,12 +190,12 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
 
     val userAnswers = new UserAnswers(CacheMap("", Map()))
 
-    "return a call to the Date Of Death when back linking from the Any Estate Passed To Descendant page" in {
-      navigator.lastPage(Constants.anyEstatePassedToDescendantsId)(userAnswers) shouldBe routes.DateOfDeathController.onPageLoad()
+    "return a call to the Date Of Death when back linking from the Part of Estate Passing to Direct Descendants page" in {
+      navigator.lastPage(Constants.partOfEstatePassingToDirectDescendantsId)(userAnswers) shouldBe routes.DateOfDeathController.onPageLoad()
     }
 
-    "return a call to the Any Estate Passed To Descendants when back linking from the Gross Estate Value page" in {
-      navigator.lastPage(Constants.grossEstateValueId)(userAnswers) shouldBe routes.AnyEstatePassedToDescendantsController.onPageLoad()
+    "return a call to the Part Of Estate Passing To Direct Descendants when back linking from the Gross Estate Value page" in {
+      navigator.lastPage(Constants.grossEstateValueId)(userAnswers) shouldBe routes.PartOfEstatePassingToDirectDescendantsController.onPageLoad()
     }
 
     "return a call to the Gross Estate Value when back linking from the Chargeable Transfer Amount page" in {
