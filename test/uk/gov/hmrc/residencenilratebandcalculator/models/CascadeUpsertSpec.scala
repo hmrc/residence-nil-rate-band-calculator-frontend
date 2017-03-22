@@ -33,7 +33,7 @@ class CascadeUpsertSpec extends UnitSpec {
     Constants.dateOfDeathId -> JsString("2020-01-01"),
     Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
     Constants.valueOfEstateId -> JsNumber(testNumber),
-    Constants.chargeableTransferAmountId -> JsNumber(testNumber),
+    Constants.chargeableEstateValueId -> JsNumber(testNumber),
     Constants.estateHasPropertyId -> JsBoolean(true),
     Constants.propertyValueId -> JsNumber(testNumber),
     Constants.anyPropertyCloselyInheritedId -> JsString(Constants.some),

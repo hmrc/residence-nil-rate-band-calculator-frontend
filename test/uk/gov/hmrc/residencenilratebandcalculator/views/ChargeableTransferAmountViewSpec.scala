@@ -17,25 +17,25 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_transfer_amount
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_estate_value
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 
 import scala.language.reflectiveCalls
 
-class ChargeableTransferAmountViewSpec extends IntViewSpecBase {
+class ChargeableEstateValueViewSpec extends IntViewSpecBase {
 
-  val messageKeyPrefix = "chargeable_transfer_amount"
+  val messageKeyPrefix = "chargeable_estate_value"
 
-  def createView(form: Option[Form[Int]] = None) = chargeable_transfer_amount(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Int]] = None) = chargeable_estate_value(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
-  "Chargeable Transfer Amount View" must {
+  "Chargeable Estate Value View" must {
 
     behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance")
 
     behave like pageWithBackLink[Int](createView)
 
-    behave like intPage(createView, messageKeyPrefix, ChargeableTransferAmountController.onSubmit().url, NonNegativeIntForm())
+    behave like intPage(createView, messageKeyPrefix, ChargeableEstateValueController.onSubmit().url, NonNegativeIntForm())
 
     behave like pageContainingPreviousAnswers(createView)
 

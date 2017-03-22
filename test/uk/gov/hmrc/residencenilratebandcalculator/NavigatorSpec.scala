@@ -69,15 +69,15 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.dateOfDeathId)(mockCacheMap) shouldBe routes.HomeController.onPageLoad()
     }
 
-    "when the ChargeableTransferAmount is used as the class id, the navigator must return a function that when executed against any" +
+    "when the ChargeableEstateValue is used as the class id, the navigator must return a function that when executed against any" +
       "parameter goes to EstateHasProperty controller" in {
-      navigator.nextPage(Constants.chargeableTransferAmountId)(mock[UserAnswers]) shouldBe routes.EstateHasPropertyController.onPageLoad()
+      navigator.nextPage(Constants.chargeableEstateValueId)(mock[UserAnswers]) shouldBe routes.EstateHasPropertyController.onPageLoad()
     }
 
-    "return a call to the ChargeableTransferAmountController onPageLoad method when given Value Of Estate" in {
+    "return a call to the ChargeableEstateValueController onPageLoad method when given Value Of Estate" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.valueOfEstate) thenReturn Some(2000000)
-      navigator.nextPage(Constants.valueOfEstateId)(mockCacheMap) shouldBe routes.ChargeableTransferAmountController.onPageLoad()
+      navigator.nextPage(Constants.valueOfEstateId)(mockCacheMap) shouldBe routes.ChargeableEstateValueController.onPageLoad()
     }
 
     "when the PropertyValue is used at the class id, the navigator must return a function that when executed against any" +
@@ -198,12 +198,12 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.valueOfEstateId)(userAnswers) shouldBe routes.PartOfEstatePassingToDirectDescendantsController.onPageLoad()
     }
 
-    "return a call to the Value Of Estate when back linking from the Chargeable Transfer Amount page" in {
-      navigator.lastPage(Constants.chargeableTransferAmountId)(userAnswers) shouldBe routes.ValueOfEstateController.onPageLoad()
+    "return a call to the Value Of Estate when back linking from the Chargeable Estate Value page" in {
+      navigator.lastPage(Constants.chargeableEstateValueId)(userAnswers) shouldBe routes.ValueOfEstateController.onPageLoad()
     }
 
-    "return a call to the Chargeable Transfer Amount when back linking from the Estate Has Property page" in {
-      navigator.lastPage(Constants.estateHasPropertyId)(userAnswers) shouldBe routes.ChargeableTransferAmountController.onPageLoad()
+    "return a call to the Chargeable Estate Value when back linking from the Estate Has Property page" in {
+      navigator.lastPage(Constants.estateHasPropertyId)(userAnswers) shouldBe routes.ChargeableEstateValueController.onPageLoad()
     }
 
     "return a call to the Estate Has Property when back linking from the Property Value page" in {

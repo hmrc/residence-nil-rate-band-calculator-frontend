@@ -134,7 +134,7 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
           Constants.dateOfDeathId -> JsString("2019-03-04"),
           Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
           Constants.valueOfEstateId -> JsNumber(500000),
-          Constants.chargeableTransferAmountId -> JsNumber(450000),
+          Constants.chargeableEstateValueId -> JsNumber(450000),
           Constants.estateHasPropertyId -> JsBoolean(true),
           Constants.propertyValueId -> JsNumber(400000),
           Constants.doesGrossingUpApplyToOtherPropertyId -> JsBoolean(true),

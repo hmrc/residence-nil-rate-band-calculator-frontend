@@ -6,24 +6,24 @@
 @(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[Int]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
-    title = messages("chargeable_transfer_amount.browser_title"),
+    title = messages("chargeable_estate_value.browser_title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
     @rnrbHelpers.back_link(backUrl)
 
-    @rnrbHelpers.heading("chargeable_transfer_amount.title")
+    @rnrbHelpers.heading("chargeable_estate_value.title")
 
-    <p>@messages("chargeable_transfer_amount.guidance")</p>
+    <p>@messages("chargeable_estate_value.guidance")</p>
 
-    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeableTransferAmountController.onSubmit(), 'autoComplete -> "off") {
+    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeableEstateValueController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
 
         @rnrbHelpers.input_text(
             id = "value",
             errorKey = FormHelpers.getErrorByKey(form, "value"),
-            label = messages("chargeable_transfer_amount.title"),
+            label = messages("chargeable_estate_value.title"),
             labelClass = Some("visually-hidden"),
             secondaryLabel = Some("currency"),
             value = Some(FormHelpers.getValue[Int](form).toString)

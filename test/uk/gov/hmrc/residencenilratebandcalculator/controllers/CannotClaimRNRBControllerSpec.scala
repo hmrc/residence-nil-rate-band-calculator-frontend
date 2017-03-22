@@ -50,7 +50,7 @@ class CannotClaimRNRBControllerSpec extends UnitSpec with WithFakeApplication wi
       Constants.dateOfDeathId -> JsString("2019-03-04"),
       Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
       Constants.valueOfEstateId -> JsNumber(500000),
-      Constants.chargeableTransferAmountId -> JsNumber(450000),
+      Constants.chargeableEstateValueId -> JsNumber(450000),
       Constants.estateHasPropertyId -> JsBoolean(true),
       Constants.propertyValueId -> JsNumber(400000),
       Constants.doesGrossingUpApplyToOtherPropertyId -> JsBoolean(true),
@@ -100,7 +100,7 @@ class CannotClaimRNRBControllerSpec extends UnitSpec with WithFakeApplication wi
       val answerList = List(Constants.dateOfDeathId,
         Constants.partOfEstatePassingToDirectDescendantsId,
         Constants.valueOfEstateId,
-        Constants.chargeableTransferAmountId,
+        Constants.chargeableEstateValueId,
         Constants.estateHasPropertyId,
         Constants.propertyValueId)
       answerList shouldBe (calculatedList)
@@ -114,7 +114,7 @@ class CannotClaimRNRBControllerSpec extends UnitSpec with WithFakeApplication wi
       val answerList = List(Constants.dateOfDeathId,
         Constants.partOfEstatePassingToDirectDescendantsId,
         Constants.valueOfEstateId,
-        Constants.chargeableTransferAmountId)
+        Constants.chargeableEstateValueId)
       answerList shouldBe (calculatedList)
     }
   }

@@ -45,7 +45,7 @@ class DoesGrossingUpApplyToResidenceControllerSpec extends SimpleControllerSpecB
       List(Constants.dateOfDeathId,
            Constants.partOfEstatePassingToDirectDescendantsId,
            Constants.valueOfEstateId,
-           Constants.chargeableTransferAmountId,
+           Constants.chargeableEstateValueId,
            Constants.estateHasPropertyId,
            Constants.propertyValueId,
            Constants.anyPropertyCloselyInheritedId,
