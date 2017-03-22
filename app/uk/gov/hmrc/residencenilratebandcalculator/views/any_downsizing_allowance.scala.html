@@ -23,8 +23,6 @@
         <li>@messages("any_downsizing_allowance.guidance1.bullet4")</li>
     </ul>
 
-    <p>@messages("any_downsizing_allowance.guidance2")</p>
-
     @helpers.form(action = AnyDownsizingAllowanceController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
