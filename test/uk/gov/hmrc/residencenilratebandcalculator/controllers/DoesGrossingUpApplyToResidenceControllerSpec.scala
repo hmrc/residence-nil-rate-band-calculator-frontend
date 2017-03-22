@@ -44,7 +44,7 @@ class DoesGrossingUpApplyToResidenceControllerSpec extends SimpleControllerSpecB
     behave like nonStartingController[Boolean](createController,
       List(Constants.dateOfDeathId,
            Constants.partOfEstatePassingToDirectDescendantsId,
-           Constants.grossEstateValueId,
+           Constants.valueOfEstateId,
            Constants.chargeableTransferAmountId,
            Constants.estateHasPropertyId,
            Constants.propertyValueId,

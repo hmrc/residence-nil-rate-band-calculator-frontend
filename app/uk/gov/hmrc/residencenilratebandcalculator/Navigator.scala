@@ -31,7 +31,7 @@ class Navigator @Inject()() {
     Map(
       Constants.dateOfDeathId -> (ua => getDateOfDeathRoute(ua)),
       Constants.partOfEstatePassingToDirectDescendantsId -> (ua => getPartOfEstatePassingToDirectDescendantsRoute(ua)),
-      Constants.grossEstateValueId -> (_ => ChargeableTransferAmountController.onPageLoad()),
+      Constants.valueOfEstateId -> (_ => ChargeableTransferAmountController.onPageLoad()),
       Constants.chargeableTransferAmountId -> (_ => EstateHasPropertyController.onPageLoad()),
       Constants.estateHasPropertyId -> (ua => getEstateHasPropertyRoute(ua)),
       Constants.cannotClaimRNRB -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
@@ -73,7 +73,7 @@ class Navigator @Inject()() {
       TransitionOutController.onPageLoad(), PartOfEstatePassingToDirectDescendantsController.onPageLoad())
 
   private def getPartOfEstatePassingToDirectDescendantsRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.partOfEstatePassingToDirectDescendants, GrossEstateValueController.onPageLoad(), TransitionOutController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.partOfEstatePassingToDirectDescendants, ValueOfEstateController.onPageLoad(), TransitionOutController.onPageLoad())
 
   private def getEstateHasPropertyRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.estateHasProperty, PropertyValueController.onPageLoad(), CannotClaimRNRBController.onPageLoad())
@@ -122,8 +122,8 @@ class Navigator @Inject()() {
   private val reverseRouteMap: Map[String, UserAnswers => Call] = {
     Map(
       Constants.partOfEstatePassingToDirectDescendantsId -> (_ => DateOfDeathController.onPageLoad()),
-      Constants.grossEstateValueId -> (_ => PartOfEstatePassingToDirectDescendantsController.onPageLoad()),
-      Constants.chargeableTransferAmountId -> (_ => GrossEstateValueController.onPageLoad()),
+      Constants.valueOfEstateId -> (_ => PartOfEstatePassingToDirectDescendantsController.onPageLoad()),
+      Constants.chargeableTransferAmountId -> (_ => ValueOfEstateController.onPageLoad()),
       Constants.estateHasPropertyId -> (_ => ChargeableTransferAmountController.onPageLoad()),
       Constants.propertyValueId -> (_ => EstateHasPropertyController.onPageLoad()),
       Constants.anyPropertyCloselyInheritedId -> (_ => PropertyValueController.onPageLoad()),

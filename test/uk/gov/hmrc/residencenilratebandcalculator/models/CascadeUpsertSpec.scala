@@ -32,7 +32,7 @@ class CascadeUpsertSpec extends UnitSpec {
   val fullCacheMap = CacheMap(cacheMapKey, Map(
     Constants.dateOfDeathId -> JsString("2020-01-01"),
     Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
-    Constants.grossEstateValueId -> JsNumber(testNumber),
+    Constants.valueOfEstateId -> JsNumber(testNumber),
     Constants.chargeableTransferAmountId -> JsNumber(testNumber),
     Constants.estateHasPropertyId -> JsBoolean(true),
     Constants.propertyValueId -> JsNumber(testNumber),

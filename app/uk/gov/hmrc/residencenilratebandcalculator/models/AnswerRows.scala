@@ -29,7 +29,7 @@ object AnswerRows {
   val rowOrderList = List[String](
     Constants.dateOfDeathId,
     Constants.partOfEstatePassingToDirectDescendantsId,
-    Constants.grossEstateValueId,
+    Constants.valueOfEstateId,
     Constants.chargeableTransferAmountId,
     Constants.estateHasPropertyId,
     Constants.propertyValueId,
@@ -87,8 +87,8 @@ object AnswerRows {
       boolAnswerRowFn("part_of_estate_passing_to_direct_descendants.title",
         Constants.partOfEstatePassingToDirectDescendantsId,
         routes.PartOfEstatePassingToDirectDescendantsController.onPageLoad),
-    Constants.grossEstateValueId ->
-      intAnswerRowFn("gross_estate_value.title", "Gross estate value", routes.GrossEstateValueController.onPageLoad),
+    Constants.valueOfEstateId ->
+      intAnswerRowFn("value_of_estate.title", Constants.valueOfEstateId, routes.ValueOfEstateController.onPageLoad),
     Constants.chargeableTransferAmountId ->
       intAnswerRowFn("chargeable_transfer_amount.title", "Chargeable transfer amount", routes.ChargeableTransferAmountController.onPageLoad),
     Constants.estateHasPropertyId ->

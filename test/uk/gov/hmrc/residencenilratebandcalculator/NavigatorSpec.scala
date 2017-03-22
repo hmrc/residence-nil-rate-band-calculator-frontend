@@ -39,10 +39,10 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.dateOfDeathId)(mockCacheMap) shouldBe routes.PartOfEstatePassingToDirectDescendantsController.onPageLoad()
     }
 
-    "return a function that goes to the Gross Estate Value controller when given Part Of Estate Passing To Direct Descendants with a value of true" in {
+    "return a function that goes to the Value Of Estate controller when given Part Of Estate Passing To Direct Descendants with a value of true" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.partOfEstatePassingToDirectDescendants) thenReturn Some(true)
-      navigator.nextPage(Constants.partOfEstatePassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.GrossEstateValueController.onPageLoad()
+      navigator.nextPage(Constants.partOfEstatePassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.ValueOfEstateController.onPageLoad()
     }
 
     "return a function that goes to the Transition Out Controller controller when given Part of Estate Passing to Direct Descendants with a value of false" in {
@@ -74,10 +74,10 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.chargeableTransferAmountId)(mock[UserAnswers]) shouldBe routes.EstateHasPropertyController.onPageLoad()
     }
 
-    "return a call to the ChargeableTransferAmountController onPageLoad method when given Gross Estate Value" in {
+    "return a call to the ChargeableTransferAmountController onPageLoad method when given Value Of Estate" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.grossEstateValue) thenReturn Some(2000000)
-      navigator.nextPage(Constants.grossEstateValueId)(mockCacheMap) shouldBe routes.ChargeableTransferAmountController.onPageLoad()
+      when(mockCacheMap.valueOfEstate) thenReturn Some(2000000)
+      navigator.nextPage(Constants.valueOfEstateId)(mockCacheMap) shouldBe routes.ChargeableTransferAmountController.onPageLoad()
     }
 
     "when the PropertyValue is used at the class id, the navigator must return a function that when executed against any" +
@@ -194,12 +194,12 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.partOfEstatePassingToDirectDescendantsId)(userAnswers) shouldBe routes.DateOfDeathController.onPageLoad()
     }
 
-    "return a call to the Part Of Estate Passing To Direct Descendants when back linking from the Gross Estate Value page" in {
-      navigator.lastPage(Constants.grossEstateValueId)(userAnswers) shouldBe routes.PartOfEstatePassingToDirectDescendantsController.onPageLoad()
+    "return a call to the Part Of Estate Passing To Direct Descendants when back linking from the Value Of Estate page" in {
+      navigator.lastPage(Constants.valueOfEstateId)(userAnswers) shouldBe routes.PartOfEstatePassingToDirectDescendantsController.onPageLoad()
     }
 
-    "return a call to the Gross Estate Value when back linking from the Chargeable Transfer Amount page" in {
-      navigator.lastPage(Constants.chargeableTransferAmountId)(userAnswers) shouldBe routes.GrossEstateValueController.onPageLoad()
+    "return a call to the Value Of Estate when back linking from the Chargeable Transfer Amount page" in {
+      navigator.lastPage(Constants.chargeableTransferAmountId)(userAnswers) shouldBe routes.ValueOfEstateController.onPageLoad()
     }
 
     "return a call to the Chargeable Transfer Amount when back linking from the Estate Has Property page" in {

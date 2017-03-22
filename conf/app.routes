@@ -65,8 +65,8 @@ POST       /estate-has-property                         uk.gov.hmrc.residencenil
 GET        /exit-questionnaire                          uk.gov.hmrc.residencenilratebandcalculator.controllers.ExitQuestionnaireController.onPageLoad
 POST       /exit-questionnaire                          uk.gov.hmrc.residencenilratebandcalculator.controllers.ExitQuestionnaireController.onSubmit
 
-GET        /gross-estate-value                          uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onPageLoad
-POST       /gross-estate-value                          uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossEstateValueController.onSubmit
+GET        /value-of-estate                             uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfEstateController.onPageLoad
+POST       /value-of-estate                             uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfEstateController.onSubmit
 
 GET        /not-found                                   uk.gov.hmrc.residencenilratebandcalculator.controllers.PageNotFoundController.onPageLoad
 

@@ -42,30 +42,12 @@ object Constants {
   val downsizingEligibilityDate = new LocalDate(2015, 7, 8)
   val eligibilityDate = new LocalDate(2017, 4, 6)
   val estateHasPropertyId = "EstateHasProperty"
-  val grossEstateValueId = "GrossEstateValue"
+  val valueOfEstateId = "ValueOfEstate"
   val percentageCloselyInheritedId = "PercentageCloselyInherited"
   val chargeableValueOfResidenceId = "ChargeableValueOfResidence"
   val chargeableValueOfResidenceCloselyInheritedId = "ChargeableValueOfResidenceCloselyInherited"
   val propertyValueId = "PropertyValue"
   val valueOfDisposedPropertyId = "ValueOfDisposedProperty"
-
-  val jsonKeys = Map(
-    broughtForwardAllowanceId -> "broughtForwardAllowance",
-    chargeableTransferAmountId -> "chargeableTransferAmount",
-    dateOfDeathId -> "dateOfDeath",
-    grossEstateValueId -> "grossEstateValue",
-    propertyValueId -> "propertyValue",
-    percentageCloselyInheritedId -> "percentageCloselyInherited",
-    chargeableValueOfResidenceId -> "chargeableValueOfResidence",
-    chargeableValueOfResidenceCloselyInheritedId -> "chargeableValueOfResidenceCloselyInherited"
-  )
-
-  val downsizingKeys = Map(
-    dateOfDisposalId -> "dateOfDisposal",
-    valueOfDisposedPropertyId -> "valueOfDisposedProperty",
-    assetsPassingToDirectDescendantsId -> "valueCloselyInherited",
-    broughtForwardAllowanceOnDisposalId -> "broughtForwardAllowanceAtDisposal"
-  )
 
   val all = "all"
   val some = "some"

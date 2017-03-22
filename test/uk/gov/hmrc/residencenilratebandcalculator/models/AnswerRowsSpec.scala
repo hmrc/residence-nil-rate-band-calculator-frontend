@@ -174,11 +174,11 @@ class AnswerRowSpecs extends UnitSpec with WithFakeApplication with MockSessionC
       val cacheMap = CacheMap("", Map(
         Constants.dateOfDeathId -> JsNumber(0),
         Constants.partOfEstatePassingToDirectDescendantsId -> JsNumber(1),
-        Constants.grossEstateValueId -> JsNumber(2),
+        Constants.valueOfEstateId -> JsNumber(2),
         Constants.chargeableTransferAmountId -> JsNumber(3)
       ))
 
-      val result = AnswerRows.truncateAndLocateInCacheMap(Constants.grossEstateValueId, cacheMap)
+      val result = AnswerRows.truncateAndLocateInCacheMap(Constants.valueOfEstateId, cacheMap)
 
       result.data shouldBe Map(Constants.dateOfDeathId -> JsNumber(0),
         Constants.partOfEstatePassingToDirectDescendantsId -> JsNumber(1))
@@ -189,11 +189,11 @@ class AnswerRowSpecs extends UnitSpec with WithFakeApplication with MockSessionC
 
       val cacheMap = CacheMap("", Map(
         Constants.dateOfDeathId -> JsNumber(0),
-        Constants.grossEstateValueId -> JsNumber(2),
+        Constants.valueOfEstateId -> JsNumber(2),
         Constants.chargeableTransferAmountId -> JsNumber(3)
       ))
 
-      val result = AnswerRows.truncateAndLocateInCacheMap(Constants.grossEstateValueId, cacheMap)
+      val result = AnswerRows.truncateAndLocateInCacheMap(Constants.valueOfEstateId, cacheMap)
 
       result.data shouldBe Map(Constants.dateOfDeathId -> JsNumber(0))
     }
@@ -203,7 +203,7 @@ class AnswerRowSpecs extends UnitSpec with WithFakeApplication with MockSessionC
       val cacheMap = CacheMap("", Map(
         Constants.dateOfDeathId -> JsNumber(0),
         Constants.partOfEstatePassingToDirectDescendantsId -> JsNumber(1),
-        Constants.grossEstateValueId -> JsNumber(2),
+        Constants.valueOfEstateId -> JsNumber(2),
         Constants.chargeableTransferAmountId -> JsNumber(3)
       ))
 
@@ -212,17 +212,17 @@ class AnswerRowSpecs extends UnitSpec with WithFakeApplication with MockSessionC
       val answerRowFns = Map[String, JsValue => Messages => AnswerRow](
         Constants.dateOfDeathId -> ((_: JsValue) => (_: Messages) => AnswerRow("title1", "Yes", "http://example.com/one")),
         Constants.partOfEstatePassingToDirectDescendantsId -> ((_: JsValue) => (_: Messages) => AnswerRow("title2", "£1,000.00", "http://example.com/two")),
-        Constants.grossEstateValueId -> ((_: JsValue) => (_: Messages) => AnswerRow("title3", "1 June 2017", "http://example.com/three"))
+        Constants.valueOfEstateId -> ((_: JsValue) => (_: Messages) => AnswerRow("title3", "1 June 2017", "http://example.com/three"))
       )
       val rowOrder = Map[String, Int](
         Constants.dateOfDeathId -> 0,
         Constants.partOfEstatePassingToDirectDescendantsId -> 1,
-        Constants.grossEstateValueId -> 2,
+        Constants.valueOfEstateId -> 2,
         Constants.chargeableTransferAmountId -> 3
       )
 
       val result = AnswerRows.constructAnswerRows(AnswerRows.truncateAndLocateInCacheMap(
-        Constants.grossEstateValueId, cacheMap),
+        Constants.valueOfEstateId, cacheMap),
         answerRowFns, rowOrder, messages)
 
       result shouldBe Seq(

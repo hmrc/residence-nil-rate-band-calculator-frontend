@@ -25,19 +25,19 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.gross_estate_value
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_estate
 
 @Singleton
-class GrossEstateValueController @Inject()(override val appConfig: FrontendAppConfig,
-                                           val messagesApi: MessagesApi,
-                                           override val sessionConnector: SessionConnector,
-                                           override val navigator: Navigator) extends SimpleControllerBase[Int] {
+class ValueOfEstateController @Inject()(override val appConfig: FrontendAppConfig,
+                                        val messagesApi: MessagesApi,
+                                        override val sessionConnector: SessionConnector,
+                                        override val navigator: Navigator) extends SimpleControllerBase[Int] {
 
-  override val controllerId = Constants.grossEstateValueId
+  override val controllerId = Constants.valueOfEstateId
 
   override def form = () => NonNegativeIntForm()
 
   override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    gross_estate_value(appConfig, backUrl, form, answerRows)
+    value_of_estate(appConfig, backUrl, form, answerRows)
   }
 }

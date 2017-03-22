@@ -21,7 +21,7 @@ import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 case class CalculationInput(dateOfDeath: LocalDate,
-                            grossEstateValue: Int,
+                            valueOfEstate: Int,
                             chargeableTransferAmount: Int,
                             propertyValue: Int,
                             percentageCloselyInherited: Int,
@@ -34,7 +34,7 @@ object CalculationInput {
 
   def apply(userAnswers: UserAnswers): CalculationInput = {
     require(userAnswers.dateOfDeath.isDefined, "Date of Death was not answered")
-    require(userAnswers.grossEstateValue.isDefined, "Gross Estate Value was not answered")
+    require(userAnswers.valueOfEstate.isDefined, "Value Of Estate was not answered")
     require(userAnswers.chargeableTransferAmount.isDefined, "Chargeable Transfer Amount was not answered")
     require(userAnswers.estateHasProperty.isDefined, "Estate Has Property was not answered")
     if (userAnswers.estateHasProperty.get) requireEstateHasPropertyDependancies(userAnswers)
@@ -44,7 +44,7 @@ object CalculationInput {
 
     CalculationInput(
       userAnswers.dateOfDeath.get,
-      userAnswers.grossEstateValue.get,
+      userAnswers.valueOfEstate.get,
       userAnswers.chargeableTransferAmount.get,
       getPropertyValue(userAnswers),
       getPercentageCloselyInherited(userAnswers),

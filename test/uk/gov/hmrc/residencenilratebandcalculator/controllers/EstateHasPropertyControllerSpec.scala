@@ -43,7 +43,7 @@ class EstateHasPropertyControllerSpec extends SimpleControllerSpecBase {
     behave like nonStartingController[Boolean](createController,
       List(Constants.dateOfDeathId,
            Constants.partOfEstatePassingToDirectDescendantsId,
-           Constants.grossEstateValueId,
+           Constants.valueOfEstateId,
            Constants.chargeableTransferAmountId))(Reads.BooleanReads, Writes.BooleanWrites)
   }
 }
