@@ -56,7 +56,7 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def estateHasProperty = cacheMap.getEntry[Boolean](Constants.estateHasPropertyId)
 
-  def grossEstateValue = cacheMap.getEntry[Int](Constants.grossEstateValueId)
+  def valueOfEstate = cacheMap.getEntry[Int](Constants.valueOfEstateId)
 
   def percentageCloselyInherited = cacheMap.getEntry[Int](Constants.percentageCloselyInheritedId)
 

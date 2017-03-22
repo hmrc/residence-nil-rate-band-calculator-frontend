@@ -181,15 +181,15 @@ exit_questionnaire.user_research.guidance = This will help improve the service. 
 session_expired.browser_title = Timed out
 session_expired.title = Your session has timed out
 
-gross_estate_value.browser_title = What is the total value of the estate before deducting any reliefs or exemptions?
-gross_estate_value.title = What is the total value of the estate before deducting any reliefs or exemptions?
-gross_estate_value.guidance1 = Add together the values that you have given in:
-gross_estate_value.guidance1.bullet1 = box 91 on the IHT-400 form
-gross_estate_value.guidance1.bullet2 = box 12 on the IHT-403 schedule
-gross_estate_value.guidance1.bullet3 = box 10 on the IHT-418 schedule
-gross_estate_value.guidance1.bullet4 = box 15 on the IHT-418 schedule
-gross_estate_value.guidance2 = The IHT-403 and IHT-418 schedules are only completed if the estate included values for gifts given away and for assets held in trust.
-gross_estate_value.label =
+value_of_estate.browser_title = What is the total value of the estate before deducting any reliefs or exemptions?
+value_of_estate.title = What is the total value of the estate before deducting any reliefs or exemptions?
+value_of_estate.guidance1 = Add together the values that you have given in:
+value_of_estate.guidance1.bullet1 = box 91 on the IHT-400 form
+value_of_estate.guidance1.bullet2 = box 12 on the IHT-403 schedule
+value_of_estate.guidance1.bullet3 = box 10 on the IHT-418 schedule
+value_of_estate.guidance1.bullet4 = box 15 on the IHT-418 schedule
+value_of_estate.guidance2 = The IHT-403 and IHT-418 schedules are only completed if the estate included values for gifts given away and for assets held in trust.
+value_of_estate.label =
 
 index.browser_title = Residence Nil-rate Band Calculator
 index.title = Residence Nil-rate Band Calculator
@@ -223,7 +223,7 @@ property_value.guidance2 = You would have included the value of a home and what 
 property_value.guidance3 = If the person who has died jointly owned their home with someone else, only include the value that they owned. If the IHT-400 form allowed you to take a discount off the value of the home, you can include that discount here before you take off any debts.
 property_value.guidance4 = If there was more than one property in the estate that the person who has died owned and had lived at, you must choose only one of them to give the value of and to answer more questions about.
 property_value.label =
-property_value.greater_than_gross_estate_value.error = Property Value cannot be greater than the Gross Estate Value
+property_value.greater_than_value_of_estate.error = Property Value cannot be greater than the Value Of Estate
 
 results.browser_title = Final calculation
 results.title = The Residence Nil Rate Amount available for this estate&nbsp;is {0}

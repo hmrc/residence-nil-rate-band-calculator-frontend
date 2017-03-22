@@ -46,9 +46,9 @@ class RnrbConnectorSpec extends UnitSpec with WithFakeApplication with MockitoSu
   val minimalJson = JsObject(Map[String, JsValue]())
 
   val dateOfDeath = new LocalDate(2020, 1, 1)
-  val grossEstateValue = 1
+  val valueOfEstate = 1
   val chargeableTransferAmount = 2
-  val calculationInput = CalculationInput(dateOfDeath, grossEstateValue, chargeableTransferAmount, 0, 0, 0, None, None)
+  val calculationInput = CalculationInput(dateOfDeath, valueOfEstate, chargeableTransferAmount, 0, 0, 0, None, None)
 
   "RNRB Connector" when {
 

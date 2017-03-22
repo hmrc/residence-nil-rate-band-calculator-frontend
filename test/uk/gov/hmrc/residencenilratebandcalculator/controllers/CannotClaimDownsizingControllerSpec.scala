@@ -50,7 +50,7 @@ class CannotClaimDownsizingControllerSpec extends UnitSpec with WithFakeApplicat
     Map[String, JsValue](
       Constants.dateOfDeathId -> JsString("2019-03-04"),
       Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
-      Constants.grossEstateValueId -> JsNumber(500000),
+      Constants.valueOfEstateId -> JsNumber(500000),
       Constants.chargeableTransferAmountId -> JsNumber(450000),
       Constants.estateHasPropertyId -> JsBoolean(true),
       Constants.propertyValueId -> JsNumber(400000),
@@ -101,7 +101,7 @@ class CannotClaimDownsizingControllerSpec extends UnitSpec with WithFakeApplicat
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
       val answerList = List(Constants.dateOfDeathId,
         Constants.partOfEstatePassingToDirectDescendantsId,
-        Constants.grossEstateValueId,
+        Constants.valueOfEstateId,
         Constants.chargeableTransferAmountId)
       answerList shouldBe (calculatedList)
     }
@@ -113,7 +113,7 @@ class CannotClaimDownsizingControllerSpec extends UnitSpec with WithFakeApplicat
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
       val answerList = List(Constants.dateOfDeathId,
         Constants.partOfEstatePassingToDirectDescendantsId,
-        Constants.grossEstateValueId,
+        Constants.valueOfEstateId,
         Constants.chargeableTransferAmountId)
       answerList shouldBe (calculatedList)
     }

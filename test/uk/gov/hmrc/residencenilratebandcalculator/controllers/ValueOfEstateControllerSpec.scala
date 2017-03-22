@@ -19,26 +19,26 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.gross_estate_value
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_estate
 
-class GrossEstateValueControllerSpec extends SimpleControllerSpecBase {
+class ValueOfEstateControllerSpec extends SimpleControllerSpecBase {
 
-  "Gross Estate Value Controller" must {
+  "Value Of Estate Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PartOfEstatePassingToDirectDescendantsController.onPageLoad().url
 
       value match {
-        case None => gross_estate_value(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => gross_estate_value(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
+        case None => value_of_estate(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => value_of_estate(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 
-    def createController = () => new GrossEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
+    def createController = () => new ValueOfEstateController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
     val testValue = 123
 
-    behave like rnrbController[Int](createController, createView, Constants.grossEstateValueId, testValue)(Reads.IntReads, Writes.IntWrites)
+    behave like rnrbController[Int](createController, createView, Constants.valueOfEstateId, testValue)(Reads.IntReads, Writes.IntWrites)
 
     behave like nonStartingController[Int](createController, List(Constants.dateOfDeathId, Constants.partOfEstatePassingToDirectDescendantsId))(Reads.IntReads, Writes.IntWrites)
   }

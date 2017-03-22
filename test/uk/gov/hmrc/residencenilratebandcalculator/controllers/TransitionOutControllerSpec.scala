@@ -42,7 +42,7 @@ class TransitionOutControllerSpec extends UnitSpec with WithFakeApplication with
     Map[String, JsValue](
       Constants.dateOfDeathId -> JsString("2019-03-04"),
       Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
-      Constants.grossEstateValueId -> JsNumber(500000),
+      Constants.valueOfEstateId -> JsNumber(500000),
       Constants.chargeableTransferAmountId -> JsNumber(450000),
       Constants.estateHasPropertyId -> JsBoolean(true),
       Constants.propertyValueId -> JsNumber(400000),
@@ -99,7 +99,7 @@ class TransitionOutControllerSpec extends UnitSpec with WithFakeApplication with
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
       val answerList = List(Constants.dateOfDeathId,
         Constants.partOfEstatePassingToDirectDescendantsId,
-        Constants.grossEstateValueId,
+        Constants.valueOfEstateId,
         Constants.chargeableTransferAmountId,
         Constants.estateHasPropertyId,
         Constants.propertyValueId,
@@ -115,7 +115,7 @@ class TransitionOutControllerSpec extends UnitSpec with WithFakeApplication with
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
       val answerList = List(Constants.dateOfDeathId,
         Constants.partOfEstatePassingToDirectDescendantsId,
-        Constants.grossEstateValueId,
+        Constants.valueOfEstateId,
         Constants.chargeableTransferAmountId,
         Constants.estateHasPropertyId,
         Constants.propertyValueId,

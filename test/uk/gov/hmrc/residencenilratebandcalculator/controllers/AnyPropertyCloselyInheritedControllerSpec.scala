@@ -43,7 +43,7 @@ class AnyPropertyCloselyInheritedControllerSpec extends SimpleControllerSpecBase
     behave like nonStartingController[String](createController,
       List(Constants.dateOfDeathId,
            Constants.partOfEstatePassingToDirectDescendantsId,
-           Constants.grossEstateValueId,
+           Constants.valueOfEstateId,
            Constants.chargeableTransferAmountId,
            Constants.estateHasPropertyId,
            Constants.propertyValueId))(Reads.StringReads, Writes.StringWrites)

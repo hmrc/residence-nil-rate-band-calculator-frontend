@@ -19,17 +19,17 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.gross_estate_value
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_estate
 
 import scala.language.reflectiveCalls
 
-class GrossEstateValueViewSpec extends IntViewSpecBase {
+class ValueOfEstateViewSpec extends IntViewSpecBase {
 
-  val messageKeyPrefix = "gross_estate_value"
+  val messageKeyPrefix = "value_of_estate"
 
-  def createView(form: Option[Form[Int]] = None) = gross_estate_value(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Int]] = None) = value_of_estate(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
-  "Gross Estate Value View" must {
+  "Value of Estate View" must {
 
     behave like rnrbPage[Int](createView, messageKeyPrefix,
       "guidance1",
@@ -42,7 +42,7 @@ class GrossEstateValueViewSpec extends IntViewSpecBase {
 
     behave like pageWithBackLink[Int](createView)
 
-    behave like intPage(createView, messageKeyPrefix, GrossEstateValueController.onSubmit().url, NonNegativeIntForm())
+    behave like intPage(createView, messageKeyPrefix, ValueOfEstateController.onSubmit().url, NonNegativeIntForm())
 
     behave like pageContainingPreviousAnswers(createView)
 

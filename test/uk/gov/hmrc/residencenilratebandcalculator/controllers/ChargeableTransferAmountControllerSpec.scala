@@ -27,7 +27,7 @@ class ChargeableTransferAmountControllerSpec extends SimpleControllerSpecBase {
   "Chargeable Transfer Amount Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
-      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.GrossEstateValueController.onPageLoad().url
+      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfEstateController.onPageLoad().url
       value match {
         case None => chargeable_transfer_amount(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
         case Some(v) => chargeable_transfer_amount(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
@@ -38,7 +38,7 @@ class ChargeableTransferAmountControllerSpec extends SimpleControllerSpecBase {
 
     val testValue = 123
 
-    val valuesToCacheBeforeSubmission = Map(Constants.grossEstateValueId -> testValue)
+    val valuesToCacheBeforeSubmission = Map(Constants.valueOfEstateId -> testValue)
 
     behave like rnrbController(createController, createView, Constants.chargeableTransferAmountId,
       testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
@@ -46,11 +46,11 @@ class ChargeableTransferAmountControllerSpec extends SimpleControllerSpecBase {
     behave like nonStartingController[Int](createController,
       List(Constants.dateOfDeathId,
            Constants.partOfEstatePassingToDirectDescendantsId,
-           Constants.grossEstateValueId))(Reads.IntReads, Writes.IntWrites)
+           Constants.valueOfEstateId))(Reads.IntReads, Writes.IntWrites)
 
-    "return bad request on submit with a value greater than the previously saved Gross Estate Value" in {
+    "return bad request on submit with a value greater than the previously saved Value Of Estate" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))
-      setCacheValue(Constants.grossEstateValueId, testValue - 1)
+      setCacheValue(Constants.valueOfEstateId, testValue - 1)
       val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
       status(result) shouldBe Status.BAD_REQUEST
     }
