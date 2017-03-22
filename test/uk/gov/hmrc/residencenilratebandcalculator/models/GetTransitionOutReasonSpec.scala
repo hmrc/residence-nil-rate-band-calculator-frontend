@@ -32,7 +32,7 @@ class GetTransitionOutReasonSpec extends UnitSpec with WithFakeApplication with 
 
     "get DirectDescendant reason if nothing has been left to direct descendants" in {
       val userAnswers = mock[UserAnswers]
-      when(userAnswers.anyEstatePassedToDescendants) thenReturn Some(false)
+      when(userAnswers.partOfEstatePassingToDirectDescendants) thenReturn Some(false)
       GetTransitionOutReason(userAnswers) shouldBe DirectDescendant
     }
 

@@ -36,7 +36,7 @@ class TransitionOutController @Inject()(val appConfig: FrontendAppConfig,
   def getControllerId(reason: Reason) =
     reason match {
       case DateOfDeath => Constants.dateOfDeathId
-      case DirectDescendant => Constants.anyEstatePassedToDescendantsId
+      case DirectDescendant => Constants.partOfEstatePassingToDirectDescendantsId
       case GrossingUpForResidence => Constants.doesGrossingUpApplyToResidenceId
       case GrossingUpForOtherProperty => Constants.doesGrossingUpApplyToOtherPropertyId
     }

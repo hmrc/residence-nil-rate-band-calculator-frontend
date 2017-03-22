@@ -17,18 +17,18 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_estate_passed_to_descendants
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.part_of_estate_passing_to_direct_descendants
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 
 import scala.language.reflectiveCalls
 
-class AnyEstatePassedToDescendantsViewSpec extends BooleanViewSpecBase {
+class PartOfEstatePassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
 
-  val messageKeyPrefix = "any_estate_passed_to_descendants"
+  val messageKeyPrefix = "part_of_estate_passing_to_direct_descendants"
 
-  def createView(form: Option[Form[Boolean]] = None) = any_estate_passed_to_descendants(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = part_of_estate_passing_to_direct_descendants(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
-  "Any Estate Passed To Descendants View" must {
+  "Part Of Estate Passing To Direct Descendants View" must {
 
     behave like rnrbPage[Boolean](createView, messageKeyPrefix,
       "guidance1",
@@ -46,7 +46,7 @@ class AnyEstatePassedToDescendantsViewSpec extends BooleanViewSpecBase {
 
     behave like pageWithBackLink[Boolean](createView)
 
-    behave like booleanPage(createView, messageKeyPrefix, AnyEstatePassedToDescendantsController.onSubmit().url)
+    behave like booleanPage(createView, messageKeyPrefix, PartOfEstatePassingToDirectDescendantsController.onSubmit().url)
 
     behave like pageContainingPreviousAnswers(createView)
   }
