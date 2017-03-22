@@ -32,8 +32,8 @@ class Navigator @Inject()() {
       Constants.dateOfDeathId -> (ua => getDateOfDeathRoute(ua)),
       Constants.partOfEstatePassingToDirectDescendantsId -> (ua => getPartOfEstatePassingToDirectDescendantsRoute(ua)),
       Constants.valueOfEstateId -> (_ => ChargeableEstateValueController.onPageLoad()),
-      Constants.chargeableEstateValueId -> (_ => EstateHasPropertyController.onPageLoad()),
-      Constants.estateHasPropertyId -> (ua => getEstateHasPropertyRoute(ua)),
+      Constants.chargeableEstateValueId -> (_ => PropertyInEstateController.onPageLoad()),
+      Constants.propertyInEstateId -> (ua => getPropertyInEstateRoute(ua)),
       Constants.cannotClaimRNRB -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
       Constants.propertyValueId -> (_ => AnyPropertyCloselyInheritedController.onPageLoad()),
       Constants.anyPropertyCloselyInheritedId -> (ua => getAnyPropertyCloselyInheritedRoute(ua)),
@@ -75,8 +75,8 @@ class Navigator @Inject()() {
   private def getPartOfEstatePassingToDirectDescendantsRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.partOfEstatePassingToDirectDescendants, ValueOfEstateController.onPageLoad(), TransitionOutController.onPageLoad())
 
-  private def getEstateHasPropertyRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.estateHasProperty, PropertyValueController.onPageLoad(), CannotClaimRNRBController.onPageLoad())
+  private def getPropertyInEstateRoute(userAnswers: UserAnswers) =
+    getRouteForOptionalBoolean(userAnswers.propertyInEstate, PropertyValueController.onPageLoad(), CannotClaimRNRBController.onPageLoad())
 
   private def getAnyBroughtForwardAllowanceRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.anyBroughtForwardAllowance, BroughtForwardAllowanceController.onPageLoad(), AnyDownsizingAllowanceController.onPageLoad())
@@ -124,8 +124,8 @@ class Navigator @Inject()() {
       Constants.partOfEstatePassingToDirectDescendantsId -> (_ => DateOfDeathController.onPageLoad()),
       Constants.valueOfEstateId -> (_ => PartOfEstatePassingToDirectDescendantsController.onPageLoad()),
       Constants.chargeableEstateValueId -> (_ => ValueOfEstateController.onPageLoad()),
-      Constants.estateHasPropertyId -> (_ => ChargeableEstateValueController.onPageLoad()),
-      Constants.propertyValueId -> (_ => EstateHasPropertyController.onPageLoad()),
+      Constants.propertyInEstateId -> (_ => ChargeableEstateValueController.onPageLoad()),
+      Constants.propertyValueId -> (_ => PropertyInEstateController.onPageLoad()),
       Constants.anyPropertyCloselyInheritedId -> (_ => PropertyValueController.onPageLoad()),
       Constants.percentageCloselyInheritedId -> (_ => AnyPropertyCloselyInheritedController.onPageLoad()),
       Constants.anyExemptionId -> (ua => getAnyExemptionReverseRoute(ua)),
@@ -152,9 +152,9 @@ class Navigator @Inject()() {
     case _ => userAnswers.anyPropertyCloselyInherited match {
       case Some(Constants.none) => AnyPropertyCloselyInheritedController.onPageLoad()
       case Some(_) => AnyExemptionController.onPageLoad()
-      case _ => userAnswers.estateHasProperty match {
+      case _ => userAnswers.propertyInEstate match {
         case Some(true) => PropertyValueController.onPageLoad()
-        case _ => EstateHasPropertyController.onPageLoad()
+        case _ => PropertyInEstateController.onPageLoad()
       }
     }
   }

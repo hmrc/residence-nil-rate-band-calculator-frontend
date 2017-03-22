@@ -59,8 +59,8 @@ POST       /does-grossing-up-apply-to-other-property    uk.gov.hmrc.residencenil
 GET        /does-grossing-up-apply-to-residence         uk.gov.hmrc.residencenilratebandcalculator.controllers.DoesGrossingUpApplyToResidenceController.onPageLoad
 POST       /does-grossing-up-apply-to-residence         uk.gov.hmrc.residencenilratebandcalculator.controllers.DoesGrossingUpApplyToResidenceController.onSubmit
 
-GET        /estate-has-property                         uk.gov.hmrc.residencenilratebandcalculator.controllers.EstateHasPropertyController.onPageLoad
-POST       /estate-has-property                         uk.gov.hmrc.residencenilratebandcalculator.controllers.EstateHasPropertyController.onSubmit
+GET        /property-in-estate                          uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyInEstateController.onPageLoad
+POST       /property-in-estate                          uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyInEstateController.onSubmit
 
 GET        /exit-questionnaire                          uk.gov.hmrc.residencenilratebandcalculator.controllers.ExitQuestionnaireController.onPageLoad
 POST       /exit-questionnaire                          uk.gov.hmrc.residencenilratebandcalculator.controllers.ExitQuestionnaireController.onSubmit

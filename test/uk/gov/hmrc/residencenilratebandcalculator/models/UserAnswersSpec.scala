@@ -114,10 +114,10 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.doesGrossingUpApplyToResidence shouldBe Some(false)
       }
 
-      "return the correct answer for Estate Has Property" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.estateHasPropertyId -> JsBoolean(true)))
+      "return the correct answer for Property In Estate" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.propertyInEstateId -> JsBoolean(true)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.estateHasProperty shouldBe Some(true)
+        userAnswers.propertyInEstate shouldBe Some(true)
       }
 
       "return the correct answer for Value Of Estate" in {
@@ -220,9 +220,9 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.dateOfDisposal shouldBe None
       }
 
-      "return None for Estate Has Property" in {
+      "return None for Property In Estate" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.estateHasProperty shouldBe None
+        userAnswers.propertyInEstate shouldBe None
       }
 
       "return None for Value Of Estate" in {

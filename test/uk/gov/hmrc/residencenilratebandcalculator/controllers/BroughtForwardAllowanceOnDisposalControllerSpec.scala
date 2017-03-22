@@ -44,7 +44,7 @@ class BroughtForwardAllowanceOnDisposalControllerSpec extends SimpleControllerSp
            Constants.partOfEstatePassingToDirectDescendantsId,
            Constants.valueOfEstateId,
            Constants.chargeableEstateValueId,
-           Constants.estateHasPropertyId,
+           Constants.propertyInEstateId,
            Constants.propertyValueId,
            Constants.anyPropertyCloselyInheritedId,
            Constants.percentageCloselyInheritedId,

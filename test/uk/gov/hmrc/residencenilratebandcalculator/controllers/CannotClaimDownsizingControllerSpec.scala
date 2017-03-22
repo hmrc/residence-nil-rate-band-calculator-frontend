@@ -52,7 +52,7 @@ class CannotClaimDownsizingControllerSpec extends UnitSpec with WithFakeApplicat
       Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
       Constants.valueOfEstateId -> JsNumber(500000),
       Constants.chargeableEstateValueId -> JsNumber(450000),
-      Constants.estateHasPropertyId -> JsBoolean(true),
+      Constants.propertyInEstateId -> JsBoolean(true),
       Constants.propertyValueId -> JsNumber(400000),
       Constants.doesGrossingUpApplyToOtherPropertyId -> JsBoolean(true),
       Constants.anyPropertyCloselyInheritedId -> JsBoolean(true),

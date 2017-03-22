@@ -26,7 +26,7 @@ class AnyBroughtForwardAllowanceControllerSpec extends SimpleControllerSpecBase 
   "Any Brought Forward Allowance Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
-      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.EstateHasPropertyController.onPageLoad().url
+      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyInEstateController.onPageLoad().url
 
       value match {
         case None => any_brought_forward_allowance(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
@@ -45,7 +45,7 @@ class AnyBroughtForwardAllowanceControllerSpec extends SimpleControllerSpecBase 
            Constants.partOfEstatePassingToDirectDescendantsId,
            Constants.valueOfEstateId,
            Constants.chargeableEstateValueId,
-           Constants.estateHasPropertyId,
+           Constants.propertyInEstateId,
            Constants.propertyValueId,
            Constants.anyPropertyCloselyInheritedId,
            Constants.percentageCloselyInheritedId,

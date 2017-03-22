@@ -160,11 +160,11 @@ error.required = Please enter a value
 error.summary.title = Message to alert the user to a problem goes here
 error.summary.text = Optional description of the errors and how to correct them
 
-estate_has_property.browser_title = Does the estate include any residential property that the deceased owned and lived in?
-estate_has_property.title = Does the estate include any residential property that the deceased owned and lived in?
-estate_has_property.guidance1 = This can be any property that the person who has died owned and also lived in during their lifetime.
-estate_has_property.guidance2 = This property does not need to be one that has been left to a direct descendant.
-estate_has_property.label =
+property_in_estate.browser_title = Does the estate include any residential property that the deceased owned and lived in?
+property_in_estate.title = Does the estate include any residential property that the deceased owned and lived in?
+property_in_estate.guidance1 = This can be any property that the person who has died owned and also lived in during their lifetime.
+property_in_estate.guidance2 = This property does not need to be one that has been left to a direct descendant.
+property_in_estate.label =
 
 exit_questionnaire.browser_title = Survey
 exit_questionnaire.title = Survey

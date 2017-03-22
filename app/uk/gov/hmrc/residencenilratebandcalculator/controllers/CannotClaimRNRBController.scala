@@ -37,7 +37,7 @@ class CannotClaimRNRBController @Inject()(val appConfig: FrontendAppConfig,
   def getControllerId(reason: Reason) =
     reason match {
       case NotCloselyInherited => Constants.anyPropertyCloselyInheritedId
-      case _ => Constants.estateHasPropertyId
+      case _ => Constants.propertyInEstateId
     }
 
   def createView(reason: Reason, userAnswers: UserAnswers, previousAnswers: Seq[AnswerRow])(implicit request: Request[_]) = {

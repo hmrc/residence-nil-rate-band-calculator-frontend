@@ -19,26 +19,26 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.estate_has_property
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_in_estate
 
-class EstateHasPropertyControllerSpec extends SimpleControllerSpecBase {
+class PropertyInEstateControllerSpec extends SimpleControllerSpecBase {
 
-  "Estate Has Property Controller" must {
+  "Property In Estate Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeableEstateValueController.onPageLoad().url
 
       value match {
-        case None => estate_has_property(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => estate_has_property(frontendAppConfig, url, Some(BooleanForm().bind(v)), Seq())(fakeRequest, messages)
+        case None => property_in_estate(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => property_in_estate(frontendAppConfig, url, Some(BooleanForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 
-    def createController = () => new EstateHasPropertyController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
+    def createController = () => new PropertyInEstateController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
     val testValue = true
 
-    behave like rnrbController[Boolean](createController, createView, Constants.estateHasPropertyId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+    behave like rnrbController[Boolean](createController, createView, Constants.propertyInEstateId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
 
     behave like nonStartingController[Boolean](createController,
       List(Constants.dateOfDeathId,

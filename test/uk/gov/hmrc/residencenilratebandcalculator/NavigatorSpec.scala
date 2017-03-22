@@ -70,8 +70,8 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     }
 
     "when the ChargeableEstateValue is used as the class id, the navigator must return a function that when executed against any" +
-      "parameter goes to EstateHasProperty controller" in {
-      navigator.nextPage(Constants.chargeableEstateValueId)(mock[UserAnswers]) shouldBe routes.EstateHasPropertyController.onPageLoad()
+      "parameter goes to PropertyInEstate controller" in {
+      navigator.nextPage(Constants.chargeableEstateValueId)(mock[UserAnswers]) shouldBe routes.PropertyInEstateController.onPageLoad()
     }
 
     "return a call to the ChargeableEstateValueController onPageLoad method when given Value Of Estate" in {
@@ -105,7 +105,7 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
 
     "return a call to the AnyBroughtForwardAllowance onPageLoad method when there is no property in the estate and we're on the Cannot Claim RNRB page" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.estateHasProperty) thenReturn Some(false)
+      when(mockCacheMap.propertyInEstate) thenReturn Some(false)
       navigator.nextPage(Constants.cannotClaimRNRB)(mockCacheMap) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
     }
 
@@ -127,20 +127,20 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
 
     "return a call to the PropertyValueController onPageLoad method when there is a property in the estate" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.estateHasProperty) thenReturn Some(true)
-      navigator.nextPage(Constants.estateHasPropertyId)(mockCacheMap) shouldBe routes.PropertyValueController.onPageLoad()
+      when(mockCacheMap.propertyInEstate) thenReturn Some(true)
+      navigator.nextPage(Constants.propertyInEstateId)(mockCacheMap) shouldBe routes.PropertyValueController.onPageLoad()
     }
 
     "return a call to the AnyBroughtForwardAllowance onPageLoad method when there is not a property in the estate" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.estateHasProperty) thenReturn Some(false)
-      navigator.nextPage(Constants.estateHasPropertyId)(mockCacheMap) shouldBe routes.CannotClaimRNRBController.onPageLoad()
+      when(mockCacheMap.propertyInEstate) thenReturn Some(false)
+      navigator.nextPage(Constants.propertyInEstateId)(mockCacheMap) shouldBe routes.CannotClaimRNRBController.onPageLoad()
     }
 
     "return a call to the HomeController onPageLoad method when there is no indication that there is a property in the estate" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.estateHasProperty) thenReturn None
-      navigator.nextPage(Constants.estateHasPropertyId)(mockCacheMap) shouldBe routes.HomeController.onPageLoad()
+      when(mockCacheMap.propertyInEstate) thenReturn None
+      navigator.nextPage(Constants.propertyInEstateId)(mockCacheMap) shouldBe routes.HomeController.onPageLoad()
     }
 
     "return a call to the BroughtForwardAllowanceController onPageLoad method when there is some brought forward allowance" in {
@@ -202,12 +202,12 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.chargeableEstateValueId)(userAnswers) shouldBe routes.ValueOfEstateController.onPageLoad()
     }
 
-    "return a call to the Chargeable Estate Value when back linking from the Estate Has Property page" in {
-      navigator.lastPage(Constants.estateHasPropertyId)(userAnswers) shouldBe routes.ChargeableEstateValueController.onPageLoad()
+    "return a call to the Chargeable Estate Value when back linking from the Property In Estate page" in {
+      navigator.lastPage(Constants.propertyInEstateId)(userAnswers) shouldBe routes.ChargeableEstateValueController.onPageLoad()
     }
 
-    "return a call to the Estate Has Property when back linking from the Property Value page" in {
-      navigator.lastPage(Constants.propertyValueId)(userAnswers) shouldBe routes.EstateHasPropertyController.onPageLoad()
+    "return a call to the Property In Estate when back linking from the Property Value page" in {
+      navigator.lastPage(Constants.propertyValueId)(userAnswers) shouldBe routes.PropertyInEstateController.onPageLoad()
     }
 
     "return a call to the Property Value when back linking from the Any Property Closely Inherited page" in {
@@ -247,8 +247,8 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.chargeableValueOfResidenceId)(userAnswers) shouldBe routes.DoesGrossingUpApplyToResidenceController.onPageLoad()
     }
 
-    "return a call to the Estate Has Property when back linking from the Any Brought Forward Allowance page" in {
-      navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.EstateHasPropertyController.onPageLoad()
+    "return a call to the Property In Estate when back linking from the Any Brought Forward Allowance page" in {
+      navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.PropertyInEstateController.onPageLoad()
     }
 
     "return a call to the Chargeable Value Of Residence Closely Inherited when back linking from the Any Brought Forward Allowance page" +
@@ -280,9 +280,9 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     }
 
     "return a call to the Property Value when back linking from the Any Brought Forward Allowance page" +
-      "when the user has positively answered Estate Has Property" in {
+      "when the user has positively answered Property In Estate" in {
       val userAnswers = mock[UserAnswers]
-      when(userAnswers.estateHasProperty) thenReturn Some(true)
+      when(userAnswers.propertyInEstate) thenReturn Some(true)
       navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.PropertyValueController.onPageLoad()
     }
 

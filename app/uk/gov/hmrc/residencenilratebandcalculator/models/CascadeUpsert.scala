@@ -34,7 +34,7 @@ class CascadeUpsert {
 
   val funcMap: Map[String, (JsValue, CacheMap) => CacheMap] =
     Map(
-      Constants.estateHasPropertyId -> ((v, cm) => estateHasProperty(v, cm)),
+      Constants.propertyInEstateId -> ((v, cm) => propertyInEstate(v, cm)),
       Constants.anyExemptionId -> ((v, cm) => anyExemptionClearance(v, cm)),
       Constants.anyBroughtForwardAllowanceId -> ((v, cm) => anyBroughtForwardAllowance(v, cm)),
       Constants.anyDownsizingAllowanceId -> ((v, cm) => anyDownsizingAllowance(v, cm)),
@@ -55,8 +55,8 @@ class CascadeUpsert {
     store(key, value, mapToStore)
   }
 
-  private def estateHasProperty[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearIfFalse(Constants.estateHasPropertyId, value,
+  private def propertyInEstate[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+    clearIfFalse(Constants.propertyInEstateId, value,
       Set(
         Constants.propertyValueId,
         Constants.anyPropertyCloselyInheritedId,

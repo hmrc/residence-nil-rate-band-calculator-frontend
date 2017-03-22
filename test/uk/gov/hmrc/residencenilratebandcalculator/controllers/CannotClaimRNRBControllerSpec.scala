@@ -51,7 +51,7 @@ class CannotClaimRNRBControllerSpec extends UnitSpec with WithFakeApplication wi
       Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
       Constants.valueOfEstateId -> JsNumber(500000),
       Constants.chargeableEstateValueId -> JsNumber(450000),
-      Constants.estateHasPropertyId -> JsBoolean(true),
+      Constants.propertyInEstateId -> JsBoolean(true),
       Constants.propertyValueId -> JsNumber(400000),
       Constants.doesGrossingUpApplyToOtherPropertyId -> JsBoolean(true),
       Constants.anyPropertyCloselyInheritedId -> JsBoolean(true),
@@ -101,7 +101,7 @@ class CannotClaimRNRBControllerSpec extends UnitSpec with WithFakeApplication wi
         Constants.partOfEstatePassingToDirectDescendantsId,
         Constants.valueOfEstateId,
         Constants.chargeableEstateValueId,
-        Constants.estateHasPropertyId,
+        Constants.propertyInEstateId,
         Constants.propertyValueId)
       answerList shouldBe (calculatedList)
     }

@@ -54,7 +54,7 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def downsizingDetails = cacheMap.getEntry[Date](Constants.downsizingDetails)
 
-  def estateHasProperty = cacheMap.getEntry[Boolean](Constants.estateHasPropertyId)
+  def propertyInEstate = cacheMap.getEntry[Boolean](Constants.propertyInEstateId)
 
   def valueOfEstate = cacheMap.getEntry[Int](Constants.valueOfEstateId)
 
