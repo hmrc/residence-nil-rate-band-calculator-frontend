@@ -49,7 +49,7 @@ class CannotClaimDownsizingControllerSpec extends UnitSpec with WithFakeApplicat
   val filledOutCacheMap = new CacheMap("",
     Map[String, JsValue](
       Constants.dateOfDeathId -> JsString("2019-03-04"),
-      Constants.anyEstatePassedToDescendantsId -> JsBoolean(true),
+      Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
       Constants.grossEstateValueId -> JsNumber(500000),
       Constants.chargeableTransferAmountId -> JsNumber(450000),
       Constants.estateHasPropertyId -> JsBoolean(true),
@@ -100,7 +100,7 @@ class CannotClaimDownsizingControllerSpec extends UnitSpec with WithFakeApplicat
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
       val answerList = List(Constants.dateOfDeathId,
-        Constants.anyEstatePassedToDescendantsId,
+        Constants.partOfEstatePassingToDirectDescendantsId,
         Constants.grossEstateValueId,
         Constants.chargeableTransferAmountId)
       answerList shouldBe (calculatedList)
@@ -112,7 +112,7 @@ class CannotClaimDownsizingControllerSpec extends UnitSpec with WithFakeApplicat
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
       val answerList = List(Constants.dateOfDeathId,
-        Constants.anyEstatePassedToDescendantsId,
+        Constants.partOfEstatePassingToDirectDescendantsId,
         Constants.grossEstateValueId,
         Constants.chargeableTransferAmountId)
       answerList shouldBe (calculatedList)

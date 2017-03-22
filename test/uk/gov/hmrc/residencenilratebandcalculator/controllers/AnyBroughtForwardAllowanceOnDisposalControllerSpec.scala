@@ -42,7 +42,7 @@ class AnyBroughtForwardAllowanceOnDisposalControllerSpec extends SimpleControlle
 
     behave like nonStartingController[Boolean](createController,
       List(Constants.dateOfDeathId,
-           Constants.anyEstatePassedToDescendantsId,
+           Constants.partOfEstatePassingToDirectDescendantsId,
            Constants.grossEstateValueId,
            Constants.chargeableTransferAmountId,
            Constants.estateHasPropertyId,

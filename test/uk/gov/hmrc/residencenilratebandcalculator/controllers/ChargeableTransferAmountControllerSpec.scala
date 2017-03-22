@@ -45,7 +45,7 @@ class ChargeableTransferAmountControllerSpec extends SimpleControllerSpecBase {
 
     behave like nonStartingController[Int](createController,
       List(Constants.dateOfDeathId,
-           Constants.anyEstatePassedToDescendantsId,
+           Constants.partOfEstatePassingToDirectDescendantsId,
            Constants.grossEstateValueId))(Reads.IntReads, Writes.IntWrites)
 
     "return bad request on submit with a value greater than the previously saved Gross Estate Value" in {

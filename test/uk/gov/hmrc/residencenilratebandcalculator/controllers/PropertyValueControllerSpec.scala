@@ -43,7 +43,7 @@ class PropertyValueControllerSpec extends SimpleControllerSpecBase {
 
     behave like nonStartingController[Int](createController,
       List(Constants.dateOfDeathId,
-           Constants.anyEstatePassedToDescendantsId,
+           Constants.partOfEstatePassingToDirectDescendantsId,
            Constants.grossEstateValueId,
            Constants.chargeableTransferAmountId,
            Constants.estateHasPropertyId))(Reads.IntReads, Writes.IntWrites)

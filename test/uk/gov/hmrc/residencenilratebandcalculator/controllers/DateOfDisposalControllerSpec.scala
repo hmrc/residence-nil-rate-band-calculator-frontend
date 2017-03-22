@@ -38,7 +38,7 @@ class DateOfDisposalControllerSpec extends DateControllerSpecBase {
 
     behave like nonStartingDateController(createController,
       List(Constants.dateOfDeathId,
-           Constants.anyEstatePassedToDescendantsId,
+           Constants.partOfEstatePassingToDirectDescendantsId,
            Constants.grossEstateValueId,
            Constants.chargeableTransferAmountId,
            Constants.estateHasPropertyId,

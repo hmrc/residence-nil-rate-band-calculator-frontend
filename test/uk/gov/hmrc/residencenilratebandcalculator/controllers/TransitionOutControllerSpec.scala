@@ -41,7 +41,7 @@ class TransitionOutControllerSpec extends UnitSpec with WithFakeApplication with
   val filledOutCacheMap = new CacheMap("",
     Map[String, JsValue](
       Constants.dateOfDeathId -> JsString("2019-03-04"),
-      Constants.anyEstatePassedToDescendantsId -> JsBoolean(true),
+      Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
       Constants.grossEstateValueId -> JsNumber(500000),
       Constants.chargeableTransferAmountId -> JsNumber(450000),
       Constants.estateHasPropertyId -> JsBoolean(true),
@@ -98,7 +98,7 @@ class TransitionOutControllerSpec extends UnitSpec with WithFakeApplication with
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
       val answerList = List(Constants.dateOfDeathId,
-        Constants.anyEstatePassedToDescendantsId,
+        Constants.partOfEstatePassingToDirectDescendantsId,
         Constants.grossEstateValueId,
         Constants.chargeableTransferAmountId,
         Constants.estateHasPropertyId,
@@ -114,7 +114,7 @@ class TransitionOutControllerSpec extends UnitSpec with WithFakeApplication with
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
       val answerList = List(Constants.dateOfDeathId,
-        Constants.anyEstatePassedToDescendantsId,
+        Constants.partOfEstatePassingToDirectDescendantsId,
         Constants.grossEstateValueId,
         Constants.chargeableTransferAmountId,
         Constants.estateHasPropertyId,

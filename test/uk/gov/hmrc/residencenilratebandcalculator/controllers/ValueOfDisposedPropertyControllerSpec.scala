@@ -42,7 +42,7 @@ class ValueOfDisposedPropertyControllerSpec extends SimpleControllerSpecBase {
 
     behave like nonStartingController[Int](createController,
       List(Constants.dateOfDeathId,
-        Constants.anyEstatePassedToDescendantsId,
+        Constants.partOfEstatePassingToDirectDescendantsId,
         Constants.grossEstateValueId,
         Constants.chargeableTransferAmountId,
         Constants.estateHasPropertyId,

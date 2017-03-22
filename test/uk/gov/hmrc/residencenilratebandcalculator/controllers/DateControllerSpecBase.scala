@@ -120,7 +120,7 @@ trait DateControllerSpecBase extends UnitSpec with WithFakeApplication with Http
       val filledOutCacheMap = new CacheMap("",
         Map[String, JsValue](
           Constants.dateOfDeathId -> JsString("2019-03-04"),
-          Constants.anyEstatePassedToDescendantsId -> JsBoolean(true),
+          Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
           Constants.grossEstateValueId -> JsNumber(500000),
           Constants.chargeableTransferAmountId -> JsNumber(450000),
           Constants.estateHasPropertyId -> JsBoolean(true),

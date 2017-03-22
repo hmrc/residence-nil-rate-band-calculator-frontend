@@ -163,7 +163,7 @@ class BroughtForwardAllowanceControllerSpec extends UnitSpec with WithFakeApplic
       val filledOutCacheMap = new CacheMap("",
         Map[String, JsValue](
           Constants.dateOfDeathId -> JsString("2019-03-04"),
-          Constants.anyEstatePassedToDescendantsId -> JsBoolean(true),
+          Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
           Constants.grossEstateValueId -> JsNumber(500000),
           Constants.chargeableTransferAmountId -> JsNumber(450000),
           Constants.estateHasPropertyId -> JsBoolean(true),
@@ -177,7 +177,7 @@ class BroughtForwardAllowanceControllerSpec extends UnitSpec with WithFakeApplic
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
       calculatedList shouldBe (
         List(Constants.dateOfDeathId,
-             Constants.anyEstatePassedToDescendantsId,
+             Constants.partOfEstatePassingToDirectDescendantsId,
              Constants.grossEstateValueId,
              Constants.chargeableTransferAmountId,
              Constants.estateHasPropertyId,
