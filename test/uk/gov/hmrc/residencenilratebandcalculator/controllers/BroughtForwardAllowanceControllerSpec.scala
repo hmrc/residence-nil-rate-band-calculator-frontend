@@ -21,7 +21,7 @@ import org.mockito.Mockito.when
 import play.api.data.FormError
 import play.api.http.Status
 import play.api.i18n.MessagesApi
-import play.api.libs.json.{JsNumber, JsString, Reads, Writes}
+import play.api.libs.json._
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -33,7 +33,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.brought_forward_all
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
-import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -157,6 +157,35 @@ class BroughtForwardAllowanceControllerSpec extends UnitSpec with WithFakeApplic
       val result = createController().onSubmit(Writes.IntWrites)(fakeRequest)
       status(result) shouldBe Status.SEE_OTHER
       redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
+    }
+
+    "The answer constants should be the same as the calulated constants for the controller" in {
+      val filledOutCacheMap = new CacheMap("",
+        Map[String, JsValue](
+          Constants.dateOfDeathId -> JsString("2019-03-04"),
+          Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
+          Constants.grossEstateValueId -> JsNumber(500000),
+          Constants.chargeableTransferAmountId -> JsNumber(450000),
+          Constants.estateHasPropertyId -> JsBoolean(true),
+          Constants.propertyValueId -> JsNumber(400000),
+          Constants.anyPropertyCloselyInheritedId -> JsBoolean(true),
+          Constants.percentageCloselyInheritedId -> JsNumber(100),
+          Constants.anyBroughtForwardAllowanceId -> JsBoolean(true)
+        ))
+      val controllerId = createController().controllerId
+      val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
+      val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
+      calculatedList shouldBe (
+        List(Constants.dateOfDeathId,
+             Constants.partOfEstatePassingToDirectDescendantsId,
+             Constants.grossEstateValueId,
+             Constants.chargeableTransferAmountId,
+             Constants.estateHasPropertyId,
+             Constants.propertyValueId,
+             Constants.anyPropertyCloselyInheritedId,
+             Constants.percentageCloselyInheritedId,
+             Constants.anyBroughtForwardAllowanceId))
+      true shouldBe(true)
     }
 
     "validate" must {

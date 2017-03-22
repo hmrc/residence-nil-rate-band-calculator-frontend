@@ -36,7 +36,18 @@ class DateOfDisposalControllerSpec extends DateControllerSpecBase {
 
     behave like rnrbDateController(createController, createView, Constants.dateOfDisposalId)(Date.dateReads, Date.dateWrites)
 
-    behave like nonStartingDateController(createController)(Date.dateReads)
+    behave like nonStartingDateController(createController,
+      List(Constants.dateOfDeathId,
+           Constants.partOfEstatePassingToDirectDescendantsId,
+           Constants.grossEstateValueId,
+           Constants.chargeableTransferAmountId,
+           Constants.estateHasPropertyId,
+           Constants.propertyValueId,
+           Constants.anyPropertyCloselyInheritedId,
+           Constants.percentageCloselyInheritedId,
+           Constants.anyBroughtForwardAllowanceId,
+           Constants.broughtForwardAllowanceId,
+           Constants.anyDownsizingAllowanceId))(Date.dateReads)
   }
 
 }

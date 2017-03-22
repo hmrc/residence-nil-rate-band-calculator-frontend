@@ -26,7 +26,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 
 object AnswerRows {
 
-  private val rowOrderList = List[String](
+  val rowOrderList = List[String](
     Constants.dateOfDeathId,
     Constants.partOfEstatePassingToDirectDescendantsId,
     Constants.grossEstateValueId,

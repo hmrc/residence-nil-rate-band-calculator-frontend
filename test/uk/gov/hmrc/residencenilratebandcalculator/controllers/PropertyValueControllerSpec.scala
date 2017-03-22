@@ -41,6 +41,13 @@ class PropertyValueControllerSpec extends SimpleControllerSpecBase {
     behave like rnrbController(createController, createView, Constants.propertyValueId,
       testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
 
+    behave like nonStartingController[Int](createController,
+      List(Constants.dateOfDeathId,
+           Constants.partOfEstatePassingToDirectDescendantsId,
+           Constants.grossEstateValueId,
+           Constants.chargeableTransferAmountId,
+           Constants.estateHasPropertyId))(Reads.IntReads, Writes.IntWrites)
+
     "return bad request on submit with a value greater than the previously saved Gross Estate Value" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))
       setCacheValue(Constants.grossEstateValueId, testValue - 1)

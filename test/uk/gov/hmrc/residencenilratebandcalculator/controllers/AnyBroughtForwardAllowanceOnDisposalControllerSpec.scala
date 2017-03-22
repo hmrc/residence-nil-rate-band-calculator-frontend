@@ -40,6 +40,23 @@ class AnyBroughtForwardAllowanceOnDisposalControllerSpec extends SimpleControlle
 
     behave like rnrbController(createController, createView, Constants.anyBroughtForwardAllowanceOnDisposalId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
 
-    behave like nonStartingController[Boolean](createController)(Reads.BooleanReads, Writes.BooleanWrites)
+    behave like nonStartingController[Boolean](createController,
+      List(Constants.dateOfDeathId,
+           Constants.partOfEstatePassingToDirectDescendantsId,
+           Constants.grossEstateValueId,
+           Constants.chargeableTransferAmountId,
+           Constants.estateHasPropertyId,
+           Constants.propertyValueId,
+           Constants.anyPropertyCloselyInheritedId,
+           Constants.percentageCloselyInheritedId,
+           Constants.chargeableValueOfResidenceId,
+           Constants.anyBroughtForwardAllowanceId,
+           Constants.broughtForwardAllowanceId,
+           Constants.anyDownsizingAllowanceId,
+           Constants.dateOfDisposalId,
+           Constants.valueOfDisposedPropertyId,
+           Constants.anyAssetsPassingToDirectDescendantsId,
+           Constants.doesGrossingUpApplyToOtherPropertyId,
+           Constants.assetsPassingToDirectDescendantsId))(Reads.BooleanReads, Writes.BooleanWrites)
   }
 }

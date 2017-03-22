@@ -42,7 +42,15 @@ class ChargeableValueOfResidenceControllerSpec extends SimpleControllerSpecBase 
     behave like rnrbController(createController, createView, Constants.chargeableValueOfResidenceId,
       testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
 
-    behave like nonStartingController[Int](createController)(Reads.IntReads, Writes.IntWrites)
+    behave like nonStartingController[Int](createController,
+      List(Constants.dateOfDeathId,
+           Constants.partOfEstatePassingToDirectDescendantsId,
+           Constants.grossEstateValueId,
+           Constants.chargeableTransferAmountId,
+           Constants.estateHasPropertyId,
+           Constants.propertyValueId,
+           Constants.anyPropertyCloselyInheritedId,
+           Constants.percentageCloselyInheritedId))(Reads.IntReads, Writes.IntWrites)
 
     "return bad request on submit with a value greater than the previously saved Property Value" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))
