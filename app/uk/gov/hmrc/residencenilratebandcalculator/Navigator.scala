@@ -35,8 +35,8 @@ class Navigator @Inject()() {
       Constants.chargeableEstateValueId -> (_ => PropertyInEstateController.onPageLoad()),
       Constants.propertyInEstateId -> (ua => getPropertyInEstateRoute(ua)),
       Constants.cannotClaimRNRB -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
-      Constants.propertyValueId -> (_ => AnyPropertyCloselyInheritedController.onPageLoad()),
-      Constants.anyPropertyCloselyInheritedId -> (ua => getAnyPropertyCloselyInheritedRoute(ua)),
+      Constants.propertyValueId -> (_ => PropertyPassingToDirectDescendantsController.onPageLoad()),
+      Constants.propertyPassingToDirectDescendantsId -> (ua => getPropertyPassingToDirectDescendantsRoute(ua)),
       Constants.percentageCloselyInheritedId -> (_ => AnyExemptionController.onPageLoad()),
       Constants.anyBroughtForwardAllowanceId -> (ua => getAnyBroughtForwardAllowanceRoute(ua)),
       Constants.broughtForwardAllowanceId -> (_ => AnyDownsizingAllowanceController.onPageLoad()),
@@ -91,7 +91,7 @@ class Navigator @Inject()() {
     getRouteForOptionalLocalDate(userAnswers.dateOfDisposal, Constants.downsizingEligibilityDate,
       CannotClaimDownsizingController.onPageLoad(), ValueOfDisposedPropertyController.onPageLoad())
 
-  private def getAnyPropertyCloselyInheritedRoute(userAnswers: UserAnswers) = userAnswers.anyPropertyCloselyInherited match {
+  private def getPropertyPassingToDirectDescendantsRoute(userAnswers: UserAnswers) = userAnswers.propertyPassingToDirectDescendants match {
     case Some(Constants.all) => AnyExemptionController.onPageLoad()
     case Some(Constants.some) => PercentageCloselyInheritedController.onPageLoad()
     case Some(_) => CannotClaimRNRBController.onPageLoad()
@@ -126,8 +126,8 @@ class Navigator @Inject()() {
       Constants.chargeableEstateValueId -> (_ => ValueOfEstateController.onPageLoad()),
       Constants.propertyInEstateId -> (_ => ChargeableEstateValueController.onPageLoad()),
       Constants.propertyValueId -> (_ => PropertyInEstateController.onPageLoad()),
-      Constants.anyPropertyCloselyInheritedId -> (_ => PropertyValueController.onPageLoad()),
-      Constants.percentageCloselyInheritedId -> (_ => AnyPropertyCloselyInheritedController.onPageLoad()),
+      Constants.propertyPassingToDirectDescendantsId -> (_ => PropertyValueController.onPageLoad()),
+      Constants.percentageCloselyInheritedId -> (_ => PropertyPassingToDirectDescendantsController.onPageLoad()),
       Constants.anyExemptionId -> (ua => getAnyExemptionReverseRoute(ua)),
       Constants.chargeableValueOfResidenceId -> (_ => DoesGrossingUpApplyToResidenceController.onPageLoad()),
       Constants.chargeableValueOfResidenceCloselyInheritedId -> (_ => ChargeableValueOfResidenceController.onPageLoad()),
@@ -149,8 +149,8 @@ class Navigator @Inject()() {
 
   private def getAnyBroughtForwardAllowanceReverseRoute(userAnswers: UserAnswers) = userAnswers.anyExemption match {
     case Some(true) => ChargeableValueOfResidenceCloselyInheritedController.onPageLoad()
-    case _ => userAnswers.anyPropertyCloselyInherited match {
-      case Some(Constants.none) => AnyPropertyCloselyInheritedController.onPageLoad()
+    case _ => userAnswers.propertyPassingToDirectDescendants match {
+      case Some(Constants.none) => PropertyPassingToDirectDescendantsController.onPageLoad()
       case Some(_) => AnyExemptionController.onPageLoad()
       case _ => userAnswers.propertyInEstate match {
         case Some(true) => PropertyValueController.onPageLoad()
@@ -159,9 +159,9 @@ class Navigator @Inject()() {
     }
   }
 
-  private def getAnyExemptionReverseRoute(userAnswers: UserAnswers) = userAnswers.anyPropertyCloselyInherited match {
+  private def getAnyExemptionReverseRoute(userAnswers: UserAnswers) = userAnswers.propertyPassingToDirectDescendants match {
     case Some(Constants.some) => PercentageCloselyInheritedController.onPageLoad()
-    case _ => AnyPropertyCloselyInheritedController.onPageLoad()
+    case _ => PropertyPassingToDirectDescendantsController.onPageLoad()
   }
 
   private def getAnyDownsizingAllowanceReverseRoute(userAnswers: UserAnswers) = userAnswers.anyBroughtForwardAllowance match {

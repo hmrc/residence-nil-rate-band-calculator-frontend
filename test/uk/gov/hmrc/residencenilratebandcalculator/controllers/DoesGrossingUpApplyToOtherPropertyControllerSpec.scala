@@ -48,7 +48,7 @@ class DoesGrossingUpApplyToOtherPropertyControllerSpec extends SimpleControllerS
            Constants.chargeableEstateValueId,
            Constants.propertyInEstateId,
            Constants.propertyValueId,
-           Constants.anyPropertyCloselyInheritedId,
+           Constants.propertyPassingToDirectDescendantsId,
            Constants.percentageCloselyInheritedId,
            Constants.chargeableValueOfResidenceId,
            Constants.anyBroughtForwardAllowanceId,

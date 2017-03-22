@@ -69,8 +69,8 @@ object CalculationInput {
   }
 
   private def getPercentageCloselyInherited(userAnswers: UserAnswers) = userAnswers.propertyInEstate.get match {
-      case true if userAnswers.anyPropertyCloselyInherited.get == Constants.all => 100
-      case true if userAnswers.anyPropertyCloselyInherited.get == Constants.some => userAnswers.percentageCloselyInherited.get
+      case true if userAnswers.propertyPassingToDirectDescendants.get == Constants.all => 100
+      case true if userAnswers.propertyPassingToDirectDescendants.get == Constants.some => userAnswers.percentageCloselyInherited.get
       case _ => 0
     }
 
@@ -92,12 +92,12 @@ object CalculationInput {
 
   private def requirePropertyInEstateDependancies(userAnswers: UserAnswers) = {
     require(userAnswers.propertyValue.isDefined, "Property Value was not answered")
-    require(userAnswers.anyPropertyCloselyInherited.isDefined, "Any Property Closely Inherited was not answered")
+    require(userAnswers.propertyPassingToDirectDescendants.isDefined, "Property Passing To Direct Descendants was not answered")
 
-    if(userAnswers.anyPropertyCloselyInherited.get == Constants.some) {
+    if(userAnswers.propertyPassingToDirectDescendants.get == Constants.some) {
       require(userAnswers.percentageCloselyInherited.isDefined, "Percentage Closely Inherited was not answered")
     }
-    if (userAnswers.anyPropertyCloselyInherited.get != Constants.none) requirePropertyCloselyInheritedDependancies(userAnswers)
+    if (userAnswers.propertyPassingToDirectDescendants.get != Constants.none) requirePropertyCloselyInheritedDependancies(userAnswers)
   }
 
   private def requirePropertyCloselyInheritedDependancies(userAnswers: UserAnswers) = {

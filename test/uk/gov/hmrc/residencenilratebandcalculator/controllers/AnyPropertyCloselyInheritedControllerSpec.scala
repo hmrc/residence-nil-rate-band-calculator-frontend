@@ -18,27 +18,27 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
-import uk.gov.hmrc.residencenilratebandcalculator.forms.AnyPropertyCloselyInheritedForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_property_closely_inherited
+import uk.gov.hmrc.residencenilratebandcalculator.forms.PropertyPassingToDirectDescendantsForm
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_passing_to_direct_descendants
 
-class AnyPropertyCloselyInheritedControllerSpec extends SimpleControllerSpecBase {
+class PropertyPassingToDirectDescendantsControllerSpec extends SimpleControllerSpecBase {
 
-  "Any Property Closely Inherited Controller" must {
+  "Property Passing To Direct Descendants Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyValueController.onPageLoad().url
 
       value match {
-        case None => any_property_closely_inherited(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => any_property_closely_inherited(frontendAppConfig, url, Some(AnyPropertyCloselyInheritedForm().bind(v)), Seq())(fakeRequest, messages)
+        case None => property_passing_to_direct_descendants(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => property_passing_to_direct_descendants(frontendAppConfig, url, Some(PropertyPassingToDirectDescendantsForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 
-    def createController = () => new AnyPropertyCloselyInheritedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
+    def createController = () => new PropertyPassingToDirectDescendantsController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
     val testValue = Constants.all
 
-    behave like rnrbController[String](createController, createView, Constants.anyPropertyCloselyInheritedId, testValue)(Reads.StringReads, Writes.StringWrites)
+    behave like rnrbController[String](createController, createView, Constants.propertyPassingToDirectDescendantsId, testValue)(Reads.StringReads, Writes.StringWrites)
 
     behave like nonStartingController[String](createController,
       List(Constants.dateOfDeathId,

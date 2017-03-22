@@ -49,7 +49,7 @@ class ChargeableValueOfResidenceCloselyInheritedControllerSpec extends SimpleCon
            Constants.chargeableEstateValueId,
            Constants.propertyInEstateId,
            Constants.propertyValueId,
-           Constants.anyPropertyCloselyInheritedId,
+           Constants.propertyPassingToDirectDescendantsId,
            Constants.percentageCloselyInheritedId,
            Constants.chargeableValueOfResidenceId))(Reads.IntReads, Writes.IntWrites)
 

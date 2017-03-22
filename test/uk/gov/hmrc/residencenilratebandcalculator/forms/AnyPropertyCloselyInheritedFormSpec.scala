@@ -16,32 +16,32 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
-class AnyPropertyCloselyInheritedFormSpec extends FormSpec {
+class PropertyPassingToDirectDescendantsFormSpec extends FormSpec {
 
-  "Any Property Closely Inherited form" must {
+  "Property Passing To Direct Descendants form" must {
     "bind the value 'all'" in {
-      val form = AnyPropertyCloselyInheritedForm().bind(Map("value" -> "all"))
+      val form = PropertyPassingToDirectDescendantsForm().bind(Map("value" -> "all"))
       form.get shouldBe "all"
     }
 
     "bind the value 'some'" in {
-      val form = AnyPropertyCloselyInheritedForm().bind(Map("value" -> "some"))
+      val form = PropertyPassingToDirectDescendantsForm().bind(Map("value" -> "some"))
       form.get shouldBe "some"
     }
 
     "bind the value 'none'" in {
-      val form = AnyPropertyCloselyInheritedForm().bind(Map("value" -> "none"))
+      val form = PropertyPassingToDirectDescendantsForm().bind(Map("value" -> "none"))
       form.get shouldBe "none"
     }
 
     "fail to bind a blank value" in {
       val expectedError = error("", "error.invalid_closely_inherited_property_option")
-      checkForError(AnyPropertyCloselyInheritedForm(), Map("value" -> ""), expectedError)
+      checkForError(PropertyPassingToDirectDescendantsForm(), Map("value" -> ""), expectedError)
     }
 
     "fail to bind when value is omitted" in {
       val expectedError = error("value", "error.required")
-      checkForError(AnyPropertyCloselyInheritedForm(), emptyForm, expectedError)
+      checkForError(PropertyPassingToDirectDescendantsForm(), emptyForm, expectedError)
     }
   }
 }

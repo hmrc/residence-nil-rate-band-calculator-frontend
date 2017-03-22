@@ -22,8 +22,8 @@ POST       /part-of-estate-passing-to-direct-descendants    uk.gov.hmrc.residenc
 GET        /any-exemption                               uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyExemptionController.onPageLoad
 POST       /any-exemption                               uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyExemptionController.onSubmit
 
-GET        /any-property-closely-inherited              uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyPropertyCloselyInheritedController.onPageLoad
-POST       /any-property-closely-inherited              uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyPropertyCloselyInheritedController.onSubmit
+GET        /any-property-closely-inherited              uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyPassingToDirectDescendantsController.onPageLoad
+POST       /any-property-closely-inherited              uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyPassingToDirectDescendantsController.onSubmit
 
 GET        /assets-passing-to-direct-descendants        uk.gov.hmrc.residencenilratebandcalculator.controllers.AssetsPassingToDirectDescendantsController.onPageLoad
 POST       /assets-passing-to-direct-descendants        uk.gov.hmrc.residencenilratebandcalculator.controllers.AssetsPassingToDirectDescendantsController.onSubmit
