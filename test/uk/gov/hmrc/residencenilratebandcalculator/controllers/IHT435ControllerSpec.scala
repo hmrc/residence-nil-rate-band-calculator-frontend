@@ -25,6 +25,9 @@ import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import org.apache.pdfbox.pdmodel.PDDocument
 
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
+
 class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSessionConnector {
   val fakeRequest = FakeRequest("", "")
 
@@ -45,6 +48,24 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
       val result = controller.onPageLoad()(fakeRequest)
       status(result) shouldBe Status.SEE_OTHER
       redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
+    }
+
+    "aa" in {
+
+      val result:Result = Await.result(controller.onPageLoad()(fakeRequest), Duration.Inf)
+
+      result
+
+
+      //      val baos = controller.generatePDF()
+      //      val bais = new ByteArrayInputStream(baos.toByteArray)
+      //      val pdfDoc = PDDocument.load(bais)
+      //      val form = pdfDoc.getDocumentCatalog.getAcroForm
+      //      val field = form.getField("IHT435_01")
+      //      field.getValueAsString shouldBe "IHT435_01"
+
+
+
     }
   }
 //
