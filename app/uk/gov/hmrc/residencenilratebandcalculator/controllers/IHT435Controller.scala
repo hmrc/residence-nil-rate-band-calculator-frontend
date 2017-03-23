@@ -16,11 +16,12 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import java.io.{ByteArrayOutputStream, File}
+import java.io.{ByteArrayOutputStream, File, FileOutputStream, OutputStream}
 import javassist.bytecode.ByteArray
 import javax.inject.{Inject, Singleton}
 
 import org.apache.pdfbox.pdmodel.PDDocument
+import org.apache.pdfbox.pdmodel.interactive.form.{PDCheckBox, PDField, PDRadioButton}
 import play.api.mvc.{Action, AnyContent, Result}
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
@@ -33,16 +34,96 @@ import scala.concurrent.Future
 class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
                                  val sessionConnector: SessionConnector) extends FrontendController {
 
+  val fieldNameMap = Map[String, String](
+    "IHT435_01" -> "IHT435_01",
+    "IHT435_02" -> "IHT435_02",
+    "IHT435_03_01" -> "IHT435_03_01",
+    "IHT435_03_02" -> "IHT435_03_02",
+    "IHT435_03_03" -> "IHT435_03_03",
+    "IHT435_03_04" -> "IHT435_03_04",
+    "IHT435_03_05" -> "IHT435_03_05",
+    "IHT435_03_06" -> "IHT435_03_06",
+    "IHT435_03_07" -> "IHT435_03_07",
+    "IHT435_03_08" -> "IHT435_03_08",
+    "IHT435_04" -> "IHT435_04",
+    //"IHT435_05" -> "IHT435_05",
+    "IHT435_06" -> "IHT435_06",
+    "IHT435_07" -> "IHT435_07",
+    //"IHT435_08" -> "IHT435_08",
+    "IHT435_09_01" -> "IHT435_09_01",
+    "IHT435_09_02" -> "IHT435_09_02",
+    "IHT435_09_03" -> "IHT435_09_03",
+    "IHT435_09_04" -> "IHT435_09_04",
+    "IHT435_10" -> "IHT435_10",
+    "IHT435_10_01" -> "IHT435_10_01",
+    "IHT435_10_02" -> "IHT435_10_02",
+    "IHT435_10_03" -> "IHT435_10_03",
+    "IHT435_10_04" -> "IHT435_10_04",
+    "IHT435_10_05" -> "IHT435_10_05",
+    "IHT435_10_06" -> "IHT435_10_06",
+    "IHT435_10_07" -> "IHT435_10_07",
+    "IHT435_11_01" -> "IHT435_11_01",
+    "IHT435_11_02" -> "IHT435_11_02",
+    "IHT435_11_03" -> "IHT435_11_03",
+    "IHT435_11_04" -> "IHT435_11_04",
+    "IHT435_11_05" -> "IHT435_11_05",
+    "IHT435_11_06" -> "IHT435_11_06",
+    //"IHT435_12" -> "IHT435_12",
+    //"IHT435_13" -> "IHT435_13",
+    "IHT435_14" -> "IHT435_14",
+    "IHT435_15" -> "IHT435_15",
+    //"IHT435_16" -> "IHT435_16",
+    "IHT435_17" -> "IHT435_17",
+    //"IHT435_18" -> "IHT435_18",
+    "IHT435_19_01" -> "IHT435_19_01",
+    "IHT435_19_02" -> "IHT435_19_02",
+    "IHT435_19_03" -> "IHT435_19_03",
+    "IHT435_19_04" -> "IHT435_19_04",
+    "IHT435_20_01" -> "IHT435_20_01",
+    "IHT435_20_02" -> "IHT435_20_02",
+    "IHT435_20_03" -> "IHT435_20_03",
+    "IHT435_20_04" -> "IHT435_20_04",
+    "IHT435_20_05" -> "IHT435_20_05",
+    "IHT435_20_06" -> "IHT435_20_06",
+    "IHT435_20_07" -> "IHT435_20_07",
+    "IHT435_20_08" -> "IHT435_20_08",
+    "IHT435_21" -> "IHT435_21",
+    //"IHT435_22" -> "IHT435_22",
+    //"IHT435_23" -> "IHT435_23",
+    "IHT435_24" -> "IHT435_24",
+    "IHT435_25_01" -> "IHT435_25_01",
+    "IHT435_25_02" -> "IHT435_25_02",
+    "IHT435_25_03" -> "IHT435_25_03",
+    "IHT435_25_04" -> "IHT435_25_04",
+    "IHT435_25_05" -> "IHT435_25_05",
+    "IHT435_25_06" -> "IHT435_25_06",
+    //"IHT435_26" -> "IHT435_26",
+    "IHT435_27" -> "IHT435_27",
+    "IHT435_28" -> "IHT435_28"
+  )
+
   def generatePDF() = {
     val pdf = PDDocument.load(new File("conf/resource/IHT435.pdf"))
     val form = pdf.getDocumentCatalog.getAcroForm
-    val field = form.getField("IHT435_01")
-    field.setValue("IHT435_01")
+
+    for (f <- fieldNameMap) {
+      val field = form.getField(f._1)
+      field.setValue(f._2)
+    }
+
+    val cb5 = form.getField("IHT435_05")
+    cb5.asInstanceOf[PDCheckBox].check()
+
+    val cb8: PDField = form.getField("IHT435_08")
+    cb8.asInstanceOf[PDCheckBox].check()
 
     pdf.setAllSecurityToBeRemoved(true)
     val baos = new ByteArrayOutputStream()
     pdf.save(baos)
     pdf.close
+
+    val outputStream = new FileOutputStream("/Users/andy/Downloads/wibble.pdf")
+    baos.writeTo(outputStream);
 
     baos
   }
