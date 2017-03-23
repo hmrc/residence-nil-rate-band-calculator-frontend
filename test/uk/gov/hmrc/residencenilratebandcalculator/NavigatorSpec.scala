@@ -109,7 +109,8 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.cannotClaimRNRB)(mockCacheMap) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
     }
 
-    "return a call to the AnyBroughtForwardAllowance onPageLoad method when there is no property closely inherited and we're on the Cannot Claim RNRB page" in {
+    "return a call to the AnyBroughtForwardAllowance onPageLoad method when there is no Property Passing To Direct Descendants" +
+      "and we're on the Cannot Claim RNRB page" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.propertyPassingToDirectDescendants) thenReturn Some(Constants.none)
       navigator.nextPage(Constants.cannotClaimRNRB)(mockCacheMap) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
@@ -259,21 +260,21 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     }
 
     "return a call to the Any Exemption when back linking from the Any Brought Forward Allowance page" +
-      "when the user has answered Property Closely Inherited as all" in {
+      "when the user has answered Property Passing To Direct Descendants as all" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.propertyPassingToDirectDescendants) thenReturn Some(Constants.all)
       navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.AnyExemptionController.onPageLoad()
     }
 
     "return a call to the Any Exemption when back linking from the Any Brought Forward Allowance page" +
-      "when the user has answered Property Closely Inherited as some" in {
+      "when the user has answered Property Passing To Direct Descendants as some" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.propertyPassingToDirectDescendants) thenReturn Some(Constants.some)
       navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.AnyExemptionController.onPageLoad()
     }
 
     "return a call to the Property Passing To Direct Descendants when back linking from the Any Brought Forward Allowance page" +
-      "when the user has answered Property Closely Inherited as none" in {
+      "when the user has answered Property Passing To Direct Descendants as none" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.propertyPassingToDirectDescendants) thenReturn Some(Constants.none)
       navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.PropertyPassingToDirectDescendantsController.onPageLoad()
