@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import akka.util.ByteString
 import org.apache.pdfbox.pdmodel.PDDocument
+import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm
 import play.api.http.Status
 import play.api.libs.json.{JsNumber, JsValue, Reads}
 import play.api.test.FakeRequest
@@ -27,19 +28,19 @@ import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 
 class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSessionConnector {
-  val fakeRequest = FakeRequest("", "")
+  private val fakeRequest = FakeRequest("", "")
 
-  val injector = fakeApplication.injector
+  private val injector = fakeApplication.injector
 
-  def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
+  private def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
-  def controller = new IHT435Controller(frontendAppConfig, mockSessionConnector)
+  private def controller = new IHT435Controller(frontendAppConfig, mockSessionConnector)
 
-  val filledcacheMap: CacheMap = new CacheMap("", Map[String, JsValue](
+  private val filledcacheMap: CacheMap = new CacheMap("", Map[String, JsValue](
     Constants.valueOfEstateId -> JsNumber(500000),
     Constants.chargeableEstateValueId -> JsNumber(450000)))
 
-  def acroForm = {
+  private def acroForm: PDAcroForm = {
     setCacheMap(filledcacheMap)
     val result = controller.onPageLoad()(fakeRequest)
     val content: ByteString = contentAsBytes(result)
