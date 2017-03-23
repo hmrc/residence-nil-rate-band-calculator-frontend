@@ -31,7 +31,7 @@ object Constants {
   val assetsPassingToDirectDescendantsId = "AssetsPassingToDirectDescendants"
   val broughtForwardAllowanceId = "BroughtForwardAllowance"
   val broughtForwardAllowanceOnDisposalId = "BroughtForwardAllowanceOnDisposal"
-  val chargeableTransferAmountId = "ChargeableTransferAmount"
+  val chargeableEstateValueId = "ChargeableEstateValue"
   val cannotClaimDownsizingId = "CannotClaimDownsizing"
   val cannotClaimRNRB = "CannotClaimRNRB"
   val dateOfDeathId = "DateOfDeath"

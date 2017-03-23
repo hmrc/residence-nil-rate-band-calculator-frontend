@@ -31,8 +31,8 @@ class Navigator @Inject()() {
     Map(
       Constants.dateOfDeathId -> (ua => getDateOfDeathRoute(ua)),
       Constants.partOfEstatePassingToDirectDescendantsId -> (ua => getPartOfEstatePassingToDirectDescendantsRoute(ua)),
-      Constants.valueOfEstateId -> (_ => ChargeableTransferAmountController.onPageLoad()),
-      Constants.chargeableTransferAmountId -> (_ => EstateHasPropertyController.onPageLoad()),
+      Constants.valueOfEstateId -> (_ => ChargeableEstateValueController.onPageLoad()),
+      Constants.chargeableEstateValueId -> (_ => EstateHasPropertyController.onPageLoad()),
       Constants.estateHasPropertyId -> (ua => getEstateHasPropertyRoute(ua)),
       Constants.cannotClaimRNRB -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
       Constants.propertyValueId -> (_ => AnyPropertyCloselyInheritedController.onPageLoad()),
@@ -123,8 +123,8 @@ class Navigator @Inject()() {
     Map(
       Constants.partOfEstatePassingToDirectDescendantsId -> (_ => DateOfDeathController.onPageLoad()),
       Constants.valueOfEstateId -> (_ => PartOfEstatePassingToDirectDescendantsController.onPageLoad()),
-      Constants.chargeableTransferAmountId -> (_ => ValueOfEstateController.onPageLoad()),
-      Constants.estateHasPropertyId -> (_ => ChargeableTransferAmountController.onPageLoad()),
+      Constants.chargeableEstateValueId -> (_ => ValueOfEstateController.onPageLoad()),
+      Constants.estateHasPropertyId -> (_ => ChargeableEstateValueController.onPageLoad()),
       Constants.propertyValueId -> (_ => EstateHasPropertyController.onPageLoad()),
       Constants.anyPropertyCloselyInheritedId -> (_ => PropertyValueController.onPageLoad()),
       Constants.percentageCloselyInheritedId -> (_ => AnyPropertyCloselyInheritedController.onPageLoad()),

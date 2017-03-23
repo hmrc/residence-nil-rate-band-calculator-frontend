@@ -175,7 +175,7 @@ class AnswerRowSpecs extends UnitSpec with WithFakeApplication with MockSessionC
         Constants.dateOfDeathId -> JsNumber(0),
         Constants.partOfEstatePassingToDirectDescendantsId -> JsNumber(1),
         Constants.valueOfEstateId -> JsNumber(2),
-        Constants.chargeableTransferAmountId -> JsNumber(3)
+        Constants.chargeableEstateValueId -> JsNumber(3)
       ))
 
       val result = AnswerRows.truncateAndLocateInCacheMap(Constants.valueOfEstateId, cacheMap)
@@ -190,7 +190,7 @@ class AnswerRowSpecs extends UnitSpec with WithFakeApplication with MockSessionC
       val cacheMap = CacheMap("", Map(
         Constants.dateOfDeathId -> JsNumber(0),
         Constants.valueOfEstateId -> JsNumber(2),
-        Constants.chargeableTransferAmountId -> JsNumber(3)
+        Constants.chargeableEstateValueId -> JsNumber(3)
       ))
 
       val result = AnswerRows.truncateAndLocateInCacheMap(Constants.valueOfEstateId, cacheMap)
@@ -204,7 +204,7 @@ class AnswerRowSpecs extends UnitSpec with WithFakeApplication with MockSessionC
         Constants.dateOfDeathId -> JsNumber(0),
         Constants.partOfEstatePassingToDirectDescendantsId -> JsNumber(1),
         Constants.valueOfEstateId -> JsNumber(2),
-        Constants.chargeableTransferAmountId -> JsNumber(3)
+        Constants.chargeableEstateValueId -> JsNumber(3)
       ))
 
       setCacheMap(cacheMap)
@@ -218,7 +218,7 @@ class AnswerRowSpecs extends UnitSpec with WithFakeApplication with MockSessionC
         Constants.dateOfDeathId -> 0,
         Constants.partOfEstatePassingToDirectDescendantsId -> 1,
         Constants.valueOfEstateId -> 2,
-        Constants.chargeableTransferAmountId -> 3
+        Constants.chargeableEstateValueId -> 3
       )
 
       val result = AnswerRows.constructAnswerRows(AnswerRows.truncateAndLocateInCacheMap(

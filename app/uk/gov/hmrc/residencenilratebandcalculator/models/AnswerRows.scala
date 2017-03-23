@@ -30,7 +30,7 @@ object AnswerRows {
     Constants.dateOfDeathId,
     Constants.partOfEstatePassingToDirectDescendantsId,
     Constants.valueOfEstateId,
-    Constants.chargeableTransferAmountId,
+    Constants.chargeableEstateValueId,
     Constants.estateHasPropertyId,
     Constants.propertyValueId,
     Constants.anyPropertyCloselyInheritedId,
@@ -89,8 +89,8 @@ object AnswerRows {
         routes.PartOfEstatePassingToDirectDescendantsController.onPageLoad),
     Constants.valueOfEstateId ->
       intAnswerRowFn("value_of_estate.title", Constants.valueOfEstateId, routes.ValueOfEstateController.onPageLoad),
-    Constants.chargeableTransferAmountId ->
-      intAnswerRowFn("chargeable_transfer_amount.title", "Chargeable transfer amount", routes.ChargeableTransferAmountController.onPageLoad),
+    Constants.chargeableEstateValueId ->
+      intAnswerRowFn("chargeable_estate_value.title", "Chargeable transfer amount", routes.ChargeableEstateValueController.onPageLoad),
     Constants.estateHasPropertyId ->
       boolAnswerRowFn("estate_has_property.title", "Estate has property", routes.EstateHasPropertyController.onPageLoad),
     Constants.anyDownsizingAllowanceId ->

@@ -43,7 +43,7 @@ class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar w
   val dateOfDeath = new LocalDate(2020, 1, 1)
   val dateOfDeathString = "2020-01-01"
   val valueOfEstate = 1
-  val chargeableTransferValue = 2
+  val chargeableEstateValue = 2
 
   val expectedResidenceNilRateAmount = 77796325
   val expectedApplicableNilRateBandAmount = 88881
@@ -53,12 +53,12 @@ class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar w
   val calculationResult = CalculationResult(expectedResidenceNilRateAmount, expectedApplicableNilRateBandAmount,
     expectedCarriedForwardAmount, expectedDefaultAllowance, adjustedAllowance)
 
-  val expectedCalculationInput = CalculationInput(dateOfDeath, valueOfEstate, chargeableTransferValue, 0, 0, 0, None, None)
+  val expectedCalculationInput = CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, 0, 0, 0, None, None)
 
   val cacheMap = CacheMap("id", Map(
     Constants.dateOfDeathId -> JsString(dateOfDeathString),
     Constants.valueOfEstateId -> JsNumber(valueOfEstate),
-    Constants.chargeableTransferAmountId -> JsNumber(chargeableTransferValue),
+    Constants.chargeableEstateValueId -> JsNumber(chargeableEstateValue),
     Constants.estateHasPropertyId -> JsBoolean(false),
     Constants.anyBroughtForwardAllowanceId -> JsBoolean(false),
     Constants.anyDownsizingAllowanceId -> JsBoolean(false)

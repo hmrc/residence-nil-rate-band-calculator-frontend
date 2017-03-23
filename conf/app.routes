@@ -34,8 +34,8 @@ POST       /brought-forward-allowance                   uk.gov.hmrc.residencenil
 GET        /brought-forward-allowance-on-disposal       uk.gov.hmrc.residencenilratebandcalculator.controllers.BroughtForwardAllowanceOnDisposalController.onPageLoad
 POST       /brought-forward-allowance-on-disposal       uk.gov.hmrc.residencenilratebandcalculator.controllers.BroughtForwardAllowanceOnDisposalController.onSubmit
 
-GET        /chargeable-transfer-amount                  uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableTransferAmountController.onPageLoad
-POST       /chargeable-transfer-amount                  uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableTransferAmountController.onSubmit
+GET        /chargeable-estate-value                     uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableEstateValueController.onPageLoad
+POST       /chargeable-estate-value                     uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableEstateValueController.onSubmit
 
 GET        /chargeable-value-of-residence               uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableValueOfResidenceController.onPageLoad
 POST       /chargeable-value-of-residence               uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableValueOfResidenceController.onSubmit
