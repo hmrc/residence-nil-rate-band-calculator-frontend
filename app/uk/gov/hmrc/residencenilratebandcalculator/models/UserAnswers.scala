@@ -42,7 +42,7 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def broughtForwardAllowanceOnDisposal = cacheMap.getEntry[Int](Constants.broughtForwardAllowanceOnDisposalId)
 
-  def chargeableTransferAmount = cacheMap.getEntry[Int](Constants.chargeableTransferAmountId)
+  def chargeableEstateValue = cacheMap.getEntry[Int](Constants.chargeableEstateValueId)
 
   def dateOfDeath = cacheMap.getEntry[LocalDate](Constants.dateOfDeathId)
 

@@ -26,7 +26,7 @@ class EstateHasPropertyControllerSpec extends SimpleControllerSpecBase {
   "Estate Has Property Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
-      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeableTransferAmountController.onPageLoad().url
+      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeableEstateValueController.onPageLoad().url
 
       value match {
         case None => estate_has_property(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
@@ -44,6 +44,6 @@ class EstateHasPropertyControllerSpec extends SimpleControllerSpecBase {
       List(Constants.dateOfDeathId,
            Constants.partOfEstatePassingToDirectDescendantsId,
            Constants.valueOfEstateId,
-           Constants.chargeableTransferAmountId))(Reads.BooleanReads, Writes.BooleanWrites)
+           Constants.chargeableEstateValueId))(Reads.BooleanReads, Writes.BooleanWrites)
   }
 }

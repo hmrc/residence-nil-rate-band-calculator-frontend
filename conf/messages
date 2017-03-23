@@ -90,10 +90,10 @@ brought_forward_allowance_on_disposal.title = What would the amount of transfera
 brought_forward_allowance_on_disposal.guidance = This is the amount of transferable residence nil rate band that would have been available to the deceased at the date of disposal, as if that date had been the deceased’s date of death.
 brought_forward_allowance_on_disposal.label =
 
-chargeable_transfer_amount.browser_title = What is the amount of the total chargeable estate on death?
-chargeable_transfer_amount.title = What is the amount of the total chargeable estate on death?
-chargeable_transfer_amount.guidance = Enter the value you have given in box 108 on the IHT-400 form.
-chargeable_transfer_amount.label =
+chargeable_estate_value.browser_title = What is the amount of the total chargeable estate on death?
+chargeable_estate_value.title = What is the amount of the total chargeable estate on death?
+chargeable_estate_value.guidance = Enter the value you have given in box 108 on the IHT-400 form.
+chargeable_estate_value.label =
 
 chargeable_value_of_residence.browser_title = What is the chargeable value of the residence for inheritance tax purposes?
 chargeable_value_of_residence.title = What is the chargeable value of the residence for inheritance tax purposes?

@@ -19,28 +19,28 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import play.api.http.Status
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_transfer_amount
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_estate_value
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
-class ChargeableTransferAmountControllerSpec extends SimpleControllerSpecBase {
+class ChargeableEstateValueControllerSpec extends SimpleControllerSpecBase {
 
-  "Chargeable Transfer Amount Controller" must {
+  "Chargeable Estate Value Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfEstateController.onPageLoad().url
       value match {
-        case None => chargeable_transfer_amount(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => chargeable_transfer_amount(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
+        case None => chargeable_estate_value(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => chargeable_estate_value(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 
-    def createController = () => new ChargeableTransferAmountController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
+    def createController = () => new ChargeableEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
     val testValue = 123
 
     val valuesToCacheBeforeSubmission = Map(Constants.valueOfEstateId -> testValue)
 
-    behave like rnrbController(createController, createView, Constants.chargeableTransferAmountId,
+    behave like rnrbController(createController, createView, Constants.chargeableEstateValueId,
       testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
 
     behave like nonStartingController[Int](createController,

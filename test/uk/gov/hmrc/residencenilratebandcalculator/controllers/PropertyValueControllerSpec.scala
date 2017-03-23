@@ -45,7 +45,7 @@ class PropertyValueControllerSpec extends SimpleControllerSpecBase {
       List(Constants.dateOfDeathId,
            Constants.partOfEstatePassingToDirectDescendantsId,
            Constants.valueOfEstateId,
-           Constants.chargeableTransferAmountId,
+           Constants.chargeableEstateValueId,
            Constants.estateHasPropertyId))(Reads.IntReads, Writes.IntWrites)
 
     "return bad request on submit with a value greater than the previously saved Value Of Estate" in {

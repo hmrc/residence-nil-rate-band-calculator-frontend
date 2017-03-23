@@ -84,10 +84,10 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.broughtForwardAllowanceOnDisposal shouldBe Some(1)
       }
 
-      "return the correct answer for Chargeable Transfer Amount" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.chargeableTransferAmountId -> JsNumber(1)))
+      "return the correct answer for Chargeable Estate Value" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.chargeableEstateValueId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.chargeableTransferAmount shouldBe Some(1)
+        userAnswers.chargeableEstateValue shouldBe Some(1)
       }
 
       "return the correct answer for Date Of Death" in {
@@ -205,9 +205,9 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.broughtForwardAllowanceOnDisposal shouldBe None
       }
 
-      "return None for Chargeable Transfer Amount" in {
+      "return None for Chargeable Estate Value" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.chargeableTransferAmount shouldBe None
+        userAnswers.chargeableEstateValue shouldBe None
       }
 
       "return None for Date Of Death" in {

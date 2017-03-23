@@ -22,7 +22,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 case class CalculationInput(dateOfDeath: LocalDate,
                             valueOfEstate: Int,
-                            chargeableTransferAmount: Int,
+                            chargeableEstateValue: Int,
                             propertyValue: Int,
                             percentageCloselyInherited: Int,
                             broughtForwardAllowance: Int,
@@ -35,7 +35,7 @@ object CalculationInput {
   def apply(userAnswers: UserAnswers): CalculationInput = {
     require(userAnswers.dateOfDeath.isDefined, "Date of Death was not answered")
     require(userAnswers.valueOfEstate.isDefined, "Value Of Estate was not answered")
-    require(userAnswers.chargeableTransferAmount.isDefined, "Chargeable Transfer Amount was not answered")
+    require(userAnswers.chargeableEstateValue.isDefined, "Chargeable Estate Value was not answered")
     require(userAnswers.estateHasProperty.isDefined, "Estate Has Property was not answered")
     if (userAnswers.estateHasProperty.get) requireEstateHasPropertyDependancies(userAnswers)
     require(userAnswers.anyBroughtForwardAllowance.isDefined, "Any Brought Forward Allowance was not answered")
@@ -45,7 +45,7 @@ object CalculationInput {
     CalculationInput(
       userAnswers.dateOfDeath.get,
       userAnswers.valueOfEstate.get,
-      userAnswers.chargeableTransferAmount.get,
+      userAnswers.chargeableEstateValue.get,
       getPropertyValue(userAnswers),
       getPercentageCloselyInherited(userAnswers),
       getBroughtForwardAllowance(userAnswers),

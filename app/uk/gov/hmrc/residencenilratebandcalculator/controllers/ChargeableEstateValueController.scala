@@ -26,23 +26,23 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_transfer_amount
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_estate_value
 
 import scala.concurrent.Future
 
 @Singleton
-class ChargeableTransferAmountController  @Inject()(override val appConfig: FrontendAppConfig,
+class ChargeableEstateValueController  @Inject()(override val appConfig: FrontendAppConfig,
                                                     val messagesApi: MessagesApi,
                                                     override val sessionConnector: SessionConnector,
                                                     override val navigator: Navigator) extends SimpleControllerBase[Int] {
 
 
-  override val controllerId = Constants.chargeableTransferAmountId
+  override val controllerId = Constants.chargeableEstateValueId
 
   override def form = () => NonNegativeIntForm()
 
   override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    chargeable_transfer_amount(appConfig, backUrl, form, answerRows)
+    chargeable_estate_value(appConfig, backUrl, form, answerRows)
   }
 
   override def validate(value: Int, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = {
