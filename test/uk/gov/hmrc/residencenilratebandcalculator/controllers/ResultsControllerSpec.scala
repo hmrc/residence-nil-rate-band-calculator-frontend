@@ -108,26 +108,5 @@ class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar w
       val contents = contentAsString(result)
       contents should include(NumberFormat.getCurrencyInstance(Locale.UK).format(expectedResidenceNilRateAmount))
     }
-
-    "display the carry forward amount if the Microservice successfully returns it" in {
-      setCacheMap(cacheMap)
-      val result = resultsController().onPageLoad()(fakeRequest)
-      val contents = contentAsString(result)
-      contents should include(NumberFormat.getCurrencyInstance(Locale.UK).format(expectedCarriedForwardAmount))
-    }
-
-    "display the applicable nil rate band if the Microservice successfully returns it" in {
-      setCacheMap(cacheMap)
-      val result = resultsController().onPageLoad()(fakeRequest)
-      val contents = contentAsString(result)
-      contents should include(NumberFormat.getCurrencyInstance(Locale.UK).format(expectedApplicableNilRateBandAmount))
-    }
-
-    "display the default allowance if the Microservice successfully returns it" in {
-      setCacheMap(cacheMap)
-      val result = resultsController().onPageLoad()(fakeRequest)
-      val contents = contentAsString(result)
-      contents should include(NumberFormat.getCurrencyInstance(Locale.UK).format(expectedDefaultAllowance))
-    }
   }
 }

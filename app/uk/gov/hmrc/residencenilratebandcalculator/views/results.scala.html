@@ -1,39 +1,42 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
-@import uk.gov.hmrc.residencenilratebandcalculator.models.DisplayResults
+@import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 
-@(appConfig: FrontendAppConfig, calculationResult: DisplayResults)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, residenceNilRateAmount: String, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("results.browser_title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    <header class="hero center">
-        <section class="hero__content u-align--center">
-            <h1 class="hero__heading-small">@Html(messages("results.title", "<span class=\"hero__heading-large\">" + calculationResult.residenceNilRateAmount + "</span>"))</h1>
-        </section>
-    </header>
+    @if(residenceNilRateAmount == "£0.00") {
+        <h1 class="heading-large">@messages("results.info.zero.header")</h1>
+        <h1 class="heading-medium">@messages("results.info.zero.guidance")
+            <div class="data-item bold-xxlarge">@residenceNilRateAmount</div>
+        </h1>
+        <p>@messages("results.info.zero.threshold_change")</p>
+    } else {
+        <h1 class="heading-large">@messages("results.info.non_zero.header")</h1>
+        <h1 class="heading-medium">@messages("results.info.non_zero.guidance")
+            <div class="data-item bold-xxlarge">@residenceNilRateAmount</div>
+        </h1>
+        <p>@messages("results.info.non_zero.threshold_change")</p>
+    }
 
-    <section class="section">
-        <h2 class="heading-medium">@messages("results.header")</h2>
-        <p>@messages("results.guidance")</p>
-        <a class="u--no-print print-link print-hidden js-visible" href="javascript:window.print()">@messages("results.link_to_print")</a>
-    </section>
-
-    <section class="section">
-        <h2 class="heading-medium">@messages("results.explanation_title")</h2>
-        @rnrbHelpers.summary(calculationResult.resultsRows)
-
-        <details id="your-answers">
-            <summary>@messages("results.answers")</summary>
-            <div class="panel-indent panel-indent--gutter">
-                @rnrbHelpers.answer_rows(calculationResult.answerRows, false, true)
-            </div>
-        </details>
-    </section>
-
-    <p>
-        <a class="u--no-print" href="@routes.ExitQuestionnaireController.onPageLoad().url">@messages("results.link_to_exit_questionnaire.text")</a>
+    <h2 class="heading-medium">@messages("results.action.header")</h2>
+    <p>@messages("results.action.guidance", residenceNilRateAmount)</p>
+    <ul class="list list-bullet">
+        <li>@messages("results.action.guidance.form_435")</li>
+        <li>@messages("results.action.guidance.form_400")</li>
+    </ul>
+    <p>@messages("results.action.guidance.continue")</p>
+    <p>@messages("results.print_prefix")
+        <a class="u--no-print print-hidden js-visible" href="javascript:window.print()">@messages("results.link_to_print")</a>
+        @messages("results.print_suffix")
     </p>
+
+    <a class="button u--no-print" href="@routes.ExitQuestionnaireController.onPageLoad().url">@messages("site.finish")</a>
+
+    @rnrbHelpers.answer_rows(answerRows)
+
 }
