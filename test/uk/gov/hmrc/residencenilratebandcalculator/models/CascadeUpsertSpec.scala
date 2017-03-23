@@ -38,7 +38,7 @@ class CascadeUpsertSpec extends UnitSpec {
     Constants.propertyValueId -> JsNumber(testNumber),
     Constants.propertyPassingToDirectDescendantsId -> JsString(Constants.some),
     Constants.percentagePassedToDirectDescendantsId -> JsNumber(testNumber),
-    Constants.anyExemptionId -> JsBoolean(true),
+    Constants.exemptionsAndReliefClaimedId -> JsBoolean(true),
     Constants.doesGrossingUpApplyToResidenceId -> JsBoolean(false),
     Constants.chargeableValueOfResidenceId -> JsNumber(testNumber),
     Constants.chargeableValueOfResidenceCloselyInheritedId -> JsNumber(testNumber),
@@ -73,9 +73,9 @@ class CascadeUpsertSpec extends UnitSpec {
         updatedCacheMap.data.keys should not contain Constants.percentagePassedToDirectDescendantsId
       }
 
-      "delete the existing 'Any Exemption' answer" in {
+      "delete the existing 'Exemptions And Relief Claimed' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.propertyInEstateId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.anyExemptionId
+        updatedCacheMap.data.keys should not contain Constants.exemptionsAndReliefClaimedId
       }
 
       "delete the existing 'Chargeable Value of Residence' answer" in {
@@ -108,9 +108,9 @@ class CascadeUpsertSpec extends UnitSpec {
         updatedCacheMap.data.keys should not contain Constants.percentagePassedToDirectDescendantsId
       }
 
-      "delete the existing 'Any Exemption' answer" in {
+      "delete the existing 'Exemptions And Relief Claimed' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.none, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.anyExemptionId
+        updatedCacheMap.data.keys should not contain Constants.exemptionsAndReliefClaimedId
       }
 
       "delete the existing 'Chargeable Value of Residence' answer" in {
@@ -150,33 +150,33 @@ class CascadeUpsertSpec extends UnitSpec {
       }
     }
 
-    "asked to save the answer 'false' for Any Exemptions" must {
+    "asked to save the answer 'false' for exemptions and relief claimed" must {
 
       "delete the existing 'Chargeable Value of Residence' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyExemptionId, false, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.exemptionsAndReliefClaimedId, false, fullCacheMap)
         updatedCacheMap.data.keys should not contain Constants.chargeableValueOfResidenceId
       }
 
       "delete the existing 'Chargeable Value of Residence Closely Inherited' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyExemptionId, false, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.exemptionsAndReliefClaimedId, false, fullCacheMap)
         updatedCacheMap.data.keys should not contain Constants.chargeableValueOfResidenceCloselyInheritedId
       }
 
       "delete the existing 'Does Grossing Up Apply To Residence' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyExemptionId, false, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.exemptionsAndReliefClaimedId, false, fullCacheMap)
         updatedCacheMap.data.keys should not contain Constants.doesGrossingUpApplyToResidenceId
       }
 
       "not delete any other answers" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyExemptionId, false, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.exemptionsAndReliefClaimedId, false, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size - 3
       }
     }
 
-    "asked to save the answer 'true' for Any Exemptions" must {
+    "asked to save the answer 'true' for exemptions and relief claimed" must {
 
       "not delete existing answers for other questions" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyExemptionId, true, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.exemptionsAndReliefClaimedId, true, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size
       }
     }

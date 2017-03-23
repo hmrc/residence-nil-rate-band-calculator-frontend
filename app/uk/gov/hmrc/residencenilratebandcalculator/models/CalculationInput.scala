@@ -101,8 +101,8 @@ object CalculationInput {
   }
 
   private def requirePropertyPassingToDirectDescendantsDependencies(userAnswers: UserAnswers) = {
-    require(userAnswers.anyExemption.isDefined, "Any Exemptions was not answered")
-    if(userAnswers.anyExemption.get) requireExemptionsDependencies(userAnswers)
+      require(userAnswers.exemptionsAndReliefClaimed.isDefined, "Exemptions And Relief Claimed was not answered")
+      if(userAnswers.exemptionsAndReliefClaimed.get) requireExemptionsDependencies(userAnswers)
   }
 
   private def requireExemptionsDependencies(userAnswers: UserAnswers) = {

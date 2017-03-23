@@ -26,7 +26,7 @@ class DoesGrossingUpApplyToResidenceControllerSpec extends SimpleControllerSpecB
   "Does Grossing Up Apply To Residence Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
-      val backUrl = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyExemptionController.onPageLoad().url
+      val backUrl = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ExemptionsAndReliefClaimedController.onPageLoad().url
 
       value match {
         case None => does_grossing_up_apply_to_residence(frontendAppConfig, backUrl, answerRows = Seq())(fakeRequest, messages)

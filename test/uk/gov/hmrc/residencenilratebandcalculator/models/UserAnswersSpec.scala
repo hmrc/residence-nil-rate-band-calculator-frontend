@@ -54,10 +54,10 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.anyDownsizingAllowance shouldBe Some(true)
       }
 
-      "return the correct answer for Any Exemption" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.anyExemptionId -> JsBoolean(true)))
+      "return the correct answer for Exemptions And Relief Claimed" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.exemptionsAndReliefClaimedId -> JsBoolean(true)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.anyExemption shouldBe Some(true)
+        userAnswers.exemptionsAndReliefClaimed shouldBe Some(true)
       }
 
       "return the correct answer for Property Passing To Direct Descendants" in {
@@ -180,9 +180,9 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.anyDownsizingAllowance shouldBe None
       }
 
-      "return None for Any Exemption" in {
+      "return None for Exemptions And Relief Claimed" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.anyExemption shouldBe None
+        userAnswers.exemptionsAndReliefClaimed shouldBe None
       }
 
       "return None for Property Passing To Direct Descendants" in {

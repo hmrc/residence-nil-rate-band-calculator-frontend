@@ -32,7 +32,7 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def partOfEstatePassingToDirectDescendants = cacheMap.getEntry[Boolean](Constants.partOfEstatePassingToDirectDescendantsId)
 
-  def anyExemption = cacheMap.getEntry[Boolean](Constants.anyExemptionId)
+  def exemptionsAndReliefClaimed = cacheMap.getEntry[Boolean](Constants.exemptionsAndReliefClaimedId)
 
   def propertyPassingToDirectDescendants = cacheMap.getEntry[String](Constants.propertyPassingToDirectDescendantsId)
 

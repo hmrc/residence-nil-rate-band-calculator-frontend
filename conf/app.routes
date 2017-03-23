@@ -19,8 +19,8 @@ POST       /any-downsizing-allowance                    uk.gov.hmrc.residencenil
 GET        /part-of-estate-passing-to-direct-descendants    uk.gov.hmrc.residencenilratebandcalculator.controllers.PartOfEstatePassingToDirectDescendantsController.onPageLoad
 POST       /part-of-estate-passing-to-direct-descendants    uk.gov.hmrc.residencenilratebandcalculator.controllers.PartOfEstatePassingToDirectDescendantsController.onSubmit
 
-GET        /any-exemption                               uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyExemptionController.onPageLoad
-POST       /any-exemption                               uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyExemptionController.onSubmit
+GET        /exemptions-and-relief-claimed               uk.gov.hmrc.residencenilratebandcalculator.controllers.ExemptionsAndReliefClaimedController.onPageLoad
+POST       /exemptions-and-relief-claimed               uk.gov.hmrc.residencenilratebandcalculator.controllers.ExemptionsAndReliefClaimedController.onSubmit
 
 GET        /property-passing-to-direct-descendants      uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyPassingToDirectDescendantsController.onPageLoad
 POST       /property-passing-to-direct-descendants      uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyPassingToDirectDescendantsController.onSubmit

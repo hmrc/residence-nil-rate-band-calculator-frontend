@@ -35,7 +35,7 @@ class CascadeUpsert {
   val funcMap: Map[String, (JsValue, CacheMap) => CacheMap] =
     Map(
       Constants.propertyInEstateId -> ((v, cm) => propertyInEstate(v, cm)),
-      Constants.anyExemptionId -> ((v, cm) => anyExemptionClearance(v, cm)),
+      Constants.exemptionsAndReliefClaimedId -> ((v, cm) => exemptionsAndReliefClaimedClearance(v, cm)),
       Constants.anyBroughtForwardAllowanceId -> ((v, cm) => anyBroughtForwardAllowance(v, cm)),
       Constants.anyDownsizingAllowanceId -> ((v, cm) => anyDownsizingAllowance(v, cm)),
       Constants.anyAssetsPassingToDirectDescendantsId -> ((v, cm) => anyAssetsPassingToDirectDescendants(v, cm)),
@@ -61,7 +61,7 @@ class CascadeUpsert {
         Constants.propertyValueId,
         Constants.propertyPassingToDirectDescendantsId,
         Constants.percentagePassedToDirectDescendantsId,
-        Constants.anyExemptionId,
+        Constants.exemptionsAndReliefClaimedId,
         Constants.chargeableValueOfResidenceId,
         Constants.chargeableValueOfResidenceCloselyInheritedId),
       cacheMap)
@@ -69,7 +69,7 @@ class CascadeUpsert {
   private def propertyPassingToDirectDescendants[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
     val keysToRemoveWhenNone = Set(
       Constants.percentagePassedToDirectDescendantsId,
-      Constants.anyExemptionId,
+      Constants.exemptionsAndReliefClaimedId,
       Constants.chargeableValueOfResidenceId,
       Constants.chargeableValueOfResidenceCloselyInheritedId
     )
@@ -82,8 +82,8 @@ class CascadeUpsert {
     store(Constants.propertyPassingToDirectDescendantsId, value, mapToStore)
   }
 
-  private def anyExemptionClearance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearIfFalse(Constants.anyExemptionId, value,
+  private def exemptionsAndReliefClaimedClearance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+    clearIfFalse(Constants.exemptionsAndReliefClaimedId, value,
       Set(
         Constants.chargeableValueOfResidenceId,
         Constants.chargeableValueOfResidenceCloselyInheritedId,

@@ -17,24 +17,24 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_exemption
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.exemptions_and_relief_claimed
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 
 import scala.language.reflectiveCalls
 
-class AnyExemptionViewSpec  extends BooleanViewSpecBase {
+class ExemptionsAndReliefClaimedViewSpec  extends BooleanViewSpecBase {
 
-  val messageKeyPrefix = "any_exemption"
+  val messageKeyPrefix = "exemptions_and_relief_claimed"
 
-  def createView(form: Option[Form[Boolean]] = None) = any_exemption(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = exemptions_and_relief_claimed(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
-  "Any Exemption View" must {
+  "Exemptions And Relief Claimed View" must {
 
     behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance", "guidance.bullet1", "guidance.bullet2", "guidance.bullet3")
 
     behave like pageWithBackLink[Boolean](createView)
 
-    behave like booleanPage(createView, messageKeyPrefix, AnyExemptionController.onSubmit().url)
+    behave like booleanPage(createView, messageKeyPrefix, ExemptionsAndReliefClaimedController.onSubmit().url)
 
     behave like pageContainingPreviousAnswers(createView)
 

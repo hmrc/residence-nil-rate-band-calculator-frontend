@@ -26,19 +26,19 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_exemption
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.exemptions_and_relief_claimed
 
 @Singleton
-class AnyExemptionController @Inject()(override val appConfig: FrontendAppConfig,
+class ExemptionsAndReliefClaimedController @Inject()(override val appConfig: FrontendAppConfig,
                                                      val messagesApi: MessagesApi,
                                                      override val sessionConnector: SessionConnector,
                                                      override val navigator: Navigator) extends SimpleControllerBase[Boolean] {
 
-  override val controllerId: String = Constants.anyExemptionId
+  override val controllerId: String = Constants.exemptionsAndReliefClaimedId
 
   override def form: () => Form[Boolean] = () => BooleanForm()
 
   override def view(form: Option[Form[Boolean]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    any_exemption(appConfig, backUrl, form, answerRows)
+    exemptions_and_relief_claimed(appConfig, backUrl, form, answerRows)
   }
 }
