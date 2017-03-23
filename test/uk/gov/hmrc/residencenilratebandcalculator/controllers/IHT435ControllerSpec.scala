@@ -19,9 +19,10 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import akka.util.ByteString
 import org.apache.pdfbox.pdmodel.PDDocument
 import play.api.http.Status
-import play.api.libs.json.{JsNumber, Reads}
+import play.api.libs.json.{JsNumber, JsValue, Reads}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 
@@ -36,21 +37,24 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
 
   "onPageLoad" must {
     "return 200 for a GET" in {
-      val result = controller.onPageLoad(Reads.IntReads)(fakeRequest)
+      val result = controller.onPageLoad()(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "On a page load with an expired session, return an redirect to an expired session page" in {
       expireSessionConnector()
-      val result = controller.onPageLoad(Reads.IntReads)(fakeRequest)
+      val result = controller.onPageLoad()(fakeRequest)
       status(result) shouldBe Status.SEE_OTHER
       redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
     }
 
     "when the value of the estate is set in the session, it should appear as field IHT435_06 in the generated PDF" in {
-      setCacheValue[JsNumber](Constants.valueOfEstateId, JsNumber(500000))
+      //setCacheValue[JsNumber](Constants.valueOfEstateId, JsNumber(500000))
 
-      val result = controller.onPageLoad(Reads.IntReads)(fakeRequest)
+      val filledcacheMap: CacheMap = new CacheMap("", Map[String, JsValue](Constants.valueOfEstateId -> JsNumber(500000)))
+      setCacheMap(filledcacheMap)
+
+      val result = controller.onPageLoad()(fakeRequest)
       val content: ByteString = contentAsBytes(result)
       val pdfDoc = PDDocument.load(content.toByteBuffer.array())
       val form = pdfDoc.getDocumentCatalog.getAcroForm

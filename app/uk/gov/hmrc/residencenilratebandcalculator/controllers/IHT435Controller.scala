@@ -104,7 +104,7 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     "IHT435_28" -> "IHT435_28"
   )
 
-  val CacheMapIdToFieldName = Map[String, String](
+  val cacheMapIdToFieldName = Map[String, String](
     Constants.valueOfEstateId -> "IHT435_06"
   )
 
@@ -112,16 +112,15 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     val pdf = PDDocument.load(new File("conf/resource/IHT435.pdf"))
     val form = pdf.getDocumentCatalog.getAcroForm
 
-    for (f <- CacheMapIdToFieldName) {
-      val fieldName = f._2
-      val storedValue = cacheMap.getEntry[JsNumber](f._1)
-      storedValue match {
-        case Some(jsval) =>
-          val field = form.getField(fieldName)
-          field.setValue(jsval.toString())
-        case None =>
-          println("\n&&&&&&&&&&&&&&&&&&&&& f._1 = " + f._1 + " " + "f._2 = " + f._2 + "&&& NUNS!!!")
-      }
+    cacheMapIdToFieldName foreach {
+      case (cacheId, fieldName) =>
+        val storedValue = cacheMap.data.get(cacheId)
+        storedValue match {
+          case Some(jsval) =>
+            val field = form.getField(fieldName)
+            field.setValue(jsval.toString())
+          case None =>
+        }
     }
 
     pdf.setAllSecurityToBeRemoved(true)
@@ -135,7 +134,7 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     baos
   }
 
-  def onPageLoad(implicit rds: Reads[Int]): Action[AnyContent] = Action.async { implicit request =>
+  def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.fetch().map {
       case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
       case Some(cacheMap) =>
