@@ -105,7 +105,8 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
   )
 
   val cacheMapIdToFieldName = Map[String, String](
-    Constants.valueOfEstateId -> "IHT435_06"
+    Constants.valueOfEstateId -> "IHT435_06",
+    Constants.chargeableEstateValueId -> "IHT435_07"
   )
 
   private def generatePDF(cacheMap: CacheMap) = {

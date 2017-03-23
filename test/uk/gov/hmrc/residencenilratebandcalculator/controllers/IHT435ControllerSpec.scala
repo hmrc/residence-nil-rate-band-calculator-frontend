@@ -35,6 +35,18 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
 
   def controller = new IHT435Controller(frontendAppConfig, mockSessionConnector)
 
+  val filledcacheMap: CacheMap = new CacheMap("", Map[String, JsValue](
+    Constants.valueOfEstateId -> JsNumber(500000),
+    Constants.chargeableEstateValueId -> JsNumber(450000)))
+
+  def acroForm = {
+    setCacheMap(filledcacheMap)
+    val result = controller.onPageLoad()(fakeRequest)
+    val content: ByteString = contentAsBytes(result)
+    val pdfDoc = PDDocument.load(content.toByteBuffer.array())
+    pdfDoc.getDocumentCatalog.getAcroForm
+  }
+
   "onPageLoad" must {
     "return 200 for a GET" in {
       val result = controller.onPageLoad()(fakeRequest)
@@ -48,19 +60,12 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
       redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
     }
 
-    "when the value of the estate is set in the session, it should appear as field IHT435_06 in the generated PDF" in {
-      //setCacheValue[JsNumber](Constants.valueOfEstateId, JsNumber(500000))
+    "when the value of the estate (2) is set in the session, it should appear as field IHT435_06 in the generated PDF" in {
+      acroForm.getField("IHT435_06").getValueAsString shouldBe "500000"
+    }
 
-      val filledcacheMap: CacheMap = new CacheMap("", Map[String, JsValue](Constants.valueOfEstateId -> JsNumber(500000)))
-      setCacheMap(filledcacheMap)
-
-      val result = controller.onPageLoad()(fakeRequest)
-      val content: ByteString = contentAsBytes(result)
-      val pdfDoc = PDDocument.load(content.toByteBuffer.array())
-      val form = pdfDoc.getDocumentCatalog.getAcroForm
-      val field = form.getField("IHT435_06")
-
-      field.getValueAsString shouldBe "500000"
+    "when the amount of the total chargeable estate (3) is set in the session, it should appear as field IHT435_07 in the generated PDF" in {
+      acroForm.getField("IHT435_07").getValueAsString shouldBe "450000"
     }
   }
 }
