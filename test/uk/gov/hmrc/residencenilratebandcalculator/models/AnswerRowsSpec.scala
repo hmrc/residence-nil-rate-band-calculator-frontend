@@ -122,7 +122,7 @@ class AnswerRowSpecs extends UnitSpec with WithFakeApplication with MockSessionC
         AnswerRow(messages("message.key"), "£1,000.00", "http://example.com")
 
       AnswerRows.intAnswerRowFn("message.key", "",
-        () => Call("", "http://example.com"))(JsNumber(data.valueCloselyInherited))(messages) shouldBe
+        () => Call("", "http://example.com"))(JsNumber(data.inheritedValue))(messages) shouldBe
         AnswerRow(messages("message.key"), "£5,000.00", "http://example.com")
     }
 

@@ -238,7 +238,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             |"broughtForwardAllowance":0,
             |"propertyValueAfterExemption":{
             |  "value":9,
-            |  "valueCloselyInherited":10
+            |  "inheritedValue":10
             |  }
             |}""".stripMargin.replaceAll("\\s+", "")
       }
@@ -555,7 +555,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       }
     }
 
-    "'grossing up on estate property' is false and there is no value for 'chargeable property value closely inhertied'" must {
+    "'grossing up on estate property' is false and there is no value for 'chargeable inhertied property value'" must {
       "throw an exception" in {
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),

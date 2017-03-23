@@ -24,7 +24,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_inherite
 
 class ChargeableInheritedPropertyValueControllerSpec extends SimpleControllerSpecBase {
 
-  "ChargeablePropertyValueCloseInheritedController"  must {
+  "Chargeable Inherited Property Value Controller"  must {
 
     val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeablePropertyValueController.onPageLoad().url
 
