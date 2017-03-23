@@ -166,9 +166,9 @@ class BroughtForwardAllowanceControllerSpec extends UnitSpec with WithFakeApplic
           Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
           Constants.valueOfEstateId -> JsNumber(500000),
           Constants.chargeableEstateValueId -> JsNumber(450000),
-          Constants.estateHasPropertyId -> JsBoolean(true),
+          Constants.propertyInEstateId -> JsBoolean(true),
           Constants.propertyValueId -> JsNumber(400000),
-          Constants.anyPropertyCloselyInheritedId -> JsBoolean(true),
+          Constants.propertyPassingToDirectDescendantsId -> JsBoolean(true),
           Constants.percentageCloselyInheritedId -> JsNumber(100),
           Constants.anyBroughtForwardAllowanceId -> JsBoolean(true)
         ))
@@ -180,9 +180,9 @@ class BroughtForwardAllowanceControllerSpec extends UnitSpec with WithFakeApplic
              Constants.partOfEstatePassingToDirectDescendantsId,
              Constants.valueOfEstateId,
              Constants.chargeableEstateValueId,
-             Constants.estateHasPropertyId,
+             Constants.propertyInEstateId,
              Constants.propertyValueId,
-             Constants.anyPropertyCloselyInheritedId,
+             Constants.propertyPassingToDirectDescendantsId,
              Constants.percentageCloselyInheritedId,
              Constants.anyBroughtForwardAllowanceId))
       true shouldBe(true)

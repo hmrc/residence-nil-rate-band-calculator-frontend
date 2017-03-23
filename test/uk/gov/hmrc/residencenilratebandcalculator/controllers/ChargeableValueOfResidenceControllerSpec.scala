@@ -47,9 +47,9 @@ class ChargeableValueOfResidenceControllerSpec extends SimpleControllerSpecBase 
            Constants.partOfEstatePassingToDirectDescendantsId,
            Constants.valueOfEstateId,
            Constants.chargeableEstateValueId,
-           Constants.estateHasPropertyId,
+           Constants.propertyInEstateId,
            Constants.propertyValueId,
-           Constants.anyPropertyCloselyInheritedId,
+           Constants.propertyPassingToDirectDescendantsId,
            Constants.percentageCloselyInheritedId))(Reads.IntReads, Writes.IntWrites)
 
     "return bad request on submit with a value greater than the previously saved Property Value" in {

@@ -34,7 +34,7 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def anyExemption = cacheMap.getEntry[Boolean](Constants.anyExemptionId)
 
-  def anyPropertyCloselyInherited = cacheMap.getEntry[String](Constants.anyPropertyCloselyInheritedId)
+  def propertyPassingToDirectDescendants = cacheMap.getEntry[String](Constants.propertyPassingToDirectDescendantsId)
 
   def assetsPassingToDirectDescendants = cacheMap.getEntry[Int](Constants.assetsPassingToDirectDescendantsId)
 
@@ -54,7 +54,7 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def downsizingDetails = cacheMap.getEntry[Date](Constants.downsizingDetails)
 
-  def estateHasProperty = cacheMap.getEntry[Boolean](Constants.estateHasPropertyId)
+  def propertyInEstate = cacheMap.getEntry[Boolean](Constants.propertyInEstateId)
 
   def valueOfEstate = cacheMap.getEntry[Int](Constants.valueOfEstateId)
 

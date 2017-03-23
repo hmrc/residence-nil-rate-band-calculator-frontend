@@ -31,9 +31,9 @@ object AnswerRows {
     Constants.partOfEstatePassingToDirectDescendantsId,
     Constants.valueOfEstateId,
     Constants.chargeableEstateValueId,
-    Constants.estateHasPropertyId,
+    Constants.propertyInEstateId,
     Constants.propertyValueId,
-    Constants.anyPropertyCloselyInheritedId,
+    Constants.propertyPassingToDirectDescendantsId,
     Constants.percentageCloselyInheritedId,
     Constants.anyExemptionId,
     Constants.doesGrossingUpApplyToResidenceId,
@@ -75,9 +75,9 @@ object AnswerRows {
       value => AnswerRow(titleKey, value, url()) _
     })
 
-  def anyPropertyCloselyInheritedAnswerRowFn(titleKey: String, title: String, url: () => Call) =
+  def propertyPassingToDirectDescendantsAnswerRowFn(titleKey: String, title: String, url: () => Call) =
     (jsValue: JsValue) => Json.fromJson[String](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
-      value => AnswerRow(titleKey, s"any_property_closely_inherited.$value", url()) _
+      value => AnswerRow(titleKey, s"property_passing_to_direct_descendants.$value", url()) _
     })
 
   val answerRowFns = Map[String, JsValue => Messages => AnswerRow](
@@ -91,8 +91,8 @@ object AnswerRows {
       intAnswerRowFn("value_of_estate.title", Constants.valueOfEstateId, routes.ValueOfEstateController.onPageLoad),
     Constants.chargeableEstateValueId ->
       intAnswerRowFn("chargeable_estate_value.title", "Chargeable transfer amount", routes.ChargeableEstateValueController.onPageLoad),
-    Constants.estateHasPropertyId ->
-      boolAnswerRowFn("estate_has_property.title", "Estate has property", routes.EstateHasPropertyController.onPageLoad),
+    Constants.propertyInEstateId ->
+      boolAnswerRowFn("property_in_estate.title", Constants.propertyInEstateId, routes.PropertyInEstateController.onPageLoad),
     Constants.anyDownsizingAllowanceId ->
       boolAnswerRowFn("any_downsizing_allowance.title", "Any downsizing allowance", routes.AnyDownsizingAllowanceController.onPageLoad),
     Constants.dateOfDisposalId ->
@@ -121,9 +121,9 @@ object AnswerRows {
       intAnswerRowFn("brought_forward_allowance_on_disposal.title",
         "Brought forward allowance on disposal",
         routes.BroughtForwardAllowanceOnDisposalController.onPageLoad),
-    Constants.anyPropertyCloselyInheritedId ->
-      anyPropertyCloselyInheritedAnswerRowFn("any_property_closely_inherited.title",
-        "Any property closely inherited", routes.AnyPropertyCloselyInheritedController.onPageLoad),
+    Constants.propertyPassingToDirectDescendantsId ->
+      propertyPassingToDirectDescendantsAnswerRowFn("property_passing_to_direct_descendants.title",
+        Constants.propertyPassingToDirectDescendantsId, routes.PropertyPassingToDirectDescendantsController.onPageLoad),
     Constants.doesGrossingUpApplyToOtherPropertyId ->
       boolAnswerRowFn("does_grossing_up_apply_to_other_property.title",
         "Does grossing up apply to other property",

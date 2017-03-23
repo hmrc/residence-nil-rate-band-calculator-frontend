@@ -27,7 +27,7 @@ object Constants {
   val anyDownsizingAllowanceId = "AnyDownsizingAllowance"
   val partOfEstatePassingToDirectDescendantsId = "PartOfEstatePassingToDirectDescendants"
   val anyExemptionId = "AnyExemption"
-  val anyPropertyCloselyInheritedId = "AnyPropertyCloselyInherited"
+  val propertyPassingToDirectDescendantsId = "PropertyPassingToDirectDescendants"
   val assetsPassingToDirectDescendantsId = "AssetsPassingToDirectDescendants"
   val broughtForwardAllowanceId = "BroughtForwardAllowance"
   val broughtForwardAllowanceOnDisposalId = "BroughtForwardAllowanceOnDisposal"
@@ -41,7 +41,7 @@ object Constants {
   val downsizingDetails = "downsizingDetails"
   val downsizingEligibilityDate = new LocalDate(2015, 7, 8)
   val eligibilityDate = new LocalDate(2017, 4, 6)
-  val estateHasPropertyId = "EstateHasProperty"
+  val propertyInEstateId = "PropertyInEstate"
   val valueOfEstateId = "ValueOfEstate"
   val percentageCloselyInheritedId = "PercentageCloselyInherited"
   val chargeableValueOfResidenceId = "ChargeableValueOfResidence"
@@ -52,9 +52,9 @@ object Constants {
   val all = "all"
   val some = "some"
   val none = "none"
-  val anyPropertyCloselyInheritedOptions = Seq(
-    RadioOption("any_property_closely_inherited", all),
-    RadioOption("any_property_closely_inherited", some),
-    RadioOption("any_property_closely_inherited", none)
+  val propertyPassingToDirectDescendantsOptions = Seq(
+    RadioOption("property_passing_to_direct_descendants", all),
+    RadioOption("property_passing_to_direct_descendants", some),
+    RadioOption("property_passing_to_direct_descendants", none)
   )
 }

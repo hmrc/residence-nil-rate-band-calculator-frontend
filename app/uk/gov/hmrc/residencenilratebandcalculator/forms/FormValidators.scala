@@ -28,5 +28,6 @@ object FormValidators {
     case _ => false
   }
 
-  def isValidPropertyCloselyInheritedOption(value: String) = Constants.anyPropertyCloselyInheritedOptions.exists(radioOption => radioOption.value == value)
+  def isValidPropertyPassingToDirectDescendantsOption(value: String) =
+    Constants.propertyPassingToDirectDescendantsOptions.exists(radioOption => radioOption.value == value)
 }

@@ -44,10 +44,10 @@ class TransitionOutControllerSpec extends UnitSpec with WithFakeApplication with
       Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
       Constants.valueOfEstateId -> JsNumber(500000),
       Constants.chargeableEstateValueId -> JsNumber(450000),
-      Constants.estateHasPropertyId -> JsBoolean(true),
+      Constants.propertyInEstateId -> JsBoolean(true),
       Constants.propertyValueId -> JsNumber(400000),
       Constants.doesGrossingUpApplyToOtherPropertyId -> JsBoolean(true),
-      Constants.anyPropertyCloselyInheritedId -> JsBoolean(true),
+      Constants.propertyPassingToDirectDescendantsId -> JsBoolean(true),
       Constants.percentageCloselyInheritedId -> JsNumber(100),
       Constants.anyBroughtForwardAllowanceId -> JsBoolean(true),
       Constants.broughtForwardAllowanceId -> JsNumber(50000),
@@ -101,9 +101,9 @@ class TransitionOutControllerSpec extends UnitSpec with WithFakeApplication with
         Constants.partOfEstatePassingToDirectDescendantsId,
         Constants.valueOfEstateId,
         Constants.chargeableEstateValueId,
-        Constants.estateHasPropertyId,
+        Constants.propertyInEstateId,
         Constants.propertyValueId,
-        Constants.anyPropertyCloselyInheritedId,
+        Constants.propertyPassingToDirectDescendantsId,
         Constants.percentageCloselyInheritedId)
       answerList shouldBe (calculatedList)
     }
@@ -117,9 +117,9 @@ class TransitionOutControllerSpec extends UnitSpec with WithFakeApplication with
         Constants.partOfEstatePassingToDirectDescendantsId,
         Constants.valueOfEstateId,
         Constants.chargeableEstateValueId,
-        Constants.estateHasPropertyId,
+        Constants.propertyInEstateId,
         Constants.propertyValueId,
-        Constants.anyPropertyCloselyInheritedId,
+        Constants.propertyPassingToDirectDescendantsId,
         Constants.percentageCloselyInheritedId)
       answerList shouldBe (calculatedList)
     }

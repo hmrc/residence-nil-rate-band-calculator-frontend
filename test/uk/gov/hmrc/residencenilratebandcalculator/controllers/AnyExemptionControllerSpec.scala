@@ -26,7 +26,7 @@ class AnyExemptionControllerSpec extends SimpleControllerSpecBase {
   "Any Exemption Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
-      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyPropertyCloselyInheritedController.onPageLoad().url
+      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyPassingToDirectDescendantsController.onPageLoad().url
 
       value match {
         case None => any_exemption(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
@@ -45,9 +45,9 @@ class AnyExemptionControllerSpec extends SimpleControllerSpecBase {
         Constants.partOfEstatePassingToDirectDescendantsId,
         Constants.valueOfEstateId,
         Constants.chargeableEstateValueId,
-        Constants.estateHasPropertyId,
+        Constants.propertyInEstateId,
         Constants.propertyValueId,
-        Constants.anyPropertyCloselyInheritedId,
+        Constants.propertyPassingToDirectDescendantsId,
         Constants.percentageCloselyInheritedId))(Reads.BooleanReads, Writes.BooleanWrites)
   }
 }
