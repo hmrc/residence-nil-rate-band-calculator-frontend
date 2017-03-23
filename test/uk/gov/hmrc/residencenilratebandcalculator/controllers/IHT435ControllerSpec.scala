@@ -16,11 +16,15 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import java.io.ByteArrayInputStream
+import javassist.bytecode.ByteArray
+
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+import org.apache.pdfbox.pdmodel.PDDocument
 
 class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSessionConnector {
   val fakeRequest = FakeRequest("", "")
@@ -31,15 +35,29 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
 
   def controller = new IHT435Controller(frontendAppConfig, mockSessionConnector)
 
-  "return 200 for a GET" in {
-    val result = controller.onPageLoad()(fakeRequest)
-    status(result) shouldBe Status.OK
+  "onPageLoad" must {
+    "return 200 for a GET" in {
+      val result = controller.onPageLoad()(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "On a page load with an expired session, return an redirect to an expired session page" in {
+      expireSessionConnector()
+      val result = controller.onPageLoad()(fakeRequest)
+      status(result) shouldBe Status.SEE_OTHER
+      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
+    }
   }
 
-  "On a page load with an expired session, return an redirect to an expired session page" in {
-    expireSessionConnector()
-    val result = controller.onPageLoad()(fakeRequest)
-    status(result) shouldBe Status.SEE_OTHER
-    redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
+  "generatePDF" must {
+    "can fill a 'IHT435_01' for a pdf text field IHT435_01 in IHT435" in {
+      val baos = controller.generatePDF
+      val bais = new ByteArrayInputStream(baos.toByteArray)
+      val pdfDoc = PDDocument.load(bais)
+      val form = pdfDoc.getDocumentCatalog.getAcroForm
+      val field = form.getField("IHT435_01")
+
+      field.getValueAsString shouldBe("IHT435_01")
+    }
   }
 }

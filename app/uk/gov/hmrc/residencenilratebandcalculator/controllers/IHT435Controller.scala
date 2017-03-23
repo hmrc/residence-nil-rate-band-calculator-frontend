@@ -16,9 +16,12 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import java.io.{ByteArrayOutputStream, File}
+import javassist.bytecode.ByteArray
 import javax.inject.{Inject, Singleton}
 
-import play.api.mvc.Action
+import org.apache.pdfbox.pdmodel.PDDocument
+import play.api.mvc.{Action, AnyContent, Result}
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
@@ -29,11 +32,27 @@ import scala.concurrent.Future
 @Singleton
 class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
                                  val sessionConnector: SessionConnector) extends FrontendController {
-  def onPageLoad = Action.async { implicit request =>
+
+  def generatePDF() = {
+    val pdf = PDDocument.load(new File("conf/resource/IHT435.pdf"))
+    val form = pdf.getDocumentCatalog.getAcroForm
+    val field = form.getField("IHT435_01")
+    field.setValue("IHT435_01")
+
+    pdf.setAllSecurityToBeRemoved(true)
+    val baos = new ByteArrayOutputStream()
+    pdf.save(baos)
+    pdf.close
+
+    baos
+  }
+
+  def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.fetch().map {
       case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
       case Some(cacheMap) => {
-        Ok(""/*.toByteArray*/).as("application/pdf")
+        //Ok(/*generatePDF*/).as("application/pdf")
+        Ok("")
       }
     }
   }
