@@ -19,26 +19,26 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PositivePercentForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_closely_inherited
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_passed_to_direct_descendants
 
-class PercentageCloselyInheritedControllerSpec extends SimpleControllerSpecBase {
+class PercentagePassedToDirectDescendantsControllerSpec extends SimpleControllerSpecBase {
 
-  "Percentage Closely Inherited Controller" must {
+  "Percentage Passed To Direct Descendants Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyPassingToDirectDescendantsController.onPageLoad().url
 
       value match {
-        case None => percentage_closely_inherited(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => percentage_closely_inherited(frontendAppConfig, url, Some(PositivePercentForm().bind(v)), Seq())(fakeRequest, messages)
+        case None => percentage_passed_to_direct_descendants(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => percentage_passed_to_direct_descendants(frontendAppConfig, url, Some(PositivePercentForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 
-    def createController = () => new PercentageCloselyInheritedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
+    def createController = () => new PercentagePassedToDirectDescendantsController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
     val testValue = 50
 
-    behave like rnrbController[Int](createController, createView, Constants.percentageCloselyInheritedId, testValue)(Reads.IntReads, Writes.IntWrites)
+    behave like rnrbController[Int](createController, createView, Constants.percentagePassedToDirectDescendantsId, testValue)(Reads.IntReads, Writes.IntWrites)
 
     behave like nonStartingController[Int](createController,
       List(Constants.dateOfDeathId,

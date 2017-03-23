@@ -50,7 +50,7 @@ class ChargeableValueOfResidenceControllerSpec extends SimpleControllerSpecBase 
            Constants.propertyInEstateId,
            Constants.propertyValueId,
            Constants.propertyPassingToDirectDescendantsId,
-           Constants.percentageCloselyInheritedId))(Reads.IntReads, Writes.IntWrites)
+           Constants.percentagePassedToDirectDescendantsId))(Reads.IntReads, Writes.IntWrites)
 
     "return bad request on submit with a value greater than the previously saved Property Value" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))

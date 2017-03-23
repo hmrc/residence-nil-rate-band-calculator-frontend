@@ -58,7 +58,7 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def valueOfEstate = cacheMap.getEntry[Int](Constants.valueOfEstateId)
 
-  def percentageCloselyInherited = cacheMap.getEntry[Int](Constants.percentageCloselyInheritedId)
+  def percentagePassedToDirectDescendants = cacheMap.getEntry[Int](Constants.percentagePassedToDirectDescendantsId)
 
   def chargeableValueOfResidence = cacheMap.getEntry[Int](Constants.chargeableValueOfResidenceId)
 

@@ -17,25 +17,25 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_closely_inherited
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_passed_to_direct_descendants
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PositivePercentForm
 
 import scala.language.reflectiveCalls
 
-class PercentageCloselyInheritedViewSpec extends IntViewSpecBase {
+class PercentagePassedToDirectDescendantsViewSpec extends IntViewSpecBase {
 
-  val messageKeyPrefix = "percentage_closely_inherited"
+  val messageKeyPrefix = "percentage_passed_to_direct_descendants"
 
-  def createView(form: Option[Form[Int]] = None) = percentage_closely_inherited(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Int]] = None) = percentage_passed_to_direct_descendants(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
-  "Percentage Closely Inherited View" must {
+  "Percentage Passed To Direct Descendants View" must {
 
     behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance")
 
     behave like pageWithBackLink[Int](createView)
 
-    behave like intPage(createView, messageKeyPrefix, PercentageCloselyInheritedController.onSubmit().url, PositivePercentForm())
+    behave like intPage(createView, messageKeyPrefix, PercentagePassedToDirectDescendantsController.onSubmit().url, PositivePercentForm())
 
     behave like pageContainingPreviousAnswers(createView)
 

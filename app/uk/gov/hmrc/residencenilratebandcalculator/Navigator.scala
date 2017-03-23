@@ -37,7 +37,7 @@ class Navigator @Inject()() {
       Constants.cannotClaimRNRB -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
       Constants.propertyValueId -> (_ => PropertyPassingToDirectDescendantsController.onPageLoad()),
       Constants.propertyPassingToDirectDescendantsId -> (ua => getPropertyPassingToDirectDescendantsRoute(ua)),
-      Constants.percentageCloselyInheritedId -> (_ => AnyExemptionController.onPageLoad()),
+      Constants.percentagePassedToDirectDescendantsId -> (_ => AnyExemptionController.onPageLoad()),
       Constants.anyBroughtForwardAllowanceId -> (ua => getAnyBroughtForwardAllowanceRoute(ua)),
       Constants.broughtForwardAllowanceId -> (_ => AnyDownsizingAllowanceController.onPageLoad()),
       Constants.anyDownsizingAllowanceId -> (ua => getAnyDownsizingAllowanceRoute(ua)),
@@ -93,7 +93,7 @@ class Navigator @Inject()() {
 
   private def getPropertyPassingToDirectDescendantsRoute(userAnswers: UserAnswers) = userAnswers.propertyPassingToDirectDescendants match {
     case Some(Constants.all) => AnyExemptionController.onPageLoad()
-    case Some(Constants.some) => PercentageCloselyInheritedController.onPageLoad()
+    case Some(Constants.some) => PercentagePassedToDirectDescendantsController.onPageLoad()
     case Some(_) => CannotClaimRNRBController.onPageLoad()
     case _ => HomeController.onPageLoad()
   }
@@ -127,7 +127,7 @@ class Navigator @Inject()() {
       Constants.propertyInEstateId -> (_ => ChargeableEstateValueController.onPageLoad()),
       Constants.propertyValueId -> (_ => PropertyInEstateController.onPageLoad()),
       Constants.propertyPassingToDirectDescendantsId -> (_ => PropertyValueController.onPageLoad()),
-      Constants.percentageCloselyInheritedId -> (_ => PropertyPassingToDirectDescendantsController.onPageLoad()),
+      Constants.percentagePassedToDirectDescendantsId -> (_ => PropertyPassingToDirectDescendantsController.onPageLoad()),
       Constants.anyExemptionId -> (ua => getAnyExemptionReverseRoute(ua)),
       Constants.chargeableValueOfResidenceId -> (_ => DoesGrossingUpApplyToResidenceController.onPageLoad()),
       Constants.chargeableValueOfResidenceCloselyInheritedId -> (_ => ChargeableValueOfResidenceController.onPageLoad()),
@@ -160,7 +160,7 @@ class Navigator @Inject()() {
   }
 
   private def getAnyExemptionReverseRoute(userAnswers: UserAnswers) = userAnswers.propertyPassingToDirectDescendants match {
-    case Some(Constants.some) => PercentageCloselyInheritedController.onPageLoad()
+    case Some(Constants.some) => PercentagePassedToDirectDescendantsController.onPageLoad()
     case _ => PropertyPassingToDirectDescendantsController.onPageLoad()
   }
 

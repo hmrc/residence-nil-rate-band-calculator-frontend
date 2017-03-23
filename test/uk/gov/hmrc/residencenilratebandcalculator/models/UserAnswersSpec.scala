@@ -126,10 +126,10 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.valueOfEstate shouldBe Some(1)
       }
 
-      "return the correct answer for Percentage Closely Inherited" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.percentageCloselyInheritedId -> JsNumber(1)))
+      "return the correct answer for Percentage Passed To Direct Descendants" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.percentagePassedToDirectDescendantsId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.percentageCloselyInherited shouldBe Some(1)
+        userAnswers.percentagePassedToDirectDescendants shouldBe Some(1)
       }
 
       "return the correct answer for Property Value" in {
@@ -230,9 +230,9 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.valueOfEstate shouldBe None
       }
 
-      "return None for Percentage Closely Inherited" in {
+      "return None for Percentage Passed To Direct Descendants" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.percentageCloselyInherited shouldBe None
+        userAnswers.percentagePassedToDirectDescendants shouldBe None
       }
 
       "return None for Property Value" in {

@@ -60,7 +60,7 @@ class CascadeUpsert {
       Set(
         Constants.propertyValueId,
         Constants.propertyPassingToDirectDescendantsId,
-        Constants.percentageCloselyInheritedId,
+        Constants.percentagePassedToDirectDescendantsId,
         Constants.anyExemptionId,
         Constants.chargeableValueOfResidenceId,
         Constants.chargeableValueOfResidenceCloselyInheritedId),
@@ -68,7 +68,7 @@ class CascadeUpsert {
 
   private def propertyPassingToDirectDescendants[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
     val keysToRemoveWhenNone = Set(
-      Constants.percentageCloselyInheritedId,
+      Constants.percentagePassedToDirectDescendantsId,
       Constants.anyExemptionId,
       Constants.chargeableValueOfResidenceId,
       Constants.chargeableValueOfResidenceCloselyInheritedId
@@ -76,7 +76,7 @@ class CascadeUpsert {
 
     val mapToStore = value match {
       case JsString(Constants.none) => cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemoveWhenNone.contains(s)))
-      case JsString(Constants.all) => cacheMap copy (data = cacheMap.data - Constants.percentageCloselyInheritedId)
+      case JsString(Constants.all) => cacheMap copy (data = cacheMap.data - Constants.percentagePassedToDirectDescendantsId)
       case _ => cacheMap
     }
     store(Constants.propertyPassingToDirectDescendantsId, value, mapToStore)

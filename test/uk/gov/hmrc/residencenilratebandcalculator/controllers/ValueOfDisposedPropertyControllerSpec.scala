@@ -48,7 +48,7 @@ class ValueOfDisposedPropertyControllerSpec extends SimpleControllerSpecBase {
         Constants.propertyInEstateId,
         Constants.propertyValueId,
         Constants.propertyPassingToDirectDescendantsId,
-        Constants.percentageCloselyInheritedId,
+        Constants.percentagePassedToDirectDescendantsId,
         Constants.chargeableValueOfResidenceId,
         Constants.anyBroughtForwardAllowanceId,
         Constants.broughtForwardAllowanceId,

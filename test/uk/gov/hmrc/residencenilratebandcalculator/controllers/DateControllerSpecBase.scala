@@ -126,7 +126,7 @@ trait DateControllerSpecBase extends UnitSpec with WithFakeApplication with Http
           Constants.propertyInEstateId -> JsBoolean(true),
           Constants.propertyValueId -> JsNumber(400000),
           Constants.propertyPassingToDirectDescendantsId -> JsBoolean(true),
-          Constants.percentageCloselyInheritedId -> JsNumber(100),
+          Constants.percentagePassedToDirectDescendantsId -> JsNumber(100),
           Constants.anyBroughtForwardAllowanceId -> JsBoolean(true),
           Constants.broughtForwardAllowanceId -> JsNumber(50000),
           Constants.anyDownsizingAllowanceId -> JsBoolean(true)

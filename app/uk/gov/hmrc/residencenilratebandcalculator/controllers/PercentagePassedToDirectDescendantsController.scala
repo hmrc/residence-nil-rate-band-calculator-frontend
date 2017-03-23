@@ -25,19 +25,19 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PositivePercentForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_closely_inherited
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_passed_to_direct_descendants
 
-class PercentageCloselyInheritedController  @Inject()(override val appConfig: FrontendAppConfig,
-                                                      val messagesApi: MessagesApi,
-                                                      override val sessionConnector: SessionConnector,
-                                                      override val navigator: Navigator) extends SimpleControllerBase[Int] {
+class PercentagePassedToDirectDescendantsController  @Inject()(override val appConfig: FrontendAppConfig,
+                                                               val messagesApi: MessagesApi,
+                                                               override val sessionConnector: SessionConnector,
+                                                               override val navigator: Navigator) extends SimpleControllerBase[Int] {
 
 
-  override val controllerId = Constants.percentageCloselyInheritedId
+  override val controllerId = Constants.percentagePassedToDirectDescendantsId
 
   override def form = () => PositivePercentForm()
 
   override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    percentage_closely_inherited(appConfig, backUrl, form, answerRows)
+    percentage_passed_to_direct_descendants(appConfig, backUrl, form, answerRows)
   }
 }
