@@ -44,7 +44,7 @@ class TransitionOutControllerSpec extends UnitSpec with WithFakeApplication with
       Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
       Constants.valueOfEstateId -> JsNumber(500000),
       Constants.chargeableEstateValueId -> JsNumber(450000),
-      Constants.estateHasPropertyId -> JsBoolean(true),
+      Constants.propertyInEstateId -> JsBoolean(true),
       Constants.propertyValueId -> JsNumber(400000),
       Constants.doesGrossingUpApplyToOtherPropertyId -> JsBoolean(true),
       Constants.anyPropertyCloselyInheritedId -> JsBoolean(true),
@@ -101,7 +101,7 @@ class TransitionOutControllerSpec extends UnitSpec with WithFakeApplication with
         Constants.partOfEstatePassingToDirectDescendantsId,
         Constants.valueOfEstateId,
         Constants.chargeableEstateValueId,
-        Constants.estateHasPropertyId,
+        Constants.propertyInEstateId,
         Constants.propertyValueId,
         Constants.anyPropertyCloselyInheritedId,
         Constants.percentageCloselyInheritedId)
@@ -117,7 +117,7 @@ class TransitionOutControllerSpec extends UnitSpec with WithFakeApplication with
         Constants.partOfEstatePassingToDirectDescendantsId,
         Constants.valueOfEstateId,
         Constants.chargeableEstateValueId,
-        Constants.estateHasPropertyId,
+        Constants.propertyInEstateId,
         Constants.propertyValueId,
         Constants.anyPropertyCloselyInheritedId,
         Constants.percentageCloselyInheritedId)

@@ -45,7 +45,7 @@ class AnyPropertyCloselyInheritedControllerSpec extends SimpleControllerSpecBase
            Constants.partOfEstatePassingToDirectDescendantsId,
            Constants.valueOfEstateId,
            Constants.chargeableEstateValueId,
-           Constants.estateHasPropertyId,
+           Constants.propertyInEstateId,
            Constants.propertyValueId))(Reads.StringReads, Writes.StringWrites)
   }
 }

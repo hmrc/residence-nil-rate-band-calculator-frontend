@@ -36,8 +36,8 @@ object CalculationInput {
     require(userAnswers.dateOfDeath.isDefined, "Date of Death was not answered")
     require(userAnswers.valueOfEstate.isDefined, "Value Of Estate was not answered")
     require(userAnswers.chargeableEstateValue.isDefined, "Chargeable Estate Value was not answered")
-    require(userAnswers.estateHasProperty.isDefined, "Estate Has Property was not answered")
-    if (userAnswers.estateHasProperty.get) requireEstateHasPropertyDependancies(userAnswers)
+    require(userAnswers.propertyInEstate.isDefined, "Property In Estate was not answered")
+    if (userAnswers.propertyInEstate.get) requirePropertyInEstateDependancies(userAnswers)
     require(userAnswers.anyBroughtForwardAllowance.isDefined, "Any Brought Forward Allowance was not answered")
     if (userAnswers.anyBroughtForwardAllowance.get) requireBroughtForwardAllowanceDependancies(userAnswers)
     require(userAnswers.anyDownsizingAllowance.isDefined, "Any Downsizing Allowance was not answered")
@@ -63,12 +63,12 @@ object CalculationInput {
     case _ => None
   }
 
-  private def getPropertyValue(userAnswers: UserAnswers) = userAnswers.estateHasProperty.get match {
+  private def getPropertyValue(userAnswers: UserAnswers) = userAnswers.propertyInEstate.get match {
     case true => userAnswers.propertyValue.get
     case _ => 0
   }
 
-  private def getPercentageCloselyInherited(userAnswers: UserAnswers) = userAnswers.estateHasProperty.get match {
+  private def getPercentageCloselyInherited(userAnswers: UserAnswers) = userAnswers.propertyInEstate.get match {
       case true if userAnswers.anyPropertyCloselyInherited.get == Constants.all => 100
       case true if userAnswers.anyPropertyCloselyInherited.get == Constants.some => userAnswers.percentageCloselyInherited.get
       case _ => 0
@@ -90,7 +90,7 @@ object CalculationInput {
     case _ => None
   }
 
-  private def requireEstateHasPropertyDependancies(userAnswers: UserAnswers) = {
+  private def requirePropertyInEstateDependancies(userAnswers: UserAnswers) = {
     require(userAnswers.propertyValue.isDefined, "Property Value was not answered")
     require(userAnswers.anyPropertyCloselyInherited.isDefined, "Any Property Closely Inherited was not answered")
 

@@ -59,7 +59,7 @@ class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar w
     Constants.dateOfDeathId -> JsString(dateOfDeathString),
     Constants.valueOfEstateId -> JsNumber(valueOfEstate),
     Constants.chargeableEstateValueId -> JsNumber(chargeableEstateValue),
-    Constants.estateHasPropertyId -> JsBoolean(false),
+    Constants.propertyInEstateId -> JsBoolean(false),
     Constants.anyBroughtForwardAllowanceId -> JsBoolean(false),
     Constants.anyDownsizingAllowanceId -> JsBoolean(false)
   ))

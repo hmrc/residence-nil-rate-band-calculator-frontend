@@ -46,7 +46,7 @@ class DoesGrossingUpApplyToResidenceControllerSpec extends SimpleControllerSpecB
            Constants.partOfEstatePassingToDirectDescendantsId,
            Constants.valueOfEstateId,
            Constants.chargeableEstateValueId,
-           Constants.estateHasPropertyId,
+           Constants.propertyInEstateId,
            Constants.propertyValueId,
            Constants.anyPropertyCloselyInheritedId,
            Constants.percentageCloselyInheritedId))(Reads.BooleanReads, Writes.BooleanWrites)

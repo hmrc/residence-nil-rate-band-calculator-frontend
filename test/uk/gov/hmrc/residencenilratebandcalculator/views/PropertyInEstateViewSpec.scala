@@ -18,23 +18,23 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.estate_has_property
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_in_estate
 
 import scala.language.reflectiveCalls
 
-class EstateHasPropertyViewSpec  extends BooleanViewSpecBase {
+class PropertyInEstateViewSpec  extends BooleanViewSpecBase {
 
-  val messageKeyPrefix = "estate_has_property"
+  val messageKeyPrefix = "property_in_estate"
 
-  def createView(form: Option[Form[Boolean]] = None) = estate_has_property(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = property_in_estate(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
-  "Estate Has Property View" must {
+  "Property In Estate View" must {
 
     behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")
 
     behave like pageWithBackLink[Boolean](createView)
 
-    behave like booleanPage(createView, messageKeyPrefix, EstateHasPropertyController.onSubmit().url)
+    behave like booleanPage(createView, messageKeyPrefix, PropertyInEstateController.onSubmit().url)
 
     behave like pageContainingPreviousAnswers(createView)
 
