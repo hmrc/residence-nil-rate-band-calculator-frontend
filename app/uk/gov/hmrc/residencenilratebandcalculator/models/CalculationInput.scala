@@ -40,7 +40,7 @@ object CalculationInput {
     if (userAnswers.propertyInEstate.get) requirePropertyInEstateDependancies(userAnswers)
     require(userAnswers.anyBroughtForwardAllowance.isDefined, "Any Brought Forward Allowance was not answered")
     if (userAnswers.anyBroughtForwardAllowance.get) requireBroughtForwardAllowanceDependancies(userAnswers)
-    require(userAnswers.anyDownsizingAllowance.isDefined, "Any Downsizing Allowance was not answered")
+    require(userAnswers.claimDownsizingThreshold.isDefined, "Claim Downsizing Threshold was not answered")
 
     CalculationInput(
       userAnswers.dateOfDeath.get,
@@ -79,7 +79,7 @@ object CalculationInput {
     case _ => 0
   }
 
-  private def getDownsizingDetails(userAnswers: UserAnswers) = userAnswers.anyDownsizingAllowance.get match {
+  private def getDownsizingDetails(userAnswers: UserAnswers) = userAnswers.claimDownsizingThreshold.get match {
     case true =>
       require(userAnswers.dateOfDisposal.isDefined, "Date of Disposal was not answered")
 

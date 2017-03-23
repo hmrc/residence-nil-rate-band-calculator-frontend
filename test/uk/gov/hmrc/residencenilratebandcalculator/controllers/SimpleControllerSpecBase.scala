@@ -142,7 +142,7 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
           Constants.percentagePassedToDirectDescendantsId -> JsNumber(100),
           Constants.anyBroughtForwardAllowanceId -> JsBoolean(true),
           Constants.broughtForwardAllowanceId -> JsNumber(50000),
-          Constants.anyDownsizingAllowanceId -> JsBoolean(true),
+          Constants.claimDownsizingThresholdId -> JsBoolean(true),
           Constants.dateOfDisposalId -> JsString("2018-03-02"),
           Constants.valueOfDisposedPropertyId -> JsNumber(100000),
           Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true),

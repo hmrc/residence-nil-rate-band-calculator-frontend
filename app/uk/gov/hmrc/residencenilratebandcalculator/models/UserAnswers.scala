@@ -28,7 +28,7 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def anyBroughtForwardAllowanceOnDisposal = cacheMap.getEntry[Boolean](Constants.anyBroughtForwardAllowanceOnDisposalId)
 
-  def anyDownsizingAllowance = cacheMap.getEntry[Boolean](Constants.anyDownsizingAllowanceId)
+  def claimDownsizingThreshold = cacheMap.getEntry[Boolean](Constants.claimDownsizingThresholdId)
 
   def partOfEstatePassingToDirectDescendants = cacheMap.getEntry[Boolean](Constants.partOfEstatePassingToDirectDescendantsId)
 

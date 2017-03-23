@@ -18,17 +18,17 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_downsizing_allowance
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.claim_downsizing_threshold
 
 import scala.language.reflectiveCalls
 
-class AnyDownsizingAllowanceViewSpec extends BooleanViewSpecBase {
+class ClaimDownsizingThresholdViewSpec extends BooleanViewSpecBase {
 
-  val messageKeyPrefix = "any_downsizing_allowance"
+  val messageKeyPrefix = "claim_downsizing_threshold"
 
-  def createView(form: Option[Form[Boolean]] = None) = any_downsizing_allowance(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = claim_downsizing_threshold(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
-  "Any Downsizing Allowance View" must {
+  "Claim Downsizing Threshold View" must {
 
     behave like rnrbPage[Boolean](createView, messageKeyPrefix,
       "guidance1",
@@ -40,7 +40,7 @@ class AnyDownsizingAllowanceViewSpec extends BooleanViewSpecBase {
 
     behave like pageWithBackLink[Boolean](createView)
 
-    behave like booleanPage(createView, messageKeyPrefix, AnyDownsizingAllowanceController.onSubmit().url)
+    behave like booleanPage(createView, messageKeyPrefix, ClaimDownsizingThresholdController.onSubmit().url)
 
     behave like pageContainingPreviousAnswers(createView)
 

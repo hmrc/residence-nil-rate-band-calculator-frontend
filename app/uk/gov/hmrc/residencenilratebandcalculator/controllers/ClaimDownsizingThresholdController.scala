@@ -25,20 +25,20 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_downsizing_allowance
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.claim_downsizing_threshold
 
 @Singleton
-class AnyDownsizingAllowanceController @Inject()(override val appConfig: FrontendAppConfig,
+class ClaimDownsizingThresholdController @Inject()(override val appConfig: FrontendAppConfig,
                                                  val messagesApi: MessagesApi,
                                                  override val sessionConnector: SessionConnector,
                                                  override val navigator: Navigator) extends SimpleControllerBase[Boolean] {
 
-  override val controllerId: String = Constants.anyDownsizingAllowanceId
+  override val controllerId: String = Constants.claimDownsizingThresholdId
 
   override def form: () => Form[Boolean] = () => BooleanForm()
 
   override def view(form: Option[Form[Boolean]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    any_downsizing_allowance(appConfig, backUrl, form, answerRows)
+    claim_downsizing_threshold(appConfig, backUrl, form, answerRows)
   }
 
 }

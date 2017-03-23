@@ -13,8 +13,8 @@ POST       /any-brought-forward-allowance               uk.gov.hmrc.residencenil
 GET        /any-brought-forward-allowance-on-disposal   uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyBroughtForwardAllowanceOnDisposalController.onPageLoad
 POST       /any-brought-forward-allowance-on-disposal   uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyBroughtForwardAllowanceOnDisposalController.onSubmit
 
-GET        /any-downsizing-allowance                    uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyDownsizingAllowanceController.onPageLoad
-POST       /any-downsizing-allowance                    uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyDownsizingAllowanceController.onSubmit
+GET        /claim-downsizing-threshold                  uk.gov.hmrc.residencenilratebandcalculator.controllers.ClaimDownsizingThresholdController.onPageLoad
+POST       /claim-downsizing-threshold                  uk.gov.hmrc.residencenilratebandcalculator.controllers.ClaimDownsizingThresholdController.onSubmit
 
 GET        /part-of-estate-passing-to-direct-descendants    uk.gov.hmrc.residencenilratebandcalculator.controllers.PartOfEstatePassingToDirectDescendantsController.onPageLoad
 POST       /part-of-estate-passing-to-direct-descendants    uk.gov.hmrc.residencenilratebandcalculator.controllers.PartOfEstatePassingToDirectDescendantsController.onSubmit
