@@ -47,15 +47,15 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
       redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
     }
   }
-
-  "generatePDF" must {
-    "can fill a 'IHT435_01' for a pdf text field IHT435_01 in IHT435" in {
-      val baos = controller.generatePDF()
-      val bais = new ByteArrayInputStream(baos.toByteArray)
-      val pdfDoc = PDDocument.load(bais)
-      val form = pdfDoc.getDocumentCatalog.getAcroForm
-      val field = form.getField("IHT435_01")
-      field.getValueAsString shouldBe "IHT435_01"
-    }
-  }
+//
+//  "generatePDF" must {
+//    "can fill a 'IHT435_01' for a pdf text field IHT435_01 in IHT435" in {
+//      val baos = controller.generatePDF()
+//      val bais = new ByteArrayInputStream(baos.toByteArray)
+//      val pdfDoc = PDDocument.load(bais)
+//      val form = pdfDoc.getDocumentCatalog.getAcroForm
+//      val field = form.getField("IHT435_01")
+//      field.getValueAsString shouldBe "IHT435_01"
+//    }
+//  }
 }

@@ -102,7 +102,7 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     "IHT435_28" -> "IHT435_28"
   )
 
-  def generatePDF() = {
+  private def generatePDF() = {
     val pdf = PDDocument.load(new File("conf/resource/IHT435.pdf"))
     val form = pdf.getDocumentCatalog.getAcroForm
 
@@ -133,10 +133,8 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
   def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.fetch().map {
       case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
-      case Some(cacheMap) => {
-        //Ok(/*generatePDF*/).as("application/pdf")
-        Ok("")
-      }
+      case Some(cacheMap) =>
+        Ok(generatePDF().toByteArray).as("application/pdf")
     }
   }
 }
