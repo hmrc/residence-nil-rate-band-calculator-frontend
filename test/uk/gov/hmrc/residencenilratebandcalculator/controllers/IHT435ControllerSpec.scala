@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.http.Status
 import play.api.test.FakeRequest
+import play.api.test.Helpers._
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 
@@ -28,9 +29,17 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
 
   def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
+  def controller = new IHT435Controller(frontendAppConfig, mockSessionConnector)
+
   "return 200 for a GET" in {
-    val controller = new IHT435Controller(frontendAppConfig, mockSessionConnector)
     val result = controller.onPageLoad()(fakeRequest)
     status(result) shouldBe Status.OK
+  }
+
+  "On a page load with an expired session, return an redirect to an expired session page" in {
+    expireSessionConnector()
+    val result = controller.onPageLoad()(fakeRequest)
+    status(result) shouldBe Status.SEE_OTHER
+    redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
   }
 }

@@ -95,4 +95,4 @@ GET        /calculate-threshold-increase                uk.gov.hmrc.residencenil
 GET        /case-studies                                uk.gov.hmrc.residencenilratebandcalculator.controllers.FakeGovUkController.caseStudies
 GET        /guidance                                    uk.gov.hmrc.residencenilratebandcalculator.controllers.FakeGovUkController.guidance
 
-GET        /iht435                                      uk.gov.hmrc.residencenilratebandcalculator.controllers.IHT435Controller.onPageLoad
+GET        /copy-of-iht435                              uk.gov.hmrc.residencenilratebandcalculator.controllers.IHT435Controller.onPageLoad

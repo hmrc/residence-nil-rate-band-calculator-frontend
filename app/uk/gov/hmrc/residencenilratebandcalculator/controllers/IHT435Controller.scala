@@ -22,6 +22,7 @@ import play.api.mvc.Action
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
+import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 
 import scala.concurrent.Future
 
@@ -29,6 +30,11 @@ import scala.concurrent.Future
 class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
                                  val sessionConnector: SessionConnector) extends FrontendController {
   def onPageLoad = Action.async { implicit request =>
-    Future.successful(Ok(""/*.toByteArray*/).as("application/pdf"))
+    sessionConnector.fetch().map {
+      case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
+      case Some(cacheMap) => {
+        Ok(""/*.toByteArray*/).as("application/pdf")
+      }
+    }
   }
 }
