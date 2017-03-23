@@ -22,9 +22,11 @@ import javax.inject.{Inject, Singleton}
 
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.pdmodel.interactive.form.{PDCheckBox, PDField, PDRadioButton}
+import play.api.libs.json.{JsNumber, JsValue, Reads}
 import play.api.mvc.{Action, AnyContent, Result}
+import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.frontend.controller.FrontendController
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 
@@ -102,39 +104,42 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     "IHT435_28" -> "IHT435_28"
   )
 
-  private def generatePDF() = {
+  val CacheMapIdToFieldName = Map[String, String](
+    Constants.valueOfEstateId -> "IHT435_06"
+  )
+
+  private def generatePDF(cacheMap: CacheMap) = {
     val pdf = PDDocument.load(new File("conf/resource/IHT435.pdf"))
     val form = pdf.getDocumentCatalog.getAcroForm
 
-    for (f <- fieldNameMap) {
-      val field = form.getField(f._1)
-      field.setValue(f._2)
+    for (f <- CacheMapIdToFieldName) {
+      val fieldName = f._2
+      val storedValue = cacheMap.getEntry[JsNumber](f._1)
+      storedValue match {
+        case Some(jsval) =>
+          val field = form.getField(fieldName)
+          field.setValue(jsval.toString())
+        case None =>
+          println("\n&&&&&&&&&&&&&&&&&&&&& f._1 = " + f._1 + " " + "f._2 = " + f._2 + "&&& NUNS!!!")
+      }
     }
-
-//    val cb5 = form.getField("IHT435_05")
-//
-//    //cb5.asInstanceOf[PDCheckBox].check()
-//    cb5.setValue("Yes")
-//
-//    val cb8: PDField = form.getField("IHT435_08")
-//    cb8.asInstanceOf[PDCheckBox].check()
 
     pdf.setAllSecurityToBeRemoved(true)
     val baos = new ByteArrayOutputStream()
     pdf.save(baos)
     pdf.close
-//"/Users/andy/Downloads/wibble.pdf"
-    val outputStream = new FileOutputStream("/home/grant/Downloads/wibble.pdf")
+
+    val outputStream = new FileOutputStream("/Users/andy/Downloads/wibble.pdf")
     baos.writeTo(outputStream);
 
     baos
   }
 
-  def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
+  def onPageLoad(implicit rds: Reads[Int]): Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.fetch().map {
       case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
       case Some(cacheMap) =>
-        Ok(generatePDF().toByteArray).as("application/pdf")
+        Ok(generatePDF(cacheMap).toByteArray).as("application/pdf")
     }
   }
 }

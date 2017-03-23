@@ -16,17 +16,14 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import java.io.{ByteArrayInputStream, File}
-
+import akka.util.ByteString
+import org.apache.pdfbox.pdmodel.PDDocument
 import play.api.http.Status
+import play.api.libs.json.{JsNumber, Reads}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
-import org.apache.pdfbox.pdmodel.PDDocument
-
-import scala.concurrent.Await
-import scala.concurrent.duration.Duration
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 
 class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSessionConnector {
   val fakeRequest = FakeRequest("", "")
@@ -39,44 +36,27 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
 
   "onPageLoad" must {
     "return 200 for a GET" in {
-      val result = controller.onPageLoad()(fakeRequest)
+      val result = controller.onPageLoad(Reads.IntReads)(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "On a page load with an expired session, return an redirect to an expired session page" in {
       expireSessionConnector()
-      val result = controller.onPageLoad()(fakeRequest)
+      val result = controller.onPageLoad(Reads.IntReads)(fakeRequest)
       status(result) shouldBe Status.SEE_OTHER
       redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
     }
 
-    "aa" in {
+    "when the value of the estate is set in the session, it should appear as field IHT435_06 in the generated PDF" in {
+      setCacheValue[JsNumber](Constants.valueOfEstateId, JsNumber(500000))
 
-      val result:Result = Await.result(controller.onPageLoad()(fakeRequest), Duration.Inf)
+      val result = controller.onPageLoad(Reads.IntReads)(fakeRequest)
+      val content: ByteString = contentAsBytes(result)
+      val pdfDoc = PDDocument.load(content.toByteBuffer.array())
+      val form = pdfDoc.getDocumentCatalog.getAcroForm
+      val field = form.getField("IHT435_06")
 
-      result
-
-
-      //      val baos = controller.generatePDF()
-      //      val bais = new ByteArrayInputStream(baos.toByteArray)
-      //      val pdfDoc = PDDocument.load(bais)
-      //      val form = pdfDoc.getDocumentCatalog.getAcroForm
-      //      val field = form.getField("IHT435_01")
-      //      field.getValueAsString shouldBe "IHT435_01"
-
-
-
+      field.getValueAsString shouldBe "500000"
     }
   }
-//
-//  "generatePDF" must {
-//    "can fill a 'IHT435_01' for a pdf text field IHT435_01 in IHT435" in {
-//      val baos = controller.generatePDF()
-//      val bais = new ByteArrayInputStream(baos.toByteArray)
-//      val pdfDoc = PDDocument.load(bais)
-//      val form = pdfDoc.getDocumentCatalog.getAcroForm
-//      val field = form.getField("IHT435_01")
-//      field.getValueAsString shouldBe "IHT435_01"
-//    }
-//  }
 }
