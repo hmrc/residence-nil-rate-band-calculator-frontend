@@ -22,7 +22,6 @@ any_downsizing_allowance.guidance1.bullet1 = downsized their home on or after 8 
 any_downsizing_allowance.guidance1.bullet2 = gave any part of their home away, like giving half of it away to a direct descendant
 any_downsizing_allowance.guidance1.bullet3 = had a home that would have qualified for residence nil rate band allowance if they had not sold it and had kept it until they died
 any_downsizing_allowance.guidance1.bullet4 = left anything in their estate to a direct descendant
-any_downsizing_allowance.guidance2 = The value of the downsizing allowance that is available cannot be more than [WORK OUT ADDITIONAL ALLOWANCE LIMIT FOR THE ESTATE].
 any_downsizing_allowance.label =
 
 part_of_estate_passing_to_direct_descendants.browser_title = Does any of the estate pass to the deceased’s children or other direct descendants?
@@ -227,21 +226,22 @@ property_value.label =
 property_value.greater_than_value_of_estate.error = Property Value cannot be greater than the Value Of Estate
 
 results.browser_title = Final calculation
-results.title = The Residence Nil Rate Amount available for this estate&nbsp;is {0}
-results.header = What happens next?
-results.guidance = You should make a copy of this figure and enter it on the TK form in box TK.
-results.link_to_print = Print off this page
-results.explanation_title = How this is calculated?
-results.applicableNilRateBandAmount.label = Residential Enhancement at the date of death is
-results.defaultAllowanceAmount.label = Default Allowance at the date of death is therefore
-results.carryForwardAmount.label = Amount of unused Residence Nil Rate Band available to be carried forward is
-results.adjustedAllowanceAmount.label = Adjusted allowance after taking tapering into consideration
-results.link_to_exit_questionnaire.text = Complete a short survey
+results.info.zero.header = There is no increase to the Inheritance Tax threshold
+results.info.zero.guidance = Based on the details you have given, the threshold can be increased by
+results.info.zero.threshold_change = There is no change to the current threshold.
+results.info.non_zero.header = The Inheritance Tax threshold can be increased
+results.info.non_zero.guidance = The threshold can be increased by an extra
+results.info.non_zero.threshold_change = This is on top of what the current threshold is.
+results.action.header = What to do next
+results.action.guidance = Write {0} in:
+results.action.guidance.form_435 = box 25 on the IHT435 form
+results.action.guidance.form_400 = box 111 on the IHT400 form
+results.action.guidance.continue = Then continue with the IHT400 form.
+results.print_prefix = You can
+results.link_to_print = view a copy of this page.
+results.print_suffix = You’ll then be able to download or print a copy to keep for your records.
 results.allowance = Allowance
 results.amount = Amount
-results.answers = Your answers
-results.question_header = Question
-results.amount_header = Amount
 
 service.no_thanks = No thanks
 
