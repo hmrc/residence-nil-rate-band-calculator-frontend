@@ -35,7 +35,7 @@ object AnswerRows {
     Constants.propertyValueId,
     Constants.propertyPassingToDirectDescendantsId,
     Constants.percentagePassedToDirectDescendantsId,
-    Constants.anyExemptionId,
+    Constants.exemptionsAndReliefClaimedId,
     Constants.doesGrossingUpApplyToResidenceId,
     Constants.chargeableValueOfResidenceId,
     Constants.chargeableValueOfResidenceCloselyInheritedId,
@@ -109,8 +109,8 @@ object AnswerRows {
       boolAnswerRowFn("any_brought_forward_allowance_on_disposal.title",
         "Any brought forward allowance on disposal",
         routes.AnyBroughtForwardAllowanceOnDisposalController.onPageLoad),
-    Constants.anyExemptionId ->
-      boolAnswerRowFn("any_exemption.title", "Any exemption", routes.AnyExemptionController.onPageLoad),
+    Constants.exemptionsAndReliefClaimedId ->
+      boolAnswerRowFn("exemptions_and_relief_claimed.title", Constants.exemptionsAndReliefClaimedId, routes.ExemptionsAndReliefClaimedController.onPageLoad),
     Constants.assetsPassingToDirectDescendantsId ->
       intAnswerRowFn("assets_passing_to_direct_descendants.title",
         "Assets passing to direct descendants",

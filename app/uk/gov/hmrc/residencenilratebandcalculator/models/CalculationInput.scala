@@ -101,8 +101,8 @@ object CalculationInput {
   }
 
   private def requirePropertyCloselyInheritedDependancies(userAnswers: UserAnswers) = {
-    require(userAnswers.anyExemption.isDefined, "Any Exemptions was not answered")
-    if(userAnswers.anyExemption.get) requireExemptionsDependancies(userAnswers)
+    require(userAnswers.exemptionsAndReliefClaimed.isDefined, "Exemptions And Relief Claimed was not answered")
+    if(userAnswers.exemptionsAndReliefClaimed.get) requireExemptionsDependancies(userAnswers)
   }
 
   private def requireExemptionsDependancies(userAnswers: UserAnswers) = {

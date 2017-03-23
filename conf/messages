@@ -40,13 +40,13 @@ part_of_estate_passing_to_direct_descendants.guidance2.bullet7 = a child who the
 part_of_estate_passing_to_direct_descendants.guidance3 = Direct descendants do not include nephews, nieces, siblings or other relatives not included above.
 part_of_estate_passing_to_direct_descendants.label =
 
-any_exemption.browser_title = Is any part of the residence exempt from inheritance tax, or does any part of it qualify for any relief on the death?
-any_exemption.title = Is any part of the residence exempt from inheritance tax, or does any part of it qualify for any relief on the death?
-any_exemption.guidance = Answer yes if any part of the property is exempt from Inheritance Tax because:
-any_exemption.guidance.bullet1 = it passed to a spouse or civil partner
-any_exemption.guidance.bullet2 = it passed to a charity
-any_exemption.guidance.bullet3 = relief, like agriculture relief, applies
-any_exemption.label =
+exemptions_and_relief_claimed.browser_title = Is any part of the residence exempt from inheritance tax, or does any part of it qualify for any relief on the death?
+exemptions_and_relief_claimed.title = Is any part of the residence exempt from inheritance tax, or does any part of it qualify for any relief on the death?
+exemptions_and_relief_claimed.guidance = Answer yes if any part of the property is exempt from Inheritance Tax because:
+exemptions_and_relief_claimed.guidance.bullet1 = it passed to a spouse or civil partner
+exemptions_and_relief_claimed.guidance.bullet2 = it passed to a charity
+exemptions_and_relief_claimed.guidance.bullet3 = relief, like agriculture relief, applies
+exemptions_and_relief_claimed.label =
 
 property_passing_to_direct_descendants.all = Yes, all of it passed
 property_passing_to_direct_descendants.some = Yes, some of it passed
