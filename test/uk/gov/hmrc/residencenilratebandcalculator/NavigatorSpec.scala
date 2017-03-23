@@ -171,10 +171,10 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.exemptionsAndReliefClaimedId)(mockCacheMap) shouldBe routes.GrossingUpOnEstatePropertyController.onPageLoad()
     }
 
-    "return a call to Chargeable Value Of Residence onPageLoad method when grossing up does not apply" in {
+    "return a call to Chargeable Property Value onPageLoad method when grossing up does not apply" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.grossingUpOnEstateProperty) thenReturn Some(false)
-      navigator.nextPage(Constants.grossingUpOnEstatePropertyId)(mockCacheMap) shouldBe routes.ChargeableValueOfResidenceController.onPageLoad()
+      navigator.nextPage(Constants.grossingUpOnEstatePropertyId)(mockCacheMap) shouldBe routes.ChargeablePropertyValueController.onPageLoad()
     }
 
     "return a call to Transition Out onPageLoad method when grossing up does apply to the residence" in {
@@ -184,8 +184,8 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     }
 
     "return a call to the Any Brought Forward Allowance onPageLoad method from the " +
-      "Chargeable Value Of Residence Closely Inherited controller" in {
-      navigator.nextPage(Constants.chargeableValueOfResidenceCloselyInheritedId)(mock[UserAnswers]) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
+      "Chargeable Inherited Property Value controller" in {
+      navigator.nextPage(Constants.chargeableInheritedPropertyValueId)(mock[UserAnswers]) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
     }
 
     val userAnswers = new UserAnswers(CacheMap("", Map()))
@@ -244,18 +244,18 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     }
 
     "return a call to the Does Grossing Up Apply when back linking from the Property Value After Exemption page" in {
-      navigator.lastPage(Constants.chargeableValueOfResidenceId)(userAnswers) shouldBe routes.GrossingUpOnEstatePropertyController.onPageLoad()
+      navigator.lastPage(Constants.chargeablePropertyValueId)(userAnswers) shouldBe routes.GrossingUpOnEstatePropertyController.onPageLoad()
     }
 
     "return a call to the Property In Estate when back linking from the Any Brought Forward Allowance page" in {
       navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.PropertyInEstateController.onPageLoad()
     }
 
-    "return a call to the Chargeable Value Of Residence Closely Inherited when back linking from the Any Brought Forward Allowance page" +
+    "return a call to the Chargeable Inherited Property Value when back linking from the Any Brought Forward Allowance page" +
       "when the user has positively answered Exemptions And Relief Claimed" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.exemptionsAndReliefClaimed) thenReturn Some(true)
-      navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.ChargeableValueOfResidenceCloselyInheritedController.onPageLoad()
+      navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.ChargeableInheritedPropertyValueController.onPageLoad()
     }
 
     "return a call to the Exemptions And Relief Claimed when back linking from the Any Brought Forward Allowance page" +

@@ -37,8 +37,8 @@ object AnswerRows {
     Constants.percentagePassedToDirectDescendantsId,
     Constants.exemptionsAndReliefClaimedId,
     Constants.grossingUpOnEstatePropertyId,
-    Constants.chargeableValueOfResidenceId,
-    Constants.chargeableValueOfResidenceCloselyInheritedId,
+    Constants.chargeablePropertyValueId,
+    Constants.chargeableInheritedPropertyValueId,
     Constants.anyBroughtForwardAllowanceId,
     Constants.broughtForwardAllowanceId,
     Constants.anyDownsizingAllowanceId,
@@ -137,14 +137,14 @@ object AnswerRows {
         routes.PercentagePassedToDirectDescendantsController.onPageLoad),
     Constants.propertyValueId ->
       intAnswerRowFn("property_value.title", "Property value", routes.PropertyValueController.onPageLoad),
-    Constants.chargeableValueOfResidenceId ->
-      intAnswerRowFn("chargeable_value_of_residence.title",
-        "Chargeable value of residence",
-        routes.ChargeableValueOfResidenceController.onPageLoad),
-    Constants.chargeableValueOfResidenceCloselyInheritedId ->
-      intAnswerRowFn("chargeable_value_of_residence_closely_inherited.title",
-      "Chargeable value of residence closely inherited",
-      routes.ChargeableValueOfResidenceCloselyInheritedController.onPageLoad)
+    Constants.chargeablePropertyValueId ->
+      intAnswerRowFn("chargeable_property_value.title",
+        Constants.chargeablePropertyValueId,
+        routes.ChargeablePropertyValueController.onPageLoad),
+    Constants.chargeableInheritedPropertyValueId ->
+      intAnswerRowFn("chargeable_inherited_property_value.title",
+        Constants.chargeableInheritedPropertyValueId,
+      routes.ChargeableInheritedPropertyValueController.onPageLoad)
   )
 
   def constructAnswerRows(cacheMap: CacheMap,

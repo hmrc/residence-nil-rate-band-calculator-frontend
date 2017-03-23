@@ -20,26 +20,26 @@ import play.api.http.Status
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_value_of_residence_closely_inherited
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_inherited_property_value
 
-class ChargeableValueOfResidenceCloselyInheritedControllerSpec extends SimpleControllerSpecBase {
+class ChargeableInheritedPropertyValueControllerSpec extends SimpleControllerSpecBase {
 
-  "ChargeableValueOfResidenceCloseInheritedController"  must {
+  "ChargeablePropertyValueCloseInheritedController"  must {
 
-    val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeableValueOfResidenceController.onPageLoad().url
+    val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeablePropertyValueController.onPageLoad().url
 
     def createView = (value: Option[Map[String, String]]) => value match {
-      case None => chargeable_value_of_residence_closely_inherited(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-      case Some(v) => chargeable_value_of_residence_closely_inherited(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
+      case None => chargeable_inherited_property_value(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
+      case Some(v) => chargeable_inherited_property_value(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
     }
 
-    def createController = () => new ChargeableValueOfResidenceCloselyInheritedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
+    def createController = () => new ChargeableInheritedPropertyValueController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
     val testValue = 123
 
-    val valuesToCacheBeforeSubmission = Map(Constants.chargeableValueOfResidenceId -> testValue)
+    val valuesToCacheBeforeSubmission = Map(Constants.chargeablePropertyValueId -> testValue)
 
-    behave like rnrbController(createController, createView, Constants.chargeableValueOfResidenceCloselyInheritedId,
+    behave like rnrbController(createController, createView, Constants.chargeableInheritedPropertyValueId,
       testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
 
     behave like nonStartingController[Int](createController,
@@ -51,11 +51,11 @@ class ChargeableValueOfResidenceCloselyInheritedControllerSpec extends SimpleCon
            Constants.propertyValueId,
            Constants.propertyPassingToDirectDescendantsId,
            Constants.percentagePassedToDirectDescendantsId,
-           Constants.chargeableValueOfResidenceId))(Reads.IntReads, Writes.IntWrites)
+           Constants.chargeablePropertyValueId))(Reads.IntReads, Writes.IntWrites)
 
-    "return bad request on submit with a value greater than the previously saved Chargeable Value of Residence" in {
+    "return bad request on submit with a value greater than the previously saved Chargeable Property Value" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))
-      setCacheValue(Constants.chargeableValueOfResidenceId, testValue - 1)
+      setCacheValue(Constants.chargeablePropertyValueId, testValue - 1)
       val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
       status(result) shouldBe Status.BAD_REQUEST
     }

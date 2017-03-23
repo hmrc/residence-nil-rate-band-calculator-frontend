@@ -139,15 +139,15 @@ class UserAnswersSpec extends UnitSpec {
       }
 
       "return the correct answer for Property Value After Exemption" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.chargeableValueOfResidenceId -> JsNumber(1)))
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.chargeablePropertyValueId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.chargeableValueOfResidence shouldBe Some(1)
+        userAnswers.chargeablePropertyValue shouldBe Some(1)
       }
 
       "return the correct answer for Property Value After Exemption Closely Inherited" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.chargeableValueOfResidenceCloselyInheritedId -> JsNumber(1)))
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.chargeableInheritedPropertyValueId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.chargeableValueOfResidenceCloselyInherited shouldBe Some(1)
+        userAnswers.chargeableInheritedPropertyValue shouldBe Some(1)
       }
 
       "return the correct answer for Value Of Disposed Property" in {
@@ -242,7 +242,7 @@ class UserAnswersSpec extends UnitSpec {
 
       "return None for Property Value After Exemption" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.chargeableValueOfResidence shouldBe None
+        userAnswers.chargeablePropertyValue shouldBe None
       }
 
       "return None for Value Of Disposed Property" in {

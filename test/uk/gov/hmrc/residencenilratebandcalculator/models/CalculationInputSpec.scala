@@ -37,8 +37,8 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
   val assetsPassingToDirectDescendants = 7
   val broughtForwardAllowanceOnDisposal = 8
   val dateOfDisposal = new LocalDate(2018, 2, 2)
-  val chargeableValueOfResidence = 9
-  val chargeableValueOfResidenceCloselyInherited = 10
+  val chargeablePropertyValue = 9
+  val chargeableInheritedPropertyValue = 10
 
   var userAnswers: UserAnswers = _
 
@@ -62,8 +62,8 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
                 valueOfEstate: Option[Int] = None,
                 percentagePassedToDirectDescendants: Option[Int] = None,
                 grossingUpOnEstateProperty: Option[Boolean] = None,
-                chargeableValueOfResidence: Option[Int] = None,
-                chargeableValueOfResidenceCloselyInherited: Option[Int] = None,
+                chargeablePropertyValue: Option[Int] = None,
+                chargeableInheritedPropertyValue: Option[Int] = None,
                 propertyValue: Option[Int] = None,
                 valueOfDisposedProperty: Option[Int] = None
                ) = {
@@ -83,8 +83,8 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
     when(userAnswers.valueOfEstate) thenReturn valueOfEstate
     when(userAnswers.percentagePassedToDirectDescendants) thenReturn percentagePassedToDirectDescendants
     when(userAnswers.grossingUpOnEstateProperty) thenReturn grossingUpOnEstateProperty
-    when(userAnswers.chargeableValueOfResidence) thenReturn chargeableValueOfResidence
-    when(userAnswers.chargeableValueOfResidenceCloselyInherited) thenReturn chargeableValueOfResidenceCloselyInherited
+    when(userAnswers.chargeablePropertyValue) thenReturn chargeablePropertyValue
+    when(userAnswers.chargeableInheritedPropertyValue) thenReturn chargeableInheritedPropertyValue
     when(userAnswers.propertyValue) thenReturn propertyValue
     when(userAnswers.valueOfDisposedProperty) thenReturn valueOfDisposedProperty
   }
@@ -213,8 +213,8 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         chargeableEstateValue = Some(chargeableEstateValue),
         propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.some),
         percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(true), grossingUpOnEstateProperty = Some(false),
-        chargeableValueOfResidence = Some(chargeableValueOfResidence),
-        chargeableValueOfResidenceCloselyInherited = Some(chargeableValueOfResidenceCloselyInherited),
+        chargeablePropertyValue = Some(chargeablePropertyValue),
+        chargeableInheritedPropertyValue = Some(chargeableInheritedPropertyValue),
         anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(false))
 
       "construct correctly from user answers" in {
@@ -222,7 +222,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         val calculationInput = CalculationInput(userAnswers)
         calculationInput shouldBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue,
           propertyValue, percentagePassedToDirectDescendants, 0,
-          Some(PropertyValueAfterExemption(chargeableValueOfResidence, chargeableValueOfResidenceCloselyInherited)), None)
+          Some(PropertyValueAfterExemption(chargeablePropertyValue, chargeableInheritedPropertyValue)), None)
       }
 
       "render to JSON" in {
@@ -542,7 +542,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       }
     }
 
-    "'grossing up on estate property' is false and there is no value for 'chargeable value of residence'" must {
+    "'grossing up on estate property' is false and there is no value for 'chargeable property value'" must {
       "throw an exception" in {
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
@@ -551,21 +551,21 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Chargeable Value of Residence was not answered"
+        exception.getMessage shouldBe "requirement failed: Chargeable Property Value was not answered"
       }
     }
 
-    "'grossing up on estate property' is false and there is no value for 'chargeable value of residence closely inhertied'" must {
+    "'grossing up on estate property' is false and there is no value for 'chargeable property value closely inhertied'" must {
       "throw an exception" in {
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
             propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.some),
             percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(true), grossingUpOnEstateProperty = Some(false),
-            chargeableValueOfResidence = Some(chargeableValueOfResidence))
+            chargeablePropertyValue = Some(chargeablePropertyValue))
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Chargeable Value of Residence Closely Inherited was not answered"
+        exception.getMessage shouldBe "requirement failed: Chargeable Inherited Property Value was not answered"
       }
     }
 

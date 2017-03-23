@@ -115,7 +115,7 @@ class AnswerRowSpecs extends UnitSpec with WithFakeApplication with MockSessionC
         AnswerRows.percentAnswerRowFn("message.key", "", () => Call("", ""))(JsString(""))(messages)
     }
 
-    "correctly create Chargeable Value of Residence AnswerRows" in {
+    "correctly create Chargeable Property Value AnswerRows" in {
       val data = PropertyValueAfterExemption(1000, 5000)
       AnswerRows.intAnswerRowFn("message.key", "",
         () => Call("", "http://example.com"))(JsNumber(data.value))(messages) shouldBe

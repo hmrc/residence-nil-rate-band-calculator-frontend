@@ -19,23 +19,23 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_value_of_residence
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_property_value
 
 import scala.language.reflectiveCalls
 
-class ChargeableValueOfResidenceViewSpec extends IntViewSpecBase {
+class ChargeablePropertyValueViewSpec extends IntViewSpecBase {
 
-  val messageKeyPrefix = "chargeable_value_of_residence"
+  val messageKeyPrefix = "chargeable_property_value"
 
-  def createView(form: Option[Form[Int]] = None) = chargeable_value_of_residence(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Int]] = None) = chargeable_property_value(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
-  "Chargeable Value Of Residence View" must {
+  "Chargeable Property Value View" must {
 
     behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2")
 
     behave like pageWithBackLink[Int](createView)
 
-    behave like intPage(createView, messageKeyPrefix, ChargeableValueOfResidenceController.onSubmit().url, NonNegativeIntForm())
+    behave like intPage(createView, messageKeyPrefix, ChargeablePropertyValueController.onSubmit().url, NonNegativeIntForm())
 
     behave like pageContainingPreviousAnswers(createView)
 

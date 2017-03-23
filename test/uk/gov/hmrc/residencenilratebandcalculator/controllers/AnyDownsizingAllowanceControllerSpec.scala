@@ -47,7 +47,7 @@ class AnyDownsizingAllowanceControllerSpec extends SimpleControllerSpecBase {
       Constants.propertyValueId,
       Constants.propertyPassingToDirectDescendantsId,
       Constants.percentagePassedToDirectDescendantsId,
-      Constants.chargeableValueOfResidenceId,
+      Constants.chargeablePropertyValueId,
       Constants.anyBroughtForwardAllowanceId,
       Constants.broughtForwardAllowanceId))(Reads.BooleanReads, Writes.BooleanWrites)
 }

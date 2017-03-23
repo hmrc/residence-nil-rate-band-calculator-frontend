@@ -26,26 +26,26 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_value_of_residence_closely_inherited
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_inherited_property_value
 
 import scala.concurrent.Future
 
-class ChargeableValueOfResidenceCloselyInheritedController @Inject()(override val appConfig: FrontendAppConfig,
+class ChargeableInheritedPropertyValueController @Inject()(override val appConfig: FrontendAppConfig,
                                                                      val messagesApi: MessagesApi,
                                                                      override val sessionConnector: SessionConnector,
                                                                      override val navigator: Navigator) extends SimpleControllerBase[Int] {
 
-  override val controllerId: String = Constants.chargeableValueOfResidenceCloselyInheritedId
+  override val controllerId: String = Constants.chargeableInheritedPropertyValueId
 
   override def form: () => Form[Int] = () => NonNegativeIntForm()
 
   override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) =
-    chargeable_value_of_residence_closely_inherited(appConfig, backUrl, form, answerRows)
+    chargeable_inherited_property_value(appConfig, backUrl, form, answerRows)
 
   override def validate(value: Int, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = {
-    userAnswers.chargeableValueOfResidence match {
-      case None => Some(FormError("value", "chargeable_value_of_residence_closely_inherited.greater_than_chargeable_value_of_residence.error"))
-      case Some(g) if value > g => Some(FormError("value", "chargeable_value_of_residence_closely_inherited.greater_than_chargeable_value_of_residence.error"))
+    userAnswers.chargeablePropertyValue match {
+      case None => Some(FormError("value", "chargeable_inherited_property_value.greater_than_chargeable_property_value.error"))
+      case Some(g) if value > g => Some(FormError("value", "chargeable_inherited_property_value.greater_than_chargeable_property_value.error"))
       case _ => None
     }
   }

@@ -49,6 +49,6 @@ class AnyBroughtForwardAllowanceControllerSpec extends SimpleControllerSpecBase 
            Constants.propertyValueId,
            Constants.propertyPassingToDirectDescendantsId,
            Constants.percentagePassedToDirectDescendantsId,
-           Constants.chargeableValueOfResidenceId))(Reads.BooleanReads, Writes.BooleanWrites)
+           Constants.chargeablePropertyValueId))(Reads.BooleanReads, Writes.BooleanWrites)
   }
 }
