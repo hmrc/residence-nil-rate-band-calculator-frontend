@@ -21,8 +21,9 @@ import play.api.data.Forms._
 import play.api.data.format.Formats._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.FormValidators._
 
-object AnyPropertyCloselyInheritedForm {
+object PropertyPassingToDirectDescendantsForm {
 
   def apply(): Form[String] =
-    Form(single("value" -> of[String]).verifying("error.invalid_closely_inherited_property_option", value => isValidPropertyCloselyInheritedOption(value)))
+    Form(single("value" -> of[String]).verifying("error.invalid_property_passing_to_direct_descendants_option",
+      value => isValidPropertyPassingToDirectDescendantsOption(value)))
 }

@@ -60,10 +60,10 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.anyExemption shouldBe Some(true)
       }
 
-      "return the correct answer for Any Property Closely Inherited" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.anyPropertyCloselyInheritedId -> JsString("abc")))
+      "return the correct answer for Property Passing To Direct Descendants" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.propertyPassingToDirectDescendantsId -> JsString("abc")))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.anyPropertyCloselyInherited shouldBe Some("abc")
+        userAnswers.propertyPassingToDirectDescendants shouldBe Some("abc")
       }
 
       "return the correct answer for Assets Passing To Direct Descendant" in {
@@ -185,9 +185,9 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.anyExemption shouldBe None
       }
 
-      "return None for Any Property Closely Inherited" in {
+      "return None for Property Passing To Direct Descendants" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.anyPropertyCloselyInherited shouldBe None
+        userAnswers.propertyPassingToDirectDescendants shouldBe None
       }
 
       "return None for Assets Passing To Direct Descendant" in {

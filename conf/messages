@@ -47,14 +47,14 @@ any_exemption.guidance.bullet2 = it passed to a charity
 any_exemption.guidance.bullet3 = relief, like agriculture relief, applies
 any_exemption.label =
 
-any_property_closely_inherited.all = Yes, all of it passed
-any_property_closely_inherited.some = Yes, some of it passed
-any_property_closely_inherited.none = No
-any_property_closely_inherited.browser_title = Did any part of this residence pass to a direct descendant or their spouse or civil partner?
-any_property_closely_inherited.title = Did any part of this residence pass to a direct descendant or their spouse or civil partner?
-any_property_closely_inherited.guidance1 = This will be listed in the will of the person who has died.
-any_property_closely_inherited.guidance2 = Answer yes if any part of the property was left in the will to a direct descendant or to a spouse or civil partner of one.
-any_property_closely_inherited.label =
+property_passing_to_direct_descendants.all = Yes, all of it passed
+property_passing_to_direct_descendants.some = Yes, some of it passed
+property_passing_to_direct_descendants.none = No
+property_passing_to_direct_descendants.browser_title = Did any part of this residence pass to a direct descendant or their spouse or civil partner?
+property_passing_to_direct_descendants.title = Did any part of this residence pass to a direct descendant or their spouse or civil partner?
+property_passing_to_direct_descendants.guidance1 = This will be listed in the will of the person who has died.
+property_passing_to_direct_descendants.guidance2 = Answer yes if any part of the property was left in the will to a direct descendant or to a spouse or civil partner of one.
+property_passing_to_direct_descendants.label =
 
 assets_passing_to_direct_descendants.browser_title = What is the total value of the other assets passing to direct descendants?
 assets_passing_to_direct_descendants.title = What is the total value of the other assets passing to direct descendants?
@@ -152,7 +152,7 @@ does_grossing_up_apply_to_residence.guidance2.bullet1 = the will makes any gifts
 does_grossing_up_apply_to_residence.guidance2.bullet2 = any part of the residue is exempt (because, for example it passes to charity or the deceased’s spouse or civil partner). The residue is what is left in the estate after you have paid all debts, legacies and taxes
 does_grossing_up_apply_to_residence.label =
 
-error.invalid_closely_inherited_property_option = Please choose an option
+error.invalid_property_passing_to_direct_descendants_option = Please choose an option
 error.invalid_date = Enter a valid date
 error.number = Please enter a valid number
 error.required = Please enter a value

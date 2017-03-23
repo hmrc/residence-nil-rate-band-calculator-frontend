@@ -36,7 +36,7 @@ class CannotClaimRNRBController @Inject()(val appConfig: FrontendAppConfig,
 
   def getControllerId(reason: Reason) =
     reason match {
-      case NotCloselyInherited => Constants.anyPropertyCloselyInheritedId
+      case NotCloselyInherited => Constants.propertyPassingToDirectDescendantsId
       case _ => Constants.propertyInEstateId
     }
 

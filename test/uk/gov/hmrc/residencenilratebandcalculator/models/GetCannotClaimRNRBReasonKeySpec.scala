@@ -26,7 +26,7 @@ class GetCannotClaimRNRBReasonSpec extends UnitSpec with WithFakeApplication wit
   "GetCannotClaimRNRBReason" must {
     "get the 'Not closely inherited' reason when there is no closely inherited property" in {
       val userAnswers = mock[UserAnswers]
-      when(userAnswers.anyPropertyCloselyInherited) thenReturn Some(Constants.none)
+      when(userAnswers.propertyPassingToDirectDescendants) thenReturn Some(Constants.none)
       GetCannotClaimRNRBReason(userAnswers) shouldBe NotCloselyInherited
     }
 

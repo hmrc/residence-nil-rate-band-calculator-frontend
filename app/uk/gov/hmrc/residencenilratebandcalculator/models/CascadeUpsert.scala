@@ -40,7 +40,7 @@ class CascadeUpsert {
       Constants.anyDownsizingAllowanceId -> ((v, cm) => anyDownsizingAllowance(v, cm)),
       Constants.anyAssetsPassingToDirectDescendantsId -> ((v, cm) => anyAssetsPassingToDirectDescendants(v, cm)),
       Constants.anyBroughtForwardAllowanceOnDisposalId -> ((v, cm) => anyBroughtForwardAllowanceOnDisposal(v, cm)),
-      Constants.anyPropertyCloselyInheritedId -> ((v, cm) => anyPropertyCloselyInherited(v, cm)),
+      Constants.propertyPassingToDirectDescendantsId -> ((v, cm) => propertyPassingToDirectDescendants(v, cm)),
       Constants.dateOfDisposalId -> ((v, cm) => dateOfDisposal(v, cm))
     )
 
@@ -59,14 +59,14 @@ class CascadeUpsert {
     clearIfFalse(Constants.propertyInEstateId, value,
       Set(
         Constants.propertyValueId,
-        Constants.anyPropertyCloselyInheritedId,
+        Constants.propertyPassingToDirectDescendantsId,
         Constants.percentageCloselyInheritedId,
         Constants.anyExemptionId,
         Constants.chargeableValueOfResidenceId,
         Constants.chargeableValueOfResidenceCloselyInheritedId),
       cacheMap)
 
-  private def anyPropertyCloselyInherited[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
+  private def propertyPassingToDirectDescendants[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
     val keysToRemoveWhenNone = Set(
       Constants.percentageCloselyInheritedId,
       Constants.anyExemptionId,
@@ -79,7 +79,7 @@ class CascadeUpsert {
       case JsString(Constants.all) => cacheMap copy (data = cacheMap.data - Constants.percentageCloselyInheritedId)
       case _ => cacheMap
     }
-    store(Constants.anyPropertyCloselyInheritedId, value, mapToStore)
+    store(Constants.propertyPassingToDirectDescendantsId, value, mapToStore)
   }
 
   private def anyExemptionClearance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =

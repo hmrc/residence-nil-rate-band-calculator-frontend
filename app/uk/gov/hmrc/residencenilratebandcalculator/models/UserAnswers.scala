@@ -34,7 +34,7 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def anyExemption = cacheMap.getEntry[Boolean](Constants.anyExemptionId)
 
-  def anyPropertyCloselyInherited = cacheMap.getEntry[String](Constants.anyPropertyCloselyInheritedId)
+  def propertyPassingToDirectDescendants = cacheMap.getEntry[String](Constants.propertyPassingToDirectDescendantsId)
 
   def assetsPassingToDirectDescendants = cacheMap.getEntry[Int](Constants.assetsPassingToDirectDescendantsId)
 

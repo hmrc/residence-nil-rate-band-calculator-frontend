@@ -24,21 +24,21 @@ import play.api.mvc.Request
 import play.twirl.api.HtmlFormat._
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.forms.AnyPropertyCloselyInheritedForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.PropertyPassingToDirectDescendantsForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_property_closely_inherited
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_passing_to_direct_descendants
 
 @Singleton
-class AnyPropertyCloselyInheritedController @Inject()(override val appConfig: FrontendAppConfig,
-                                                      val messagesApi: MessagesApi,
-                                                      override val sessionConnector: SessionConnector,
-                                                      override val navigator: Navigator) extends SimpleControllerBase[String] {
+class PropertyPassingToDirectDescendantsController @Inject()(override val appConfig: FrontendAppConfig,
+                                                             val messagesApi: MessagesApi,
+                                                             override val sessionConnector: SessionConnector,
+                                                             override val navigator: Navigator) extends SimpleControllerBase[String] {
 
-  override val controllerId: String = Constants.anyPropertyCloselyInheritedId
+  override val controllerId: String = Constants.propertyPassingToDirectDescendantsId
 
-  override def form: () => Form[String] = () => AnyPropertyCloselyInheritedForm()
+  override def form: () => Form[String] = () => PropertyPassingToDirectDescendantsForm()
 
   override def view(form: Option[Form[String]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    any_property_closely_inherited(appConfig, backUrl, form, answerRows)
+    property_passing_to_direct_descendants(appConfig, backUrl, form, answerRows)
   }
 }
