@@ -144,13 +144,13 @@ does_grossing_up_apply_to_other_property.guidance2.bullet1 = the will makes any 
 does_grossing_up_apply_to_other_property.guidance2.bullet2 = any part of the residue is exempt (because, for example it passes to charity or the deceased’s spouse or civil partner). The residue is what is left in the estate after you have paid all debts, legacies and taxes
 does_grossing_up_apply_to_other_property.label =
 
-does_grossing_up_apply_to_residence.browser_title = Does grossing-up or interaction apply?
-does_grossing_up_apply_to_residence.title = Does grossing-up or interaction apply?
-does_grossing_up_apply_to_residence.guidance1 = This is against the property you have given the value of.
-does_grossing_up_apply_to_residence.guidance2 = Grossing-up will apply if Inheritance Tax is due, and:
-does_grossing_up_apply_to_residence.guidance2.bullet1 = the will makes any gifts that are ‘free of tax’
-does_grossing_up_apply_to_residence.guidance2.bullet2 = any part of the residue is exempt (because, for example it passes to charity or the deceased’s spouse or civil partner). The residue is what is left in the estate after you have paid all debts, legacies and taxes
-does_grossing_up_apply_to_residence.label =
+grossing_up_on_estate_property.browser_title = Does grossing-up or interaction apply?
+grossing_up_on_estate_property.title = Does grossing-up or interaction apply?
+grossing_up_on_estate_property.guidance1 = This is against the property you have given the value of.
+grossing_up_on_estate_property.guidance2 = Grossing-up will apply if Inheritance Tax is due, and:
+grossing_up_on_estate_property.guidance2.bullet1 = the will makes any gifts that are ‘free of tax’
+grossing_up_on_estate_property.guidance2.bullet2 = any part of the residue is exempt (because, for example it passes to charity or the deceased’s spouse or civil partner). The residue is what is left in the estate after you have paid all debts, legacies and taxes
+grossing_up_on_estate_property.label =
 
 error.invalid_property_passing_to_direct_descendants_option = Please choose an option
 error.invalid_date = Enter a valid date

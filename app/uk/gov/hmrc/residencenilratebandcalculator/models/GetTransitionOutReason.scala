@@ -25,7 +25,7 @@ object GetTransitionOutReason extends GetReason {
   case object GrossingUpForOtherProperty extends Reason
 
   def apply(userAnswers: UserAnswers) =
-    (userAnswers.dateOfDeath, userAnswers.partOfEstatePassingToDirectDescendants, userAnswers.doesGrossingUpApplyToResidence) match {
+    (userAnswers.dateOfDeath, userAnswers.partOfEstatePassingToDirectDescendants, userAnswers.grossingUpOnEstateProperty) match {
       case (Some(dateOfDeath), _, _) if dateOfDeath isBefore Constants.eligibilityDate => DateOfDeath
       case (_, Some(false), _) => DirectDescendant
       case (_, _, Some(true)) => GrossingUpForResidence

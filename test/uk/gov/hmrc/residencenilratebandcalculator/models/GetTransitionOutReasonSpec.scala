@@ -38,7 +38,7 @@ class GetTransitionOutReasonSpec extends UnitSpec with WithFakeApplication with 
 
     "get GrossingUpForResidence reason when grossing up is applied to the residence" in {
       val userAnswers = mock[UserAnswers]
-      when(userAnswers.doesGrossingUpApplyToResidence) thenReturn Some(true)
+      when(userAnswers.grossingUpOnEstateProperty) thenReturn Some(true)
       GetTransitionOutReason(userAnswers) shouldBe GrossingUpForResidence
     }
 

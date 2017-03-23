@@ -87,7 +87,7 @@ class CascadeUpsert {
       Set(
         Constants.chargeableValueOfResidenceId,
         Constants.chargeableValueOfResidenceCloselyInheritedId,
-        Constants.doesGrossingUpApplyToResidenceId),
+        Constants.grossingUpOnEstatePropertyId),
       cacheMap)
 
   private def anyBroughtForwardAllowance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =

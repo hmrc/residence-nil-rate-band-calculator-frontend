@@ -48,7 +48,7 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def dateOfDisposal = cacheMap.getEntry[LocalDate](Constants.dateOfDisposalId)
 
-  def doesGrossingUpApplyToResidence = cacheMap.getEntry[Boolean](Constants.doesGrossingUpApplyToResidenceId)
+  def grossingUpOnEstateProperty = cacheMap.getEntry[Boolean](Constants.grossingUpOnEstatePropertyId)
 
   def doesGrossingUpApplyToOtherProperty = cacheMap.getEntry[Boolean](Constants.doesGrossingUpApplyToOtherPropertyId)
 

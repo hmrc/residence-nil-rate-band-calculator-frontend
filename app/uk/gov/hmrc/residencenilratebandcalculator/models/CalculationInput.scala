@@ -101,13 +101,13 @@ object CalculationInput {
   }
 
   private def requirePropertyPassingToDirectDescendantsDependencies(userAnswers: UserAnswers) = {
-      require(userAnswers.exemptionsAndReliefClaimed.isDefined, "Exemptions And Relief Claimed was not answered")
-      if(userAnswers.exemptionsAndReliefClaimed.get) requireExemptionsDependencies(userAnswers)
+    require(userAnswers.exemptionsAndReliefClaimed.isDefined, "Exemptions And Relief Claimed was not answered")
+    if(userAnswers.exemptionsAndReliefClaimed.get) requireExemptionsDependancies(userAnswers)
   }
 
-  private def requireExemptionsDependencies(userAnswers: UserAnswers) = {
-    require(userAnswers.doesGrossingUpApplyToResidence.isDefined, "Does Grossing Up Apply to Residence was not answered")
-    if (!userAnswers.doesGrossingUpApplyToResidence.get) requireNoGrossingUpDependencies(userAnswers)
+  private def requireExemptionsDependancies(userAnswers: UserAnswers) = {
+    require(userAnswers.grossingUpOnEstateProperty.isDefined, "Grossing Up On Estate Property was not answered")
+    if (!userAnswers.grossingUpOnEstateProperty.get) requireNoGrossingUpDependencies(userAnswers)
   }
 
   private def requireNoGrossingUpDependencies(userAnswers: UserAnswers) = {

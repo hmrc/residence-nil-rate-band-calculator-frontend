@@ -61,7 +61,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
                 propertyInEstate: Option[Boolean] = None,
                 valueOfEstate: Option[Int] = None,
                 percentagePassedToDirectDescendants: Option[Int] = None,
-                doesGrossingUpApplyToResidence: Option[Boolean] = None,
+                grossingUpOnEstateProperty: Option[Boolean] = None,
                 chargeableValueOfResidence: Option[Int] = None,
                 chargeableValueOfResidenceCloselyInherited: Option[Int] = None,
                 propertyValue: Option[Int] = None,
@@ -82,7 +82,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
     when(userAnswers.propertyInEstate) thenReturn propertyInEstate
     when(userAnswers.valueOfEstate) thenReturn valueOfEstate
     when(userAnswers.percentagePassedToDirectDescendants) thenReturn percentagePassedToDirectDescendants
-    when(userAnswers.doesGrossingUpApplyToResidence) thenReturn doesGrossingUpApplyToResidence
+    when(userAnswers.grossingUpOnEstateProperty) thenReturn grossingUpOnEstateProperty
     when(userAnswers.chargeableValueOfResidence) thenReturn chargeableValueOfResidence
     when(userAnswers.chargeableValueOfResidenceCloselyInherited) thenReturn chargeableValueOfResidenceCloselyInherited
     when(userAnswers.propertyValue) thenReturn propertyValue
@@ -212,7 +212,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate),
         chargeableEstateValue = Some(chargeableEstateValue),
         propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.some),
-        percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(true), doesGrossingUpApplyToResidence = Some(false),
+        percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(true), grossingUpOnEstateProperty = Some(false),
         chargeableValueOfResidence = Some(chargeableValueOfResidence),
         chargeableValueOfResidenceCloselyInherited = Some(chargeableValueOfResidenceCloselyInherited),
         anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(false))
@@ -529,7 +529,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       }
     }
 
-    "'property passing to direct descendants' is 'some' and 'exemptions and relief claimed' is true but there is no value for 'does grossing up apply to residence'" must {
+    "'property passing to direct descendants' is 'some' and 'exemptions and relief claimed' is true but there is no value for 'grossing up on estate property'" must {
       "throw an exception" in {
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
@@ -538,16 +538,16 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Does Grossing Up Apply to Residence was not answered"
+        exception.getMessage shouldBe "requirement failed: Grossing Up On Estate Property was not answered"
       }
     }
 
-    "'does grossing up apply to residence' is false and there is no value for 'chargeable value of residence'" must {
+    "'grossing up on estate property' is false and there is no value for 'chargeable value of residence'" must {
       "throw an exception" in {
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
             propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.some),
-            percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(true), doesGrossingUpApplyToResidence = Some(false))
+            percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(true), grossingUpOnEstateProperty = Some(false))
           CalculationInput(userAnswers)
         }
 
@@ -555,12 +555,12 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       }
     }
 
-    "'does grossing up apply to residence' is false and there is no value for 'chargeable value of residence closely inhertied'" must {
+    "'grossing up on estate property' is false and there is no value for 'chargeable value of residence closely inhertied'" must {
       "throw an exception" in {
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
             propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.some),
-            percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(true), doesGrossingUpApplyToResidence = Some(false),
+            percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(true), grossingUpOnEstateProperty = Some(false),
             chargeableValueOfResidence = Some(chargeableValueOfResidence))
           CalculationInput(userAnswers)
         }

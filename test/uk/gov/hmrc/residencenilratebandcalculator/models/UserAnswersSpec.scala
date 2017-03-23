@@ -108,10 +108,10 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.doesGrossingUpApplyToOtherProperty shouldBe Some(false)
       }
 
-      "return the correct answer for Does Grossing Up Apply To Residence" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.doesGrossingUpApplyToResidenceId -> JsBoolean(false)))
+      "return the correct answer for Grossing Up On Estate Property" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.grossingUpOnEstatePropertyId -> JsBoolean(false)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.doesGrossingUpApplyToResidence shouldBe Some(false)
+        userAnswers.grossingUpOnEstateProperty shouldBe Some(false)
       }
 
       "return the correct answer for Property In Estate" in {
