@@ -39,7 +39,7 @@ class CascadeUpsertSpec extends UnitSpec {
     Constants.propertyPassingToDirectDescendantsId -> JsString(Constants.some),
     Constants.percentagePassedToDirectDescendantsId -> JsNumber(testNumber),
     Constants.exemptionsAndReliefClaimedId -> JsBoolean(true),
-    Constants.doesGrossingUpApplyToResidenceId -> JsBoolean(false),
+    Constants.grossingUpOnEstatePropertyId -> JsBoolean(false),
     Constants.chargeableValueOfResidenceId -> JsNumber(testNumber),
     Constants.chargeableValueOfResidenceCloselyInheritedId -> JsNumber(testNumber),
     Constants.anyBroughtForwardAllowanceId -> JsBoolean(true),
@@ -162,9 +162,9 @@ class CascadeUpsertSpec extends UnitSpec {
         updatedCacheMap.data.keys should not contain Constants.chargeableValueOfResidenceCloselyInheritedId
       }
 
-      "delete the existing 'Does Grossing Up Apply To Residence' answer" in {
+      "delete the existing 'Grossing Up On Estate Property' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.exemptionsAndReliefClaimedId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.doesGrossingUpApplyToResidenceId
+        updatedCacheMap.data.keys should not contain Constants.grossingUpOnEstatePropertyId
       }
 
       "not delete any other answers" in {

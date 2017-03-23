@@ -26,7 +26,7 @@ class ChargeableValueOfResidenceControllerSpec extends SimpleControllerSpecBase 
 
 
   "Chargeable Value of Residence Controller" must {
-    val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DoesGrossingUpApplyToResidenceController.onPageLoad().url
+    val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.GrossingUpOnEstatePropertyController.onPageLoad().url
 
     def createView = (value: Option[Map[String, String]]) => value match {
       case None => chargeable_value_of_residence(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)

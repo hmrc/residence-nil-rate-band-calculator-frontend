@@ -36,7 +36,7 @@ object AnswerRows {
     Constants.propertyPassingToDirectDescendantsId,
     Constants.percentagePassedToDirectDescendantsId,
     Constants.exemptionsAndReliefClaimedId,
-    Constants.doesGrossingUpApplyToResidenceId,
+    Constants.grossingUpOnEstatePropertyId,
     Constants.chargeableValueOfResidenceId,
     Constants.chargeableValueOfResidenceCloselyInheritedId,
     Constants.anyBroughtForwardAllowanceId,
@@ -128,10 +128,10 @@ object AnswerRows {
       boolAnswerRowFn("does_grossing_up_apply_to_other_property.title",
         "Does grossing up apply to other property",
         routes.DoesGrossingUpApplyToOtherPropertyController.onPageLoad),
-    Constants.doesGrossingUpApplyToResidenceId ->
-      boolAnswerRowFn("does_grossing_up_apply_to_residence.title",
-        "Does grossing up apply to residence",
-        routes.DoesGrossingUpApplyToResidenceController.onPageLoad),
+    Constants.grossingUpOnEstatePropertyId ->
+      boolAnswerRowFn("grossing_up_on_estate_property.title",
+        Constants.grossingUpOnEstatePropertyId,
+        routes.GrossingUpOnEstatePropertyController.onPageLoad),
     Constants.percentagePassedToDirectDescendantsId ->
       percentAnswerRowFn("percentage_passed_to_direct_descendants.title", Constants.percentagePassedToDirectDescendantsId,
         routes.PercentagePassedToDirectDescendantsController.onPageLoad),

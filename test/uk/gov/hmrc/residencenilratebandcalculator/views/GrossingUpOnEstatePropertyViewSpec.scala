@@ -17,22 +17,22 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.does_grossing_up_apply_to_residence
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_estate_property
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 
-class DoesGrossingUpApplyToResidenceViewSpec extends BooleanViewSpecBase {
+class GrossingUpOnEstatePropertyViewSpec extends BooleanViewSpecBase {
 
-  val messageKeyPrefix = "does_grossing_up_apply_to_residence"
+  val messageKeyPrefix = "grossing_up_on_estate_property"
 
-  def createView(form: Option[Form[Boolean]] = None) = does_grossing_up_apply_to_residence(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = grossing_up_on_estate_property(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
-  "Does Grossing Up Apply To Residence View" must {
+  "Grossing Up On Estate Property View" must {
 
     behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance2.bullet1", "guidance2.bullet2")
 
     behave like pageWithBackLink[Boolean](createView)
 
-    behave like booleanPage(createView, messageKeyPrefix, DoesGrossingUpApplyToResidenceController.onSubmit().url)
+    behave like booleanPage(createView, messageKeyPrefix, GrossingUpOnEstatePropertyController.onSubmit().url)
 
     behave like pageContainingPreviousAnswers(createView)
 

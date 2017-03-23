@@ -25,19 +25,19 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.does_grossing_up_apply_to_residence
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_estate_property
 
 @Singleton
-class DoesGrossingUpApplyToResidenceController @Inject()(override val appConfig: FrontendAppConfig,
+class GrossingUpOnEstatePropertyController @Inject()(override val appConfig: FrontendAppConfig,
                                                          val messagesApi: MessagesApi,
                                                          override val sessionConnector: SessionConnector,
                                                          override val navigator: Navigator) extends SimpleControllerBase[Boolean] {
 
-  override val controllerId: String = Constants.doesGrossingUpApplyToResidenceId
+  override val controllerId: String = Constants.grossingUpOnEstatePropertyId
 
   override def form: () => Form[Boolean] = () => BooleanForm()
 
   override def view(form: Option[Form[Boolean]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    does_grossing_up_apply_to_residence(appConfig, backUrl, form, answerRows)
+    grossing_up_on_estate_property(appConfig, backUrl, form, answerRows)
   }
 }

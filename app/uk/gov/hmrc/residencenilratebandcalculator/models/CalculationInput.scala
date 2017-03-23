@@ -106,8 +106,8 @@ object CalculationInput {
   }
 
   private def requireExemptionsDependancies(userAnswers: UserAnswers) = {
-    require(userAnswers.doesGrossingUpApplyToResidence.isDefined, "Does Grossing Up Apply to Residence was not answered")
-    if (!userAnswers.doesGrossingUpApplyToResidence.get) requireNoGrossingUpDependancies(userAnswers)
+    require(userAnswers.grossingUpOnEstateProperty.isDefined, "Grossing Up On Estate Property was not answered")
+    if (!userAnswers.grossingUpOnEstateProperty.get) requireNoGrossingUpDependancies(userAnswers)
   }
 
   private def requireNoGrossingUpDependancies(userAnswers: UserAnswers) = {

@@ -56,8 +56,8 @@ POST       /date-of-disposal                            uk.gov.hmrc.residencenil
 GET        /does-grossing-up-apply-to-other-property    uk.gov.hmrc.residencenilratebandcalculator.controllers.DoesGrossingUpApplyToOtherPropertyController.onPageLoad
 POST       /does-grossing-up-apply-to-other-property    uk.gov.hmrc.residencenilratebandcalculator.controllers.DoesGrossingUpApplyToOtherPropertyController.onSubmit
 
-GET        /does-grossing-up-apply-to-residence         uk.gov.hmrc.residencenilratebandcalculator.controllers.DoesGrossingUpApplyToResidenceController.onPageLoad
-POST       /does-grossing-up-apply-to-residence         uk.gov.hmrc.residencenilratebandcalculator.controllers.DoesGrossingUpApplyToResidenceController.onSubmit
+GET        /grossing-up-on-estate-property              uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossingUpOnEstatePropertyController.onPageLoad
+POST       /grossing-up-on-estate-property              uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossingUpOnEstatePropertyController.onSubmit
 
 GET        /property-in-estate                          uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyInEstateController.onPageLoad
 POST       /property-in-estate                          uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyInEstateController.onSubmit
