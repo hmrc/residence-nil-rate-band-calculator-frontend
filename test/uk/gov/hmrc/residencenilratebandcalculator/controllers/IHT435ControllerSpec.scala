@@ -20,7 +20,7 @@ import akka.util.ByteString
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm
 import play.api.http.Status
-import play.api.libs.json.{JsNumber, JsValue, Reads}
+import play.api.libs.json.{JsBoolean, JsNumber, JsValue}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
@@ -38,14 +38,18 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
 
   private val filledcacheMap: CacheMap = new CacheMap("", Map[String, JsValue](
     Constants.valueOfEstateId -> JsNumber(500000),
-    Constants.chargeableEstateValueId -> JsNumber(450000)))
+    Constants.chargeableEstateValueId -> JsNumber(450000),
+    Constants.assetsPassingToDirectDescendantsId -> JsBoolean(false)
+  ))
 
   private def acroForm: PDAcroForm = {
     setCacheMap(filledcacheMap)
     val result = controller.onPageLoad()(fakeRequest)
     val content: ByteString = contentAsBytes(result)
     val pdfDoc = PDDocument.load(content.toByteBuffer.array())
-    pdfDoc.getDocumentCatalog.getAcroForm
+    val acroForm = pdfDoc.getDocumentCatalog.getAcroForm
+    pdfDoc.close()
+    acroForm
   }
 
   "onPageLoad" must {
@@ -67,6 +71,11 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
 
     "when the amount of the total chargeable estate (3) is set in the session, it should appear as field IHT435_07 in the generated PDF" in {
       acroForm.getField("IHT435_07").getValueAsString shouldBe "450000"
+    }
+
+    "when \"Does any of the estate pass to the deceased’s children or other direct descendants?\" (1) is set in the session, " +
+      "it should appear as field IHT435_05 in the generated PDF" in {
+      acroForm.getField("IHT435_05").getValueAsString shouldBe "No"
     }
   }
 }
