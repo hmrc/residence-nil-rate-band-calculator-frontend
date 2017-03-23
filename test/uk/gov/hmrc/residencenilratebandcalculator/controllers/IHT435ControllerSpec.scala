@@ -16,8 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import java.io.ByteArrayInputStream
-import javassist.bytecode.ByteArray
+import java.io.{ByteArrayInputStream, File}
 
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -51,13 +50,12 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
 
   "generatePDF" must {
     "can fill a 'IHT435_01' for a pdf text field IHT435_01 in IHT435" in {
-      val baos = controller.generatePDF
+      val baos = controller.generatePDF()
       val bais = new ByteArrayInputStream(baos.toByteArray)
       val pdfDoc = PDDocument.load(bais)
       val form = pdfDoc.getDocumentCatalog.getAcroForm
       val field = form.getField("IHT435_01")
-
-      field.getValueAsString shouldBe("IHT435_01")
+      field.getValueAsString shouldBe "IHT435_01"
     }
   }
 }

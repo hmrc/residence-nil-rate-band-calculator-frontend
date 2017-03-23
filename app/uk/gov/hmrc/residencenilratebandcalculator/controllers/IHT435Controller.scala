@@ -46,10 +46,10 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     "IHT435_03_07" -> "IHT435_03_07",
     "IHT435_03_08" -> "IHT435_03_08",
     "IHT435_04" -> "IHT435_04",
-    //"IHT435_05" -> "IHT435_05",
+    "IHT435_05" -> "Yes",
     "IHT435_06" -> "IHT435_06",
     "IHT435_07" -> "IHT435_07",
-    //"IHT435_08" -> "IHT435_08",
+    "IHT435_08" -> "No",
     "IHT435_09_01" -> "IHT435_09_01",
     "IHT435_09_02" -> "IHT435_09_02",
     "IHT435_09_03" -> "IHT435_09_03",
@@ -68,13 +68,13 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     "IHT435_11_04" -> "IHT435_11_04",
     "IHT435_11_05" -> "IHT435_11_05",
     "IHT435_11_06" -> "IHT435_11_06",
-    //"IHT435_12" -> "IHT435_12",
-    //"IHT435_13" -> "IHT435_13",
+    "IHT435_12" -> "Yes",
+    "IHT435_13" -> "No",
     "IHT435_14" -> "IHT435_14",
     "IHT435_15" -> "IHT435_15",
-    //"IHT435_16" -> "IHT435_16",
+    "IHT435_16" -> "Yes",
     "IHT435_17" -> "IHT435_17",
-    //"IHT435_18" -> "IHT435_18",
+    "IHT435_18" -> "No",
     "IHT435_19_01" -> "IHT435_19_01",
     "IHT435_19_02" -> "IHT435_19_02",
     "IHT435_19_03" -> "IHT435_19_03",
@@ -88,8 +88,8 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     "IHT435_20_07" -> "IHT435_20_07",
     "IHT435_20_08" -> "IHT435_20_08",
     "IHT435_21" -> "IHT435_21",
-    //"IHT435_22" -> "IHT435_22",
-    //"IHT435_23" -> "IHT435_23",
+    "IHT435_22" -> "Yes",
+    "IHT435_23" -> "No",
     "IHT435_24" -> "IHT435_24",
     "IHT435_25_01" -> "IHT435_25_01",
     "IHT435_25_02" -> "IHT435_25_02",
@@ -97,7 +97,7 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     "IHT435_25_04" -> "IHT435_25_04",
     "IHT435_25_05" -> "IHT435_25_05",
     "IHT435_25_06" -> "IHT435_25_06",
-    //"IHT435_26" -> "IHT435_26",
+    "IHT435_26" -> "Yes",
     "IHT435_27" -> "IHT435_27",
     "IHT435_28" -> "IHT435_28"
   )
@@ -111,18 +111,20 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
       field.setValue(f._2)
     }
 
-    val cb5 = form.getField("IHT435_05")
-    cb5.asInstanceOf[PDCheckBox].check()
-
-    val cb8: PDField = form.getField("IHT435_08")
-    cb8.asInstanceOf[PDCheckBox].check()
+//    val cb5 = form.getField("IHT435_05")
+//
+//    //cb5.asInstanceOf[PDCheckBox].check()
+//    cb5.setValue("Yes")
+//
+//    val cb8: PDField = form.getField("IHT435_08")
+//    cb8.asInstanceOf[PDCheckBox].check()
 
     pdf.setAllSecurityToBeRemoved(true)
     val baos = new ByteArrayOutputStream()
     pdf.save(baos)
     pdf.close
-
-    val outputStream = new FileOutputStream("/Users/andy/Downloads/wibble.pdf")
+//"/Users/andy/Downloads/wibble.pdf"
+    val outputStream = new FileOutputStream("/home/grant/Downloads/wibble.pdf")
     baos.writeTo(outputStream);
 
     baos
