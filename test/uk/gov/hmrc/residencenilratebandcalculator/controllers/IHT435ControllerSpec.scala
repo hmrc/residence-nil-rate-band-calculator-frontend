@@ -39,7 +39,7 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
   private val filledcacheMap: CacheMap = new CacheMap("", Map[String, JsValue](
     Constants.valueOfEstateId -> JsNumber(500000),
     Constants.chargeableEstateValueId -> JsNumber(450000),
-    Constants.assetsPassingToDirectDescendantsId -> JsBoolean(false)
+    Constants.assetsPassingToDirectDescendantsId -> JsBoolean(true)
   ))
 
   private def acroForm: PDAcroForm = {
@@ -75,7 +75,12 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
 
     "when \"Does any of the estate pass to the deceased’s children or other direct descendants?\" (1) is set in the session, " +
       "it should appear as field IHT435_05 in the generated PDF" in {
-      acroForm.getField("IHT435_05").getValueAsString shouldBe "No"
+      acroForm.getField("IHT435_05").getValueAsString shouldBe "Yes"
     }
+
+//    "when \"Does the estate include any residential property that the deceased owned and lived in?\" (4) is set in the session, " +
+//      "it should appear as field IHT435_08 in the generated PDF" in {
+//      acroForm.getField("IHT435_08").getValueAsString shouldBe "No"
+//    }
   }
 }
