@@ -96,10 +96,10 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.dateOfDeath shouldBe Some(new LocalDate(2018, 1, 1))
       }
 
-      "return the correct answer for Date Of Disposal" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.dateOfDisposalId -> JsString("2018-01-01")))
+      "return the correct answer for Date Property Was Changed" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.datePropertyWasChangedId -> JsString("2018-01-01")))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.dateOfDisposal shouldBe Some(new LocalDate(2018, 1, 1))
+        userAnswers.datePropertyWasChanged shouldBe Some(new LocalDate(2018, 1, 1))
       }
 
       "return the correct answer for Does Grossing Up Apply To Other Property" in {
@@ -215,9 +215,9 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.dateOfDeath shouldBe None
       }
 
-      "return None for Date Of Disposal" in {
+      "return None for Date Property Was Changed" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.dateOfDisposal shouldBe None
+        userAnswers.datePropertyWasChanged shouldBe None
       }
 
       "return None for Property In Estate" in {

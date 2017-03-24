@@ -21,7 +21,7 @@ import javax.inject.{Inject, Singleton}
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetCannotClaimDownsizingReason.{DateOfDisposalTooEarly, NoAssetsPassingToDirectDescendants}
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetCannotClaimDownsizingReason.{DatePropertyWasChangedTooEarly, NoAssetsPassingToDirectDescendants}
 import uk.gov.hmrc.residencenilratebandcalculator.models._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.cannot_claim_downsizing
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
@@ -37,13 +37,13 @@ class CannotClaimDownsizingController @Inject()(val appConfig: FrontendAppConfig
   def getControllerId(reason: Reason) =
     reason match {
       case NoAssetsPassingToDirectDescendants => Constants.anyAssetsPassingToDirectDescendantsId
-      case _ => Constants.dateOfDisposalId
+      case _ => Constants.datePropertyWasChangedId
     }
 
   def createView(reason: Reason, userAnswers: UserAnswers, previousAnswers: Seq[AnswerRow])(implicit request: Request[_]) = {
     val reasonKey = reason match {
       case NoAssetsPassingToDirectDescendants => "cannot_claim_downsizing.no_assets_passing_to_direct_descendants_reason"
-      case DateOfDisposalTooEarly => "cannot_claim_downsizing.date_of_disposal_too_early_reason"
+      case DatePropertyWasChangedTooEarly => "cannot_claim_downsizing.date_property_was_changed_too_early_reason"
     }
     cannot_claim_downsizing(appConfig, reasonKey, navigator.nextPage(Constants.cannotClaimDownsizingId)(userAnswers), previousAnswers)
   }

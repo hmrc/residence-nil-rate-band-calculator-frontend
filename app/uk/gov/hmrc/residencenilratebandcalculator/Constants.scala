@@ -35,7 +35,7 @@ object Constants {
   val cannotClaimDownsizingId = "CannotClaimDownsizing"
   val cannotClaimRNRB = "CannotClaimRNRB"
   val dateOfDeathId = "DateOfDeath"
-  val dateOfDisposalId = "DateOfDisposal"
+  val datePropertyWasChangedId = "DatePropertyWasChanged"
   val grossingUpOnEstatePropertyId = "GrossingUpOnEstateProperty"
   val doesGrossingUpApplyToOtherPropertyId = "DoesGrossingUpApplyToOtherProperty"
   val downsizingDetails = "downsizingDetails"

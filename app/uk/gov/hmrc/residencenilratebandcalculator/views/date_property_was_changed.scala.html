@@ -11,30 +11,30 @@
 @(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[Date]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
-    title = messages("date_of_disposal.browser_title"),
+    title = messages("date_property_was_changed.browser_title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
     @rnrbHelpers.back_link(backUrl)
 
-    @rnrbHelpers.heading("date_of_disposal.title")
+    @rnrbHelpers.heading("date_property_was_changed.title")
 
-    <p>@messages("date_of_disposal.guidance1")</p>
+    <p>@messages("date_property_was_changed.guidance1")</p>
 
-    <p>@messages("date_of_disposal.guidance2")</p>
+    <p>@messages("date_property_was_changed.guidance2")</p>
 
-    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDisposalController.onSubmit(), 'autoComplete -> "off") {
+    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DatePropertyWasChangedController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
 
         @rnrbHelpers.input_date(
-            label = messages("date_of_disposal.browser_title"),
+            label = messages("date_property_was_changed.browser_title"),
             legendClass = "visually-hidden",
             errorKey = FormHelpers.getErrorByKey(form, ""),
             valueDay = Some(FormHelpers.getDatePart(form, Day).toString),
             valueMonth = Some(FormHelpers.getDatePart(form, Month).toString),
             valueYear = Some(FormHelpers.getDatePart(form, Year).toString),
-            hint = Some(messages("date_of_disposal.hint"))
+            hint = Some(messages("date_property_was_changed.hint"))
         )
 
         @rnrbHelpers.submit_button()

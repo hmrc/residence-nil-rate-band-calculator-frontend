@@ -19,22 +19,22 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_disposal
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_property_was_changed
 
-class DateOfDisposalControllerSpec extends DateControllerSpecBase {
-  "Date Of Disposal Controller" must {
+class DatePropertyWasChangedControllerSpec extends DateControllerSpecBase {
+  "Date Property Was Changed Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ClaimDownsizingThresholdController.onPageLoad().url
       value match {
-        case None => date_of_disposal(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => date_of_disposal(frontendAppConfig, url, Some(DateForm().bind(v)), Seq())(fakeRequest, messages)
+        case None => date_property_was_changed(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => date_property_was_changed(frontendAppConfig, url, Some(DateForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 
-    def createController = () => new DateOfDisposalController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
+    def createController = () => new DatePropertyWasChangedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
-    behave like rnrbDateController(createController, createView, Constants.dateOfDisposalId)(Date.dateReads, Date.dateWrites)
+    behave like rnrbDateController(createController, createView, Constants.datePropertyWasChangedId)(Date.dateReads, Date.dateWrites)
 
     behave like nonStartingDateController(createController,
       List(Constants.dateOfDeathId,

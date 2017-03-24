@@ -26,7 +26,7 @@ class ValueOfDisposedPropertyControllerSpec extends SimpleControllerSpecBase {
   "Value of Disposed Property Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
-      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDisposalController.onPageLoad().url
+      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DatePropertyWasChangedController.onPageLoad().url
 
       value match {
         case None => value_of_disposed_property(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
@@ -53,6 +53,6 @@ class ValueOfDisposedPropertyControllerSpec extends SimpleControllerSpecBase {
         Constants.anyBroughtForwardAllowanceId,
         Constants.broughtForwardAllowanceId,
         Constants.claimDownsizingThresholdId,
-        Constants.dateOfDisposalId))(Reads.IntReads, Writes.IntWrites)
+        Constants.datePropertyWasChangedId))(Reads.IntReads, Writes.IntWrites)
   }
 }

@@ -24,20 +24,20 @@ import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, Date, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_disposal
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_property_was_changed
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 @Singleton
-class DateOfDisposalController @Inject()(override val appConfig: FrontendAppConfig,
+class DatePropertyWasChangedController @Inject()(override val appConfig: FrontendAppConfig,
                                          val messagesApi: MessagesApi,
                                          override val sessionConnector: SessionConnector,
                                          override val navigator: Navigator) extends SimpleControllerBase[Date]{
 
-  val controllerId: String = Constants.dateOfDisposalId
+  val controllerId: String = Constants.datePropertyWasChangedId
 
   def form: () => Form[Date] = () => DateForm()
 
   def view(form: Option[Form[Date]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    date_of_disposal(appConfig, backUrl, form, answerRows)
+    date_property_was_changed(appConfig, backUrl, form, answerRows)
   }
 }

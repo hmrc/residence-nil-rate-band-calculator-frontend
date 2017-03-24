@@ -59,7 +59,7 @@ class CannotClaimRNRBControllerSpec extends UnitSpec with WithFakeApplication wi
       Constants.anyBroughtForwardAllowanceId -> JsBoolean(true),
       Constants.broughtForwardAllowanceId -> JsNumber(50000),
       Constants.claimDownsizingThresholdId -> JsBoolean(true),
-      Constants.dateOfDisposalId -> JsString("2018-03-02"),
+      Constants.datePropertyWasChangedId -> JsString("2018-03-02"),
       Constants.valueOfDisposedPropertyId -> JsNumber(100000),
       Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true),
       Constants.doesGrossingUpApplyToOtherPropertyId -> JsBoolean(true),

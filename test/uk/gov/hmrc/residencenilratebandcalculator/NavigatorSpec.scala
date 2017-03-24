@@ -302,12 +302,12 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.claimDownsizingThresholdId)(userAnswers) shouldBe routes.BroughtForwardAllowanceController.onPageLoad()
     }
 
-    "return a call to the Claim Downsizing Threshold After Exemption when back linking from the Date of Disposal page" in {
-      navigator.lastPage(Constants.dateOfDisposalId)(userAnswers) shouldBe routes.ClaimDownsizingThresholdController.onPageLoad()
+    "return a call to the Claim Downsizing Threshold After Exemption when back linking from the Date Property Was Changed page" in {
+      navigator.lastPage(Constants.datePropertyWasChangedId)(userAnswers) shouldBe routes.ClaimDownsizingThresholdController.onPageLoad()
     }
 
-    "return a call to the Date of Disposal After Exemption when back linking from the Value Of Disposed Property page" in {
-      navigator.lastPage(Constants.valueOfDisposedPropertyId)(userAnswers) shouldBe routes.DateOfDisposalController.onPageLoad()
+    "return a call to the Date Property Was Changed After Exemption when back linking from the Value Of Disposed Property page" in {
+      navigator.lastPage(Constants.valueOfDisposedPropertyId)(userAnswers) shouldBe routes.DatePropertyWasChangedController.onPageLoad()
     }
 
     "return a call to the Value Of Disposed Property when back linking from the Any Assets Passing To Direct Decendants page" in {
@@ -336,23 +336,23 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.claimDownsizingThresholdId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
     }
 
-    "return a call to the date of property disposal controller onPageLoad method when there is some downsizing allowance" in {
+    "return a call to the date property was changed controller onPageLoad method when there is some downsizing allowance" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.claimDownsizingThreshold) thenReturn Some(true)
-      navigator.nextPage(Constants.claimDownsizingThresholdId)(mockCacheMap) shouldBe routes.DateOfDisposalController.onPageLoad()
+      navigator.nextPage(Constants.claimDownsizingThresholdId)(mockCacheMap) shouldBe routes.DatePropertyWasChangedController.onPageLoad()
     }
 
     "return a call to the Cannot Claim Downsizing Controller onPageLoad method when a date before 8th July 2015 is" +
-      "supplied as the Date of Disposal " in {
+      "supplied as the Date Property Was Changed " in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.dateOfDisposal) thenReturn Some(new LocalDate(2015, 7, 7))
-      navigator.nextPage(Constants.dateOfDisposalId)(mockCacheMap) shouldBe routes.CannotClaimDownsizingController.onPageLoad()
+      when(mockCacheMap.datePropertyWasChanged) thenReturn Some(new LocalDate(2015, 7, 7))
+      navigator.nextPage(Constants.datePropertyWasChangedId)(mockCacheMap) shouldBe routes.CannotClaimDownsizingController.onPageLoad()
     }
 
-    "return a call to the Value of Disposed Property Controller onPageLoad method when a date on or after 8th July 2015 is supplied as the Date of Disposal" in {
+    "return a call to the Value of Disposed Property Controller onPageLoad method when a date on or after 8th July 2015 is supplied as the Date Property Was Changed" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.dateOfDisposal) thenReturn Some(new LocalDate(2015, 7, 8))
-      navigator.nextPage(Constants.dateOfDisposalId)(mockCacheMap) shouldBe routes.ValueOfDisposedPropertyController.onPageLoad()
+      when(mockCacheMap.datePropertyWasChanged) thenReturn Some(new LocalDate(2015, 7, 8))
+      navigator.nextPage(Constants.datePropertyWasChangedId)(mockCacheMap) shouldBe routes.ValueOfDisposedPropertyController.onPageLoad()
     }
 
     "return a call to the any assets passing to direct descendants controller onPageLoad method from the ValueOfDisposedProperty controller" in {
@@ -384,26 +384,26 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     }
 
     "return a call to the Any Brought Forward Allowance On Disposal controller onPageLoad method from the AssetsPassingToDirectDescendants controller " +
-      "when there is brought forward allowance and the property was disposed on (or after) the eligibility date" in {
+      "when there is brought forward allowance and the property was changed on (or after) the eligibility date" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.anyBroughtForwardAllowance) thenReturn Some(true)
-      when(mockCacheMap.dateOfDisposal) thenReturn Some(Constants.eligibilityDate)
+      when(mockCacheMap.datePropertyWasChanged) thenReturn Some(Constants.eligibilityDate)
       navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.AnyBroughtForwardAllowanceOnDisposalController.onPageLoad()
     }
 
     "return a call to the Results controller onPageLoad method from AssetsPassingToDirectDescendants when there is no brought forward allowance, " +
-      "even though the property was disposed on the eligibility date" in {
+      "even though the property was changed on the eligibility date" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.anyBroughtForwardAllowance) thenReturn Some(false)
-      when(mockCacheMap.dateOfDisposal) thenReturn Some(Constants.eligibilityDate)
+      when(mockCacheMap.datePropertyWasChanged) thenReturn Some(Constants.eligibilityDate)
       navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
     }
 
     "return a call to the Results controller onPageLoad method from AssetsPassingToDirectDescendants when there is brought forward allowance " +
-      "but the property was disposed before the eligibility date" in {
+      "but the property was changed before the eligibility date" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.anyBroughtForwardAllowance) thenReturn Some(true)
-      when(mockCacheMap.dateOfDisposal) thenReturn Some(Constants.eligibilityDate.minusDays(1))
+      when(mockCacheMap.datePropertyWasChanged) thenReturn Some(Constants.eligibilityDate.minusDays(1))
       navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
     }
 

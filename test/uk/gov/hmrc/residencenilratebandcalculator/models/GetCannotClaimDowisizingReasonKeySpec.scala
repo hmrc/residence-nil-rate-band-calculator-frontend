@@ -20,7 +20,7 @@ import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetCannotClaimDownsizingReason.{DateOfDisposalTooEarly, NoAssetsPassingToDirectDescendants}
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetCannotClaimDownsizingReason.{DatePropertyWasChangedTooEarly, NoAssetsPassingToDirectDescendants}
 
 class GetCannotClaimDowisizingReasonSpec extends UnitSpec with WithFakeApplication with MockitoSugar {
   "Get Cannot Claim Dowisizing Reason" must {
@@ -30,10 +30,10 @@ class GetCannotClaimDowisizingReasonSpec extends UnitSpec with WithFakeApplicati
       GetCannotClaimDownsizingReason(userAnswers) shouldBe NoAssetsPassingToDirectDescendants
     }
 
-    "get the 'date of disposal too early' reason when the property is disposed of before 8 July 2015" in {
+    "get the 'Date Property Was Changed too early' reason when the property is disposed of before 8 July 2015" in {
       val userAnswers = mock[UserAnswers]
-      when(userAnswers.dateOfDisposal) thenReturn Some(Constants.downsizingEligibilityDate.minusDays(1))
-      GetCannotClaimDownsizingReason(userAnswers) shouldBe DateOfDisposalTooEarly
+      when(userAnswers.datePropertyWasChanged) thenReturn Some(Constants.downsizingEligibilityDate.minusDays(1))
+      GetCannotClaimDownsizingReason(userAnswers) shouldBe DatePropertyWasChangedTooEarly
     }
   }
 }

@@ -50,8 +50,8 @@ GET        /cannot-claim-downsizing                     uk.gov.hmrc.residencenil
 GET        /date-of-death                               uk.gov.hmrc.residencenilratebandcalculator.controllers.DateOfDeathController.onPageLoad
 POST       /date-of-death                               uk.gov.hmrc.residencenilratebandcalculator.controllers.DateOfDeathController.onSubmit
 
-GET        /date-of-disposal                            uk.gov.hmrc.residencenilratebandcalculator.controllers.DateOfDisposalController.onPageLoad
-POST       /date-of-disposal                            uk.gov.hmrc.residencenilratebandcalculator.controllers.DateOfDisposalController.onSubmit
+GET        /date-property-was-changed                   uk.gov.hmrc.residencenilratebandcalculator.controllers.DatePropertyWasChangedController.onPageLoad
+POST       /date-property-was-changed                   uk.gov.hmrc.residencenilratebandcalculator.controllers.DatePropertyWasChangedController.onSubmit
 
 GET        /does-grossing-up-apply-to-other-property    uk.gov.hmrc.residencenilratebandcalculator.controllers.DoesGrossingUpApplyToOtherPropertyController.onPageLoad
 POST       /does-grossing-up-apply-to-other-property    uk.gov.hmrc.residencenilratebandcalculator.controllers.DoesGrossingUpApplyToOtherPropertyController.onSubmit

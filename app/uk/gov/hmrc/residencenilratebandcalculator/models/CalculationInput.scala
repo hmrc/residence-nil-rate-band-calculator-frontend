@@ -81,9 +81,9 @@ object CalculationInput {
 
   private def getDownsizingDetails(userAnswers: UserAnswers) = userAnswers.claimDownsizingThreshold.get match {
     case true =>
-      require(userAnswers.dateOfDisposal.isDefined, "Date of Disposal was not answered")
+      require(userAnswers.datePropertyWasChanged.isDefined, "Date Property Was Changed was not answered")
 
-      userAnswers.dateOfDisposal match {
+      userAnswers.datePropertyWasChanged match {
         case Some(d) if d isBefore Constants.downsizingEligibilityDate => None
         case Some(_) => Some(DownsizingDetails(userAnswers))
       }
@@ -119,7 +119,7 @@ object CalculationInput {
     require(userAnswers.broughtForwardAllowance.isDefined, "Brought Forward Allowance was not answered")
 }
 
-case class DownsizingDetails(dateOfDisposal: LocalDate,
+case class DownsizingDetails(datePropertyWasChanged: LocalDate,
                              valueOfDisposedProperty: Int,
                              valueCloselyInherited: Int,
                              broughtForwardAllowanceAtDisposal: Int)
@@ -128,13 +128,13 @@ object DownsizingDetails {
   implicit val formats: OFormat[DownsizingDetails] = Json.format[DownsizingDetails]
 
   def apply(userAnswers: UserAnswers): DownsizingDetails = {
-    require(userAnswers.dateOfDisposal.isDefined, "Date of Disposal was not answered")
+    require(userAnswers.datePropertyWasChanged.isDefined, "Date Property Was Changed was not answered")
     require(userAnswers.valueOfDisposedProperty.isDefined, "Value of Disposed Property was not answered")
     require(userAnswers.anyAssetsPassingToDirectDescendants.isDefined, "Any Assets Passing to Direct Descendants was not answered")
     if (userAnswers.anyAssetsPassingToDirectDescendants.get) requireAssetsPassingToDirectDescendantsDependencies(userAnswers)
 
     DownsizingDetails(
-      userAnswers.dateOfDisposal.get,
+      userAnswers.datePropertyWasChanged.get,
       userAnswers.valueOfDisposedProperty.get,
       getValueCloselyInherited(userAnswers),
       getBroughtForwardAllowanceOnDisposal(userAnswers))
@@ -153,7 +153,7 @@ object DownsizingDetails {
 
   private def requireAssetsPassingToDirectDescendantsDependencies(userAnswers: UserAnswers) = {
     require(userAnswers.assetsPassingToDirectDescendants.isDefined, "Assets Passing to Direct Descendants was not answered")
-    if (userAnswers.anyBroughtForwardAllowance.get && !(userAnswers.dateOfDisposal.get isBefore Constants.eligibilityDate)) {
+    if (userAnswers.anyBroughtForwardAllowance.get && !(userAnswers.datePropertyWasChanged.get isBefore Constants.eligibilityDate)) {
       requireAnyBroughtForwardAllowanceOnDisposalDependencies(userAnswers)
     }
   }

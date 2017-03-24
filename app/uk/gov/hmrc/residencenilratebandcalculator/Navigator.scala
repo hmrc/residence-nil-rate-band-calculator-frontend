@@ -42,7 +42,7 @@ class Navigator @Inject()() {
       Constants.broughtForwardAllowanceId -> (_ => ClaimDownsizingThresholdController.onPageLoad()),
       Constants.claimDownsizingThresholdId -> (ua => getClaimDownsizingThresholdRoute(ua)),
       Constants.cannotClaimDownsizingId -> (_ => ResultsController.onPageLoad()),
-      Constants.dateOfDisposalId -> (ua => getDateOfDisposalRoute(ua)),
+      Constants.datePropertyWasChangedId -> (ua => getDatePropertyWasChangedRoute(ua)),
       Constants.exemptionsAndReliefClaimedId -> (ua => getExemptionsAndReliefClaimedRoute(ua)),
       Constants.chargeablePropertyValueId -> (_ => ChargeableInheritedPropertyValueController.onPageLoad()),
       Constants.chargeableInheritedPropertyValueId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
@@ -85,10 +85,10 @@ class Navigator @Inject()() {
     getRouteForOptionalBoolean(userAnswers.anyBroughtForwardAllowanceOnDisposal, BroughtForwardAllowanceOnDisposalController.onPageLoad(), ResultsController.onPageLoad())
 
   private def getClaimDownsizingThresholdRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.claimDownsizingThreshold, DateOfDisposalController.onPageLoad(), ResultsController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.claimDownsizingThreshold, DatePropertyWasChangedController.onPageLoad(), ResultsController.onPageLoad())
 
-  private def getDateOfDisposalRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalLocalDate(userAnswers.dateOfDisposal, Constants.downsizingEligibilityDate,
+  private def getDatePropertyWasChangedRoute(userAnswers: UserAnswers) =
+    getRouteForOptionalLocalDate(userAnswers.datePropertyWasChanged, Constants.downsizingEligibilityDate,
       CannotClaimDownsizingController.onPageLoad(), ValueOfDisposedPropertyController.onPageLoad())
 
   private def getPropertyPassingToDirectDescendantsRoute(userAnswers: UserAnswers) = userAnswers.propertyPassingToDirectDescendants match {
@@ -110,7 +110,7 @@ class Navigator @Inject()() {
   private def getDoesGrossingUpApplyToOtherPropertyRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.doesGrossingUpApplyToOtherProperty, TransitionOutController.onPageLoad(), AssetsPassingToDirectDescendantsController.onPageLoad())
 
-  private def getAssetsPassingToDirectDescendantsRoute(userAnswers: UserAnswers) = (userAnswers.anyBroughtForwardAllowance, userAnswers.dateOfDisposal) match {
+  private def getAssetsPassingToDirectDescendantsRoute(userAnswers: UserAnswers) = (userAnswers.anyBroughtForwardAllowance, userAnswers.datePropertyWasChanged) match {
     case (Some(true), Some(d)) if !(d isBefore Constants.eligibilityDate) => AnyBroughtForwardAllowanceOnDisposalController.onPageLoad()
     case _ => ResultsController.onPageLoad()
   }
@@ -135,8 +135,8 @@ class Navigator @Inject()() {
       Constants.anyBroughtForwardAllowanceId -> (ua => getAnyBroughtForwardAllowanceReverseRoute(ua)),
       Constants.broughtForwardAllowanceId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
       Constants.claimDownsizingThresholdId -> (ua => getClaimDownsizingThresholdReverseRoute(ua)),
-      Constants.dateOfDisposalId -> (_ => ClaimDownsizingThresholdController.onPageLoad()),
-      Constants.valueOfDisposedPropertyId -> (_ => DateOfDisposalController.onPageLoad()),
+      Constants.datePropertyWasChangedId -> (_ => ClaimDownsizingThresholdController.onPageLoad()),
+      Constants.valueOfDisposedPropertyId -> (_ => DatePropertyWasChangedController.onPageLoad()),
       Constants.anyAssetsPassingToDirectDescendantsId -> (_ => ValueOfDisposedPropertyController.onPageLoad()),
       Constants.doesGrossingUpApplyToOtherPropertyId -> (_ => AnyAssetsPassingToDirectDescendantsController.onPageLoad()),
       Constants.assetsPassingToDirectDescendantsId -> (_ => DoesGrossingUpApplyToOtherPropertyController.onPageLoad()),
