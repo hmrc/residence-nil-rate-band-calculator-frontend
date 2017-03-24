@@ -108,7 +108,7 @@ class CascadeUpsert {
         Constants.anyAssetsPassingToDirectDescendantsId,
         Constants.assetsPassingToDirectDescendantsId,
         Constants.anyBroughtForwardAllowanceOnDisposalId,
-        Constants.doesGrossingUpApplyToOtherPropertyId,
+        Constants.grossingUpOnEstateAssetsId,
         Constants.broughtForwardAllowanceOnDisposalId),
       cacheMap)
 
@@ -117,7 +117,7 @@ class CascadeUpsert {
       Set(
         Constants.assetsPassingToDirectDescendantsId,
         Constants.anyBroughtForwardAllowanceOnDisposalId,
-        Constants.doesGrossingUpApplyToOtherPropertyId,
+        Constants.grossingUpOnEstateAssetsId,
         Constants.broughtForwardAllowanceOnDisposalId),
       cacheMap)
 
@@ -128,7 +128,7 @@ class CascadeUpsert {
     val keysToRemoveWhenDateBeforeDownsizingDate = Set(
       Constants.valueOfChangedPropertyId,
       Constants.anyAssetsPassingToDirectDescendantsId,
-      Constants.doesGrossingUpApplyToOtherPropertyId,
+      Constants.grossingUpOnEstateAssetsId,
       Constants.assetsPassingToDirectDescendantsId,
       Constants.anyBroughtForwardAllowanceOnDisposalId,
       Constants.broughtForwardAllowanceOnDisposalId

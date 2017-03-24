@@ -26,7 +26,7 @@ class AssetsPassingToDirectDescendantsControllerSpec extends SimpleControllerSpe
   "Assets Passing to Direct Descendants Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
-      val backUrl = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DoesGrossingUpApplyToOtherPropertyController.onPageLoad().url
+      val backUrl = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.GrossingUpOnEstateAssetsController.onPageLoad().url
 
       value match {
         case None => assets_passing_to_direct_descendants(frontendAppConfig, backUrl, answerRows = Seq())(fakeRequest, messages)
@@ -56,6 +56,6 @@ class AssetsPassingToDirectDescendantsControllerSpec extends SimpleControllerSpe
            Constants.datePropertyWasChangedId,
            Constants.valueOfChangedPropertyId,
            Constants.anyAssetsPassingToDirectDescendantsId,
-           Constants.doesGrossingUpApplyToOtherPropertyId))(Reads.IntReads, Writes.IntWrites)
+           Constants.grossingUpOnEstateAssetsId))(Reads.IntReads, Writes.IntWrites)
   }
 }

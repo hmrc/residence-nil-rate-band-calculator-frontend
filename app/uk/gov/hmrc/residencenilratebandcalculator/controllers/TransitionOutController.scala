@@ -38,7 +38,7 @@ class TransitionOutController @Inject()(val appConfig: FrontendAppConfig,
       case DateOfDeath => Constants.dateOfDeathId
       case DirectDescendant => Constants.partOfEstatePassingToDirectDescendantsId
       case GrossingUpForResidence => Constants.grossingUpOnEstatePropertyId
-      case GrossingUpForOtherProperty => Constants.doesGrossingUpApplyToOtherPropertyId
+      case GrossingUpForOtherProperty => Constants.grossingUpOnEstateAssetsId
     }
 
   def createView(reason: Reason, userAnswers: UserAnswers, previousAnswers: scala.Seq[AnswerRow])(implicit request: Request[_]) = {

@@ -19,27 +19,27 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.does_grossing_up_apply_to_other_property
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_estate_assets
 
-class DoesGrossingUpApplyToOtherPropertyControllerSpec extends SimpleControllerSpecBase {
+class GrossingUpOnEstateAssetsControllerSpec extends SimpleControllerSpecBase {
 
-  "Does Grossing Up Apply To Other Property Controller" must {
+  "Grossing Up On Estate Assets Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       val backUrl = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyAssetsPassingToDirectDescendantsController.onPageLoad().url
 
       value match {
-        case None => does_grossing_up_apply_to_other_property(frontendAppConfig, backUrl, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => does_grossing_up_apply_to_other_property(frontendAppConfig, backUrl, Some(BooleanForm().bind(v)), Seq())(fakeRequest, messages)
+        case None => grossing_up_on_estate_assets(frontendAppConfig, backUrl, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => grossing_up_on_estate_assets(frontendAppConfig, backUrl, Some(BooleanForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 
-    def createController = () => new DoesGrossingUpApplyToOtherPropertyController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
+    def createController = () => new GrossingUpOnEstateAssetsController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
     val testValue = false
 
     behave like
-      rnrbController[Boolean](createController, createView, Constants.doesGrossingUpApplyToOtherPropertyId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+      rnrbController[Boolean](createController, createView, Constants.grossingUpOnEstateAssetsId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
 
     behave like nonStartingController[Boolean](createController,
       List(Constants.dateOfDeathId,
