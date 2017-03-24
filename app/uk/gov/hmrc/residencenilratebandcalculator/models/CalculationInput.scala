@@ -120,7 +120,7 @@ object CalculationInput {
 }
 
 case class DownsizingDetails(datePropertyWasChanged: LocalDate,
-                             valueOfDisposedProperty: Int,
+                             valueOfChangedProperty: Int,
                              valueCloselyInherited: Int,
                              broughtForwardAllowanceAtDisposal: Int)
 
@@ -129,13 +129,13 @@ object DownsizingDetails {
 
   def apply(userAnswers: UserAnswers): DownsizingDetails = {
     require(userAnswers.datePropertyWasChanged.isDefined, "Date Property Was Changed was not answered")
-    require(userAnswers.valueOfDisposedProperty.isDefined, "Value of Disposed Property was not answered")
+    require(userAnswers.valueOfChangedProperty.isDefined, "Value Of Changed Property was not answered")
     require(userAnswers.anyAssetsPassingToDirectDescendants.isDefined, "Any Assets Passing to Direct Descendants was not answered")
     if (userAnswers.anyAssetsPassingToDirectDescendants.get) requireAssetsPassingToDirectDescendantsDependencies(userAnswers)
 
     DownsizingDetails(
       userAnswers.datePropertyWasChanged.get,
-      userAnswers.valueOfDisposedProperty.get,
+      userAnswers.valueOfChangedProperty.get,
       getValueCloselyInherited(userAnswers),
       getBroughtForwardAllowanceOnDisposal(userAnswers))
   }

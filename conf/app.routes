@@ -86,8 +86,8 @@ GET        /style-guide                                 uk.gov.hmrc.residencenil
 
 GET        /thank-you                                   uk.gov.hmrc.residencenilratebandcalculator.controllers.ThankYouController.onPageLoad
 
-GET        /value-of-disposed-property                  uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfDisposedPropertyController.onPageLoad
-POST       /value-of-disposed-property                  uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfDisposedPropertyController.onSubmit
+GET        /value-of-changed-property                   uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfChangedPropertyController.onPageLoad
+POST       /value-of-changed-property                   uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfChangedPropertyController.onSubmit
 
 GET        /calculate-threshold-increase                uk.gov.hmrc.residencenilratebandcalculator.controllers.CalculateThresholdIncreaseController.onPageLoad
 

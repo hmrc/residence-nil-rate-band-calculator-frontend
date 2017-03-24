@@ -306,12 +306,12 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.datePropertyWasChangedId)(userAnswers) shouldBe routes.ClaimDownsizingThresholdController.onPageLoad()
     }
 
-    "return a call to the Date Property Was Changed After Exemption when back linking from the Value Of Disposed Property page" in {
-      navigator.lastPage(Constants.valueOfDisposedPropertyId)(userAnswers) shouldBe routes.DatePropertyWasChangedController.onPageLoad()
+    "return a call to the Date Property Was Changed After Exemption when back linking from the Value Of Changed Property page" in {
+      navigator.lastPage(Constants.valueOfChangedPropertyId)(userAnswers) shouldBe routes.DatePropertyWasChangedController.onPageLoad()
     }
 
-    "return a call to the Value Of Disposed Property when back linking from the Any Assets Passing To Direct Decendants page" in {
-      navigator.lastPage(Constants.anyAssetsPassingToDirectDescendantsId)(userAnswers) shouldBe routes.ValueOfDisposedPropertyController.onPageLoad()
+    "return a call to the Value Of Changed Property when back linking from the Any Assets Passing To Direct Decendants page" in {
+      navigator.lastPage(Constants.anyAssetsPassingToDirectDescendantsId)(userAnswers) shouldBe routes.ValueOfChangedPropertyController.onPageLoad()
     }
 
     "return a call to the Any Assets Passing To Direct Descendants when back linking from the Does Grossing Up Apply To Other Property page" in {
@@ -349,14 +349,14 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.datePropertyWasChangedId)(mockCacheMap) shouldBe routes.CannotClaimDownsizingController.onPageLoad()
     }
 
-    "return a call to the Value of Disposed Property Controller onPageLoad method when a date on or after 8th July 2015 is supplied as the Date Property Was Changed" in {
+    "return a call to the Value Of Changed Property Controller onPageLoad method when a date on or after 8th July 2015 is supplied as the Date Property Was Changed" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.datePropertyWasChanged) thenReturn Some(new LocalDate(2015, 7, 8))
-      navigator.nextPage(Constants.datePropertyWasChangedId)(mockCacheMap) shouldBe routes.ValueOfDisposedPropertyController.onPageLoad()
+      navigator.nextPage(Constants.datePropertyWasChangedId)(mockCacheMap) shouldBe routes.ValueOfChangedPropertyController.onPageLoad()
     }
 
-    "return a call to the any assets passing to direct descendants controller onPageLoad method from the ValueOfDisposedProperty controller" in {
-      navigator.nextPage(Constants.valueOfDisposedPropertyId)(mock[UserAnswers]) shouldBe routes.AnyAssetsPassingToDirectDescendantsController.onPageLoad()
+    "return a call to the any assets passing to direct descendants controller onPageLoad method from the ValueOfChangedProperty controller" in {
+      navigator.nextPage(Constants.valueOfChangedPropertyId)(mock[UserAnswers]) shouldBe routes.AnyAssetsPassingToDirectDescendantsController.onPageLoad()
     }
 
     "return a call to the assets passing to direct descendant onPageLoad method when grossing up does not apply to the other property" in {

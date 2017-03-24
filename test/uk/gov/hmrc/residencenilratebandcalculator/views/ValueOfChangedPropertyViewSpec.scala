@@ -19,23 +19,23 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_disposed_property
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_changed_property
 
 import scala.language.reflectiveCalls
 
-class ValueOfDisposedPropertyViewSpec extends IntViewSpecBase {
+class ValueOfChangedPropertyViewSpec extends IntViewSpecBase {
 
-  val messageKeyPrefix = "value_of_disposed_property"
+  val messageKeyPrefix = "value_of_changed_property"
 
-  def createView(form: Option[Form[Int]] = None) = value_of_disposed_property(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Int]] = None) = value_of_changed_property(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
-  "Value of Disposed Property View" must {
+  "Value Of Changed Property View" must {
 
     behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance3")
 
     behave like pageWithBackLink[Int](createView)
 
-    behave like intPage(createView, messageKeyPrefix, ValueOfDisposedPropertyController.onSubmit().url, NonNegativeIntForm())
+    behave like intPage(createView, messageKeyPrefix, ValueOfChangedPropertyController.onSubmit().url, NonNegativeIntForm())
 
     behave like pageContainingPreviousAnswers(createView)
 

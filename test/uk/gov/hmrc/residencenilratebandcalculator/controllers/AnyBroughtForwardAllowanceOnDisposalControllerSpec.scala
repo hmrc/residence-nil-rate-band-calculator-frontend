@@ -54,7 +54,7 @@ class AnyBroughtForwardAllowanceOnDisposalControllerSpec extends SimpleControlle
            Constants.broughtForwardAllowanceId,
            Constants.claimDownsizingThresholdId,
            Constants.datePropertyWasChangedId,
-           Constants.valueOfDisposedPropertyId,
+           Constants.valueOfChangedPropertyId,
            Constants.anyAssetsPassingToDirectDescendantsId,
            Constants.doesGrossingUpApplyToOtherPropertyId,
            Constants.assetsPassingToDirectDescendantsId))(Reads.BooleanReads, Writes.BooleanWrites)
