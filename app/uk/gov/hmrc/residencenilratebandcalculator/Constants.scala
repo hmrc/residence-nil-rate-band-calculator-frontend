@@ -44,8 +44,8 @@ object Constants {
   val propertyInEstateId = "PropertyInEstate"
   val valueOfEstateId = "ValueOfEstate"
   val percentagePassedToDirectDescendantsId = "PercentagePassedToDirectDescendants"
-  val chargeableValueOfResidenceId = "ChargeableValueOfResidence"
-  val chargeableValueOfResidenceCloselyInheritedId = "ChargeableValueOfResidenceCloselyInherited"
+  val chargeablePropertyValueId = "ChargeablePropertyValue"
+  val chargeableInheritedPropertyValueId = "ChargeableInheritedPropertyValue"
   val propertyValueId = "PropertyValue"
   val valueOfDisposedPropertyId = "ValueOfDisposedProperty"
 

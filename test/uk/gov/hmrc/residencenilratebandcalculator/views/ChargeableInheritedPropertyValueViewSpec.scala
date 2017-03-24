@@ -19,23 +19,23 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_value_of_residence_closely_inherited
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_inherited_property_value
 
 import scala.language.reflectiveCalls
 
-class ChargeableValueOfResidenceCloselyInheritedViewSpec extends IntViewSpecBase {
+class ChargeableInheritedPropertyValueViewSpec extends IntViewSpecBase {
 
-  val messageKeyPrefix = "chargeable_value_of_residence_closely_inherited"
+  val messageKeyPrefix = "chargeable_inherited_property_value"
 
-  def createView(form: Option[Form[Int]] = None) = chargeable_value_of_residence_closely_inherited(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Int]] = None) = chargeable_inherited_property_value(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
-  "Chargeable Value Of Residence Closely Inherited View" must {
+  "Chargeable Inherited Property Value View" must {
 
     behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2")
 
     behave like pageWithBackLink[Int](createView)
 
-    behave like intPage(createView, messageKeyPrefix, ChargeableValueOfResidenceCloselyInheritedController.onSubmit().url, NonNegativeIntForm())
+    behave like intPage(createView, messageKeyPrefix, ChargeableInheritedPropertyValueController.onSubmit().url, NonNegativeIntForm())
 
     behave like pageContainingPreviousAnswers(createView)
 

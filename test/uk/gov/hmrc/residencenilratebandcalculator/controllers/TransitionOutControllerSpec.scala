@@ -56,7 +56,7 @@ class TransitionOutControllerSpec extends UnitSpec with WithFakeApplication with
       Constants.valueOfDisposedPropertyId -> JsNumber(100000),
       Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true),
       Constants.doesGrossingUpApplyToOtherPropertyId -> JsBoolean(true),
-      Constants.chargeableValueOfResidenceId -> JsNumber(50000),
+      Constants.chargeablePropertyValueId -> JsNumber(50000),
       Constants.assetsPassingToDirectDescendantsId -> JsNumber(1000),
       Constants.anyBroughtForwardAllowanceOnDisposalId -> JsBoolean(true),
       Constants.broughtForwardAllowanceOnDisposalId -> JsNumber(1000)

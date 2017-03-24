@@ -49,16 +49,16 @@ object CalculationInput {
       getPropertyValue(userAnswers),
       getPercentagePassedToDirectDescendants(userAnswers),
       getBroughtForwardAllowance(userAnswers),
-      getChargeableValueOfResidence(userAnswers),
+      getChargeablePropertyValue(userAnswers),
       getDownsizingDetails(userAnswers)
     )
   }
 
-  def getChargeableValueOfResidence(userAnswers: UserAnswers): Option[PropertyValueAfterExemption] =
-    userAnswers.chargeableValueOfResidence.isDefined match {
+  def getChargeablePropertyValue(userAnswers: UserAnswers): Option[PropertyValueAfterExemption] =
+    userAnswers.chargeablePropertyValue.isDefined match {
     case true => Some(PropertyValueAfterExemption(
-      userAnswers.chargeableValueOfResidence.get,
-      userAnswers.chargeableValueOfResidenceCloselyInherited.get
+      userAnswers.chargeablePropertyValue.get,
+      userAnswers.chargeableInheritedPropertyValue.get
     ))
     case _ => None
   }
@@ -107,12 +107,12 @@ object CalculationInput {
 
   private def requireExemptionsDependancies(userAnswers: UserAnswers) = {
     require(userAnswers.grossingUpOnEstateProperty.isDefined, "Grossing Up On Estate Property was not answered")
-    if (!userAnswers.grossingUpOnEstateProperty.get) requireNoGrossingUpDependencies(userAnswers)
+    if (!userAnswers.grossingUpOnEstateProperty.get) requireNoGrossingUpDependancies(userAnswers)
   }
 
-  private def requireNoGrossingUpDependencies(userAnswers: UserAnswers) = {
-    require(userAnswers.chargeableValueOfResidence.isDefined, "Chargeable Value of Residence was not answered")
-    require(userAnswers.chargeableValueOfResidenceCloselyInherited.isDefined, "Chargeable Value of Residence Closely Inherited was not answered")
+  private def requireNoGrossingUpDependancies(userAnswers: UserAnswers) = {
+    require(userAnswers.chargeablePropertyValue.isDefined, "Chargeable Property Value was not answered")
+    require(userAnswers.chargeableInheritedPropertyValue.isDefined, "Chargeable Inherited Property Value was not answered")
   }
 
   private def requireBroughtForwardAllowanceDependencies(userAnswers: UserAnswers) =

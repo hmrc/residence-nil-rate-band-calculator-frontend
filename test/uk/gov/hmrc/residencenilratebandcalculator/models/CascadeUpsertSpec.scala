@@ -40,8 +40,8 @@ class CascadeUpsertSpec extends UnitSpec {
     Constants.percentagePassedToDirectDescendantsId -> JsNumber(testNumber),
     Constants.exemptionsAndReliefClaimedId -> JsBoolean(true),
     Constants.grossingUpOnEstatePropertyId -> JsBoolean(false),
-    Constants.chargeableValueOfResidenceId -> JsNumber(testNumber),
-    Constants.chargeableValueOfResidenceCloselyInheritedId -> JsNumber(testNumber),
+    Constants.chargeablePropertyValueId -> JsNumber(testNumber),
+    Constants.chargeableInheritedPropertyValueId -> JsNumber(testNumber),
     Constants.anyBroughtForwardAllowanceId -> JsBoolean(true),
     Constants.broughtForwardAllowanceId -> JsNumber(testNumber),
     Constants.anyDownsizingAllowanceId -> JsBoolean(true),
@@ -78,14 +78,14 @@ class CascadeUpsertSpec extends UnitSpec {
         updatedCacheMap.data.keys should not contain Constants.exemptionsAndReliefClaimedId
       }
 
-      "delete the existing 'Chargeable Value of Residence' answer" in {
+      "delete the existing 'Chargeable Property Value' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.propertyInEstateId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.chargeableValueOfResidenceId
+        updatedCacheMap.data.keys should not contain Constants.chargeablePropertyValueId
       }
 
-      "delete the existing 'Chargeable Value of Residence Closely Inherited' answer" in {
+      "delete the existing 'Chargeable Inherited Property Value' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.propertyInEstateId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.chargeableValueOfResidenceCloselyInheritedId
+        updatedCacheMap.data.keys should not contain Constants.chargeableInheritedPropertyValueId
       }
 
       "not delete any other answers" in {
@@ -113,14 +113,14 @@ class CascadeUpsertSpec extends UnitSpec {
         updatedCacheMap.data.keys should not contain Constants.exemptionsAndReliefClaimedId
       }
 
-      "delete the existing 'Chargeable Value of Residence' answer" in {
+      "delete the existing 'Chargeable Property Value' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.none, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.chargeableValueOfResidenceId
+        updatedCacheMap.data.keys should not contain Constants.chargeablePropertyValueId
       }
 
-      "delete the existing 'Chargeable Value of Residence Closely Inherited' answer" in {
+      "delete the existing 'Chargeable Inherited Property Value' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.none, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.chargeableValueOfResidenceCloselyInheritedId
+        updatedCacheMap.data.keys should not contain Constants.chargeableInheritedPropertyValueId
       }
 
       "not delete any other answers" in {
@@ -152,14 +152,14 @@ class CascadeUpsertSpec extends UnitSpec {
 
     "asked to save the answer 'false' for exemptions and relief claimed" must {
 
-      "delete the existing 'Chargeable Value of Residence' answer" in {
+      "delete the existing 'Chargeable Property Value' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.exemptionsAndReliefClaimedId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.chargeableValueOfResidenceId
+        updatedCacheMap.data.keys should not contain Constants.chargeablePropertyValueId
       }
 
-      "delete the existing 'Chargeable Value of Residence Closely Inherited' answer" in {
+      "delete the existing 'Chargeable Inherited Property Value' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.exemptionsAndReliefClaimedId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.chargeableValueOfResidenceCloselyInheritedId
+        updatedCacheMap.data.keys should not contain Constants.chargeableInheritedPropertyValueId
       }
 
       "delete the existing 'Grossing Up On Estate Property' answer" in {

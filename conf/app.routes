@@ -37,11 +37,11 @@ POST       /brought-forward-allowance-on-disposal       uk.gov.hmrc.residencenil
 GET        /chargeable-estate-value                     uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableEstateValueController.onPageLoad
 POST       /chargeable-estate-value                     uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableEstateValueController.onSubmit
 
-GET        /chargeable-value-of-residence               uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableValueOfResidenceController.onPageLoad
-POST       /chargeable-value-of-residence               uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableValueOfResidenceController.onSubmit
+GET        /chargeable-property-value                   uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeablePropertyValueController.onPageLoad
+POST       /chargeable-property-value                   uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeablePropertyValueController.onSubmit
 
-GET        /chargeable-value-closely-inherited          uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableValueOfResidenceCloselyInheritedController.onPageLoad
-POST       /chargeable-value-closely-inherited          uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableValueOfResidenceCloselyInheritedController.onSubmit
+GET        /chargeable-inherited-property-value         uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableInheritedPropertyValueController.onPageLoad
+POST       /chargeable-inherited-property-value         uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableInheritedPropertyValueController.onSubmit
 
 GET        /cannot-claim-rnrb                           uk.gov.hmrc.residencenilratebandcalculator.controllers.CannotClaimRNRBController.onPageLoad
 
