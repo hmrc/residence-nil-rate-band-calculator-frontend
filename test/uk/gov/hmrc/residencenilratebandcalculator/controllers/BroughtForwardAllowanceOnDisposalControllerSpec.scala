@@ -26,7 +26,7 @@ class BroughtForwardAllowanceOnDisposalControllerSpec extends SimpleControllerSp
   "Brought Forward Allowance On Disposal Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
-      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyBroughtForwardAllowanceOnDisposalController.onPageLoad().url
+      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.TransferAvailableWhenPropertyChangedController.onPageLoad().url
       value match {
         case None => brought_forward_allowance_on_disposal(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
         case Some(v) => brought_forward_allowance_on_disposal(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
@@ -57,6 +57,6 @@ class BroughtForwardAllowanceOnDisposalControllerSpec extends SimpleControllerSp
            Constants.anyAssetsPassingToDirectDescendantsId,
            Constants.grossingUpOnEstateAssetsId,
            Constants.assetsPassingToDirectDescendantsId,
-           Constants.anyBroughtForwardAllowanceOnDisposalId))(Reads.IntReads, Writes.IntWrites)
+           Constants.transferAvailableWhenPropertyChangedId))(Reads.IntReads, Writes.IntWrites)
   }
 }

@@ -39,7 +39,7 @@ class CascadeUpsert {
       Constants.anyBroughtForwardAllowanceId -> ((v, cm) => anyBroughtForwardAllowance(v, cm)),
       Constants.claimDownsizingThresholdId -> ((v, cm) => claimDownsizingThreshold(v, cm)),
       Constants.anyAssetsPassingToDirectDescendantsId -> ((v, cm) => anyAssetsPassingToDirectDescendants(v, cm)),
-      Constants.anyBroughtForwardAllowanceOnDisposalId -> ((v, cm) => anyBroughtForwardAllowanceOnDisposal(v, cm)),
+      Constants.transferAvailableWhenPropertyChangedId -> ((v, cm) => transferAvailableWhenPropertyChanged(v, cm)),
       Constants.propertyPassingToDirectDescendantsId -> ((v, cm) => propertyPassingToDirectDescendants(v, cm)),
       Constants.datePropertyWasChangedId -> ((v, cm) => datePropertyWasChanged(v, cm))
     )
@@ -95,7 +95,7 @@ class CascadeUpsert {
       value,
       Set(
         Constants.broughtForwardAllowanceId,
-        Constants.anyBroughtForwardAllowanceOnDisposalId,
+        Constants.transferAvailableWhenPropertyChangedId,
         Constants.broughtForwardAllowanceOnDisposalId),
       cacheMap)
 
@@ -107,7 +107,7 @@ class CascadeUpsert {
         Constants.valueOfChangedPropertyId,
         Constants.anyAssetsPassingToDirectDescendantsId,
         Constants.assetsPassingToDirectDescendantsId,
-        Constants.anyBroughtForwardAllowanceOnDisposalId,
+        Constants.transferAvailableWhenPropertyChangedId,
         Constants.grossingUpOnEstateAssetsId,
         Constants.broughtForwardAllowanceOnDisposalId),
       cacheMap)
@@ -116,13 +116,13 @@ class CascadeUpsert {
     clearIfFalse(Constants.anyAssetsPassingToDirectDescendantsId, value,
       Set(
         Constants.assetsPassingToDirectDescendantsId,
-        Constants.anyBroughtForwardAllowanceOnDisposalId,
+        Constants.transferAvailableWhenPropertyChangedId,
         Constants.grossingUpOnEstateAssetsId,
         Constants.broughtForwardAllowanceOnDisposalId),
       cacheMap)
 
-  private def anyBroughtForwardAllowanceOnDisposal[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearIfFalse(Constants.anyBroughtForwardAllowanceOnDisposalId, value, Set(Constants.broughtForwardAllowanceOnDisposalId), cacheMap)
+  private def transferAvailableWhenPropertyChanged[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+    clearIfFalse(Constants.transferAvailableWhenPropertyChangedId, value, Set(Constants.broughtForwardAllowanceOnDisposalId), cacheMap)
 
   private def datePropertyWasChanged[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
     val keysToRemoveWhenDateBeforeDownsizingDate = Set(
@@ -130,12 +130,12 @@ class CascadeUpsert {
       Constants.anyAssetsPassingToDirectDescendantsId,
       Constants.grossingUpOnEstateAssetsId,
       Constants.assetsPassingToDirectDescendantsId,
-      Constants.anyBroughtForwardAllowanceOnDisposalId,
+      Constants.transferAvailableWhenPropertyChangedId,
       Constants.broughtForwardAllowanceOnDisposalId
     )
 
     val keysToRemoveWhenDateBeforeEligibilityDate = Set(
-      Constants.anyBroughtForwardAllowanceOnDisposalId,
+      Constants.transferAvailableWhenPropertyChangedId,
       Constants.broughtForwardAllowanceOnDisposalId
     )
 

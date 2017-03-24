@@ -146,7 +146,7 @@ object DownsizingDetails {
   }
 
   private def getBroughtForwardAllowanceOnDisposal(userAnswers: UserAnswers) = userAnswers.anyAssetsPassingToDirectDescendants.get match {
-    case true if userAnswers.anyBroughtForwardAllowanceOnDisposal.isDefined && userAnswers.anyBroughtForwardAllowanceOnDisposal.get =>
+    case true if userAnswers.transferAvailableWhenPropertyChanged.isDefined && userAnswers.transferAvailableWhenPropertyChanged.get =>
       userAnswers.broughtForwardAllowanceOnDisposal.get
     case _ => 0
   }
@@ -154,13 +154,13 @@ object DownsizingDetails {
   private def requireAssetsPassingToDirectDescendantsDependencies(userAnswers: UserAnswers) = {
     require(userAnswers.assetsPassingToDirectDescendants.isDefined, "Assets Passing to Direct Descendants was not answered")
     if (userAnswers.anyBroughtForwardAllowance.get && !(userAnswers.datePropertyWasChanged.get isBefore Constants.eligibilityDate)) {
-      requireAnyBroughtForwardAllowanceOnDisposalDependencies(userAnswers)
+      requireTransferAvailableWhenPropertyChangedDependencies(userAnswers)
     }
   }
 
-  private def requireAnyBroughtForwardAllowanceOnDisposalDependencies(userAnswers: UserAnswers) = {
-    require(userAnswers.anyBroughtForwardAllowanceOnDisposal.isDefined, "Any Brought Forward Allowance on Disposal was not answered")
-    if (userAnswers.anyBroughtForwardAllowanceOnDisposal.get) {
+  private def requireTransferAvailableWhenPropertyChangedDependencies(userAnswers: UserAnswers) = {
+    require(userAnswers.transferAvailableWhenPropertyChanged.isDefined, "Transfer Available When Property Changed was not answered")
+    if (userAnswers.transferAvailableWhenPropertyChanged.get) {
       require(userAnswers.broughtForwardAllowanceOnDisposal.isDefined, "Brought Forward Allowance on Disposal was not answered")
     }
   }

@@ -322,12 +322,12 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.assetsPassingToDirectDescendantsId)(userAnswers) shouldBe routes.GrossingUpOnEstateAssetsController.onPageLoad()
     }
 
-    "return a call to the Assets Passing To Direct Descendants when back linking from the Any Brought Forward Allowance On Disposal page" in {
-      navigator.lastPage(Constants.anyBroughtForwardAllowanceOnDisposalId)(userAnswers) shouldBe routes.AssetsPassingToDirectDescendantsController.onPageLoad()
+    "return a call to the Assets Passing To Direct Descendants when back linking from the Transfer Available When Property Changed page" in {
+      navigator.lastPage(Constants.transferAvailableWhenPropertyChangedId)(userAnswers) shouldBe routes.AssetsPassingToDirectDescendantsController.onPageLoad()
     }
 
-    "return a call to the Any Brought Forward Allowance On Disposal when back linking from the Brought Forward Allowance On Disposal page" in {
-      navigator.lastPage(Constants.broughtForwardAllowanceOnDisposalId)(userAnswers) shouldBe routes.AnyBroughtForwardAllowanceOnDisposalController.onPageLoad()
+    "return a call to the Transfer Available When Property Changed when back linking from the Brought Forward Allowance On Disposal page" in {
+      navigator.lastPage(Constants.broughtForwardAllowanceOnDisposalId)(userAnswers) shouldBe routes.TransferAvailableWhenPropertyChangedController.onPageLoad()
     }
 
     "return a call to the Results Controller onPageLoad method when there is no downsizing allowance" in {
@@ -383,12 +383,12 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.anyAssetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.CannotClaimDownsizingController.onPageLoad()
     }
 
-    "return a call to the Any Brought Forward Allowance On Disposal controller onPageLoad method from the AssetsPassingToDirectDescendants controller " +
+    "return a call to the Transfer Available When Property Changed controller onPageLoad method from the AssetsPassingToDirectDescendants controller " +
       "when there is brought forward allowance and the property was changed on (or after) the eligibility date" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.anyBroughtForwardAllowance) thenReturn Some(true)
       when(mockCacheMap.datePropertyWasChanged) thenReturn Some(Constants.eligibilityDate)
-      navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.AnyBroughtForwardAllowanceOnDisposalController.onPageLoad()
+      navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.TransferAvailableWhenPropertyChangedController.onPageLoad()
     }
 
     "return a call to the Results controller onPageLoad method from AssetsPassingToDirectDescendants when there is no brought forward allowance, " +
@@ -409,14 +409,14 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
 
     "return a call to the Results onPageLoad method when there is no brought forward allowance on disposal" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.anyBroughtForwardAllowanceOnDisposal) thenReturn Some(false)
-      navigator.nextPage(Constants.anyBroughtForwardAllowanceOnDisposalId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
+      when(mockCacheMap.transferAvailableWhenPropertyChanged) thenReturn Some(false)
+      navigator.nextPage(Constants.transferAvailableWhenPropertyChangedId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
     }
 
     "return a call to the Brought Forward Allowance on Disposal onPageLoad method when there is some brought forward allowance on disposal" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.anyBroughtForwardAllowanceOnDisposal) thenReturn Some(true)
-      navigator.nextPage(Constants.anyBroughtForwardAllowanceOnDisposalId)(mockCacheMap) shouldBe routes.BroughtForwardAllowanceOnDisposalController.onPageLoad()
+      when(mockCacheMap.transferAvailableWhenPropertyChanged) thenReturn Some(true)
+      navigator.nextPage(Constants.transferAvailableWhenPropertyChangedId)(mockCacheMap) shouldBe routes.BroughtForwardAllowanceOnDisposalController.onPageLoad()
     }
 
     "return a call to the Results controller onPageLoad method from the BroughtForwardAllowanceOnDisposal controller" in {

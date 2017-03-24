@@ -47,7 +47,7 @@ object AnswerRows {
     Constants.anyAssetsPassingToDirectDescendantsId,
     Constants.grossingUpOnEstateAssetsId,
     Constants.assetsPassingToDirectDescendantsId,
-    Constants.anyBroughtForwardAllowanceOnDisposalId,
+    Constants.transferAvailableWhenPropertyChangedId,
     Constants.broughtForwardAllowanceOnDisposalId
   )
 
@@ -105,10 +105,10 @@ object AnswerRows {
         routes.AnyAssetsPassingToDirectDescendantsController.onPageLoad),
     Constants.anyBroughtForwardAllowanceId ->
       boolAnswerRowFn("any_brought_forward_allowance.title", "Any brought forward allowance", routes.AnyBroughtForwardAllowanceController.onPageLoad),
-    Constants.anyBroughtForwardAllowanceOnDisposalId ->
-      boolAnswerRowFn("any_brought_forward_allowance_on_disposal.title",
-        "Any brought forward allowance on disposal",
-        routes.AnyBroughtForwardAllowanceOnDisposalController.onPageLoad),
+    Constants.transferAvailableWhenPropertyChangedId ->
+      boolAnswerRowFn("transfer_available_when_property_changed.title",
+        Constants.transferAvailableWhenPropertyChangedId,
+        routes.TransferAvailableWhenPropertyChangedController.onPageLoad),
     Constants.exemptionsAndReliefClaimedId ->
       boolAnswerRowFn("exemptions_and_relief_claimed.title", Constants.exemptionsAndReliefClaimedId, routes.ExemptionsAndReliefClaimedController.onPageLoad),
     Constants.assetsPassingToDirectDescendantsId ->
