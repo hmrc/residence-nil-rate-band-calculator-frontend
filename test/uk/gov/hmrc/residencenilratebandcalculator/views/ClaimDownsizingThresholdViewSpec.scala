@@ -35,8 +35,7 @@ class ClaimDownsizingThresholdViewSpec extends BooleanViewSpecBase {
       "guidance1.bullet1",
       "guidance1.bullet2",
       "guidance1.bullet3",
-      "guidance1.bullet4",
-      "guidance2")
+      "guidance1.bullet4")
 
     behave like pageWithBackLink[Boolean](createView)
 

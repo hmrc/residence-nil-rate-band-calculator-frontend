@@ -18,6 +18,8 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
 
+import java.text.NumberFormat
+import java.util.Locale
 import play.Logger
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._
@@ -27,7 +29,7 @@ import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
-import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CalculationInput, DisplayResults, UserAnswers}
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CalculationInput, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.results
 
 import scala.concurrent.Future
@@ -72,7 +74,8 @@ class ResultsController @Inject()(appConfig: FrontendAppConfig, val messagesApi:
           case (Failure(ex), _) => fail(ex)
           case (Success(result), Success(answers)) =>
             val messages = messagesApi.preferred(request)
-            Ok(results(appConfig, DisplayResults(result, AnswerRows(answers, messages))(messages)))
+            val residenceNilRateAmount = NumberFormat.getCurrencyInstance(Locale.UK).format(result.residenceNilRateAmount)
+            Ok(results(appConfig, residenceNilRateAmount, AnswerRows(answers, messages)))
         }
       }
     }
