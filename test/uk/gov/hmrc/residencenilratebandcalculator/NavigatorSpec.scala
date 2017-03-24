@@ -144,20 +144,20 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.propertyInEstateId)(mockCacheMap) shouldBe routes.HomeController.onPageLoad()
     }
 
-    "return a call to the BroughtForwardAllowanceController onPageLoad method when there is some brought forward allowance" in {
+    "return a call to the ValueBeingTransferredController onPageLoad method when there is some value being transferred" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.transferAnyUnusedThreshold) thenReturn Some(true)
-      navigator.nextPage(Constants.transferAnyUnusedThresholdId)(mockCacheMap) shouldBe routes.BroughtForwardAllowanceController.onPageLoad()
+      navigator.nextPage(Constants.transferAnyUnusedThresholdId)(mockCacheMap) shouldBe routes.ValueBeingTransferredController.onPageLoad()
     }
 
-    "return a call to the ClaimDownsizingThresholdController onPageLoad method when there is no brought forward allowance" in {
+    "return a call to the ClaimDownsizingThresholdController onPageLoad method when there is no value being transferred" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.transferAnyUnusedThreshold) thenReturn Some(false)
       navigator.nextPage(Constants.transferAnyUnusedThresholdId)(mockCacheMap) shouldBe routes.ClaimDownsizingThresholdController.onPageLoad()
     }
 
-    "return a call to the ClaimDownsizingThresholdController onPageLoad method from the BroughtForwardController" in {
-      navigator.nextPage(Constants.broughtForwardAllowanceId)(mock[UserAnswers]) shouldBe routes.ClaimDownsizingThresholdController.onPageLoad()
+    "return a call to the ClaimDownsizingThresholdController onPageLoad method from the ValueBeingTransferred" in {
+      navigator.nextPage(Constants.valueBeingTransferredId)(mock[UserAnswers]) shouldBe routes.ClaimDownsizingThresholdController.onPageLoad()
     }
 
     "return a call to the Transfer Any Unused Allowance onPageLoad method when no exemptions apply to the property" in {
@@ -287,19 +287,19 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.transferAnyUnusedThresholdId)(userAnswers) shouldBe routes.PropertyValueController.onPageLoad()
     }
 
-    "return a call to the Transfer Any Unused Allowance After Exemption when back linking from the Brought Forward Allowance page" in {
-      navigator.lastPage(Constants.broughtForwardAllowanceId)(userAnswers) shouldBe routes.TransferAnyUnusedThresholdController.onPageLoad()
+    "return a call to the Transfer Any Unused Allowance After Exemption when back linking from the Value Being Transferred page" in {
+      navigator.lastPage(Constants.valueBeingTransferredId)(userAnswers) shouldBe routes.TransferAnyUnusedThresholdController.onPageLoad()
     }
 
     "return a call to the Transfer Any Unused Allowance when back linking from the Claim Downsizing Threshold page" in {
       navigator.lastPage(Constants.claimDownsizingThresholdId)(userAnswers) shouldBe routes.TransferAnyUnusedThresholdController.onPageLoad()
     }
 
-    "return a call to the Brought Forward Allowance when back linking from the Claim Downsizing Threshold page when the" +
+    "return a call to the Value Being Transferred when back linking from the Claim Downsizing Threshold page when the" +
       "user has positively answered Transfer Any Unused Allowance" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.transferAnyUnusedThreshold) thenReturn Some(true)
-      navigator.lastPage(Constants.claimDownsizingThresholdId)(userAnswers) shouldBe routes.BroughtForwardAllowanceController.onPageLoad()
+      navigator.lastPage(Constants.claimDownsizingThresholdId)(userAnswers) shouldBe routes.ValueBeingTransferredController.onPageLoad()
     }
 
     "return a call to the Claim Downsizing Threshold After Exemption when back linking from the Date Property Was Changed page" in {
@@ -384,14 +384,14 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     }
 
     "return a call to the Transfer Available When Property Changed controller onPageLoad method from the AssetsPassingToDirectDescendants controller " +
-      "when there is brought forward allowance and the property was changed on (or after) the eligibility date" in {
+      "when there is value being transferred and the property was changed on (or after) the eligibility date" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.transferAnyUnusedThreshold) thenReturn Some(true)
       when(mockCacheMap.datePropertyWasChanged) thenReturn Some(Constants.eligibilityDate)
       navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.TransferAvailableWhenPropertyChangedController.onPageLoad()
     }
 
-    "return a call to the Results controller onPageLoad method from AssetsPassingToDirectDescendants when there is no brought forward allowance, " +
+    "return a call to the Results controller onPageLoad method from AssetsPassingToDirectDescendants when there is no value being transferred, " +
       "even though the property was changed on the eligibility date" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.transferAnyUnusedThreshold) thenReturn Some(false)
@@ -399,7 +399,7 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
     }
 
-    "return a call to the Results controller onPageLoad method from AssetsPassingToDirectDescendants when there is brought forward allowance " +
+    "return a call to the Results controller onPageLoad method from AssetsPassingToDirectDescendants when there is value being transferred " +
       "but the property was changed before the eligibility date" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.transferAnyUnusedThreshold) thenReturn Some(true)

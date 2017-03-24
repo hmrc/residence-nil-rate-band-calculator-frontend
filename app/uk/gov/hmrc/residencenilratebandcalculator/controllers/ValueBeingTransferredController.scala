@@ -32,19 +32,19 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, Ses
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.brought_forward_allowance
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_being_transferred
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 @Singleton
-class BroughtForwardAllowanceController @Inject()(val appConfig: FrontendAppConfig,
+class ValueBeingTransferredController @Inject()(val appConfig: FrontendAppConfig,
                                                   val messagesApi: MessagesApi,
                                                   val sessionConnector: SessionConnector,
                                                   val navigator: Navigator, val rnrbConnector: RnrbConnector) extends FrontendController {
 
-  val controllerId = Constants.broughtForwardAllowanceId
+  val controllerId = Constants.valueBeingTransferredId
 
   def form = () => NonNegativeIntForm()
 
@@ -79,7 +79,7 @@ class BroughtForwardAllowanceController @Inject()(val appConfig: FrontendAppConf
           val userAnswers = new UserAnswers(cacheMap)
           val nilRateBand = formatJsonNumber(nilRateValueJson.json.toString())
           implicit val messages = messagesApi.preferred(request)
-          Ok(brought_forward_allowance(appConfig, navigator.lastPage(controllerId)(userAnswers).url,
+          Ok(value_being_transferred(appConfig, navigator.lastPage(controllerId)(userAnswers).url,
             nilRateBand,
             cacheMap.getEntry(controllerId).map(value => form().fill(value)),
             previousAnswers))
@@ -105,11 +105,11 @@ class BroughtForwardAllowanceController @Inject()(val appConfig: FrontendAppConf
           val userAnswers = new UserAnswers(cacheMap)
           implicit val messages = messagesApi.preferred(request)
           boundForm.fold(
-            formWithErrors => Future.successful(BadRequest(brought_forward_allowance(appConfig,
+            formWithErrors => Future.successful(BadRequest(value_being_transferred(appConfig,
               navigator.lastPage(controllerId)(userAnswers).url, formattedNilRateBand, Some(formWithErrors), previousAnswers))),
             (value) => {
               validate(value, nilRateBand).flatMap {
-                case Some(error) => Future.successful(BadRequest(brought_forward_allowance(appConfig,
+                case Some(error) => Future.successful(BadRequest(value_being_transferred(appConfig,
                   navigator.lastPage(controllerId)(userAnswers).url,
                   formattedNilRateBand,
                   Some(form().fill(value).withError(error)),
@@ -143,7 +143,7 @@ class BroughtForwardAllowanceController @Inject()(val appConfig: FrontendAppConf
     if (value <= nrb) {
       Future.successful(None)
     } else {
-      Future.successful(Some(FormError("value", "brought_forward_allowance.error")))
+      Future.successful(Some(FormError("value", "value_being_transferred.error")))
     }
   }
 

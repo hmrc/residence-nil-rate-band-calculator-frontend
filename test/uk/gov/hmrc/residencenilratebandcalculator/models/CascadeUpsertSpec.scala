@@ -43,7 +43,7 @@ class CascadeUpsertSpec extends UnitSpec {
     Constants.chargeablePropertyValueId -> JsNumber(testNumber),
     Constants.chargeableInheritedPropertyValueId -> JsNumber(testNumber),
     Constants.transferAnyUnusedThresholdId -> JsBoolean(true),
-    Constants.broughtForwardAllowanceId -> JsNumber(testNumber),
+    Constants.valueBeingTransferredId -> JsNumber(testNumber),
     Constants.claimDownsizingThresholdId -> JsBoolean(true),
     Constants.datePropertyWasChangedId -> JsString("2019-01-01"),
     Constants.valueOfChangedPropertyId -> JsNumber(testNumber),
@@ -183,9 +183,9 @@ class CascadeUpsertSpec extends UnitSpec {
 
     "asked to save the value 'false' for Transfer Any Unused Allowance" must {
 
-      "delete the existing 'Brought Forward Allowance' answer" in {
+      "delete the existing 'Value Being Transferred' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.transferAnyUnusedThresholdId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.broughtForwardAllowanceId
+        updatedCacheMap.data.keys should not contain Constants.valueBeingTransferredId
       }
 
       "delete the existing 'Transfer Available When Property Changed' answer" in {

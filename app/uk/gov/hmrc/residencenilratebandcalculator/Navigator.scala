@@ -39,7 +39,7 @@ class Navigator @Inject()() {
       Constants.propertyPassingToDirectDescendantsId -> (ua => getPropertyPassingToDirectDescendantsRoute(ua)),
       Constants.percentagePassedToDirectDescendantsId -> (_ => ExemptionsAndReliefClaimedController.onPageLoad()),
       Constants.transferAnyUnusedThresholdId -> (ua => getTransferAnyUnusedThresholdRoute(ua)),
-      Constants.broughtForwardAllowanceId -> (_ => ClaimDownsizingThresholdController.onPageLoad()),
+      Constants.valueBeingTransferredId -> (_ => ClaimDownsizingThresholdController.onPageLoad()),
       Constants.claimDownsizingThresholdId -> (ua => getClaimDownsizingThresholdRoute(ua)),
       Constants.cannotClaimDownsizingId -> (_ => ResultsController.onPageLoad()),
       Constants.datePropertyWasChangedId -> (ua => getDatePropertyWasChangedRoute(ua)),
@@ -79,7 +79,7 @@ class Navigator @Inject()() {
     getRouteForOptionalBoolean(userAnswers.propertyInEstate, PropertyValueController.onPageLoad(), CannotClaimRNRBController.onPageLoad())
 
   private def getTransferAnyUnusedThresholdRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.transferAnyUnusedThreshold, BroughtForwardAllowanceController.onPageLoad(), ClaimDownsizingThresholdController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.transferAnyUnusedThreshold, ValueBeingTransferredController.onPageLoad(), ClaimDownsizingThresholdController.onPageLoad())
 
   private def getTransferAvailableWhenPropertyChangedRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.transferAvailableWhenPropertyChanged, ValueAvailableWhenPropertyChangedController.onPageLoad(), ResultsController.onPageLoad())
@@ -133,7 +133,7 @@ class Navigator @Inject()() {
       Constants.chargeableInheritedPropertyValueId -> (_ => ChargeablePropertyValueController.onPageLoad()),
       Constants.grossingUpOnEstatePropertyId -> (_ => ExemptionsAndReliefClaimedController.onPageLoad()),
       Constants.transferAnyUnusedThresholdId -> (ua => getTransferAnyUnusedThresholdReverseRoute(ua)),
-      Constants.broughtForwardAllowanceId -> (_ => TransferAnyUnusedThresholdController.onPageLoad()),
+      Constants.valueBeingTransferredId -> (_ => TransferAnyUnusedThresholdController.onPageLoad()),
       Constants.claimDownsizingThresholdId -> (ua => getClaimDownsizingThresholdReverseRoute(ua)),
       Constants.datePropertyWasChangedId -> (_ => ClaimDownsizingThresholdController.onPageLoad()),
       Constants.valueOfChangedPropertyId -> (_ => DatePropertyWasChangedController.onPageLoad()),
@@ -165,7 +165,7 @@ class Navigator @Inject()() {
   }
 
   private def getClaimDownsizingThresholdReverseRoute(userAnswers: UserAnswers) = userAnswers.transferAnyUnusedThreshold match {
-    case Some(true) => BroughtForwardAllowanceController.onPageLoad()
+    case Some(true) => ValueBeingTransferredController.onPageLoad()
     case _ => TransferAnyUnusedThresholdController.onPageLoad()
   }
 

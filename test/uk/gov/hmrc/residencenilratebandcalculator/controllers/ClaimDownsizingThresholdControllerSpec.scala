@@ -49,5 +49,5 @@ class ClaimDownsizingThresholdControllerSpec extends SimpleControllerSpecBase {
       Constants.percentagePassedToDirectDescendantsId,
       Constants.chargeablePropertyValueId,
       Constants.transferAnyUnusedThresholdId,
-      Constants.broughtForwardAllowanceId))(Reads.BooleanReads, Writes.BooleanWrites)
+      Constants.valueBeingTransferredId))(Reads.BooleanReads, Writes.BooleanWrites)
 }

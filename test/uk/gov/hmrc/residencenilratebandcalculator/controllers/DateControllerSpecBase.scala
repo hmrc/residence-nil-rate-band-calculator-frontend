@@ -128,7 +128,7 @@ trait DateControllerSpecBase extends UnitSpec with WithFakeApplication with Http
           Constants.propertyPassingToDirectDescendantsId -> JsBoolean(true),
           Constants.percentagePassedToDirectDescendantsId -> JsNumber(100),
           Constants.transferAnyUnusedThresholdId -> JsBoolean(true),
-          Constants.broughtForwardAllowanceId -> JsNumber(50000),
+          Constants.valueBeingTransferredId -> JsNumber(50000),
           Constants.claimDownsizingThresholdId -> JsBoolean(true)
         ))
       val controllerId = createController().controllerId

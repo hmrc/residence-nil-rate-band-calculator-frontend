@@ -29,7 +29,7 @@ import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.brought_forward_allowance
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_being_transferred
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
@@ -38,7 +38,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class BroughtForwardAllowanceControllerSpec extends UnitSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
+class ValueBeingTransferredControllerSpec extends UnitSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
 
   val fakeRequest = FakeRequest("", "")
 
@@ -62,8 +62,8 @@ class BroughtForwardAllowanceControllerSpec extends UnitSpec with WithFakeApplic
     val url = routes.TransferAnyUnusedThresholdController.onPageLoad().url
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
-      case None => brought_forward_allowance(frontendAppConfig, url, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages)
-      case Some(v) => brought_forward_allowance(frontendAppConfig, url, "£100,000.00", Some(NonNegativeIntForm().bind(v)), Seq(answerRow))(fakeRequest, messages)
+      case None => value_being_transferred(frontendAppConfig, url, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages)
+      case Some(v) => value_being_transferred(frontendAppConfig, url, "£100,000.00", Some(NonNegativeIntForm().bind(v)), Seq(answerRow))(fakeRequest, messages)
     }
   }
 
@@ -71,16 +71,16 @@ class BroughtForwardAllowanceControllerSpec extends UnitSpec with WithFakeApplic
     val url = routes.TransferAnyUnusedThresholdController.onPageLoad().url
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
-      case None => brought_forward_allowance(frontendAppConfig, url, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages)
-      case Some(v) => brought_forward_allowance(frontendAppConfig, url, "£100,000.00", Some(NonNegativeIntForm().bind(v)), Seq(answerRow))(fakeRequest, messages)
+      case None => value_being_transferred(frontendAppConfig, url, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages)
+      case Some(v) => value_being_transferred(frontendAppConfig, url, "£100,000.00", Some(NonNegativeIntForm().bind(v)), Seq(answerRow))(fakeRequest, messages)
     }
   }
 
-  def createController = () => new BroughtForwardAllowanceController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, mockRnrbConnector)
+  def createController = () => new ValueBeingTransferredController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, mockRnrbConnector)
 
   def testValue = "100000"
 
-  "Brought Forward Allowance Controller" must {
+  "Value Being Transferred Controller" must {
     "if the date of death key is set return 200 for a GET" in {
       setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"))))
       val result = createController().onPageLoad(Reads.IntReads)(fakeRequest)
@@ -112,7 +112,7 @@ class BroughtForwardAllowanceControllerSpec extends UnitSpec with WithFakeApplic
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", "100000"))
       setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"), "value" -> JsNumber(100000))))
       await(createController().onSubmit(Writes.IntWrites)(fakePostRequest))
-      verifyValueIsCached(Constants.broughtForwardAllowanceId, 100000)
+      verifyValueIsCached(Constants.valueBeingTransferredId, 100000)
     }
 
     "return bad request on submit with invalid data" in {
@@ -140,7 +140,7 @@ class BroughtForwardAllowanceControllerSpec extends UnitSpec with WithFakeApplic
     }
 
     "get a previously stored value from keystore" in {
-      setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"), Constants.broughtForwardAllowanceId -> JsNumber(100000))))
+      setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"), Constants.valueBeingTransferredId -> JsNumber(100000))))
       val result = createController().onPageLoad(Reads.IntReads)(fakeRequest)
       contentAsString(result) shouldBe createView(Some(Map("value" -> testValue))).toString
     }
@@ -194,7 +194,7 @@ class BroughtForwardAllowanceControllerSpec extends UnitSpec with WithFakeApplic
         val testValue = 123000
         val controller = createController()
         val result = controller.validate(testValue, "100000")(new HeaderCarrier())
-        result.map(x => x should be(Some(FormError("value", "brought_forward_allowance.error"))))
+        result.map(x => x should be(Some(FormError("value", "value_being_transferred.error"))))
       }
 
       "return a None when given a value less than or equal to the nil rate band for the year of death" in {

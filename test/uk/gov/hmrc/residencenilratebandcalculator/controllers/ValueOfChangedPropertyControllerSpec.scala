@@ -51,7 +51,7 @@ class ValueOfChangedPropertyControllerSpec extends SimpleControllerSpecBase {
         Constants.percentagePassedToDirectDescendantsId,
         Constants.chargeablePropertyValueId,
         Constants.transferAnyUnusedThresholdId,
-        Constants.broughtForwardAllowanceId,
+        Constants.valueBeingTransferredId,
         Constants.claimDownsizingThresholdId,
         Constants.datePropertyWasChangedId))(Reads.IntReads, Writes.IntWrites)
   }

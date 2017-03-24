@@ -50,7 +50,7 @@ class TransitionOutControllerSpec extends UnitSpec with WithFakeApplication with
       Constants.propertyPassingToDirectDescendantsId -> JsBoolean(true),
       Constants.percentagePassedToDirectDescendantsId -> JsNumber(100),
       Constants.transferAnyUnusedThresholdId -> JsBoolean(true),
-      Constants.broughtForwardAllowanceId -> JsNumber(50000),
+      Constants.valueBeingTransferredId -> JsNumber(50000),
       Constants.claimDownsizingThresholdId -> JsBoolean(true),
       Constants.datePropertyWasChangedId -> JsString("2018-03-02"),
       Constants.valueOfChangedPropertyId -> JsNumber(100000),

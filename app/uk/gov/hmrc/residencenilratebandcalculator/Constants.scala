@@ -29,7 +29,7 @@ object Constants {
   val exemptionsAndReliefClaimedId = "ExemptionsAndReliefClaimed"
   val propertyPassingToDirectDescendantsId = "PropertyPassingToDirectDescendants"
   val assetsPassingToDirectDescendantsId = "AssetsPassingToDirectDescendants"
-  val broughtForwardAllowanceId = "BroughtForwardAllowance"
+  val valueBeingTransferredId = "ValueBeingTransferred"
   val valueAvailableWhenPropertyChangedId = "ValueAvailableWhenPropertyChanged"
   val chargeableEstateValueId = "ChargeableEstateValue"
   val cannotClaimDownsizingId = "CannotClaimDownsizing"

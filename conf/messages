@@ -77,13 +77,13 @@ calculate_threshold_increase.guidance4.bullet2 = details of any other assets lef
 calculate_threshold_increase.guidance4.bullet3 = a completed IHT-436 form with the value of transferable residential nil rate band being claimed if the person who has died was married during their lifetime and their spouse or civil partner died first
 calculate_threshold_increase.sub_heading = Before you start
 
-brought_forward_allowance.browser_title = How much transferable residence nil rate band are you claiming?
-brought_forward_allowance.title = How much transferable residence nil rate band are you claiming?
-brought_forward_allowance.guidance1 = This is the number in either box 15 or box 21 on the IHT-436 form.
-brought_forward_allowance.guidance2 = If the person who you are claiming an allowance for had been married or in a civil partnership more than once during their lifetime and their spouse or civil partner died first, you can transfer more than one unused allowance. Add together the numbers in either box 15 or box 21 on each IHT-436 form.
-brought_forward_allowance.guidance3 = You cannot transfer more than {0}
-brought_forward_allowance.error = You cannot transfer more than the maximum amount
-brought_forward_allowance.label =
+value_being_transferred.browser_title = How much transferable residence nil rate band are you claiming?
+value_being_transferred.title = How much transferable residence nil rate band are you claiming?
+value_being_transferred.guidance1 = This is the number in either box 15 or box 21 on the IHT-436 form.
+value_being_transferred.guidance2 = If the person who you are claiming an allowance for had been married or in a civil partnership more than once during their lifetime and their spouse or civil partner died first, you can transfer more than one unused allowance. Add together the numbers in either box 15 or box 21 on each IHT-436 form.
+value_being_transferred.guidance3 = You cannot transfer more than {0}
+value_being_transferred.error = You cannot transfer more than the maximum amount
+value_being_transferred.label =
 
 value_available_when_property_changed.browser_title = What would the amount of transferable residence nil rate band have been at the date of disposal?
 value_available_when_property_changed.title = What would the amount of transferable residence nil rate band have been at the date of disposal?

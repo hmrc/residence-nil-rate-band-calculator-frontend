@@ -38,7 +38,7 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def assetsPassingToDirectDescendants = cacheMap.getEntry[Int](Constants.assetsPassingToDirectDescendantsId)
 
-  def broughtForwardAllowance = cacheMap.getEntry[Int](Constants.broughtForwardAllowanceId)
+  def valueBeingTransferred = cacheMap.getEntry[Int](Constants.valueBeingTransferredId)
 
   def valueAvailableWhenPropertyChanged = cacheMap.getEntry[Int](Constants.valueAvailableWhenPropertyChangedId)
 

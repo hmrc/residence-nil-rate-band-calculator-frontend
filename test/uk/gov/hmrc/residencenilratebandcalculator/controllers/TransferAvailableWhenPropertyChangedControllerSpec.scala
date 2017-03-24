@@ -51,7 +51,7 @@ class TransferAvailableWhenPropertyChangedControllerSpec extends SimpleControlle
            Constants.percentagePassedToDirectDescendantsId,
            Constants.chargeablePropertyValueId,
            Constants.transferAnyUnusedThresholdId,
-           Constants.broughtForwardAllowanceId,
+           Constants.valueBeingTransferredId,
            Constants.claimDownsizingThresholdId,
            Constants.datePropertyWasChangedId,
            Constants.valueOfChangedPropertyId,

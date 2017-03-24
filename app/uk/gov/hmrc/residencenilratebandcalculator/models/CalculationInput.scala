@@ -25,7 +25,7 @@ case class CalculationInput(dateOfDeath: LocalDate,
                             chargeableEstateValue: Int,
                             propertyValue: Int,
                             percentagePassedToDirectDescendants: Int,
-                            broughtForwardAllowance: Int,
+                            valueBeingTransferred: Int,
                             propertyValueAfterExemption: Option[PropertyValueAfterExemption],
                             downsizingDetails: Option[DownsizingDetails])
 
@@ -39,7 +39,7 @@ object CalculationInput {
     require(userAnswers.propertyInEstate.isDefined, "Property In Estate was not answered")
     if (userAnswers.propertyInEstate.get) requirePropertyInEstateDependencies(userAnswers)
     require(userAnswers.transferAnyUnusedThreshold.isDefined, "Transfer Any Unused Allowance was not answered")
-    if (userAnswers.transferAnyUnusedThreshold.get) requireBroughtForwardAllowanceDependencies(userAnswers)
+    if (userAnswers.transferAnyUnusedThreshold.get) requireValueBeingTransferredDependencies(userAnswers)
     require(userAnswers.claimDownsizingThreshold.isDefined, "Claim Downsizing Threshold was not answered")
 
     CalculationInput(
@@ -48,7 +48,7 @@ object CalculationInput {
       userAnswers.chargeableEstateValue.get,
       getPropertyValue(userAnswers),
       getPercentagePassedToDirectDescendants(userAnswers),
-      getBroughtForwardAllowance(userAnswers),
+      getValueBeingTransferred(userAnswers),
       getChargeablePropertyValue(userAnswers),
       getDownsizingDetails(userAnswers)
     )
@@ -74,8 +74,8 @@ object CalculationInput {
       case _ => 0
     }
 
-  private def getBroughtForwardAllowance(userAnswers: UserAnswers) = userAnswers.transferAnyUnusedThreshold.get match {
-    case true => userAnswers.broughtForwardAllowance.get
+  private def getValueBeingTransferred(userAnswers: UserAnswers) = userAnswers.transferAnyUnusedThreshold.get match {
+    case true => userAnswers.valueBeingTransferred.get
     case _ => 0
   }
 
@@ -115,8 +115,8 @@ object CalculationInput {
     require(userAnswers.chargeableInheritedPropertyValue.isDefined, "Chargeable Inherited Property Value was not answered")
   }
 
-  private def requireBroughtForwardAllowanceDependencies(userAnswers: UserAnswers) =
-    require(userAnswers.broughtForwardAllowance.isDefined, "Brought Forward Allowance was not answered")
+  private def requireValueBeingTransferredDependencies(userAnswers: UserAnswers) =
+    require(userAnswers.valueBeingTransferred.isDefined, "Value Being Transferred was not answered")
 }
 
 case class DownsizingDetails(datePropertyWasChanged: LocalDate,

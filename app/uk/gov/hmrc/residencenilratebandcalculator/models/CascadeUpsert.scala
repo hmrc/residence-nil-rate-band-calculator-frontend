@@ -94,7 +94,7 @@ class CascadeUpsert {
     clearIfFalse(Constants.transferAnyUnusedThresholdId,
       value,
       Set(
-        Constants.broughtForwardAllowanceId,
+        Constants.valueBeingTransferredId,
         Constants.transferAvailableWhenPropertyChangedId,
         Constants.valueAvailableWhenPropertyChangedId),
       cacheMap)
