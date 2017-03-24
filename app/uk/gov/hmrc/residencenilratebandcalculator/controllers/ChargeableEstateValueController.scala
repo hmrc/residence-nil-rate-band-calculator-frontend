@@ -47,8 +47,8 @@ class ChargeableEstateValueController  @Inject()(override val appConfig: Fronten
 
   override def validate(value: Int, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = {
     userAnswers.valueOfEstate match {
-      case None => Some(FormError("value", "chargeable_value_of_residence.greater_than_property_value.error"))
-      case Some(g) if value > g => Some(FormError("value", "chargeable_value_of_residence.greater_than_property_value.error"))
+      case None => Some(FormError("value", "chargeable_property_value.greater_than_property_value.error"))
+      case Some(g) if value > g => Some(FormError("value", "chargeable_property_value.greater_than_property_value.error"))
       case _ => None
     }
   }

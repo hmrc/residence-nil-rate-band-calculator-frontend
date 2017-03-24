@@ -17,25 +17,24 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_closely_inherited
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.exemptions_and_relief_claimed
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
-import uk.gov.hmrc.residencenilratebandcalculator.forms.PositivePercentForm
 
 import scala.language.reflectiveCalls
 
-class PercentageCloselyInheritedViewSpec extends IntViewSpecBase {
+class ExemptionsAndReliefClaimedViewSpec  extends BooleanViewSpecBase {
 
-  val messageKeyPrefix = "percentage_closely_inherited"
+  val messageKeyPrefix = "exemptions_and_relief_claimed"
 
-  def createView(form: Option[Form[Int]] = None) = percentage_closely_inherited(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = exemptions_and_relief_claimed(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
-  "Percentage Closely Inherited View" must {
+  "Exemptions And Relief Claimed View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance")
+    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance", "guidance.bullet1", "guidance.bullet2", "guidance.bullet3")
 
-    behave like pageWithBackLink[Int](createView)
+    behave like pageWithBackLink[Boolean](createView)
 
-    behave like intPage(createView, messageKeyPrefix, PercentageCloselyInheritedController.onSubmit().url, PositivePercentForm())
+    behave like booleanPage(createView, messageKeyPrefix, ExemptionsAndReliefClaimedController.onSubmit().url)
 
     behave like pageContainingPreviousAnswers(createView)
 

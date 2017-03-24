@@ -32,9 +32,9 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def partOfEstatePassingToDirectDescendants = cacheMap.getEntry[Boolean](Constants.partOfEstatePassingToDirectDescendantsId)
 
-  def anyExemption = cacheMap.getEntry[Boolean](Constants.anyExemptionId)
+  def exemptionsAndReliefClaimed = cacheMap.getEntry[Boolean](Constants.exemptionsAndReliefClaimedId)
 
-  def anyPropertyCloselyInherited = cacheMap.getEntry[String](Constants.anyPropertyCloselyInheritedId)
+  def propertyPassingToDirectDescendants = cacheMap.getEntry[String](Constants.propertyPassingToDirectDescendantsId)
 
   def assetsPassingToDirectDescendants = cacheMap.getEntry[Int](Constants.assetsPassingToDirectDescendantsId)
 
@@ -48,21 +48,21 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def dateOfDisposal = cacheMap.getEntry[LocalDate](Constants.dateOfDisposalId)
 
-  def doesGrossingUpApplyToResidence = cacheMap.getEntry[Boolean](Constants.doesGrossingUpApplyToResidenceId)
+  def grossingUpOnEstateProperty = cacheMap.getEntry[Boolean](Constants.grossingUpOnEstatePropertyId)
 
   def doesGrossingUpApplyToOtherProperty = cacheMap.getEntry[Boolean](Constants.doesGrossingUpApplyToOtherPropertyId)
 
   def downsizingDetails = cacheMap.getEntry[Date](Constants.downsizingDetails)
 
-  def estateHasProperty = cacheMap.getEntry[Boolean](Constants.estateHasPropertyId)
+  def propertyInEstate = cacheMap.getEntry[Boolean](Constants.propertyInEstateId)
 
   def valueOfEstate = cacheMap.getEntry[Int](Constants.valueOfEstateId)
 
-  def percentageCloselyInherited = cacheMap.getEntry[Int](Constants.percentageCloselyInheritedId)
+  def percentagePassedToDirectDescendants = cacheMap.getEntry[Int](Constants.percentagePassedToDirectDescendantsId)
 
-  def chargeableValueOfResidence = cacheMap.getEntry[Int](Constants.chargeableValueOfResidenceId)
+  def chargeablePropertyValue = cacheMap.getEntry[Int](Constants.chargeablePropertyValueId)
 
-  def chargeableValueOfResidenceCloselyInherited = cacheMap.getEntry[Int](Constants.chargeableValueOfResidenceCloselyInheritedId)
+  def chargeableInheritedPropertyValue = cacheMap.getEntry[Int](Constants.chargeableInheritedPropertyValueId)
 
   def propertyValue = cacheMap.getEntry[Int](Constants.propertyValueId)
 

@@ -25,7 +25,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_value
 class PropertyValueControllerSpec extends SimpleControllerSpecBase {
 
   "Property Value Controller" must {
-   val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.EstateHasPropertyController.onPageLoad().url
+   val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyInEstateController.onPageLoad().url
 
     def createView = (value: Option[Map[String, String]]) => value match {
       case None => property_value(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
@@ -46,7 +46,7 @@ class PropertyValueControllerSpec extends SimpleControllerSpecBase {
            Constants.partOfEstatePassingToDirectDescendantsId,
            Constants.valueOfEstateId,
            Constants.chargeableEstateValueId,
-           Constants.estateHasPropertyId))(Reads.IntReads, Writes.IntWrites)
+           Constants.propertyInEstateId))(Reads.IntReads, Writes.IntWrites)
 
     "return bad request on submit with a value greater than the previously saved Value Of Estate" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))

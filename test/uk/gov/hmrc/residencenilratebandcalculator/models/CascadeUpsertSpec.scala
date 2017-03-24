@@ -34,14 +34,14 @@ class CascadeUpsertSpec extends UnitSpec {
     Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
     Constants.valueOfEstateId -> JsNumber(testNumber),
     Constants.chargeableEstateValueId -> JsNumber(testNumber),
-    Constants.estateHasPropertyId -> JsBoolean(true),
+    Constants.propertyInEstateId -> JsBoolean(true),
     Constants.propertyValueId -> JsNumber(testNumber),
-    Constants.anyPropertyCloselyInheritedId -> JsString(Constants.some),
-    Constants.percentageCloselyInheritedId -> JsNumber(testNumber),
-    Constants.anyExemptionId -> JsBoolean(true),
-    Constants.doesGrossingUpApplyToResidenceId -> JsBoolean(false),
-    Constants.chargeableValueOfResidenceId -> JsNumber(testNumber),
-    Constants.chargeableValueOfResidenceCloselyInheritedId -> JsNumber(testNumber),
+    Constants.propertyPassingToDirectDescendantsId -> JsString(Constants.some),
+    Constants.percentagePassedToDirectDescendantsId -> JsNumber(testNumber),
+    Constants.exemptionsAndReliefClaimedId -> JsBoolean(true),
+    Constants.grossingUpOnEstatePropertyId -> JsBoolean(false),
+    Constants.chargeablePropertyValueId -> JsNumber(testNumber),
+    Constants.chargeableInheritedPropertyValueId -> JsNumber(testNumber),
     Constants.anyBroughtForwardAllowanceId -> JsBoolean(true),
     Constants.broughtForwardAllowanceId -> JsNumber(testNumber),
     Constants.anyDownsizingAllowanceId -> JsBoolean(true),
@@ -56,127 +56,127 @@ class CascadeUpsertSpec extends UnitSpec {
 
   "Cascade Upsert" when {
 
-    "asked to save the answer 'false' for Estate Has Property" must {
+    "asked to save the answer 'false' for Property In Estate" must {
 
       "delete the existing 'Property Value'" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.estateHasPropertyId, false, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.propertyInEstateId, false, fullCacheMap)
         updatedCacheMap.data.keys should not contain Constants.propertyValueId
       }
 
-      "delete the existing 'Any Property Closely Inherited'" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.estateHasPropertyId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.anyPropertyCloselyInheritedId
+      "delete the existing 'Property Passing To Direct Descendants'" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.propertyInEstateId, false, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.propertyPassingToDirectDescendantsId
       }
 
-      "delete the existing 'Percentage Closely Inherited'" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.estateHasPropertyId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.percentageCloselyInheritedId
+      "delete the existing 'Percentage Passed To Direct Descendants'" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.propertyInEstateId, false, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.percentagePassedToDirectDescendantsId
       }
 
-      "delete the existing 'Any Exemption' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.estateHasPropertyId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.anyExemptionId
+      "delete the existing 'Exemptions And Relief Claimed' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.propertyInEstateId, false, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.exemptionsAndReliefClaimedId
       }
 
-      "delete the existing 'Chargeable Value of Residence' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.estateHasPropertyId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.chargeableValueOfResidenceId
+      "delete the existing 'Chargeable Property Value' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.propertyInEstateId, false, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.chargeablePropertyValueId
       }
 
-      "delete the existing 'Chargeable Value of Residence Closely Inherited' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.estateHasPropertyId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.chargeableValueOfResidenceCloselyInheritedId
+      "delete the existing 'Chargeable Inherited Property Value' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.propertyInEstateId, false, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.chargeableInheritedPropertyValueId
       }
 
       "not delete any other answers" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.estateHasPropertyId, false, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.propertyInEstateId, false, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size - 6
       }
     }
 
-    "asked to save the answer 'true' for Estate Has Property" must {
+    "asked to save the answer 'true' for Property In Estate" must {
 
       "not delete existing answers for other questions" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.estateHasPropertyId, true, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.propertyInEstateId, true, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size
       }
     }
 
-    "asked to save the answer 'none' for Any Property Closely Inherited" must {
-      "delete the existing 'Percentage Closely Inherited' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyPropertyCloselyInheritedId, Constants.none, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.percentageCloselyInheritedId
+    "asked to save the answer 'none' for Property Passing To Direct Descendants" must {
+      "delete the existing 'Percentage Passed To Direct Descendants' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.none, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.percentagePassedToDirectDescendantsId
       }
 
-      "delete the existing 'Any Exemption' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyPropertyCloselyInheritedId, Constants.none, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.anyExemptionId
+      "delete the existing 'Exemptions And Relief Claimed' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.none, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.exemptionsAndReliefClaimedId
       }
 
-      "delete the existing 'Chargeable Value of Residence' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyPropertyCloselyInheritedId, Constants.none, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.chargeableValueOfResidenceId
+      "delete the existing 'Chargeable Property Value' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.none, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.chargeablePropertyValueId
       }
 
-      "delete the existing 'Chargeable Value of Residence Closely Inherited' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyPropertyCloselyInheritedId, Constants.none, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.chargeableValueOfResidenceCloselyInheritedId
+      "delete the existing 'Chargeable Inherited Property Value' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.none, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.chargeableInheritedPropertyValueId
       }
 
       "not delete any other answers" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyPropertyCloselyInheritedId, Constants.none, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.none, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size - 4
       }
     }
 
-    "asked to save the answer 'all' for Any Property Closely Inherited" must {
+    "asked to save the answer 'all' for Property Passing To Direct Descendants" must {
 
-      "delete the existing 'Percentage Closely Inherited' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyPropertyCloselyInheritedId, Constants.all, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.percentageCloselyInheritedId
+      "delete the existing 'Percentage Passed To Direct Descendants' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.all, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.percentagePassedToDirectDescendantsId
       }
 
       "not delete any other answers" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyPropertyCloselyInheritedId, Constants.all, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.all, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size - 1
       }
     }
 
-    "asked to save the answer 'some' for Any Property Closely Inherited" must {
+    "asked to save the answer 'some' for Property Passing To Direct Descendants" must {
 
       "not delete existing answers for other questions" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyPropertyCloselyInheritedId, Constants.some, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.some, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size
       }
     }
 
-    "asked to save the answer 'false' for Any Exemptions" must {
+    "asked to save the answer 'false' for exemptions and relief claimed" must {
 
-      "delete the existing 'Chargeable Value of Residence' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyExemptionId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.chargeableValueOfResidenceId
+      "delete the existing 'Chargeable Property Value' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.exemptionsAndReliefClaimedId, false, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.chargeablePropertyValueId
       }
 
-      "delete the existing 'Chargeable Value of Residence Closely Inherited' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyExemptionId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.chargeableValueOfResidenceCloselyInheritedId
+      "delete the existing 'Chargeable Inherited Property Value' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.exemptionsAndReliefClaimedId, false, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.chargeableInheritedPropertyValueId
       }
 
-      "delete the existing 'Does Grossing Up Apply To Residence' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyExemptionId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.doesGrossingUpApplyToResidenceId
+      "delete the existing 'Grossing Up On Estate Property' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.exemptionsAndReliefClaimedId, false, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.grossingUpOnEstatePropertyId
       }
 
       "not delete any other answers" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyExemptionId, false, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.exemptionsAndReliefClaimedId, false, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size - 3
       }
     }
 
-    "asked to save the answer 'true' for Any Exemptions" must {
+    "asked to save the answer 'true' for exemptions and relief claimed" must {
 
       "not delete existing answers for other questions" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyExemptionId, true, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.exemptionsAndReliefClaimedId, true, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size
       }
     }

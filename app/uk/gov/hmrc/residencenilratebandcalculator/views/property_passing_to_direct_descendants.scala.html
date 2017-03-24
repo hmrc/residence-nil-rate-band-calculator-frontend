@@ -7,28 +7,28 @@
 @(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[String]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
-    title = messages("any_property_closely_inherited.browser_title"),
+    title = messages("property_passing_to_direct_descendants.browser_title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
     @rnrbHelpers.back_link(backUrl)
 
-    @rnrbHelpers.heading("any_property_closely_inherited.title")
+    @rnrbHelpers.heading("property_passing_to_direct_descendants.title")
 
-    <p>@messages("any_property_closely_inherited.guidance1")</p>
+    <p>@messages("property_passing_to_direct_descendants.guidance1")</p>
 
-    <p>@messages("any_property_closely_inherited.guidance2")</p>
+    <p>@messages("property_passing_to_direct_descendants.guidance2")</p>
 
-    @helpers.form(action = AnyPropertyCloselyInheritedController.onSubmit(), 'autoComplete -> "off") {
+    @helpers.form(action = PropertyPassingToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
 
         @rnrbHelpers.input_radio(
             name = "value",
-            legend = messages("any_property_closely_inherited.title"),
+            legend = messages("property_passing_to_direct_descendants.title"),
             legendClass = Some("visually-hidden"),
             errorKey = FormHelpers.getErrorByKey(form, "value"),
-            inputs = Constants.anyPropertyCloselyInheritedOptions,
+            inputs = Constants.propertyPassingToDirectDescendantsOptions,
             value = Some(FormHelpers.getValue[String](form).toString)
         )
 

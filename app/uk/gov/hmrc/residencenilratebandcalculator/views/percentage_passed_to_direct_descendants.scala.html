@@ -6,24 +6,24 @@
 @(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[Int]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
-    title = messages("percentage_closely_inherited.browser_title"),
+    title = messages("percentage_passed_to_direct_descendants.browser_title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
     @rnrbHelpers.back_link(backUrl)
 
-    @rnrbHelpers.heading("percentage_closely_inherited.title")
+    @rnrbHelpers.heading("percentage_passed_to_direct_descendants.title")
 
-    <p>@messages("percentage_closely_inherited.guidance")</p>
+    <p>@messages("percentage_passed_to_direct_descendants.guidance")</p>
 
-    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PercentageCloselyInheritedController.onSubmit(), 'autoComplete -> "off") {
+    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PercentagePassedToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
 
         @rnrbHelpers.input_text(
             id = "value",
             errorKey = FormHelpers.getErrorByKey(form, "value"),
-            label = messages("percentage_closely_inherited.title"),
+            label = messages("percentage_passed_to_direct_descendants.title"),
             labelClass = Some("visually-hidden"),
             secondaryLabel = Some("percentage"),
             value = Some(FormHelpers.getValue[Int](form).toString)

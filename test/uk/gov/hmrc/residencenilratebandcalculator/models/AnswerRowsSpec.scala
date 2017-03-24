@@ -115,26 +115,26 @@ class AnswerRowSpecs extends UnitSpec with WithFakeApplication with MockSessionC
         AnswerRows.percentAnswerRowFn("message.key", "", () => Call("", ""))(JsString(""))(messages)
     }
 
-    "correctly create Chargeable Value of Residence AnswerRows" in {
+    "correctly create Chargeable Property Value AnswerRows" in {
       val data = PropertyValueAfterExemption(1000, 5000)
       AnswerRows.intAnswerRowFn("message.key", "",
         () => Call("", "http://example.com"))(JsNumber(data.value))(messages) shouldBe
         AnswerRow(messages("message.key"), "£1,000.00", "http://example.com")
 
       AnswerRows.intAnswerRowFn("message.key", "",
-        () => Call("", "http://example.com"))(JsNumber(data.valueCloselyInherited))(messages) shouldBe
+        () => Call("", "http://example.com"))(JsNumber(data.inheritedValue))(messages) shouldBe
         AnswerRow(messages("message.key"), "£5,000.00", "http://example.com")
     }
 
-    "correctly create Any Property Closely Inherited AnswerRow" in {
+    "correctly create Property Passing To Direct Descendants AnswerRow" in {
       val data = Constants.all
-      AnswerRows.anyPropertyCloselyInheritedAnswerRowFn("message.key", "", () => Call("", "http://example.com"))(JsString(data))(messages) shouldBe
-        AnswerRow(messages("message.key"), messages("any_property_closely_inherited.all"), "http://example.com")
+      AnswerRows.propertyPassingToDirectDescendantsAnswerRowFn("message.key", "", () => Call("", "http://example.com"))(JsString(data))(messages) shouldBe
+        AnswerRow(messages("message.key"), messages("property_passing_to_direct_descendants.all"), "http://example.com")
     }
 
-    "throw an exception when anyPropertyCloselyInheritedAnswerRowFn is not passed a string" in {
+    "throw an exception when propertyPassingToDirectDescendantsAnswerRowFn is not passed a string" in {
       an[RuntimeException] should be thrownBy
-        AnswerRows.anyPropertyCloselyInheritedAnswerRowFn("message.key", "", () => Call("", ""))(JsBoolean(true))(messages)
+        AnswerRows.propertyPassingToDirectDescendantsAnswerRowFn("message.key", "", () => Call("", ""))(JsBoolean(true))(messages)
     }
 
     "ignore data in the cache map which does not have a corresponding key in the answer rows function map" in {

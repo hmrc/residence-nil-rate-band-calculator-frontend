@@ -1,35 +1,35 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.play.views.html._
-@import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DoesGrossingUpApplyToResidenceController
+@import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.GrossingUpOnEstatePropertyController
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 @(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[Boolean]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
-    title = messages("does_grossing_up_apply_to_residence.browser_title"),
+    title = messages("grossing_up_on_estate_property.browser_title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
     @rnrbHelpers.back_link(backUrl)
 
-    @rnrbHelpers.heading("does_grossing_up_apply_to_residence.title")
+    @rnrbHelpers.heading("grossing_up_on_estate_property.title")
 
-    <p>@messages("does_grossing_up_apply_to_residence.guidance1")</p>
+    <p>@messages("grossing_up_on_estate_property.guidance1")</p>
 
-    <p>@messages("does_grossing_up_apply_to_residence.guidance2")</p>
+    <p>@messages("grossing_up_on_estate_property.guidance2")</p>
     <ul class="list list-bullet">
-        <li>@messages("does_grossing_up_apply_to_residence.guidance2.bullet1")</li>
-        <li>@messages("does_grossing_up_apply_to_residence.guidance2.bullet2")</li>
+        <li>@messages("grossing_up_on_estate_property.guidance2.bullet1")</li>
+        <li>@messages("grossing_up_on_estate_property.guidance2.bullet2")</li>
     </ul>
 
-    @helpers.form(action = DoesGrossingUpApplyToResidenceController.onSubmit(), 'autoComplete -> "off") {
+    @helpers.form(action = GrossingUpOnEstatePropertyController.onSubmit(), 'autoComplete -> "off") {
 
     @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
 
     @rnrbHelpers.input_yes_no(
         id = "value",
-        label = messages("does_grossing_up_apply_to_residence.title"),
+        label = messages("grossing_up_on_estate_property.title"),
         labelClass = Some("visually-hidden"),
         errorKey = FormHelpers.getErrorByKey(form, "value"),
         value = Some(FormHelpers.getYesNo(form)))

@@ -31,14 +31,14 @@ object AnswerRows {
     Constants.partOfEstatePassingToDirectDescendantsId,
     Constants.valueOfEstateId,
     Constants.chargeableEstateValueId,
-    Constants.estateHasPropertyId,
+    Constants.propertyInEstateId,
     Constants.propertyValueId,
-    Constants.anyPropertyCloselyInheritedId,
-    Constants.percentageCloselyInheritedId,
-    Constants.anyExemptionId,
-    Constants.doesGrossingUpApplyToResidenceId,
-    Constants.chargeableValueOfResidenceId,
-    Constants.chargeableValueOfResidenceCloselyInheritedId,
+    Constants.propertyPassingToDirectDescendantsId,
+    Constants.percentagePassedToDirectDescendantsId,
+    Constants.exemptionsAndReliefClaimedId,
+    Constants.grossingUpOnEstatePropertyId,
+    Constants.chargeablePropertyValueId,
+    Constants.chargeableInheritedPropertyValueId,
     Constants.anyBroughtForwardAllowanceId,
     Constants.broughtForwardAllowanceId,
     Constants.anyDownsizingAllowanceId,
@@ -75,9 +75,9 @@ object AnswerRows {
       value => AnswerRow(titleKey, value, url()) _
     })
 
-  def anyPropertyCloselyInheritedAnswerRowFn(titleKey: String, title: String, url: () => Call) =
+  def propertyPassingToDirectDescendantsAnswerRowFn(titleKey: String, title: String, url: () => Call) =
     (jsValue: JsValue) => Json.fromJson[String](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
-      value => AnswerRow(titleKey, s"any_property_closely_inherited.$value", url()) _
+      value => AnswerRow(titleKey, s"property_passing_to_direct_descendants.$value", url()) _
     })
 
   val answerRowFns = Map[String, JsValue => Messages => AnswerRow](
@@ -91,8 +91,8 @@ object AnswerRows {
       intAnswerRowFn("value_of_estate.title", Constants.valueOfEstateId, routes.ValueOfEstateController.onPageLoad),
     Constants.chargeableEstateValueId ->
       intAnswerRowFn("chargeable_estate_value.title", "Chargeable transfer amount", routes.ChargeableEstateValueController.onPageLoad),
-    Constants.estateHasPropertyId ->
-      boolAnswerRowFn("estate_has_property.title", "Estate has property", routes.EstateHasPropertyController.onPageLoad),
+    Constants.propertyInEstateId ->
+      boolAnswerRowFn("property_in_estate.title", Constants.propertyInEstateId, routes.PropertyInEstateController.onPageLoad),
     Constants.anyDownsizingAllowanceId ->
       boolAnswerRowFn("any_downsizing_allowance.title", "Any downsizing allowance", routes.AnyDownsizingAllowanceController.onPageLoad),
     Constants.dateOfDisposalId ->
@@ -109,8 +109,8 @@ object AnswerRows {
       boolAnswerRowFn("any_brought_forward_allowance_on_disposal.title",
         "Any brought forward allowance on disposal",
         routes.AnyBroughtForwardAllowanceOnDisposalController.onPageLoad),
-    Constants.anyExemptionId ->
-      boolAnswerRowFn("any_exemption.title", "Any exemption", routes.AnyExemptionController.onPageLoad),
+    Constants.exemptionsAndReliefClaimedId ->
+      boolAnswerRowFn("exemptions_and_relief_claimed.title", Constants.exemptionsAndReliefClaimedId, routes.ExemptionsAndReliefClaimedController.onPageLoad),
     Constants.assetsPassingToDirectDescendantsId ->
       intAnswerRowFn("assets_passing_to_direct_descendants.title",
         "Assets passing to direct descendants",
@@ -121,29 +121,30 @@ object AnswerRows {
       intAnswerRowFn("brought_forward_allowance_on_disposal.title",
         "Brought forward allowance on disposal",
         routes.BroughtForwardAllowanceOnDisposalController.onPageLoad),
-    Constants.anyPropertyCloselyInheritedId ->
-      anyPropertyCloselyInheritedAnswerRowFn("any_property_closely_inherited.title",
-        "Any property closely inherited", routes.AnyPropertyCloselyInheritedController.onPageLoad),
+    Constants.propertyPassingToDirectDescendantsId ->
+      propertyPassingToDirectDescendantsAnswerRowFn("property_passing_to_direct_descendants.title",
+        Constants.propertyPassingToDirectDescendantsId, routes.PropertyPassingToDirectDescendantsController.onPageLoad),
     Constants.doesGrossingUpApplyToOtherPropertyId ->
       boolAnswerRowFn("does_grossing_up_apply_to_other_property.title",
         "Does grossing up apply to other property",
         routes.DoesGrossingUpApplyToOtherPropertyController.onPageLoad),
-    Constants.doesGrossingUpApplyToResidenceId ->
-      boolAnswerRowFn("does_grossing_up_apply_to_residence.title",
-        "Does grossing up apply to residence",
-        routes.DoesGrossingUpApplyToResidenceController.onPageLoad),
-    Constants.percentageCloselyInheritedId ->
-      percentAnswerRowFn("percentage_closely_inherited.title", "Percentage closely inherited", routes.PercentageCloselyInheritedController.onPageLoad),
+    Constants.grossingUpOnEstatePropertyId ->
+      boolAnswerRowFn("grossing_up_on_estate_property.title",
+        Constants.grossingUpOnEstatePropertyId,
+        routes.GrossingUpOnEstatePropertyController.onPageLoad),
+    Constants.percentagePassedToDirectDescendantsId ->
+      percentAnswerRowFn("percentage_passed_to_direct_descendants.title", Constants.percentagePassedToDirectDescendantsId,
+        routes.PercentagePassedToDirectDescendantsController.onPageLoad),
     Constants.propertyValueId ->
       intAnswerRowFn("property_value.title", "Property value", routes.PropertyValueController.onPageLoad),
-    Constants.chargeableValueOfResidenceId ->
-      intAnswerRowFn("chargeable_value_of_residence.title",
-        "Chargeable value of residence",
-        routes.ChargeableValueOfResidenceController.onPageLoad),
-    Constants.chargeableValueOfResidenceCloselyInheritedId ->
-      intAnswerRowFn("chargeable_value_of_residence_closely_inherited.title",
-      "Chargeable value of residence closely inherited",
-      routes.ChargeableValueOfResidenceCloselyInheritedController.onPageLoad)
+    Constants.chargeablePropertyValueId ->
+      intAnswerRowFn("chargeable_property_value.title",
+        Constants.chargeablePropertyValueId,
+        routes.ChargeablePropertyValueController.onPageLoad),
+    Constants.chargeableInheritedPropertyValueId ->
+      intAnswerRowFn("chargeable_inherited_property_value.title",
+        Constants.chargeableInheritedPropertyValueId,
+      routes.ChargeableInheritedPropertyValueController.onPageLoad)
   )
 
   def constructAnswerRows(cacheMap: CacheMap,

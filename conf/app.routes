@@ -19,11 +19,11 @@ POST       /any-downsizing-allowance                    uk.gov.hmrc.residencenil
 GET        /part-of-estate-passing-to-direct-descendants    uk.gov.hmrc.residencenilratebandcalculator.controllers.PartOfEstatePassingToDirectDescendantsController.onPageLoad
 POST       /part-of-estate-passing-to-direct-descendants    uk.gov.hmrc.residencenilratebandcalculator.controllers.PartOfEstatePassingToDirectDescendantsController.onSubmit
 
-GET        /any-exemption                               uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyExemptionController.onPageLoad
-POST       /any-exemption                               uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyExemptionController.onSubmit
+GET        /exemptions-and-relief-claimed               uk.gov.hmrc.residencenilratebandcalculator.controllers.ExemptionsAndReliefClaimedController.onPageLoad
+POST       /exemptions-and-relief-claimed               uk.gov.hmrc.residencenilratebandcalculator.controllers.ExemptionsAndReliefClaimedController.onSubmit
 
-GET        /any-property-closely-inherited              uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyPropertyCloselyInheritedController.onPageLoad
-POST       /any-property-closely-inherited              uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyPropertyCloselyInheritedController.onSubmit
+GET        /property-passing-to-direct-descendants      uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyPassingToDirectDescendantsController.onPageLoad
+POST       /property-passing-to-direct-descendants      uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyPassingToDirectDescendantsController.onSubmit
 
 GET        /assets-passing-to-direct-descendants        uk.gov.hmrc.residencenilratebandcalculator.controllers.AssetsPassingToDirectDescendantsController.onPageLoad
 POST       /assets-passing-to-direct-descendants        uk.gov.hmrc.residencenilratebandcalculator.controllers.AssetsPassingToDirectDescendantsController.onSubmit
@@ -37,11 +37,11 @@ POST       /brought-forward-allowance-on-disposal       uk.gov.hmrc.residencenil
 GET        /chargeable-estate-value                     uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableEstateValueController.onPageLoad
 POST       /chargeable-estate-value                     uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableEstateValueController.onSubmit
 
-GET        /chargeable-value-of-residence               uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableValueOfResidenceController.onPageLoad
-POST       /chargeable-value-of-residence               uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableValueOfResidenceController.onSubmit
+GET        /chargeable-property-value                   uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeablePropertyValueController.onPageLoad
+POST       /chargeable-property-value                   uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeablePropertyValueController.onSubmit
 
-GET        /chargeable-value-closely-inherited          uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableValueOfResidenceCloselyInheritedController.onPageLoad
-POST       /chargeable-value-closely-inherited          uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableValueOfResidenceCloselyInheritedController.onSubmit
+GET        /chargeable-inherited-property-value         uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableInheritedPropertyValueController.onPageLoad
+POST       /chargeable-inherited-property-value         uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableInheritedPropertyValueController.onSubmit
 
 GET        /cannot-claim-rnrb                           uk.gov.hmrc.residencenilratebandcalculator.controllers.CannotClaimRNRBController.onPageLoad
 
@@ -56,11 +56,11 @@ POST       /date-of-disposal                            uk.gov.hmrc.residencenil
 GET        /does-grossing-up-apply-to-other-property    uk.gov.hmrc.residencenilratebandcalculator.controllers.DoesGrossingUpApplyToOtherPropertyController.onPageLoad
 POST       /does-grossing-up-apply-to-other-property    uk.gov.hmrc.residencenilratebandcalculator.controllers.DoesGrossingUpApplyToOtherPropertyController.onSubmit
 
-GET        /does-grossing-up-apply-to-residence         uk.gov.hmrc.residencenilratebandcalculator.controllers.DoesGrossingUpApplyToResidenceController.onPageLoad
-POST       /does-grossing-up-apply-to-residence         uk.gov.hmrc.residencenilratebandcalculator.controllers.DoesGrossingUpApplyToResidenceController.onSubmit
+GET        /grossing-up-on-estate-property              uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossingUpOnEstatePropertyController.onPageLoad
+POST       /grossing-up-on-estate-property              uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossingUpOnEstatePropertyController.onSubmit
 
-GET        /estate-has-property                         uk.gov.hmrc.residencenilratebandcalculator.controllers.EstateHasPropertyController.onPageLoad
-POST       /estate-has-property                         uk.gov.hmrc.residencenilratebandcalculator.controllers.EstateHasPropertyController.onSubmit
+GET        /property-in-estate                          uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyInEstateController.onPageLoad
+POST       /property-in-estate                          uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyInEstateController.onSubmit
 
 GET        /exit-questionnaire                          uk.gov.hmrc.residencenilratebandcalculator.controllers.ExitQuestionnaireController.onPageLoad
 POST       /exit-questionnaire                          uk.gov.hmrc.residencenilratebandcalculator.controllers.ExitQuestionnaireController.onSubmit
@@ -74,8 +74,8 @@ GET        /expired                                     uk.gov.hmrc.residencenil
 
 GET        /not-possible-to-use-calculator              uk.gov.hmrc.residencenilratebandcalculator.controllers.TransitionOutController.onPageLoad
 
-GET        /percentage-closely-inherited                uk.gov.hmrc.residencenilratebandcalculator.controllers.PercentageCloselyInheritedController.onPageLoad
-POST       /percentage-closely-inherited                uk.gov.hmrc.residencenilratebandcalculator.controllers.PercentageCloselyInheritedController.onSubmit
+GET        /percentage-passed-to-direct-descendants     uk.gov.hmrc.residencenilratebandcalculator.controllers.PercentagePassedToDirectDescendantsController.onPageLoad
+POST       /percentage-passed-to-direct-descendants     uk.gov.hmrc.residencenilratebandcalculator.controllers.PercentagePassedToDirectDescendantsController.onSubmit
 
 GET        /property-value                              uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyValueController.onPageLoad
 POST       /property-value                              uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyValueController.onSubmit

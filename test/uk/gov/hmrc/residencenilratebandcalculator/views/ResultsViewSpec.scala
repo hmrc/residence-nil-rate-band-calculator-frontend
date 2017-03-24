@@ -16,18 +16,14 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import java.text.NumberFormat
-import java.util.Locale
-
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
-import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationResult, DisplayResults}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.results
 
 import scala.language.reflectiveCalls
 
 class ResultsViewSpec extends HtmlSpec {
   def fixture() = new {
-    val view = results(frontendAppConfig, DisplayResults(CalculationResult(10, 50, 300, 260, 15), Nil)(messages))(request, messages)
+    val view = results(frontendAppConfig, "£10.00", Nil)(request, messages)
     val doc = asDocument(view)
   }
 
@@ -40,61 +36,35 @@ class ResultsViewSpec extends HtmlSpec {
         assertEqualsMessage(f.doc, "title", "results.browser_title")
       }
 
-      "display the correct page title" in {
-        val f = thisFixture()
-        assertPageTitleEqualsMessage(f.doc, "results.title", NumberFormat.getCurrencyInstance(Locale.UK).format(10))
-      }
-
       "display the correct guidance" in {
         val f = thisFixture()
-        assertContainsMessages(f.doc, "results.guidance")
+        assertContainsMessages(f.doc, "results.action.header", "results.action.guidance.form_435", "results.action.guidance.form_400",
+          "results.action.guidance.continue", "results.print_prefix", "results.link_to_print", "results.print_suffix")
       }
 
-      "contain an amount for the value" in {
-        val f = thisFixture()
-        assertContainsText(f.doc, "10")
+      "display the correct information when there is no Residence Nil Rate Amount" in {
+        val residenceNilRateAmount = "£0.00"
+        val view = results(frontendAppConfig, residenceNilRateAmount, Nil)(request, messages)
+        val doc = asDocument(view)
+
+        assertContainsMessages(doc, "results.info.zero.header", "results.info.zero.guidance", "results.info.zero.threshold_change")
+        assertContainsText(doc, messages("results.action.guidance", residenceNilRateAmount))
       }
 
-      "contain a label for the carry forward amount" in {
-        val f = thisFixture()
-        assertContainsMessages(f.doc, "results.carryForwardAmount.label")
-      }
+      "display the correct information when there is a positive Residence Nil Rate Amount" in {
+        val residenceNilRateAmount = "£10.00"
+        val view = results(frontendAppConfig, residenceNilRateAmount, Nil)(request, messages)
+        val doc = asDocument(view)
 
-      "contain an amount for the carry forward amount" in {
-        val f = thisFixture()
-        assertContainsText(f.doc, "300")
-      }
-
-      "contain a label for the applicable nil rate band amount" in {
-        val f = thisFixture()
-        assertContainsMessages(f.doc, "results.applicableNilRateBandAmount.label")
-      }
-
-      "contain an amount for the applicable nil rate band amount" in {
-        val f = thisFixture()
-        assertContainsText(f.doc, "50")
-      }
-
-      "contain an amount for the default allowance amount" in {
-        val f = thisFixture()
-        assertContainsText(f.doc, "260")
-      }
-
-      "contain a label for the adjusted allowance" in {
-        val f = thisFixture()
-        assertContainsMessages(f.doc, "results.adjustedAllowanceAmount.label")
-      }
-
-      "contain an amount for the adjusted allowance" in {
-        val f = thisFixture()
-        assertContainsText(f.doc, "15")
+        assertContainsMessages(doc, "results.info.non_zero.header", "results.info.non_zero.guidance", "results.info.non_zero.threshold_change")
+        assertContainsText(doc, messages("results.action.guidance", residenceNilRateAmount))
       }
 
       "contain a link to the exit questionnaire" in {
         val f = thisFixture()
         val links = f.doc.getElementsByAttributeValue("href", routes.ExitQuestionnaireController.onPageLoad().url)
         links.size shouldBe 1
-        links.first.text shouldBe messages("results.link_to_exit_questionnaire.text")
+        links.first.text shouldBe messages("site.finish")
       }
     }
   }

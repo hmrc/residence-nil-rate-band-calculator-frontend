@@ -17,28 +17,27 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_passed_to_direct_descendants
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
-import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_value_of_residence_closely_inherited
+import uk.gov.hmrc.residencenilratebandcalculator.forms.PositivePercentForm
 
 import scala.language.reflectiveCalls
 
-class ChargeableValueOfResidenceCloselyInheritedViewSpec extends IntViewSpecBase {
+class PercentagePassedToDirectDescendantsViewSpec extends IntViewSpecBase {
 
-  val messageKeyPrefix = "chargeable_value_of_residence_closely_inherited"
+  val messageKeyPrefix = "percentage_passed_to_direct_descendants"
 
-  def createView(form: Option[Form[Int]] = None) = chargeable_value_of_residence_closely_inherited(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Int]] = None) = percentage_passed_to_direct_descendants(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
-  "Chargeable Value Of Residence Closely Inherited View" must {
+  "Percentage Passed To Direct Descendants View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2")
+    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance")
 
     behave like pageWithBackLink[Int](createView)
 
-    behave like intPage(createView, messageKeyPrefix, ChargeableValueOfResidenceCloselyInheritedController.onSubmit().url, NonNegativeIntForm())
+    behave like intPage(createView, messageKeyPrefix, PercentagePassedToDirectDescendantsController.onSubmit().url, PositivePercentForm())
 
     behave like pageContainingPreviousAnswers(createView)
 
   }
-
 }

@@ -17,24 +17,22 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_exemption
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_estate_property
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 
-import scala.language.reflectiveCalls
+class GrossingUpOnEstatePropertyViewSpec extends BooleanViewSpecBase {
 
-class AnyExemptionViewSpec  extends BooleanViewSpecBase {
+  val messageKeyPrefix = "grossing_up_on_estate_property"
 
-  val messageKeyPrefix = "any_exemption"
+  def createView(form: Option[Form[Boolean]] = None) = grossing_up_on_estate_property(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
-  def createView(form: Option[Form[Boolean]] = None) = any_exemption(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  "Grossing Up On Estate Property View" must {
 
-  "Any Exemption View" must {
-
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance", "guidance.bullet1", "guidance.bullet2", "guidance.bullet3")
+    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance2.bullet1", "guidance2.bullet2")
 
     behave like pageWithBackLink[Boolean](createView)
 
-    behave like booleanPage(createView, messageKeyPrefix, AnyExemptionController.onSubmit().url)
+    behave like booleanPage(createView, messageKeyPrefix, GrossingUpOnEstatePropertyController.onSubmit().url)
 
     behave like pageContainingPreviousAnswers(createView)
 

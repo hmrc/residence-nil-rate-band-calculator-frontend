@@ -19,35 +19,35 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_exemption
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.exemptions_and_relief_claimed
 
-class AnyExemptionControllerSpec extends SimpleControllerSpecBase {
+class ExemptionsAndReliefClaimedControllerSpec extends SimpleControllerSpecBase {
 
-  "Any Exemption Controller" must {
+  "Exemptions And Relief Claimed Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
-      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyPropertyCloselyInheritedController.onPageLoad().url
+      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyPassingToDirectDescendantsController.onPageLoad().url
 
       value match {
-        case None => any_exemption(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => any_exemption(frontendAppConfig, url, Some(BooleanForm().bind(v)), Seq())(fakeRequest, messages)
+        case None => exemptions_and_relief_claimed(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => exemptions_and_relief_claimed(frontendAppConfig, url, Some(BooleanForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 
-    def createController = () => new AnyExemptionController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
+    def createController = () => new ExemptionsAndReliefClaimedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
     val testValue = true
 
-    behave like rnrbController[Boolean](createController, createView, Constants.anyExemptionId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+    behave like rnrbController[Boolean](createController, createView, Constants.exemptionsAndReliefClaimedId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
 
     behave like nonStartingController[Boolean](createController,
       List(Constants.dateOfDeathId,
         Constants.partOfEstatePassingToDirectDescendantsId,
         Constants.valueOfEstateId,
         Constants.chargeableEstateValueId,
-        Constants.estateHasPropertyId,
+        Constants.propertyInEstateId,
         Constants.propertyValueId,
-        Constants.anyPropertyCloselyInheritedId,
-        Constants.percentageCloselyInheritedId))(Reads.BooleanReads, Writes.BooleanWrites)
+        Constants.propertyPassingToDirectDescendantsId,
+        Constants.percentagePassedToDirectDescendantsId))(Reads.BooleanReads, Writes.BooleanWrites)
   }
 }

@@ -21,24 +21,24 @@ import javax.inject.{Inject, Singleton}
 import play.api.data.Form
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
-import play.twirl.api.HtmlFormat._
+import play.twirl.api.HtmlFormat.Appendable
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_exemption
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_in_estate
 
 @Singleton
-class AnyExemptionController @Inject()(override val appConfig: FrontendAppConfig,
-                                                     val messagesApi: MessagesApi,
-                                                     override val sessionConnector: SessionConnector,
-                                                     override val navigator: Navigator) extends SimpleControllerBase[Boolean] {
+class PropertyInEstateController @Inject()(override val appConfig: FrontendAppConfig,
+                                           val messagesApi: MessagesApi,
+                                           override val sessionConnector: SessionConnector,
+                                           override val navigator: Navigator) extends SimpleControllerBase[Boolean] {
 
-  override val controllerId: String = Constants.anyExemptionId
+  override val controllerId: String = Constants.propertyInEstateId
 
   override def form: () => Form[Boolean] = () => BooleanForm()
 
   override def view(form: Option[Form[Boolean]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    any_exemption(appConfig, backUrl, form, answerRows)
+    property_in_estate(appConfig, backUrl, form, answerRows)
   }
 }

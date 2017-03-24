@@ -32,21 +32,21 @@ class Navigator @Inject()() {
       Constants.dateOfDeathId -> (ua => getDateOfDeathRoute(ua)),
       Constants.partOfEstatePassingToDirectDescendantsId -> (ua => getPartOfEstatePassingToDirectDescendantsRoute(ua)),
       Constants.valueOfEstateId -> (_ => ChargeableEstateValueController.onPageLoad()),
-      Constants.chargeableEstateValueId -> (_ => EstateHasPropertyController.onPageLoad()),
-      Constants.estateHasPropertyId -> (ua => getEstateHasPropertyRoute(ua)),
+      Constants.chargeableEstateValueId -> (_ => PropertyInEstateController.onPageLoad()),
+      Constants.propertyInEstateId -> (ua => getPropertyInEstateRoute(ua)),
       Constants.cannotClaimRNRB -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
-      Constants.propertyValueId -> (_ => AnyPropertyCloselyInheritedController.onPageLoad()),
-      Constants.anyPropertyCloselyInheritedId -> (ua => getAnyPropertyCloselyInheritedRoute(ua)),
-      Constants.percentageCloselyInheritedId -> (_ => AnyExemptionController.onPageLoad()),
+      Constants.propertyValueId -> (_ => PropertyPassingToDirectDescendantsController.onPageLoad()),
+      Constants.propertyPassingToDirectDescendantsId -> (ua => getPropertyPassingToDirectDescendantsRoute(ua)),
+      Constants.percentagePassedToDirectDescendantsId -> (_ => ExemptionsAndReliefClaimedController.onPageLoad()),
       Constants.anyBroughtForwardAllowanceId -> (ua => getAnyBroughtForwardAllowanceRoute(ua)),
       Constants.broughtForwardAllowanceId -> (_ => AnyDownsizingAllowanceController.onPageLoad()),
       Constants.anyDownsizingAllowanceId -> (ua => getAnyDownsizingAllowanceRoute(ua)),
       Constants.cannotClaimDownsizingId -> (_ => ResultsController.onPageLoad()),
       Constants.dateOfDisposalId -> (ua => getDateOfDisposalRoute(ua)),
-      Constants.anyExemptionId -> (ua => getAnyExemptionRoute(ua)),
-      Constants.chargeableValueOfResidenceId -> (_ => ChargeableValueOfResidenceCloselyInheritedController.onPageLoad()),
-      Constants.chargeableValueOfResidenceCloselyInheritedId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
-      Constants.doesGrossingUpApplyToResidenceId -> (ua => getDoesGrossingUpApplyToResidenceRoute(ua)),
+      Constants.exemptionsAndReliefClaimedId -> (ua => getExemptionsAndReliefClaimedRoute(ua)),
+      Constants.chargeablePropertyValueId -> (_ => ChargeableInheritedPropertyValueController.onPageLoad()),
+      Constants.chargeableInheritedPropertyValueId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
+      Constants.grossingUpOnEstatePropertyId -> (ua => getGrossingUpOnEstatePropertyRoute(ua)),
       Constants.valueOfDisposedPropertyId -> (_ => AnyAssetsPassingToDirectDescendantsController.onPageLoad()),
       Constants.anyAssetsPassingToDirectDescendantsId -> (ua => getAnyAssetsPassingToDirectDescendantsRoute(ua)),
       Constants.doesGrossingUpApplyToOtherPropertyId -> (ua => getDoesGrossingUpApplyToOtherPropertyRoute(ua)),
@@ -75,8 +75,8 @@ class Navigator @Inject()() {
   private def getPartOfEstatePassingToDirectDescendantsRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.partOfEstatePassingToDirectDescendants, ValueOfEstateController.onPageLoad(), TransitionOutController.onPageLoad())
 
-  private def getEstateHasPropertyRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.estateHasProperty, PropertyValueController.onPageLoad(), CannotClaimRNRBController.onPageLoad())
+  private def getPropertyInEstateRoute(userAnswers: UserAnswers) =
+    getRouteForOptionalBoolean(userAnswers.propertyInEstate, PropertyValueController.onPageLoad(), CannotClaimRNRBController.onPageLoad())
 
   private def getAnyBroughtForwardAllowanceRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.anyBroughtForwardAllowance, BroughtForwardAllowanceController.onPageLoad(), AnyDownsizingAllowanceController.onPageLoad())
@@ -91,18 +91,18 @@ class Navigator @Inject()() {
     getRouteForOptionalLocalDate(userAnswers.dateOfDisposal, Constants.downsizingEligibilityDate,
       CannotClaimDownsizingController.onPageLoad(), ValueOfDisposedPropertyController.onPageLoad())
 
-  private def getAnyPropertyCloselyInheritedRoute(userAnswers: UserAnswers) = userAnswers.anyPropertyCloselyInherited match {
-    case Some(Constants.all) => AnyExemptionController.onPageLoad()
-    case Some(Constants.some) => PercentageCloselyInheritedController.onPageLoad()
+  private def getPropertyPassingToDirectDescendantsRoute(userAnswers: UserAnswers) = userAnswers.propertyPassingToDirectDescendants match {
+    case Some(Constants.all) => ExemptionsAndReliefClaimedController.onPageLoad()
+    case Some(Constants.some) => PercentagePassedToDirectDescendantsController.onPageLoad()
     case Some(_) => CannotClaimRNRBController.onPageLoad()
     case _ => HomeController.onPageLoad()
   }
 
-  private def getAnyExemptionRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.anyExemption, DoesGrossingUpApplyToResidenceController.onPageLoad(), AnyBroughtForwardAllowanceController.onPageLoad())
+  private def getExemptionsAndReliefClaimedRoute(userAnswers: UserAnswers) =
+    getRouteForOptionalBoolean(userAnswers.exemptionsAndReliefClaimed, GrossingUpOnEstatePropertyController.onPageLoad(), AnyBroughtForwardAllowanceController.onPageLoad())
 
-  private def getDoesGrossingUpApplyToResidenceRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.doesGrossingUpApplyToResidence, TransitionOutController.onPageLoad(), ChargeableValueOfResidenceController.onPageLoad())
+  private def getGrossingUpOnEstatePropertyRoute(userAnswers: UserAnswers) =
+    getRouteForOptionalBoolean(userAnswers.grossingUpOnEstateProperty, TransitionOutController.onPageLoad(), ChargeablePropertyValueController.onPageLoad())
 
   private def getAnyAssetsPassingToDirectDescendantsRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.anyAssetsPassingToDirectDescendants, DoesGrossingUpApplyToOtherPropertyController.onPageLoad(), CannotClaimDownsizingController.onPageLoad())
@@ -124,14 +124,14 @@ class Navigator @Inject()() {
       Constants.partOfEstatePassingToDirectDescendantsId -> (_ => DateOfDeathController.onPageLoad()),
       Constants.valueOfEstateId -> (_ => PartOfEstatePassingToDirectDescendantsController.onPageLoad()),
       Constants.chargeableEstateValueId -> (_ => ValueOfEstateController.onPageLoad()),
-      Constants.estateHasPropertyId -> (_ => ChargeableEstateValueController.onPageLoad()),
-      Constants.propertyValueId -> (_ => EstateHasPropertyController.onPageLoad()),
-      Constants.anyPropertyCloselyInheritedId -> (_ => PropertyValueController.onPageLoad()),
-      Constants.percentageCloselyInheritedId -> (_ => AnyPropertyCloselyInheritedController.onPageLoad()),
-      Constants.anyExemptionId -> (ua => getAnyExemptionReverseRoute(ua)),
-      Constants.chargeableValueOfResidenceId -> (_ => DoesGrossingUpApplyToResidenceController.onPageLoad()),
-      Constants.chargeableValueOfResidenceCloselyInheritedId -> (_ => ChargeableValueOfResidenceController.onPageLoad()),
-      Constants.doesGrossingUpApplyToResidenceId -> (_ => AnyExemptionController.onPageLoad()),
+      Constants.propertyInEstateId -> (_ => ChargeableEstateValueController.onPageLoad()),
+      Constants.propertyValueId -> (_ => PropertyInEstateController.onPageLoad()),
+      Constants.propertyPassingToDirectDescendantsId -> (_ => PropertyValueController.onPageLoad()),
+      Constants.percentagePassedToDirectDescendantsId -> (_ => PropertyPassingToDirectDescendantsController.onPageLoad()),
+      Constants.exemptionsAndReliefClaimedId -> (ua => getExemptionsAndReliefClaimedReverseRoute(ua)),
+      Constants.chargeablePropertyValueId -> (_ => GrossingUpOnEstatePropertyController.onPageLoad()),
+      Constants.chargeableInheritedPropertyValueId -> (_ => ChargeablePropertyValueController.onPageLoad()),
+      Constants.grossingUpOnEstatePropertyId -> (_ => ExemptionsAndReliefClaimedController.onPageLoad()),
       Constants.anyBroughtForwardAllowanceId -> (ua => getAnyBroughtForwardAllowanceReverseRoute(ua)),
       Constants.broughtForwardAllowanceId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
       Constants.anyDownsizingAllowanceId -> (ua => getAnyDownsizingAllowanceReverseRoute(ua)),
@@ -147,21 +147,21 @@ class Navigator @Inject()() {
 
   private def goToPageNotFound: UserAnswers => Call = _ => PageNotFoundController.onPageLoad()
 
-  private def getAnyBroughtForwardAllowanceReverseRoute(userAnswers: UserAnswers) = userAnswers.anyExemption match {
-    case Some(true) => ChargeableValueOfResidenceCloselyInheritedController.onPageLoad()
-    case _ => userAnswers.anyPropertyCloselyInherited match {
-      case Some(Constants.none) => AnyPropertyCloselyInheritedController.onPageLoad()
-      case Some(_) => AnyExemptionController.onPageLoad()
-      case _ => userAnswers.estateHasProperty match {
+  private def getAnyBroughtForwardAllowanceReverseRoute(userAnswers: UserAnswers) = userAnswers.exemptionsAndReliefClaimed match {
+    case Some(true) => ChargeableInheritedPropertyValueController.onPageLoad()
+    case _ => userAnswers.propertyPassingToDirectDescendants match {
+      case Some(Constants.none) => PropertyPassingToDirectDescendantsController.onPageLoad()
+      case Some(_) => ExemptionsAndReliefClaimedController.onPageLoad()
+      case _ => userAnswers.propertyInEstate match {
         case Some(true) => PropertyValueController.onPageLoad()
-        case _ => EstateHasPropertyController.onPageLoad()
+        case _ => PropertyInEstateController.onPageLoad()
       }
     }
   }
 
-  private def getAnyExemptionReverseRoute(userAnswers: UserAnswers) = userAnswers.anyPropertyCloselyInherited match {
-    case Some(Constants.some) => PercentageCloselyInheritedController.onPageLoad()
-    case _ => AnyPropertyCloselyInheritedController.onPageLoad()
+  private def getExemptionsAndReliefClaimedReverseRoute(userAnswers: UserAnswers) = userAnswers.propertyPassingToDirectDescendants match {
+    case Some(Constants.some) => PercentagePassedToDirectDescendantsController.onPageLoad()
+    case _ => PropertyPassingToDirectDescendantsController.onPageLoad()
   }
 
   private def getAnyDownsizingAllowanceReverseRoute(userAnswers: UserAnswers) = userAnswers.anyBroughtForwardAllowance match {

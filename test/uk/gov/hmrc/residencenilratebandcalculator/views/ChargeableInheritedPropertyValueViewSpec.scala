@@ -17,24 +17,28 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.does_grossing_up_apply_to_residence
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_inherited_property_value
 
-class DoesGrossingUpApplyToResidenceViewSpec extends BooleanViewSpecBase {
+import scala.language.reflectiveCalls
 
-  val messageKeyPrefix = "does_grossing_up_apply_to_residence"
+class ChargeableInheritedPropertyValueViewSpec extends IntViewSpecBase {
 
-  def createView(form: Option[Form[Boolean]] = None) = does_grossing_up_apply_to_residence(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  val messageKeyPrefix = "chargeable_inherited_property_value"
 
-  "Does Grossing Up Apply To Residence View" must {
+  def createView(form: Option[Form[Int]] = None) = chargeable_inherited_property_value(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance2.bullet1", "guidance2.bullet2")
+  "Chargeable Inherited Property Value View" must {
 
-    behave like pageWithBackLink[Boolean](createView)
+    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2")
 
-    behave like booleanPage(createView, messageKeyPrefix, DoesGrossingUpApplyToResidenceController.onSubmit().url)
+    behave like pageWithBackLink[Int](createView)
+
+    behave like intPage(createView, messageKeyPrefix, ChargeableInheritedPropertyValueController.onSubmit().url, NonNegativeIntForm())
 
     behave like pageContainingPreviousAnswers(createView)
 
   }
+
 }

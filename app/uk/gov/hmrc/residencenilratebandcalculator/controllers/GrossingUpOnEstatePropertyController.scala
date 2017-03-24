@@ -16,28 +16,28 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import javax.inject.Inject
+import javax.inject.{Inject, Singleton}
 
 import play.api.data.Form
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.forms.PositivePercentForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_closely_inherited
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_estate_property
 
-class PercentageCloselyInheritedController  @Inject()(override val appConfig: FrontendAppConfig,
-                                                      val messagesApi: MessagesApi,
-                                                      override val sessionConnector: SessionConnector,
-                                                      override val navigator: Navigator) extends SimpleControllerBase[Int] {
+@Singleton
+class GrossingUpOnEstatePropertyController @Inject()(override val appConfig: FrontendAppConfig,
+                                                         val messagesApi: MessagesApi,
+                                                         override val sessionConnector: SessionConnector,
+                                                         override val navigator: Navigator) extends SimpleControllerBase[Boolean] {
 
+  override val controllerId: String = Constants.grossingUpOnEstatePropertyId
 
-  override val controllerId = Constants.percentageCloselyInheritedId
+  override def form: () => Form[Boolean] = () => BooleanForm()
 
-  override def form = () => PositivePercentForm()
-
-  override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    percentage_closely_inherited(appConfig, backUrl, form, answerRows)
+  override def view(form: Option[Form[Boolean]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+    grossing_up_on_estate_property(appConfig, backUrl, form, answerRows)
   }
 }

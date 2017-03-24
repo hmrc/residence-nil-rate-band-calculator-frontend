@@ -54,16 +54,16 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.anyDownsizingAllowance shouldBe Some(true)
       }
 
-      "return the correct answer for Any Exemption" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.anyExemptionId -> JsBoolean(true)))
+      "return the correct answer for Exemptions And Relief Claimed" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.exemptionsAndReliefClaimedId -> JsBoolean(true)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.anyExemption shouldBe Some(true)
+        userAnswers.exemptionsAndReliefClaimed shouldBe Some(true)
       }
 
-      "return the correct answer for Any Property Closely Inherited" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.anyPropertyCloselyInheritedId -> JsString("abc")))
+      "return the correct answer for Property Passing To Direct Descendants" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.propertyPassingToDirectDescendantsId -> JsString("abc")))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.anyPropertyCloselyInherited shouldBe Some("abc")
+        userAnswers.propertyPassingToDirectDescendants shouldBe Some("abc")
       }
 
       "return the correct answer for Assets Passing To Direct Descendant" in {
@@ -108,16 +108,16 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.doesGrossingUpApplyToOtherProperty shouldBe Some(false)
       }
 
-      "return the correct answer for Does Grossing Up Apply To Residence" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.doesGrossingUpApplyToResidenceId -> JsBoolean(false)))
+      "return the correct answer for Grossing Up On Estate Property" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.grossingUpOnEstatePropertyId -> JsBoolean(false)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.doesGrossingUpApplyToResidence shouldBe Some(false)
+        userAnswers.grossingUpOnEstateProperty shouldBe Some(false)
       }
 
-      "return the correct answer for Estate Has Property" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.estateHasPropertyId -> JsBoolean(true)))
+      "return the correct answer for Property In Estate" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.propertyInEstateId -> JsBoolean(true)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.estateHasProperty shouldBe Some(true)
+        userAnswers.propertyInEstate shouldBe Some(true)
       }
 
       "return the correct answer for Value Of Estate" in {
@@ -126,10 +126,10 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.valueOfEstate shouldBe Some(1)
       }
 
-      "return the correct answer for Percentage Closely Inherited" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.percentageCloselyInheritedId -> JsNumber(1)))
+      "return the correct answer for Percentage Passed To Direct Descendants" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.percentagePassedToDirectDescendantsId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.percentageCloselyInherited shouldBe Some(1)
+        userAnswers.percentagePassedToDirectDescendants shouldBe Some(1)
       }
 
       "return the correct answer for Property Value" in {
@@ -139,15 +139,15 @@ class UserAnswersSpec extends UnitSpec {
       }
 
       "return the correct answer for Property Value After Exemption" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.chargeableValueOfResidenceId -> JsNumber(1)))
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.chargeablePropertyValueId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.chargeableValueOfResidence shouldBe Some(1)
+        userAnswers.chargeablePropertyValue shouldBe Some(1)
       }
 
       "return the correct answer for Property Value After Exemption Closely Inherited" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.chargeableValueOfResidenceCloselyInheritedId -> JsNumber(1)))
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.chargeableInheritedPropertyValueId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.chargeableValueOfResidenceCloselyInherited shouldBe Some(1)
+        userAnswers.chargeableInheritedPropertyValue shouldBe Some(1)
       }
 
       "return the correct answer for Value Of Disposed Property" in {
@@ -180,14 +180,14 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.anyDownsizingAllowance shouldBe None
       }
 
-      "return None for Any Exemption" in {
+      "return None for Exemptions And Relief Claimed" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.anyExemption shouldBe None
+        userAnswers.exemptionsAndReliefClaimed shouldBe None
       }
 
-      "return None for Any Property Closely Inherited" in {
+      "return None for Property Passing To Direct Descendants" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.anyPropertyCloselyInherited shouldBe None
+        userAnswers.propertyPassingToDirectDescendants shouldBe None
       }
 
       "return None for Assets Passing To Direct Descendant" in {
@@ -220,9 +220,9 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.dateOfDisposal shouldBe None
       }
 
-      "return None for Estate Has Property" in {
+      "return None for Property In Estate" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.estateHasProperty shouldBe None
+        userAnswers.propertyInEstate shouldBe None
       }
 
       "return None for Value Of Estate" in {
@@ -230,9 +230,9 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.valueOfEstate shouldBe None
       }
 
-      "return None for Percentage Closely Inherited" in {
+      "return None for Percentage Passed To Direct Descendants" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.percentageCloselyInherited shouldBe None
+        userAnswers.percentagePassedToDirectDescendants shouldBe None
       }
 
       "return None for Property Value" in {
@@ -242,7 +242,7 @@ class UserAnswersSpec extends UnitSpec {
 
       "return None for Property Value After Exemption" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.chargeableValueOfResidence shouldBe None
+        userAnswers.chargeablePropertyValue shouldBe None
       }
 
       "return None for Value Of Disposed Property" in {

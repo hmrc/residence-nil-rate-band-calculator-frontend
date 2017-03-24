@@ -23,7 +23,7 @@ object GetCannotClaimRNRBReason extends GetReason {
   case object NoProperty extends Reason
 
   def apply(userAnswers: UserAnswers) =
-    userAnswers.anyPropertyCloselyInherited match {
+    userAnswers.propertyPassingToDirectDescendants match {
       case Some(Constants.none) => NotCloselyInherited
       case _ => NoProperty
     }

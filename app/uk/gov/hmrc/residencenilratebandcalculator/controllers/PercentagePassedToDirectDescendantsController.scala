@@ -16,29 +16,28 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.Inject
 
 import play.api.data.Form
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
-import play.twirl.api.HtmlFormat.Appendable
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.PositivePercentForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.estate_has_property
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_passed_to_direct_descendants
 
-@Singleton
-class EstateHasPropertyController @Inject()(override val appConfig: FrontendAppConfig,
-                                            val messagesApi: MessagesApi,
-                                            override val sessionConnector: SessionConnector,
-                                            override val navigator: Navigator) extends SimpleControllerBase[Boolean] {
+class PercentagePassedToDirectDescendantsController  @Inject()(override val appConfig: FrontendAppConfig,
+                                                               val messagesApi: MessagesApi,
+                                                               override val sessionConnector: SessionConnector,
+                                                               override val navigator: Navigator) extends SimpleControllerBase[Int] {
 
-  override val controllerId: String = Constants.estateHasPropertyId
 
-  override def form: () => Form[Boolean] = () => BooleanForm()
+  override val controllerId = Constants.percentagePassedToDirectDescendantsId
 
-  override def view(form: Option[Form[Boolean]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    estate_has_property(appConfig, backUrl, form, answerRows)
+  override def form = () => PositivePercentForm()
+
+  override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+    percentage_passed_to_direct_descendants(appConfig, backUrl, form, answerRows)
   }
 }
