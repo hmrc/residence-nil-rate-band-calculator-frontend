@@ -46,7 +46,7 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def dateOfDeath = cacheMap.getEntry[LocalDate](Constants.dateOfDeathId)
 
-  def dateOfDisposal = cacheMap.getEntry[LocalDate](Constants.dateOfDisposalId)
+  def datePropertyWasChanged = cacheMap.getEntry[LocalDate](Constants.datePropertyWasChangedId)
 
   def grossingUpOnEstateProperty = cacheMap.getEntry[Boolean](Constants.grossingUpOnEstatePropertyId)
 

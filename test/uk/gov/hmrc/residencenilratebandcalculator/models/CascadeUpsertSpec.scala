@@ -45,7 +45,7 @@ class CascadeUpsertSpec extends UnitSpec {
     Constants.anyBroughtForwardAllowanceId -> JsBoolean(true),
     Constants.broughtForwardAllowanceId -> JsNumber(testNumber),
     Constants.claimDownsizingThresholdId -> JsBoolean(true),
-    Constants.dateOfDisposalId -> JsString("2019-01-01"),
+    Constants.datePropertyWasChangedId -> JsString("2019-01-01"),
     Constants.valueOfDisposedPropertyId -> JsNumber(testNumber),
     Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true),
     Constants.doesGrossingUpApplyToOtherPropertyId -> JsBoolean(false),
@@ -214,9 +214,9 @@ class CascadeUpsertSpec extends UnitSpec {
 
     "asked to save the value 'false' for Claim Downsizing Threshold" must {
 
-      "delete the existing 'Date of Disposal' answer" in {
+      "delete the existing 'Date Property Was Changed' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.dateOfDisposalId
+        updatedCacheMap.data.keys should not contain Constants.datePropertyWasChangedId
       }
 
       "delete the existing 'Value of Disposed Property' answer" in {
@@ -320,65 +320,65 @@ class CascadeUpsertSpec extends UnitSpec {
       }
     }
 
-    "asked to save a value before 8 July 2015 for Date of Disposal" must {
+    "asked to save a value before 8 July 2015 for Date Property Was Changed" must {
       "delete the existing 'Value of Disposed Property' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.dateOfDisposalId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys should not contain Constants.valueOfDisposedPropertyId
       }
 
       "delete the existing 'Any Assets Passing to Direct Descendants' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.dateOfDisposalId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys should not contain Constants.anyAssetsPassingToDirectDescendantsId
       }
 
       "delete the existing 'Assets Passing to Direct Descendants' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.dateOfDisposalId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys should not contain Constants.assetsPassingToDirectDescendantsId
       }
 
       "delete the existing 'Any Brought Forward Allowance on Disposal' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.dateOfDisposalId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys should not contain Constants.anyBroughtForwardAllowanceOnDisposalId
       }
 
       "delete the existing 'Does Grossing Up Apply to Other Property' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.dateOfDisposalId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys should not contain Constants.doesGrossingUpApplyToOtherPropertyId
       }
 
       "delete the existing 'Brought Forward Allowance on Disposal' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.dateOfDisposalId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys should not contain Constants.broughtForwardAllowanceOnDisposalId
       }
 
       "not delete any other answers" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.dateOfDisposalId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size - 6
       }
     }
 
-    "asked to save a value between 8 July 2015 and 5 April 2017 for Date of Disposal" must {
+    "asked to save a value between 8 July 2015 and 5 April 2017 for Date Property Was Changed" must {
 
       "delete the existing 'Any Brought Forward Allowance on Disposal' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.dateOfDisposalId, oneDayBeforeEligibilityDate, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeEligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys should not contain Constants.anyBroughtForwardAllowanceOnDisposalId
       }
 
       "delete the existing 'Brought Forward Allowance on Disposal' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.dateOfDisposalId, oneDayBeforeEligibilityDate, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeEligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys should not contain Constants.broughtForwardAllowanceOnDisposalId
       }
 
       "not delete any other answers" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.dateOfDisposalId, oneDayBeforeEligibilityDate, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeEligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size - 2
       }
     }
 
-    "asked to save a value on or after 6 April 2017 for Date of Disposal" must {
+    "asked to save a value on or after 6 April 2017 for Date Property Was Changed" must {
 
       "not delete existing answers for other questions" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.dateOfDisposalId, Constants.eligibilityDate, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, Constants.eligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size
       }
     }

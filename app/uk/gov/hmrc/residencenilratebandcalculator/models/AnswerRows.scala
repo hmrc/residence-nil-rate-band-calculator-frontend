@@ -42,7 +42,7 @@ object AnswerRows {
     Constants.anyBroughtForwardAllowanceId,
     Constants.broughtForwardAllowanceId,
     Constants.claimDownsizingThresholdId,
-    Constants.dateOfDisposalId,
+    Constants.datePropertyWasChangedId,
     Constants.valueOfDisposedPropertyId,
     Constants.anyAssetsPassingToDirectDescendantsId,
     Constants.doesGrossingUpApplyToOtherPropertyId,
@@ -95,8 +95,8 @@ object AnswerRows {
       boolAnswerRowFn("property_in_estate.title", Constants.propertyInEstateId, routes.PropertyInEstateController.onPageLoad),
     Constants.claimDownsizingThresholdId ->
       boolAnswerRowFn("claim_downsizing_threshold.title", Constants.claimDownsizingThresholdId, routes.ClaimDownsizingThresholdController.onPageLoad),
-    Constants.dateOfDisposalId ->
-      dateAnswerRowFn("date_of_disposal.title", "Date of disposal", routes.DateOfDisposalController.onPageLoad),
+    Constants.datePropertyWasChangedId ->
+      dateAnswerRowFn("date_property_was_changed.title", Constants.datePropertyWasChangedId, routes.DatePropertyWasChangedController.onPageLoad),
     Constants.valueOfDisposedPropertyId ->
       intAnswerRowFn("value_of_disposed_property.title", "Vale of disposed property", routes.ValueOfDisposedPropertyController.onPageLoad),
     Constants.anyAssetsPassingToDirectDescendantsId ->

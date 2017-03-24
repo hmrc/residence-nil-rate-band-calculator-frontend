@@ -19,23 +19,23 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_disposal
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_property_was_changed
 
 import scala.language.reflectiveCalls
 
-class DateOfDisposalViewSpec  extends DateViewSpecBase {
+class DatePropertyWasChangedViewSpec  extends DateViewSpecBase {
 
-  val messageKeyPrefix = "date_of_disposal"
+  val messageKeyPrefix = "date_property_was_changed"
 
-  def createView(form: Option[Form[Date]] = None) = date_of_disposal(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Date]] = None) = date_property_was_changed(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
-  "Date of Disposal View" must {
+  "Date Property Was Changed View" must {
 
     behave like rnrbPage[Date](createView, messageKeyPrefix, "guidance1", "guidance2")
 
     behave like pageWithBackLink[Date](createView)
 
-    behave like datePage(createView, messageKeyPrefix, DateOfDisposalController.onSubmit().url)
+    behave like datePage(createView, messageKeyPrefix, DatePropertyWasChangedController.onSubmit().url)
 
     behave like pageContainingPreviousAnswers(createView)
 

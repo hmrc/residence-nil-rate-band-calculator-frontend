@@ -53,7 +53,7 @@ class AssetsPassingToDirectDescendantsControllerSpec extends SimpleControllerSpe
            Constants.anyBroughtForwardAllowanceId,
            Constants.broughtForwardAllowanceId,
            Constants.claimDownsizingThresholdId,
-           Constants.dateOfDisposalId,
+           Constants.datePropertyWasChangedId,
            Constants.valueOfDisposedPropertyId,
            Constants.anyAssetsPassingToDirectDescendantsId,
            Constants.doesGrossingUpApplyToOtherPropertyId))(Reads.IntReads, Writes.IntWrites)

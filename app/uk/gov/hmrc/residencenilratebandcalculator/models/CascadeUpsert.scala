@@ -41,7 +41,7 @@ class CascadeUpsert {
       Constants.anyAssetsPassingToDirectDescendantsId -> ((v, cm) => anyAssetsPassingToDirectDescendants(v, cm)),
       Constants.anyBroughtForwardAllowanceOnDisposalId -> ((v, cm) => anyBroughtForwardAllowanceOnDisposal(v, cm)),
       Constants.propertyPassingToDirectDescendantsId -> ((v, cm) => propertyPassingToDirectDescendants(v, cm)),
-      Constants.dateOfDisposalId -> ((v, cm) => dateOfDisposal(v, cm))
+      Constants.datePropertyWasChangedId -> ((v, cm) => datePropertyWasChanged(v, cm))
     )
 
   private def store[A](key:String, value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]) =
@@ -103,7 +103,7 @@ class CascadeUpsert {
     clearIfFalse(Constants.claimDownsizingThresholdId,
       value,
       Set(
-        Constants.dateOfDisposalId,
+        Constants.datePropertyWasChangedId,
         Constants.valueOfDisposedPropertyId,
         Constants.anyAssetsPassingToDirectDescendantsId,
         Constants.assetsPassingToDirectDescendantsId,
@@ -124,7 +124,7 @@ class CascadeUpsert {
   private def anyBroughtForwardAllowanceOnDisposal[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
     clearIfFalse(Constants.anyBroughtForwardAllowanceOnDisposalId, value, Set(Constants.broughtForwardAllowanceOnDisposalId), cacheMap)
 
-  private def dateOfDisposal[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
+  private def datePropertyWasChanged[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
     val keysToRemoveWhenDateBeforeDownsizingDate = Set(
       Constants.valueOfDisposedPropertyId,
       Constants.anyAssetsPassingToDirectDescendantsId,
@@ -147,7 +147,7 @@ class CascadeUpsert {
           case Success(parsedDate) if parsedDate isBefore Constants.eligibilityDate =>
             cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemoveWhenDateBeforeEligibilityDate.contains(s)))
           case Failure(e) =>
-            val msg = s"Unable to parse value $value as the date of disposal"
+            val msg = s"Unable to parse value $value as the Date Property Was Changed"
             Logger.error(msg)
             throw new RuntimeException(msg)
           case _ => cacheMap
@@ -155,6 +155,6 @@ class CascadeUpsert {
       case _ => cacheMap
     }
 
-    store(Constants.dateOfDisposalId, value, mapToStore)
+    store(Constants.datePropertyWasChangedId, value, mapToStore)
   }
 }
