@@ -103,17 +103,17 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.propertyPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.CannotClaimRNRBController.onPageLoad()
     }
 
-    "return a call to the AnyBroughtForwardAllowance onPageLoad method when there is no property in the estate and we're on the Cannot Claim RNRB page" in {
+    "return a call to the TransferAnyUnusedThreshold onPageLoad method when there is no property in the estate and we're on the Cannot Claim RNRB page" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.propertyInEstate) thenReturn Some(false)
-      navigator.nextPage(Constants.cannotClaimRNRB)(mockCacheMap) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
+      navigator.nextPage(Constants.cannotClaimRNRB)(mockCacheMap) shouldBe routes.TransferAnyUnusedThresholdController.onPageLoad()
     }
 
-    "return a call to the AnyBroughtForwardAllowance onPageLoad method when there is no Property Passing To Direct Descendants" +
+    "return a call to the TransferAnyUnusedThreshold onPageLoad method when there is no Property Passing To Direct Descendants" +
       "and we're on the Cannot Claim RNRB page" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.propertyPassingToDirectDescendants) thenReturn Some(Constants.none)
-      navigator.nextPage(Constants.cannotClaimRNRB)(mockCacheMap) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
+      navigator.nextPage(Constants.cannotClaimRNRB)(mockCacheMap) shouldBe routes.TransferAnyUnusedThresholdController.onPageLoad()
     }
 
     "return a call to the Results onPageLoad method when we're on the Cannot Claim Downsizing page" in {
@@ -132,7 +132,7 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.propertyInEstateId)(mockCacheMap) shouldBe routes.PropertyValueController.onPageLoad()
     }
 
-    "return a call to the AnyBroughtForwardAllowance onPageLoad method when there is not a property in the estate" in {
+    "return a call to the TransferAnyUnusedThreshold onPageLoad method when there is not a property in the estate" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.propertyInEstate) thenReturn Some(false)
       navigator.nextPage(Constants.propertyInEstateId)(mockCacheMap) shouldBe routes.CannotClaimRNRBController.onPageLoad()
@@ -146,24 +146,24 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
 
     "return a call to the BroughtForwardAllowanceController onPageLoad method when there is some brought forward allowance" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.anyBroughtForwardAllowance) thenReturn Some(true)
-      navigator.nextPage(Constants.anyBroughtForwardAllowanceId)(mockCacheMap) shouldBe routes.BroughtForwardAllowanceController.onPageLoad()
+      when(mockCacheMap.transferAnyUnusedThreshold) thenReturn Some(true)
+      navigator.nextPage(Constants.transferAnyUnusedThresholdId)(mockCacheMap) shouldBe routes.BroughtForwardAllowanceController.onPageLoad()
     }
 
     "return a call to the ClaimDownsizingThresholdController onPageLoad method when there is no brought forward allowance" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.anyBroughtForwardAllowance) thenReturn Some(false)
-      navigator.nextPage(Constants.anyBroughtForwardAllowanceId)(mockCacheMap) shouldBe routes.ClaimDownsizingThresholdController.onPageLoad()
+      when(mockCacheMap.transferAnyUnusedThreshold) thenReturn Some(false)
+      navigator.nextPage(Constants.transferAnyUnusedThresholdId)(mockCacheMap) shouldBe routes.ClaimDownsizingThresholdController.onPageLoad()
     }
 
     "return a call to the ClaimDownsizingThresholdController onPageLoad method from the BroughtForwardController" in {
       navigator.nextPage(Constants.broughtForwardAllowanceId)(mock[UserAnswers]) shouldBe routes.ClaimDownsizingThresholdController.onPageLoad()
     }
 
-    "return a call to the Any Brought Forward Allowance onPageLoad method when no exemptions apply to the property" in {
+    "return a call to the Transfer Any Unused Allowance onPageLoad method when no exemptions apply to the property" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.exemptionsAndReliefClaimed) thenReturn Some(false)
-      navigator.nextPage(Constants.exemptionsAndReliefClaimedId)(mockCacheMap) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
+      navigator.nextPage(Constants.exemptionsAndReliefClaimedId)(mockCacheMap) shouldBe routes.TransferAnyUnusedThresholdController.onPageLoad()
     }
 
     "return a call to the Grossing Up On Estate Property onPageLoad method when exemptions apply to the property" in {
@@ -184,9 +184,9 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.grossingUpOnEstatePropertyId)(mockCacheMap) shouldBe routes.TransitionOutController.onPageLoad()
     }
 
-    "return a call to the Any Brought Forward Allowance onPageLoad method from the " +
+    "return a call to the Transfer Any Unused Allowance onPageLoad method from the " +
       "Chargeable Inherited Property Value controller" in {
-      navigator.nextPage(Constants.chargeableInheritedPropertyValueId)(mock[UserAnswers]) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
+      navigator.nextPage(Constants.chargeableInheritedPropertyValueId)(mock[UserAnswers]) shouldBe routes.TransferAnyUnusedThresholdController.onPageLoad()
     }
 
     val userAnswers = new UserAnswers(CacheMap("", Map()))
@@ -248,57 +248,57 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.chargeablePropertyValueId)(userAnswers) shouldBe routes.GrossingUpOnEstatePropertyController.onPageLoad()
     }
 
-    "return a call to the Property In Estate when back linking from the Any Brought Forward Allowance page" in {
-      navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.PropertyInEstateController.onPageLoad()
+    "return a call to the Property In Estate when back linking from the Transfer Any Unused Allowance page" in {
+      navigator.lastPage(Constants.transferAnyUnusedThresholdId)(userAnswers) shouldBe routes.PropertyInEstateController.onPageLoad()
     }
 
-    "return a call to the Chargeable Inherited Property Value when back linking from the Any Brought Forward Allowance page" +
+    "return a call to the Chargeable Inherited Property Value when back linking from the Transfer Any Unused Allowance page" +
       "when the user has positively answered Exemptions And Relief Claimed" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.exemptionsAndReliefClaimed) thenReturn Some(true)
-      navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.ChargeableInheritedPropertyValueController.onPageLoad()
+      navigator.lastPage(Constants.transferAnyUnusedThresholdId)(userAnswers) shouldBe routes.ChargeableInheritedPropertyValueController.onPageLoad()
     }
 
-    "return a call to the Exemptions And Relief Claimed when back linking from the Any Brought Forward Allowance page" +
+    "return a call to the Exemptions And Relief Claimed when back linking from the Transfer Any Unused Allowance page" +
       "when the user has answered Property Closely Inherited as all" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.propertyPassingToDirectDescendants) thenReturn Some(Constants.all)
-      navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.ExemptionsAndReliefClaimedController.onPageLoad()
+      navigator.lastPage(Constants.transferAnyUnusedThresholdId)(userAnswers) shouldBe routes.ExemptionsAndReliefClaimedController.onPageLoad()
     }
 
-    "return a call to the Exemptions And Relief Claimed when back linking from the Any Brought Forward Allowance page" +
+    "return a call to the Exemptions And Relief Claimed when back linking from the Transfer Any Unused Allowance page" +
       "when the user has answered Property Closely Inherited as some" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.propertyPassingToDirectDescendants) thenReturn Some(Constants.some)
-      navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.ExemptionsAndReliefClaimedController.onPageLoad()
+      navigator.lastPage(Constants.transferAnyUnusedThresholdId)(userAnswers) shouldBe routes.ExemptionsAndReliefClaimedController.onPageLoad()
     }
 
-    "return a call to the Property Passing To Direct Descendants when back linking from the Any Brought Forward Allowance page" +
+    "return a call to the Property Passing To Direct Descendants when back linking from the Transfer Any Unused Allowance page" +
       "when the user has answered Property Passing To Direct Descendants as none" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.propertyPassingToDirectDescendants) thenReturn Some(Constants.none)
-      navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.PropertyPassingToDirectDescendantsController.onPageLoad()
+      navigator.lastPage(Constants.transferAnyUnusedThresholdId)(userAnswers) shouldBe routes.PropertyPassingToDirectDescendantsController.onPageLoad()
     }
 
-    "return a call to the Property Value when back linking from the Any Brought Forward Allowance page" +
+    "return a call to the Property Value when back linking from the Transfer Any Unused Allowance page" +
       "when the user has positively answered Property In Estate" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.propertyInEstate) thenReturn Some(true)
-      navigator.lastPage(Constants.anyBroughtForwardAllowanceId)(userAnswers) shouldBe routes.PropertyValueController.onPageLoad()
+      navigator.lastPage(Constants.transferAnyUnusedThresholdId)(userAnswers) shouldBe routes.PropertyValueController.onPageLoad()
     }
 
-    "return a call to the Any Brought Forward Allowance After Exemption when back linking from the Brought Forward Allowance page" in {
-      navigator.lastPage(Constants.broughtForwardAllowanceId)(userAnswers) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
+    "return a call to the Transfer Any Unused Allowance After Exemption when back linking from the Brought Forward Allowance page" in {
+      navigator.lastPage(Constants.broughtForwardAllowanceId)(userAnswers) shouldBe routes.TransferAnyUnusedThresholdController.onPageLoad()
     }
 
-    "return a call to the Any Brought Forward Allowance when back linking from the Claim Downsizing Threshold page" in {
-      navigator.lastPage(Constants.claimDownsizingThresholdId)(userAnswers) shouldBe routes.AnyBroughtForwardAllowanceController.onPageLoad()
+    "return a call to the Transfer Any Unused Allowance when back linking from the Claim Downsizing Threshold page" in {
+      navigator.lastPage(Constants.claimDownsizingThresholdId)(userAnswers) shouldBe routes.TransferAnyUnusedThresholdController.onPageLoad()
     }
 
     "return a call to the Brought Forward Allowance when back linking from the Claim Downsizing Threshold page when the" +
-      "user has positively answered Any Brought Forward Allowance" in {
+      "user has positively answered Transfer Any Unused Allowance" in {
       val userAnswers = mock[UserAnswers]
-      when(userAnswers.anyBroughtForwardAllowance) thenReturn Some(true)
+      when(userAnswers.transferAnyUnusedThreshold) thenReturn Some(true)
       navigator.lastPage(Constants.claimDownsizingThresholdId)(userAnswers) shouldBe routes.BroughtForwardAllowanceController.onPageLoad()
     }
 
@@ -386,7 +386,7 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     "return a call to the Transfer Available When Property Changed controller onPageLoad method from the AssetsPassingToDirectDescendants controller " +
       "when there is brought forward allowance and the property was changed on (or after) the eligibility date" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.anyBroughtForwardAllowance) thenReturn Some(true)
+      when(mockCacheMap.transferAnyUnusedThreshold) thenReturn Some(true)
       when(mockCacheMap.datePropertyWasChanged) thenReturn Some(Constants.eligibilityDate)
       navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.TransferAvailableWhenPropertyChangedController.onPageLoad()
     }
@@ -394,7 +394,7 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     "return a call to the Results controller onPageLoad method from AssetsPassingToDirectDescendants when there is no brought forward allowance, " +
       "even though the property was changed on the eligibility date" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.anyBroughtForwardAllowance) thenReturn Some(false)
+      when(mockCacheMap.transferAnyUnusedThreshold) thenReturn Some(false)
       when(mockCacheMap.datePropertyWasChanged) thenReturn Some(Constants.eligibilityDate)
       navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
     }
@@ -402,7 +402,7 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     "return a call to the Results controller onPageLoad method from AssetsPassingToDirectDescendants when there is brought forward allowance " +
       "but the property was changed before the eligibility date" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.anyBroughtForwardAllowance) thenReturn Some(true)
+      when(mockCacheMap.transferAnyUnusedThreshold) thenReturn Some(true)
       when(mockCacheMap.datePropertyWasChanged) thenReturn Some(Constants.eligibilityDate.minusDays(1))
       navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
     }

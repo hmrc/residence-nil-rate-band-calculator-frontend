@@ -24,7 +24,7 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def anyAssetsPassingToDirectDescendants = cacheMap.getEntry[Boolean](Constants.anyAssetsPassingToDirectDescendantsId)
 
-  def anyBroughtForwardAllowance = cacheMap.getEntry[Boolean](Constants.anyBroughtForwardAllowanceId)
+  def transferAnyUnusedThreshold = cacheMap.getEntry[Boolean](Constants.transferAnyUnusedThresholdId)
 
   def transferAvailableWhenPropertyChanged = cacheMap.getEntry[Boolean](Constants.transferAvailableWhenPropertyChangedId)
 

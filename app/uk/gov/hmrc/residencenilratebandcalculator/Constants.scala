@@ -22,7 +22,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.RadioOption
 
 object Constants {
   val anyAssetsPassingToDirectDescendantsId = "AnyAssetsPassingToDirectDescendants"
-  val anyBroughtForwardAllowanceId = "AnyBroughtForwardAllowance"
+  val transferAnyUnusedThresholdId = "TransferAnyUnusedThreshold"
   val transferAvailableWhenPropertyChangedId = "TransferAvailableWhenPropertyChanged"
   val claimDownsizingThresholdId = "ClaimDownsizingThreshold"
   val partOfEstatePassingToDirectDescendantsId = "PartOfEstatePassingToDirectDescendants"

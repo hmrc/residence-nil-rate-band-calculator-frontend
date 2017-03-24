@@ -17,24 +17,24 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_brought_forward_allowance
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_any_unused_threshold
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 
 import scala.language.reflectiveCalls
 
-class AnyBroughtForwardAllowanceViewSpec extends BooleanViewSpecBase {
+class TransferAnyUnusedThresholdViewSpec extends BooleanViewSpecBase {
 
-  val messageKeyPrefix = "any_brought_forward_allowance"
+  val messageKeyPrefix = "transfer_any_unused_threshold"
 
-  def createView(form: Option[Form[Boolean]] = None) = any_brought_forward_allowance(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = transfer_any_unused_threshold(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
-  "Any Brought Forward Allowance View" must {
+  "Transfer Any Unused Allowance View" must {
 
     behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")
 
     behave like pageWithBackLink[Boolean](createView)
 
-    behave like booleanPage(createView, messageKeyPrefix, AnyBroughtForwardAllowanceController.onSubmit().url)
+    behave like booleanPage(createView, messageKeyPrefix, TransferAnyUnusedThresholdController.onSubmit().url)
 
     behave like pageContainingPreviousAnswers(createView)
 

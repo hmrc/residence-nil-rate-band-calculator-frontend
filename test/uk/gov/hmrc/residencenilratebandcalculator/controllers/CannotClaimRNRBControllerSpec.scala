@@ -56,7 +56,7 @@ class CannotClaimRNRBControllerSpec extends UnitSpec with WithFakeApplication wi
       Constants.grossingUpOnEstateAssetsId -> JsBoolean(true),
       Constants.propertyPassingToDirectDescendantsId -> JsBoolean(true),
       Constants.percentagePassedToDirectDescendantsId -> JsNumber(100),
-      Constants.anyBroughtForwardAllowanceId -> JsBoolean(true),
+      Constants.transferAnyUnusedThresholdId -> JsBoolean(true),
       Constants.broughtForwardAllowanceId -> JsNumber(50000),
       Constants.claimDownsizingThresholdId -> JsBoolean(true),
       Constants.datePropertyWasChangedId -> JsString("2018-03-02"),
@@ -82,7 +82,7 @@ class CannotClaimRNRBControllerSpec extends UnitSpec with WithFakeApplication wi
 
       val result = controller.onPageLoad(fakeRequest)
       contentAsString(result) shouldBe
-        cannot_claim_RNRB(frontendAppConfig, "cannot_claim_RNRB.no_property_reason", routes.AnyBroughtForwardAllowanceController.onPageLoad, Seq())(fakeRequest, messages).toString
+        cannot_claim_RNRB(frontendAppConfig, "cannot_claim_RNRB.no_property_reason", routes.TransferAnyUnusedThresholdController.onPageLoad, Seq())(fakeRequest, messages).toString
     }
 
     "throw an exception when the cache is unavailable" in {

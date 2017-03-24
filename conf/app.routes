@@ -7,8 +7,8 @@ GET        /assets/*file                                controllers.Assets.versi
 GET        /any-assets-passing-to-direct-descendants    uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyAssetsPassingToDirectDescendantsController.onPageLoad
 POST       /any-assets-passing-to-direct-descendants    uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyAssetsPassingToDirectDescendantsController.onSubmit
 
-GET        /any-brought-forward-allowance               uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyBroughtForwardAllowanceController.onPageLoad
-POST       /any-brought-forward-allowance               uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyBroughtForwardAllowanceController.onSubmit
+GET        /transfer-any-unused-threshold               uk.gov.hmrc.residencenilratebandcalculator.controllers.TransferAnyUnusedThresholdController.onPageLoad
+POST       /transfer-any-unused-threshold               uk.gov.hmrc.residencenilratebandcalculator.controllers.TransferAnyUnusedThresholdController.onSubmit
 
 GET        /transfer-available-when-property-changed    uk.gov.hmrc.residencenilratebandcalculator.controllers.TransferAvailableWhenPropertyChangedController.onPageLoad
 POST       /transfer-available-when-property-changed    uk.gov.hmrc.residencenilratebandcalculator.controllers.TransferAvailableWhenPropertyChangedController.onSubmit

@@ -36,7 +36,7 @@ class CascadeUpsert {
     Map(
       Constants.propertyInEstateId -> ((v, cm) => propertyInEstate(v, cm)),
       Constants.exemptionsAndReliefClaimedId -> ((v, cm) => exemptionsAndReliefClaimedClearance(v, cm)),
-      Constants.anyBroughtForwardAllowanceId -> ((v, cm) => anyBroughtForwardAllowance(v, cm)),
+      Constants.transferAnyUnusedThresholdId -> ((v, cm) => transferAnyUnusedThreshold(v, cm)),
       Constants.claimDownsizingThresholdId -> ((v, cm) => claimDownsizingThreshold(v, cm)),
       Constants.anyAssetsPassingToDirectDescendantsId -> ((v, cm) => anyAssetsPassingToDirectDescendants(v, cm)),
       Constants.transferAvailableWhenPropertyChangedId -> ((v, cm) => transferAvailableWhenPropertyChanged(v, cm)),
@@ -90,8 +90,8 @@ class CascadeUpsert {
         Constants.grossingUpOnEstatePropertyId),
       cacheMap)
 
-  private def anyBroughtForwardAllowance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearIfFalse(Constants.anyBroughtForwardAllowanceId,
+  private def transferAnyUnusedThreshold[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+    clearIfFalse(Constants.transferAnyUnusedThresholdId,
       value,
       Set(
         Constants.broughtForwardAllowanceId,

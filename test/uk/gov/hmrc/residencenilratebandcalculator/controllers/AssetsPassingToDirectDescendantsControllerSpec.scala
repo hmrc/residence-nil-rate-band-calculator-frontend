@@ -50,7 +50,7 @@ class AssetsPassingToDirectDescendantsControllerSpec extends SimpleControllerSpe
            Constants.propertyPassingToDirectDescendantsId,
            Constants.percentagePassedToDirectDescendantsId,
            Constants.chargeablePropertyValueId,
-           Constants.anyBroughtForwardAllowanceId,
+           Constants.transferAnyUnusedThresholdId,
            Constants.broughtForwardAllowanceId,
            Constants.claimDownsizingThresholdId,
            Constants.datePropertyWasChangedId,

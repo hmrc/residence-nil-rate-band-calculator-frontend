@@ -34,18 +34,18 @@ class Navigator @Inject()() {
       Constants.valueOfEstateId -> (_ => ChargeableEstateValueController.onPageLoad()),
       Constants.chargeableEstateValueId -> (_ => PropertyInEstateController.onPageLoad()),
       Constants.propertyInEstateId -> (ua => getPropertyInEstateRoute(ua)),
-      Constants.cannotClaimRNRB -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
+      Constants.cannotClaimRNRB -> (_ => TransferAnyUnusedThresholdController.onPageLoad()),
       Constants.propertyValueId -> (_ => PropertyPassingToDirectDescendantsController.onPageLoad()),
       Constants.propertyPassingToDirectDescendantsId -> (ua => getPropertyPassingToDirectDescendantsRoute(ua)),
       Constants.percentagePassedToDirectDescendantsId -> (_ => ExemptionsAndReliefClaimedController.onPageLoad()),
-      Constants.anyBroughtForwardAllowanceId -> (ua => getAnyBroughtForwardAllowanceRoute(ua)),
+      Constants.transferAnyUnusedThresholdId -> (ua => getTransferAnyUnusedThresholdRoute(ua)),
       Constants.broughtForwardAllowanceId -> (_ => ClaimDownsizingThresholdController.onPageLoad()),
       Constants.claimDownsizingThresholdId -> (ua => getClaimDownsizingThresholdRoute(ua)),
       Constants.cannotClaimDownsizingId -> (_ => ResultsController.onPageLoad()),
       Constants.datePropertyWasChangedId -> (ua => getDatePropertyWasChangedRoute(ua)),
       Constants.exemptionsAndReliefClaimedId -> (ua => getExemptionsAndReliefClaimedRoute(ua)),
       Constants.chargeablePropertyValueId -> (_ => ChargeableInheritedPropertyValueController.onPageLoad()),
-      Constants.chargeableInheritedPropertyValueId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
+      Constants.chargeableInheritedPropertyValueId -> (_ => TransferAnyUnusedThresholdController.onPageLoad()),
       Constants.grossingUpOnEstatePropertyId -> (ua => getGrossingUpOnEstatePropertyRoute(ua)),
       Constants.valueOfChangedPropertyId -> (_ => AnyAssetsPassingToDirectDescendantsController.onPageLoad()),
       Constants.anyAssetsPassingToDirectDescendantsId -> (ua => getAnyAssetsPassingToDirectDescendantsRoute(ua)),
@@ -78,8 +78,8 @@ class Navigator @Inject()() {
   private def getPropertyInEstateRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.propertyInEstate, PropertyValueController.onPageLoad(), CannotClaimRNRBController.onPageLoad())
 
-  private def getAnyBroughtForwardAllowanceRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.anyBroughtForwardAllowance, BroughtForwardAllowanceController.onPageLoad(), ClaimDownsizingThresholdController.onPageLoad())
+  private def getTransferAnyUnusedThresholdRoute(userAnswers: UserAnswers) =
+    getRouteForOptionalBoolean(userAnswers.transferAnyUnusedThreshold, BroughtForwardAllowanceController.onPageLoad(), ClaimDownsizingThresholdController.onPageLoad())
 
   private def getTransferAvailableWhenPropertyChangedRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.transferAvailableWhenPropertyChanged, ValueAvailableWhenPropertyChangedController.onPageLoad(), ResultsController.onPageLoad())
@@ -99,7 +99,7 @@ class Navigator @Inject()() {
   }
 
   private def getExemptionsAndReliefClaimedRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.exemptionsAndReliefClaimed, GrossingUpOnEstatePropertyController.onPageLoad(), AnyBroughtForwardAllowanceController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.exemptionsAndReliefClaimed, GrossingUpOnEstatePropertyController.onPageLoad(), TransferAnyUnusedThresholdController.onPageLoad())
 
   private def getGrossingUpOnEstatePropertyRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.grossingUpOnEstateProperty, TransitionOutController.onPageLoad(), ChargeablePropertyValueController.onPageLoad())
@@ -110,7 +110,7 @@ class Navigator @Inject()() {
   private def getGrossingUpOnEstateAssetsRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.grossingUpOnEstateAssets, TransitionOutController.onPageLoad(), AssetsPassingToDirectDescendantsController.onPageLoad())
 
-  private def getAssetsPassingToDirectDescendantsRoute(userAnswers: UserAnswers) = (userAnswers.anyBroughtForwardAllowance, userAnswers.datePropertyWasChanged) match {
+  private def getAssetsPassingToDirectDescendantsRoute(userAnswers: UserAnswers) = (userAnswers.transferAnyUnusedThreshold, userAnswers.datePropertyWasChanged) match {
     case (Some(true), Some(d)) if !(d isBefore Constants.eligibilityDate) => TransferAvailableWhenPropertyChangedController.onPageLoad()
     case _ => ResultsController.onPageLoad()
   }
@@ -132,8 +132,8 @@ class Navigator @Inject()() {
       Constants.chargeablePropertyValueId -> (_ => GrossingUpOnEstatePropertyController.onPageLoad()),
       Constants.chargeableInheritedPropertyValueId -> (_ => ChargeablePropertyValueController.onPageLoad()),
       Constants.grossingUpOnEstatePropertyId -> (_ => ExemptionsAndReliefClaimedController.onPageLoad()),
-      Constants.anyBroughtForwardAllowanceId -> (ua => getAnyBroughtForwardAllowanceReverseRoute(ua)),
-      Constants.broughtForwardAllowanceId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
+      Constants.transferAnyUnusedThresholdId -> (ua => getTransferAnyUnusedThresholdReverseRoute(ua)),
+      Constants.broughtForwardAllowanceId -> (_ => TransferAnyUnusedThresholdController.onPageLoad()),
       Constants.claimDownsizingThresholdId -> (ua => getClaimDownsizingThresholdReverseRoute(ua)),
       Constants.datePropertyWasChangedId -> (_ => ClaimDownsizingThresholdController.onPageLoad()),
       Constants.valueOfChangedPropertyId -> (_ => DatePropertyWasChangedController.onPageLoad()),
@@ -147,7 +147,7 @@ class Navigator @Inject()() {
 
   private def goToPageNotFound: UserAnswers => Call = _ => PageNotFoundController.onPageLoad()
 
-  private def getAnyBroughtForwardAllowanceReverseRoute(userAnswers: UserAnswers) = userAnswers.exemptionsAndReliefClaimed match {
+  private def getTransferAnyUnusedThresholdReverseRoute(userAnswers: UserAnswers) = userAnswers.exemptionsAndReliefClaimed match {
     case Some(true) => ChargeableInheritedPropertyValueController.onPageLoad()
     case _ => userAnswers.propertyPassingToDirectDescendants match {
       case Some(Constants.none) => PropertyPassingToDirectDescendantsController.onPageLoad()
@@ -164,9 +164,9 @@ class Navigator @Inject()() {
     case _ => PropertyPassingToDirectDescendantsController.onPageLoad()
   }
 
-  private def getClaimDownsizingThresholdReverseRoute(userAnswers: UserAnswers) = userAnswers.anyBroughtForwardAllowance match {
+  private def getClaimDownsizingThresholdReverseRoute(userAnswers: UserAnswers) = userAnswers.transferAnyUnusedThreshold match {
     case Some(true) => BroughtForwardAllowanceController.onPageLoad()
-    case _ => AnyBroughtForwardAllowanceController.onPageLoad()
+    case _ => TransferAnyUnusedThresholdController.onPageLoad()
   }
 
   def lastPage(controllerId: String): UserAnswers => Call = {

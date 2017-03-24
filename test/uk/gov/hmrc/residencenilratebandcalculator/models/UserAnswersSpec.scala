@@ -36,10 +36,10 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.anyAssetsPassingToDirectDescendants shouldBe Some(true)
       }
 
-      "return the correct answer for Any Brought Forward Allowance" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.anyBroughtForwardAllowanceId -> JsBoolean(true)))
+      "return the correct answer for Transfer Any Unused Allowance" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.transferAnyUnusedThresholdId -> JsBoolean(true)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.anyBroughtForwardAllowance shouldBe Some(true)
+        userAnswers.transferAnyUnusedThreshold shouldBe Some(true)
       }
 
       "return the correct answer for Transfer Available When Property Changed" in {
@@ -165,9 +165,9 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.anyAssetsPassingToDirectDescendants shouldBe None
       }
 
-      "return None for Any Brought Forward Allowance" in {
+      "return None for Transfer Any Unused Allowance" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.anyBroughtForwardAllowance shouldBe None
+        userAnswers.transferAnyUnusedThreshold shouldBe None
       }
 
       "return None for Transfer Available When Property Changed" in {

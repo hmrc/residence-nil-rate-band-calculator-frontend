@@ -38,8 +38,8 @@ object CalculationInput {
     require(userAnswers.chargeableEstateValue.isDefined, "Chargeable Estate Value was not answered")
     require(userAnswers.propertyInEstate.isDefined, "Property In Estate was not answered")
     if (userAnswers.propertyInEstate.get) requirePropertyInEstateDependencies(userAnswers)
-    require(userAnswers.anyBroughtForwardAllowance.isDefined, "Any Brought Forward Allowance was not answered")
-    if (userAnswers.anyBroughtForwardAllowance.get) requireBroughtForwardAllowanceDependencies(userAnswers)
+    require(userAnswers.transferAnyUnusedThreshold.isDefined, "Transfer Any Unused Allowance was not answered")
+    if (userAnswers.transferAnyUnusedThreshold.get) requireBroughtForwardAllowanceDependencies(userAnswers)
     require(userAnswers.claimDownsizingThreshold.isDefined, "Claim Downsizing Threshold was not answered")
 
     CalculationInput(
@@ -74,7 +74,7 @@ object CalculationInput {
       case _ => 0
     }
 
-  private def getBroughtForwardAllowance(userAnswers: UserAnswers) = userAnswers.anyBroughtForwardAllowance.get match {
+  private def getBroughtForwardAllowance(userAnswers: UserAnswers) = userAnswers.transferAnyUnusedThreshold.get match {
     case true => userAnswers.broughtForwardAllowance.get
     case _ => 0
   }
@@ -153,7 +153,7 @@ object DownsizingDetails {
 
   private def requireAssetsPassingToDirectDescendantsDependencies(userAnswers: UserAnswers) = {
     require(userAnswers.assetsPassingToDirectDescendants.isDefined, "Assets Passing to Direct Descendants was not answered")
-    if (userAnswers.anyBroughtForwardAllowance.get && !(userAnswers.datePropertyWasChanged.get isBefore Constants.eligibilityDate)) {
+    if (userAnswers.transferAnyUnusedThreshold.get && !(userAnswers.datePropertyWasChanged.get isBefore Constants.eligibilityDate)) {
       requireTransferAvailableWhenPropertyChangedDependencies(userAnswers)
     }
   }

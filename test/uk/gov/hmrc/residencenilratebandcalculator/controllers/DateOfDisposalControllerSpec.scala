@@ -45,7 +45,7 @@ class DatePropertyWasChangedControllerSpec extends DateControllerSpecBase {
            Constants.propertyValueId,
            Constants.propertyPassingToDirectDescendantsId,
            Constants.percentagePassedToDirectDescendantsId,
-           Constants.anyBroughtForwardAllowanceId,
+           Constants.transferAnyUnusedThresholdId,
            Constants.broughtForwardAllowanceId,
            Constants.claimDownsizingThresholdId))(Date.dateReads)
   }

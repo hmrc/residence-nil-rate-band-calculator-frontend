@@ -59,7 +59,7 @@ class BroughtForwardAllowanceControllerSpec extends UnitSpec with WithFakeApplic
   }
 
   def createView = (value: Option[Map[String, String]]) => {
-    val url = routes.AnyBroughtForwardAllowanceController.onPageLoad().url
+    val url = routes.TransferAnyUnusedThresholdController.onPageLoad().url
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
       case None => brought_forward_allowance(frontendAppConfig, url, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages)
@@ -68,7 +68,7 @@ class BroughtForwardAllowanceControllerSpec extends UnitSpec with WithFakeApplic
   }
 
   def createViewWithBacklink = (value: Option[Map[String, String]]) => {
-    val url = routes.AnyBroughtForwardAllowanceController.onPageLoad().url
+    val url = routes.TransferAnyUnusedThresholdController.onPageLoad().url
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
       case None => brought_forward_allowance(frontendAppConfig, url, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages)
@@ -170,7 +170,7 @@ class BroughtForwardAllowanceControllerSpec extends UnitSpec with WithFakeApplic
           Constants.propertyValueId -> JsNumber(400000),
           Constants.propertyPassingToDirectDescendantsId -> JsBoolean(true),
           Constants.percentagePassedToDirectDescendantsId -> JsNumber(100),
-          Constants.anyBroughtForwardAllowanceId -> JsBoolean(true)
+          Constants.transferAnyUnusedThresholdId -> JsBoolean(true)
         ))
       val controllerId = createController().controllerId
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
@@ -184,7 +184,7 @@ class BroughtForwardAllowanceControllerSpec extends UnitSpec with WithFakeApplic
              Constants.propertyValueId,
              Constants.propertyPassingToDirectDescendantsId,
              Constants.percentagePassedToDirectDescendantsId,
-             Constants.anyBroughtForwardAllowanceId))
+             Constants.transferAnyUnusedThresholdId))
       true shouldBe(true)
     }
 

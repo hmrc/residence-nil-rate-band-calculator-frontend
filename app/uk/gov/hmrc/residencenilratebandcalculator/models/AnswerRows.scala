@@ -39,7 +39,7 @@ object AnswerRows {
     Constants.grossingUpOnEstatePropertyId,
     Constants.chargeablePropertyValueId,
     Constants.chargeableInheritedPropertyValueId,
-    Constants.anyBroughtForwardAllowanceId,
+    Constants.transferAnyUnusedThresholdId,
     Constants.broughtForwardAllowanceId,
     Constants.claimDownsizingThresholdId,
     Constants.datePropertyWasChangedId,
@@ -103,8 +103,8 @@ object AnswerRows {
       boolAnswerRowFn("any_assets_passing_to_direct_descendants.title",
         "Any assets passing to direct descendants",
         routes.AnyAssetsPassingToDirectDescendantsController.onPageLoad),
-    Constants.anyBroughtForwardAllowanceId ->
-      boolAnswerRowFn("any_brought_forward_allowance.title", "Any brought forward allowance", routes.AnyBroughtForwardAllowanceController.onPageLoad),
+    Constants.transferAnyUnusedThresholdId ->
+      boolAnswerRowFn("transfer_any_unused_threshold.title", Constants.transferAnyUnusedThresholdId, routes.TransferAnyUnusedThresholdController.onPageLoad),
     Constants.transferAvailableWhenPropertyChangedId ->
       boolAnswerRowFn("transfer_available_when_property_changed.title",
         Constants.transferAvailableWhenPropertyChangedId,
