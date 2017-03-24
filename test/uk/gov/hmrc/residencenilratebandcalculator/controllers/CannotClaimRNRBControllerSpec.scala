@@ -66,7 +66,7 @@ class CannotClaimRNRBControllerSpec extends UnitSpec with WithFakeApplication wi
       Constants.chargeablePropertyValueId -> JsNumber(50000),
       Constants.assetsPassingToDirectDescendantsId -> JsNumber(1000),
       Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true),
-      Constants.broughtForwardAllowanceOnDisposalId -> JsNumber(1000)
+      Constants.valueAvailableWhenPropertyChangedId -> JsNumber(1000)
     ))
 
   "Cannot Claim RNRB Controller" must {

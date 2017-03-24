@@ -51,7 +51,7 @@ class CascadeUpsertSpec extends UnitSpec {
     Constants.grossingUpOnEstateAssetsId -> JsBoolean(false),
     Constants.assetsPassingToDirectDescendantsId -> JsNumber(testNumber),
     Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true),
-    Constants.broughtForwardAllowanceOnDisposalId -> JsNumber(testNumber)
+    Constants.valueAvailableWhenPropertyChangedId -> JsNumber(testNumber)
   ))
 
   "Cascade Upsert" when {
@@ -193,9 +193,9 @@ class CascadeUpsertSpec extends UnitSpec {
         updatedCacheMap.data.keys should not contain Constants.transferAvailableWhenPropertyChangedId
       }
 
-      "delete the existing 'Brought Forward Allowance on DIsposal' answer" in {
+      "delete the existing 'Value Available When Property Changed' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.anyBroughtForwardAllowanceId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.broughtForwardAllowanceOnDisposalId
+        updatedCacheMap.data.keys should not contain Constants.valueAvailableWhenPropertyChangedId
       }
 
       "not delete any other answers" in {
@@ -244,9 +244,9 @@ class CascadeUpsertSpec extends UnitSpec {
         updatedCacheMap.data.keys should not contain Constants.grossingUpOnEstateAssetsId
       }
 
-      "delete the existing 'Brought Forward Allowance on Disposal' answer" in {
+      "delete the existing 'Value Available When Property Changed' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.broughtForwardAllowanceOnDisposalId
+        updatedCacheMap.data.keys should not contain Constants.valueAvailableWhenPropertyChangedId
       }
 
       "not delete any other answers" in {
@@ -280,9 +280,9 @@ class CascadeUpsertSpec extends UnitSpec {
         updatedCacheMap.data.keys should not contain Constants.grossingUpOnEstateAssetsId
       }
 
-      "delete the existing 'Brought Forward Allowance on Disposal' answer" in {
+      "delete the existing 'Value Available When Property Changed' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.anyAssetsPassingToDirectDescendantsId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.broughtForwardAllowanceOnDisposalId
+        updatedCacheMap.data.keys should not contain Constants.valueAvailableWhenPropertyChangedId
       }
 
       "not delete any other answers" in {
@@ -301,9 +301,9 @@ class CascadeUpsertSpec extends UnitSpec {
 
     "asked to save the value 'false' for Transfer Available When Property Changed" must {
 
-      "delete the existing 'Brought Forward Allowance on Disposal' answer" in {
+      "delete the existing 'Value Available When Property Changed' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.transferAvailableWhenPropertyChangedId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.broughtForwardAllowanceOnDisposalId
+        updatedCacheMap.data.keys should not contain Constants.valueAvailableWhenPropertyChangedId
       }
 
       "not delete any other answers" in {
@@ -346,9 +346,9 @@ class CascadeUpsertSpec extends UnitSpec {
         updatedCacheMap.data.keys should not contain Constants.grossingUpOnEstateAssetsId
       }
 
-      "delete the existing 'Brought Forward Allowance on Disposal' answer" in {
+      "delete the existing 'Value Available When Property Changed' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.broughtForwardAllowanceOnDisposalId
+        updatedCacheMap.data.keys should not contain Constants.valueAvailableWhenPropertyChangedId
       }
 
       "not delete any other answers" in {
@@ -364,9 +364,9 @@ class CascadeUpsertSpec extends UnitSpec {
         updatedCacheMap.data.keys should not contain Constants.transferAvailableWhenPropertyChangedId
       }
 
-      "delete the existing 'Brought Forward Allowance on Disposal' answer" in {
+      "delete the existing 'Value Available When Property Changed' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeEligibilityDate, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.broughtForwardAllowanceOnDisposalId
+        updatedCacheMap.data.keys should not contain Constants.valueAvailableWhenPropertyChangedId
       }
 
       "not delete any other answers" in {

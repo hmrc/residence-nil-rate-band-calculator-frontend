@@ -19,23 +19,23 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.brought_forward_allowance_on_disposal
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_available_when_property_changed
 
 import scala.language.reflectiveCalls
 
-class BroughtForwardAllowanceOnDisposalViewSpec extends IntViewSpecBase {
+class ValueAvailableWhenPropertyChangedViewSpec extends IntViewSpecBase {
 
-  val messageKeyPrefix = "brought_forward_allowance_on_disposal"
+  val messageKeyPrefix = "value_available_when_property_changed"
 
-  def createView(form: Option[Form[Int]] = None) = brought_forward_allowance_on_disposal(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Int]] = None) = value_available_when_property_changed(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
-  "Brought Forward Allowance On Disposal View" must {
+  "Value Available When Property Changed View" must {
 
     behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance")
 
     behave like pageWithBackLink[Int](createView)
 
-    behave like intPage(createView, messageKeyPrefix, BroughtForwardAllowanceOnDisposalController.onSubmit().url, NonNegativeIntForm())
+    behave like intPage(createView, messageKeyPrefix, ValueAvailableWhenPropertyChangedController.onSubmit().url, NonNegativeIntForm())
 
     behave like pageContainingPreviousAnswers(createView)
 

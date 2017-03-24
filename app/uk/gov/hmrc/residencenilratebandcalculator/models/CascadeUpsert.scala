@@ -96,7 +96,7 @@ class CascadeUpsert {
       Set(
         Constants.broughtForwardAllowanceId,
         Constants.transferAvailableWhenPropertyChangedId,
-        Constants.broughtForwardAllowanceOnDisposalId),
+        Constants.valueAvailableWhenPropertyChangedId),
       cacheMap)
 
   private def claimDownsizingThreshold[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
@@ -109,7 +109,7 @@ class CascadeUpsert {
         Constants.assetsPassingToDirectDescendantsId,
         Constants.transferAvailableWhenPropertyChangedId,
         Constants.grossingUpOnEstateAssetsId,
-        Constants.broughtForwardAllowanceOnDisposalId),
+        Constants.valueAvailableWhenPropertyChangedId),
       cacheMap)
 
   private def anyAssetsPassingToDirectDescendants[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
@@ -118,11 +118,11 @@ class CascadeUpsert {
         Constants.assetsPassingToDirectDescendantsId,
         Constants.transferAvailableWhenPropertyChangedId,
         Constants.grossingUpOnEstateAssetsId,
-        Constants.broughtForwardAllowanceOnDisposalId),
+        Constants.valueAvailableWhenPropertyChangedId),
       cacheMap)
 
   private def transferAvailableWhenPropertyChanged[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearIfFalse(Constants.transferAvailableWhenPropertyChangedId, value, Set(Constants.broughtForwardAllowanceOnDisposalId), cacheMap)
+    clearIfFalse(Constants.transferAvailableWhenPropertyChangedId, value, Set(Constants.valueAvailableWhenPropertyChangedId), cacheMap)
 
   private def datePropertyWasChanged[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
     val keysToRemoveWhenDateBeforeDownsizingDate = Set(
@@ -131,12 +131,12 @@ class CascadeUpsert {
       Constants.grossingUpOnEstateAssetsId,
       Constants.assetsPassingToDirectDescendantsId,
       Constants.transferAvailableWhenPropertyChangedId,
-      Constants.broughtForwardAllowanceOnDisposalId
+      Constants.valueAvailableWhenPropertyChangedId
     )
 
     val keysToRemoveWhenDateBeforeEligibilityDate = Set(
       Constants.transferAvailableWhenPropertyChangedId,
-      Constants.broughtForwardAllowanceOnDisposalId
+      Constants.valueAvailableWhenPropertyChangedId
     )
 
     val mapToStore = value match {

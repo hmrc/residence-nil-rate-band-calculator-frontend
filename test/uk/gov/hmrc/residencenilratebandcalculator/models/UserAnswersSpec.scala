@@ -78,10 +78,10 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.broughtForwardAllowance shouldBe Some(1)
       }
 
-      "return the correct answer for Brought Forward Allowance On Disposal" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.broughtForwardAllowanceOnDisposalId -> JsNumber(1)))
+      "return the correct answer for Value Available When Property Changed" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.valueAvailableWhenPropertyChangedId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.broughtForwardAllowanceOnDisposal shouldBe Some(1)
+        userAnswers.valueAvailableWhenPropertyChanged shouldBe Some(1)
       }
 
       "return the correct answer for Chargeable Estate Value" in {
@@ -200,9 +200,9 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.broughtForwardAllowance shouldBe None
       }
 
-      "return None for Brought Forward Allowance On Disposal" in {
+      "return None for Value Available When Property Changed" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.broughtForwardAllowanceOnDisposal shouldBe None
+        userAnswers.valueAvailableWhenPropertyChanged shouldBe None
       }
 
       "return None for Chargeable Estate Value" in {

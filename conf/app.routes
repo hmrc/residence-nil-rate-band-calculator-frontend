@@ -31,8 +31,8 @@ POST       /assets-passing-to-direct-descendants        uk.gov.hmrc.residencenil
 GET        /brought-forward-allowance                   uk.gov.hmrc.residencenilratebandcalculator.controllers.BroughtForwardAllowanceController.onPageLoad
 POST       /brought-forward-allowance                   uk.gov.hmrc.residencenilratebandcalculator.controllers.BroughtForwardAllowanceController.onSubmit
 
-GET        /brought-forward-allowance-on-disposal       uk.gov.hmrc.residencenilratebandcalculator.controllers.BroughtForwardAllowanceOnDisposalController.onPageLoad
-POST       /brought-forward-allowance-on-disposal       uk.gov.hmrc.residencenilratebandcalculator.controllers.BroughtForwardAllowanceOnDisposalController.onSubmit
+GET        /value-available-when-property-changed       uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueAvailableWhenPropertyChangedController.onPageLoad
+POST       /value-available-when-property-changed       uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueAvailableWhenPropertyChangedController.onSubmit
 
 GET        /chargeable-estate-value                     uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableEstateValueController.onPageLoad
 POST       /chargeable-estate-value                     uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableEstateValueController.onSubmit

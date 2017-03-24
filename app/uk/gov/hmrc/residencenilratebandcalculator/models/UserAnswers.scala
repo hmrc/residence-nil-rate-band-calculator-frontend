@@ -40,7 +40,7 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def broughtForwardAllowance = cacheMap.getEntry[Int](Constants.broughtForwardAllowanceId)
 
-  def broughtForwardAllowanceOnDisposal = cacheMap.getEntry[Int](Constants.broughtForwardAllowanceOnDisposalId)
+  def valueAvailableWhenPropertyChanged = cacheMap.getEntry[Int](Constants.valueAvailableWhenPropertyChangedId)
 
   def chargeableEstateValue = cacheMap.getEntry[Int](Constants.chargeableEstateValueId)
 
