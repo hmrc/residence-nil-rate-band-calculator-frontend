@@ -19,25 +19,25 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.brought_forward_allowance_on_disposal
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_available_when_property_changed
 
-class BroughtForwardAllowanceOnDisposalControllerSpec extends SimpleControllerSpecBase {
+class ValueAvailableWhenPropertyChangedControllerSpec extends SimpleControllerSpecBase {
 
-  "Brought Forward Allowance On Disposal Controller" must {
+  "Value Available When Property Changed Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.TransferAvailableWhenPropertyChangedController.onPageLoad().url
       value match {
-        case None => brought_forward_allowance_on_disposal(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => brought_forward_allowance_on_disposal(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
+        case None => value_available_when_property_changed(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => value_available_when_property_changed(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 
-    def createController = () => new BroughtForwardAllowanceOnDisposalController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
+    def createController = () => new ValueAvailableWhenPropertyChangedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
     val testValue = 123
 
-    behave like rnrbController(createController, createView, Constants.broughtForwardAllowanceOnDisposalId, testValue)(Reads.IntReads, Writes.IntWrites)
+    behave like rnrbController(createController, createView, Constants.valueAvailableWhenPropertyChangedId, testValue)(Reads.IntReads, Writes.IntWrites)
 
     behave like nonStartingController[Int](createController,
       List(Constants.dateOfDeathId,

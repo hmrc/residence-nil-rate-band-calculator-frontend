@@ -85,10 +85,10 @@ brought_forward_allowance.guidance3 = You cannot transfer more than {0}
 brought_forward_allowance.error = You cannot transfer more than the maximum amount
 brought_forward_allowance.label =
 
-brought_forward_allowance_on_disposal.browser_title = What would the amount of transferable residence nil rate band have been at the date of disposal?
-brought_forward_allowance_on_disposal.title = What would the amount of transferable residence nil rate band have been at the date of disposal?
-brought_forward_allowance_on_disposal.guidance = This is the amount of transferable residence nil rate band that would have been available to the deceased at the date of disposal, as if that date had been the deceased’s date of death.
-brought_forward_allowance_on_disposal.label =
+value_available_when_property_changed.browser_title = What would the amount of transferable residence nil rate band have been at the date of disposal?
+value_available_when_property_changed.title = What would the amount of transferable residence nil rate band have been at the date of disposal?
+value_available_when_property_changed.guidance = This is the amount of transferable residence nil rate band that would have been available to the deceased at the date of disposal, as if that date had been the deceased’s date of death.
+value_available_when_property_changed.label =
 
 chargeable_estate_value.browser_title = What is the amount of the total chargeable estate on death?
 chargeable_estate_value.title = What is the amount of the total chargeable estate on death?

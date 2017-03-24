@@ -48,7 +48,7 @@ object AnswerRows {
     Constants.grossingUpOnEstateAssetsId,
     Constants.assetsPassingToDirectDescendantsId,
     Constants.transferAvailableWhenPropertyChangedId,
-    Constants.broughtForwardAllowanceOnDisposalId
+    Constants.valueAvailableWhenPropertyChangedId
   )
 
   val rowOrder = rowOrderList.zipWithIndex.toMap
@@ -117,10 +117,10 @@ object AnswerRows {
         routes.AssetsPassingToDirectDescendantsController.onPageLoad),
     Constants.broughtForwardAllowanceId ->
       intAnswerRowFn("brought_forward_allowance.title", "Brought forward allowance", routes.BroughtForwardAllowanceController.onPageLoad),
-    Constants.broughtForwardAllowanceOnDisposalId ->
-      intAnswerRowFn("brought_forward_allowance_on_disposal.title",
-        "Brought forward allowance on disposal",
-        routes.BroughtForwardAllowanceOnDisposalController.onPageLoad),
+    Constants.valueAvailableWhenPropertyChangedId ->
+      intAnswerRowFn("value_available_when_property_changed.title",
+        Constants.valueAvailableWhenPropertyChangedId,
+        routes.ValueAvailableWhenPropertyChangedController.onPageLoad),
     Constants.propertyPassingToDirectDescendantsId ->
       propertyPassingToDirectDescendantsAnswerRowFn("property_passing_to_direct_descendants.title",
         Constants.propertyPassingToDirectDescendantsId, routes.PropertyPassingToDirectDescendantsController.onPageLoad),

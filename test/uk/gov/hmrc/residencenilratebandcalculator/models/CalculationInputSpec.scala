@@ -35,7 +35,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
   val broughtForwardAllowance = 5
   val valueOfChangedProperty = 6
   val assetsPassingToDirectDescendants = 7
-  val broughtForwardAllowanceOnDisposal = 8
+  val valueAvailableWhenPropertyChanged = 8
   val datePropertyWasChanged = new LocalDate(2018, 2, 2)
   val chargeablePropertyValue = 9
   val chargeableInheritedPropertyValue = 10
@@ -54,7 +54,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
                 propertyPassingToDirectDescendants: Option[String] = None,
                 assetsPassingToDirectDescendants: Option[Int] = None,
                 broughtForwardAllowance: Option[Int] = None,
-                broughtForwardAllowanceOnDisposal: Option[Int] = None,
+                valueAvailableWhenPropertyChanged: Option[Int] = None,
                 chargeableEstateValue: Option[Int] = None,
                 dateOfDeath: Option[LocalDate] = None,
                 datePropertyWasChanged: Option[LocalDate] = None,
@@ -75,7 +75,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
     when(userAnswers.propertyPassingToDirectDescendants) thenReturn propertyPassingToDirectDescendants
     when(userAnswers.assetsPassingToDirectDescendants) thenReturn assetsPassingToDirectDescendants
     when(userAnswers.broughtForwardAllowance) thenReturn broughtForwardAllowance
-    when(userAnswers.broughtForwardAllowanceOnDisposal) thenReturn broughtForwardAllowanceOnDisposal
+    when(userAnswers.valueAvailableWhenPropertyChanged) thenReturn valueAvailableWhenPropertyChanged
     when(userAnswers.chargeableEstateValue) thenReturn chargeableEstateValue
     when(userAnswers.dateOfDeath) thenReturn dateOfDeath
     when(userAnswers.datePropertyWasChanged) thenReturn datePropertyWasChanged
@@ -305,7 +305,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             |  "datePropertyWasChanged":"2018-02-02",
             |  "valueOfChangedProperty":6,
             |  "valueCloselyInherited":0,
-            |  "broughtForwardAllowanceAtDisposal":0
+            |  "valueAvailableWhenPropertyChanged":0
             |}
             |}""".stripMargin.replaceAll("\\s+", "")
       }
@@ -344,7 +344,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             |  "datePropertyWasChanged":"2018-02-02",
             |  "valueOfChangedProperty":6,
             |  "valueCloselyInherited":7,
-            |  "broughtForwardAllowanceAtDisposal":0
+            |  "valueAvailableWhenPropertyChanged":0
             |}
             |}""".stripMargin.replaceAll("\\s+", "")
       }
@@ -360,14 +360,14 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         anyBroughtForwardAllowance = Some(true), broughtForwardAllowance = Some(broughtForwardAllowance), claimDownsizingThreshold = Some(true),
         datePropertyWasChanged = Some(datePropertyWasChanged), valueOfChangedProperty = Some(valueOfChangedProperty), anyAssetsPassingToDirectDescendants = Some(true),
         assetsPassingToDirectDescendants = Some(assetsPassingToDirectDescendants), transferAvailableWhenPropertyChanged = Some(true),
-        broughtForwardAllowanceOnDisposal = Some(broughtForwardAllowanceOnDisposal))
+        valueAvailableWhenPropertyChanged = Some(valueAvailableWhenPropertyChanged))
 
       "construct correctly from user answers" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
         calculationInput shouldBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, propertyValue, percentagePassedToDirectDescendants,
           broughtForwardAllowance, None, Some(DownsizingDetails(datePropertyWasChanged, valueOfChangedProperty, assetsPassingToDirectDescendants,
-            broughtForwardAllowanceOnDisposal)))
+            valueAvailableWhenPropertyChanged)))
       }
 
       "render to JSON" in {
@@ -385,7 +385,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             |  "datePropertyWasChanged":"2018-02-02",
             |  "valueOfChangedProperty":6,
             |  "valueCloselyInherited":7,
-            |  "broughtForwardAllowanceAtDisposal":8
+            |  "valueAvailableWhenPropertyChanged":8
             |}
             |}""".stripMargin.replaceAll("\\s+", "")
       }
@@ -703,7 +703,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Brought Forward Allowance on Disposal was not answered"
+        exception.getMessage shouldBe "requirement failed: Value Available When Property Changed was not answered"
       }
     }
   }

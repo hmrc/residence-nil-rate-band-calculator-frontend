@@ -25,19 +25,19 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.brought_forward_allowance_on_disposal
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_available_when_property_changed
 
 @Singleton
-class BroughtForwardAllowanceOnDisposalController @Inject()(override val appConfig: FrontendAppConfig,
+class ValueAvailableWhenPropertyChangedController @Inject()(override val appConfig: FrontendAppConfig,
                                                   val messagesApi: MessagesApi,
                                                   override val sessionConnector: SessionConnector,
                                                   override val navigator: Navigator) extends SimpleControllerBase[Int] {
 
-  override val controllerId = Constants.broughtForwardAllowanceOnDisposalId
+  override val controllerId = Constants.valueAvailableWhenPropertyChangedId
 
   override def form = () => NonNegativeIntForm()
 
   override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    brought_forward_allowance_on_disposal(appConfig, backUrl, form, answerRows)
+    value_available_when_property_changed(appConfig, backUrl, form, answerRows)
   }
 }

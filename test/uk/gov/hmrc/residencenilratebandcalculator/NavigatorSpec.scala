@@ -326,8 +326,8 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.transferAvailableWhenPropertyChangedId)(userAnswers) shouldBe routes.AssetsPassingToDirectDescendantsController.onPageLoad()
     }
 
-    "return a call to the Transfer Available When Property Changed when back linking from the Brought Forward Allowance On Disposal page" in {
-      navigator.lastPage(Constants.broughtForwardAllowanceOnDisposalId)(userAnswers) shouldBe routes.TransferAvailableWhenPropertyChangedController.onPageLoad()
+    "return a call to the Transfer Available When Property Changed when back linking from the Value Available When Property Changed page" in {
+      navigator.lastPage(Constants.valueAvailableWhenPropertyChangedId)(userAnswers) shouldBe routes.TransferAvailableWhenPropertyChangedController.onPageLoad()
     }
 
     "return a call to the Results Controller onPageLoad method when there is no downsizing allowance" in {
@@ -407,20 +407,20 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
     }
 
-    "return a call to the Results onPageLoad method when there is no brought forward allowance on disposal" in {
+    "return a call to the Results onPageLoad method when there is no Value Available When Property Changed" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.transferAvailableWhenPropertyChanged) thenReturn Some(false)
       navigator.nextPage(Constants.transferAvailableWhenPropertyChangedId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
     }
 
-    "return a call to the Brought Forward Allowance on Disposal onPageLoad method when there is some brought forward allowance on disposal" in {
+    "return a call to the Value Available When Property Changed onPageLoad method when there is some Value Available When Property Changed" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.transferAvailableWhenPropertyChanged) thenReturn Some(true)
-      navigator.nextPage(Constants.transferAvailableWhenPropertyChangedId)(mockCacheMap) shouldBe routes.BroughtForwardAllowanceOnDisposalController.onPageLoad()
+      navigator.nextPage(Constants.transferAvailableWhenPropertyChangedId)(mockCacheMap) shouldBe routes.ValueAvailableWhenPropertyChangedController.onPageLoad()
     }
 
-    "return a call to the Results controller onPageLoad method from the BroughtForwardAllowanceOnDisposal controller" in {
-      navigator.nextPage(Constants.broughtForwardAllowanceOnDisposalId)(mock[UserAnswers]) shouldBe routes.ResultsController.onPageLoad()
+    "return a call to the Results controller onPageLoad method from the ValueAvailableWhenPropertyChanged controller" in {
+      navigator.nextPage(Constants.valueAvailableWhenPropertyChangedId)(mock[UserAnswers]) shouldBe routes.ResultsController.onPageLoad()
     }
   }
 }

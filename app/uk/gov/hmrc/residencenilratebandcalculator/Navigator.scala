@@ -52,7 +52,7 @@ class Navigator @Inject()() {
       Constants.grossingUpOnEstateAssetsId -> (ua => getGrossingUpOnEstateAssetsRoute(ua)),
       Constants.assetsPassingToDirectDescendantsId -> (ua => getAssetsPassingToDirectDescendantsRoute(ua)),
       Constants.transferAvailableWhenPropertyChangedId -> (ua => getTransferAvailableWhenPropertyChangedRoute(ua)),
-      Constants.broughtForwardAllowanceOnDisposalId -> (_ => ResultsController.onPageLoad())
+      Constants.valueAvailableWhenPropertyChangedId -> (_ => ResultsController.onPageLoad())
     )
   }
 
@@ -82,7 +82,7 @@ class Navigator @Inject()() {
     getRouteForOptionalBoolean(userAnswers.anyBroughtForwardAllowance, BroughtForwardAllowanceController.onPageLoad(), ClaimDownsizingThresholdController.onPageLoad())
 
   private def getTransferAvailableWhenPropertyChangedRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.transferAvailableWhenPropertyChanged, BroughtForwardAllowanceOnDisposalController.onPageLoad(), ResultsController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.transferAvailableWhenPropertyChanged, ValueAvailableWhenPropertyChangedController.onPageLoad(), ResultsController.onPageLoad())
 
   private def getClaimDownsizingThresholdRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.claimDownsizingThreshold, DatePropertyWasChangedController.onPageLoad(), ResultsController.onPageLoad())
@@ -141,7 +141,7 @@ class Navigator @Inject()() {
       Constants.grossingUpOnEstateAssetsId -> (_ => AnyAssetsPassingToDirectDescendantsController.onPageLoad()),
       Constants.assetsPassingToDirectDescendantsId -> (_ => GrossingUpOnEstateAssetsController.onPageLoad()),
       Constants.transferAvailableWhenPropertyChangedId -> (_ => AssetsPassingToDirectDescendantsController.onPageLoad()),
-      Constants.broughtForwardAllowanceOnDisposalId -> (_ => TransferAvailableWhenPropertyChangedController.onPageLoad())
+      Constants.valueAvailableWhenPropertyChangedId -> (_ => TransferAvailableWhenPropertyChangedController.onPageLoad())
     )
   }
 

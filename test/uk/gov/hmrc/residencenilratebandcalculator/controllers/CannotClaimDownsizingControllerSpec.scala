@@ -67,7 +67,7 @@ class CannotClaimDownsizingControllerSpec extends UnitSpec with WithFakeApplicat
       Constants.chargeablePropertyValueId -> JsNumber(50000),
       Constants.assetsPassingToDirectDescendantsId -> JsNumber(1000),
       Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true),
-      Constants.broughtForwardAllowanceOnDisposalId -> JsNumber(1000)
+      Constants.valueAvailableWhenPropertyChangedId -> JsNumber(1000)
     ))
 
   "Cannot Claim Downsizing Controller" must {
