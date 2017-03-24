@@ -129,7 +129,7 @@ trait DateControllerSpecBase extends UnitSpec with WithFakeApplication with Http
           Constants.percentagePassedToDirectDescendantsId -> JsNumber(100),
           Constants.anyBroughtForwardAllowanceId -> JsBoolean(true),
           Constants.broughtForwardAllowanceId -> JsNumber(50000),
-          Constants.anyDownsizingAllowanceId -> JsBoolean(true)
+          Constants.claimDownsizingThresholdId -> JsBoolean(true)
         ))
       val controllerId = createController().controllerId
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList

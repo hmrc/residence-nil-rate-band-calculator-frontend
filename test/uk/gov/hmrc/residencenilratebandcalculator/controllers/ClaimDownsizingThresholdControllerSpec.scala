@@ -19,24 +19,24 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_downsizing_allowance
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.claim_downsizing_threshold
 
-class AnyDownsizingAllowanceControllerSpec extends SimpleControllerSpecBase {
+class ClaimDownsizingThresholdControllerSpec extends SimpleControllerSpecBase {
 
   def createView = (value: Option[Map[String, String]]) => {
     val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyBroughtForwardAllowanceController.onPageLoad().url
 
     value match {
-      case None => any_downsizing_allowance(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-      case Some(v) => any_downsizing_allowance(frontendAppConfig, url, Some(BooleanForm().bind(v)), Seq())(fakeRequest, messages)
+      case None => claim_downsizing_threshold(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
+      case Some(v) => claim_downsizing_threshold(frontendAppConfig, url, Some(BooleanForm().bind(v)), Seq())(fakeRequest, messages)
     }
   }
 
-  def createController = () => new AnyDownsizingAllowanceController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
+  def createController = () => new ClaimDownsizingThresholdController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
   val testValue = true
 
-  behave like rnrbController(createController, createView, Constants.anyDownsizingAllowanceId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+  behave like rnrbController(createController, createView, Constants.claimDownsizingThresholdId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
 
   behave like nonStartingController[Boolean](createController,
     List(Constants.dateOfDeathId,

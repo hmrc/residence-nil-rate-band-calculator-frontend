@@ -61,7 +61,7 @@ class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar w
     Constants.chargeableEstateValueId -> JsNumber(chargeableEstateValue),
     Constants.propertyInEstateId -> JsBoolean(false),
     Constants.anyBroughtForwardAllowanceId -> JsBoolean(false),
-    Constants.anyDownsizingAllowanceId -> JsBoolean(false)
+    Constants.claimDownsizingThresholdId -> JsBoolean(false)
   ))
 
   def mockRnrbConnector = {

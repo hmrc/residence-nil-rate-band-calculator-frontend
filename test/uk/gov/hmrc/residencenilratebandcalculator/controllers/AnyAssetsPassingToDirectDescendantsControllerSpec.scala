@@ -60,7 +60,7 @@ class AnyAssetsPassingToDirectDescendantsControllerSpec extends SimpleController
         Constants.chargeablePropertyValueId,
         Constants.anyBroughtForwardAllowanceId,
         Constants.broughtForwardAllowanceId,
-        Constants.anyDownsizingAllowanceId,
+        Constants.claimDownsizingThresholdId,
         Constants.dateOfDisposalId,
         Constants.valueOfDisposedPropertyId))(Reads.BooleanReads, Writes.BooleanWrites)
   }

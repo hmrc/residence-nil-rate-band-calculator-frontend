@@ -49,7 +49,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
   def setupMock(anyAssetsPassingToDirectDescendants: Option[Boolean] = None,
                 anyBroughtForwardAllowance: Option[Boolean] = None,
                 anyBroughtForwardAllowanceOnDisposal: Option[Boolean] = None,
-                anyDownsizingAllowance: Option[Boolean] = None,
+                claimDownsizingThreshold: Option[Boolean] = None,
                 exemptionsAndReliefClaimed: Option[Boolean] = None,
                 propertyPassingToDirectDescendants: Option[String] = None,
                 assetsPassingToDirectDescendants: Option[Int] = None,
@@ -70,7 +70,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
     when(userAnswers.anyAssetsPassingToDirectDescendants) thenReturn anyAssetsPassingToDirectDescendants
     when(userAnswers.anyBroughtForwardAllowance) thenReturn anyBroughtForwardAllowance
     when(userAnswers.anyBroughtForwardAllowanceOnDisposal) thenReturn anyBroughtForwardAllowanceOnDisposal
-    when(userAnswers.anyDownsizingAllowance) thenReturn anyDownsizingAllowance
+    when(userAnswers.claimDownsizingThreshold) thenReturn claimDownsizingThreshold
     when(userAnswers.exemptionsAndReliefClaimed) thenReturn exemptionsAndReliefClaimed
     when(userAnswers.propertyPassingToDirectDescendants) thenReturn propertyPassingToDirectDescendants
     when(userAnswers.assetsPassingToDirectDescendants) thenReturn assetsPassingToDirectDescendants
@@ -95,7 +95,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
 
       def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate),
         chargeableEstateValue = Some(chargeableEstateValue), propertyInEstate = Some(false), anyBroughtForwardAllowance = Some(false),
-        anyDownsizingAllowance = Some(false))
+        claimDownsizingThreshold = Some(false))
 
       "construct correctly from user answers" in {
         buildAnswers
@@ -123,7 +123,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate),
         chargeableEstateValue = Some(chargeableEstateValue),
         propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.none),
-        anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(false))
+        anyBroughtForwardAllowance = Some(false), claimDownsizingThreshold = Some(false))
 
       "construct correctly from user answers" in {
         buildAnswers
@@ -152,7 +152,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         chargeableEstateValue = Some(chargeableEstateValue),
         propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.all),
         percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(false),
-        anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(false))
+        anyBroughtForwardAllowance = Some(false), claimDownsizingThreshold = Some(false))
 
       "construct correctly from user answers" in {
         buildAnswers
@@ -183,7 +183,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         chargeableEstateValue = Some(chargeableEstateValue),
         propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.some),
         percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(false),
-        anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(false))
+        anyBroughtForwardAllowance = Some(false), claimDownsizingThreshold = Some(false))
 
       "construct correctly from user answers" in {
         buildAnswers
@@ -215,7 +215,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(true), grossingUpOnEstateProperty = Some(false),
         chargeablePropertyValue = Some(chargeablePropertyValue),
         chargeableInheritedPropertyValue = Some(chargeableInheritedPropertyValue),
-        anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(false))
+        anyBroughtForwardAllowance = Some(false), claimDownsizingThreshold = Some(false))
 
       "construct correctly from user answers" in {
         buildAnswers
@@ -250,7 +250,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         chargeableEstateValue = Some(chargeableEstateValue),
         propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.some),
         percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(false),
-        anyBroughtForwardAllowance = Some(true), broughtForwardAllowance = Some(broughtForwardAllowance), anyDownsizingAllowance = Some(false))
+        anyBroughtForwardAllowance = Some(true), broughtForwardAllowance = Some(broughtForwardAllowance), claimDownsizingThreshold = Some(false))
 
       "construct correctly from user answers" in {
         buildAnswers
@@ -280,7 +280,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         chargeableEstateValue = Some(chargeableEstateValue),
         propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.some),
         percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(false),
-        anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(true), dateOfDisposal = Some(dateOfDisposal),
+        anyBroughtForwardAllowance = Some(false), claimDownsizingThreshold = Some(true), dateOfDisposal = Some(dateOfDisposal),
         valueOfDisposedProperty = Some(valueOfDisposedProperty), anyAssetsPassingToDirectDescendants = Some(false))
 
       "construct correctly from user answers" in {
@@ -318,7 +318,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         chargeableEstateValue = Some(chargeableEstateValue),
         propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.some),
         percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(false),
-        anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(true), dateOfDisposal = Some(dateOfDisposal),
+        anyBroughtForwardAllowance = Some(false), claimDownsizingThreshold = Some(true), dateOfDisposal = Some(dateOfDisposal),
         valueOfDisposedProperty = Some(valueOfDisposedProperty), anyAssetsPassingToDirectDescendants = Some(true),
         assetsPassingToDirectDescendants = Some(assetsPassingToDirectDescendants), anyBroughtForwardAllowanceOnDisposal = Some(false))
 
@@ -357,7 +357,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         chargeableEstateValue = Some(chargeableEstateValue),
         propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.some),
         percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(false),
-        anyBroughtForwardAllowance = Some(true), broughtForwardAllowance = Some(broughtForwardAllowance), anyDownsizingAllowance = Some(true),
+        anyBroughtForwardAllowance = Some(true), broughtForwardAllowance = Some(broughtForwardAllowance), claimDownsizingThreshold = Some(true),
         dateOfDisposal = Some(dateOfDisposal), valueOfDisposedProperty = Some(valueOfDisposedProperty), anyAssetsPassingToDirectDescendants = Some(true),
         assetsPassingToDirectDescendants = Some(assetsPassingToDirectDescendants), anyBroughtForwardAllowanceOnDisposal = Some(true),
         broughtForwardAllowanceOnDisposal = Some(broughtForwardAllowanceOnDisposal))
@@ -398,7 +398,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         chargeableEstateValue = Some(chargeableEstateValue),
         propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.some),
         percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(false),
-        anyBroughtForwardAllowance = Some(true), broughtForwardAllowance = Some(broughtForwardAllowance), anyDownsizingAllowance = Some(true),
+        anyBroughtForwardAllowance = Some(true), broughtForwardAllowance = Some(broughtForwardAllowance), claimDownsizingThreshold = Some(true),
         dateOfDisposal = Some(Constants.downsizingEligibilityDate.minusDays(1)))
 
       "construct correctly from user answers" in {
@@ -594,7 +594,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       }
     }
 
-    "there is no value for 'any downsizing allowance'" must {
+    "there is no value for 'claim downsizing threshold'" must {
       "throw an exception" in {
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
@@ -603,16 +603,16 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Any Downsizing Allowance was not answered"
+        exception.getMessage shouldBe "requirement failed: Claim Downsizing Threshold was not answered"
       }
     }
 
-    "'any downsizing allowance' is true but there is no value for 'date of disposal'" must {
+    "'claim downsizing threshold' is true but there is no value for 'date of disposal'" must {
       "throw an exception" in {
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
             propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.none),
-            anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(true))
+            anyBroughtForwardAllowance = Some(false), claimDownsizingThreshold = Some(true))
           CalculationInput(userAnswers)
         }
 
@@ -620,12 +620,12 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       }
     }
 
-    "'any downsizing allowance' is true but there is no value for 'value of disposed property'" must {
+    "'claim downsizing threshold' is true but there is no value for 'value of disposed property'" must {
       "throw an exception" in {
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
             propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.none),
-            anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(true), dateOfDisposal = Some(dateOfDisposal))
+            anyBroughtForwardAllowance = Some(false), claimDownsizingThreshold = Some(true), dateOfDisposal = Some(dateOfDisposal))
           CalculationInput(userAnswers)
         }
 
@@ -633,12 +633,12 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       }
     }
 
-    "'any downsizing allowance' is true but there is no value for 'any assets passing to direct descendants'" must {
+    "'claim downsizing threshold' is true but there is no value for 'any assets passing to direct descendants'" must {
       "throw an exception" in {
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
             propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.none),
-            anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(true), dateOfDisposal = Some(dateOfDisposal),
+            anyBroughtForwardAllowance = Some(false), claimDownsizingThreshold = Some(true), dateOfDisposal = Some(dateOfDisposal),
             valueOfDisposedProperty = Some(valueOfDisposedProperty))
           CalculationInput(userAnswers)
         }
@@ -647,13 +647,13 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       }
     }
 
-    "'any downsizing allowance' is true and 'any assets passing to direct descendants' is true but there is no value for " +
+    "'claim downsizing threshold' is true and 'any assets passing to direct descendants' is true but there is no value for " +
       "'assets passing to direct descendants'" must {
       "throw an exception" in {
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
             propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.none),
-            anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(true), dateOfDisposal = Some(dateOfDisposal),
+            anyBroughtForwardAllowance = Some(false), claimDownsizingThreshold = Some(true), dateOfDisposal = Some(dateOfDisposal),
             valueOfDisposedProperty = Some(valueOfDisposedProperty), anyAssetsPassingToDirectDescendants = Some(true))
           CalculationInput(userAnswers)
         }
@@ -662,13 +662,13 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       }
     }
 
-    "there is brought forward allowance, 'any downsizing allowance' is true and 'any assets passing to direct descendants' is true but there is no value for " +
+    "there is brought forward allowance, 'claim downsizing threshold' is true and 'any assets passing to direct descendants' is true but there is no value for " +
       "'any brought forward allowance on disposal'" must {
       "throw an exception" in {
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
             propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.none),
-            anyBroughtForwardAllowance = Some(true), broughtForwardAllowance = Some(broughtForwardAllowance), anyDownsizingAllowance = Some(true),
+            anyBroughtForwardAllowance = Some(true), broughtForwardAllowance = Some(broughtForwardAllowance), claimDownsizingThreshold = Some(true),
             dateOfDisposal = Some(dateOfDisposal), valueOfDisposedProperty = Some(valueOfDisposedProperty), anyAssetsPassingToDirectDescendants = Some(true),
             assetsPassingToDirectDescendants = Some(assetsPassingToDirectDescendants))
           CalculationInput(userAnswers)
@@ -678,12 +678,12 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       }
     }
 
-    "there is no brought forward allowance, 'any downsizing allowance' is true and 'any assets passing to direct descendants' is true but there is no value " +
+    "there is no brought forward allowance, 'claim downsizing threshold' is true and 'any assets passing to direct descendants' is true but there is no value " +
       "for 'any brought forward allowance on disposal'" must {
       "not throw an exception" in {
         setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
           propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.none),
-          anyBroughtForwardAllowance = Some(false), anyDownsizingAllowance = Some(true),
+          anyBroughtForwardAllowance = Some(false), claimDownsizingThreshold = Some(true),
           dateOfDisposal = Some(dateOfDisposal), valueOfDisposedProperty = Some(valueOfDisposedProperty), anyAssetsPassingToDirectDescendants = Some(true),
           assetsPassingToDirectDescendants = Some(assetsPassingToDirectDescendants))
 
@@ -691,13 +691,13 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       }
     }
 
-    "'any downsizing allowance' is true, 'any assets passing to direct descendants' is true and 'any brought forward allownace on disposal' is true " +
+    "'claim downsizing threshold' is true, 'any assets passing to direct descendants' is true and 'any brought forward allownace on disposal' is true " +
       "but there is no value for 'any brought forward allowance on disposal'" must {
       "throw an exception" in {
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
             propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.none),
-            anyBroughtForwardAllowance = Some(true), broughtForwardAllowance = Some(broughtForwardAllowance), anyDownsizingAllowance = Some(true),
+            anyBroughtForwardAllowance = Some(true), broughtForwardAllowance = Some(broughtForwardAllowance), claimDownsizingThreshold = Some(true),
             dateOfDisposal = Some(dateOfDisposal), valueOfDisposedProperty = Some(valueOfDisposedProperty), anyAssetsPassingToDirectDescendants = Some(true),
             assetsPassingToDirectDescendants = Some(assetsPassingToDirectDescendants), anyBroughtForwardAllowanceOnDisposal = Some(true))
           CalculationInput(userAnswers)

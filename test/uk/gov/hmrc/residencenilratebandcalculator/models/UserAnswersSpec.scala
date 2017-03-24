@@ -48,10 +48,10 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.anyBroughtForwardAllowanceOnDisposal shouldBe Some(true)
       }
 
-      "return the correct answer for Any Downsizing Allowance" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.anyDownsizingAllowanceId -> JsBoolean(true)))
+      "return the correct answer for Claim Downsizing Threshold" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.claimDownsizingThresholdId -> JsBoolean(true)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.anyDownsizingAllowance shouldBe Some(true)
+        userAnswers.claimDownsizingThreshold shouldBe Some(true)
       }
 
       "return the correct answer for Exemptions And Relief Claimed" in {
@@ -175,9 +175,9 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.anyBroughtForwardAllowanceOnDisposal shouldBe None
       }
 
-      "return None for Any Downsizing Allowance" in {
+      "return None for Claim Downsizing Threshold" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.anyDownsizingAllowance shouldBe None
+        userAnswers.claimDownsizingThreshold shouldBe None
       }
 
       "return None for Exemptions And Relief Claimed" in {

@@ -15,14 +15,14 @@ any_brought_forward_allowance_on_disposal.title = If a valid claim for RNRB had 
 any_brought_forward_allowance_on_disposal.guidance = Answer yes if the date that the person who has died sold or gave away their home was after the date that their spouse or civil partner died.
 any_brought_forward_allowance_on_disposal.label =
 
-any_downsizing_allowance.browser_title = Are you claiming any downsizing allowance?
-any_downsizing_allowance.title = Are you claiming any downsizing allowance?
-any_downsizing_allowance.guidance1 = You can claim extra allowance for the estate if the person who has died:
-any_downsizing_allowance.guidance1.bullet1 = downsized their home on or after 8 July 2015 by either selling it and buying a cheaper home or selling it and not buying another home
-any_downsizing_allowance.guidance1.bullet2 = gave any part of their home away, like giving half of it away to a direct descendant
-any_downsizing_allowance.guidance1.bullet3 = had a home that would have qualified for residence nil rate band allowance if they had not sold it and had kept it until they died
-any_downsizing_allowance.guidance1.bullet4 = left anything in their estate to a direct descendant
-any_downsizing_allowance.label =
+claim_downsizing_threshold.browser_title = Are you claiming any downsizing allowance?
+claim_downsizing_threshold.title = Are you claiming any downsizing allowance?
+claim_downsizing_threshold.guidance1 = You can claim extra allowance for the estate if the person who has died:
+claim_downsizing_threshold.guidance1.bullet1 = downsized their home on or after 8 July 2015 by either selling it and buying a cheaper home or selling it and not buying another home
+claim_downsizing_threshold.guidance1.bullet2 = gave any part of their home away, like giving half of it away to a direct descendant
+claim_downsizing_threshold.guidance1.bullet3 = had a home that would have qualified for residence nil rate band allowance if they had not sold it and had kept it until they died
+claim_downsizing_threshold.guidance1.bullet4 = left anything in their estate to a direct descendant
+claim_downsizing_threshold.label =
 
 part_of_estate_passing_to_direct_descendants.browser_title = Does any of the estate pass to the deceased’s children or other direct descendants?
 part_of_estate_passing_to_direct_descendants.title = Does any of the estate pass to the deceased’s children or other direct descendants?

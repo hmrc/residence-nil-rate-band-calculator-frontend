@@ -52,7 +52,7 @@ class ValueOfDisposedPropertyControllerSpec extends SimpleControllerSpecBase {
         Constants.chargeablePropertyValueId,
         Constants.anyBroughtForwardAllowanceId,
         Constants.broughtForwardAllowanceId,
-        Constants.anyDownsizingAllowanceId,
+        Constants.claimDownsizingThresholdId,
         Constants.dateOfDisposalId))(Reads.IntReads, Writes.IntWrites)
   }
 }

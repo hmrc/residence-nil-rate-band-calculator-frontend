@@ -44,7 +44,7 @@ class CascadeUpsertSpec extends UnitSpec {
     Constants.chargeableInheritedPropertyValueId -> JsNumber(testNumber),
     Constants.anyBroughtForwardAllowanceId -> JsBoolean(true),
     Constants.broughtForwardAllowanceId -> JsNumber(testNumber),
-    Constants.anyDownsizingAllowanceId -> JsBoolean(true),
+    Constants.claimDownsizingThresholdId -> JsBoolean(true),
     Constants.dateOfDisposalId -> JsString("2019-01-01"),
     Constants.valueOfDisposedPropertyId -> JsNumber(testNumber),
     Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true),
@@ -212,53 +212,53 @@ class CascadeUpsertSpec extends UnitSpec {
       }
     }
 
-    "asked to save the value 'false' for Any Downsizing Allowance" must {
+    "asked to save the value 'false' for Claim Downsizing Threshold" must {
 
       "delete the existing 'Date of Disposal' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyDownsizingAllowanceId, false, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
         updatedCacheMap.data.keys should not contain Constants.dateOfDisposalId
       }
 
       "delete the existing 'Value of Disposed Property' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyDownsizingAllowanceId, false, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
         updatedCacheMap.data.keys should not contain Constants.valueOfDisposedPropertyId
       }
 
       "delete the existing 'Any Assets Passing to Direct Descendants' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyDownsizingAllowanceId, false, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
         updatedCacheMap.data.keys should not contain Constants.anyAssetsPassingToDirectDescendantsId
       }
 
       "delete the existing 'Assets Passing to Direct Descendants' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyDownsizingAllowanceId, false, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
         updatedCacheMap.data.keys should not contain Constants.assetsPassingToDirectDescendantsId
       }
 
       "delete the existing 'Any Brought Forward Allowance on Disposal' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyDownsizingAllowanceId, false, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
         updatedCacheMap.data.keys should not contain Constants.anyBroughtForwardAllowanceOnDisposalId
       }
 
       "delete the existing 'Does Grossing Up Apply to Other Property' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyDownsizingAllowanceId, false, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
         updatedCacheMap.data.keys should not contain Constants.doesGrossingUpApplyToOtherPropertyId
       }
 
       "delete the existing 'Brought Forward Allowance on Disposal' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyDownsizingAllowanceId, false, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
         updatedCacheMap.data.keys should not contain Constants.broughtForwardAllowanceOnDisposalId
       }
 
       "not delete any other answers" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyDownsizingAllowanceId, false, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size - 7
       }
     }
 
-    "asked to save the value 'true' for Any Downsizing Allowance" must {
+    "asked to save the value 'true' for Claim Downsizing Threshold" must {
 
       "not delete existing answers for other questions" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyDownsizingAllowanceId, true, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, true, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size
       }
     }
