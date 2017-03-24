@@ -48,7 +48,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
   
   def setupMock(anyAssetsPassingToDirectDescendants: Option[Boolean] = None,
                 anyBroughtForwardAllowance: Option[Boolean] = None,
-                anyBroughtForwardAllowanceOnDisposal: Option[Boolean] = None,
+                transferAvailableWhenPropertyChanged: Option[Boolean] = None,
                 claimDownsizingThreshold: Option[Boolean] = None,
                 exemptionsAndReliefClaimed: Option[Boolean] = None,
                 propertyPassingToDirectDescendants: Option[String] = None,
@@ -69,7 +69,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
                ) = {
     when(userAnswers.anyAssetsPassingToDirectDescendants) thenReturn anyAssetsPassingToDirectDescendants
     when(userAnswers.anyBroughtForwardAllowance) thenReturn anyBroughtForwardAllowance
-    when(userAnswers.anyBroughtForwardAllowanceOnDisposal) thenReturn anyBroughtForwardAllowanceOnDisposal
+    when(userAnswers.transferAvailableWhenPropertyChanged) thenReturn transferAvailableWhenPropertyChanged
     when(userAnswers.claimDownsizingThreshold) thenReturn claimDownsizingThreshold
     when(userAnswers.exemptionsAndReliefClaimed) thenReturn exemptionsAndReliefClaimed
     when(userAnswers.propertyPassingToDirectDescendants) thenReturn propertyPassingToDirectDescendants
@@ -320,7 +320,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(false),
         anyBroughtForwardAllowance = Some(false), claimDownsizingThreshold = Some(true), datePropertyWasChanged = Some(datePropertyWasChanged),
         valueOfChangedProperty = Some(valueOfChangedProperty), anyAssetsPassingToDirectDescendants = Some(true),
-        assetsPassingToDirectDescendants = Some(assetsPassingToDirectDescendants), anyBroughtForwardAllowanceOnDisposal = Some(false))
+        assetsPassingToDirectDescendants = Some(assetsPassingToDirectDescendants), transferAvailableWhenPropertyChanged = Some(false))
 
       "construct correctly from user answers" in {
         buildAnswers
@@ -359,7 +359,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(false),
         anyBroughtForwardAllowance = Some(true), broughtForwardAllowance = Some(broughtForwardAllowance), claimDownsizingThreshold = Some(true),
         datePropertyWasChanged = Some(datePropertyWasChanged), valueOfChangedProperty = Some(valueOfChangedProperty), anyAssetsPassingToDirectDescendants = Some(true),
-        assetsPassingToDirectDescendants = Some(assetsPassingToDirectDescendants), anyBroughtForwardAllowanceOnDisposal = Some(true),
+        assetsPassingToDirectDescendants = Some(assetsPassingToDirectDescendants), transferAvailableWhenPropertyChanged = Some(true),
         broughtForwardAllowanceOnDisposal = Some(broughtForwardAllowanceOnDisposal))
 
       "construct correctly from user answers" in {
@@ -663,7 +663,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
     }
 
     "there is brought forward allowance, 'claim downsizing threshold' is true and 'any assets passing to direct descendants' is true but there is no value for " +
-      "'any brought forward allowance on disposal'" must {
+      "'transfer available when property changed'" must {
       "throw an exception" in {
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
@@ -674,12 +674,12 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Any Brought Forward Allowance on Disposal was not answered"
+        exception.getMessage shouldBe "requirement failed: Transfer Available When Property Changed was not answered"
       }
     }
 
     "there is no brought forward allowance, 'claim downsizing threshold' is true and 'any assets passing to direct descendants' is true but there is no value " +
-      "for 'any brought forward allowance on disposal'" must {
+      "for 'transfer available when property changed'" must {
       "not throw an exception" in {
         setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
           propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.none),
@@ -692,14 +692,14 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
     }
 
     "'claim downsizing threshold' is true, 'any assets passing to direct descendants' is true and 'any brought forward allownace on disposal' is true " +
-      "but there is no value for 'any brought forward allowance on disposal'" must {
+      "but there is no value for 'transfer available when property changed'" must {
       "throw an exception" in {
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
             propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.none),
             anyBroughtForwardAllowance = Some(true), broughtForwardAllowance = Some(broughtForwardAllowance), claimDownsizingThreshold = Some(true),
             datePropertyWasChanged = Some(datePropertyWasChanged), valueOfChangedProperty = Some(valueOfChangedProperty), anyAssetsPassingToDirectDescendants = Some(true),
-            assetsPassingToDirectDescendants = Some(assetsPassingToDirectDescendants), anyBroughtForwardAllowanceOnDisposal = Some(true))
+            assetsPassingToDirectDescendants = Some(assetsPassingToDirectDescendants), transferAvailableWhenPropertyChanged = Some(true))
           CalculationInput(userAnswers)
         }
 

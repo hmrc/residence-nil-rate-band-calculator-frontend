@@ -51,7 +51,7 @@ class Navigator @Inject()() {
       Constants.anyAssetsPassingToDirectDescendantsId -> (ua => getAnyAssetsPassingToDirectDescendantsRoute(ua)),
       Constants.grossingUpOnEstateAssetsId -> (ua => getGrossingUpOnEstateAssetsRoute(ua)),
       Constants.assetsPassingToDirectDescendantsId -> (ua => getAssetsPassingToDirectDescendantsRoute(ua)),
-      Constants.anyBroughtForwardAllowanceOnDisposalId -> (ua => getAnyBroughtForwardAllowanceOnDisposalRoute(ua)),
+      Constants.transferAvailableWhenPropertyChangedId -> (ua => getTransferAvailableWhenPropertyChangedRoute(ua)),
       Constants.broughtForwardAllowanceOnDisposalId -> (_ => ResultsController.onPageLoad())
     )
   }
@@ -81,8 +81,8 @@ class Navigator @Inject()() {
   private def getAnyBroughtForwardAllowanceRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.anyBroughtForwardAllowance, BroughtForwardAllowanceController.onPageLoad(), ClaimDownsizingThresholdController.onPageLoad())
 
-  private def getAnyBroughtForwardAllowanceOnDisposalRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.anyBroughtForwardAllowanceOnDisposal, BroughtForwardAllowanceOnDisposalController.onPageLoad(), ResultsController.onPageLoad())
+  private def getTransferAvailableWhenPropertyChangedRoute(userAnswers: UserAnswers) =
+    getRouteForOptionalBoolean(userAnswers.transferAvailableWhenPropertyChanged, BroughtForwardAllowanceOnDisposalController.onPageLoad(), ResultsController.onPageLoad())
 
   private def getClaimDownsizingThresholdRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.claimDownsizingThreshold, DatePropertyWasChangedController.onPageLoad(), ResultsController.onPageLoad())
@@ -111,7 +111,7 @@ class Navigator @Inject()() {
     getRouteForOptionalBoolean(userAnswers.grossingUpOnEstateAssets, TransitionOutController.onPageLoad(), AssetsPassingToDirectDescendantsController.onPageLoad())
 
   private def getAssetsPassingToDirectDescendantsRoute(userAnswers: UserAnswers) = (userAnswers.anyBroughtForwardAllowance, userAnswers.datePropertyWasChanged) match {
-    case (Some(true), Some(d)) if !(d isBefore Constants.eligibilityDate) => AnyBroughtForwardAllowanceOnDisposalController.onPageLoad()
+    case (Some(true), Some(d)) if !(d isBefore Constants.eligibilityDate) => TransferAvailableWhenPropertyChangedController.onPageLoad()
     case _ => ResultsController.onPageLoad()
   }
 
@@ -140,8 +140,8 @@ class Navigator @Inject()() {
       Constants.anyAssetsPassingToDirectDescendantsId -> (_ => ValueOfChangedPropertyController.onPageLoad()),
       Constants.grossingUpOnEstateAssetsId -> (_ => AnyAssetsPassingToDirectDescendantsController.onPageLoad()),
       Constants.assetsPassingToDirectDescendantsId -> (_ => GrossingUpOnEstateAssetsController.onPageLoad()),
-      Constants.anyBroughtForwardAllowanceOnDisposalId -> (_ => AssetsPassingToDirectDescendantsController.onPageLoad()),
-      Constants.broughtForwardAllowanceOnDisposalId -> (_ => AnyBroughtForwardAllowanceOnDisposalController.onPageLoad())
+      Constants.transferAvailableWhenPropertyChangedId -> (_ => AssetsPassingToDirectDescendantsController.onPageLoad()),
+      Constants.broughtForwardAllowanceOnDisposalId -> (_ => TransferAvailableWhenPropertyChangedController.onPageLoad())
     )
   }
 

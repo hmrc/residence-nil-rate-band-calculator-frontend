@@ -42,10 +42,10 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.anyBroughtForwardAllowance shouldBe Some(true)
       }
 
-      "return the correct answer for Any Brought Forward Allowance On Disposal" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.anyBroughtForwardAllowanceOnDisposalId -> JsBoolean(true)))
+      "return the correct answer for Transfer Available When Property Changed" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.anyBroughtForwardAllowanceOnDisposal shouldBe Some(true)
+        userAnswers.transferAvailableWhenPropertyChanged shouldBe Some(true)
       }
 
       "return the correct answer for Claim Downsizing Threshold" in {
@@ -170,9 +170,9 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.anyBroughtForwardAllowance shouldBe None
       }
 
-      "return None for Any Brought Forward Allowance On Disposal" in {
+      "return None for Transfer Available When Property Changed" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.anyBroughtForwardAllowanceOnDisposal shouldBe None
+        userAnswers.transferAvailableWhenPropertyChanged shouldBe None
       }
 
       "return None for Claim Downsizing Threshold" in {

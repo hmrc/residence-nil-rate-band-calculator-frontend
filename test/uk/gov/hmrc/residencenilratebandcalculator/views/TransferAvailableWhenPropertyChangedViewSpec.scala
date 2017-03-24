@@ -18,24 +18,24 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.{Form, FormError}
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_brought_forward_allowance_on_disposal
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_available_when_property_changed
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 
 import scala.language.reflectiveCalls
 
-class AnyBroughtForwardAllowanceOnDisposalViewSpec extends BooleanViewSpecBase {
+class TransferAvailableWhenPropertyChangedViewSpec extends BooleanViewSpecBase {
 
-  val messageKeyPrefix = "any_brought_forward_allowance_on_disposal"
+  val messageKeyPrefix = "transfer_available_when_property_changed"
 
-  def createView(form: Option[Form[Boolean]] = None) = any_brought_forward_allowance_on_disposal(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = transfer_available_when_property_changed(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
-  "Any Brought Forward Allowance on Disposal View" must {
+  "Transfer Available When Property Changed View" must {
 
     behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance")
 
     behave like pageWithBackLink[Boolean](createView)
 
-    behave like booleanPage(createView, messageKeyPrefix, AnyBroughtForwardAllowanceOnDisposalController.onSubmit().url)
+    behave like booleanPage(createView, messageKeyPrefix, TransferAvailableWhenPropertyChangedController.onSubmit().url)
 
     behave like pageContainingPreviousAnswers(createView)
 

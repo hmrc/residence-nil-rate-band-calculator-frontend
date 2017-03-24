@@ -26,7 +26,7 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def anyBroughtForwardAllowance = cacheMap.getEntry[Boolean](Constants.anyBroughtForwardAllowanceId)
 
-  def anyBroughtForwardAllowanceOnDisposal = cacheMap.getEntry[Boolean](Constants.anyBroughtForwardAllowanceOnDisposalId)
+  def transferAvailableWhenPropertyChanged = cacheMap.getEntry[Boolean](Constants.transferAvailableWhenPropertyChangedId)
 
   def claimDownsizingThreshold = cacheMap.getEntry[Boolean](Constants.claimDownsizingThresholdId)
 

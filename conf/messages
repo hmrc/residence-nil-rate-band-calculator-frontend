@@ -10,10 +10,10 @@ any_brought_forward_allowance.guidance1 = This transfer will be from the estate 
 any_brought_forward_allowance.guidance2 = You will need a completed copy of the IHT-436 form if you are transferring any unused allowance from somebody else’s estate.
 any_brought_forward_allowance.label =
 
-any_brought_forward_allowance_on_disposal.browser_title = If a valid claim for RNRB had been made at the date of disposal would any transferable residence nil rate band have been available at that time?
-any_brought_forward_allowance_on_disposal.title = If a valid claim for RNRB had been made at the date of disposal would any transferable residence nil rate band have been available at that time?
-any_brought_forward_allowance_on_disposal.guidance = Answer yes if the date that the person who has died sold or gave away their home was after the date that their spouse or civil partner died.
-any_brought_forward_allowance_on_disposal.label =
+transfer_available_when_property_changed.browser_title = If a valid claim for RNRB had been made at the date of disposal would any transferable residence nil rate band have been available at that time?
+transfer_available_when_property_changed.title = If a valid claim for RNRB had been made at the date of disposal would any transferable residence nil rate band have been available at that time?
+transfer_available_when_property_changed.guidance = Answer yes if the date that the person who has died sold or gave away their home was after the date that their spouse or civil partner died.
+transfer_available_when_property_changed.label =
 
 claim_downsizing_threshold.browser_title = Are you claiming any downsizing allowance?
 claim_downsizing_threshold.title = Are you claiming any downsizing allowance?
