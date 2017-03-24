@@ -122,7 +122,7 @@ object CalculationInput {
 case class DownsizingDetails(datePropertyWasChanged: LocalDate,
                              valueOfChangedProperty: Int,
                              valueCloselyInherited: Int,
-                             broughtForwardAllowanceAtDisposal: Int)
+                             valueAvailableWhenPropertyChanged: Int)
 
 object DownsizingDetails {
   implicit val formats: OFormat[DownsizingDetails] = Json.format[DownsizingDetails]
