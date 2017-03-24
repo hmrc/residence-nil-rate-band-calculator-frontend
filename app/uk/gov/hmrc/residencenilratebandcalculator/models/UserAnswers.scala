@@ -66,5 +66,5 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def propertyValue = cacheMap.getEntry[Int](Constants.propertyValueId)
 
-  def valueOfDisposedProperty = cacheMap.getEntry[Int](Constants.valueOfDisposedPropertyId)
+  def valueOfChangedProperty = cacheMap.getEntry[Int](Constants.valueOfChangedPropertyId)
 }

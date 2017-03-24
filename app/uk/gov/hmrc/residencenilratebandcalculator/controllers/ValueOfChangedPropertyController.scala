@@ -25,19 +25,19 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_disposed_property
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_changed_property
 
 @Singleton
-class ValueOfDisposedPropertyController @Inject()(override val appConfig: FrontendAppConfig,
+class ValueOfChangedPropertyController @Inject()(override val appConfig: FrontendAppConfig,
                                                   val messagesApi: MessagesApi,
                                                   override val sessionConnector: SessionConnector,
                                                   override val navigator: Navigator) extends SimpleControllerBase[Int] {
 
-  override val controllerId = Constants.valueOfDisposedPropertyId
+  override val controllerId = Constants.valueOfChangedPropertyId
 
   override def form = () => NonNegativeIntForm()
 
   override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    value_of_disposed_property(appConfig, backUrl, form, answerRows)
+    value_of_changed_property(appConfig, backUrl, form, answerRows)
   }
 }

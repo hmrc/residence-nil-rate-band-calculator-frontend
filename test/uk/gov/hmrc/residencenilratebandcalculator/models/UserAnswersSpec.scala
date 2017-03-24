@@ -150,10 +150,10 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.chargeableInheritedPropertyValue shouldBe Some(1)
       }
 
-      "return the correct answer for Value Of Disposed Property" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.valueOfDisposedPropertyId -> JsNumber(1)))
+      "return the correct answer for Value Of Changed Property" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.valueOfChangedPropertyId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.valueOfDisposedProperty shouldBe Some(1)
+        userAnswers.valueOfChangedProperty shouldBe Some(1)
       }
     }
 
@@ -245,9 +245,9 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.chargeablePropertyValue shouldBe None
       }
 
-      "return None for Value Of Disposed Property" in {
+      "return None for Value Of Changed Property" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.valueOfDisposedProperty shouldBe None
+        userAnswers.valueOfChangedProperty shouldBe None
       }
     }
   }

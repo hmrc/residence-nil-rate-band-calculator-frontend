@@ -47,7 +47,7 @@ class Navigator @Inject()() {
       Constants.chargeablePropertyValueId -> (_ => ChargeableInheritedPropertyValueController.onPageLoad()),
       Constants.chargeableInheritedPropertyValueId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
       Constants.grossingUpOnEstatePropertyId -> (ua => getGrossingUpOnEstatePropertyRoute(ua)),
-      Constants.valueOfDisposedPropertyId -> (_ => AnyAssetsPassingToDirectDescendantsController.onPageLoad()),
+      Constants.valueOfChangedPropertyId -> (_ => AnyAssetsPassingToDirectDescendantsController.onPageLoad()),
       Constants.anyAssetsPassingToDirectDescendantsId -> (ua => getAnyAssetsPassingToDirectDescendantsRoute(ua)),
       Constants.doesGrossingUpApplyToOtherPropertyId -> (ua => getDoesGrossingUpApplyToOtherPropertyRoute(ua)),
       Constants.assetsPassingToDirectDescendantsId -> (ua => getAssetsPassingToDirectDescendantsRoute(ua)),
@@ -89,7 +89,7 @@ class Navigator @Inject()() {
 
   private def getDatePropertyWasChangedRoute(userAnswers: UserAnswers) =
     getRouteForOptionalLocalDate(userAnswers.datePropertyWasChanged, Constants.downsizingEligibilityDate,
-      CannotClaimDownsizingController.onPageLoad(), ValueOfDisposedPropertyController.onPageLoad())
+      CannotClaimDownsizingController.onPageLoad(), ValueOfChangedPropertyController.onPageLoad())
 
   private def getPropertyPassingToDirectDescendantsRoute(userAnswers: UserAnswers) = userAnswers.propertyPassingToDirectDescendants match {
     case Some(Constants.all) => ExemptionsAndReliefClaimedController.onPageLoad()
@@ -136,8 +136,8 @@ class Navigator @Inject()() {
       Constants.broughtForwardAllowanceId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
       Constants.claimDownsizingThresholdId -> (ua => getClaimDownsizingThresholdReverseRoute(ua)),
       Constants.datePropertyWasChangedId -> (_ => ClaimDownsizingThresholdController.onPageLoad()),
-      Constants.valueOfDisposedPropertyId -> (_ => DatePropertyWasChangedController.onPageLoad()),
-      Constants.anyAssetsPassingToDirectDescendantsId -> (_ => ValueOfDisposedPropertyController.onPageLoad()),
+      Constants.valueOfChangedPropertyId -> (_ => DatePropertyWasChangedController.onPageLoad()),
+      Constants.anyAssetsPassingToDirectDescendantsId -> (_ => ValueOfChangedPropertyController.onPageLoad()),
       Constants.doesGrossingUpApplyToOtherPropertyId -> (_ => AnyAssetsPassingToDirectDescendantsController.onPageLoad()),
       Constants.assetsPassingToDirectDescendantsId -> (_ => DoesGrossingUpApplyToOtherPropertyController.onPageLoad()),
       Constants.anyBroughtForwardAllowanceOnDisposalId -> (_ => AssetsPassingToDirectDescendantsController.onPageLoad()),

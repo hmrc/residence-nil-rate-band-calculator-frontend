@@ -19,26 +19,26 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_disposed_property
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_changed_property
 
-class ValueOfDisposedPropertyControllerSpec extends SimpleControllerSpecBase {
+class ValueOfChangedPropertyControllerSpec extends SimpleControllerSpecBase {
 
-  "Value of Disposed Property Controller" must {
+  "Value Of Changed Property Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DatePropertyWasChangedController.onPageLoad().url
 
       value match {
-        case None => value_of_disposed_property(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => value_of_disposed_property(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
+        case None => value_of_changed_property(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => value_of_changed_property(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 
-    def createController = () => new ValueOfDisposedPropertyController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
+    def createController = () => new ValueOfChangedPropertyController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
     val testValue = 123
 
-    behave like rnrbController(createController, createView, Constants.valueOfDisposedPropertyId, testValue)(Reads.IntReads, Writes.IntWrites)
+    behave like rnrbController(createController, createView, Constants.valueOfChangedPropertyId, testValue)(Reads.IntReads, Writes.IntWrites)
 
     behave like nonStartingController[Int](createController,
       List(Constants.dateOfDeathId,

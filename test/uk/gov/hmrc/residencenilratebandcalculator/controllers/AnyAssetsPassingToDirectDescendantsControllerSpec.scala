@@ -29,7 +29,7 @@ class AnyAssetsPassingToDirectDescendantsControllerSpec extends SimpleController
     val formattedPropertyValue = Some("£123,456.00")
 
     def createView = (value: Option[Map[String, String]]) => {
-      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfDisposedPropertyController.onPageLoad().url
+      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfChangedPropertyController.onPageLoad().url
 
       value match {
         case None =>
@@ -62,6 +62,6 @@ class AnyAssetsPassingToDirectDescendantsControllerSpec extends SimpleController
         Constants.broughtForwardAllowanceId,
         Constants.claimDownsizingThresholdId,
         Constants.datePropertyWasChangedId,
-        Constants.valueOfDisposedPropertyId))(Reads.BooleanReads, Writes.BooleanWrites)
+        Constants.valueOfChangedPropertyId))(Reads.BooleanReads, Writes.BooleanWrites)
   }
 }

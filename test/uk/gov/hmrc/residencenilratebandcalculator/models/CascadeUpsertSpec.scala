@@ -46,7 +46,7 @@ class CascadeUpsertSpec extends UnitSpec {
     Constants.broughtForwardAllowanceId -> JsNumber(testNumber),
     Constants.claimDownsizingThresholdId -> JsBoolean(true),
     Constants.datePropertyWasChangedId -> JsString("2019-01-01"),
-    Constants.valueOfDisposedPropertyId -> JsNumber(testNumber),
+    Constants.valueOfChangedPropertyId -> JsNumber(testNumber),
     Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true),
     Constants.doesGrossingUpApplyToOtherPropertyId -> JsBoolean(false),
     Constants.assetsPassingToDirectDescendantsId -> JsNumber(testNumber),
@@ -219,9 +219,9 @@ class CascadeUpsertSpec extends UnitSpec {
         updatedCacheMap.data.keys should not contain Constants.datePropertyWasChangedId
       }
 
-      "delete the existing 'Value of Disposed Property' answer" in {
+      "delete the existing 'Value Of Changed Property' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.valueOfDisposedPropertyId
+        updatedCacheMap.data.keys should not contain Constants.valueOfChangedPropertyId
       }
 
       "delete the existing 'Any Assets Passing to Direct Descendants' answer" in {
@@ -321,9 +321,9 @@ class CascadeUpsertSpec extends UnitSpec {
     }
 
     "asked to save a value before 8 July 2015 for Date Property Was Changed" must {
-      "delete the existing 'Value of Disposed Property' answer" in {
+      "delete the existing 'Value Of Changed Property' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.valueOfDisposedPropertyId
+        updatedCacheMap.data.keys should not contain Constants.valueOfChangedPropertyId
       }
 
       "delete the existing 'Any Assets Passing to Direct Descendants' answer" in {

@@ -55,7 +55,7 @@ class DoesGrossingUpApplyToOtherPropertyControllerSpec extends SimpleControllerS
            Constants.broughtForwardAllowanceId,
            Constants.claimDownsizingThresholdId,
            Constants.datePropertyWasChangedId,
-           Constants.valueOfDisposedPropertyId,
+           Constants.valueOfChangedPropertyId,
            Constants.anyAssetsPassingToDirectDescendantsId))(Reads.BooleanReads, Writes.BooleanWrites)
   }
 }
