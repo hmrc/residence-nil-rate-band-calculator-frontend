@@ -53,8 +53,8 @@ POST       /date-of-death                               uk.gov.hmrc.residencenil
 GET        /date-property-was-changed                   uk.gov.hmrc.residencenilratebandcalculator.controllers.DatePropertyWasChangedController.onPageLoad
 POST       /date-property-was-changed                   uk.gov.hmrc.residencenilratebandcalculator.controllers.DatePropertyWasChangedController.onSubmit
 
-GET        /does-grossing-up-apply-to-other-property    uk.gov.hmrc.residencenilratebandcalculator.controllers.DoesGrossingUpApplyToOtherPropertyController.onPageLoad
-POST       /does-grossing-up-apply-to-other-property    uk.gov.hmrc.residencenilratebandcalculator.controllers.DoesGrossingUpApplyToOtherPropertyController.onSubmit
+GET        /grossing-up-on-estate-assets                uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossingUpOnEstateAssetsController.onPageLoad
+POST       /grossing-up-on-estate-assets                uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossingUpOnEstateAssetsController.onSubmit
 
 GET        /grossing-up-on-estate-property              uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossingUpOnEstatePropertyController.onPageLoad
 POST       /grossing-up-on-estate-property              uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossingUpOnEstatePropertyController.onSubmit

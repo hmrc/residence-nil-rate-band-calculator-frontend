@@ -49,7 +49,7 @@ class Navigator @Inject()() {
       Constants.grossingUpOnEstatePropertyId -> (ua => getGrossingUpOnEstatePropertyRoute(ua)),
       Constants.valueOfChangedPropertyId -> (_ => AnyAssetsPassingToDirectDescendantsController.onPageLoad()),
       Constants.anyAssetsPassingToDirectDescendantsId -> (ua => getAnyAssetsPassingToDirectDescendantsRoute(ua)),
-      Constants.doesGrossingUpApplyToOtherPropertyId -> (ua => getDoesGrossingUpApplyToOtherPropertyRoute(ua)),
+      Constants.grossingUpOnEstateAssetsId -> (ua => getGrossingUpOnEstateAssetsRoute(ua)),
       Constants.assetsPassingToDirectDescendantsId -> (ua => getAssetsPassingToDirectDescendantsRoute(ua)),
       Constants.anyBroughtForwardAllowanceOnDisposalId -> (ua => getAnyBroughtForwardAllowanceOnDisposalRoute(ua)),
       Constants.broughtForwardAllowanceOnDisposalId -> (_ => ResultsController.onPageLoad())
@@ -105,10 +105,10 @@ class Navigator @Inject()() {
     getRouteForOptionalBoolean(userAnswers.grossingUpOnEstateProperty, TransitionOutController.onPageLoad(), ChargeablePropertyValueController.onPageLoad())
 
   private def getAnyAssetsPassingToDirectDescendantsRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.anyAssetsPassingToDirectDescendants, DoesGrossingUpApplyToOtherPropertyController.onPageLoad(), CannotClaimDownsizingController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.anyAssetsPassingToDirectDescendants, GrossingUpOnEstateAssetsController.onPageLoad(), CannotClaimDownsizingController.onPageLoad())
 
-  private def getDoesGrossingUpApplyToOtherPropertyRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.doesGrossingUpApplyToOtherProperty, TransitionOutController.onPageLoad(), AssetsPassingToDirectDescendantsController.onPageLoad())
+  private def getGrossingUpOnEstateAssetsRoute(userAnswers: UserAnswers) =
+    getRouteForOptionalBoolean(userAnswers.grossingUpOnEstateAssets, TransitionOutController.onPageLoad(), AssetsPassingToDirectDescendantsController.onPageLoad())
 
   private def getAssetsPassingToDirectDescendantsRoute(userAnswers: UserAnswers) = (userAnswers.anyBroughtForwardAllowance, userAnswers.datePropertyWasChanged) match {
     case (Some(true), Some(d)) if !(d isBefore Constants.eligibilityDate) => AnyBroughtForwardAllowanceOnDisposalController.onPageLoad()
@@ -138,8 +138,8 @@ class Navigator @Inject()() {
       Constants.datePropertyWasChangedId -> (_ => ClaimDownsizingThresholdController.onPageLoad()),
       Constants.valueOfChangedPropertyId -> (_ => DatePropertyWasChangedController.onPageLoad()),
       Constants.anyAssetsPassingToDirectDescendantsId -> (_ => ValueOfChangedPropertyController.onPageLoad()),
-      Constants.doesGrossingUpApplyToOtherPropertyId -> (_ => AnyAssetsPassingToDirectDescendantsController.onPageLoad()),
-      Constants.assetsPassingToDirectDescendantsId -> (_ => DoesGrossingUpApplyToOtherPropertyController.onPageLoad()),
+      Constants.grossingUpOnEstateAssetsId -> (_ => AnyAssetsPassingToDirectDescendantsController.onPageLoad()),
+      Constants.assetsPassingToDirectDescendantsId -> (_ => GrossingUpOnEstateAssetsController.onPageLoad()),
       Constants.anyBroughtForwardAllowanceOnDisposalId -> (_ => AssetsPassingToDirectDescendantsController.onPageLoad()),
       Constants.broughtForwardAllowanceOnDisposalId -> (_ => AnyBroughtForwardAllowanceOnDisposalController.onPageLoad())
     )

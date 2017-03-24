@@ -102,10 +102,10 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.datePropertyWasChanged shouldBe Some(new LocalDate(2018, 1, 1))
       }
 
-      "return the correct answer for Does Grossing Up Apply To Other Property" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.doesGrossingUpApplyToOtherPropertyId -> JsBoolean(false)))
+      "return the correct answer for Grossing Up On Estate Assets" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.grossingUpOnEstateAssetsId -> JsBoolean(false)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.doesGrossingUpApplyToOtherProperty shouldBe Some(false)
+        userAnswers.grossingUpOnEstateAssets shouldBe Some(false)
       }
 
       "return the correct answer for Grossing Up On Estate Property" in {

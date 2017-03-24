@@ -48,7 +48,7 @@ class CascadeUpsertSpec extends UnitSpec {
     Constants.datePropertyWasChangedId -> JsString("2019-01-01"),
     Constants.valueOfChangedPropertyId -> JsNumber(testNumber),
     Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true),
-    Constants.doesGrossingUpApplyToOtherPropertyId -> JsBoolean(false),
+    Constants.grossingUpOnEstateAssetsId -> JsBoolean(false),
     Constants.assetsPassingToDirectDescendantsId -> JsNumber(testNumber),
     Constants.anyBroughtForwardAllowanceOnDisposalId -> JsBoolean(true),
     Constants.broughtForwardAllowanceOnDisposalId -> JsNumber(testNumber)
@@ -239,9 +239,9 @@ class CascadeUpsertSpec extends UnitSpec {
         updatedCacheMap.data.keys should not contain Constants.anyBroughtForwardAllowanceOnDisposalId
       }
 
-      "delete the existing 'Does Grossing Up Apply to Other Property' answer" in {
+      "delete the existing 'Grossing Up On Estate Assets' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.doesGrossingUpApplyToOtherPropertyId
+        updatedCacheMap.data.keys should not contain Constants.grossingUpOnEstateAssetsId
       }
 
       "delete the existing 'Brought Forward Allowance on Disposal' answer" in {
@@ -275,9 +275,9 @@ class CascadeUpsertSpec extends UnitSpec {
         updatedCacheMap.data.keys should not contain Constants.anyBroughtForwardAllowanceOnDisposalId
       }
 
-      "delete the existing 'Does Grossing Up Apply to Other Property' answer" in {
+      "delete the existing 'Grossing Up On Estate Assets' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.anyAssetsPassingToDirectDescendantsId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.doesGrossingUpApplyToOtherPropertyId
+        updatedCacheMap.data.keys should not contain Constants.grossingUpOnEstateAssetsId
       }
 
       "delete the existing 'Brought Forward Allowance on Disposal' answer" in {
@@ -341,9 +341,9 @@ class CascadeUpsertSpec extends UnitSpec {
         updatedCacheMap.data.keys should not contain Constants.anyBroughtForwardAllowanceOnDisposalId
       }
 
-      "delete the existing 'Does Grossing Up Apply to Other Property' answer" in {
+      "delete the existing 'Grossing Up On Estate Assets' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.doesGrossingUpApplyToOtherPropertyId
+        updatedCacheMap.data.keys should not contain Constants.grossingUpOnEstateAssetsId
       }
 
       "delete the existing 'Brought Forward Allowance on Disposal' answer" in {

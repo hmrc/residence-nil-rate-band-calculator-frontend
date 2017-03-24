@@ -45,7 +45,7 @@ object AnswerRows {
     Constants.datePropertyWasChangedId,
     Constants.valueOfChangedPropertyId,
     Constants.anyAssetsPassingToDirectDescendantsId,
-    Constants.doesGrossingUpApplyToOtherPropertyId,
+    Constants.grossingUpOnEstateAssetsId,
     Constants.assetsPassingToDirectDescendantsId,
     Constants.anyBroughtForwardAllowanceOnDisposalId,
     Constants.broughtForwardAllowanceOnDisposalId
@@ -124,10 +124,10 @@ object AnswerRows {
     Constants.propertyPassingToDirectDescendantsId ->
       propertyPassingToDirectDescendantsAnswerRowFn("property_passing_to_direct_descendants.title",
         Constants.propertyPassingToDirectDescendantsId, routes.PropertyPassingToDirectDescendantsController.onPageLoad),
-    Constants.doesGrossingUpApplyToOtherPropertyId ->
-      boolAnswerRowFn("does_grossing_up_apply_to_other_property.title",
-        "Does grossing up apply to other property",
-        routes.DoesGrossingUpApplyToOtherPropertyController.onPageLoad),
+    Constants.grossingUpOnEstateAssetsId ->
+      boolAnswerRowFn("grossing_up_on_estate_assets.title",
+        Constants.grossingUpOnEstateAssetsId,
+        routes.GrossingUpOnEstateAssetsController.onPageLoad),
     Constants.grossingUpOnEstatePropertyId ->
       boolAnswerRowFn("grossing_up_on_estate_property.title",
         Constants.grossingUpOnEstatePropertyId,
