@@ -39,7 +39,7 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
   private val filledcacheMap: CacheMap = new CacheMap("", Map[String, JsValue](
     Constants.valueOfEstateId -> JsNumber(500000),
     Constants.chargeableEstateValueId -> JsNumber(450000),
-    Constants.assetsPassingToDirectDescendantsId -> JsBoolean(true)
+    Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true)
   ))
 
   private def acroForm: PDAcroForm = {

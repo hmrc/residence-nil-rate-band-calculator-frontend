@@ -25,6 +25,7 @@ import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
+import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 
 @Singleton
@@ -102,20 +103,32 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
   private val cacheMapIdToFieldName = Map[String, String](
     Constants.valueOfEstateId -> "IHT435_06",
     Constants.chargeableEstateValueId -> "IHT435_07",
-    Constants.assetsPassingToDirectDescendantsId -> "IHT435_05"
+    Constants.anyAssetsPassingToDirectDescendantsId -> "IHT435_05"
   )
 
-  private def formatForPDF(jsValue: JsValue) = {
-    if (jsValue.isInstanceOf[JsBoolean]) {
-      jsValue.toString match {
-        case "false" => "No"
-        case "true" => "Yes"
-        case _ => ""
-      }
-    } else {
-      jsValue.toString
+  private def getValueForPDF(cacheMap: CacheMap, field:String): String = {
+    val ua = new UserAnswers(cacheMap)
+    field match {
+      case Constants.anyAssetsPassingToDirectDescendantsId =>
+        ua.anyAssetsPassingToDirectDescendants.map(x=>if(x) "Yes" else "No").fold("Off")(identity)
+      case Constants.valueOfEstateId => ua.valueOfEstate.map(x=>x.toString).fold("")(identity)
+      case Constants.chargeableEstateValueId =>
+        ua.chargeableEstateValue.map(x=>x.toString).fold("")(identity)
+      case _ => ""
     }
   }
+
+//  private def formatForPDF(jsValue: JsValue) = {
+//    if (jsValue.isInstanceOf[JsBoolean]) {
+//      jsValue.toString match {
+//        case "false" => "No"
+//        case "true" => "Yes"
+//        case _ => ""
+//      }
+//    } else {
+//      jsValue.toString
+//    }
+//  }
 
   private def generatePDF(cacheMap: CacheMap) = {
     val pdf = PDDocument.load(new File("conf/resource/IHT435.pdf"))
@@ -123,11 +136,14 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
 
     cacheMapIdToFieldName foreach {
       case (cacheId, fieldName) =>
-        cacheMap.data.get(cacheId) match {
-          case Some(jsValueFromCacheMap) =>
-            form.getField(fieldName).setValue(formatForPDF(jsValueFromCacheMap))
-          case None =>
-        }
+        val fieldValueAsStringForPDF = getValueForPDF(cacheMap, cacheId)
+        val field = form.getField(fieldName)
+          field.setValue(fieldValueAsStringForPDF)
+//        cacheMap.data.get(cacheId) match {
+//          case Some(jsValueFromCacheMap) =>
+//            form.getField(fieldName).setValue(formatForPDF(jsValueFromCacheMap))
+//          case None =>
+//        }
     }
 
     pdf.setAllSecurityToBeRemoved(true)
