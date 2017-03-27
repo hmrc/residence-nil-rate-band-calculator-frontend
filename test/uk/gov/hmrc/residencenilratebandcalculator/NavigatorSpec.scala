@@ -181,7 +181,7 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     "return a call to Transition Out onPageLoad method when grossing up does apply to the residence" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.grossingUpOnEstateProperty) thenReturn Some(true)
-      navigator.nextPage(Constants.grossingUpOnEstatePropertyId)(mockCacheMap) shouldBe routes.TransitionOutController.onPageLoad()
+      navigator.nextPage(Constants.grossingUpOnEstatePropertyId)(mockCacheMap) shouldBe routes.UnableToCalculateThresholdIncreaseController.onPageLoad()
     }
 
     "return a call to the Transfer Any Unused Allowance onPageLoad method from the " +
@@ -368,7 +368,7 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     "return a call to the transition out onPageLoad method when grossing up does apply to the other property" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.grossingUpOnEstateAssets) thenReturn Some(true)
-      navigator.nextPage(Constants.grossingUpOnEstateAssetsId)(mockCacheMap) shouldBe routes.TransitionOutController.onPageLoad()
+      navigator.nextPage(Constants.grossingUpOnEstateAssetsId)(mockCacheMap) shouldBe routes.UnableToCalculateThresholdIncreaseController.onPageLoad()
     }
 
     "return a call to the Grossing Up On Estate Assets onPageLoad method when there are some assets passing to the direct descendant" in {

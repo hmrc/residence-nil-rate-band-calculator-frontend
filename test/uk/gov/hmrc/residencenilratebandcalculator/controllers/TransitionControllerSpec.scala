@@ -56,7 +56,7 @@ class TransitionControllerSpec extends UnitSpec with WithFakeApplication with Mo
       status(result) shouldBe Status.OK
     }
 
-    "return the Not Possible to use Calculator view for a GET" in {
+    "return the Unable To Calculate Threshold Increase view for a GET" in {
       val result = createController.onPageLoad()(fakeRequest)
       contentAsString(result) shouldBe ""
 

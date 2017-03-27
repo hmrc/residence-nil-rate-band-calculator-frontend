@@ -19,21 +19,21 @@ package uk.gov.hmrc.residencenilratebandcalculator.models
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetTransitionOutReason.{GrossingUpForOtherProperty, GrossingUpForResidence}
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetUnableToCalculateThresholdIncreaseReason.{GrossingUpForOtherProperty, GrossingUpForResidence}
 
-class GetTransitionOutReasonSpec extends UnitSpec with WithFakeApplication with MockitoSugar {
-  "GetTransitionOutReason" must {
+class GetUnableToCalculateThresholdIncreaseReasonSpec extends UnitSpec with WithFakeApplication with MockitoSugar {
+  "GetUnableToCalculateThresholdIncreaseReason" must {
 
     "get GrossingUpForResidence reason when grossing up is applied to the residence" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.grossingUpOnEstateProperty) thenReturn Some(true)
-      GetTransitionOutReason(userAnswers) shouldBe GrossingUpForResidence
+      GetUnableToCalculateThresholdIncreaseReason(userAnswers) shouldBe GrossingUpForResidence
     }
 
     "get GrossingUpForOtherProperty reason when grossing up is applied to other property" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.grossingUpOnEstateAssets) thenReturn Some(true)
-      GetTransitionOutReason(userAnswers) shouldBe GrossingUpForOtherProperty
+      GetUnableToCalculateThresholdIncreaseReason(userAnswers) shouldBe GrossingUpForOtherProperty
     }
   }
 }

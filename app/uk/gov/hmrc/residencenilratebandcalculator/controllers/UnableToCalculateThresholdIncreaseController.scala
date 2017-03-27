@@ -21,17 +21,17 @@ import javax.inject.{Inject, Singleton}
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetTransitionOutReason.{GrossingUpForOtherProperty, GrossingUpForResidence}
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetUnableToCalculateThresholdIncreaseReason.{GrossingUpForOtherProperty, GrossingUpForResidence}
 import uk.gov.hmrc.residencenilratebandcalculator.models._
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.not_possible_to_use_service
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.unable_to_calculate_threshold_increase
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 
 @Singleton
-class TransitionOutController @Inject()(val appConfig: FrontendAppConfig,
+class UnableToCalculateThresholdIncreaseController @Inject()(val appConfig: FrontendAppConfig,
                                         override val messagesApi: MessagesApi,
                                         override val sessionConnector: SessionConnector) extends TransitionController {
 
-  val getReason = GetTransitionOutReason
+  val getReason = GetUnableToCalculateThresholdIncreaseReason
 
   def getControllerId(reason: Reason) =
     reason match {
@@ -41,9 +41,9 @@ class TransitionOutController @Inject()(val appConfig: FrontendAppConfig,
 
   def createView(reason: Reason, userAnswers: UserAnswers, previousAnswers: scala.Seq[AnswerRow])(implicit request: Request[_]) = {
     val prefix = reason match {
-      case GrossingUpForResidence => "not_possible_to_use_service.grossing_up"
-      case GrossingUpForOtherProperty => "not_possible_to_use_service.grossing_up"
+      case GrossingUpForResidence => "unable_to_calculate_threshold_increase.grossing_up"
+      case GrossingUpForOtherProperty => "unable_to_calculate_threshold_increase.grossing_up"
     }
-    not_possible_to_use_service(appConfig, prefix, previousAnswers)
+    unable_to_calculate_threshold_increase(appConfig, prefix, previousAnswers)
   }
 }

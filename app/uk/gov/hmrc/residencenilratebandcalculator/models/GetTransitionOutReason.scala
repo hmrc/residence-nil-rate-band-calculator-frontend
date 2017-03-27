@@ -18,7 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
-object GetTransitionOutReason extends GetReason {
+object GetUnableToCalculateThresholdIncreaseReason extends GetReason {
   case object GrossingUpForResidence extends Reason
   case object GrossingUpForOtherProperty extends Reason
 

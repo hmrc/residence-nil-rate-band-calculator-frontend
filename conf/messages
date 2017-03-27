@@ -198,20 +198,17 @@ index.guidance = Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliqua
 nav.title =
 
 no_threshold_increase.browser_title = There is no RNRB allowance available for this estate
-
-not_possible_to_use_service.browser_title = Not possible to use this Calculator
-
 no_threshold_increase.date_of_death.title = There is no RNRB allowance available for the estate
 no_threshold_increase.date_of_death.reason = This is because the date of death of the person who has died was before 6 April 2017.
 no_threshold_increase.date_of_death.guidance =
-
 no_threshold_increase.direct_descendant.title = There is no RNRB allowance available for the estate
 no_threshold_increase.direct_descendant.reason = This is because none of the estate is being left to a direct descendant.
 no_threshold_increase.direct_descendant.guidance =
 
-not_possible_to_use_service.grossing_up.title = You cannot get a calculation using this service
-not_possible_to_use_service.grossing_up.reason = This is because the estate includes grossing up.
-not_possible_to_use_service.grossing_up.guidance = HMRC will calculate the allowance for you.
+unable_to_calculate_threshold_increase.browser_title = You cannot get a calculation using this service
+unable_to_calculate_threshold_increase.grossing_up.title = You cannot get a calculation using this service
+unable_to_calculate_threshold_increase.grossing_up.reason = This is because the estate includes grossing up.
+unable_to_calculate_threshold_increase.grossing_up.guidance = HMRC will calculate the allowance for you.
 
 percentage_passed_to_direct_descendants.browser_title = What percentage of the residence passes to direct descendants following the deceased’s death?
 percentage_passed_to_direct_descendants.title = What percentage of the residence passes to direct descendants following the deceased’s death?
