@@ -104,7 +104,7 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
   private val cacheMapIdToFieldName = Map[String, Seq[String]](
     Constants.valueOfEstateId -> Seq("IHT435_06"),
     Constants.chargeableEstateValueId -> Seq("IHT435_07"),
-    Constants.anyAssetsPassingToDirectDescendantsId -> Seq("IHT435_05"),
+    Constants.assetsPassingToDirectDescendantsId -> Seq("IHT435_05"),
     Constants.dateOfDeathId -> Seq(
       "IHT435_03_01",
       "IHT435_03_02",
@@ -117,12 +117,43 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     )
   )
 
+  /**
+    * Change the format of a date from "2017-5-12" (with or without quotes) to 12052017.
+    */
+  def reformatDate(dateAsString:String): String = {
+    def stripOffQuotesIfPresent(s:String) = {
+      val leadingQuotesRemoved = if (s.startsWith("\"")) {
+        s.substring(1)
+      } else {
+        s
+      }
+
+      if (leadingQuotesRemoved.endsWith("\"")) {
+        leadingQuotesRemoved.substring(0, leadingQuotesRemoved.length - 1)
+      } else {
+        leadingQuotesRemoved
+      }
+    }
+
+    val dateComponents = stripOffQuotesIfPresent(dateAsString).split("-")
+    if (dateComponents.size != 3 || dateComponents(0).length != 4 ||
+      dateComponents(1).length == 0 || dateComponents(1).length > 2 ||
+      dateComponents(2).length == 0 || dateComponents(2).length > 2) {
+      throw new RuntimeException("Invalid date:" + dateAsString)
+    }
+    val year = dateComponents(0)
+    val month = ("0" + dateComponents(1)) takeRight 2
+    val day = ("0" + dateComponents(2)) takeRight 2
+    day + month + year
+  }
+
   private def getValueForPDF(jsVal: JsValue, cacheId: String): String = {
-    val dateCacheIds = Set("","")
+    val dateCacheIds = Set(Constants.dateOfDeathId)
     jsVal match {
       case n: JsNumber => n.toString
       case b: JsBoolean => if (b.value) "Yes" else "No"
-      case s: JsString if dateCacheIds.contains(cacheId) => s.toString // Is date
+      case s: JsString if dateCacheIds.contains(cacheId) =>
+        reformatDate(s.toString)
       case s: JsString => s.toString
       case _ => ""
     }
@@ -175,7 +206,7 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
             var i = 0
             fieldNames.foreach { currField =>
               val storedValue = valueToStore(valueForPDF, i)
-              println("\n&&&&&&&&&&&&&&&& SETTING FIELD " + currField + " TO " + storedValue)
+              //println("\n&&&&&&&&&&&&&&&& SETTING FIELD " + currField + " TO " + storedValue)
               form.getField(currField).setValue(storedValue)
               i = i + 1
             }

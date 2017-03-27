@@ -39,7 +39,7 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
   private val filledcacheMap: CacheMap = new CacheMap("", Map[String, JsValue](
     Constants.valueOfEstateId -> JsNumber(500000),
     Constants.chargeableEstateValueId -> JsNumber(450000),
-    Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true),
+    Constants.assetsPassingToDirectDescendantsId -> JsBoolean(true),
     Constants.dateOfDeathId -> JsString("2017-5-12")
   ))
 
@@ -93,22 +93,47 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
 //      acroForm.getField("IHT435_08").getValueAsString shouldBe "No"
 //    }
 
+    "when \"Date of death\" is set in the session, it should appear as the appropriate fields in the generated PDF" in {
+      checkDate(acroForm, "IHT435_03", "12052017")
 
 
-//    "when \"Date of death\" is set in the session, it should appear as the appropriate fields in the generated PDF" in {
-//      //2017-5-12
-//      //    "IHT435_03_01" -> "IHT435_03_01",
-//      //    "IHT435_03_02" -> "IHT435_03_02",
-//      //    "IHT435_03_03" -> "IHT435_03_03",
-//      //    "IHT435_03_04" -> "IHT435_03_04",
-//      //    "IHT435_03_05" -> "IHT435_03_05",
-//      //    "IHT435_03_06" -> "IHT435_03_06",
-//      //    "IHT435_03_07" -> "IHT435_03_07",
-//      //    "IHT435_03_08" -> "IHT435_03_08",
-//
-//      checkDate(acroForm, "IHT435_03", "12052017")
-//
-//
-//    }
+    }
+  }
+
+  "reformatDate" must {
+    "behave correctly for a valid date where there are no quotes" in {
+      controller.reformatDate("2017-5-12") shouldBe "12052017"
+    }
+    "behave correctly for a valid date where month has no leading zero" in {
+      controller.reformatDate("\"2017-5-12\"") shouldBe "12052017"
+    }
+    "behave correctly for a valid date where day has no leading zero" in {
+      controller.reformatDate("\"2017-05-03\"") shouldBe "03052017"
+    }
+    "throw an exception where day is empty" in {
+      a[RuntimeException] shouldBe thrownBy {
+        controller.reformatDate("\"2017--03\"")
+      }
+    }
+    "throw an exception where month is empty" in {
+      a[RuntimeException] shouldBe thrownBy {
+        controller.reformatDate("\"2017-03-\"")
+      }
+    }
+    "throw an exception where year is empty" in {
+      a[RuntimeException] shouldBe thrownBy {
+        controller.reformatDate("\"--03-04\"")
+      }
+    }
+    "throw an exception where day is too long" in {
+      a[RuntimeException] shouldBe thrownBy {
+        controller.reformatDate("2017-5-124")
+      }
+    }
+    "throw an exception where month is too long" in {
+      a[RuntimeException] shouldBe thrownBy {
+        controller.reformatDate("2017-124-5")
+      }
+    }
   }
 }
