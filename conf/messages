@@ -195,8 +195,6 @@ index.browser_title = Residence Nil-rate Band Calculator
 index.title = Residence Nil-rate Band Calculator
 index.guidance = Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam massa nisl, pretium in magna a, dapibus rhoncus tellus. Etiam convallis libero ante, et sodales urna porta quis. Aliquam magna elit, venenatis eu auctor in, cursus nec justo. Integer et dui sit amet massa porta dictum non ac lectus. Fusce rutrum, tellus at congue aliquet, leo tortor consectetur ligula, id sollicitudin massa urna ut augue. Quisque lectus sapien, tristique eget tincidunt sed, rhoncus eu libero.
 
-nav.title =
-
 not_possible_to_use_service.browser_title = Not possible to use this Calculator
 
 not_possible_to_use_service.date_of_death.title = There is no RNRB allowance available for the estate
@@ -270,6 +268,7 @@ site.start_again = Start again
 site.start_now = Start now
 site.textarea.char_limit = (Limit is 1200 characters)
 site.finish = Finish
+site.service_name = Calculate the additional threshold
 
 thank_you.browser_title = Thank You
 thank_you.title = Thank You
