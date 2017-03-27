@@ -55,7 +55,7 @@ class TransferAvailableWhenPropertyChangedControllerSpec extends SimpleControlle
            Constants.claimDownsizingThresholdId,
            Constants.datePropertyWasChangedId,
            Constants.valueOfChangedPropertyId,
-           Constants.anyAssetsPassingToDirectDescendantsId,
+           Constants.assetsPassingToDirectDescendantsId,
            Constants.grossingUpOnEstateAssetsId,
            Constants.valueOfAssetsPassingId))(Reads.BooleanReads, Writes.BooleanWrites)
   }

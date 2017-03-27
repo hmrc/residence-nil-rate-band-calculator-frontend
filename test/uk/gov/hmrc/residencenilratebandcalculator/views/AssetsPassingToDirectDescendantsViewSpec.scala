@@ -17,44 +17,44 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_assets_passing_to_direct_descendants
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.assets_passing_to_direct_descendants
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 
 import scala.language.reflectiveCalls
 
-class AnyAssetsPassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
+class AssetsPassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
 
-  val messageKeyPrefix = "any_assets_passing_to_direct_descendants"
+  val messageKeyPrefix = "assets_passing_to_direct_descendants"
 
   val formattedPropertyValue = "£123,456.78"
 
   def createView(form: Option[Form[Boolean]] = None) =
-    any_assets_passing_to_direct_descendants(frontendAppConfig, backUrl, form, Seq(), None)(request, messages)
+    assets_passing_to_direct_descendants(frontendAppConfig, backUrl, form, Seq(), None)(request, messages)
 
-  "Any Assets Passing to Direct Descendants View" must {
+  "Assets Passing To Direct Descendants View" must {
 
     behave like rnrbPage[Boolean](createView, messageKeyPrefix)
 
     behave like pageWithBackLink[Boolean](createView)
 
-    behave like booleanPage(createView, messageKeyPrefix, AnyAssetsPassingToDirectDescendantsController.onSubmit().url)
+    behave like booleanPage(createView, messageKeyPrefix, AssetsPassingToDirectDescendantsController.onSubmit().url)
 
     behave like pageContainingPreviousAnswers(createView)
   }
 
-  "Any Assets Passing to Direct Descendants View" when {
+  "Assets Passing To Direct Descendants View" when {
 
     "there is a property in the estate" must {
       "contain guidance that includes the property value" in {
-        val doc = asDocument(any_assets_passing_to_direct_descendants(frontendAppConfig, backUrl, None, Seq(), Some(formattedPropertyValue))(request, messages))
-        assertContainsText(doc, messages("any_assets_passing_to_direct_descendants.guidance", formattedPropertyValue))
+        val doc = asDocument(assets_passing_to_direct_descendants(frontendAppConfig, backUrl, None, Seq(), Some(formattedPropertyValue))(request, messages))
+        assertContainsText(doc, messages("assets_passing_to_direct_descendants.guidance", formattedPropertyValue))
       }
     }
 
     "there is no property in the estate" must {
       "contain guidance that does not include the property value" in {
         val doc = asDocument(createView(None))
-        assertContainsText(doc, messages("any_assets_passing_to_direct_descendants.guidance_no_property"))
+        assertContainsText(doc, messages("assets_passing_to_direct_descendants.guidance_no_property"))
       }
     }
   }

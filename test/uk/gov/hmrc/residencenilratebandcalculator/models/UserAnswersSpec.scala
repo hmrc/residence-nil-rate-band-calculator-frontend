@@ -31,9 +31,9 @@ class UserAnswersSpec extends UnitSpec {
     "values exist in the cache map" must {
 
       "return the correct answer for Any Assets Passing To Direct Descendant" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true)))
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.assetsPassingToDirectDescendantsId -> JsBoolean(true)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.anyAssetsPassingToDirectDescendants shouldBe Some(true)
+        userAnswers.assetsPassingToDirectDescendants shouldBe Some(true)
       }
 
       "return the correct answer for Transfer Any Unused Allowance" in {
@@ -162,7 +162,7 @@ class UserAnswersSpec extends UnitSpec {
 
       "return None for Any Assets Passing To Direct Descendant" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.anyAssetsPassingToDirectDescendants shouldBe None
+        userAnswers.assetsPassingToDirectDescendants shouldBe None
       }
 
       "return None for Transfer Any Unused Allowance" in {

@@ -55,7 +55,7 @@ class ValueOfAssetsPassingControllerSpec extends SimpleControllerSpecBase {
            Constants.claimDownsizingThresholdId,
            Constants.datePropertyWasChangedId,
            Constants.valueOfChangedPropertyId,
-           Constants.anyAssetsPassingToDirectDescendantsId,
+           Constants.assetsPassingToDirectDescendantsId,
            Constants.grossingUpOnEstateAssetsId))(Reads.IntReads, Writes.IntWrites)
   }
 }

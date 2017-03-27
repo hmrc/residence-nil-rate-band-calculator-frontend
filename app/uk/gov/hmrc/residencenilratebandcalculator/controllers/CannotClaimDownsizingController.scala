@@ -36,7 +36,7 @@ class CannotClaimDownsizingController @Inject()(val appConfig: FrontendAppConfig
 
   def getControllerId(reason: Reason) =
     reason match {
-      case NoAssetsPassingToDirectDescendants => Constants.anyAssetsPassingToDirectDescendantsId
+      case NoAssetsPassingToDirectDescendants => Constants.assetsPassingToDirectDescendantsId
       case _ => Constants.datePropertyWasChangedId
     }
 

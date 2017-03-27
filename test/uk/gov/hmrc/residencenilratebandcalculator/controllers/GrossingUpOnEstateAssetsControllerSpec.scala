@@ -26,7 +26,7 @@ class GrossingUpOnEstateAssetsControllerSpec extends SimpleControllerSpecBase {
   "Grossing Up On Estate Assets Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
-      val backUrl = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AnyAssetsPassingToDirectDescendantsController.onPageLoad().url
+      val backUrl = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AssetsPassingToDirectDescendantsController.onPageLoad().url
 
       value match {
         case None => grossing_up_on_estate_assets(frontendAppConfig, backUrl, answerRows = Seq())(fakeRequest, messages)
@@ -56,6 +56,6 @@ class GrossingUpOnEstateAssetsControllerSpec extends SimpleControllerSpecBase {
            Constants.claimDownsizingThresholdId,
            Constants.datePropertyWasChangedId,
            Constants.valueOfChangedPropertyId,
-           Constants.anyAssetsPassingToDirectDescendantsId))(Reads.BooleanReads, Writes.BooleanWrites)
+           Constants.assetsPassingToDirectDescendantsId))(Reads.BooleanReads, Writes.BooleanWrites)
   }
 }

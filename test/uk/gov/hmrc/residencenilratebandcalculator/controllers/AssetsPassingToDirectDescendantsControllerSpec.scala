@@ -19,11 +19,11 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_assets_passing_to_direct_descendants
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.assets_passing_to_direct_descendants
 
-class AnyAssetsPassingToDirectDescendantsControllerSpec extends SimpleControllerSpecBase {
+class AssetsPassingToDirectDescendantsControllerSpec extends SimpleControllerSpecBase {
 
-  "Any Assets Passing to Direct Descendants Controller" must {
+  "Assets Passing To Direct Descendants Controller" must {
 
     val propertyValue = 123456
     val formattedPropertyValue = Some("£123,456.00")
@@ -33,19 +33,19 @@ class AnyAssetsPassingToDirectDescendantsControllerSpec extends SimpleController
 
       value match {
         case None =>
-          any_assets_passing_to_direct_descendants(frontendAppConfig, url, None, Seq(), formattedPropertyValue)(fakeRequest, messages)
+          assets_passing_to_direct_descendants(frontendAppConfig, url, None, Seq(), formattedPropertyValue)(fakeRequest, messages)
         case Some(v) =>
-          any_assets_passing_to_direct_descendants(frontendAppConfig, url, Some(BooleanForm().bind(v)), Seq(), formattedPropertyValue)(fakeRequest, messages)
+          assets_passing_to_direct_descendants(frontendAppConfig, url, Some(BooleanForm().bind(v)), Seq(), formattedPropertyValue)(fakeRequest, messages)
       }
     }
 
-    def createController = () => new AnyAssetsPassingToDirectDescendantsController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
+    def createController = () => new AssetsPassingToDirectDescendantsController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
     val testValue = true
 
     val valuesToCacheBeforeLoad = Map(Constants.propertyValueId -> propertyValue)
 
-    behave like rnrbController[Boolean](createController, createView, Constants.anyAssetsPassingToDirectDescendantsId, testValue,
+    behave like rnrbController[Boolean](createController, createView, Constants.assetsPassingToDirectDescendantsId, testValue,
       valuesToCacheBeforeLoad = valuesToCacheBeforeLoad)(Reads.BooleanReads, Writes.BooleanWrites)
 
     behave like nonStartingController[Boolean](createController,

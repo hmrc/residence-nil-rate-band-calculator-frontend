@@ -54,7 +54,7 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends SimpleControllerSp
            Constants.claimDownsizingThresholdId,
            Constants.datePropertyWasChangedId,
            Constants.valueOfChangedPropertyId,
-           Constants.anyAssetsPassingToDirectDescendantsId,
+           Constants.assetsPassingToDirectDescendantsId,
            Constants.grossingUpOnEstateAssetsId,
            Constants.valueOfAssetsPassingId,
            Constants.transferAvailableWhenPropertyChangedId))(Reads.IntReads, Writes.IntWrites)

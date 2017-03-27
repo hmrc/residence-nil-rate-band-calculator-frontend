@@ -21,7 +21,7 @@ import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.models.RadioOption
 
 object Constants {
-  val anyAssetsPassingToDirectDescendantsId = "AnyAssetsPassingToDirectDescendants"
+  val assetsPassingToDirectDescendantsId = "AssetsPassingToDirectDescendants"
   val transferAnyUnusedThresholdId = "TransferAnyUnusedThreshold"
   val transferAvailableWhenPropertyChangedId = "TransferAvailableWhenPropertyChanged"
   val claimDownsizingThresholdId = "ClaimDownsizingThreshold"

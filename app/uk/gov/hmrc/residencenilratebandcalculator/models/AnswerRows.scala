@@ -44,7 +44,7 @@ object AnswerRows {
     Constants.claimDownsizingThresholdId,
     Constants.datePropertyWasChangedId,
     Constants.valueOfChangedPropertyId,
-    Constants.anyAssetsPassingToDirectDescendantsId,
+    Constants.assetsPassingToDirectDescendantsId,
     Constants.grossingUpOnEstateAssetsId,
     Constants.valueOfAssetsPassingId,
     Constants.transferAvailableWhenPropertyChangedId,
@@ -99,10 +99,10 @@ object AnswerRows {
       dateAnswerRowFn("date_property_was_changed.title", Constants.datePropertyWasChangedId, routes.DatePropertyWasChangedController.onPageLoad),
     Constants.valueOfChangedPropertyId ->
       intAnswerRowFn("value_of_changed_property.title", Constants.valueOfChangedPropertyId, routes.ValueOfChangedPropertyController.onPageLoad),
-    Constants.anyAssetsPassingToDirectDescendantsId ->
-      boolAnswerRowFn("any_assets_passing_to_direct_descendants.title",
-        "Any assets passing to direct descendants",
-        routes.AnyAssetsPassingToDirectDescendantsController.onPageLoad),
+    Constants.assetsPassingToDirectDescendantsId ->
+      boolAnswerRowFn("assets_passing_to_direct_descendants.title",
+        Constants.assetsPassingToDirectDescendantsId,
+        routes.AssetsPassingToDirectDescendantsController.onPageLoad),
     Constants.transferAnyUnusedThresholdId ->
       boolAnswerRowFn("transfer_any_unused_threshold.title", Constants.transferAnyUnusedThresholdId, routes.TransferAnyUnusedThresholdController.onPageLoad),
     Constants.transferAvailableWhenPropertyChangedId ->

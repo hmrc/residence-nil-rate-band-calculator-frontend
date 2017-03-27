@@ -27,15 +27,15 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.any_assets_passing_to_direct_descendants
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.assets_passing_to_direct_descendants
 
 @Singleton
-class AnyAssetsPassingToDirectDescendantsController @Inject()(override val appConfig: FrontendAppConfig,
+class AssetsPassingToDirectDescendantsController @Inject()(override val appConfig: FrontendAppConfig,
                                                               val messagesApi: MessagesApi,
                                                               override val sessionConnector: SessionConnector,
                                                               override val navigator: Navigator) extends SimpleControllerBase[Boolean] {
 
-  override val controllerId: String = Constants.anyAssetsPassingToDirectDescendantsId
+  override val controllerId: String = Constants.assetsPassingToDirectDescendantsId
 
   override def form: () => Form[Boolean] = () => BooleanForm()
 
@@ -44,6 +44,6 @@ class AnyAssetsPassingToDirectDescendantsController @Inject()(override val appCo
       case Some(value) => Some(NumberFormat.getCurrencyInstance(Locale.UK).format(value))
       case _ => None
     }
-    any_assets_passing_to_direct_descendants(appConfig, backUrl, form, answerRows, formattedPropertyValue)
+    assets_passing_to_direct_descendants(appConfig, backUrl, form, answerRows, formattedPropertyValue)
   }
 }

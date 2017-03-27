@@ -1,8 +1,8 @@
-any_assets_passing_to_direct_descendants.browser_title = Other than the property that you are claiming residence nil rate band allowance on, do any other assets pass to a direct descendant following the death?
-any_assets_passing_to_direct_descendants.title = Other than the property that you are claiming residence nil rate band allowance on, do any other assets pass to a direct descendant following the death?
-any_assets_passing_to_direct_descendants.guidance = This doesn’t include the property worth {0}. A direct descendant must have received other assets from the estate for the downsizing allowance to be claimed.
-any_assets_passing_to_direct_descendants.guidance_no_property = A direct descendant must have received assets from the estate for the downsizing allowance to be claimed.
-any_assets_passing_to_direct_descendants.label =
+assets_passing_to_direct_descendants.browser_title = Other than the property that you are claiming residence nil rate band allowance on, do any other assets pass to a direct descendant following the death?
+assets_passing_to_direct_descendants.title = Other than the property that you are claiming residence nil rate band allowance on, do any other assets pass to a direct descendant following the death?
+assets_passing_to_direct_descendants.guidance = This doesn’t include the property worth {0}. A direct descendant must have received other assets from the estate for the downsizing allowance to be claimed.
+assets_passing_to_direct_descendants.guidance_no_property = A direct descendant must have received assets from the estate for the downsizing allowance to be claimed.
+assets_passing_to_direct_descendants.label =
 
 transfer_any_unused_threshold.browser_title = Do you wish to transfer any unused residence nil rate band?
 transfer_any_unused_threshold.title = Do you wish to transfer any unused residence nil rate band?
