@@ -20,6 +20,7 @@ import java.io.{ByteArrayOutputStream, File, FileOutputStream}
 import javax.inject.{Inject, Singleton}
 
 import org.apache.pdfbox.pdmodel.PDDocument
+import org.apache.pdfbox.pdmodel.interactive.form.PDField
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.http.cache.client.CacheMap
@@ -100,19 +101,61 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
   //    "IHT435_28" -> "IHT435_28"
   //  )
 
-  private val cacheMapIdToFieldName = Map[String, String](
-    Constants.valueOfEstateId -> "IHT435_06",
-    Constants.chargeableEstateValueId -> "IHT435_07",
-    Constants.anyAssetsPassingToDirectDescendantsId -> "IHT435_05"
+  private val cacheMapIdToFieldName = Map[String, Seq[String]](
+    Constants.valueOfEstateId -> Seq("IHT435_06"),
+    Constants.chargeableEstateValueId -> Seq("IHT435_07"),
+    Constants.anyAssetsPassingToDirectDescendantsId -> Seq("IHT435_05"),
+    Constants.dateOfDeathId -> Seq(
+      "IHT435_03_01",
+      "IHT435_03_02",
+      "IHT435_03_03",
+      "IHT435_03_04",
+      "IHT435_03_05",
+      "IHT435_03_06",
+      "IHT435_03_07",
+      "IHT435_03_08"
+    )
   )
 
-  private def getValueForPDF(jsVal: JsValue): String = {
-    jsVal match  {
+  private def getValueForPDF(jsVal: JsValue, cacheId: String): String = {
+    val dateCacheIds = Set("","")
+    jsVal match {
       case n: JsNumber => n.toString
       case b: JsBoolean => if (b.value) "Yes" else "No"
+      case s: JsString if dateCacheIds.contains(cacheId) => s.toString // Is date
       case s: JsString => s.toString
       case _ => ""
     }
+  }
+
+  def ook = {
+    val pdf = PDDocument.load(new File("conf/resource/IHT435.pdf"))
+    val form = pdf.getDocumentCatalog.getAcroForm
+
+    val it = form.getFields.iterator
+    while (it.hasNext) {
+      val gg: PDField = it.next
+      println("\n**" + gg + ":" + gg.getFieldType)
+      if (gg.getFieldType != "Btn") {
+        val fldName = gg.getPartialName
+        if (fldName == "IHT435_03_01") {
+          gg.setValue("3")
+        } else {
+          gg.setValue(fldName)
+        }
+
+      }
+    }
+
+
+    pdf.setAllSecurityToBeRemoved(true)
+    val baos = new ByteArrayOutputStream()
+    pdf.save(baos)
+    pdf.close()
+    //"/Users/andy/Downloads/blat.pdf"
+    val outputStream = new FileOutputStream("/home/grant/Downloads/blat.pdf")
+    baos.writeTo(outputStream)
+    baos
   }
 
   private def generatePDF(cacheMap: CacheMap) = {
@@ -120,12 +163,22 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     val form = pdf.getDocumentCatalog.getAcroForm
 
     cacheMapIdToFieldName foreach {
-      case (cacheId, fieldName) =>
+      case (cacheId, fieldNames) =>
         val optionalJsVal = cacheMap.data.get(cacheId)
         optionalJsVal match {
           case Some(jsVal) =>
-            println("\n&&&&&&&&&&&&&&&& SETTING FIELD " + fieldName + " TO " + getValueForPDF(jsVal))
-            form.getField(fieldName).setValue(getValueForPDF(jsVal))
+            val valueForPDF = getValueForPDF(jsVal, cacheId)
+            val valueToStoreFor1Field: (String, Int) => String = (v, _) => v
+            val valueToStoreForMoreThan1Field: (String, Int) => String = (v, i) => v.charAt(i).toString
+            val valueToStore: (String, Int) => String =
+              if (fieldNames.size == 1) valueToStoreFor1Field else valueToStoreForMoreThan1Field
+            var i = 0
+            fieldNames.foreach { currField =>
+              val storedValue = valueToStore(valueForPDF, i)
+              println("\n&&&&&&&&&&&&&&&& SETTING FIELD " + currField + " TO " + storedValue)
+              form.getField(currField).setValue(storedValue)
+              i = i + 1
+            }
           case None =>
         }
     }
@@ -134,7 +187,7 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     val baos = new ByteArrayOutputStream()
     pdf.save(baos)
     pdf.close()
-//"/Users/andy/Downloads/blat.pdf"
+    //"/Users/andy/Downloads/blat.pdf"
     val outputStream = new FileOutputStream("/home/grant/Downloads/blat.pdf")
     baos.writeTo(outputStream)
     baos

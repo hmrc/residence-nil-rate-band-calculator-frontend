@@ -20,7 +20,7 @@ import akka.util.ByteString
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm
 import play.api.http.Status
-import play.api.libs.json.{JsBoolean, JsNumber, JsValue}
+import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
@@ -39,7 +39,8 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
   private val filledcacheMap: CacheMap = new CacheMap("", Map[String, JsValue](
     Constants.valueOfEstateId -> JsNumber(500000),
     Constants.chargeableEstateValueId -> JsNumber(450000),
-    Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true)
+    Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true),
+    Constants.dateOfDeathId -> JsString("2017-5-12")
   ))
 
   private def acroForm: PDAcroForm = {
@@ -52,7 +53,16 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     acroForm
   }
 
+  def checkDate(acroForm: PDAcroForm, baseFieldName:String, expectedDate:String) = {
+    acroForm.getField(baseFieldName + "_01").getValueAsString shouldBe expectedDate.charAt(0).toString
+  }
+
   "onPageLoad" must {
+
+//    "list all" in {
+//      controller.ook
+//    }
+
     "return 200 for a GET" in {
       val result = controller.onPageLoad()(fakeRequest)
       status(result) shouldBe Status.OK
@@ -81,6 +91,24 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
 //    "when \"Does the estate include any residential property that the deceased owned and lived in?\" (4) is set in the session, " +
 //      "it should appear as field IHT435_08 in the generated PDF" in {
 //      acroForm.getField("IHT435_08").getValueAsString shouldBe "No"
+//    }
+
+
+
+//    "when \"Date of death\" is set in the session, it should appear as the appropriate fields in the generated PDF" in {
+//      //2017-5-12
+//      //    "IHT435_03_01" -> "IHT435_03_01",
+//      //    "IHT435_03_02" -> "IHT435_03_02",
+//      //    "IHT435_03_03" -> "IHT435_03_03",
+//      //    "IHT435_03_04" -> "IHT435_03_04",
+//      //    "IHT435_03_05" -> "IHT435_03_05",
+//      //    "IHT435_03_06" -> "IHT435_03_06",
+//      //    "IHT435_03_07" -> "IHT435_03_07",
+//      //    "IHT435_03_08" -> "IHT435_03_08",
+//
+//      checkDate(acroForm, "IHT435_03", "12052017")
+//
+//
 //    }
   }
 }
