@@ -304,7 +304,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             |"downsizingDetails":{
             |  "datePropertyWasChanged":"2018-02-02",
             |  "valueOfChangedProperty":6,
-            |  "valueCloselyInherited":0,
+            |  "valueOfAssetsPassing":0,
             |  "valueAvailableWhenPropertyChanged":0
             |}
             |}""".stripMargin.replaceAll("\\s+", "")
@@ -343,7 +343,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             |"downsizingDetails":{
             |  "datePropertyWasChanged":"2018-02-02",
             |  "valueOfChangedProperty":6,
-            |  "valueCloselyInherited":7,
+            |  "valueOfAssetsPassing":7,
             |  "valueAvailableWhenPropertyChanged":0
             |}
             |}""".stripMargin.replaceAll("\\s+", "")
@@ -384,7 +384,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             |"downsizingDetails":{
             |  "datePropertyWasChanged":"2018-02-02",
             |  "valueOfChangedProperty":6,
-            |  "valueCloselyInherited":7,
+            |  "valueOfAssetsPassing":7,
             |  "valueAvailableWhenPropertyChanged":8
             |}
             |}""".stripMargin.replaceAll("\\s+", "")
