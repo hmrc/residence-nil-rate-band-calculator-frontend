@@ -70,10 +70,10 @@ class Navigator @Inject()() {
 
   private def getDateOfDeathRoute(userAnswers: UserAnswers) =
     getRouteForOptionalLocalDate(userAnswers.dateOfDeath, Constants.eligibilityDate,
-      TransitionOutController.onPageLoad(), PartOfEstatePassingToDirectDescendantsController.onPageLoad())
+      NoThresholdIncreaseController.onPageLoad(), PartOfEstatePassingToDirectDescendantsController.onPageLoad())
 
   private def getPartOfEstatePassingToDirectDescendantsRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.partOfEstatePassingToDirectDescendants, ValueOfEstateController.onPageLoad(), TransitionOutController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.partOfEstatePassingToDirectDescendants, ValueOfEstateController.onPageLoad(), NoThresholdIncreaseController.onPageLoad())
 
   private def getPropertyInEstateRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.propertyInEstate, PropertyValueController.onPageLoad(), NoAdditionalThresholdAvailableController.onPageLoad())
@@ -102,13 +102,13 @@ class Navigator @Inject()() {
     getRouteForOptionalBoolean(userAnswers.exemptionsAndReliefClaimed, GrossingUpOnEstatePropertyController.onPageLoad(), TransferAnyUnusedThresholdController.onPageLoad())
 
   private def getGrossingUpOnEstatePropertyRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.grossingUpOnEstateProperty, TransitionOutController.onPageLoad(), ChargeablePropertyValueController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.grossingUpOnEstateProperty, UnableToCalculateThresholdIncreaseController.onPageLoad(), ChargeablePropertyValueController.onPageLoad())
 
   private def getAssetsPassingToDirectDescendantsRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.assetsPassingToDirectDescendants, GrossingUpOnEstateAssetsController.onPageLoad(), NoDownsizingThresholdIncreaseController.onPageLoad())
 
   private def getGrossingUpOnEstateAssetsRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.grossingUpOnEstateAssets, TransitionOutController.onPageLoad(), ValueOfAssetsPassingController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.grossingUpOnEstateAssets, UnableToCalculateThresholdIncreaseController.onPageLoad(), ValueOfAssetsPassingController.onPageLoad())
 
   private def getValueOfAssetsPassingRoute(userAnswers: UserAnswers) = (userAnswers.transferAnyUnusedThreshold, userAnswers.datePropertyWasChanged) match {
     case (Some(true), Some(d)) if !(d isBefore Constants.eligibilityDate) => TransferAvailableWhenPropertyChangedController.onPageLoad()

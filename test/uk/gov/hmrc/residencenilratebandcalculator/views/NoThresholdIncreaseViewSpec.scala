@@ -16,24 +16,24 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.not_possible_to_use_service
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_threshold_increase
 
 import scala.language.reflectiveCalls
 
-class NotPossibleToUseServiceViewSpec extends HtmlSpec {
+class NoThresholdIncreaseViewSpec extends HtmlSpec {
 
-  val prefix = "not_possible_to_use_service.grossing_up"
+  val prefix = "no_threshold_increase.direct_descendants"
 
   def fixture() = new {
-    val view = not_possible_to_use_service(frontendAppConfig, prefix, Seq())(request, messages)
+    val view = no_threshold_increase(frontendAppConfig, prefix, Seq())(request, messages)
     val doc = asDocument(view)
   }
 
-  "Not Possible to use Service View" must {
+  "No Threshold Increase View" must {
 
     "display the correct browser title" in {
       val f = fixture()
-      assertEqualsMessage(f.doc, "title", "not_possible_to_use_service.browser_title")
+      assertEqualsMessage(f.doc, "title", "no_threshold_increase.browser_title")
     }
 
     "display the correct page title" in {

@@ -72,7 +72,9 @@ GET        /not-found                                   uk.gov.hmrc.residencenil
 
 GET        /expired                                     uk.gov.hmrc.residencenilratebandcalculator.controllers.SessionExpiredController.onPageLoad
 
-GET        /not-possible-to-use-calculator              uk.gov.hmrc.residencenilratebandcalculator.controllers.TransitionOutController.onPageLoad
+GET        /no-threshold-increase                       uk.gov.hmrc.residencenilratebandcalculator.controllers.NoThresholdIncreaseController.onPageLoad
+
+GET        /unable-to-calculate-threshold-increase      uk.gov.hmrc.residencenilratebandcalculator.controllers.UnableToCalculateThresholdIncreaseController.onPageLoad
 
 GET        /percentage-passed-to-direct-descendants     uk.gov.hmrc.residencenilratebandcalculator.controllers.PercentagePassedToDirectDescendantsController.onPageLoad
 POST       /percentage-passed-to-direct-descendants     uk.gov.hmrc.residencenilratebandcalculator.controllers.PercentagePassedToDirectDescendantsController.onSubmit

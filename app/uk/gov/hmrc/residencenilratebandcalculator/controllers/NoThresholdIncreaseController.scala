@@ -20,34 +20,31 @@ import javax.inject.{Inject, Singleton}
 
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetTransitionOutReason.{DateOfDeath, DirectDescendant, GrossingUpForOtherProperty, GrossingUpForResidence}
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoThresholdIncreaseReason.{DateOfDeath, DirectDescendant}
 import uk.gov.hmrc.residencenilratebandcalculator.models._
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.not_possible_to_use_service
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_threshold_increase
 
 @Singleton
-class TransitionOutController @Inject()(val appConfig: FrontendAppConfig,
-                                        override val messagesApi: MessagesApi,
-                                        override val sessionConnector: SessionConnector) extends TransitionController {
+class NoThresholdIncreaseController  @Inject()(val appConfig: FrontendAppConfig,
+                                               override val messagesApi: MessagesApi,
+                                               override val sessionConnector: SessionConnector) extends TransitionController {
 
-  val getReason = GetTransitionOutReason
+  val getReason = GetNoThresholdIncreaseReason
 
   def getControllerId(reason: Reason) =
     reason match {
       case DateOfDeath => Constants.dateOfDeathId
       case DirectDescendant => Constants.partOfEstatePassingToDirectDescendantsId
-      case GrossingUpForResidence => Constants.grossingUpOnEstatePropertyId
-      case GrossingUpForOtherProperty => Constants.grossingUpOnEstateAssetsId
     }
 
   def createView(reason: Reason, userAnswers: UserAnswers, previousAnswers: scala.Seq[AnswerRow])(implicit request: Request[_]) = {
     val prefix = reason match {
-      case DateOfDeath => "not_possible_to_use_service.date_of_death"
-      case DirectDescendant => "not_possible_to_use_service.direct_descendant"
-      case GrossingUpForResidence => "not_possible_to_use_service.grossing_up"
-      case GrossingUpForOtherProperty => "not_possible_to_use_service.grossing_up"
+      case DateOfDeath => "no_threshold_increase.date_of_death"
+      case DirectDescendant => "no_threshold_increase.direct_descendant"
     }
-    not_possible_to_use_service(appConfig, prefix, previousAnswers)
+
+    no_threshold_increase(appConfig, prefix, previousAnswers)
   }
 }
