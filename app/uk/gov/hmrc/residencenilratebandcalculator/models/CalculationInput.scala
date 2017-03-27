@@ -121,7 +121,7 @@ object CalculationInput {
 
 case class DownsizingDetails(datePropertyWasChanged: LocalDate,
                              valueOfChangedProperty: Int,
-                             valueCloselyInherited: Int,
+                             valueOfAssetsPassing: Int,
                              valueAvailableWhenPropertyChanged: Int)
 
 object DownsizingDetails {
@@ -136,11 +136,11 @@ object DownsizingDetails {
     DownsizingDetails(
       userAnswers.datePropertyWasChanged.get,
       userAnswers.valueOfChangedProperty.get,
-      getValueCloselyInherited(userAnswers),
+      getValueOfAssetsPassing(userAnswers),
       getValueAvailableWhenPropertyChanged(userAnswers))
   }
 
-  private def getValueCloselyInherited(userAnswers: UserAnswers) = userAnswers.assetsPassingToDirectDescendants.get match {
+  private def getValueOfAssetsPassing(userAnswers: UserAnswers) = userAnswers.assetsPassingToDirectDescendants.get match {
     case true => userAnswers.valueOfAssetsPassing.get
     case _ => 0
   }
