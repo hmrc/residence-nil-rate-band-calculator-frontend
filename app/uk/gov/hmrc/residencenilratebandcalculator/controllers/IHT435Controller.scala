@@ -102,14 +102,14 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
 
   private val cacheMapIdToFieldName = Map[String, String](
     Constants.valueOfEstateId -> "IHT435_06",
-    Constants.chargeableEstateValueId -> "IHT435_07" //,
-    //Constants.anyAssetsPassingToDirectDescendantsId -> "IHT435_05"
+    Constants.chargeableEstateValueId -> "IHT435_07",
+    Constants.anyAssetsPassingToDirectDescendantsId -> "IHT435_05"
   )
 
   private def getValueForPDF(jsVal: JsValue): String = {
     jsVal match  {
       case n: JsNumber => n.toString
-      //case b: JsBoolean => if (b.value) "No" else "Yes"
+      case b: JsBoolean => if (b.value) "Yes" else "No"
       case s: JsString => s.toString
       case _ => ""
     }
@@ -119,27 +119,24 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     val pdf = PDDocument.load(new File("conf/resource/IHT435.pdf"))
     val form = pdf.getDocumentCatalog.getAcroForm
 
-//    cacheMapIdToFieldName foreach {
-//      case (cacheId, fieldName) =>
-//        val optionalJsVal = cacheMap.data.get(cacheId)
-//        optionalJsVal match {
-//          case Some(jsVal) =>
-//            println("\n&&&&&&&&&&&&&&&& SETTING FIELD " + fieldName + " TO " + getValueForPDF(jsVal))
-//            form.getField(fieldName).setValue(getValueForPDF(jsVal))
-//          case None =>
-//        }
-//    }
-
-    form.getField("IHT435_05").setValue("No")
+    cacheMapIdToFieldName foreach {
+      case (cacheId, fieldName) =>
+        val optionalJsVal = cacheMap.data.get(cacheId)
+        optionalJsVal match {
+          case Some(jsVal) =>
+            println("\n&&&&&&&&&&&&&&&& SETTING FIELD " + fieldName + " TO " + getValueForPDF(jsVal))
+            form.getField(fieldName).setValue(getValueForPDF(jsVal))
+          case None =>
+        }
+    }
 
     pdf.setAllSecurityToBeRemoved(true)
     val baos = new ByteArrayOutputStream()
     pdf.save(baos)
     pdf.close()
-
-        val outputStream = new FileOutputStream("/Users/andy/Downloads/blat.pdf")
-        baos.writeTo(outputStream)
-
+//"/Users/andy/Downloads/blat.pdf"
+    val outputStream = new FileOutputStream("/home/grant/Downloads/blat.pdf")
+    baos.writeTo(outputStream)
     baos
   }
 
