@@ -32,7 +32,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
   val chargeableEstateValue = 2
   val propertyValue = 3
   val percentagePassedToDirectDescendants = 4
-  val broughtForwardAllowance = 5
+  val valueBeingTransferred = 5
   val valueOfChangedProperty = 6
   val assetsPassingToDirectDescendants = 7
   val valueAvailableWhenPropertyChanged = 8
@@ -47,13 +47,13 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
   }
   
   def setupMock(anyAssetsPassingToDirectDescendants: Option[Boolean] = None,
-                anyBroughtForwardAllowance: Option[Boolean] = None,
+                transferAnyUnusedThreshold: Option[Boolean] = None,
                 transferAvailableWhenPropertyChanged: Option[Boolean] = None,
                 claimDownsizingThreshold: Option[Boolean] = None,
                 exemptionsAndReliefClaimed: Option[Boolean] = None,
                 propertyPassingToDirectDescendants: Option[String] = None,
                 assetsPassingToDirectDescendants: Option[Int] = None,
-                broughtForwardAllowance: Option[Int] = None,
+                valueBeingTransferred: Option[Int] = None,
                 valueAvailableWhenPropertyChanged: Option[Int] = None,
                 chargeableEstateValue: Option[Int] = None,
                 dateOfDeath: Option[LocalDate] = None,
@@ -68,13 +68,13 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
                 valueOfChangedProperty: Option[Int] = None
                ) = {
     when(userAnswers.anyAssetsPassingToDirectDescendants) thenReturn anyAssetsPassingToDirectDescendants
-    when(userAnswers.anyBroughtForwardAllowance) thenReturn anyBroughtForwardAllowance
+    when(userAnswers.transferAnyUnusedThreshold) thenReturn transferAnyUnusedThreshold
     when(userAnswers.transferAvailableWhenPropertyChanged) thenReturn transferAvailableWhenPropertyChanged
     when(userAnswers.claimDownsizingThreshold) thenReturn claimDownsizingThreshold
     when(userAnswers.exemptionsAndReliefClaimed) thenReturn exemptionsAndReliefClaimed
     when(userAnswers.propertyPassingToDirectDescendants) thenReturn propertyPassingToDirectDescendants
     when(userAnswers.assetsPassingToDirectDescendants) thenReturn assetsPassingToDirectDescendants
-    when(userAnswers.broughtForwardAllowance) thenReturn broughtForwardAllowance
+    when(userAnswers.valueBeingTransferred) thenReturn valueBeingTransferred
     when(userAnswers.valueAvailableWhenPropertyChanged) thenReturn valueAvailableWhenPropertyChanged
     when(userAnswers.chargeableEstateValue) thenReturn chargeableEstateValue
     when(userAnswers.dateOfDeath) thenReturn dateOfDeath
@@ -91,10 +91,10 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
 
   "Calculation Input" when {
 
-    "there is no property, brought forward allowance or downsizing" must {
+    "there is no property, value being transferred or downsizing" must {
 
       def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate),
-        chargeableEstateValue = Some(chargeableEstateValue), propertyInEstate = Some(false), anyBroughtForwardAllowance = Some(false),
+        chargeableEstateValue = Some(chargeableEstateValue), propertyInEstate = Some(false), transferAnyUnusedThreshold = Some(false),
         claimDownsizingThreshold = Some(false))
 
       "construct correctly from user answers" in {
@@ -113,17 +113,17 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             |"chargeableEstateValue":2,
             |"propertyValue":0,
             |"percentagePassedToDirectDescendants":0,
-            |"broughtForwardAllowance":0
+            |"valueBeingTransferred":0
             |}""".stripMargin.replaceAll("\\s+", "")
       }
     }
 
-    "there is a property, none of which is closely inherited, and no brought forward allowance or downsizing" must {
+    "there is a property, none of which is closely inherited, and no value being transferred or downsizing" must {
 
       def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate),
         chargeableEstateValue = Some(chargeableEstateValue),
         propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.none),
-        anyBroughtForwardAllowance = Some(false), claimDownsizingThreshold = Some(false))
+        transferAnyUnusedThreshold = Some(false), claimDownsizingThreshold = Some(false))
 
       "construct correctly from user answers" in {
         buildAnswers
@@ -141,18 +141,18 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             |"chargeableEstateValue":2,
             |"propertyValue":3,
             |"percentagePassedToDirectDescendants":0,
-            |"broughtForwardAllowance":0
+            |"valueBeingTransferred":0
             |}""".stripMargin.replaceAll("\\s+", "")
       }
     }
 
-    "there is a property, all of which is closely inherited, and no exemptions, brought forward allowance or downsizing" must {
+    "there is a property, all of which is closely inherited, and no exemptions, value being transferred or downsizing" must {
 
       def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate),
         chargeableEstateValue = Some(chargeableEstateValue),
         propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.all),
         percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(false),
-        anyBroughtForwardAllowance = Some(false), claimDownsizingThreshold = Some(false))
+        transferAnyUnusedThreshold = Some(false), claimDownsizingThreshold = Some(false))
 
       "construct correctly from user answers" in {
         buildAnswers
@@ -171,19 +171,19 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             |"chargeableEstateValue":2,
             |"propertyValue":3,
             |"percentagePassedToDirectDescendants":100,
-            |"broughtForwardAllowance":0
+            |"valueBeingTransferred":0
             |}""".stripMargin.replaceAll("\\s+", "")
       }
     }
 
 
-    "there is a property, some of which is closely inherited, and no exemptions, brought forward allowance or downsizing" must {
+    "there is a property, some of which is closely inherited, and no exemptions, value being transferred or downsizing" must {
 
       def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate),
         chargeableEstateValue = Some(chargeableEstateValue),
         propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.some),
         percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(false),
-        anyBroughtForwardAllowance = Some(false), claimDownsizingThreshold = Some(false))
+        transferAnyUnusedThreshold = Some(false), claimDownsizingThreshold = Some(false))
 
       "construct correctly from user answers" in {
         buildAnswers
@@ -202,12 +202,12 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             |"chargeableEstateValue":2,
             |"propertyValue":3,
             |"percentagePassedToDirectDescendants":4,
-            |"broughtForwardAllowance":0
+            |"valueBeingTransferred":0
             |}""".stripMargin.replaceAll("\\s+", "")
       }
     }
 
-    "there is a property, some of which is closely inherited, some exemptions, and no brought forward allowance or downsizing" must {
+    "there is a property, some of which is closely inherited, some exemptions, and no value being transferred or downsizing" must {
 
       def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate),
         chargeableEstateValue = Some(chargeableEstateValue),
@@ -215,7 +215,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(true), grossingUpOnEstateProperty = Some(false),
         chargeablePropertyValue = Some(chargeablePropertyValue),
         chargeableInheritedPropertyValue = Some(chargeableInheritedPropertyValue),
-        anyBroughtForwardAllowance = Some(false), claimDownsizingThreshold = Some(false))
+        transferAnyUnusedThreshold = Some(false), claimDownsizingThreshold = Some(false))
 
       "construct correctly from user answers" in {
         buildAnswers
@@ -235,7 +235,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             |"chargeableEstateValue":2,
             |"propertyValue":3,
             |"percentagePassedToDirectDescendants":4,
-            |"broughtForwardAllowance":0,
+            |"valueBeingTransferred":0,
             |"propertyValueAfterExemption":{
             |  "value":9,
             |  "inheritedValue":10
@@ -244,19 +244,19 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       }
     }
 
-    "there is a property, some of which is closely inherited, no exemptions, some brought forward allowance and no downsizing" must {
+    "there is a property, some of which is closely inherited, no exemptions, some value being transferred and no downsizing" must {
 
       def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate),
         chargeableEstateValue = Some(chargeableEstateValue),
         propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.some),
         percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(false),
-        anyBroughtForwardAllowance = Some(true), broughtForwardAllowance = Some(broughtForwardAllowance), claimDownsizingThreshold = Some(false))
+        transferAnyUnusedThreshold = Some(true), valueBeingTransferred = Some(valueBeingTransferred), claimDownsizingThreshold = Some(false))
 
       "construct correctly from user answers" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
         calculationInput shouldBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue,
-          propertyValue, percentagePassedToDirectDescendants, broughtForwardAllowance, None, None)
+          propertyValue, percentagePassedToDirectDescendants, valueBeingTransferred, None, None)
       }
 
       "render to JSON" in {
@@ -269,18 +269,18 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             |"chargeableEstateValue":2,
             |"propertyValue":3,
             |"percentagePassedToDirectDescendants":4,
-            |"broughtForwardAllowance":5
+            |"valueBeingTransferred":5
             |}""".stripMargin.replaceAll("\\s+", "")
       }
     }
 
-    "there is a property, some of which is closely inherited, no exemptions, no brought forward allowance and downsizing" must {
+    "there is a property, some of which is closely inherited, no exemptions, no value being transferred and downsizing" must {
 
       def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate),
         chargeableEstateValue = Some(chargeableEstateValue),
         propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.some),
         percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(false),
-        anyBroughtForwardAllowance = Some(false), claimDownsizingThreshold = Some(true), datePropertyWasChanged = Some(datePropertyWasChanged),
+        transferAnyUnusedThreshold = Some(false), claimDownsizingThreshold = Some(true), datePropertyWasChanged = Some(datePropertyWasChanged),
         valueOfChangedProperty = Some(valueOfChangedProperty), anyAssetsPassingToDirectDescendants = Some(false))
 
       "construct correctly from user answers" in {
@@ -300,7 +300,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             |"chargeableEstateValue":2,
             |"propertyValue":3,
             |"percentagePassedToDirectDescendants":4,
-            |"broughtForwardAllowance":0,
+            |"valueBeingTransferred":0,
             |"downsizingDetails":{
             |  "datePropertyWasChanged":"2018-02-02",
             |  "valueOfChangedProperty":6,
@@ -311,14 +311,14 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       }
     }
 
-    "there is a property, some of which is closely inherited, no exemptions, no brought forward allowance, " +
+    "there is a property, some of which is closely inherited, no exemptions, no value being transferred, " +
       "downsizing and other assets left to a direct descendant" must {
 
       def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate),
         chargeableEstateValue = Some(chargeableEstateValue),
         propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.some),
         percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(false),
-        anyBroughtForwardAllowance = Some(false), claimDownsizingThreshold = Some(true), datePropertyWasChanged = Some(datePropertyWasChanged),
+        transferAnyUnusedThreshold = Some(false), claimDownsizingThreshold = Some(true), datePropertyWasChanged = Some(datePropertyWasChanged),
         valueOfChangedProperty = Some(valueOfChangedProperty), anyAssetsPassingToDirectDescendants = Some(true),
         assetsPassingToDirectDescendants = Some(assetsPassingToDirectDescendants), transferAvailableWhenPropertyChanged = Some(false))
 
@@ -339,7 +339,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             |"chargeableEstateValue":2,
             |"propertyValue":3,
             |"percentagePassedToDirectDescendants":4,
-            |"broughtForwardAllowance":0,
+            |"valueBeingTransferred":0,
             |"downsizingDetails":{
             |  "datePropertyWasChanged":"2018-02-02",
             |  "valueOfChangedProperty":6,
@@ -350,14 +350,14 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       }
     }
 
-    "there is a property, some of which is closely inherited, no exemptions, brought forward allowance, downsizing and " +
+    "there is a property, some of which is closely inherited, no exemptions, value being transferred, downsizing and " +
       "other assets left to a direct descendant" must {
 
       def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate),
         chargeableEstateValue = Some(chargeableEstateValue),
         propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.some),
         percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(false),
-        anyBroughtForwardAllowance = Some(true), broughtForwardAllowance = Some(broughtForwardAllowance), claimDownsizingThreshold = Some(true),
+        transferAnyUnusedThreshold = Some(true), valueBeingTransferred = Some(valueBeingTransferred), claimDownsizingThreshold = Some(true),
         datePropertyWasChanged = Some(datePropertyWasChanged), valueOfChangedProperty = Some(valueOfChangedProperty), anyAssetsPassingToDirectDescendants = Some(true),
         assetsPassingToDirectDescendants = Some(assetsPassingToDirectDescendants), transferAvailableWhenPropertyChanged = Some(true),
         valueAvailableWhenPropertyChanged = Some(valueAvailableWhenPropertyChanged))
@@ -366,7 +366,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
         calculationInput shouldBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, propertyValue, percentagePassedToDirectDescendants,
-          broughtForwardAllowance, None, Some(DownsizingDetails(datePropertyWasChanged, valueOfChangedProperty, assetsPassingToDirectDescendants,
+          valueBeingTransferred, None, Some(DownsizingDetails(datePropertyWasChanged, valueOfChangedProperty, assetsPassingToDirectDescendants,
             valueAvailableWhenPropertyChanged)))
       }
 
@@ -380,7 +380,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             |"chargeableEstateValue":2,
             |"propertyValue":3,
             |"percentagePassedToDirectDescendants":4,
-            |"broughtForwardAllowance":5,
+            |"valueBeingTransferred":5,
             |"downsizingDetails":{
             |  "datePropertyWasChanged":"2018-02-02",
             |  "valueOfChangedProperty":6,
@@ -391,21 +391,21 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       }
     }
 
-    "there is a property, some of which is closely inherited, no exemptions, brought forward allowance, downsizing is claimed " +
+    "there is a property, some of which is closely inherited, no exemptions, value being transferred, downsizing is claimed " +
       "but the Date Property Was Changed is before the eligibility date" must {
 
       def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate),
         chargeableEstateValue = Some(chargeableEstateValue),
         propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.some),
         percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(false),
-        anyBroughtForwardAllowance = Some(true), broughtForwardAllowance = Some(broughtForwardAllowance), claimDownsizingThreshold = Some(true),
+        transferAnyUnusedThreshold = Some(true), valueBeingTransferred = Some(valueBeingTransferred), claimDownsizingThreshold = Some(true),
         datePropertyWasChanged = Some(Constants.downsizingEligibilityDate.minusDays(1)))
 
       "construct correctly from user answers" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
         calculationInput shouldBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, propertyValue, percentagePassedToDirectDescendants,
-          broughtForwardAllowance, None, None)
+          valueBeingTransferred, None, None)
       }
 
       "render to JSON" in {
@@ -418,7 +418,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             |"chargeableEstateValue":2,
             |"propertyValue":3,
             |"percentagePassedToDirectDescendants":4,
-            |"broughtForwardAllowance":5
+            |"valueBeingTransferred":5
             |}""".stripMargin.replaceAll("\\s+", "")
       }
     }
@@ -569,7 +569,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       }
     }
 
-    "there is no value for 'any brought forward allowance'" must {
+    "there is no value for 'Transfer Any Unused Allowance'" must {
       "throw an exception" in {
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
@@ -577,20 +577,20 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Any Brought Forward Allowance was not answered"
+        exception.getMessage shouldBe "requirement failed: Transfer Any Unused Allowance was not answered"
       }
     }
 
-    "'any brought forward allowance' is true but there is no value for 'brought forward allowance'" must {
+    "'Transfer Any Unused Allowance' is true but there is no value for 'value being transferred'" must {
       "throw an exception" in {
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
             propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.none),
-            anyBroughtForwardAllowance = Some(true))
+            transferAnyUnusedThreshold = Some(true))
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Brought Forward Allowance was not answered"
+        exception.getMessage shouldBe "requirement failed: Value Being Transferred was not answered"
       }
     }
 
@@ -599,7 +599,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
             propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.none),
-            anyBroughtForwardAllowance = Some(false))
+            transferAnyUnusedThreshold = Some(false))
           CalculationInput(userAnswers)
         }
 
@@ -612,7 +612,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
             propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.none),
-            anyBroughtForwardAllowance = Some(false), claimDownsizingThreshold = Some(true))
+            transferAnyUnusedThreshold = Some(false), claimDownsizingThreshold = Some(true))
           CalculationInput(userAnswers)
         }
 
@@ -625,7 +625,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
             propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.none),
-            anyBroughtForwardAllowance = Some(false), claimDownsizingThreshold = Some(true), datePropertyWasChanged = Some(datePropertyWasChanged))
+            transferAnyUnusedThreshold = Some(false), claimDownsizingThreshold = Some(true), datePropertyWasChanged = Some(datePropertyWasChanged))
           CalculationInput(userAnswers)
         }
 
@@ -638,7 +638,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
             propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.none),
-            anyBroughtForwardAllowance = Some(false), claimDownsizingThreshold = Some(true), datePropertyWasChanged = Some(datePropertyWasChanged),
+            transferAnyUnusedThreshold = Some(false), claimDownsizingThreshold = Some(true), datePropertyWasChanged = Some(datePropertyWasChanged),
             valueOfChangedProperty = Some(valueOfChangedProperty))
           CalculationInput(userAnswers)
         }
@@ -653,7 +653,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
             propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.none),
-            anyBroughtForwardAllowance = Some(false), claimDownsizingThreshold = Some(true), datePropertyWasChanged = Some(datePropertyWasChanged),
+            transferAnyUnusedThreshold = Some(false), claimDownsizingThreshold = Some(true), datePropertyWasChanged = Some(datePropertyWasChanged),
             valueOfChangedProperty = Some(valueOfChangedProperty), anyAssetsPassingToDirectDescendants = Some(true))
           CalculationInput(userAnswers)
         }
@@ -662,13 +662,13 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       }
     }
 
-    "there is brought forward allowance, 'claim downsizing threshold' is true and 'any assets passing to direct descendants' is true but there is no value for " +
+    "there is value being transferred, 'claim downsizing threshold' is true and 'any assets passing to direct descendants' is true but there is no value for " +
       "'transfer available when property changed'" must {
       "throw an exception" in {
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
             propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.none),
-            anyBroughtForwardAllowance = Some(true), broughtForwardAllowance = Some(broughtForwardAllowance), claimDownsizingThreshold = Some(true),
+            transferAnyUnusedThreshold = Some(true), valueBeingTransferred = Some(valueBeingTransferred), claimDownsizingThreshold = Some(true),
             datePropertyWasChanged = Some(datePropertyWasChanged), valueOfChangedProperty = Some(valueOfChangedProperty), anyAssetsPassingToDirectDescendants = Some(true),
             assetsPassingToDirectDescendants = Some(assetsPassingToDirectDescendants))
           CalculationInput(userAnswers)
@@ -678,12 +678,12 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       }
     }
 
-    "there is no brought forward allowance, 'claim downsizing threshold' is true and 'any assets passing to direct descendants' is true but there is no value " +
+    "there is no value being transferred, 'claim downsizing threshold' is true and 'any assets passing to direct descendants' is true but there is no value " +
       "for 'transfer available when property changed'" must {
       "not throw an exception" in {
         setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
           propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.none),
-          anyBroughtForwardAllowance = Some(false), claimDownsizingThreshold = Some(true),
+          transferAnyUnusedThreshold = Some(false), claimDownsizingThreshold = Some(true),
           datePropertyWasChanged = Some(datePropertyWasChanged), valueOfChangedProperty = Some(valueOfChangedProperty), anyAssetsPassingToDirectDescendants = Some(true),
           assetsPassingToDirectDescendants = Some(assetsPassingToDirectDescendants))
 
@@ -691,13 +691,13 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       }
     }
 
-    "'claim downsizing threshold' is true, 'any assets passing to direct descendants' is true and 'any brought forward allownace on disposal' is true " +
+    "'claim downsizing threshold' is true, 'any assets passing to direct descendants' is true and 'transfer available when property changed' is true " +
       "but there is no value for 'transfer available when property changed'" must {
       "throw an exception" in {
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
             propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.none),
-            anyBroughtForwardAllowance = Some(true), broughtForwardAllowance = Some(broughtForwardAllowance), claimDownsizingThreshold = Some(true),
+            transferAnyUnusedThreshold = Some(true), valueBeingTransferred = Some(valueBeingTransferred), claimDownsizingThreshold = Some(true),
             datePropertyWasChanged = Some(datePropertyWasChanged), valueOfChangedProperty = Some(valueOfChangedProperty), anyAssetsPassingToDirectDescendants = Some(true),
             assetsPassingToDirectDescendants = Some(assetsPassingToDirectDescendants), transferAvailableWhenPropertyChanged = Some(true))
           CalculationInput(userAnswers)

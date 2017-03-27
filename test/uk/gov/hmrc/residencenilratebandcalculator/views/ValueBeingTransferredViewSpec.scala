@@ -19,23 +19,23 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.brought_forward_allowance
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_being_transferred
 
 import scala.language.reflectiveCalls
 
-class BroughtForwardAllowanceViewSpec extends IntViewSpecBase {
+class ValueBeingTransferredViewSpec extends IntViewSpecBase {
 
-  val messageKeyPrefix = "brought_forward_allowance"
+  val messageKeyPrefix = "value_being_transferred"
 
-  def createView(form: Option[Form[Int]] = None) = brought_forward_allowance(frontendAppConfig, backUrl, "100000", form, Seq())(request, messages)
+  def createView(form: Option[Form[Int]] = None) = value_being_transferred(frontendAppConfig, backUrl, "100000", form, Seq())(request, messages)
 
-  "Brought Forward Allowance View" must {
+  "Value Being Transferred View" must {
 
     behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2")
 
     behave like pageWithBackLink[Int](createView)
 
-    behave like intPage(createView, messageKeyPrefix, BroughtForwardAllowanceController.onSubmit().url, NonNegativeIntForm())
+    behave like intPage(createView, messageKeyPrefix, ValueBeingTransferredController.onSubmit().url, NonNegativeIntForm())
 
     behave like pageContainingPreviousAnswers(createView)
 

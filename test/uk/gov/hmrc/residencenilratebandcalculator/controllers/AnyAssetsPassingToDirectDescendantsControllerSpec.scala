@@ -58,8 +58,8 @@ class AnyAssetsPassingToDirectDescendantsControllerSpec extends SimpleController
         Constants.propertyPassingToDirectDescendantsId,
         Constants.percentagePassedToDirectDescendantsId,
         Constants.chargeablePropertyValueId,
-        Constants.anyBroughtForwardAllowanceId,
-        Constants.broughtForwardAllowanceId,
+        Constants.transferAnyUnusedThresholdId,
+        Constants.valueBeingTransferredId,
         Constants.claimDownsizingThresholdId,
         Constants.datePropertyWasChangedId,
         Constants.valueOfChangedPropertyId))(Reads.BooleanReads, Writes.BooleanWrites)

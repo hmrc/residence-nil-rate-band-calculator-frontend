@@ -36,10 +36,10 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.anyAssetsPassingToDirectDescendants shouldBe Some(true)
       }
 
-      "return the correct answer for Any Brought Forward Allowance" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.anyBroughtForwardAllowanceId -> JsBoolean(true)))
+      "return the correct answer for Transfer Any Unused Allowance" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.transferAnyUnusedThresholdId -> JsBoolean(true)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.anyBroughtForwardAllowance shouldBe Some(true)
+        userAnswers.transferAnyUnusedThreshold shouldBe Some(true)
       }
 
       "return the correct answer for Transfer Available When Property Changed" in {
@@ -72,10 +72,10 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.assetsPassingToDirectDescendants shouldBe Some(1)
       }
 
-      "return the correct answer for Brought Forward Allowance" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.broughtForwardAllowanceId -> JsNumber(1)))
+      "return the correct answer for Value Being Transferred" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.valueBeingTransferredId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.broughtForwardAllowance shouldBe Some(1)
+        userAnswers.valueBeingTransferred shouldBe Some(1)
       }
 
       "return the correct answer for Value Available When Property Changed" in {
@@ -165,9 +165,9 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.anyAssetsPassingToDirectDescendants shouldBe None
       }
 
-      "return None for Any Brought Forward Allowance" in {
+      "return None for Transfer Any Unused Allowance" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.anyBroughtForwardAllowance shouldBe None
+        userAnswers.transferAnyUnusedThreshold shouldBe None
       }
 
       "return None for Transfer Available When Property Changed" in {
@@ -195,9 +195,9 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.assetsPassingToDirectDescendants shouldBe None
       }
 
-      "return None for Brought Forward Allowance" in {
+      "return None for Value Being Transferred" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.broughtForwardAllowance shouldBe None
+        userAnswers.valueBeingTransferred shouldBe None
       }
 
       "return None for Value Available When Property Changed" in {

@@ -42,8 +42,8 @@ class CascadeUpsertSpec extends UnitSpec {
     Constants.grossingUpOnEstatePropertyId -> JsBoolean(false),
     Constants.chargeablePropertyValueId -> JsNumber(testNumber),
     Constants.chargeableInheritedPropertyValueId -> JsNumber(testNumber),
-    Constants.anyBroughtForwardAllowanceId -> JsBoolean(true),
-    Constants.broughtForwardAllowanceId -> JsNumber(testNumber),
+    Constants.transferAnyUnusedThresholdId -> JsBoolean(true),
+    Constants.valueBeingTransferredId -> JsNumber(testNumber),
     Constants.claimDownsizingThresholdId -> JsBoolean(true),
     Constants.datePropertyWasChangedId -> JsString("2019-01-01"),
     Constants.valueOfChangedPropertyId -> JsNumber(testNumber),
@@ -181,33 +181,33 @@ class CascadeUpsertSpec extends UnitSpec {
       }
     }
 
-    "asked to save the value 'false' for Any Brought Forward Allowance" must {
+    "asked to save the value 'false' for Transfer Any Unused Allowance" must {
 
-      "delete the existing 'Brought Forward Allowance' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyBroughtForwardAllowanceId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.broughtForwardAllowanceId
+      "delete the existing 'Value Being Transferred' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.transferAnyUnusedThresholdId, false, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.valueBeingTransferredId
       }
 
       "delete the existing 'Transfer Available When Property Changed' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyBroughtForwardAllowanceId, false, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.transferAnyUnusedThresholdId, false, fullCacheMap)
         updatedCacheMap.data.keys should not contain Constants.transferAvailableWhenPropertyChangedId
       }
 
       "delete the existing 'Value Available When Property Changed' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyBroughtForwardAllowanceId, false, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.transferAnyUnusedThresholdId, false, fullCacheMap)
         updatedCacheMap.data.keys should not contain Constants.valueAvailableWhenPropertyChangedId
       }
 
       "not delete any other answers" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyBroughtForwardAllowanceId, false, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.transferAnyUnusedThresholdId, false, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size - 3
       }
     }
 
-    "asked to save the value 'true' for Any Brought Forward Allowance" must {
+    "asked to save the value 'true' for Transfer Any Unused Allowance" must {
 
       "not delete existing answers for other questions" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyBroughtForwardAllowanceId, true, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.transferAnyUnusedThresholdId, true, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size
       }
     }

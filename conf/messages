@@ -4,11 +4,11 @@ any_assets_passing_to_direct_descendants.guidance = This doesn’t include the p
 any_assets_passing_to_direct_descendants.guidance_no_property = A direct descendant must have received assets from the estate for the downsizing allowance to be claimed.
 any_assets_passing_to_direct_descendants.label =
 
-any_brought_forward_allowance.browser_title = Do you wish to transfer any unused residence nil rate band?
-any_brought_forward_allowance.title = Do you wish to transfer any unused residence nil rate band?
-any_brought_forward_allowance.guidance1 = This transfer will be from the estate of a spouse or civil partner who died before the person who you are claiming an allowance for.
-any_brought_forward_allowance.guidance2 = You will need a completed copy of the IHT-436 form if you are transferring any unused allowance from somebody else’s estate.
-any_brought_forward_allowance.label =
+transfer_any_unused_threshold.browser_title = Do you wish to transfer any unused residence nil rate band?
+transfer_any_unused_threshold.title = Do you wish to transfer any unused residence nil rate band?
+transfer_any_unused_threshold.guidance1 = This transfer will be from the estate of a spouse or civil partner who died before the person who you are claiming an allowance for.
+transfer_any_unused_threshold.guidance2 = You will need a completed copy of the IHT-436 form if you are transferring any unused allowance from somebody else’s estate.
+transfer_any_unused_threshold.label =
 
 transfer_available_when_property_changed.browser_title = If a valid claim for RNRB had been made at the date of disposal would any transferable residence nil rate band have been available at that time?
 transfer_available_when_property_changed.title = If a valid claim for RNRB had been made at the date of disposal would any transferable residence nil rate band have been available at that time?
@@ -77,13 +77,13 @@ calculate_threshold_increase.guidance4.bullet2 = details of any other assets lef
 calculate_threshold_increase.guidance4.bullet3 = a completed IHT-436 form with the value of transferable residential nil rate band being claimed if the person who has died was married during their lifetime and their spouse or civil partner died first
 calculate_threshold_increase.sub_heading = Before you start
 
-brought_forward_allowance.browser_title = How much transferable residence nil rate band are you claiming?
-brought_forward_allowance.title = How much transferable residence nil rate band are you claiming?
-brought_forward_allowance.guidance1 = This is the number in either box 15 or box 21 on the IHT-436 form.
-brought_forward_allowance.guidance2 = If the person who you are claiming an allowance for had been married or in a civil partnership more than once during their lifetime and their spouse or civil partner died first, you can transfer more than one unused allowance. Add together the numbers in either box 15 or box 21 on each IHT-436 form.
-brought_forward_allowance.guidance3 = You cannot transfer more than {0}
-brought_forward_allowance.error = You cannot transfer more than the maximum amount
-brought_forward_allowance.label =
+value_being_transferred.browser_title = How much transferable residence nil rate band are you claiming?
+value_being_transferred.title = How much transferable residence nil rate band are you claiming?
+value_being_transferred.guidance1 = This is the number in either box 15 or box 21 on the IHT-436 form.
+value_being_transferred.guidance2 = If the person who you are claiming an allowance for had been married or in a civil partnership more than once during their lifetime and their spouse or civil partner died first, you can transfer more than one unused allowance. Add together the numbers in either box 15 or box 21 on each IHT-436 form.
+value_being_transferred.guidance3 = You cannot transfer more than {0}
+value_being_transferred.error = You cannot transfer more than the maximum amount
+value_being_transferred.label =
 
 value_available_when_property_changed.browser_title = What would the amount of transferable residence nil rate band have been at the date of disposal?
 value_available_when_property_changed.title = What would the amount of transferable residence nil rate band have been at the date of disposal?
