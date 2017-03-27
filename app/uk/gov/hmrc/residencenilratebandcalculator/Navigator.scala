@@ -41,7 +41,7 @@ class Navigator @Inject()() {
       Constants.transferAnyUnusedThresholdId -> (ua => getTransferAnyUnusedThresholdRoute(ua)),
       Constants.valueBeingTransferredId -> (_ => ClaimDownsizingThresholdController.onPageLoad()),
       Constants.claimDownsizingThresholdId -> (ua => getClaimDownsizingThresholdRoute(ua)),
-      Constants.noDownsizingThresholdIncrease -> (_ => ResultsController.onPageLoad()),
+      Constants.noDownsizingThresholdIncrease -> (_ => ThresholdCalculationResultController.onPageLoad()),
       Constants.datePropertyWasChangedId -> (ua => getDatePropertyWasChangedRoute(ua)),
       Constants.exemptionsAndReliefClaimedId -> (ua => getExemptionsAndReliefClaimedRoute(ua)),
       Constants.chargeablePropertyValueId -> (_ => ChargeableInheritedPropertyValueController.onPageLoad()),
@@ -52,7 +52,7 @@ class Navigator @Inject()() {
       Constants.grossingUpOnEstateAssetsId -> (ua => getGrossingUpOnEstateAssetsRoute(ua)),
       Constants.valueOfAssetsPassingId -> (ua => getValueOfAssetsPassingRoute(ua)),
       Constants.transferAvailableWhenPropertyChangedId -> (ua => getTransferAvailableWhenPropertyChangedRoute(ua)),
-      Constants.valueAvailableWhenPropertyChangedId -> (_ => ResultsController.onPageLoad())
+      Constants.valueAvailableWhenPropertyChangedId -> (_ => ThresholdCalculationResultController.onPageLoad())
     )
   }
 
@@ -82,10 +82,10 @@ class Navigator @Inject()() {
     getRouteForOptionalBoolean(userAnswers.transferAnyUnusedThreshold, ValueBeingTransferredController.onPageLoad(), ClaimDownsizingThresholdController.onPageLoad())
 
   private def getTransferAvailableWhenPropertyChangedRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.transferAvailableWhenPropertyChanged, ValueAvailableWhenPropertyChangedController.onPageLoad(), ResultsController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.transferAvailableWhenPropertyChanged, ValueAvailableWhenPropertyChangedController.onPageLoad(), ThresholdCalculationResultController.onPageLoad())
 
   private def getClaimDownsizingThresholdRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.claimDownsizingThreshold, DatePropertyWasChangedController.onPageLoad(), ResultsController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.claimDownsizingThreshold, DatePropertyWasChangedController.onPageLoad(), ThresholdCalculationResultController.onPageLoad())
 
   private def getDatePropertyWasChangedRoute(userAnswers: UserAnswers) =
     getRouteForOptionalLocalDate(userAnswers.datePropertyWasChanged, Constants.downsizingEligibilityDate,
@@ -112,7 +112,7 @@ class Navigator @Inject()() {
 
   private def getValueOfAssetsPassingRoute(userAnswers: UserAnswers) = (userAnswers.transferAnyUnusedThreshold, userAnswers.datePropertyWasChanged) match {
     case (Some(true), Some(d)) if !(d isBefore Constants.eligibilityDate) => TransferAvailableWhenPropertyChangedController.onPageLoad()
-    case _ => ResultsController.onPageLoad()
+    case _ => ThresholdCalculationResultController.onPageLoad()
   }
 
   def nextPage(controllerId: String): UserAnswers => Call = {
