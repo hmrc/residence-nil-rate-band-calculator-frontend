@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-object GetCannotClaimDownsizingReason extends GetReason {
+object GetNoDownsizingThresholdIncreaseReason extends GetReason {
   case object NoAssetsPassingToDirectDescendants extends Reason
   case object DatePropertyWasChangedTooEarly extends Reason
 

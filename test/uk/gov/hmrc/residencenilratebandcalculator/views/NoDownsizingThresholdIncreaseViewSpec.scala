@@ -17,36 +17,36 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.mvc.Call
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.cannot_claim_downsizing
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_downsizing_threshold_increase
 
-class CannotClaimDownsizingViewSpec extends HtmlSpec {
+class NoDownsizingThresholdIncreaseViewSpec extends HtmlSpec {
   implicit val msg = messages
-  val messageKeyPrefix = "cannot_claim_downsizing"
+  val messageKeyPrefix = "no_downsizing_threshold_increase"
 
-  "Cannot Claim Downsizing View" must {
+  "No Downsizing Threshold Increase View" must {
     "display the correct browser title" in {
-      val doc = asDocument(cannot_claim_downsizing(frontendAppConfig, "", Call("", ""), Seq()))
+      val doc = asDocument(no_downsizing_threshold_increase(frontendAppConfig, "", Call("", ""), Seq()))
       assertEqualsMessage(doc, "title", s"$messageKeyPrefix.browser_title")
     }
 
     "display the correct page title" in {
-      val doc = asDocument(cannot_claim_downsizing(frontendAppConfig, "", Call("", ""), Seq()))
+      val doc = asDocument(no_downsizing_threshold_increase(frontendAppConfig, "", Call("", ""), Seq()))
       assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.title")
     }
 
     "display the correct reason" in {
-      val doc = asDocument(cannot_claim_downsizing(frontendAppConfig, s"$messageKeyPrefix.no_property_reason", Call("", ""), Seq()))
+      val doc = asDocument(no_downsizing_threshold_increase(frontendAppConfig, s"$messageKeyPrefix.no_property_reason", Call("", ""), Seq()))
       assertContainsText(doc, messages(s"$messageKeyPrefix.no_property_reason"))
     }
 
     "contain a link to the given page" in {
       val exampleURL = "http://www.example.com"
-      val doc = asDocument(cannot_claim_downsizing(frontendAppConfig, "", Call("GET", exampleURL), Seq()))
+      val doc = asDocument(no_downsizing_threshold_increase(frontendAppConfig, "", Call("GET", exampleURL), Seq()))
       assertContainsText(doc, exampleURL)
     }
 
     "contain the Show previous answers link" in {
-      val doc = asDocument(cannot_claim_downsizing(frontendAppConfig, "", Call("", ""), Seq()))
+      val doc = asDocument(no_downsizing_threshold_increase(frontendAppConfig, "", Call("", ""), Seq()))
       assertContainsMessages(doc, "site.show_previous_answers")
     }
   }

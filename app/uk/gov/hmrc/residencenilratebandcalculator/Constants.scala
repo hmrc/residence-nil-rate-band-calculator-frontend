@@ -32,7 +32,7 @@ object Constants {
   val valueBeingTransferredId = "ValueBeingTransferred"
   val valueAvailableWhenPropertyChangedId = "ValueAvailableWhenPropertyChanged"
   val chargeableEstateValueId = "ChargeableEstateValue"
-  val cannotClaimDownsizingId = "CannotClaimDownsizing"
+  val noDownsizingThresholdIncrease = "NoDownsizingThresholdIncrease"
   val noAdditionalThresholdAvailableId = "NoAdditionalThresholdAvailable"
   val dateOfDeathId = "DateOfDeath"
   val datePropertyWasChangedId = "DatePropertyWasChanged"

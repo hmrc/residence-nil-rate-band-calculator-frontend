@@ -116,8 +116,8 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.noAdditionalThresholdAvailableId)(mockCacheMap) shouldBe routes.TransferAnyUnusedThresholdController.onPageLoad()
     }
 
-    "return a call to the Results onPageLoad method when we're on the Cannot Claim Downsizing page" in {
-      navigator.nextPage(Constants.cannotClaimDownsizingId)(mock[UserAnswers]) shouldBe routes.ResultsController.onPageLoad()
+    "return a call to the Results onPageLoad method when we're on the No Downsizing Threshold Increase page" in {
+      navigator.nextPage(Constants.noDownsizingThresholdIncrease)(mock[UserAnswers]) shouldBe routes.ResultsController.onPageLoad()
     }
 
     "return a function that goes to the Exemptions And Relief Claimed controller when given PercentagePassedToDirectDescendants" in {
@@ -342,11 +342,11 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.claimDownsizingThresholdId)(mockCacheMap) shouldBe routes.DatePropertyWasChangedController.onPageLoad()
     }
 
-    "return a call to the Cannot Claim Downsizing Controller onPageLoad method when a date before 8th July 2015 is" +
+    "return a call to the No Downsizing Threshold Increase Controller onPageLoad method when a date before 8th July 2015 is" +
       "supplied as the Date Property Was Changed " in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.datePropertyWasChanged) thenReturn Some(new LocalDate(2015, 7, 7))
-      navigator.nextPage(Constants.datePropertyWasChangedId)(mockCacheMap) shouldBe routes.CannotClaimDownsizingController.onPageLoad()
+      navigator.nextPage(Constants.datePropertyWasChangedId)(mockCacheMap) shouldBe routes.NoDownsizingThresholdIncreaseController.onPageLoad()
     }
 
     "return a call to the Value Of Changed Property Controller onPageLoad method when a date on or after 8th July 2015 is supplied as the Date Property Was Changed" in {
@@ -377,10 +377,10 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.GrossingUpOnEstateAssetsController.onPageLoad()
     }
 
-    "return a call to the Cannot Claim Downsizing onPageLoad method when there are no assets passing to the direct descendant" in {
+    "return a call to the No Downsizing Threshold Increase onPageLoad method when there are no assets passing to the direct descendant" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.assetsPassingToDirectDescendants) thenReturn Some(false)
-      navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.CannotClaimDownsizingController.onPageLoad()
+      navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.NoDownsizingThresholdIncreaseController.onPageLoad()
     }
 
     "return a call to the Transfer Available When Property Changed controller onPageLoad method from the AssetsPassingToDirectDescendants controller " +

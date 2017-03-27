@@ -21,18 +21,18 @@ import javax.inject.{Inject, Singleton}
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetCannotClaimDownsizingReason.{DatePropertyWasChangedTooEarly, NoAssetsPassingToDirectDescendants}
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThresholdIncreaseReason.{DatePropertyWasChangedTooEarly, NoAssetsPassingToDirectDescendants}
 import uk.gov.hmrc.residencenilratebandcalculator.models._
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.cannot_claim_downsizing
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_downsizing_threshold_increase
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 @Singleton
-class CannotClaimDownsizingController @Inject()(val appConfig: FrontendAppConfig,
+class NoDownsizingThresholdIncreaseController @Inject()(val appConfig: FrontendAppConfig,
                                                 override val messagesApi: MessagesApi,
                                                 override val sessionConnector: SessionConnector,
                                                 val navigator: Navigator) extends TransitionController {
 
-  val getReason = GetCannotClaimDownsizingReason
+  val getReason = GetNoDownsizingThresholdIncreaseReason
 
   def getControllerId(reason: Reason) =
     reason match {
@@ -42,9 +42,9 @@ class CannotClaimDownsizingController @Inject()(val appConfig: FrontendAppConfig
 
   def createView(reason: Reason, userAnswers: UserAnswers, previousAnswers: Seq[AnswerRow])(implicit request: Request[_]) = {
     val reasonKey = reason match {
-      case NoAssetsPassingToDirectDescendants => "cannot_claim_downsizing.no_assets_passing_to_direct_descendants_reason"
-      case DatePropertyWasChangedTooEarly => "cannot_claim_downsizing.date_property_was_changed_too_early_reason"
+      case NoAssetsPassingToDirectDescendants => "no_downsizing_threshold_increase.no_assets_passing_to_direct_descendants_reason"
+      case DatePropertyWasChangedTooEarly => "no_downsizing_threshold_increase.date_property_was_changed_too_early_reason"
     }
-    cannot_claim_downsizing(appConfig, reasonKey, navigator.nextPage(Constants.cannotClaimDownsizingId)(userAnswers), previousAnswers)
+    no_downsizing_threshold_increase(appConfig, reasonKey, navigator.nextPage(Constants.noDownsizingThresholdIncrease)(userAnswers), previousAnswers)
   }
 }

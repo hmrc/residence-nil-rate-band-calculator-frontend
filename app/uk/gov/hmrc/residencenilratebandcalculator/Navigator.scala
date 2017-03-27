@@ -41,7 +41,7 @@ class Navigator @Inject()() {
       Constants.transferAnyUnusedThresholdId -> (ua => getTransferAnyUnusedThresholdRoute(ua)),
       Constants.valueBeingTransferredId -> (_ => ClaimDownsizingThresholdController.onPageLoad()),
       Constants.claimDownsizingThresholdId -> (ua => getClaimDownsizingThresholdRoute(ua)),
-      Constants.cannotClaimDownsizingId -> (_ => ResultsController.onPageLoad()),
+      Constants.noDownsizingThresholdIncrease -> (_ => ResultsController.onPageLoad()),
       Constants.datePropertyWasChangedId -> (ua => getDatePropertyWasChangedRoute(ua)),
       Constants.exemptionsAndReliefClaimedId -> (ua => getExemptionsAndReliefClaimedRoute(ua)),
       Constants.chargeablePropertyValueId -> (_ => ChargeableInheritedPropertyValueController.onPageLoad()),
@@ -89,7 +89,7 @@ class Navigator @Inject()() {
 
   private def getDatePropertyWasChangedRoute(userAnswers: UserAnswers) =
     getRouteForOptionalLocalDate(userAnswers.datePropertyWasChanged, Constants.downsizingEligibilityDate,
-      CannotClaimDownsizingController.onPageLoad(), ValueOfChangedPropertyController.onPageLoad())
+      NoDownsizingThresholdIncreaseController.onPageLoad(), ValueOfChangedPropertyController.onPageLoad())
 
   private def getPropertyPassingToDirectDescendantsRoute(userAnswers: UserAnswers) = userAnswers.propertyPassingToDirectDescendants match {
     case Some(Constants.all) => ExemptionsAndReliefClaimedController.onPageLoad()
@@ -105,7 +105,7 @@ class Navigator @Inject()() {
     getRouteForOptionalBoolean(userAnswers.grossingUpOnEstateProperty, TransitionOutController.onPageLoad(), ChargeablePropertyValueController.onPageLoad())
 
   private def getAssetsPassingToDirectDescendantsRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.assetsPassingToDirectDescendants, GrossingUpOnEstateAssetsController.onPageLoad(), CannotClaimDownsizingController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.assetsPassingToDirectDescendants, GrossingUpOnEstateAssetsController.onPageLoad(), NoDownsizingThresholdIncreaseController.onPageLoad())
 
   private def getGrossingUpOnEstateAssetsRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.grossingUpOnEstateAssets, TransitionOutController.onPageLoad(), ValueOfAssetsPassingController.onPageLoad())

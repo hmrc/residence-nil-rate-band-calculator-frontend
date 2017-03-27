@@ -108,10 +108,10 @@ chargeable_inherited_property_value.guidance2 = If only part of the property is 
 chargeable_property_value.greater_than_property_value.error = Chargeable Value cannot be greater than the Property Value
 chargeable_inherited_property_value.greater_than_chargeable_property_value.error = Value Closely Inherited cannot be greater than the Chargeable Value
 
-cannot_claim_downsizing.browser_title = There is no downsizing allowance available for the estate
-cannot_claim_downsizing.title = There is no downsizing allowance available for the estate
-cannot_claim_downsizing.date_property_was_changed_too_early_reason = This is because the person who died downsized their home before 8 July 2015.
-cannot_claim_downsizing.no_assets_passing_to_direct_descendants_reason = This is because no other assets are being left to a direct descendant.
+no_downsizing_threshold_increase.browser_title = There is no downsizing allowance available for the estate
+no_downsizing_threshold_increase.title = There is no downsizing allowance available for the estate
+no_downsizing_threshold_increase.date_property_was_changed_too_early_reason = This is because the person who died downsized their home before 8 July 2015.
+no_downsizing_threshold_increase.no_assets_passing_to_direct_descendants_reason = This is because no other assets are being left to a direct descendant.
 
 no_additional_threshold_available.browser_title = You can’t claim any RNRB allowance
 no_additional_threshold_available.title = You can’t claim any RNRB allowance
