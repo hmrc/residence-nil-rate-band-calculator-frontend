@@ -70,10 +70,10 @@ class Navigator @Inject()() {
 
   private def getDateOfDeathRoute(userAnswers: UserAnswers) =
     getRouteForOptionalLocalDate(userAnswers.dateOfDeath, Constants.eligibilityDate,
-      TransitionOutController.onPageLoad(), PartOfEstatePassingToDirectDescendantsController.onPageLoad())
+      NoThresholdIncreaseController.onPageLoad(), PartOfEstatePassingToDirectDescendantsController.onPageLoad())
 
   private def getPartOfEstatePassingToDirectDescendantsRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.partOfEstatePassingToDirectDescendants, ValueOfEstateController.onPageLoad(), TransitionOutController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.partOfEstatePassingToDirectDescendants, ValueOfEstateController.onPageLoad(), NoThresholdIncreaseController.onPageLoad())
 
   private def getPropertyInEstateRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.propertyInEstate, PropertyValueController.onPageLoad(), NoAdditionalThresholdAvailableController.onPageLoad())

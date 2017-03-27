@@ -24,11 +24,11 @@ import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRows
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetTransitionOutReason.GrossingUpForResidence
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoThresholdIncreaseReason.{DateOfDeath, DirectDescendant}
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.not_possible_to_use_service
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_threshold_increase
 
-class TransitionOutControllerSpec extends UnitSpec with WithFakeApplication with MockSessionConnector {
+class NoThresholdIncreaseControllerSpec extends UnitSpec with WithFakeApplication with MockSessionConnector {
 
   val fakeRequest = FakeRequest("", "")
 
@@ -62,48 +62,34 @@ class TransitionOutControllerSpec extends UnitSpec with WithFakeApplication with
       Constants.valueAvailableWhenPropertyChangedId -> JsNumber(1000)
     ))
 
-  "Transition controller" must {
+  "No Threshold Increase controller" must {
     "return 200 for a GET" in {
-      val result = new TransitionOutController(frontendAppConfig, messagesApi, mockSessionConnector).onPageLoad()(fakeRequest)
+      val result = new NoThresholdIncreaseController(frontendAppConfig, messagesApi, mockSessionConnector).onPageLoad()(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
-    "return the Not Possible to use Calculator view for a GET" in {
-      val result = new TransitionOutController(frontendAppConfig, messagesApi, mockSessionConnector).onPageLoad()(fakeRequest)
+    "return the No Threshold Increase view for a GET" in {
+      val result = new NoThresholdIncreaseController(frontendAppConfig, messagesApi, mockSessionConnector).onPageLoad()(fakeRequest)
       contentAsString(result) shouldBe
-        not_possible_to_use_service(frontendAppConfig, "not_possible_to_use_service.grossing_up", Seq())(fakeRequest, messages).toString
+        no_threshold_increase(frontendAppConfig, "no_threshold_increase.direct_descendant", Seq())(fakeRequest, messages).toString
     }
 
-    "The answer constants should be the same as the calulated constants for the controller when the reason is GrossingUpForResidence" in {
-      val controller = new TransitionOutController(frontendAppConfig, messagesApi, mockSessionConnector)
-      val controllerId = controller.getControllerId(GrossingUpForResidence)
+    "The answer constants should be the same as the calulated constants for the controller when the reason is DateOfDeath" in {
+      val controller = new NoThresholdIncreaseController(frontendAppConfig, messagesApi, mockSessionConnector)
+      val controllerId = controller.getControllerId(DateOfDeath)
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
-      val answerList = List(Constants.dateOfDeathId,
-        Constants.partOfEstatePassingToDirectDescendantsId,
-        Constants.valueOfEstateId,
-        Constants.chargeableEstateValueId,
-        Constants.propertyInEstateId,
-        Constants.propertyValueId,
-        Constants.propertyPassingToDirectDescendantsId,
-        Constants.percentagePassedToDirectDescendantsId)
-      answerList shouldBe (calculatedList)
+      val answerList = List()
+      answerList shouldBe calculatedList
     }
 
-    "The answer constants should be the same as the calulated constants for the controller when the reason is GrossingUpForOtherProperty" in {
-      val controller = new TransitionOutController(frontendAppConfig, messagesApi, mockSessionConnector)
-      val controllerId = controller.getControllerId(GrossingUpForResidence)
+    "The answer constants should be the same as the calulated constants for the controller when the reason is DirectDescendant" in {
+      val controller = new NoThresholdIncreaseController(frontendAppConfig, messagesApi, mockSessionConnector)
+      val controllerId = controller.getControllerId(DirectDescendant)
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
-      val answerList = List(Constants.dateOfDeathId,
-        Constants.partOfEstatePassingToDirectDescendantsId,
-        Constants.valueOfEstateId,
-        Constants.chargeableEstateValueId,
-        Constants.propertyInEstateId,
-        Constants.propertyValueId,
-        Constants.propertyPassingToDirectDescendantsId,
-        Constants.percentagePassedToDirectDescendantsId)
-      answerList shouldBe (calculatedList)
+      val answerList = List(Constants.dateOfDeathId)
+      answerList shouldBe calculatedList
     }
   }
 }

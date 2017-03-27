@@ -19,21 +19,23 @@ package uk.gov.hmrc.residencenilratebandcalculator.models
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetTransitionOutReason.{GrossingUpForOtherProperty, GrossingUpForResidence}
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoThresholdIncreaseReason.{DateOfDeath, DirectDescendant}
 
-class GetTransitionOutReasonSpec extends UnitSpec with WithFakeApplication with MockitoSugar {
-  "GetTransitionOutReason" must {
+class GetNoThresholdIncreaseReasonSpec extends UnitSpec with WithFakeApplication with MockitoSugar {
 
-    "get GrossingUpForResidence reason when grossing up is applied to the residence" in {
+  "Get No Threshold Increase Reason" must {
+
+    "get DateOfDeath reason if date of death is before the eligibility date" in {
       val userAnswers = mock[UserAnswers]
-      when(userAnswers.grossingUpOnEstateProperty) thenReturn Some(true)
-      GetTransitionOutReason(userAnswers) shouldBe GrossingUpForResidence
+      when(userAnswers.dateOfDeath) thenReturn Some(Constants.eligibilityDate.minusDays(1))
+      GetNoThresholdIncreaseReason(userAnswers) shouldBe DateOfDeath
     }
 
-    "get GrossingUpForOtherProperty reason when grossing up is applied to other property" in {
+    "get DirectDescendant reason if nothing has been left to direct descendants" in {
       val userAnswers = mock[UserAnswers]
-      when(userAnswers.grossingUpOnEstateAssets) thenReturn Some(true)
-      GetTransitionOutReason(userAnswers) shouldBe GrossingUpForOtherProperty
+      when(userAnswers.partOfEstatePassingToDirectDescendants) thenReturn Some(false)
+      GetNoThresholdIncreaseReason(userAnswers) shouldBe DirectDescendant
     }
   }
 }

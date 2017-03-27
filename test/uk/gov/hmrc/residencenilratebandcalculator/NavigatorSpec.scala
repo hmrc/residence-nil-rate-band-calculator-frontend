@@ -45,22 +45,22 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.partOfEstatePassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.ValueOfEstateController.onPageLoad()
     }
 
-    "return a function that goes to the Transition Out Controller controller when given Part of Estate Passing to Direct Descendants with a value of false" in {
+    "return a function that goes to the No Threshold Increase Controller controller when given Part of Estate Passing to Direct Descendants with a value of false" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.partOfEstatePassingToDirectDescendants) thenReturn Some(false)
-      navigator.nextPage(Constants.partOfEstatePassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.TransitionOutController.onPageLoad()
+      navigator.nextPage(Constants.partOfEstatePassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.NoThresholdIncreaseController.onPageLoad()
     }
 
-    "return a function that goes to the Transition controller when given DateOfDeath, and the date of death is 5 April 2017" in {
+    "return a function that goes to the No Threshold Increase controller when given DateOfDeath, and the date of death is 5 April 2017" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.dateOfDeath) thenReturn Some(new LocalDate(2017, 4, 5))
-      navigator.nextPage(Constants.dateOfDeathId)(mockCacheMap) shouldBe routes.TransitionOutController.onPageLoad()
+      navigator.nextPage(Constants.dateOfDeathId)(mockCacheMap) shouldBe routes.NoThresholdIncreaseController.onPageLoad()
     }
 
-    "return a function that goes to the Transition controller when given DateOfDeath, and the date of death is before 5 April 2017" in {
+    "return a function that goes to the No Threshold Increase controller when given DateOfDeath, and the date of death is before 5 April 2017" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.dateOfDeath) thenReturn Some(new LocalDate(2017, 4, 4))
-      navigator.nextPage(Constants.dateOfDeathId)(mockCacheMap) shouldBe routes.TransitionOutController.onPageLoad()
+      navigator.nextPage(Constants.dateOfDeathId)(mockCacheMap) shouldBe routes.NoThresholdIncreaseController.onPageLoad()
     }
 
     "return a function that goes to the Home controller when given DateOfDeath, and the date of death does not exist in keystore" in {
