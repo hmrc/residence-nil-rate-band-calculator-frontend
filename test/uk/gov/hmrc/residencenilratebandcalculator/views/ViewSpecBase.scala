@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
+import org.jsoup.nodes.Document
 import play.twirl.api.HtmlFormat
 import play.api.data.{Form, FormError}
 
@@ -31,9 +32,15 @@ trait ViewSpecBase extends HtmlSpec {
   def rnrbPage[A: ClassTag](createView: (Option[Form[A]]) => HtmlFormat.Appendable,
                             messageKeyPrefix: String,
                             expectedGuidanceKeys: String*) = {
-
     "behave like a standard RNRB page" when {
       "rendered" must {
+        "have the correct banner title" in {
+          val doc = asDocument(createView(None))
+          val nav = doc.getElementById("proposition-menu")
+          val span = nav.children.first
+          span.text shouldBe messagesApi("site.service_name")
+        }
+
         "display the correct browser title" in {
           val doc = asDocument(createView(None))
           assertEqualsMessage(doc, "title", s"$messageKeyPrefix.browser_title")
