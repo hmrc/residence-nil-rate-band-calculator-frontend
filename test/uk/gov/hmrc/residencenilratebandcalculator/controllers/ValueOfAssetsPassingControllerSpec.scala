@@ -23,7 +23,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_assets_pas
 
 class ValueOfAssetsPassingControllerSpec extends SimpleControllerSpecBase {
 
-  "Assets Passing to Direct Descendants Controller" must {
+  "Value Of Assets Passing Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       val backUrl = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.GrossingUpOnEstateAssetsController.onPageLoad().url

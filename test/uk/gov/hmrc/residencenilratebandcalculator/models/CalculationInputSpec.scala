@@ -34,7 +34,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
   val percentagePassedToDirectDescendants = 4
   val valueBeingTransferred = 5
   val valueOfChangedProperty = 6
-  val assetsPassingToDirectDescendants = 7
+  val valueOfAssetsPassing = 7
   val valueAvailableWhenPropertyChanged = 8
   val datePropertyWasChanged = new LocalDate(2018, 2, 2)
   val chargeablePropertyValue = 9
@@ -52,7 +52,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
                 claimDownsizingThreshold: Option[Boolean] = None,
                 exemptionsAndReliefClaimed: Option[Boolean] = None,
                 propertyPassingToDirectDescendants: Option[String] = None,
-                assetsPassingToDirectDescendants: Option[Int] = None,
+                valueOfAssetsPassing: Option[Int] = None,
                 valueBeingTransferred: Option[Int] = None,
                 valueAvailableWhenPropertyChanged: Option[Int] = None,
                 chargeableEstateValue: Option[Int] = None,
@@ -73,7 +73,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
     when(userAnswers.claimDownsizingThreshold) thenReturn claimDownsizingThreshold
     when(userAnswers.exemptionsAndReliefClaimed) thenReturn exemptionsAndReliefClaimed
     when(userAnswers.propertyPassingToDirectDescendants) thenReturn propertyPassingToDirectDescendants
-    when(userAnswers.assetsPassingToDirectDescendants) thenReturn assetsPassingToDirectDescendants
+    when(userAnswers.valueOfAssetsPassing) thenReturn valueOfAssetsPassing
     when(userAnswers.valueBeingTransferred) thenReturn valueBeingTransferred
     when(userAnswers.valueAvailableWhenPropertyChanged) thenReturn valueAvailableWhenPropertyChanged
     when(userAnswers.chargeableEstateValue) thenReturn chargeableEstateValue
@@ -320,13 +320,13 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(false),
         transferAnyUnusedThreshold = Some(false), claimDownsizingThreshold = Some(true), datePropertyWasChanged = Some(datePropertyWasChanged),
         valueOfChangedProperty = Some(valueOfChangedProperty), anyAssetsPassingToDirectDescendants = Some(true),
-        assetsPassingToDirectDescendants = Some(assetsPassingToDirectDescendants), transferAvailableWhenPropertyChanged = Some(false))
+        valueOfAssetsPassing = Some(valueOfAssetsPassing), transferAvailableWhenPropertyChanged = Some(false))
 
       "construct correctly from user answers" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
         calculationInput shouldBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, propertyValue, percentagePassedToDirectDescendants,
-          0, None, Some(DownsizingDetails(datePropertyWasChanged, valueOfChangedProperty, assetsPassingToDirectDescendants, 0)))
+          0, None, Some(DownsizingDetails(datePropertyWasChanged, valueOfChangedProperty, valueOfAssetsPassing, 0)))
       }
 
       "render to JSON" in {
@@ -359,14 +359,14 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(false),
         transferAnyUnusedThreshold = Some(true), valueBeingTransferred = Some(valueBeingTransferred), claimDownsizingThreshold = Some(true),
         datePropertyWasChanged = Some(datePropertyWasChanged), valueOfChangedProperty = Some(valueOfChangedProperty), anyAssetsPassingToDirectDescendants = Some(true),
-        assetsPassingToDirectDescendants = Some(assetsPassingToDirectDescendants), transferAvailableWhenPropertyChanged = Some(true),
+        valueOfAssetsPassing = Some(valueOfAssetsPassing), transferAvailableWhenPropertyChanged = Some(true),
         valueAvailableWhenPropertyChanged = Some(valueAvailableWhenPropertyChanged))
 
       "construct correctly from user answers" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
         calculationInput shouldBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, propertyValue, percentagePassedToDirectDescendants,
-          valueBeingTransferred, None, Some(DownsizingDetails(datePropertyWasChanged, valueOfChangedProperty, assetsPassingToDirectDescendants,
+          valueBeingTransferred, None, Some(DownsizingDetails(datePropertyWasChanged, valueOfChangedProperty, valueOfAssetsPassing,
             valueAvailableWhenPropertyChanged)))
       }
 
@@ -648,7 +648,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
     }
 
     "'claim downsizing threshold' is true and 'any assets passing to direct descendants' is true but there is no value for " +
-      "'assets passing to direct descendants'" must {
+      "'value of assets passing'" must {
       "throw an exception" in {
         val exception = intercept[IllegalArgumentException] {
           setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate), chargeableEstateValue = Some(chargeableEstateValue),
@@ -658,7 +658,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Assets Passing to Direct Descendants was not answered"
+        exception.getMessage shouldBe "requirement failed: Value Of Assets Passing was not answered"
       }
     }
 
@@ -670,7 +670,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.none),
             transferAnyUnusedThreshold = Some(true), valueBeingTransferred = Some(valueBeingTransferred), claimDownsizingThreshold = Some(true),
             datePropertyWasChanged = Some(datePropertyWasChanged), valueOfChangedProperty = Some(valueOfChangedProperty), anyAssetsPassingToDirectDescendants = Some(true),
-            assetsPassingToDirectDescendants = Some(assetsPassingToDirectDescendants))
+            valueOfAssetsPassing = Some(valueOfAssetsPassing))
           CalculationInput(userAnswers)
         }
 
@@ -685,7 +685,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
           propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.none),
           transferAnyUnusedThreshold = Some(false), claimDownsizingThreshold = Some(true),
           datePropertyWasChanged = Some(datePropertyWasChanged), valueOfChangedProperty = Some(valueOfChangedProperty), anyAssetsPassingToDirectDescendants = Some(true),
-          assetsPassingToDirectDescendants = Some(assetsPassingToDirectDescendants))
+          valueOfAssetsPassing = Some(valueOfAssetsPassing))
 
         CalculationInput(userAnswers)
       }
@@ -699,7 +699,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.none),
             transferAnyUnusedThreshold = Some(true), valueBeingTransferred = Some(valueBeingTransferred), claimDownsizingThreshold = Some(true),
             datePropertyWasChanged = Some(datePropertyWasChanged), valueOfChangedProperty = Some(valueOfChangedProperty), anyAssetsPassingToDirectDescendants = Some(true),
-            assetsPassingToDirectDescendants = Some(assetsPassingToDirectDescendants), transferAvailableWhenPropertyChanged = Some(true))
+            valueOfAssetsPassing = Some(valueOfAssetsPassing), transferAvailableWhenPropertyChanged = Some(true))
           CalculationInput(userAnswers)
         }
 

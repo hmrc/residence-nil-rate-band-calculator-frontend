@@ -318,11 +318,11 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.grossingUpOnEstateAssetsId)(userAnswers) shouldBe routes.AnyAssetsPassingToDirectDescendantsController.onPageLoad()
     }
 
-    "return a call to the Grossing Up On Estate Assets when back linking from the Assets Passing To Direct Descendants page" in {
+    "return a call to the Grossing Up On Estate Assets when back linking from the Value Of Assest Passing page" in {
       navigator.lastPage(Constants.valueOfAssetsPassingId)(userAnswers) shouldBe routes.GrossingUpOnEstateAssetsController.onPageLoad()
     }
 
-    "return a call to the Assets Passing To Direct Descendants when back linking from the Transfer Available When Property Changed page" in {
+    "return a call to the Value Of Assets Passing when back linking from the Transfer Available When Property Changed page" in {
       navigator.lastPage(Constants.transferAvailableWhenPropertyChangedId)(userAnswers) shouldBe routes.ValueOfAssetsPassingController.onPageLoad()
     }
 
