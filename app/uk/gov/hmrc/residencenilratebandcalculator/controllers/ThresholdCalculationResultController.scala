@@ -30,14 +30,14 @@ import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CalculationInput, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.results
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.threshold_calculation_result
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
 
 @Singleton
-class ResultsController @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi,
-                                  rnrbConnector: RnrbConnector, sessionConnector: SessionConnector)
+class ThresholdCalculationResultController @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi,
+                                                     rnrbConnector: RnrbConnector, sessionConnector: SessionConnector)
   extends FrontendController with I18nSupport {
 
   private def fail(ex: Throwable) = {
@@ -75,7 +75,7 @@ class ResultsController @Inject()(appConfig: FrontendAppConfig, val messagesApi:
           case (Success(result), Success(answers)) =>
             val messages = messagesApi.preferred(request)
             val residenceNilRateAmount = NumberFormat.getCurrencyInstance(Locale.UK).format(result.residenceNilRateAmount)
-            Ok(results(appConfig, residenceNilRateAmount, AnswerRows(answers, messages)))
+            Ok(threshold_calculation_result(appConfig, residenceNilRateAmount, AnswerRows(answers, messages)))
         }
       }
     }

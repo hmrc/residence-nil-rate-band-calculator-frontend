@@ -154,24 +154,6 @@ property_value.guidance3 = If the person who has died jointly owned their home w
 property_value.guidance4 = If there was more than one property in the estate that the person who has died owned and had lived at, you must choose only one of them to give the value of and to answer more questions about.
 property_value.greater_than_value_of_estate.error = Property Value cannot be greater than the Value Of Estate
 
-results.browser_title = Final calculation
-results.info.zero.header = There is no increase to the Inheritance Tax threshold
-results.info.zero.guidance = Based on the details you have given, the threshold can be increased by
-results.info.zero.threshold_change = There is no change to the current threshold.
-results.info.non_zero.header = The Inheritance Tax threshold can be increased
-results.info.non_zero.guidance = The threshold can be increased by an extra
-results.info.non_zero.threshold_change = This is on top of what the current threshold is.
-results.action.header = What to do next
-results.action.guidance = Write {0} in:
-results.action.guidance.form_435 = box 25 on the IHT435 form
-results.action.guidance.form_400 = box 111 on the IHT400 form
-results.action.guidance.continue = Then continue with the IHT400 form.
-results.print_prefix = You can
-results.link_to_print = view a copy of this page.
-results.print_suffix = You’ll then be able to download or print a copy to keep for your records.
-results.allowance = Allowance
-results.amount = Amount
-
 service.no_thanks = No thanks
 
 service_difficulty.very_easy = Very easy
@@ -205,6 +187,24 @@ site.service_name = Calculate the additional threshold
 
 thank_you.browser_title = Thank You
 thank_you.title = Thank You
+
+threshold_calculation_result.browser_title = Final calculation
+threshold_calculation_result.info.zero.header = There is no increase to the Inheritance Tax threshold
+threshold_calculation_result.info.zero.guidance = Based on the details you have given, the threshold can be increased by
+threshold_calculation_result.info.zero.threshold_change = There is no change to the current threshold.
+threshold_calculation_result.info.non_zero.header = The Inheritance Tax threshold can be increased
+threshold_calculation_result.info.non_zero.guidance = The threshold can be increased by an extra
+threshold_calculation_result.info.non_zero.threshold_change = This is on top of what the current threshold is.
+threshold_calculation_result.action.header = What to do next
+threshold_calculation_result.action.guidance = Write {0} in:
+threshold_calculation_result.action.guidance.form_435 = box 25 on the IHT435 form
+threshold_calculation_result.action.guidance.form_400 = box 111 on the IHT400 form
+threshold_calculation_result.action.guidance.continue = Then continue with the IHT400 form.
+threshold_calculation_result.print_prefix = You can
+threshold_calculation_result.link_to_print = view a copy of this page.
+threshold_calculation_result.print_suffix = You’ll then be able to download or print a copy to keep for your records.
+threshold_calculation_result.allowance = Allowance
+threshold_calculation_result.amount = Amount
 
 transfer_any_unused_threshold.browser_title = Do you wish to transfer any unused residence nil rate band?
 transfer_any_unused_threshold.title = Do you wish to transfer any unused residence nil rate band?

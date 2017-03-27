@@ -84,7 +84,7 @@ class NoDownsizingThresholdIncreaseControllerSpec extends UnitSpec with WithFake
       val result = controller.onPageLoad(fakeRequest)
       contentAsString(result) shouldBe
         no_downsizing_threshold_increase(frontendAppConfig, "no_downsizing_threshold_increase.date_property_was_changed_too_early_reason",
-          routes.ResultsController.onPageLoad, Seq())(fakeRequest, messages).toString
+          routes.ThresholdCalculationResultController.onPageLoad, Seq())(fakeRequest, messages).toString
     }
 
     "throw an exception when the cache is unavailable" in {

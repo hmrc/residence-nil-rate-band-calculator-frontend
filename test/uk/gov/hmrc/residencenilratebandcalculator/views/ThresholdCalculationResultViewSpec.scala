@@ -17,47 +17,50 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.results
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.threshold_calculation_result
 
 import scala.language.reflectiveCalls
 
-class ResultsViewSpec extends HtmlSpec {
+class ThresholdCalculationResultViewSpec extends HtmlSpec {
   def fixture() = new {
-    val view = results(frontendAppConfig, "£10.00", Nil)(request, messages)
+    val view = threshold_calculation_result(frontendAppConfig, "£10.00", Nil)(request, messages)
     val doc = asDocument(view)
   }
 
-  "Results View" when {
+  "Threshold Calculation Result View" when {
     def thisFixture() = fixture()
 
     "rendered" must {
       "display the correct browser title" in {
         val f = thisFixture()
-        assertEqualsMessage(f.doc, "title", "results.browser_title")
+        assertEqualsMessage(f.doc, "title", "threshold_calculation_result.browser_title")
       }
 
       "display the correct guidance" in {
         val f = thisFixture()
-        assertContainsMessages(f.doc, "results.action.header", "results.action.guidance.form_435", "results.action.guidance.form_400",
-          "results.action.guidance.continue", "results.print_prefix", "results.link_to_print", "results.print_suffix")
+        assertContainsMessages(f.doc, "threshold_calculation_result.action.header", "threshold_calculation_result.action.guidance.form_435",
+          "threshold_calculation_result.action.guidance.form_400", "threshold_calculation_result.action.guidance.continue",
+          "threshold_calculation_result.print_prefix", "threshold_calculation_result.link_to_print", "threshold_calculation_result.print_suffix")
       }
 
       "display the correct information when there is no Residence Nil Rate Amount" in {
         val residenceNilRateAmount = "£0.00"
-        val view = results(frontendAppConfig, residenceNilRateAmount, Nil)(request, messages)
+        val view = threshold_calculation_result(frontendAppConfig, residenceNilRateAmount, Nil)(request, messages)
         val doc = asDocument(view)
 
-        assertContainsMessages(doc, "results.info.zero.header", "results.info.zero.guidance", "results.info.zero.threshold_change")
-        assertContainsText(doc, messages("results.action.guidance", residenceNilRateAmount))
+        assertContainsMessages(doc, "threshold_calculation_result.info.zero.header", "threshold_calculation_result.info.zero.guidance",
+          "threshold_calculation_result.info.zero.threshold_change")
+        assertContainsText(doc, messages("threshold_calculation_result.action.guidance", residenceNilRateAmount))
       }
 
       "display the correct information when there is a positive Residence Nil Rate Amount" in {
         val residenceNilRateAmount = "£10.00"
-        val view = results(frontendAppConfig, residenceNilRateAmount, Nil)(request, messages)
+        val view = threshold_calculation_result(frontendAppConfig, residenceNilRateAmount, Nil)(request, messages)
         val doc = asDocument(view)
 
-        assertContainsMessages(doc, "results.info.non_zero.header", "results.info.non_zero.guidance", "results.info.non_zero.threshold_change")
-        assertContainsText(doc, messages("results.action.guidance", residenceNilRateAmount))
+        assertContainsMessages(doc, "threshold_calculation_result.info.non_zero.header", "threshold_calculation_result.info.non_zero.guidance",
+          "threshold_calculation_result.info.non_zero.threshold_change")
+        assertContainsText(doc, messages("threshold_calculation_result.action.guidance", residenceNilRateAmount))
       }
 
       "contain a link to the exit questionnaire" in {

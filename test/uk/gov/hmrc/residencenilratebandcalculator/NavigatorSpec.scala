@@ -116,8 +116,8 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.noAdditionalThresholdAvailableId)(mockCacheMap) shouldBe routes.TransferAnyUnusedThresholdController.onPageLoad()
     }
 
-    "return a call to the Results onPageLoad method when we're on the No Downsizing Threshold Increase page" in {
-      navigator.nextPage(Constants.noDownsizingThresholdIncrease)(mock[UserAnswers]) shouldBe routes.ResultsController.onPageLoad()
+    "return a call to the ThresholdCalculationResult onPageLoad method when we're on the No Downsizing Threshold Increase page" in {
+      navigator.nextPage(Constants.noDownsizingThresholdIncrease)(mock[UserAnswers]) shouldBe routes.ThresholdCalculationResultController.onPageLoad()
     }
 
     "return a function that goes to the Exemptions And Relief Claimed controller when given PercentagePassedToDirectDescendants" in {
@@ -330,10 +330,10 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.lastPage(Constants.valueAvailableWhenPropertyChangedId)(userAnswers) shouldBe routes.TransferAvailableWhenPropertyChangedController.onPageLoad()
     }
 
-    "return a call to the Results Controller onPageLoad method when there is no downsizing allowance" in {
+    "return a call to the ThresholdCalculationResult Controller onPageLoad method when there is no downsizing allowance" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.claimDownsizingThreshold) thenReturn Some(false)
-      navigator.nextPage(Constants.claimDownsizingThresholdId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
+      navigator.nextPage(Constants.claimDownsizingThresholdId)(mockCacheMap) shouldBe routes.ThresholdCalculationResultController.onPageLoad()
     }
 
     "return a call to the date property was changed controller onPageLoad method when there is some downsizing allowance" in {
@@ -391,26 +391,26 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.valueOfAssetsPassingId)(mockCacheMap) shouldBe routes.TransferAvailableWhenPropertyChangedController.onPageLoad()
     }
 
-    "return a call to the Results controller onPageLoad method from AssetsPassingToDirectDescendants when there is no value being transferred, " +
+    "return a call to the Threshold Calculation Result controller onPageLoad method from AssetsPassingToDirectDescendants when there is no value being transferred, " +
       "even though the property was changed on the eligibility date" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.transferAnyUnusedThreshold) thenReturn Some(false)
       when(mockCacheMap.datePropertyWasChanged) thenReturn Some(Constants.eligibilityDate)
-      navigator.nextPage(Constants.valueOfAssetsPassingId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
+      navigator.nextPage(Constants.valueOfAssetsPassingId)(mockCacheMap) shouldBe routes.ThresholdCalculationResultController.onPageLoad()
     }
 
-    "return a call to the Results controller onPageLoad method from AssetsPassingToDirectDescendants when there is value being transferred " +
+    "return a call to the Threshold Calculation Result controller onPageLoad method from AssetsPassingToDirectDescendants when there is value being transferred " +
       "but the property was changed before the eligibility date" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.transferAnyUnusedThreshold) thenReturn Some(true)
       when(mockCacheMap.datePropertyWasChanged) thenReturn Some(Constants.eligibilityDate.minusDays(1))
-      navigator.nextPage(Constants.valueOfAssetsPassingId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
+      navigator.nextPage(Constants.valueOfAssetsPassingId)(mockCacheMap) shouldBe routes.ThresholdCalculationResultController.onPageLoad()
     }
 
-    "return a call to the Results onPageLoad method when there is no Value Available When Property Changed" in {
+    "return a call to the Threshold Calculation Result onPageLoad method when there is no Value Available When Property Changed" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.transferAvailableWhenPropertyChanged) thenReturn Some(false)
-      navigator.nextPage(Constants.transferAvailableWhenPropertyChangedId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
+      navigator.nextPage(Constants.transferAvailableWhenPropertyChangedId)(mockCacheMap) shouldBe routes.ThresholdCalculationResultController.onPageLoad()
     }
 
     "return a call to the Value Available When Property Changed onPageLoad method when there is some Value Available When Property Changed" in {
@@ -419,8 +419,8 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.transferAvailableWhenPropertyChangedId)(mockCacheMap) shouldBe routes.ValueAvailableWhenPropertyChangedController.onPageLoad()
     }
 
-    "return a call to the Results controller onPageLoad method from the ValueAvailableWhenPropertyChanged controller" in {
-      navigator.nextPage(Constants.valueAvailableWhenPropertyChangedId)(mock[UserAnswers]) shouldBe routes.ResultsController.onPageLoad()
+    "return a call to the Threshold Calculation Result controller onPageLoad method from the ValueAvailableWhenPropertyChanged controller" in {
+      navigator.nextPage(Constants.valueAvailableWhenPropertyChangedId)(mock[UserAnswers]) shouldBe routes.ThresholdCalculationResultController.onPageLoad()
     }
   }
 }

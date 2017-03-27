@@ -36,7 +36,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, Calc
 import scala.concurrent.Future
 import scala.util.Success
 
-class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar with Matchers {
+class ThresholdCalculationResultControllerSpec extends SimpleControllerSpecBase with MockitoSugar with Matchers {
 
   val testJsNumber = JsNumber(10)
 
@@ -70,26 +70,26 @@ class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar w
     mockConnector
   }
 
-  def resultsController(rnrbConnector: RnrbConnector = mockRnrbConnector) =
-    new ResultsController(frontendAppConfig, messagesApi, rnrbConnector, mockSessionConnector)
+  def thresholdCalculationResultController(rnrbConnector: RnrbConnector = mockRnrbConnector) =
+    new ThresholdCalculationResultController(frontendAppConfig, messagesApi, rnrbConnector, mockSessionConnector)
 
-  "ResultsController" must {
+  "Threshold Calculation Result Controller" must {
 
     "return 200 for a GET" in {
       setCacheMap(cacheMap)
-      val result = resultsController().onPageLoad()(fakeRequest)
+      val result = thresholdCalculationResultController().onPageLoad()(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return the View for a GET" in {
       setCacheMap(cacheMap)
-      val result = resultsController().onPageLoad()(fakeRequest)
+      val result = thresholdCalculationResultController().onPageLoad()(fakeRequest)
       contentAsString(result) should include("<title>Final calculation</title>")
     }
 
     "returns an Internal Server Error when the cache is in an unusable state" in {
       setCacheMap(CacheMap("id", Map()))
-      val result = resultsController().onPageLoad()(fakeRequest)
+      val result = thresholdCalculationResultController().onPageLoad()(fakeRequest)
       status(result) shouldBe INTERNAL_SERVER_ERROR
     }
 
@@ -97,14 +97,14 @@ class ResultsControllerSpec extends SimpleControllerSpecBase with MockitoSugar w
       setCacheMap(cacheMap)
       val connector = mockRnrbConnector
       val jsonNapper = ArgumentCaptor.forClass(classOf[CalculationInput])
-      await(resultsController(connector).onPageLoad()(fakeRequest))
+      await(thresholdCalculationResultController(connector).onPageLoad()(fakeRequest))
       verify(connector).send(jsonNapper.capture)
       jsonNapper.getValue shouldBe expectedCalculationInput
     }
 
     "display the calculation result if the Microservice successfully returns it" in {
       setCacheMap(cacheMap)
-      val result = resultsController().onPageLoad()(fakeRequest)
+      val result = thresholdCalculationResultController().onPageLoad()(fakeRequest)
       val contents = contentAsString(result)
       contents should include(NumberFormat.getCurrencyInstance(Locale.UK).format(expectedResidenceNilRateAmount))
     }
