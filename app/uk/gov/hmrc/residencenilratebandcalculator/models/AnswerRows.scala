@@ -46,7 +46,7 @@ object AnswerRows {
     Constants.valueOfChangedPropertyId,
     Constants.anyAssetsPassingToDirectDescendantsId,
     Constants.grossingUpOnEstateAssetsId,
-    Constants.assetsPassingToDirectDescendantsId,
+    Constants.valueOfAssetsPassingId,
     Constants.transferAvailableWhenPropertyChangedId,
     Constants.valueAvailableWhenPropertyChangedId
   )
@@ -111,10 +111,10 @@ object AnswerRows {
         routes.TransferAvailableWhenPropertyChangedController.onPageLoad),
     Constants.exemptionsAndReliefClaimedId ->
       boolAnswerRowFn("exemptions_and_relief_claimed.title", Constants.exemptionsAndReliefClaimedId, routes.ExemptionsAndReliefClaimedController.onPageLoad),
-    Constants.assetsPassingToDirectDescendantsId ->
-      intAnswerRowFn("assets_passing_to_direct_descendants.title",
-        "Assets passing to direct descendants",
-        routes.AssetsPassingToDirectDescendantsController.onPageLoad),
+    Constants.valueOfAssetsPassingId ->
+      intAnswerRowFn("value_of_assets_passing.title",
+        Constants.valueOfAssetsPassingId,
+        routes.ValueOfAssetsPassingController.onPageLoad),
     Constants.valueBeingTransferredId ->
       intAnswerRowFn("value_being_transferred.title", Constants.valueBeingTransferredId, routes.ValueBeingTransferredController.onPageLoad),
     Constants.valueAvailableWhenPropertyChangedId ->

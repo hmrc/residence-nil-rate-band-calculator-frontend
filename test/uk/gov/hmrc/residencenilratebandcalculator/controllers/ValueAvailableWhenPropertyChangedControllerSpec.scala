@@ -56,7 +56,7 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends SimpleControllerSp
            Constants.valueOfChangedPropertyId,
            Constants.anyAssetsPassingToDirectDescendantsId,
            Constants.grossingUpOnEstateAssetsId,
-           Constants.assetsPassingToDirectDescendantsId,
+           Constants.valueOfAssetsPassingId,
            Constants.transferAvailableWhenPropertyChangedId))(Reads.IntReads, Writes.IntWrites)
   }
 }

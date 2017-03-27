@@ -106,7 +106,7 @@ class CascadeUpsert {
         Constants.datePropertyWasChangedId,
         Constants.valueOfChangedPropertyId,
         Constants.anyAssetsPassingToDirectDescendantsId,
-        Constants.assetsPassingToDirectDescendantsId,
+        Constants.valueOfAssetsPassingId,
         Constants.transferAvailableWhenPropertyChangedId,
         Constants.grossingUpOnEstateAssetsId,
         Constants.valueAvailableWhenPropertyChangedId),
@@ -115,7 +115,7 @@ class CascadeUpsert {
   private def anyAssetsPassingToDirectDescendants[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
     clearIfFalse(Constants.anyAssetsPassingToDirectDescendantsId, value,
       Set(
-        Constants.assetsPassingToDirectDescendantsId,
+        Constants.valueOfAssetsPassingId,
         Constants.transferAvailableWhenPropertyChangedId,
         Constants.grossingUpOnEstateAssetsId,
         Constants.valueAvailableWhenPropertyChangedId),
@@ -129,7 +129,7 @@ class CascadeUpsert {
       Constants.valueOfChangedPropertyId,
       Constants.anyAssetsPassingToDirectDescendantsId,
       Constants.grossingUpOnEstateAssetsId,
-      Constants.assetsPassingToDirectDescendantsId,
+      Constants.valueOfAssetsPassingId,
       Constants.transferAvailableWhenPropertyChangedId,
       Constants.valueAvailableWhenPropertyChangedId
     )

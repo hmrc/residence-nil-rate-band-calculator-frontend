@@ -19,9 +19,9 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.assets_passing_to_direct_descendants
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_assets_passing
 
-class AssetsPassingToDirectDescendantsControllerSpec extends SimpleControllerSpecBase {
+class ValueOfAssetsPassingControllerSpec extends SimpleControllerSpecBase {
 
   "Assets Passing to Direct Descendants Controller" must {
 
@@ -29,16 +29,16 @@ class AssetsPassingToDirectDescendantsControllerSpec extends SimpleControllerSpe
       val backUrl = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.GrossingUpOnEstateAssetsController.onPageLoad().url
 
       value match {
-        case None => assets_passing_to_direct_descendants(frontendAppConfig, backUrl, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => assets_passing_to_direct_descendants(frontendAppConfig, backUrl, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
+        case None => value_of_assets_passing(frontendAppConfig, backUrl, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => value_of_assets_passing(frontendAppConfig, backUrl, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 
-    def createController = () => new AssetsPassingToDirectDescendantsController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
+    def createController = () => new ValueOfAssetsPassingController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
     val testValue = 123
 
-    behave like rnrbController[Int](createController, createView, Constants.assetsPassingToDirectDescendantsId, testValue)(Reads.IntReads, Writes.IntWrites)
+    behave like rnrbController[Int](createController, createView, Constants.valueOfAssetsPassingId, testValue)(Reads.IntReads, Writes.IntWrites)
 
     behave like nonStartingController[Int](createController,
       List(Constants.dateOfDeathId,

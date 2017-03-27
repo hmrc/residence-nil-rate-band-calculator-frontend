@@ -25,19 +25,19 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.assets_passing_to_direct_descendants
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_assets_passing
 
 @Singleton
-class AssetsPassingToDirectDescendantsController @Inject()(override val appConfig: FrontendAppConfig,
-                                                           val messagesApi: MessagesApi,
-                                                           override val sessionConnector: SessionConnector,
-                                                           override val navigator: Navigator) extends SimpleControllerBase[Int] {
+class ValueOfAssetsPassingController @Inject()(override val appConfig: FrontendAppConfig,
+                                               val messagesApi: MessagesApi,
+                                               override val sessionConnector: SessionConnector,
+                                               override val navigator: Navigator) extends SimpleControllerBase[Int] {
 
-  override val controllerId = Constants.assetsPassingToDirectDescendantsId
+  override val controllerId = Constants.valueOfAssetsPassingId
 
   override def form = () => NonNegativeIntForm()
 
   override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    assets_passing_to_direct_descendants(appConfig, backUrl, form, answerRows)
+    value_of_assets_passing(appConfig, backUrl, form, answerRows)
   }
 }

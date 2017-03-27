@@ -56,11 +56,11 @@ property_passing_to_direct_descendants.guidance1 = This will be listed in the wi
 property_passing_to_direct_descendants.guidance2 = Answer yes if any part of the property was left in the will to a direct descendant or to a spouse or civil partner of one.
 property_passing_to_direct_descendants.label =
 
-assets_passing_to_direct_descendants.browser_title = What is the total value of the other assets passing to direct descendants?
-assets_passing_to_direct_descendants.title = What is the total value of the other assets passing to direct descendants?
-assets_passing_to_direct_descendants.guidance1 = You will need the will and the value of assets to work this out.
-assets_passing_to_direct_descendants.guidance2 = Find out what was left to a direct descendant then add the values of each asset up to get the total value of assets passing to a direct descendant.
-assets_passing_to_direct_descendants.label =
+value_of_assets_passing.browser_title = What is the total value of the other assets passing to direct descendants?
+value_of_assets_passing.title = What is the total value of the other assets passing to direct descendants?
+value_of_assets_passing.guidance1 = You will need the will and the value of assets to work this out.
+value_of_assets_passing.guidance2 = Find out what was left to a direct descendant then add the values of each asset up to get the total value of assets passing to a direct descendant.
+value_of_assets_passing.label =
 
 calculate_threshold_increase.browser_title = Calculate the residence nil rate band (RNRB) for the estate of someone who has died
 calculate_threshold_increase.title = Calculate the residence nil rate band (RNRB) for the estate of someone who has died

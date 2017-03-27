@@ -67,7 +67,7 @@ class UserAnswersSpec extends UnitSpec {
       }
 
       "return the correct answer for Assets Passing To Direct Descendant" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.assetsPassingToDirectDescendantsId -> JsNumber(1)))
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.valueOfAssetsPassingId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
         userAnswers.assetsPassingToDirectDescendants shouldBe Some(1)
       }

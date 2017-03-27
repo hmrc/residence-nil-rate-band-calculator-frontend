@@ -319,11 +319,11 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     }
 
     "return a call to the Grossing Up On Estate Assets when back linking from the Assets Passing To Direct Descendants page" in {
-      navigator.lastPage(Constants.assetsPassingToDirectDescendantsId)(userAnswers) shouldBe routes.GrossingUpOnEstateAssetsController.onPageLoad()
+      navigator.lastPage(Constants.valueOfAssetsPassingId)(userAnswers) shouldBe routes.GrossingUpOnEstateAssetsController.onPageLoad()
     }
 
     "return a call to the Assets Passing To Direct Descendants when back linking from the Transfer Available When Property Changed page" in {
-      navigator.lastPage(Constants.transferAvailableWhenPropertyChangedId)(userAnswers) shouldBe routes.AssetsPassingToDirectDescendantsController.onPageLoad()
+      navigator.lastPage(Constants.transferAvailableWhenPropertyChangedId)(userAnswers) shouldBe routes.ValueOfAssetsPassingController.onPageLoad()
     }
 
     "return a call to the Transfer Available When Property Changed when back linking from the Value Available When Property Changed page" in {
@@ -362,7 +362,7 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     "return a call to the assets passing to direct descendant onPageLoad method when grossing up does not apply to the other property" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.grossingUpOnEstateAssets) thenReturn Some(false)
-      navigator.nextPage(Constants.grossingUpOnEstateAssetsId)(mockCacheMap) shouldBe routes.AssetsPassingToDirectDescendantsController.onPageLoad()
+      navigator.nextPage(Constants.grossingUpOnEstateAssetsId)(mockCacheMap) shouldBe routes.ValueOfAssetsPassingController.onPageLoad()
     }
 
     "return a call to the transition out onPageLoad method when grossing up does apply to the other property" in {
@@ -388,7 +388,7 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.transferAnyUnusedThreshold) thenReturn Some(true)
       when(mockCacheMap.datePropertyWasChanged) thenReturn Some(Constants.eligibilityDate)
-      navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.TransferAvailableWhenPropertyChangedController.onPageLoad()
+      navigator.nextPage(Constants.valueOfAssetsPassingId)(mockCacheMap) shouldBe routes.TransferAvailableWhenPropertyChangedController.onPageLoad()
     }
 
     "return a call to the Results controller onPageLoad method from AssetsPassingToDirectDescendants when there is no value being transferred, " +
@@ -396,7 +396,7 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.transferAnyUnusedThreshold) thenReturn Some(false)
       when(mockCacheMap.datePropertyWasChanged) thenReturn Some(Constants.eligibilityDate)
-      navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
+      navigator.nextPage(Constants.valueOfAssetsPassingId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
     }
 
     "return a call to the Results controller onPageLoad method from AssetsPassingToDirectDescendants when there is value being transferred " +
@@ -404,7 +404,7 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.transferAnyUnusedThreshold) thenReturn Some(true)
       when(mockCacheMap.datePropertyWasChanged) thenReturn Some(Constants.eligibilityDate.minusDays(1))
-      navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
+      navigator.nextPage(Constants.valueOfAssetsPassingId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
     }
 
     "return a call to the Results onPageLoad method when there is no Value Available When Property Changed" in {

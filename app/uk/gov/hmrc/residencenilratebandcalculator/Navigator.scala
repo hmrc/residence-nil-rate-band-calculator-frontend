@@ -50,7 +50,7 @@ class Navigator @Inject()() {
       Constants.valueOfChangedPropertyId -> (_ => AnyAssetsPassingToDirectDescendantsController.onPageLoad()),
       Constants.anyAssetsPassingToDirectDescendantsId -> (ua => getAnyAssetsPassingToDirectDescendantsRoute(ua)),
       Constants.grossingUpOnEstateAssetsId -> (ua => getGrossingUpOnEstateAssetsRoute(ua)),
-      Constants.assetsPassingToDirectDescendantsId -> (ua => getAssetsPassingToDirectDescendantsRoute(ua)),
+      Constants.valueOfAssetsPassingId -> (ua => getValueOfAssetsPassingRoute(ua)),
       Constants.transferAvailableWhenPropertyChangedId -> (ua => getTransferAvailableWhenPropertyChangedRoute(ua)),
       Constants.valueAvailableWhenPropertyChangedId -> (_ => ResultsController.onPageLoad())
     )
@@ -108,9 +108,9 @@ class Navigator @Inject()() {
     getRouteForOptionalBoolean(userAnswers.anyAssetsPassingToDirectDescendants, GrossingUpOnEstateAssetsController.onPageLoad(), CannotClaimDownsizingController.onPageLoad())
 
   private def getGrossingUpOnEstateAssetsRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.grossingUpOnEstateAssets, TransitionOutController.onPageLoad(), AssetsPassingToDirectDescendantsController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.grossingUpOnEstateAssets, TransitionOutController.onPageLoad(), ValueOfAssetsPassingController.onPageLoad())
 
-  private def getAssetsPassingToDirectDescendantsRoute(userAnswers: UserAnswers) = (userAnswers.transferAnyUnusedThreshold, userAnswers.datePropertyWasChanged) match {
+  private def getValueOfAssetsPassingRoute(userAnswers: UserAnswers) = (userAnswers.transferAnyUnusedThreshold, userAnswers.datePropertyWasChanged) match {
     case (Some(true), Some(d)) if !(d isBefore Constants.eligibilityDate) => TransferAvailableWhenPropertyChangedController.onPageLoad()
     case _ => ResultsController.onPageLoad()
   }
@@ -139,8 +139,8 @@ class Navigator @Inject()() {
       Constants.valueOfChangedPropertyId -> (_ => DatePropertyWasChangedController.onPageLoad()),
       Constants.anyAssetsPassingToDirectDescendantsId -> (_ => ValueOfChangedPropertyController.onPageLoad()),
       Constants.grossingUpOnEstateAssetsId -> (_ => AnyAssetsPassingToDirectDescendantsController.onPageLoad()),
-      Constants.assetsPassingToDirectDescendantsId -> (_ => GrossingUpOnEstateAssetsController.onPageLoad()),
-      Constants.transferAvailableWhenPropertyChangedId -> (_ => AssetsPassingToDirectDescendantsController.onPageLoad()),
+      Constants.valueOfAssetsPassingId -> (_ => GrossingUpOnEstateAssetsController.onPageLoad()),
+      Constants.transferAvailableWhenPropertyChangedId -> (_ => ValueOfAssetsPassingController.onPageLoad()),
       Constants.valueAvailableWhenPropertyChangedId -> (_ => TransferAvailableWhenPropertyChangedController.onPageLoad())
     )
   }

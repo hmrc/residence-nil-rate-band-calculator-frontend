@@ -19,23 +19,23 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.assets_passing_to_direct_descendants
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_assets_passing
 
 import scala.language.reflectiveCalls
 
-class AssetsPassingToDirectDescendantsViewSpec extends IntViewSpecBase {
+class ValueOfAssetsPassingViewSpec extends IntViewSpecBase {
 
-  val messageKeyPrefix = "assets_passing_to_direct_descendants"
+  val messageKeyPrefix = "value_of_assets_passing"
 
-  def createView(form: Option[Form[Int]] = None) = assets_passing_to_direct_descendants(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Int]] = None) = value_of_assets_passing(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
-  "Assets Passing to Direct Descendants View" must {
+  "Value Of Assets Passing View" must {
 
     behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2")
 
     behave like pageWithBackLink[Int](createView)
 
-    behave like intPage(createView, messageKeyPrefix, AssetsPassingToDirectDescendantsController.onSubmit().url, NonNegativeIntForm())
+    behave like intPage(createView, messageKeyPrefix, ValueOfAssetsPassingController.onSubmit().url, NonNegativeIntForm())
 
     behave like pageContainingPreviousAnswers(createView)
 

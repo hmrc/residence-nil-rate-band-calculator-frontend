@@ -28,7 +28,7 @@ object Constants {
   val partOfEstatePassingToDirectDescendantsId = "PartOfEstatePassingToDirectDescendants"
   val exemptionsAndReliefClaimedId = "ExemptionsAndReliefClaimed"
   val propertyPassingToDirectDescendantsId = "PropertyPassingToDirectDescendants"
-  val assetsPassingToDirectDescendantsId = "AssetsPassingToDirectDescendants"
+  val valueOfAssetsPassingId = "ValueOfAssetsPassing"
   val valueBeingTransferredId = "ValueBeingTransferred"
   val valueAvailableWhenPropertyChangedId = "ValueAvailableWhenPropertyChanged"
   val chargeableEstateValueId = "ChargeableEstateValue"

@@ -36,7 +36,7 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def propertyPassingToDirectDescendants = cacheMap.getEntry[String](Constants.propertyPassingToDirectDescendantsId)
 
-  def assetsPassingToDirectDescendants = cacheMap.getEntry[Int](Constants.assetsPassingToDirectDescendantsId)
+  def assetsPassingToDirectDescendants = cacheMap.getEntry[Int](Constants.valueOfAssetsPassingId)
 
   def valueBeingTransferred = cacheMap.getEntry[Int](Constants.valueBeingTransferredId)
 

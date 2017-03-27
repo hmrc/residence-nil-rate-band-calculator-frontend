@@ -6,26 +6,26 @@
 @(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[Int]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
-    title = messages("assets_passing_to_direct_descendants.browser_title"),
+    title = messages("value_of_assets_passing.browser_title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
     @rnrbHelpers.back_link(backUrl)
 
-    @rnrbHelpers.heading("assets_passing_to_direct_descendants.title")
+    @rnrbHelpers.heading("value_of_assets_passing.title")
 
-    <p>@messages("assets_passing_to_direct_descendants.guidance1")</p>
+    <p>@messages("value_of_assets_passing.guidance1")</p>
 
-    <p>@messages("assets_passing_to_direct_descendants.guidance2")</p>
+    <p>@messages("value_of_assets_passing.guidance2")</p>
 
-    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AssetsPassingToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
+    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfAssetsPassingController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
 
         @rnrbHelpers.input_text(
             id = "value",
             value = Some(FormHelpers.getValue[Int](form).toString),
-            label = messages("assets_passing_to_direct_descendants.title"),
+            label = messages("value_of_assets_passing.title"),
             labelClass = Some("visually-hidden"),
             secondaryLabel = Some("currency"),
             errorKey = FormHelpers.getErrorByKey(form, "value")

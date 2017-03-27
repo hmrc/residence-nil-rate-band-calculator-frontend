@@ -49,7 +49,7 @@ class CascadeUpsertSpec extends UnitSpec {
     Constants.valueOfChangedPropertyId -> JsNumber(testNumber),
     Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true),
     Constants.grossingUpOnEstateAssetsId -> JsBoolean(false),
-    Constants.assetsPassingToDirectDescendantsId -> JsNumber(testNumber),
+    Constants.valueOfAssetsPassingId -> JsNumber(testNumber),
     Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true),
     Constants.valueAvailableWhenPropertyChangedId -> JsNumber(testNumber)
   ))
@@ -231,7 +231,7 @@ class CascadeUpsertSpec extends UnitSpec {
 
       "delete the existing 'Assets Passing to Direct Descendants' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.assetsPassingToDirectDescendantsId
+        updatedCacheMap.data.keys should not contain Constants.valueOfAssetsPassingId
       }
 
       "delete the existing 'Transfer Available When Property Changed' answer" in {
@@ -267,7 +267,7 @@ class CascadeUpsertSpec extends UnitSpec {
 
       "delete the existing 'Assets Passing to Direct Descendants' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.anyAssetsPassingToDirectDescendantsId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.assetsPassingToDirectDescendantsId
+        updatedCacheMap.data.keys should not contain Constants.valueOfAssetsPassingId
       }
 
       "delete the existing 'Transfer Available When Property Changed' answer" in {
@@ -333,7 +333,7 @@ class CascadeUpsertSpec extends UnitSpec {
 
       "delete the existing 'Assets Passing to Direct Descendants' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.assetsPassingToDirectDescendantsId
+        updatedCacheMap.data.keys should not contain Constants.valueOfAssetsPassingId
       }
 
       "delete the existing 'Transfer Available When Property Changed' answer" in {

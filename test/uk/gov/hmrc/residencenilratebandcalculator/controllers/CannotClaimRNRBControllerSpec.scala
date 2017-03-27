@@ -64,7 +64,7 @@ class CannotClaimRNRBControllerSpec extends UnitSpec with WithFakeApplication wi
       Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true),
       Constants.grossingUpOnEstateAssetsId -> JsBoolean(true),
       Constants.chargeablePropertyValueId -> JsNumber(50000),
-      Constants.assetsPassingToDirectDescendantsId -> JsNumber(1000),
+      Constants.valueOfAssetsPassingId -> JsNumber(1000),
       Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true),
       Constants.valueAvailableWhenPropertyChangedId -> JsNumber(1000)
     ))
