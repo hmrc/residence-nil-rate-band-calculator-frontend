@@ -21,30 +21,30 @@ import javax.inject.{Inject, Singleton}
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetCannotClaimRNRBReason.{NoProperty, NotCloselyInherited}
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThresholdIncreaseReason.{DatePropertyWasChangedTooEarly, NoAssetsPassingToDirectDescendants}
 import uk.gov.hmrc.residencenilratebandcalculator.models._
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.cannot_claim_RNRB
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_downsizing_threshold_increase
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 @Singleton
-class CannotClaimRNRBController @Inject()(val appConfig: FrontendAppConfig,
-                                          override val messagesApi: MessagesApi,
-                                          override val sessionConnector: SessionConnector,
-                                          val navigator: Navigator) extends TransitionController {
+class NoDownsizingThresholdIncreaseController @Inject()(val appConfig: FrontendAppConfig,
+                                                override val messagesApi: MessagesApi,
+                                                override val sessionConnector: SessionConnector,
+                                                val navigator: Navigator) extends TransitionController {
 
-  val getReason = GetCannotClaimRNRBReason
+  val getReason = GetNoDownsizingThresholdIncreaseReason
 
   def getControllerId(reason: Reason) =
     reason match {
-      case NotCloselyInherited => Constants.propertyPassingToDirectDescendantsId
-      case _ => Constants.propertyInEstateId
+      case NoAssetsPassingToDirectDescendants => Constants.assetsPassingToDirectDescendantsId
+      case _ => Constants.datePropertyWasChangedId
     }
 
   def createView(reason: Reason, userAnswers: UserAnswers, previousAnswers: Seq[AnswerRow])(implicit request: Request[_]) = {
     val reasonKey = reason match {
-      case NotCloselyInherited => "cannot_claim_RNRB.not_closely_inherited_reason"
-      case NoProperty => "cannot_claim_RNRB.no_property_reason"
+      case NoAssetsPassingToDirectDescendants => "no_downsizing_threshold_increase.no_assets_passing_to_direct_descendants_reason"
+      case DatePropertyWasChangedTooEarly => "no_downsizing_threshold_increase.date_property_was_changed_too_early_reason"
     }
-    cannot_claim_RNRB(appConfig, reasonKey, navigator.nextPage(Constants.cannotClaimRNRB)(userAnswers), previousAnswers)
+    no_downsizing_threshold_increase(appConfig, reasonKey, navigator.nextPage(Constants.noDownsizingThresholdIncrease)(userAnswers), previousAnswers)
   }
 }

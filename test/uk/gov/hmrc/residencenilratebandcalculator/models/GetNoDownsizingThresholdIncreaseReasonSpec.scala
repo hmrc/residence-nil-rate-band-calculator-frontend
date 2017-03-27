@@ -20,20 +20,20 @@ import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetCannotClaimDownsizingReason.{DatePropertyWasChangedTooEarly, NoAssetsPassingToDirectDescendants}
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThresholdIncreaseReason.{DatePropertyWasChangedTooEarly, NoAssetsPassingToDirectDescendants}
 
-class GetCannotClaimDowisizingReasonSpec extends UnitSpec with WithFakeApplication with MockitoSugar {
-  "Get Cannot Claim Dowisizing Reason" must {
+class GetNoDownsizingThresholdIncreaseReasonSpec extends UnitSpec with WithFakeApplication with MockitoSugar {
+  "Get No Downsizing Threshold Increase Reason" must {
     "get the 'no assets passing to a direct descendant' reason when there are no assets passing to direct descendants" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.assetsPassingToDirectDescendants) thenReturn Some(false)
-      GetCannotClaimDownsizingReason(userAnswers) shouldBe NoAssetsPassingToDirectDescendants
+      GetNoDownsizingThresholdIncreaseReason(userAnswers) shouldBe NoAssetsPassingToDirectDescendants
     }
 
     "get the 'Date Property Was Changed too early' reason when the property is disposed of before 8 July 2015" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.datePropertyWasChanged) thenReturn Some(Constants.downsizingEligibilityDate.minusDays(1))
-      GetCannotClaimDownsizingReason(userAnswers) shouldBe DatePropertyWasChangedTooEarly
+      GetNoDownsizingThresholdIncreaseReason(userAnswers) shouldBe DatePropertyWasChangedTooEarly
     }
   }
 }

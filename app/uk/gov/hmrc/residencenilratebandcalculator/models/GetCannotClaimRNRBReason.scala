@@ -18,7 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
-object GetCannotClaimRNRBReason extends GetReason {
+object GetNoAdditionalThresholdAvailableReason extends GetReason {
   case object NotCloselyInherited extends Reason
   case object NoProperty extends Reason
 

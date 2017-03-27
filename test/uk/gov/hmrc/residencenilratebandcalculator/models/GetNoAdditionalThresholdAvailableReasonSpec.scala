@@ -20,20 +20,20 @@ import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetCannotClaimRNRBReason.{NoProperty, NotCloselyInherited}
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.{NoProperty, NotCloselyInherited}
 
-class GetCannotClaimRNRBReasonSpec extends UnitSpec with WithFakeApplication with MockitoSugar {
-  "GetCannotClaimRNRBReason" must {
+class GetNoAdditionalThresholdAvailableReasonSpec extends UnitSpec with WithFakeApplication with MockitoSugar {
+  "GetNoAdditionalThresholdAvailableReason" must {
     "get the 'Not closely inherited' reason when there is no closely inherited property" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.propertyPassingToDirectDescendants) thenReturn Some(Constants.none)
-      GetCannotClaimRNRBReason(userAnswers) shouldBe NotCloselyInherited
+      GetNoAdditionalThresholdAvailableReason(userAnswers) shouldBe NotCloselyInherited
     }
 
     "get the 'No property' reason when there is no property in the estate" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.propertyInEstate) thenReturn Some(false)
-      GetCannotClaimRNRBReason(userAnswers) shouldBe NoProperty
+      GetNoAdditionalThresholdAvailableReason(userAnswers) shouldBe NoProperty
     }
   }
 }

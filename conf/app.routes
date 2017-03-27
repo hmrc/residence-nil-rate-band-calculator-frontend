@@ -43,9 +43,9 @@ POST       /chargeable-property-value                   uk.gov.hmrc.residencenil
 GET        /chargeable-inherited-property-value         uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableInheritedPropertyValueController.onPageLoad
 POST       /chargeable-inherited-property-value         uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableInheritedPropertyValueController.onSubmit
 
-GET        /cannot-claim-rnrb                           uk.gov.hmrc.residencenilratebandcalculator.controllers.CannotClaimRNRBController.onPageLoad
+GET        /no-additional-threshold-available           uk.gov.hmrc.residencenilratebandcalculator.controllers.NoAdditionalThresholdAvailableController.onPageLoad
 
-GET        /cannot-claim-downsizing                     uk.gov.hmrc.residencenilratebandcalculator.controllers.CannotClaimDownsizingController.onPageLoad
+GET        /no-downsizing-threshold-increase            uk.gov.hmrc.residencenilratebandcalculator.controllers.NoDownsizingThresholdIncreaseController.onPageLoad
 
 GET        /date-of-death                               uk.gov.hmrc.residencenilratebandcalculator.controllers.DateOfDeathController.onPageLoad
 POST       /date-of-death                               uk.gov.hmrc.residencenilratebandcalculator.controllers.DateOfDeathController.onSubmit

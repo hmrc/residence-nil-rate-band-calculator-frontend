@@ -34,14 +34,14 @@ class Navigator @Inject()() {
       Constants.valueOfEstateId -> (_ => ChargeableEstateValueController.onPageLoad()),
       Constants.chargeableEstateValueId -> (_ => PropertyInEstateController.onPageLoad()),
       Constants.propertyInEstateId -> (ua => getPropertyInEstateRoute(ua)),
-      Constants.cannotClaimRNRB -> (_ => TransferAnyUnusedThresholdController.onPageLoad()),
+      Constants.noAdditionalThresholdAvailableId -> (_ => TransferAnyUnusedThresholdController.onPageLoad()),
       Constants.propertyValueId -> (_ => PropertyPassingToDirectDescendantsController.onPageLoad()),
       Constants.propertyPassingToDirectDescendantsId -> (ua => getPropertyPassingToDirectDescendantsRoute(ua)),
       Constants.percentagePassedToDirectDescendantsId -> (_ => ExemptionsAndReliefClaimedController.onPageLoad()),
       Constants.transferAnyUnusedThresholdId -> (ua => getTransferAnyUnusedThresholdRoute(ua)),
       Constants.valueBeingTransferredId -> (_ => ClaimDownsizingThresholdController.onPageLoad()),
       Constants.claimDownsizingThresholdId -> (ua => getClaimDownsizingThresholdRoute(ua)),
-      Constants.cannotClaimDownsizingId -> (_ => ResultsController.onPageLoad()),
+      Constants.noDownsizingThresholdIncrease -> (_ => ResultsController.onPageLoad()),
       Constants.datePropertyWasChangedId -> (ua => getDatePropertyWasChangedRoute(ua)),
       Constants.exemptionsAndReliefClaimedId -> (ua => getExemptionsAndReliefClaimedRoute(ua)),
       Constants.chargeablePropertyValueId -> (_ => ChargeableInheritedPropertyValueController.onPageLoad()),
@@ -76,7 +76,7 @@ class Navigator @Inject()() {
     getRouteForOptionalBoolean(userAnswers.partOfEstatePassingToDirectDescendants, ValueOfEstateController.onPageLoad(), TransitionOutController.onPageLoad())
 
   private def getPropertyInEstateRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.propertyInEstate, PropertyValueController.onPageLoad(), CannotClaimRNRBController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.propertyInEstate, PropertyValueController.onPageLoad(), NoAdditionalThresholdAvailableController.onPageLoad())
 
   private def getTransferAnyUnusedThresholdRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.transferAnyUnusedThreshold, ValueBeingTransferredController.onPageLoad(), ClaimDownsizingThresholdController.onPageLoad())
@@ -89,12 +89,12 @@ class Navigator @Inject()() {
 
   private def getDatePropertyWasChangedRoute(userAnswers: UserAnswers) =
     getRouteForOptionalLocalDate(userAnswers.datePropertyWasChanged, Constants.downsizingEligibilityDate,
-      CannotClaimDownsizingController.onPageLoad(), ValueOfChangedPropertyController.onPageLoad())
+      NoDownsizingThresholdIncreaseController.onPageLoad(), ValueOfChangedPropertyController.onPageLoad())
 
   private def getPropertyPassingToDirectDescendantsRoute(userAnswers: UserAnswers) = userAnswers.propertyPassingToDirectDescendants match {
     case Some(Constants.all) => ExemptionsAndReliefClaimedController.onPageLoad()
     case Some(Constants.some) => PercentagePassedToDirectDescendantsController.onPageLoad()
-    case Some(_) => CannotClaimRNRBController.onPageLoad()
+    case Some(_) => NoAdditionalThresholdAvailableController.onPageLoad()
     case _ => HomeController.onPageLoad()
   }
 
@@ -105,7 +105,7 @@ class Navigator @Inject()() {
     getRouteForOptionalBoolean(userAnswers.grossingUpOnEstateProperty, TransitionOutController.onPageLoad(), ChargeablePropertyValueController.onPageLoad())
 
   private def getAssetsPassingToDirectDescendantsRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.assetsPassingToDirectDescendants, GrossingUpOnEstateAssetsController.onPageLoad(), CannotClaimDownsizingController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.assetsPassingToDirectDescendants, GrossingUpOnEstateAssetsController.onPageLoad(), NoDownsizingThresholdIncreaseController.onPageLoad())
 
   private def getGrossingUpOnEstateAssetsRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.grossingUpOnEstateAssets, TransitionOutController.onPageLoad(), ValueOfAssetsPassingController.onPageLoad())
