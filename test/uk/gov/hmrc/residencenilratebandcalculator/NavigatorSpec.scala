@@ -311,19 +311,19 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
     }
 
     "return a call to the Value Of Changed Property when back linking from the Any Assets Passing To Direct Decendants page" in {
-      navigator.lastPage(Constants.anyAssetsPassingToDirectDescendantsId)(userAnswers) shouldBe routes.ValueOfChangedPropertyController.onPageLoad()
+      navigator.lastPage(Constants.assetsPassingToDirectDescendantsId)(userAnswers) shouldBe routes.ValueOfChangedPropertyController.onPageLoad()
     }
 
-    "return a call to the Any Assets Passing To Direct Descendants when back linking from the Grossing Up On Estate Assets page" in {
-      navigator.lastPage(Constants.grossingUpOnEstateAssetsId)(userAnswers) shouldBe routes.AnyAssetsPassingToDirectDescendantsController.onPageLoad()
+    "return a call to the Assets Passing To Direct Descendants when back linking from the Grossing Up On Estate Assets page" in {
+      navigator.lastPage(Constants.grossingUpOnEstateAssetsId)(userAnswers) shouldBe routes.AssetsPassingToDirectDescendantsController.onPageLoad()
     }
 
-    "return a call to the Grossing Up On Estate Assets when back linking from the Assets Passing To Direct Descendants page" in {
-      navigator.lastPage(Constants.assetsPassingToDirectDescendantsId)(userAnswers) shouldBe routes.GrossingUpOnEstateAssetsController.onPageLoad()
+    "return a call to the Grossing Up On Estate Assets when back linking from the Value Of Assest Passing page" in {
+      navigator.lastPage(Constants.valueOfAssetsPassingId)(userAnswers) shouldBe routes.GrossingUpOnEstateAssetsController.onPageLoad()
     }
 
-    "return a call to the Assets Passing To Direct Descendants when back linking from the Transfer Available When Property Changed page" in {
-      navigator.lastPage(Constants.transferAvailableWhenPropertyChangedId)(userAnswers) shouldBe routes.AssetsPassingToDirectDescendantsController.onPageLoad()
+    "return a call to the Value Of Assets Passing when back linking from the Transfer Available When Property Changed page" in {
+      navigator.lastPage(Constants.transferAvailableWhenPropertyChangedId)(userAnswers) shouldBe routes.ValueOfAssetsPassingController.onPageLoad()
     }
 
     "return a call to the Transfer Available When Property Changed when back linking from the Value Available When Property Changed page" in {
@@ -355,14 +355,14 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.datePropertyWasChangedId)(mockCacheMap) shouldBe routes.ValueOfChangedPropertyController.onPageLoad()
     }
 
-    "return a call to the any assets passing to direct descendants controller onPageLoad method from the ValueOfChangedProperty controller" in {
-      navigator.nextPage(Constants.valueOfChangedPropertyId)(mock[UserAnswers]) shouldBe routes.AnyAssetsPassingToDirectDescendantsController.onPageLoad()
+    "return a call to the assets passing to direct descendants controller onPageLoad method from the ValueOfChangedProperty controller" in {
+      navigator.nextPage(Constants.valueOfChangedPropertyId)(mock[UserAnswers]) shouldBe routes.AssetsPassingToDirectDescendantsController.onPageLoad()
     }
 
     "return a call to the assets passing to direct descendant onPageLoad method when grossing up does not apply to the other property" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.grossingUpOnEstateAssets) thenReturn Some(false)
-      navigator.nextPage(Constants.grossingUpOnEstateAssetsId)(mockCacheMap) shouldBe routes.AssetsPassingToDirectDescendantsController.onPageLoad()
+      navigator.nextPage(Constants.grossingUpOnEstateAssetsId)(mockCacheMap) shouldBe routes.ValueOfAssetsPassingController.onPageLoad()
     }
 
     "return a call to the transition out onPageLoad method when grossing up does apply to the other property" in {
@@ -373,14 +373,14 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
 
     "return a call to the Grossing Up On Estate Assets onPageLoad method when there are some assets passing to the direct descendant" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.anyAssetsPassingToDirectDescendants) thenReturn Some(true)
-      navigator.nextPage(Constants.anyAssetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.GrossingUpOnEstateAssetsController.onPageLoad()
+      when(mockCacheMap.assetsPassingToDirectDescendants) thenReturn Some(true)
+      navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.GrossingUpOnEstateAssetsController.onPageLoad()
     }
 
     "return a call to the Cannot Claim Downsizing onPageLoad method when there are no assets passing to the direct descendant" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.anyAssetsPassingToDirectDescendants) thenReturn Some(false)
-      navigator.nextPage(Constants.anyAssetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.CannotClaimDownsizingController.onPageLoad()
+      when(mockCacheMap.assetsPassingToDirectDescendants) thenReturn Some(false)
+      navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.CannotClaimDownsizingController.onPageLoad()
     }
 
     "return a call to the Transfer Available When Property Changed controller onPageLoad method from the AssetsPassingToDirectDescendants controller " +
@@ -388,7 +388,7 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.transferAnyUnusedThreshold) thenReturn Some(true)
       when(mockCacheMap.datePropertyWasChanged) thenReturn Some(Constants.eligibilityDate)
-      navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.TransferAvailableWhenPropertyChangedController.onPageLoad()
+      navigator.nextPage(Constants.valueOfAssetsPassingId)(mockCacheMap) shouldBe routes.TransferAvailableWhenPropertyChangedController.onPageLoad()
     }
 
     "return a call to the Results controller onPageLoad method from AssetsPassingToDirectDescendants when there is no value being transferred, " +
@@ -396,7 +396,7 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.transferAnyUnusedThreshold) thenReturn Some(false)
       when(mockCacheMap.datePropertyWasChanged) thenReturn Some(Constants.eligibilityDate)
-      navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
+      navigator.nextPage(Constants.valueOfAssetsPassingId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
     }
 
     "return a call to the Results controller onPageLoad method from AssetsPassingToDirectDescendants when there is value being transferred " +
@@ -404,7 +404,7 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.transferAnyUnusedThreshold) thenReturn Some(true)
       when(mockCacheMap.datePropertyWasChanged) thenReturn Some(Constants.eligibilityDate.minusDays(1))
-      navigator.nextPage(Constants.assetsPassingToDirectDescendantsId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
+      navigator.nextPage(Constants.valueOfAssetsPassingId)(mockCacheMap) shouldBe routes.ResultsController.onPageLoad()
     }
 
     "return a call to the Results onPageLoad method when there is no Value Available When Property Changed" in {

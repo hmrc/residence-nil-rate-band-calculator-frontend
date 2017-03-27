@@ -44,9 +44,9 @@ object AnswerRows {
     Constants.claimDownsizingThresholdId,
     Constants.datePropertyWasChangedId,
     Constants.valueOfChangedPropertyId,
-    Constants.anyAssetsPassingToDirectDescendantsId,
-    Constants.grossingUpOnEstateAssetsId,
     Constants.assetsPassingToDirectDescendantsId,
+    Constants.grossingUpOnEstateAssetsId,
+    Constants.valueOfAssetsPassingId,
     Constants.transferAvailableWhenPropertyChangedId,
     Constants.valueAvailableWhenPropertyChangedId
   )
@@ -99,10 +99,10 @@ object AnswerRows {
       dateAnswerRowFn("date_property_was_changed.title", Constants.datePropertyWasChangedId, routes.DatePropertyWasChangedController.onPageLoad),
     Constants.valueOfChangedPropertyId ->
       intAnswerRowFn("value_of_changed_property.title", Constants.valueOfChangedPropertyId, routes.ValueOfChangedPropertyController.onPageLoad),
-    Constants.anyAssetsPassingToDirectDescendantsId ->
-      boolAnswerRowFn("any_assets_passing_to_direct_descendants.title",
-        "Any assets passing to direct descendants",
-        routes.AnyAssetsPassingToDirectDescendantsController.onPageLoad),
+    Constants.assetsPassingToDirectDescendantsId ->
+      boolAnswerRowFn("assets_passing_to_direct_descendants.title",
+        Constants.assetsPassingToDirectDescendantsId,
+        routes.AssetsPassingToDirectDescendantsController.onPageLoad),
     Constants.transferAnyUnusedThresholdId ->
       boolAnswerRowFn("transfer_any_unused_threshold.title", Constants.transferAnyUnusedThresholdId, routes.TransferAnyUnusedThresholdController.onPageLoad),
     Constants.transferAvailableWhenPropertyChangedId ->
@@ -111,10 +111,10 @@ object AnswerRows {
         routes.TransferAvailableWhenPropertyChangedController.onPageLoad),
     Constants.exemptionsAndReliefClaimedId ->
       boolAnswerRowFn("exemptions_and_relief_claimed.title", Constants.exemptionsAndReliefClaimedId, routes.ExemptionsAndReliefClaimedController.onPageLoad),
-    Constants.assetsPassingToDirectDescendantsId ->
-      intAnswerRowFn("assets_passing_to_direct_descendants.title",
-        "Assets passing to direct descendants",
-        routes.AssetsPassingToDirectDescendantsController.onPageLoad),
+    Constants.valueOfAssetsPassingId ->
+      intAnswerRowFn("value_of_assets_passing.title",
+        Constants.valueOfAssetsPassingId,
+        routes.ValueOfAssetsPassingController.onPageLoad),
     Constants.valueBeingTransferredId ->
       intAnswerRowFn("value_being_transferred.title", Constants.valueBeingTransferredId, routes.ValueBeingTransferredController.onPageLoad),
     Constants.valueAvailableWhenPropertyChangedId ->

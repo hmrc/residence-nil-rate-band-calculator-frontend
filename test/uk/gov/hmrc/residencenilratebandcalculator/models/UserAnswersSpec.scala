@@ -31,9 +31,9 @@ class UserAnswersSpec extends UnitSpec {
     "values exist in the cache map" must {
 
       "return the correct answer for Any Assets Passing To Direct Descendant" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true)))
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.assetsPassingToDirectDescendantsId -> JsBoolean(true)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.anyAssetsPassingToDirectDescendants shouldBe Some(true)
+        userAnswers.assetsPassingToDirectDescendants shouldBe Some(true)
       }
 
       "return the correct answer for Transfer Any Unused Allowance" in {
@@ -67,9 +67,9 @@ class UserAnswersSpec extends UnitSpec {
       }
 
       "return the correct answer for Assets Passing To Direct Descendant" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.assetsPassingToDirectDescendantsId -> JsNumber(1)))
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.valueOfAssetsPassingId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.assetsPassingToDirectDescendants shouldBe Some(1)
+        userAnswers.valueOfAssetsPassing shouldBe Some(1)
       }
 
       "return the correct answer for Value Being Transferred" in {
@@ -162,7 +162,7 @@ class UserAnswersSpec extends UnitSpec {
 
       "return None for Any Assets Passing To Direct Descendant" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.anyAssetsPassingToDirectDescendants shouldBe None
+        userAnswers.assetsPassingToDirectDescendants shouldBe None
       }
 
       "return None for Transfer Any Unused Allowance" in {
@@ -192,7 +192,7 @@ class UserAnswersSpec extends UnitSpec {
 
       "return None for Assets Passing To Direct Descendant" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.assetsPassingToDirectDescendants shouldBe None
+        userAnswers.valueOfAssetsPassing shouldBe None
       }
 
       "return None for Value Being Transferred" in {

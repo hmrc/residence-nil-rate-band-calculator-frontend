@@ -62,10 +62,10 @@ class CannotClaimDownsizingControllerSpec extends UnitSpec with WithFakeApplicat
       Constants.claimDownsizingThresholdId -> JsBoolean(true),
       Constants.datePropertyWasChangedId -> JsString("2018-03-02"),
       Constants.valueOfChangedPropertyId -> JsNumber(100000),
-      Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true),
+      Constants.assetsPassingToDirectDescendantsId -> JsBoolean(true),
       Constants.grossingUpOnEstateAssetsId -> JsBoolean(true),
       Constants.chargeablePropertyValueId -> JsNumber(50000),
-      Constants.assetsPassingToDirectDescendantsId -> JsNumber(1000),
+      Constants.valueOfAssetsPassingId -> JsNumber(1000),
       Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true),
       Constants.valueAvailableWhenPropertyChangedId -> JsNumber(1000)
     ))

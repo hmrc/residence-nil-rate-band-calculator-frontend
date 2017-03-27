@@ -22,7 +22,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 class UserAnswers(cacheMap: CacheMap) {
 
-  def anyAssetsPassingToDirectDescendants = cacheMap.getEntry[Boolean](Constants.anyAssetsPassingToDirectDescendantsId)
+  def assetsPassingToDirectDescendants = cacheMap.getEntry[Boolean](Constants.assetsPassingToDirectDescendantsId)
 
   def transferAnyUnusedThreshold = cacheMap.getEntry[Boolean](Constants.transferAnyUnusedThresholdId)
 
@@ -36,7 +36,7 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def propertyPassingToDirectDescendants = cacheMap.getEntry[String](Constants.propertyPassingToDirectDescendantsId)
 
-  def assetsPassingToDirectDescendants = cacheMap.getEntry[Int](Constants.assetsPassingToDirectDescendantsId)
+  def valueOfAssetsPassing = cacheMap.getEntry[Int](Constants.valueOfAssetsPassingId)
 
   def valueBeingTransferred = cacheMap.getEntry[Int](Constants.valueBeingTransferredId)
 

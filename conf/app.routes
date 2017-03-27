@@ -4,8 +4,8 @@ GET        /                                            uk.gov.hmrc.residencenil
 
 GET        /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)
 
-GET        /any-assets-passing-to-direct-descendants    uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyAssetsPassingToDirectDescendantsController.onPageLoad
-POST       /any-assets-passing-to-direct-descendants    uk.gov.hmrc.residencenilratebandcalculator.controllers.AnyAssetsPassingToDirectDescendantsController.onSubmit
+GET        /assets-passing-to-direct-descendants        uk.gov.hmrc.residencenilratebandcalculator.controllers.AssetsPassingToDirectDescendantsController.onPageLoad
+POST       /assets-passing-to-direct-descendants        uk.gov.hmrc.residencenilratebandcalculator.controllers.AssetsPassingToDirectDescendantsController.onSubmit
 
 GET        /transfer-any-unused-threshold               uk.gov.hmrc.residencenilratebandcalculator.controllers.TransferAnyUnusedThresholdController.onPageLoad
 POST       /transfer-any-unused-threshold               uk.gov.hmrc.residencenilratebandcalculator.controllers.TransferAnyUnusedThresholdController.onSubmit
@@ -25,8 +25,8 @@ POST       /exemptions-and-relief-claimed               uk.gov.hmrc.residencenil
 GET        /property-passing-to-direct-descendants      uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyPassingToDirectDescendantsController.onPageLoad
 POST       /property-passing-to-direct-descendants      uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyPassingToDirectDescendantsController.onSubmit
 
-GET        /assets-passing-to-direct-descendants        uk.gov.hmrc.residencenilratebandcalculator.controllers.AssetsPassingToDirectDescendantsController.onPageLoad
-POST       /assets-passing-to-direct-descendants        uk.gov.hmrc.residencenilratebandcalculator.controllers.AssetsPassingToDirectDescendantsController.onSubmit
+GET        /value-of-assets-passing                     uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfAssetsPassingController.onPageLoad
+POST       /value-of-assets-passing                     uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfAssetsPassingController.onSubmit
 
 GET        /value-being-transferred                     uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueBeingTransferredController.onPageLoad
 POST       /value-being-transferred                     uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueBeingTransferredController.onSubmit

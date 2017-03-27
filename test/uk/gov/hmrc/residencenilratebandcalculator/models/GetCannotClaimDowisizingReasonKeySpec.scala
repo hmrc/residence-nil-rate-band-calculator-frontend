@@ -26,7 +26,7 @@ class GetCannotClaimDowisizingReasonSpec extends UnitSpec with WithFakeApplicati
   "Get Cannot Claim Dowisizing Reason" must {
     "get the 'no assets passing to a direct descendant' reason when there are no assets passing to direct descendants" in {
       val userAnswers = mock[UserAnswers]
-      when(userAnswers.anyAssetsPassingToDirectDescendants) thenReturn Some(false)
+      when(userAnswers.assetsPassingToDirectDescendants) thenReturn Some(false)
       GetCannotClaimDownsizingReason(userAnswers) shouldBe NoAssetsPassingToDirectDescendants
     }
 

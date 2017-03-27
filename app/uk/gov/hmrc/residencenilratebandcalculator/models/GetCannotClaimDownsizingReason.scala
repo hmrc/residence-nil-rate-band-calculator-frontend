@@ -21,7 +21,7 @@ object GetCannotClaimDownsizingReason extends GetReason {
   case object DatePropertyWasChangedTooEarly extends Reason
 
   def apply(userAnswers: UserAnswers) =
-    userAnswers.anyAssetsPassingToDirectDescendants match {
+    userAnswers.assetsPassingToDirectDescendants match {
       case Some(false) => NoAssetsPassingToDirectDescendants
       case _ => DatePropertyWasChangedTooEarly
     }

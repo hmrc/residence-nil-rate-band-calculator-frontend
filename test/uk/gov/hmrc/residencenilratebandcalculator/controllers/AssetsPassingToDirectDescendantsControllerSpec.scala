@@ -18,44 +18,50 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
-import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.assets_passing_to_direct_descendants
 
 class AssetsPassingToDirectDescendantsControllerSpec extends SimpleControllerSpecBase {
 
-  "Assets Passing to Direct Descendants Controller" must {
+  "Assets Passing To Direct Descendants Controller" must {
+
+    val propertyValue = 123456
+    val formattedPropertyValue = Some("£123,456.00")
 
     def createView = (value: Option[Map[String, String]]) => {
-      val backUrl = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.GrossingUpOnEstateAssetsController.onPageLoad().url
+      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfChangedPropertyController.onPageLoad().url
 
       value match {
-        case None => assets_passing_to_direct_descendants(frontendAppConfig, backUrl, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => assets_passing_to_direct_descendants(frontendAppConfig, backUrl, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
+        case None =>
+          assets_passing_to_direct_descendants(frontendAppConfig, url, None, Seq(), formattedPropertyValue)(fakeRequest, messages)
+        case Some(v) =>
+          assets_passing_to_direct_descendants(frontendAppConfig, url, Some(BooleanForm().bind(v)), Seq(), formattedPropertyValue)(fakeRequest, messages)
       }
     }
 
     def createController = () => new AssetsPassingToDirectDescendantsController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
-    val testValue = 123
+    val testValue = true
 
-    behave like rnrbController[Int](createController, createView, Constants.assetsPassingToDirectDescendantsId, testValue)(Reads.IntReads, Writes.IntWrites)
+    val valuesToCacheBeforeLoad = Map(Constants.propertyValueId -> propertyValue)
 
-    behave like nonStartingController[Int](createController,
+    behave like rnrbController[Boolean](createController, createView, Constants.assetsPassingToDirectDescendantsId, testValue,
+      valuesToCacheBeforeLoad = valuesToCacheBeforeLoad)(Reads.BooleanReads, Writes.BooleanWrites)
+
+    behave like nonStartingController[Boolean](createController,
       List(Constants.dateOfDeathId,
-           Constants.partOfEstatePassingToDirectDescendantsId,
-           Constants.valueOfEstateId,
-           Constants.chargeableEstateValueId,
-           Constants.propertyInEstateId,
-           Constants.propertyValueId,
-           Constants.propertyPassingToDirectDescendantsId,
-           Constants.percentagePassedToDirectDescendantsId,
-           Constants.chargeablePropertyValueId,
-           Constants.transferAnyUnusedThresholdId,
-           Constants.valueBeingTransferredId,
-           Constants.claimDownsizingThresholdId,
-           Constants.datePropertyWasChangedId,
-           Constants.valueOfChangedPropertyId,
-           Constants.anyAssetsPassingToDirectDescendantsId,
-           Constants.grossingUpOnEstateAssetsId))(Reads.IntReads, Writes.IntWrites)
+        Constants.partOfEstatePassingToDirectDescendantsId,
+        Constants.valueOfEstateId,
+        Constants.chargeableEstateValueId,
+        Constants.propertyInEstateId,
+        Constants.propertyValueId,
+        Constants.propertyPassingToDirectDescendantsId,
+        Constants.percentagePassedToDirectDescendantsId,
+        Constants.chargeablePropertyValueId,
+        Constants.transferAnyUnusedThresholdId,
+        Constants.valueBeingTransferredId,
+        Constants.claimDownsizingThresholdId,
+        Constants.datePropertyWasChangedId,
+        Constants.valueOfChangedPropertyId))(Reads.BooleanReads, Writes.BooleanWrites)
   }
 }

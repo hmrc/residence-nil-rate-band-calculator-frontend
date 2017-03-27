@@ -121,7 +121,7 @@ object CalculationInput {
 
 case class DownsizingDetails(datePropertyWasChanged: LocalDate,
                              valueOfChangedProperty: Int,
-                             valueCloselyInherited: Int,
+                             valueOfAssetsPassing: Int,
                              valueAvailableWhenPropertyChanged: Int)
 
 object DownsizingDetails {
@@ -130,29 +130,29 @@ object DownsizingDetails {
   def apply(userAnswers: UserAnswers): DownsizingDetails = {
     require(userAnswers.datePropertyWasChanged.isDefined, "Date Property Was Changed was not answered")
     require(userAnswers.valueOfChangedProperty.isDefined, "Value Of Changed Property was not answered")
-    require(userAnswers.anyAssetsPassingToDirectDescendants.isDefined, "Any Assets Passing to Direct Descendants was not answered")
-    if (userAnswers.anyAssetsPassingToDirectDescendants.get) requireAssetsPassingToDirectDescendantsDependencies(userAnswers)
+    require(userAnswers.assetsPassingToDirectDescendants.isDefined, "Assets Passing To Direct Descendants was not answered")
+    if (userAnswers.assetsPassingToDirectDescendants.get) requireValueOfAssetsPassingDependancies(userAnswers)
 
     DownsizingDetails(
       userAnswers.datePropertyWasChanged.get,
       userAnswers.valueOfChangedProperty.get,
-      getValueCloselyInherited(userAnswers),
+      getValueOfAssetsPassing(userAnswers),
       getValueAvailableWhenPropertyChanged(userAnswers))
   }
 
-  private def getValueCloselyInherited(userAnswers: UserAnswers) = userAnswers.anyAssetsPassingToDirectDescendants.get match {
-    case true => userAnswers.assetsPassingToDirectDescendants.get
+  private def getValueOfAssetsPassing(userAnswers: UserAnswers) = userAnswers.assetsPassingToDirectDescendants.get match {
+    case true => userAnswers.valueOfAssetsPassing.get
     case _ => 0
   }
 
-  private def getValueAvailableWhenPropertyChanged(userAnswers: UserAnswers) = userAnswers.anyAssetsPassingToDirectDescendants.get match {
+  private def getValueAvailableWhenPropertyChanged(userAnswers: UserAnswers) = userAnswers.assetsPassingToDirectDescendants.get match {
     case true if userAnswers.transferAvailableWhenPropertyChanged.isDefined && userAnswers.transferAvailableWhenPropertyChanged.get =>
       userAnswers.valueAvailableWhenPropertyChanged.get
     case _ => 0
   }
 
-  private def requireAssetsPassingToDirectDescendantsDependencies(userAnswers: UserAnswers) = {
-    require(userAnswers.assetsPassingToDirectDescendants.isDefined, "Assets Passing to Direct Descendants was not answered")
+  private def requireValueOfAssetsPassingDependancies(userAnswers: UserAnswers) = {
+    require(userAnswers.valueOfAssetsPassing.isDefined, "Value Of Assets Passing was not answered")
     if (userAnswers.transferAnyUnusedThreshold.get && !(userAnswers.datePropertyWasChanged.get isBefore Constants.eligibilityDate)) {
       requireTransferAvailableWhenPropertyChangedDependencies(userAnswers)
     }
