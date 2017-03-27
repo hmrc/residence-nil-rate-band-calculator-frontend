@@ -21,23 +21,23 @@ import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.models.RadioOption
 
 object Constants {
-  val anyAssetsPassingToDirectDescendantsId = "AnyAssetsPassingToDirectDescendants"
-  val anyBroughtForwardAllowanceId = "AnyBroughtForwardAllowance"
-  val anyBroughtForwardAllowanceOnDisposalId = "AnyBroughtForwardAllowanceOnDisposal"
-  val anyDownsizingAllowanceId = "AnyDownsizingAllowance"
+  val assetsPassingToDirectDescendantsId = "AssetsPassingToDirectDescendants"
+  val transferAnyUnusedThresholdId = "TransferAnyUnusedThreshold"
+  val transferAvailableWhenPropertyChangedId = "TransferAvailableWhenPropertyChanged"
+  val claimDownsizingThresholdId = "ClaimDownsizingThreshold"
   val partOfEstatePassingToDirectDescendantsId = "PartOfEstatePassingToDirectDescendants"
   val exemptionsAndReliefClaimedId = "ExemptionsAndReliefClaimed"
   val propertyPassingToDirectDescendantsId = "PropertyPassingToDirectDescendants"
-  val assetsPassingToDirectDescendantsId = "AssetsPassingToDirectDescendants"
-  val broughtForwardAllowanceId = "BroughtForwardAllowance"
-  val broughtForwardAllowanceOnDisposalId = "BroughtForwardAllowanceOnDisposal"
+  val valueOfAssetsPassingId = "ValueOfAssetsPassing"
+  val valueBeingTransferredId = "ValueBeingTransferred"
+  val valueAvailableWhenPropertyChangedId = "ValueAvailableWhenPropertyChanged"
   val chargeableEstateValueId = "ChargeableEstateValue"
-  val cannotClaimDownsizingId = "CannotClaimDownsizing"
-  val cannotClaimRNRB = "CannotClaimRNRB"
+  val noDownsizingThresholdIncrease = "NoDownsizingThresholdIncrease"
+  val noAdditionalThresholdAvailableId = "NoAdditionalThresholdAvailable"
   val dateOfDeathId = "DateOfDeath"
-  val dateOfDisposalId = "DateOfDisposal"
+  val datePropertyWasChangedId = "DatePropertyWasChanged"
   val grossingUpOnEstatePropertyId = "GrossingUpOnEstateProperty"
-  val doesGrossingUpApplyToOtherPropertyId = "DoesGrossingUpApplyToOtherProperty"
+  val grossingUpOnEstateAssetsId = "GrossingUpOnEstateAssets"
   val downsizingDetails = "downsizingDetails"
   val downsizingEligibilityDate = new LocalDate(2015, 7, 8)
   val eligibilityDate = new LocalDate(2017, 4, 6)
@@ -47,7 +47,7 @@ object Constants {
   val chargeablePropertyValueId = "ChargeablePropertyValue"
   val chargeableInheritedPropertyValueId = "ChargeableInheritedPropertyValue"
   val propertyValueId = "PropertyValue"
-  val valueOfDisposedPropertyId = "ValueOfDisposedProperty"
+  val valueOfChangedPropertyId = "ValueOfChangedProperty"
 
   val all = "all"
   val some = "some"

@@ -42,16 +42,16 @@ class CascadeUpsertSpec extends UnitSpec {
     Constants.grossingUpOnEstatePropertyId -> JsBoolean(false),
     Constants.chargeablePropertyValueId -> JsNumber(testNumber),
     Constants.chargeableInheritedPropertyValueId -> JsNumber(testNumber),
-    Constants.anyBroughtForwardAllowanceId -> JsBoolean(true),
-    Constants.broughtForwardAllowanceId -> JsNumber(testNumber),
-    Constants.anyDownsizingAllowanceId -> JsBoolean(true),
-    Constants.dateOfDisposalId -> JsString("2019-01-01"),
-    Constants.valueOfDisposedPropertyId -> JsNumber(testNumber),
-    Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true),
-    Constants.doesGrossingUpApplyToOtherPropertyId -> JsBoolean(false),
-    Constants.assetsPassingToDirectDescendantsId -> JsNumber(testNumber),
-    Constants.anyBroughtForwardAllowanceOnDisposalId -> JsBoolean(true),
-    Constants.broughtForwardAllowanceOnDisposalId -> JsNumber(testNumber)
+    Constants.transferAnyUnusedThresholdId -> JsBoolean(true),
+    Constants.valueBeingTransferredId -> JsNumber(testNumber),
+    Constants.claimDownsizingThresholdId -> JsBoolean(true),
+    Constants.datePropertyWasChangedId -> JsString("2019-01-01"),
+    Constants.valueOfChangedPropertyId -> JsNumber(testNumber),
+    Constants.assetsPassingToDirectDescendantsId -> JsBoolean(true),
+    Constants.grossingUpOnEstateAssetsId -> JsBoolean(false),
+    Constants.valueOfAssetsPassingId -> JsNumber(testNumber),
+    Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true),
+    Constants.valueAvailableWhenPropertyChangedId -> JsNumber(testNumber)
   ))
 
   "Cascade Upsert" when {
@@ -181,204 +181,204 @@ class CascadeUpsertSpec extends UnitSpec {
       }
     }
 
-    "asked to save the value 'false' for Any Brought Forward Allowance" must {
+    "asked to save the value 'false' for Transfer Any Unused Allowance" must {
 
-      "delete the existing 'Brought Forward Allowance' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyBroughtForwardAllowanceId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.broughtForwardAllowanceId
+      "delete the existing 'Value Being Transferred' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.transferAnyUnusedThresholdId, false, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.valueBeingTransferredId
       }
 
-      "delete the existing 'Any Brought Forward Allowance on Disposal' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyBroughtForwardAllowanceId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.anyBroughtForwardAllowanceOnDisposalId
+      "delete the existing 'Transfer Available When Property Changed' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.transferAnyUnusedThresholdId, false, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.transferAvailableWhenPropertyChangedId
       }
 
-      "delete the existing 'Brought Forward Allowance on DIsposal' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyBroughtForwardAllowanceId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.broughtForwardAllowanceOnDisposalId
+      "delete the existing 'Value Available When Property Changed' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.transferAnyUnusedThresholdId, false, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.valueAvailableWhenPropertyChangedId
       }
 
       "not delete any other answers" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyBroughtForwardAllowanceId, false, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.transferAnyUnusedThresholdId, false, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size - 3
       }
     }
 
-    "asked to save the value 'true' for Any Brought Forward Allowance" must {
+    "asked to save the value 'true' for Transfer Any Unused Allowance" must {
 
       "not delete existing answers for other questions" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyBroughtForwardAllowanceId, true, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.transferAnyUnusedThresholdId, true, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size
       }
     }
 
-    "asked to save the value 'false' for Any Downsizing Allowance" must {
+    "asked to save the value 'false' for Claim Downsizing Threshold" must {
 
-      "delete the existing 'Date of Disposal' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyDownsizingAllowanceId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.dateOfDisposalId
+      "delete the existing 'Date Property Was Changed' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.datePropertyWasChangedId
       }
 
-      "delete the existing 'Value of Disposed Property' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyDownsizingAllowanceId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.valueOfDisposedPropertyId
+      "delete the existing 'Value Of Changed Property' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.valueOfChangedPropertyId
       }
 
-      "delete the existing 'Any Assets Passing to Direct Descendants' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyDownsizingAllowanceId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.anyAssetsPassingToDirectDescendantsId
-      }
-
-      "delete the existing 'Assets Passing to Direct Descendants' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyDownsizingAllowanceId, false, fullCacheMap)
+      "delete the existing 'Assets Passing To Direct Descendants' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
         updatedCacheMap.data.keys should not contain Constants.assetsPassingToDirectDescendantsId
       }
 
-      "delete the existing 'Any Brought Forward Allowance on Disposal' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyDownsizingAllowanceId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.anyBroughtForwardAllowanceOnDisposalId
+      "delete the existing 'Value Of Assets Passing' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.valueOfAssetsPassingId
       }
 
-      "delete the existing 'Does Grossing Up Apply to Other Property' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyDownsizingAllowanceId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.doesGrossingUpApplyToOtherPropertyId
+      "delete the existing 'Transfer Available When Property Changed' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.transferAvailableWhenPropertyChangedId
       }
 
-      "delete the existing 'Brought Forward Allowance on Disposal' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyDownsizingAllowanceId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.broughtForwardAllowanceOnDisposalId
+      "delete the existing 'Grossing Up On Estate Assets' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.grossingUpOnEstateAssetsId
+      }
+
+      "delete the existing 'Value Available When Property Changed' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.valueAvailableWhenPropertyChangedId
       }
 
       "not delete any other answers" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyDownsizingAllowanceId, false, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size - 7
       }
     }
 
-    "asked to save the value 'true' for Any Downsizing Allowance" must {
+    "asked to save the value 'true' for Claim Downsizing Threshold" must {
 
       "not delete existing answers for other questions" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyDownsizingAllowanceId, true, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, true, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size
       }
     }
 
-    "asked to save the value 'false' for Any Assets Passing to Direct Descendants" must {
+    "asked to save the value 'false' for Assets Passing To Direct Descendants" must {
 
-      "delete the existing 'Assets Passing to Direct Descendants' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyAssetsPassingToDirectDescendantsId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.assetsPassingToDirectDescendantsId
+      "delete the existing 'Value Of Assets Passing' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.assetsPassingToDirectDescendantsId, false, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.valueOfAssetsPassingId
       }
 
-      "delete the existing 'Any Brought Forward Allowance on Disposal' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyAssetsPassingToDirectDescendantsId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.anyBroughtForwardAllowanceOnDisposalId
+      "delete the existing 'Transfer Available When Property Changed' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.assetsPassingToDirectDescendantsId, false, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.transferAvailableWhenPropertyChangedId
       }
 
-      "delete the existing 'Does Grossing Up Apply to Other Property' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyAssetsPassingToDirectDescendantsId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.doesGrossingUpApplyToOtherPropertyId
+      "delete the existing 'Grossing Up On Estate Assets' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.assetsPassingToDirectDescendantsId, false, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.grossingUpOnEstateAssetsId
       }
 
-      "delete the existing 'Brought Forward Allowance on Disposal' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyAssetsPassingToDirectDescendantsId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.broughtForwardAllowanceOnDisposalId
+      "delete the existing 'Value Available When Property Changed' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.assetsPassingToDirectDescendantsId, false, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.valueAvailableWhenPropertyChangedId
       }
 
       "not delete any other answers" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyAssetsPassingToDirectDescendantsId, false, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.assetsPassingToDirectDescendantsId, false, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size - 4
       }
     }
 
-    "asked to save the value 'true' for Any Assets Passing to Direct Descendants" must {
+    "asked to save the value 'true' for Assets Passing To Direct Descendants" must {
 
       "not delete existing answers for other questions" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyAssetsPassingToDirectDescendantsId, true, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.assetsPassingToDirectDescendantsId, true, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size
       }
     }
 
-    "asked to save the value 'false' for Any Brought Forward Allowance on Disposal" must {
+    "asked to save the value 'false' for Transfer Available When Property Changed" must {
 
-      "delete the existing 'Brought Forward Allowance on Disposal' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyBroughtForwardAllowanceOnDisposalId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.broughtForwardAllowanceOnDisposalId
+      "delete the existing 'Value Available When Property Changed' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.transferAvailableWhenPropertyChangedId, false, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.valueAvailableWhenPropertyChangedId
       }
 
       "not delete any other answers" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyBroughtForwardAllowanceOnDisposalId, false, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.transferAvailableWhenPropertyChangedId, false, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size - 1
       }
     }
 
-    "asked to save the value 'true' for Any Brought Forward Allowance on Disposal" must {
+    "asked to save the value 'true' for Transfer Available When Property Changed" must {
 
       "not delete existing answers for other questions" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.anyBroughtForwardAllowanceOnDisposalId, true, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.transferAvailableWhenPropertyChangedId, true, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size
       }
     }
 
-    "asked to save a value before 8 July 2015 for Date of Disposal" must {
-      "delete the existing 'Value of Disposed Property' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.dateOfDisposalId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.valueOfDisposedPropertyId
+    "asked to save a value before 8 July 2015 for Date Property Was Changed" must {
+      "delete the existing 'Value Of Changed Property' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.valueOfChangedPropertyId
       }
 
-      "delete the existing 'Any Assets Passing to Direct Descendants' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.dateOfDisposalId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.anyAssetsPassingToDirectDescendantsId
-      }
-
-      "delete the existing 'Assets Passing to Direct Descendants' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.dateOfDisposalId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
+      "delete the existing 'Assets Passing To Direct Descendants' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys should not contain Constants.assetsPassingToDirectDescendantsId
       }
 
-      "delete the existing 'Any Brought Forward Allowance on Disposal' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.dateOfDisposalId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.anyBroughtForwardAllowanceOnDisposalId
+      "delete the existing 'Value Of Assets Passing' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.valueOfAssetsPassingId
       }
 
-      "delete the existing 'Does Grossing Up Apply to Other Property' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.dateOfDisposalId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.doesGrossingUpApplyToOtherPropertyId
+      "delete the existing 'Transfer Available When Property Changed' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.transferAvailableWhenPropertyChangedId
       }
 
-      "delete the existing 'Brought Forward Allowance on Disposal' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.dateOfDisposalId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.broughtForwardAllowanceOnDisposalId
+      "delete the existing 'Grossing Up On Estate Assets' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.grossingUpOnEstateAssetsId
+      }
+
+      "delete the existing 'Value Available When Property Changed' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.valueAvailableWhenPropertyChangedId
       }
 
       "not delete any other answers" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.dateOfDisposalId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size - 6
       }
     }
 
-    "asked to save a value between 8 July 2015 and 5 April 2017 for Date of Disposal" must {
+    "asked to save a value between 8 July 2015 and 5 April 2017 for Date Property Was Changed" must {
 
-      "delete the existing 'Any Brought Forward Allowance on Disposal' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.dateOfDisposalId, oneDayBeforeEligibilityDate, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.anyBroughtForwardAllowanceOnDisposalId
+      "delete the existing 'Transfer Available When Property Changed' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeEligibilityDate, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.transferAvailableWhenPropertyChangedId
       }
 
-      "delete the existing 'Brought Forward Allowance on Disposal' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.dateOfDisposalId, oneDayBeforeEligibilityDate, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.broughtForwardAllowanceOnDisposalId
+      "delete the existing 'Value Available When Property Changed' answer" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeEligibilityDate, fullCacheMap)
+        updatedCacheMap.data.keys should not contain Constants.valueAvailableWhenPropertyChangedId
       }
 
       "not delete any other answers" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.dateOfDisposalId, oneDayBeforeEligibilityDate, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeEligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size - 2
       }
     }
 
-    "asked to save a value on or after 6 April 2017 for Date of Disposal" must {
+    "asked to save a value on or after 6 April 2017 for Date Property Was Changed" must {
 
       "not delete existing answers for other questions" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.dateOfDisposalId, Constants.eligibilityDate, fullCacheMap)
+        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, Constants.eligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size
       }
     }

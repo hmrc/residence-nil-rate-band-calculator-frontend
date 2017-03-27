@@ -31,27 +31,27 @@ class UserAnswersSpec extends UnitSpec {
     "values exist in the cache map" must {
 
       "return the correct answer for Any Assets Passing To Direct Descendant" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true)))
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.assetsPassingToDirectDescendantsId -> JsBoolean(true)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.anyAssetsPassingToDirectDescendants shouldBe Some(true)
+        userAnswers.assetsPassingToDirectDescendants shouldBe Some(true)
       }
 
-      "return the correct answer for Any Brought Forward Allowance" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.anyBroughtForwardAllowanceId -> JsBoolean(true)))
+      "return the correct answer for Transfer Any Unused Allowance" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.transferAnyUnusedThresholdId -> JsBoolean(true)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.anyBroughtForwardAllowance shouldBe Some(true)
+        userAnswers.transferAnyUnusedThreshold shouldBe Some(true)
       }
 
-      "return the correct answer for Any Brought Forward Allowance On Disposal" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.anyBroughtForwardAllowanceOnDisposalId -> JsBoolean(true)))
+      "return the correct answer for Transfer Available When Property Changed" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.anyBroughtForwardAllowanceOnDisposal shouldBe Some(true)
+        userAnswers.transferAvailableWhenPropertyChanged shouldBe Some(true)
       }
 
-      "return the correct answer for Any Downsizing Allowance" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.anyDownsizingAllowanceId -> JsBoolean(true)))
+      "return the correct answer for Claim Downsizing Threshold" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.claimDownsizingThresholdId -> JsBoolean(true)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.anyDownsizingAllowance shouldBe Some(true)
+        userAnswers.claimDownsizingThreshold shouldBe Some(true)
       }
 
       "return the correct answer for Exemptions And Relief Claimed" in {
@@ -67,21 +67,21 @@ class UserAnswersSpec extends UnitSpec {
       }
 
       "return the correct answer for Assets Passing To Direct Descendant" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.assetsPassingToDirectDescendantsId -> JsNumber(1)))
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.valueOfAssetsPassingId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.assetsPassingToDirectDescendants shouldBe Some(1)
+        userAnswers.valueOfAssetsPassing shouldBe Some(1)
       }
 
-      "return the correct answer for Brought Forward Allowance" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.broughtForwardAllowanceId -> JsNumber(1)))
+      "return the correct answer for Value Being Transferred" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.valueBeingTransferredId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.broughtForwardAllowance shouldBe Some(1)
+        userAnswers.valueBeingTransferred shouldBe Some(1)
       }
 
-      "return the correct answer for Brought Forward Allowance On Disposal" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.broughtForwardAllowanceOnDisposalId -> JsNumber(1)))
+      "return the correct answer for Value Available When Property Changed" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.valueAvailableWhenPropertyChangedId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.broughtForwardAllowanceOnDisposal shouldBe Some(1)
+        userAnswers.valueAvailableWhenPropertyChanged shouldBe Some(1)
       }
 
       "return the correct answer for Chargeable Estate Value" in {
@@ -96,16 +96,16 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.dateOfDeath shouldBe Some(new LocalDate(2018, 1, 1))
       }
 
-      "return the correct answer for Date Of Disposal" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.dateOfDisposalId -> JsString("2018-01-01")))
+      "return the correct answer for Date Property Was Changed" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.datePropertyWasChangedId -> JsString("2018-01-01")))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.dateOfDisposal shouldBe Some(new LocalDate(2018, 1, 1))
+        userAnswers.datePropertyWasChanged shouldBe Some(new LocalDate(2018, 1, 1))
       }
 
-      "return the correct answer for Does Grossing Up Apply To Other Property" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.doesGrossingUpApplyToOtherPropertyId -> JsBoolean(false)))
+      "return the correct answer for Grossing Up On Estate Assets" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.grossingUpOnEstateAssetsId -> JsBoolean(false)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.doesGrossingUpApplyToOtherProperty shouldBe Some(false)
+        userAnswers.grossingUpOnEstateAssets shouldBe Some(false)
       }
 
       "return the correct answer for Grossing Up On Estate Property" in {
@@ -150,10 +150,10 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.chargeableInheritedPropertyValue shouldBe Some(1)
       }
 
-      "return the correct answer for Value Of Disposed Property" in {
-        val cacheMap = CacheMap(cacheMapKey, Map(Constants.valueOfDisposedPropertyId -> JsNumber(1)))
+      "return the correct answer for Value Of Changed Property" in {
+        val cacheMap = CacheMap(cacheMapKey, Map(Constants.valueOfChangedPropertyId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.valueOfDisposedProperty shouldBe Some(1)
+        userAnswers.valueOfChangedProperty shouldBe Some(1)
       }
     }
 
@@ -162,22 +162,22 @@ class UserAnswersSpec extends UnitSpec {
 
       "return None for Any Assets Passing To Direct Descendant" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.anyAssetsPassingToDirectDescendants shouldBe None
+        userAnswers.assetsPassingToDirectDescendants shouldBe None
       }
 
-      "return None for Any Brought Forward Allowance" in {
+      "return None for Transfer Any Unused Allowance" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.anyBroughtForwardAllowance shouldBe None
+        userAnswers.transferAnyUnusedThreshold shouldBe None
       }
 
-      "return None for Any Brought Forward Allowance On Disposal" in {
+      "return None for Transfer Available When Property Changed" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.anyBroughtForwardAllowanceOnDisposal shouldBe None
+        userAnswers.transferAvailableWhenPropertyChanged shouldBe None
       }
 
-      "return None for Any Downsizing Allowance" in {
+      "return None for Claim Downsizing Threshold" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.anyDownsizingAllowance shouldBe None
+        userAnswers.claimDownsizingThreshold shouldBe None
       }
 
       "return None for Exemptions And Relief Claimed" in {
@@ -192,17 +192,17 @@ class UserAnswersSpec extends UnitSpec {
 
       "return None for Assets Passing To Direct Descendant" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.assetsPassingToDirectDescendants shouldBe None
+        userAnswers.valueOfAssetsPassing shouldBe None
       }
 
-      "return None for Brought Forward Allowance" in {
+      "return None for Value Being Transferred" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.broughtForwardAllowance shouldBe None
+        userAnswers.valueBeingTransferred shouldBe None
       }
 
-      "return None for Brought Forward Allowance On Disposal" in {
+      "return None for Value Available When Property Changed" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.broughtForwardAllowanceOnDisposal shouldBe None
+        userAnswers.valueAvailableWhenPropertyChanged shouldBe None
       }
 
       "return None for Chargeable Estate Value" in {
@@ -215,9 +215,9 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.dateOfDeath shouldBe None
       }
 
-      "return None for Date Of Disposal" in {
+      "return None for Date Property Was Changed" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.dateOfDisposal shouldBe None
+        userAnswers.datePropertyWasChanged shouldBe None
       }
 
       "return None for Property In Estate" in {
@@ -245,9 +245,9 @@ class UserAnswersSpec extends UnitSpec {
         userAnswers.chargeablePropertyValue shouldBe None
       }
 
-      "return None for Value Of Disposed Property" in {
+      "return None for Value Of Changed Property" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.valueOfDisposedProperty shouldBe None
+        userAnswers.valueOfChangedProperty shouldBe None
       }
     }
   }

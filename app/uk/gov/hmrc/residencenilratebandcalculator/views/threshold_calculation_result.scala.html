@@ -1,0 +1,42 @@
+@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+@import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
+
+@(appConfig: FrontendAppConfig, residenceNilRateAmount: String, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
+
+@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+    title = messages("threshold_calculation_result.browser_title"),
+    appConfig = appConfig,
+    bodyClasses = None) {
+
+    @if(residenceNilRateAmount == "£0.00") {
+        <h1 class="heading-large">@messages("threshold_calculation_result.info.zero.header")</h1>
+        <h1 class="heading-medium">@messages("threshold_calculation_result.info.zero.guidance")
+            <div class="data-item bold-xxlarge">@residenceNilRateAmount</div>
+        </h1>
+        <p>@messages("threshold_calculation_result.info.zero.threshold_change")</p>
+    } else {
+        <h1 class="heading-large">@messages("threshold_calculation_result.info.non_zero.header")</h1>
+        <h1 class="heading-medium">@messages("threshold_calculation_result.info.non_zero.guidance")
+            <div class="data-item bold-xxlarge">@residenceNilRateAmount</div>
+        </h1>
+        <p>@messages("threshold_calculation_result.info.non_zero.threshold_change")</p>
+    }
+
+    <h2 class="heading-medium">@messages("threshold_calculation_result.action.header")</h2>
+    <p>@messages("threshold_calculation_result.action.guidance", residenceNilRateAmount)</p>
+    <ul class="list list-bullet">
+        <li>@messages("threshold_calculation_result.action.guidance.form_435")</li>
+        <li>@messages("threshold_calculation_result.action.guidance.form_400")</li>
+    </ul>
+    <p>@messages("threshold_calculation_result.action.guidance.continue")</p>
+    <p>@messages("threshold_calculation_result.print_prefix")
+        <a class="u--no-print print-hidden js-visible" href="javascript:window.print()">@messages("threshold_calculation_result.link_to_print")</a>
+        @messages("threshold_calculation_result.print_suffix")
+    </p>
+
+    <a class="button u--no-print" href="@routes.ExitQuestionnaireController.onPageLoad().url">@messages("site.finish")</a>
+
+    @rnrbHelpers.answer_rows(answerRows)
+
+}

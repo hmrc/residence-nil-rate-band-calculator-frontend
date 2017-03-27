@@ -39,16 +39,16 @@ object AnswerRows {
     Constants.grossingUpOnEstatePropertyId,
     Constants.chargeablePropertyValueId,
     Constants.chargeableInheritedPropertyValueId,
-    Constants.anyBroughtForwardAllowanceId,
-    Constants.broughtForwardAllowanceId,
-    Constants.anyDownsizingAllowanceId,
-    Constants.dateOfDisposalId,
-    Constants.valueOfDisposedPropertyId,
-    Constants.anyAssetsPassingToDirectDescendantsId,
-    Constants.doesGrossingUpApplyToOtherPropertyId,
+    Constants.transferAnyUnusedThresholdId,
+    Constants.valueBeingTransferredId,
+    Constants.claimDownsizingThresholdId,
+    Constants.datePropertyWasChangedId,
+    Constants.valueOfChangedPropertyId,
     Constants.assetsPassingToDirectDescendantsId,
-    Constants.anyBroughtForwardAllowanceOnDisposalId,
-    Constants.broughtForwardAllowanceOnDisposalId
+    Constants.grossingUpOnEstateAssetsId,
+    Constants.valueOfAssetsPassingId,
+    Constants.transferAvailableWhenPropertyChangedId,
+    Constants.valueAvailableWhenPropertyChangedId
   )
 
   val rowOrder = rowOrderList.zipWithIndex.toMap
@@ -93,41 +93,41 @@ object AnswerRows {
       intAnswerRowFn("chargeable_estate_value.title", "Chargeable transfer amount", routes.ChargeableEstateValueController.onPageLoad),
     Constants.propertyInEstateId ->
       boolAnswerRowFn("property_in_estate.title", Constants.propertyInEstateId, routes.PropertyInEstateController.onPageLoad),
-    Constants.anyDownsizingAllowanceId ->
-      boolAnswerRowFn("any_downsizing_allowance.title", "Any downsizing allowance", routes.AnyDownsizingAllowanceController.onPageLoad),
-    Constants.dateOfDisposalId ->
-      dateAnswerRowFn("date_of_disposal.title", "Date of disposal", routes.DateOfDisposalController.onPageLoad),
-    Constants.valueOfDisposedPropertyId ->
-      intAnswerRowFn("value_of_disposed_property.title", "Vale of disposed property", routes.ValueOfDisposedPropertyController.onPageLoad),
-    Constants.anyAssetsPassingToDirectDescendantsId ->
-      boolAnswerRowFn("any_assets_passing_to_direct_descendants.title",
-        "Any assets passing to direct descendants",
-        routes.AnyAssetsPassingToDirectDescendantsController.onPageLoad),
-    Constants.anyBroughtForwardAllowanceId ->
-      boolAnswerRowFn("any_brought_forward_allowance.title", "Any brought forward allowance", routes.AnyBroughtForwardAllowanceController.onPageLoad),
-    Constants.anyBroughtForwardAllowanceOnDisposalId ->
-      boolAnswerRowFn("any_brought_forward_allowance_on_disposal.title",
-        "Any brought forward allowance on disposal",
-        routes.AnyBroughtForwardAllowanceOnDisposalController.onPageLoad),
+    Constants.claimDownsizingThresholdId ->
+      boolAnswerRowFn("claim_downsizing_threshold.title", Constants.claimDownsizingThresholdId, routes.ClaimDownsizingThresholdController.onPageLoad),
+    Constants.datePropertyWasChangedId ->
+      dateAnswerRowFn("date_property_was_changed.title", Constants.datePropertyWasChangedId, routes.DatePropertyWasChangedController.onPageLoad),
+    Constants.valueOfChangedPropertyId ->
+      intAnswerRowFn("value_of_changed_property.title", Constants.valueOfChangedPropertyId, routes.ValueOfChangedPropertyController.onPageLoad),
+    Constants.assetsPassingToDirectDescendantsId ->
+      boolAnswerRowFn("assets_passing_to_direct_descendants.title",
+        Constants.assetsPassingToDirectDescendantsId,
+        routes.AssetsPassingToDirectDescendantsController.onPageLoad),
+    Constants.transferAnyUnusedThresholdId ->
+      boolAnswerRowFn("transfer_any_unused_threshold.title", Constants.transferAnyUnusedThresholdId, routes.TransferAnyUnusedThresholdController.onPageLoad),
+    Constants.transferAvailableWhenPropertyChangedId ->
+      boolAnswerRowFn("transfer_available_when_property_changed.title",
+        Constants.transferAvailableWhenPropertyChangedId,
+        routes.TransferAvailableWhenPropertyChangedController.onPageLoad),
     Constants.exemptionsAndReliefClaimedId ->
       boolAnswerRowFn("exemptions_and_relief_claimed.title", Constants.exemptionsAndReliefClaimedId, routes.ExemptionsAndReliefClaimedController.onPageLoad),
-    Constants.assetsPassingToDirectDescendantsId ->
-      intAnswerRowFn("assets_passing_to_direct_descendants.title",
-        "Assets passing to direct descendants",
-        routes.AssetsPassingToDirectDescendantsController.onPageLoad),
-    Constants.broughtForwardAllowanceId ->
-      intAnswerRowFn("brought_forward_allowance.title", "Brought forward allowance", routes.BroughtForwardAllowanceController.onPageLoad),
-    Constants.broughtForwardAllowanceOnDisposalId ->
-      intAnswerRowFn("brought_forward_allowance_on_disposal.title",
-        "Brought forward allowance on disposal",
-        routes.BroughtForwardAllowanceOnDisposalController.onPageLoad),
+    Constants.valueOfAssetsPassingId ->
+      intAnswerRowFn("value_of_assets_passing.title",
+        Constants.valueOfAssetsPassingId,
+        routes.ValueOfAssetsPassingController.onPageLoad),
+    Constants.valueBeingTransferredId ->
+      intAnswerRowFn("value_being_transferred.title", Constants.valueBeingTransferredId, routes.ValueBeingTransferredController.onPageLoad),
+    Constants.valueAvailableWhenPropertyChangedId ->
+      intAnswerRowFn("value_available_when_property_changed.title",
+        Constants.valueAvailableWhenPropertyChangedId,
+        routes.ValueAvailableWhenPropertyChangedController.onPageLoad),
     Constants.propertyPassingToDirectDescendantsId ->
       propertyPassingToDirectDescendantsAnswerRowFn("property_passing_to_direct_descendants.title",
         Constants.propertyPassingToDirectDescendantsId, routes.PropertyPassingToDirectDescendantsController.onPageLoad),
-    Constants.doesGrossingUpApplyToOtherPropertyId ->
-      boolAnswerRowFn("does_grossing_up_apply_to_other_property.title",
-        "Does grossing up apply to other property",
-        routes.DoesGrossingUpApplyToOtherPropertyController.onPageLoad),
+    Constants.grossingUpOnEstateAssetsId ->
+      boolAnswerRowFn("grossing_up_on_estate_assets.title",
+        Constants.grossingUpOnEstateAssetsId,
+        routes.GrossingUpOnEstateAssetsController.onPageLoad),
     Constants.grossingUpOnEstatePropertyId ->
       boolAnswerRowFn("grossing_up_on_estate_property.title",
         Constants.grossingUpOnEstatePropertyId,

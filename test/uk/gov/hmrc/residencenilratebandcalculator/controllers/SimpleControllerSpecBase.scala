@@ -137,20 +137,20 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
           Constants.chargeableEstateValueId -> JsNumber(450000),
           Constants.propertyInEstateId -> JsBoolean(true),
           Constants.propertyValueId -> JsNumber(400000),
-          Constants.doesGrossingUpApplyToOtherPropertyId -> JsBoolean(true),
+          Constants.grossingUpOnEstateAssetsId -> JsBoolean(true),
           Constants.propertyPassingToDirectDescendantsId -> JsBoolean(true),
           Constants.percentagePassedToDirectDescendantsId -> JsNumber(100),
-          Constants.anyBroughtForwardAllowanceId -> JsBoolean(true),
-          Constants.broughtForwardAllowanceId -> JsNumber(50000),
-          Constants.anyDownsizingAllowanceId -> JsBoolean(true),
-          Constants.dateOfDisposalId -> JsString("2018-03-02"),
-          Constants.valueOfDisposedPropertyId -> JsNumber(100000),
-          Constants.anyAssetsPassingToDirectDescendantsId -> JsBoolean(true),
-          Constants.doesGrossingUpApplyToOtherPropertyId -> JsBoolean(true),
+          Constants.transferAnyUnusedThresholdId -> JsBoolean(true),
+          Constants.valueBeingTransferredId -> JsNumber(50000),
+          Constants.claimDownsizingThresholdId -> JsBoolean(true),
+          Constants.datePropertyWasChangedId -> JsString("2018-03-02"),
+          Constants.valueOfChangedPropertyId -> JsNumber(100000),
+          Constants.assetsPassingToDirectDescendantsId -> JsBoolean(true),
+          Constants.grossingUpOnEstateAssetsId -> JsBoolean(true),
           Constants.chargeablePropertyValueId -> JsNumber(50000),
-          Constants.assetsPassingToDirectDescendantsId -> JsNumber(1000),
-          Constants.anyBroughtForwardAllowanceOnDisposalId -> JsBoolean(true),
-          Constants.broughtForwardAllowanceOnDisposalId -> JsNumber(1000)
+          Constants.valueOfAssetsPassingId -> JsNumber(1000),
+          Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true),
+          Constants.valueAvailableWhenPropertyChangedId -> JsNumber(1000)
         ))
       val controllerId = createController().controllerId
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList

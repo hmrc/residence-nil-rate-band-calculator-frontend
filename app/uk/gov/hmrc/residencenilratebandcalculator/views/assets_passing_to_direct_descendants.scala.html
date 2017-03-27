@@ -1,9 +1,10 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
-@import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 @import uk.gov.hmrc.play.views.html._
+@import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
-@(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[Int]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[Boolean]] = None, answerRows: Seq[AnswerRow], formattedPropertyValue: Option[String])(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("assets_passing_to_direct_descendants.browser_title"),
@@ -14,23 +15,26 @@
 
     @rnrbHelpers.heading("assets_passing_to_direct_descendants.title")
 
-    <p>@messages("assets_passing_to_direct_descendants.guidance1")</p>
+    @if(formattedPropertyValue.isDefined) {
+        <p>@messages("assets_passing_to_direct_descendants.guidance", formattedPropertyValue.get)</p>
+    } else {
+        <p>@messages("assets_passing_to_direct_descendants.guidance_no_property")</p>
+    }
 
-    <p>@messages("assets_passing_to_direct_descendants.guidance2")</p>
-
-    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.AssetsPassingToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
+    @helpers.form(action = AssetsPassingToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
 
-        @rnrbHelpers.input_text(
+        @rnrbHelpers.input_yes_no(
             id = "value",
-            value = Some(FormHelpers.getValue[Int](form).toString),
             label = messages("assets_passing_to_direct_descendants.title"),
             labelClass = Some("visually-hidden"),
-            secondaryLabel = Some("currency"),
-            errorKey = FormHelpers.getErrorByKey(form, "value")
+            errorKey = FormHelpers.getErrorByKey(form, "value"),
+            value = Some(FormHelpers.getYesNo(form))
         )
+
         @rnrbHelpers.submit_button()
     }
+
     @rnrbHelpers.answer_rows(answerRows)
 }

@@ -26,7 +26,7 @@ import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.MockSessionConnector
 
-class AnswerRowSpecs extends UnitSpec with WithFakeApplication with MockSessionConnector {
+class AnswerRowsSpec extends UnitSpec with WithFakeApplication with MockSessionConnector {
 
   val fakeRequest = FakeRequest("", "")
 

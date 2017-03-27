@@ -22,13 +22,13 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 class UserAnswers(cacheMap: CacheMap) {
 
-  def anyAssetsPassingToDirectDescendants = cacheMap.getEntry[Boolean](Constants.anyAssetsPassingToDirectDescendantsId)
+  def assetsPassingToDirectDescendants = cacheMap.getEntry[Boolean](Constants.assetsPassingToDirectDescendantsId)
 
-  def anyBroughtForwardAllowance = cacheMap.getEntry[Boolean](Constants.anyBroughtForwardAllowanceId)
+  def transferAnyUnusedThreshold = cacheMap.getEntry[Boolean](Constants.transferAnyUnusedThresholdId)
 
-  def anyBroughtForwardAllowanceOnDisposal = cacheMap.getEntry[Boolean](Constants.anyBroughtForwardAllowanceOnDisposalId)
+  def transferAvailableWhenPropertyChanged = cacheMap.getEntry[Boolean](Constants.transferAvailableWhenPropertyChangedId)
 
-  def anyDownsizingAllowance = cacheMap.getEntry[Boolean](Constants.anyDownsizingAllowanceId)
+  def claimDownsizingThreshold = cacheMap.getEntry[Boolean](Constants.claimDownsizingThresholdId)
 
   def partOfEstatePassingToDirectDescendants = cacheMap.getEntry[Boolean](Constants.partOfEstatePassingToDirectDescendantsId)
 
@@ -36,21 +36,21 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def propertyPassingToDirectDescendants = cacheMap.getEntry[String](Constants.propertyPassingToDirectDescendantsId)
 
-  def assetsPassingToDirectDescendants = cacheMap.getEntry[Int](Constants.assetsPassingToDirectDescendantsId)
+  def valueOfAssetsPassing = cacheMap.getEntry[Int](Constants.valueOfAssetsPassingId)
 
-  def broughtForwardAllowance = cacheMap.getEntry[Int](Constants.broughtForwardAllowanceId)
+  def valueBeingTransferred = cacheMap.getEntry[Int](Constants.valueBeingTransferredId)
 
-  def broughtForwardAllowanceOnDisposal = cacheMap.getEntry[Int](Constants.broughtForwardAllowanceOnDisposalId)
+  def valueAvailableWhenPropertyChanged = cacheMap.getEntry[Int](Constants.valueAvailableWhenPropertyChangedId)
 
   def chargeableEstateValue = cacheMap.getEntry[Int](Constants.chargeableEstateValueId)
 
   def dateOfDeath = cacheMap.getEntry[LocalDate](Constants.dateOfDeathId)
 
-  def dateOfDisposal = cacheMap.getEntry[LocalDate](Constants.dateOfDisposalId)
+  def datePropertyWasChanged = cacheMap.getEntry[LocalDate](Constants.datePropertyWasChangedId)
 
   def grossingUpOnEstateProperty = cacheMap.getEntry[Boolean](Constants.grossingUpOnEstatePropertyId)
 
-  def doesGrossingUpApplyToOtherProperty = cacheMap.getEntry[Boolean](Constants.doesGrossingUpApplyToOtherPropertyId)
+  def grossingUpOnEstateAssets = cacheMap.getEntry[Boolean](Constants.grossingUpOnEstateAssetsId)
 
   def downsizingDetails = cacheMap.getEntry[Date](Constants.downsizingDetails)
 
@@ -66,5 +66,5 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def propertyValue = cacheMap.getEntry[Int](Constants.propertyValueId)
 
-  def valueOfDisposedProperty = cacheMap.getEntry[Int](Constants.valueOfDisposedPropertyId)
+  def valueOfChangedProperty = cacheMap.getEntry[Int](Constants.valueOfChangedPropertyId)
 }

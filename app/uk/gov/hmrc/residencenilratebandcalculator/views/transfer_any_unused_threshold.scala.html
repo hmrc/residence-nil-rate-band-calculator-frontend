@@ -1,0 +1,37 @@
+@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@import uk.gov.hmrc.play.views.html._
+@import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.TransferAnyUnusedThresholdController
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
+
+@import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+@(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[Boolean]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
+
+@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+    title = messages("transfer_any_unused_threshold.browser_title"),
+    appConfig = appConfig,
+    bodyClasses = None) {
+
+    @rnrbHelpers.back_link(backUrl)
+
+    @rnrbHelpers.heading("transfer_any_unused_threshold.title")
+
+    <p>@messages("transfer_any_unused_threshold.guidance1")</p>
+
+    <p>@messages("transfer_any_unused_threshold.guidance2")</p>
+
+    @helpers.form(action = TransferAnyUnusedThresholdController.onSubmit(), 'autoComplete -> "off") {
+
+        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
+        @rnrbHelpers.input_yes_no(
+            id = "value",
+            label = messages("transfer_any_unused_threshold.title"),
+            labelClass = Some("visually-hidden"),
+            errorKey = FormHelpers.getErrorByKey(form, "value"),
+            value = Some(FormHelpers.getYesNo(form))
+        )
+
+        @rnrbHelpers.submit_button()
+    }
+    @rnrbHelpers.answer_rows(answerRows)
+}

@@ -34,25 +34,25 @@ class Navigator @Inject()() {
       Constants.valueOfEstateId -> (_ => ChargeableEstateValueController.onPageLoad()),
       Constants.chargeableEstateValueId -> (_ => PropertyInEstateController.onPageLoad()),
       Constants.propertyInEstateId -> (ua => getPropertyInEstateRoute(ua)),
-      Constants.cannotClaimRNRB -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
+      Constants.noAdditionalThresholdAvailableId -> (_ => TransferAnyUnusedThresholdController.onPageLoad()),
       Constants.propertyValueId -> (_ => PropertyPassingToDirectDescendantsController.onPageLoad()),
       Constants.propertyPassingToDirectDescendantsId -> (ua => getPropertyPassingToDirectDescendantsRoute(ua)),
       Constants.percentagePassedToDirectDescendantsId -> (_ => ExemptionsAndReliefClaimedController.onPageLoad()),
-      Constants.anyBroughtForwardAllowanceId -> (ua => getAnyBroughtForwardAllowanceRoute(ua)),
-      Constants.broughtForwardAllowanceId -> (_ => AnyDownsizingAllowanceController.onPageLoad()),
-      Constants.anyDownsizingAllowanceId -> (ua => getAnyDownsizingAllowanceRoute(ua)),
-      Constants.cannotClaimDownsizingId -> (_ => ResultsController.onPageLoad()),
-      Constants.dateOfDisposalId -> (ua => getDateOfDisposalRoute(ua)),
+      Constants.transferAnyUnusedThresholdId -> (ua => getTransferAnyUnusedThresholdRoute(ua)),
+      Constants.valueBeingTransferredId -> (_ => ClaimDownsizingThresholdController.onPageLoad()),
+      Constants.claimDownsizingThresholdId -> (ua => getClaimDownsizingThresholdRoute(ua)),
+      Constants.noDownsizingThresholdIncrease -> (_ => ThresholdCalculationResultController.onPageLoad()),
+      Constants.datePropertyWasChangedId -> (ua => getDatePropertyWasChangedRoute(ua)),
       Constants.exemptionsAndReliefClaimedId -> (ua => getExemptionsAndReliefClaimedRoute(ua)),
       Constants.chargeablePropertyValueId -> (_ => ChargeableInheritedPropertyValueController.onPageLoad()),
-      Constants.chargeableInheritedPropertyValueId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
+      Constants.chargeableInheritedPropertyValueId -> (_ => TransferAnyUnusedThresholdController.onPageLoad()),
       Constants.grossingUpOnEstatePropertyId -> (ua => getGrossingUpOnEstatePropertyRoute(ua)),
-      Constants.valueOfDisposedPropertyId -> (_ => AnyAssetsPassingToDirectDescendantsController.onPageLoad()),
-      Constants.anyAssetsPassingToDirectDescendantsId -> (ua => getAnyAssetsPassingToDirectDescendantsRoute(ua)),
-      Constants.doesGrossingUpApplyToOtherPropertyId -> (ua => getDoesGrossingUpApplyToOtherPropertyRoute(ua)),
+      Constants.valueOfChangedPropertyId -> (_ => AssetsPassingToDirectDescendantsController.onPageLoad()),
       Constants.assetsPassingToDirectDescendantsId -> (ua => getAssetsPassingToDirectDescendantsRoute(ua)),
-      Constants.anyBroughtForwardAllowanceOnDisposalId -> (ua => getAnyBroughtForwardAllowanceOnDisposalRoute(ua)),
-      Constants.broughtForwardAllowanceOnDisposalId -> (_ => ResultsController.onPageLoad())
+      Constants.grossingUpOnEstateAssetsId -> (ua => getGrossingUpOnEstateAssetsRoute(ua)),
+      Constants.valueOfAssetsPassingId -> (ua => getValueOfAssetsPassingRoute(ua)),
+      Constants.transferAvailableWhenPropertyChangedId -> (ua => getTransferAvailableWhenPropertyChangedRoute(ua)),
+      Constants.valueAvailableWhenPropertyChangedId -> (_ => ThresholdCalculationResultController.onPageLoad())
     )
   }
 
@@ -70,49 +70,49 @@ class Navigator @Inject()() {
 
   private def getDateOfDeathRoute(userAnswers: UserAnswers) =
     getRouteForOptionalLocalDate(userAnswers.dateOfDeath, Constants.eligibilityDate,
-      TransitionOutController.onPageLoad(), PartOfEstatePassingToDirectDescendantsController.onPageLoad())
+      NoThresholdIncreaseController.onPageLoad(), PartOfEstatePassingToDirectDescendantsController.onPageLoad())
 
   private def getPartOfEstatePassingToDirectDescendantsRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.partOfEstatePassingToDirectDescendants, ValueOfEstateController.onPageLoad(), TransitionOutController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.partOfEstatePassingToDirectDescendants, ValueOfEstateController.onPageLoad(), NoThresholdIncreaseController.onPageLoad())
 
   private def getPropertyInEstateRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.propertyInEstate, PropertyValueController.onPageLoad(), CannotClaimRNRBController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.propertyInEstate, PropertyValueController.onPageLoad(), NoAdditionalThresholdAvailableController.onPageLoad())
 
-  private def getAnyBroughtForwardAllowanceRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.anyBroughtForwardAllowance, BroughtForwardAllowanceController.onPageLoad(), AnyDownsizingAllowanceController.onPageLoad())
+  private def getTransferAnyUnusedThresholdRoute(userAnswers: UserAnswers) =
+    getRouteForOptionalBoolean(userAnswers.transferAnyUnusedThreshold, ValueBeingTransferredController.onPageLoad(), ClaimDownsizingThresholdController.onPageLoad())
 
-  private def getAnyBroughtForwardAllowanceOnDisposalRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.anyBroughtForwardAllowanceOnDisposal, BroughtForwardAllowanceOnDisposalController.onPageLoad(), ResultsController.onPageLoad())
+  private def getTransferAvailableWhenPropertyChangedRoute(userAnswers: UserAnswers) =
+    getRouteForOptionalBoolean(userAnswers.transferAvailableWhenPropertyChanged, ValueAvailableWhenPropertyChangedController.onPageLoad(), ThresholdCalculationResultController.onPageLoad())
 
-  private def getAnyDownsizingAllowanceRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.anyDownsizingAllowance, DateOfDisposalController.onPageLoad(), ResultsController.onPageLoad())
+  private def getClaimDownsizingThresholdRoute(userAnswers: UserAnswers) =
+    getRouteForOptionalBoolean(userAnswers.claimDownsizingThreshold, DatePropertyWasChangedController.onPageLoad(), ThresholdCalculationResultController.onPageLoad())
 
-  private def getDateOfDisposalRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalLocalDate(userAnswers.dateOfDisposal, Constants.downsizingEligibilityDate,
-      CannotClaimDownsizingController.onPageLoad(), ValueOfDisposedPropertyController.onPageLoad())
+  private def getDatePropertyWasChangedRoute(userAnswers: UserAnswers) =
+    getRouteForOptionalLocalDate(userAnswers.datePropertyWasChanged, Constants.downsizingEligibilityDate,
+      NoDownsizingThresholdIncreaseController.onPageLoad(), ValueOfChangedPropertyController.onPageLoad())
 
   private def getPropertyPassingToDirectDescendantsRoute(userAnswers: UserAnswers) = userAnswers.propertyPassingToDirectDescendants match {
     case Some(Constants.all) => ExemptionsAndReliefClaimedController.onPageLoad()
     case Some(Constants.some) => PercentagePassedToDirectDescendantsController.onPageLoad()
-    case Some(_) => CannotClaimRNRBController.onPageLoad()
+    case Some(_) => NoAdditionalThresholdAvailableController.onPageLoad()
     case _ => HomeController.onPageLoad()
   }
 
   private def getExemptionsAndReliefClaimedRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.exemptionsAndReliefClaimed, GrossingUpOnEstatePropertyController.onPageLoad(), AnyBroughtForwardAllowanceController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.exemptionsAndReliefClaimed, GrossingUpOnEstatePropertyController.onPageLoad(), TransferAnyUnusedThresholdController.onPageLoad())
 
   private def getGrossingUpOnEstatePropertyRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.grossingUpOnEstateProperty, TransitionOutController.onPageLoad(), ChargeablePropertyValueController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.grossingUpOnEstateProperty, UnableToCalculateThresholdIncreaseController.onPageLoad(), ChargeablePropertyValueController.onPageLoad())
 
-  private def getAnyAssetsPassingToDirectDescendantsRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.anyAssetsPassingToDirectDescendants, DoesGrossingUpApplyToOtherPropertyController.onPageLoad(), CannotClaimDownsizingController.onPageLoad())
+  private def getAssetsPassingToDirectDescendantsRoute(userAnswers: UserAnswers) =
+    getRouteForOptionalBoolean(userAnswers.assetsPassingToDirectDescendants, GrossingUpOnEstateAssetsController.onPageLoad(), NoDownsizingThresholdIncreaseController.onPageLoad())
 
-  private def getDoesGrossingUpApplyToOtherPropertyRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.doesGrossingUpApplyToOtherProperty, TransitionOutController.onPageLoad(), AssetsPassingToDirectDescendantsController.onPageLoad())
+  private def getGrossingUpOnEstateAssetsRoute(userAnswers: UserAnswers) =
+    getRouteForOptionalBoolean(userAnswers.grossingUpOnEstateAssets, UnableToCalculateThresholdIncreaseController.onPageLoad(), ValueOfAssetsPassingController.onPageLoad())
 
-  private def getAssetsPassingToDirectDescendantsRoute(userAnswers: UserAnswers) = (userAnswers.anyBroughtForwardAllowance, userAnswers.dateOfDisposal) match {
-    case (Some(true), Some(d)) if !(d isBefore Constants.eligibilityDate) => AnyBroughtForwardAllowanceOnDisposalController.onPageLoad()
-    case _ => ResultsController.onPageLoad()
+  private def getValueOfAssetsPassingRoute(userAnswers: UserAnswers) = (userAnswers.transferAnyUnusedThreshold, userAnswers.datePropertyWasChanged) match {
+    case (Some(true), Some(d)) if !(d isBefore Constants.eligibilityDate) => TransferAvailableWhenPropertyChangedController.onPageLoad()
+    case _ => ThresholdCalculationResultController.onPageLoad()
   }
 
   def nextPage(controllerId: String): UserAnswers => Call = {
@@ -132,22 +132,22 @@ class Navigator @Inject()() {
       Constants.chargeablePropertyValueId -> (_ => GrossingUpOnEstatePropertyController.onPageLoad()),
       Constants.chargeableInheritedPropertyValueId -> (_ => ChargeablePropertyValueController.onPageLoad()),
       Constants.grossingUpOnEstatePropertyId -> (_ => ExemptionsAndReliefClaimedController.onPageLoad()),
-      Constants.anyBroughtForwardAllowanceId -> (ua => getAnyBroughtForwardAllowanceReverseRoute(ua)),
-      Constants.broughtForwardAllowanceId -> (_ => AnyBroughtForwardAllowanceController.onPageLoad()),
-      Constants.anyDownsizingAllowanceId -> (ua => getAnyDownsizingAllowanceReverseRoute(ua)),
-      Constants.dateOfDisposalId -> (_ => AnyDownsizingAllowanceController.onPageLoad()),
-      Constants.valueOfDisposedPropertyId -> (_ => DateOfDisposalController.onPageLoad()),
-      Constants.anyAssetsPassingToDirectDescendantsId -> (_ => ValueOfDisposedPropertyController.onPageLoad()),
-      Constants.doesGrossingUpApplyToOtherPropertyId -> (_ => AnyAssetsPassingToDirectDescendantsController.onPageLoad()),
-      Constants.assetsPassingToDirectDescendantsId -> (_ => DoesGrossingUpApplyToOtherPropertyController.onPageLoad()),
-      Constants.anyBroughtForwardAllowanceOnDisposalId -> (_ => AssetsPassingToDirectDescendantsController.onPageLoad()),
-      Constants.broughtForwardAllowanceOnDisposalId -> (_ => AnyBroughtForwardAllowanceOnDisposalController.onPageLoad())
+      Constants.transferAnyUnusedThresholdId -> (ua => getTransferAnyUnusedThresholdReverseRoute(ua)),
+      Constants.valueBeingTransferredId -> (_ => TransferAnyUnusedThresholdController.onPageLoad()),
+      Constants.claimDownsizingThresholdId -> (ua => getClaimDownsizingThresholdReverseRoute(ua)),
+      Constants.datePropertyWasChangedId -> (_ => ClaimDownsizingThresholdController.onPageLoad()),
+      Constants.valueOfChangedPropertyId -> (_ => DatePropertyWasChangedController.onPageLoad()),
+      Constants.assetsPassingToDirectDescendantsId -> (_ => ValueOfChangedPropertyController.onPageLoad()),
+      Constants.grossingUpOnEstateAssetsId -> (_ => AssetsPassingToDirectDescendantsController.onPageLoad()),
+      Constants.valueOfAssetsPassingId -> (_ => GrossingUpOnEstateAssetsController.onPageLoad()),
+      Constants.transferAvailableWhenPropertyChangedId -> (_ => ValueOfAssetsPassingController.onPageLoad()),
+      Constants.valueAvailableWhenPropertyChangedId -> (_ => TransferAvailableWhenPropertyChangedController.onPageLoad())
     )
   }
 
   private def goToPageNotFound: UserAnswers => Call = _ => PageNotFoundController.onPageLoad()
 
-  private def getAnyBroughtForwardAllowanceReverseRoute(userAnswers: UserAnswers) = userAnswers.exemptionsAndReliefClaimed match {
+  private def getTransferAnyUnusedThresholdReverseRoute(userAnswers: UserAnswers) = userAnswers.exemptionsAndReliefClaimed match {
     case Some(true) => ChargeableInheritedPropertyValueController.onPageLoad()
     case _ => userAnswers.propertyPassingToDirectDescendants match {
       case Some(Constants.none) => PropertyPassingToDirectDescendantsController.onPageLoad()
@@ -164,9 +164,9 @@ class Navigator @Inject()() {
     case _ => PropertyPassingToDirectDescendantsController.onPageLoad()
   }
 
-  private def getAnyDownsizingAllowanceReverseRoute(userAnswers: UserAnswers) = userAnswers.anyBroughtForwardAllowance match {
-    case Some(true) => BroughtForwardAllowanceController.onPageLoad()
-    case _ => AnyBroughtForwardAllowanceController.onPageLoad()
+  private def getClaimDownsizingThresholdReverseRoute(userAnswers: UserAnswers) = userAnswers.transferAnyUnusedThreshold match {
+    case Some(true) => ValueBeingTransferredController.onPageLoad()
+    case _ => TransferAnyUnusedThresholdController.onPageLoad()
   }
 
   def lastPage(controllerId: String): UserAnswers => Call = {

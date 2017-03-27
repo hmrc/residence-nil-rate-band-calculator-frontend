@@ -36,12 +36,12 @@ class CascadeUpsert {
     Map(
       Constants.propertyInEstateId -> ((v, cm) => propertyInEstate(v, cm)),
       Constants.exemptionsAndReliefClaimedId -> ((v, cm) => exemptionsAndReliefClaimedClearance(v, cm)),
-      Constants.anyBroughtForwardAllowanceId -> ((v, cm) => anyBroughtForwardAllowance(v, cm)),
-      Constants.anyDownsizingAllowanceId -> ((v, cm) => anyDownsizingAllowance(v, cm)),
-      Constants.anyAssetsPassingToDirectDescendantsId -> ((v, cm) => anyAssetsPassingToDirectDescendants(v, cm)),
-      Constants.anyBroughtForwardAllowanceOnDisposalId -> ((v, cm) => anyBroughtForwardAllowanceOnDisposal(v, cm)),
+      Constants.transferAnyUnusedThresholdId -> ((v, cm) => transferAnyUnusedThreshold(v, cm)),
+      Constants.claimDownsizingThresholdId -> ((v, cm) => claimDownsizingThreshold(v, cm)),
+      Constants.assetsPassingToDirectDescendantsId -> ((v, cm) => assetsPassingToDirectDescendants(v, cm)),
+      Constants.transferAvailableWhenPropertyChangedId -> ((v, cm) => transferAvailableWhenPropertyChanged(v, cm)),
       Constants.propertyPassingToDirectDescendantsId -> ((v, cm) => propertyPassingToDirectDescendants(v, cm)),
-      Constants.dateOfDisposalId -> ((v, cm) => dateOfDisposal(v, cm))
+      Constants.datePropertyWasChangedId -> ((v, cm) => datePropertyWasChanged(v, cm))
     )
 
   private def store[A](key:String, value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]) =
@@ -90,53 +90,53 @@ class CascadeUpsert {
         Constants.grossingUpOnEstatePropertyId),
       cacheMap)
 
-  private def anyBroughtForwardAllowance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearIfFalse(Constants.anyBroughtForwardAllowanceId,
+  private def transferAnyUnusedThreshold[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+    clearIfFalse(Constants.transferAnyUnusedThresholdId,
       value,
       Set(
-        Constants.broughtForwardAllowanceId,
-        Constants.anyBroughtForwardAllowanceOnDisposalId,
-        Constants.broughtForwardAllowanceOnDisposalId),
+        Constants.valueBeingTransferredId,
+        Constants.transferAvailableWhenPropertyChangedId,
+        Constants.valueAvailableWhenPropertyChangedId),
       cacheMap)
 
-  private def anyDownsizingAllowance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearIfFalse(Constants.anyDownsizingAllowanceId,
+  private def claimDownsizingThreshold[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+    clearIfFalse(Constants.claimDownsizingThresholdId,
       value,
       Set(
-        Constants.dateOfDisposalId,
-        Constants.valueOfDisposedPropertyId,
-        Constants.anyAssetsPassingToDirectDescendantsId,
+        Constants.datePropertyWasChangedId,
+        Constants.valueOfChangedPropertyId,
         Constants.assetsPassingToDirectDescendantsId,
-        Constants.anyBroughtForwardAllowanceOnDisposalId,
-        Constants.doesGrossingUpApplyToOtherPropertyId,
-        Constants.broughtForwardAllowanceOnDisposalId),
+        Constants.valueOfAssetsPassingId,
+        Constants.transferAvailableWhenPropertyChangedId,
+        Constants.grossingUpOnEstateAssetsId,
+        Constants.valueAvailableWhenPropertyChangedId),
       cacheMap)
 
-  private def anyAssetsPassingToDirectDescendants[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearIfFalse(Constants.anyAssetsPassingToDirectDescendantsId, value,
+  private def assetsPassingToDirectDescendants[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+    clearIfFalse(Constants.assetsPassingToDirectDescendantsId, value,
       Set(
-        Constants.assetsPassingToDirectDescendantsId,
-        Constants.anyBroughtForwardAllowanceOnDisposalId,
-        Constants.doesGrossingUpApplyToOtherPropertyId,
-        Constants.broughtForwardAllowanceOnDisposalId),
+        Constants.valueOfAssetsPassingId,
+        Constants.transferAvailableWhenPropertyChangedId,
+        Constants.grossingUpOnEstateAssetsId,
+        Constants.valueAvailableWhenPropertyChangedId),
       cacheMap)
 
-  private def anyBroughtForwardAllowanceOnDisposal[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
-    clearIfFalse(Constants.anyBroughtForwardAllowanceOnDisposalId, value, Set(Constants.broughtForwardAllowanceOnDisposalId), cacheMap)
+  private def transferAvailableWhenPropertyChanged[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+    clearIfFalse(Constants.transferAvailableWhenPropertyChangedId, value, Set(Constants.valueAvailableWhenPropertyChangedId), cacheMap)
 
-  private def dateOfDisposal[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
+  private def datePropertyWasChanged[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
     val keysToRemoveWhenDateBeforeDownsizingDate = Set(
-      Constants.valueOfDisposedPropertyId,
-      Constants.anyAssetsPassingToDirectDescendantsId,
-      Constants.doesGrossingUpApplyToOtherPropertyId,
+      Constants.valueOfChangedPropertyId,
       Constants.assetsPassingToDirectDescendantsId,
-      Constants.anyBroughtForwardAllowanceOnDisposalId,
-      Constants.broughtForwardAllowanceOnDisposalId
+      Constants.grossingUpOnEstateAssetsId,
+      Constants.valueOfAssetsPassingId,
+      Constants.transferAvailableWhenPropertyChangedId,
+      Constants.valueAvailableWhenPropertyChangedId
     )
 
     val keysToRemoveWhenDateBeforeEligibilityDate = Set(
-      Constants.anyBroughtForwardAllowanceOnDisposalId,
-      Constants.broughtForwardAllowanceOnDisposalId
+      Constants.transferAvailableWhenPropertyChangedId,
+      Constants.valueAvailableWhenPropertyChangedId
     )
 
     val mapToStore = value match {
@@ -147,7 +147,7 @@ class CascadeUpsert {
           case Success(parsedDate) if parsedDate isBefore Constants.eligibilityDate =>
             cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemoveWhenDateBeforeEligibilityDate.contains(s)))
           case Failure(e) =>
-            val msg = s"Unable to parse value $value as the date of disposal"
+            val msg = s"Unable to parse value $value as the Date Property Was Changed"
             Logger.error(msg)
             throw new RuntimeException(msg)
           case _ => cacheMap
@@ -155,6 +155,6 @@ class CascadeUpsert {
       case _ => cacheMap
     }
 
-    store(Constants.dateOfDisposalId, value, mapToStore)
+    store(Constants.datePropertyWasChangedId, value, mapToStore)
   }
 }
