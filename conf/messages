@@ -236,6 +236,12 @@ value_of_assets_passing.title = What is the total value of the other assets pass
 value_of_assets_passing.guidance1 = You will need the will and the value of assets to work this out.
 value_of_assets_passing.guidance2 = Find out what was left to a direct descendant then add the values of each asset up to get the total value of assets passing to a direct descendant.
 
+value_of_changed_property.title = What was the value of the deceased’s interest in the property at the date it was disposed of?
+value_of_changed_property.browser_title = What was the value of the deceased’s interest in the property at the date it was disposed of?
+value_of_changed_property.guidance1 = This is the value of what the person who has died owned. If they owned all of the property when they sold it or gave it away, deduct any mortgage owed from the sale price and give that value.
+value_of_changed_property.guidance2 = If the person who has died owned half of the property, you should half the sale price and deduct the value of the mortgage that the person who has died was responsible for paying and then give that value.
+value_of_changed_property.guidance3 = Do not deduct any solicitor or estate agent fees from the values.
+
 value_of_estate.browser_title = What is the total value of the estate before deducting any reliefs or exemptions?
 value_of_estate.title = What is the total value of the estate before deducting any reliefs or exemptions?
 value_of_estate.guidance1 = Add together the values that you have given in:
@@ -244,10 +250,3 @@ value_of_estate.guidance1.bullet2 = box 12 on the IHT-403 schedule
 value_of_estate.guidance1.bullet3 = box 10 on the IHT-418 schedule
 value_of_estate.guidance1.bullet4 = box 15 on the IHT-418 schedule
 value_of_estate.guidance2 = The IHT-403 and IHT-418 schedules are only completed if the estate included values for gifts given away and for assets held in trust.
-
-
-value_of_changed_property.title = What was the value of the deceased’s interest in the property at the date it was disposed of?
-value_of_changed_property.browser_title = What was the value of the deceased’s interest in the property at the date it was disposed of?
-value_of_changed_property.guidance1 = This is the value of what the person who has died owned. If they owned all of the property when they sold it or gave it away, deduct any mortgage owed from the sale price and give that value.
-value_of_changed_property.guidance2 = If the person who has died owned half of the property, you should half the sale price and deduct the value of the mortgage that the person who has died was responsible for paying and then give that value.
-value_of_changed_property.guidance3 = Do not deduct any solicitor or estate agent fees from the values.
