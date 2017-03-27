@@ -39,11 +39,6 @@ class UnableToCalculateThresholdIncreaseController @Inject()(val appConfig: Fron
       case GrossingUpForOtherProperty => Constants.grossingUpOnEstateAssetsId
     }
 
-  def createView(reason: Reason, userAnswers: UserAnswers, previousAnswers: scala.Seq[AnswerRow])(implicit request: Request[_]) = {
-    val prefix = reason match {
-      case GrossingUpForResidence => "unable_to_calculate_threshold_increase.grossing_up"
-      case GrossingUpForOtherProperty => "unable_to_calculate_threshold_increase.grossing_up"
-    }
-    unable_to_calculate_threshold_increase(appConfig, prefix, previousAnswers)
-  }
+  def createView(reason: Reason, userAnswers: UserAnswers, previousAnswers: scala.Seq[AnswerRow])(implicit request: Request[_]) =
+    unable_to_calculate_threshold_increase(appConfig, "unable_to_calculate_threshold_increase.grossing_up", previousAnswers)
 }

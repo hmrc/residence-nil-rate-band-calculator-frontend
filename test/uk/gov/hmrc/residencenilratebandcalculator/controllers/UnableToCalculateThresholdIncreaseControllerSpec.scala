@@ -87,7 +87,7 @@ class UnableToCalculateThresholdIncreaseControllerSpec extends UnitSpec with Wit
         Constants.propertyValueId,
         Constants.propertyPassingToDirectDescendantsId,
         Constants.percentagePassedToDirectDescendantsId)
-      answerList shouldBe (calculatedList)
+      answerList shouldBe calculatedList
     }
 
     "The answer constants should be the same as the calulated constants for the controller when the reason is GrossingUpForOtherProperty" in {
@@ -103,7 +103,7 @@ class UnableToCalculateThresholdIncreaseControllerSpec extends UnitSpec with Wit
         Constants.propertyValueId,
         Constants.propertyPassingToDirectDescendantsId,
         Constants.percentagePassedToDirectDescendantsId)
-      answerList shouldBe (calculatedList)
+      answerList shouldBe calculatedList
     }
   }
 }
