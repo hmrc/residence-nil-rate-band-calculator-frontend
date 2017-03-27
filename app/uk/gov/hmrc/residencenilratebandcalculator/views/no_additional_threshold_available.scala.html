@@ -5,17 +5,17 @@
 @(appConfig: FrontendAppConfig, reasonKey: String, nextPage: Call, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
-    title = messages("cannot_claim_RNRB.browser_title"),
+    title = messages("no_additional_threshold_available.browser_title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    <h1>@messages("cannot_claim_RNRB.title")</h1>
+    <h1>@messages("no_additional_threshold_available.title")</h1>
 
     <div class="panel panel-border-wide">
         <p>@messages(reasonKey)</p>
     </div>
 
-    <p>@messages("cannot_claim_RNRB.guidance")</p>
+    <p>@messages("no_additional_threshold_available.guidance")</p>
 
     <a href="@nextPage.url" class="button u--no-print">@messages("site.continue")</a>
 

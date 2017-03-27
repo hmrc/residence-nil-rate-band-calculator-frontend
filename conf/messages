@@ -113,11 +113,11 @@ cannot_claim_downsizing.title = There is no downsizing allowance available for t
 cannot_claim_downsizing.date_property_was_changed_too_early_reason = This is because the person who died downsized their home before 8 July 2015.
 cannot_claim_downsizing.no_assets_passing_to_direct_descendants_reason = This is because no other assets are being left to a direct descendant.
 
-cannot_claim_RNRB.browser_title = You can’t claim any RNRB allowance
-cannot_claim_RNRB.title = You can’t claim any RNRB allowance
-cannot_claim_RNRB.guidance = You might still be able to claim a downsizing allowance or transfer residence nil rate band if the person who has died was married during their lifetime and their spouse or civil partner died first.
-cannot_claim_RNRB.no_property_reason = This is because the estate doesn’t include a property that the person who died lived in at any time while they also owned it
-cannot_claim_RNRB.not_closely_inherited_reason = This is because none of the house passed to a direct descendant, or the spouse or civil partner of a direct descendant
+no_additional_threshold_available.browser_title = You can’t claim any RNRB allowance
+no_additional_threshold_available.title = You can’t claim any RNRB allowance
+no_additional_threshold_available.guidance = You might still be able to claim a downsizing allowance or transfer residence nil rate band if the person who has died was married during their lifetime and their spouse or civil partner died first.
+no_additional_threshold_available.no_property_reason = This is because the estate doesn’t include a property that the person who died lived in at any time while they also owned it
+no_additional_threshold_available.not_closely_inherited_reason = This is because none of the house passed to a direct descendant, or the spouse or civil partner of a direct descendant
 
 date.day = Day
 date.month = Month

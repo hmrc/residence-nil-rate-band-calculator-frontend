@@ -21,18 +21,18 @@ import javax.inject.{Inject, Singleton}
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetCannotClaimRNRBReason.{NoProperty, NotCloselyInherited}
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.{NoProperty, NotCloselyInherited}
 import uk.gov.hmrc.residencenilratebandcalculator.models._
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.cannot_claim_RNRB
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_additional_threshold_available
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 @Singleton
-class CannotClaimRNRBController @Inject()(val appConfig: FrontendAppConfig,
+class NoAdditionalThresholdAvailableController @Inject()(val appConfig: FrontendAppConfig,
                                           override val messagesApi: MessagesApi,
                                           override val sessionConnector: SessionConnector,
                                           val navigator: Navigator) extends TransitionController {
 
-  val getReason = GetCannotClaimRNRBReason
+  val getReason = GetNoAdditionalThresholdAvailableReason
 
   def getControllerId(reason: Reason) =
     reason match {
@@ -42,9 +42,9 @@ class CannotClaimRNRBController @Inject()(val appConfig: FrontendAppConfig,
 
   def createView(reason: Reason, userAnswers: UserAnswers, previousAnswers: Seq[AnswerRow])(implicit request: Request[_]) = {
     val reasonKey = reason match {
-      case NotCloselyInherited => "cannot_claim_RNRB.not_closely_inherited_reason"
-      case NoProperty => "cannot_claim_RNRB.no_property_reason"
+      case NotCloselyInherited => "no_additional_threshold_available.not_closely_inherited_reason"
+      case NoProperty => "no_additional_threshold_available.no_property_reason"
     }
-    cannot_claim_RNRB(appConfig, reasonKey, navigator.nextPage(Constants.cannotClaimRNRB)(userAnswers), previousAnswers)
+    no_additional_threshold_available(appConfig, reasonKey, navigator.nextPage(Constants.noAdditionalThresholdAvailableId)(userAnswers), previousAnswers)
   }
 }

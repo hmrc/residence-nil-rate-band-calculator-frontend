@@ -34,7 +34,7 @@ class Navigator @Inject()() {
       Constants.valueOfEstateId -> (_ => ChargeableEstateValueController.onPageLoad()),
       Constants.chargeableEstateValueId -> (_ => PropertyInEstateController.onPageLoad()),
       Constants.propertyInEstateId -> (ua => getPropertyInEstateRoute(ua)),
-      Constants.cannotClaimRNRB -> (_ => TransferAnyUnusedThresholdController.onPageLoad()),
+      Constants.noAdditionalThresholdAvailableId -> (_ => TransferAnyUnusedThresholdController.onPageLoad()),
       Constants.propertyValueId -> (_ => PropertyPassingToDirectDescendantsController.onPageLoad()),
       Constants.propertyPassingToDirectDescendantsId -> (ua => getPropertyPassingToDirectDescendantsRoute(ua)),
       Constants.percentagePassedToDirectDescendantsId -> (_ => ExemptionsAndReliefClaimedController.onPageLoad()),
@@ -76,7 +76,7 @@ class Navigator @Inject()() {
     getRouteForOptionalBoolean(userAnswers.partOfEstatePassingToDirectDescendants, ValueOfEstateController.onPageLoad(), TransitionOutController.onPageLoad())
 
   private def getPropertyInEstateRoute(userAnswers: UserAnswers) =
-    getRouteForOptionalBoolean(userAnswers.propertyInEstate, PropertyValueController.onPageLoad(), CannotClaimRNRBController.onPageLoad())
+    getRouteForOptionalBoolean(userAnswers.propertyInEstate, PropertyValueController.onPageLoad(), NoAdditionalThresholdAvailableController.onPageLoad())
 
   private def getTransferAnyUnusedThresholdRoute(userAnswers: UserAnswers) =
     getRouteForOptionalBoolean(userAnswers.transferAnyUnusedThreshold, ValueBeingTransferredController.onPageLoad(), ClaimDownsizingThresholdController.onPageLoad())
@@ -94,7 +94,7 @@ class Navigator @Inject()() {
   private def getPropertyPassingToDirectDescendantsRoute(userAnswers: UserAnswers) = userAnswers.propertyPassingToDirectDescendants match {
     case Some(Constants.all) => ExemptionsAndReliefClaimedController.onPageLoad()
     case Some(Constants.some) => PercentagePassedToDirectDescendantsController.onPageLoad()
-    case Some(_) => CannotClaimRNRBController.onPageLoad()
+    case Some(_) => NoAdditionalThresholdAvailableController.onPageLoad()
     case _ => HomeController.onPageLoad()
   }
 
