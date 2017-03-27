@@ -112,10 +112,8 @@ no_downsizing_threshold_increase.no_assets_passing_to_direct_descendants_reason 
 no_threshold_increase.browser_title = There is no RNRB allowance available for this estate
 no_threshold_increase.date_of_death.title = There is no RNRB allowance available for the estate
 no_threshold_increase.date_of_death.reason = This is because the date of death of the person who has died was before 6 April 2017.
-no_threshold_increase.date_of_death.guidance =
 no_threshold_increase.direct_descendant.title = There is no RNRB allowance available for the estate
 no_threshold_increase.direct_descendant.reason = This is because none of the estate is being left to a direct descendant.
-no_threshold_increase.direct_descendant.guidance =
 
 part_of_estate_passing_to_direct_descendants.browser_title = Does any of the estate pass to the deceased’s children or other direct descendants?
 part_of_estate_passing_to_direct_descendants.title = Does any of the estate pass to the deceased’s children or other direct descendants?

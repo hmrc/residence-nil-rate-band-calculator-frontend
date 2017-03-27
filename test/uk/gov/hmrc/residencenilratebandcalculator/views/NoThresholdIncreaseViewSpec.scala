@@ -40,10 +40,5 @@ class NoThresholdIncreaseViewSpec extends HtmlSpec {
       val f = fixture()
       assertPageTitleEqualsMessage(f.doc, s"${prefix}.title")
     }
-
-    "display the correct guidance" in {
-      val f = fixture()
-      assertContainsMessages(f.doc, s"${prefix}.guidance")
-    }
   }
 }
