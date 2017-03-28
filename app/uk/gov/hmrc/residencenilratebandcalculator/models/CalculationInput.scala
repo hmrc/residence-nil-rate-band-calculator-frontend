@@ -24,7 +24,7 @@ case class CalculationInput(dateOfDeath: LocalDate,
                             valueOfEstate: Int,
                             chargeableEstateValue: Int,
                             propertyValue: Int,
-                            percentagePassedToDirectDescendants: Int,
+                            percentagePassedToDirectDescendants: BigDecimal,
                             valueBeingTransferred: Int,
                             propertyValueAfterExemption: Option[PropertyValueAfterExemption],
                             downsizingDetails: Option[DownsizingDetails])
@@ -69,9 +69,9 @@ object CalculationInput {
   }
 
   private def getPercentagePassedToDirectDescendants(userAnswers: UserAnswers) = userAnswers.propertyInEstate.get match {
-      case true if userAnswers.propertyPassingToDirectDescendants.get == Constants.all => 100
-      case true if userAnswers.propertyPassingToDirectDescendants.get == Constants.some => userAnswers.percentagePassedToDirectDescendants.get
-      case _ => 0
+      case true if userAnswers.propertyPassingToDirectDescendants.get == Constants.all => BigDecimal(100)
+      case true if userAnswers.propertyPassingToDirectDescendants.get == Constants.some => userAnswers.percentagePassedToDirectDescendants.get.setScale(4, BigDecimal.RoundingMode.HALF_UP)
+      case _ => BigDecimal(0)
     }
 
   private def getValueBeingTransferred(userAnswers: UserAnswers) = userAnswers.transferAnyUnusedThreshold.get match {

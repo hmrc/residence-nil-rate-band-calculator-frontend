@@ -1,5 +1,6 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
+@import uk.gov.hmrc.play.views.html._
 
 @(appConfig: FrontendAppConfig)(implicit request: Request[_], messages: Messages)
 
@@ -8,32 +9,20 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
-    <h1>@messages("calculate_threshold_increase.title")</h1>
+    @rnrbHelpers.heading("calculate_threshold_increase.title")
 
     <p>@messages("calculate_threshold_increase.guidance1")</p>
 
-    <p>@messages("calculate_threshold_increase.guidance2")</p>
+    <ul class="list list-bullet">
+        <li>@messages("calculate_threshold_increase.guidance2.bullet1")</li>
+        <li>@messages("calculate_threshold_increase.guidance2.bullet2")</li>
+        <li>@messages("calculate_threshold_increase.guidance2.bullet3")</li>
+    </ul>
+
+    <p>@messages("calculate_threshold_increase.guidance3")</p>
 
     <p>
         <a href="@routes.DateOfDeathController.onPageLoad().url" class="button button--get-started" role="button" id="start">@messages("site.start_now")</a>
     </p>
-
-    <h2>@messages("calculate_threshold_increase.sub_heading")</h2>
-
-    <p>@messages("calculate_threshold_increase.guidance3")</p>
-    <ul class="list list-bullet">
-        <li>@messages("calculate_threshold_increase.guidance3.bullet1")</li>
-        <li>@messages("calculate_threshold_increase.guidance3.bullet2")</li>
-        <li>@messages("calculate_threshold_increase.guidance3.bullet3")</li>
-        <li>@messages("calculate_threshold_increase.guidance3.bullet4")</li>
-    </ul>
-
-    <p>@messages("calculate_threshold_increase.guidance4")</p>
-    <ul class="list list-bullet">
-        <li>@messages("calculate_threshold_increase.guidance4.bullet1")</li>
-        <li>@messages("calculate_threshold_increase.guidance4.bullet2")</li>
-        <li>@messages("calculate_threshold_increase.guidance4.bullet3")</li>
-    </ul>
-
 
 }
