@@ -27,6 +27,7 @@ import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
+import uk.gov.hmrc.residencenilratebandcalculator.utils.Transformers
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 
 @Singleton
@@ -101,6 +102,9 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
   //    "IHT435_28" -> "IHT435_28"
   //  )
 
+  private val retrieveValueToStoreFor1Field: (String, Int) => String = (v, _) => v
+  private val retrieveValueToStoreForMoreThan1Field: (String, Int) => String = (v, i) => v.charAt(i).toString
+
   private val cacheMapIdToFieldName = Map[String, Seq[String]](
     Constants.valueOfEstateId -> Seq("IHT435_06"),
     Constants.chargeableEstateValueId -> Seq("IHT435_07"),
@@ -117,43 +121,13 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     )
   )
 
-  /**
-    * Change the format of a date from "2017-5-12" (with or without quotes) to 12052017.
-    */
-  def reformatDate(dateAsString:String): String = {
-    def stripOffQuotesIfPresent(s:String) = {
-      val leadingQuotesRemoved = if (s.startsWith("\"")) {
-        s.substring(1)
-      } else {
-        s
-      }
-
-      if (leadingQuotesRemoved.endsWith("\"")) {
-        leadingQuotesRemoved.substring(0, leadingQuotesRemoved.length - 1)
-      } else {
-        leadingQuotesRemoved
-      }
-    }
-
-    val dateComponents = stripOffQuotesIfPresent(dateAsString).split("-")
-    if (dateComponents.size != 3 || dateComponents(0).length != 4 ||
-      dateComponents(1).length == 0 || dateComponents(1).length > 2 ||
-      dateComponents(2).length == 0 || dateComponents(2).length > 2) {
-      throw new RuntimeException("Invalid date:" + dateAsString)
-    }
-    val year = dateComponents(0)
-    val month = ("0" + dateComponents(1)) takeRight 2
-    val day = ("0" + dateComponents(2)) takeRight 2
-    day + month + year
-  }
-
   private def getValueForPDF(jsVal: JsValue, cacheId: String): String = {
     val dateCacheIds = Set(Constants.dateOfDeathId)
     jsVal match {
       case n: JsNumber => n.toString
       case b: JsBoolean => if (b.value) "Yes" else "No"
       case s: JsString if dateCacheIds.contains(cacheId) =>
-        reformatDate(s.toString)
+        Transformers.transformDateFormat(s.toString)
       case s: JsString => s.toString
       case _ => ""
     }
@@ -199,15 +173,12 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
         optionalJsVal match {
           case Some(jsVal) =>
             val valueForPDF = getValueForPDF(jsVal, cacheId)
-            val valueToStoreFor1Field: (String, Int) => String = (v, _) => v
-            val valueToStoreForMoreThan1Field: (String, Int) => String = (v, i) => v.charAt(i).toString
-            val valueToStore: (String, Int) => String =
-              if (fieldNames.size == 1) valueToStoreFor1Field else valueToStoreForMoreThan1Field
+            val retrieveValueToStore: (String, Int) => String =
+              if (fieldNames.size == 1) retrieveValueToStoreFor1Field else retrieveValueToStoreForMoreThan1Field
             var i = 0
             fieldNames.foreach { currField =>
-              val storedValue = valueToStore(valueForPDF, i)
               //println("\n&&&&&&&&&&&&&&&& SETTING FIELD " + currField + " TO " + storedValue)
-              form.getField(currField).setValue(storedValue)
+              form.getField(currField).setValue(retrieveValueToStore(valueForPDF, i))
               i = i + 1
             }
           case None =>

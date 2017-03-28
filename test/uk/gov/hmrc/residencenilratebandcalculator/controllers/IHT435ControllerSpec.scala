@@ -99,41 +99,4 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
 
     }
   }
-
-  "reformatDate" must {
-    "behave correctly for a valid date where there are no quotes" in {
-      controller.reformatDate("2017-5-12") shouldBe "12052017"
-    }
-    "behave correctly for a valid date where month has no leading zero" in {
-      controller.reformatDate("\"2017-5-12\"") shouldBe "12052017"
-    }
-    "behave correctly for a valid date where day has no leading zero" in {
-      controller.reformatDate("\"2017-05-03\"") shouldBe "03052017"
-    }
-    "throw an exception where day is empty" in {
-      a[RuntimeException] shouldBe thrownBy {
-        controller.reformatDate("\"2017--03\"")
-      }
-    }
-    "throw an exception where month is empty" in {
-      a[RuntimeException] shouldBe thrownBy {
-        controller.reformatDate("\"2017-03-\"")
-      }
-    }
-    "throw an exception where year is empty" in {
-      a[RuntimeException] shouldBe thrownBy {
-        controller.reformatDate("\"--03-04\"")
-      }
-    }
-    "throw an exception where day is too long" in {
-      a[RuntimeException] shouldBe thrownBy {
-        controller.reformatDate("2017-5-124")
-      }
-    }
-    "throw an exception where month is too long" in {
-      a[RuntimeException] shouldBe thrownBy {
-        controller.reformatDate("2017-124-5")
-      }
-    }
-  }
 }
