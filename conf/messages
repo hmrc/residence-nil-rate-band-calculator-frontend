@@ -203,7 +203,7 @@ threshold_calculation_result.amount = Amount
 transfer_any_unused_threshold.browser_title = Do you wish to transfer any unused residence nil rate band?
 transfer_any_unused_threshold.title = Do you wish to transfer any unused residence nil rate band?
 transfer_any_unused_threshold.guidance1 = This transfer will be from the estate of a spouse or civil partner who died before the person who you are claiming an allowance for.
-transfer_any_unused_threshold.guidance2 = You will need a completed copy of the IHT436 form if you are transferring any unused allowance from somebody else’s estate.
+transfer_any_unused_threshold.guidance2 = You will need a completed copy of the IHT436 form if you are transferring any unused home threshold from somebody else’s estate.
 
 transfer_available_when_property_changed.browser_title = If a valid claim for RNRB had been made at the date of disposal would any transferable residence nil rate band have been available at that time?
 transfer_available_when_property_changed.title = If a valid claim for RNRB had been made at the date of disposal would any transferable residence nil rate band have been available at that time?
