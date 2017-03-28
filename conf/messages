@@ -49,7 +49,7 @@ date_of_death.label = Date of death
 date_property_was_changed.browser_title = What was the date the property was disposed of?
 date_property_was_changed.title = What was the date the property was disposed of?
 date_property_was_changed.guidance1 = This is the date that the person who has died sold their home or gave it away.
-date_property_was_changed.guidance2 = The person who has died might have given away different parts of their home at different times. If this happened, choose one date only for the downsizing date.
+date_property_was_changed.guidance2 = The person who has died might have given away different parts of their home at different times. If this happened, choose 1 date only for the downsizing date.
 date_property_was_changed.hint = For example, 6 4 2017
 
 error.invalid_property_passing_to_direct_descendants_option = Please choose an option
