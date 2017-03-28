@@ -30,10 +30,10 @@ chargeable_inherited_property_value.greater_than_chargeable_property_value.error
 
 claim_downsizing_threshold.browser_title = Are you claiming any downsizing allowance?
 claim_downsizing_threshold.title = Are you claiming any downsizing allowance?
-claim_downsizing_threshold.guidance1 = You can claim extra allowance for the estate if the person who has died:
+claim_downsizing_threshold.guidance1 = You can claim additional threshold for the estate if the person who has died:
 claim_downsizing_threshold.guidance1.bullet1 = downsized their home on or after 8 July 2015 by either selling it and buying a cheaper home or selling it and not buying another home
 claim_downsizing_threshold.guidance1.bullet2 = gave any part of their home away, like giving half of it away to a direct descendant
-claim_downsizing_threshold.guidance1.bullet3 = had a home that would have qualified for residence nil rate band allowance if they had not sold it and had kept it until they died
+claim_downsizing_threshold.guidance1.bullet3 = had a home that would have qualified for the home threshold if they had not sold it and had kept it until they died
 claim_downsizing_threshold.guidance1.bullet4 = left anything in their estate to a direct descendant
 
 date.day = Day
