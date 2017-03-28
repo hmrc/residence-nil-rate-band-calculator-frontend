@@ -36,17 +36,17 @@ class PercentagePassedToDirectDescendantsControllerSpec extends SimpleController
 
     def createController = () => new PercentagePassedToDirectDescendantsController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
-    val testValue = 50
+    val testValue = BigDecimal(50)
 
-    behave like rnrbController[Int](createController, createView, Constants.percentagePassedToDirectDescendantsId, testValue)(Reads.IntReads, Writes.IntWrites)
+    behave like rnrbController[BigDecimal](createController, createView, Constants.percentagePassedToDirectDescendantsId, testValue)(Reads.bigDecReads, Writes.BigDecimalWrites)
 
-    behave like nonStartingController[Int](createController,
+    behave like nonStartingController[BigDecimal](createController,
       List(Constants.dateOfDeathId,
         Constants.partOfEstatePassingToDirectDescendantsId,
         Constants.valueOfEstateId,
         Constants.chargeableEstateValueId,
         Constants.propertyInEstateId,
         Constants.propertyValueId,
-        Constants.propertyPassingToDirectDescendantsId))(Reads.IntReads, Writes.IntWrites)
+        Constants.propertyPassingToDirectDescendantsId))(Reads.bigDecReads, Writes.BigDecimalWrites)
   }
 }
