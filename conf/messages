@@ -224,7 +224,7 @@ value_available_when_property_changed.error = You cannot transfer more than the 
 value_being_transferred.browser_title = How much transferable residence nil rate band are you claiming?
 value_being_transferred.title = How much transferable residence nil rate band are you claiming?
 value_being_transferred.guidance1 = This is the number in either box 15 or box 21 on the IHT436 form.
-value_being_transferred.guidance2 = If the person who you are claiming an allowance for had been married or in a civil partnership more than once during their lifetime and their spouse or civil partner died first, you can transfer more than one unused allowance. Add together the numbers in either box 15 or box 21 on each IHT436 form.
+value_being_transferred.guidance2 = If the person who has died had been married or in a civil partnership more than once during their lifetime and their spouse or civil partner died first, you can transfer more than one unused allowance. Add together the numbers in either box 15 or box 21 on each IHT436 form.
 value_being_transferred.guidance3 = You cannot transfer more than {0}
 value_being_transferred.error = You cannot transfer more than the maximum amount
 
