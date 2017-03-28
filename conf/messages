@@ -13,7 +13,7 @@ calculate_threshold_increase.guidance3 = You will also need details of the prope
 
 chargeable_estate_value.browser_title = What is the amount of the total chargeable estate on death?
 chargeable_estate_value.title = What is the amount of the total chargeable estate on death?
-chargeable_estate_value.guidance = Enter the value you have given in box 108 on the IHT-400 form.
+chargeable_estate_value.guidance = Enter the value you have given in box 108 on the IHT400 form.
 
 chargeable_property_value.browser_title = What is the chargeable value of the residence for inheritance tax purposes?
 chargeable_property_value.title = What is the chargeable value of the residence for inheritance tax purposes?
@@ -40,7 +40,7 @@ date.year = Year
 
 date_of_death.browser_title = What was the date of death?
 date_of_death.title = What was the date of death?
-date_of_death.guidance = Enter the date you have given in box 2 of the IHT-400 form.
+date_of_death.guidance = Enter the date you have given in box 2 of the IHT400 form.
 date_of_death.example = For example, 6 4 2017
 date_of_death.label = Date of death
 
@@ -142,8 +142,8 @@ property_passing_to_direct_descendants.guidance2 = Answer yes if any part of the
 property_value.browser_title = What is the value of the residence at the date of death?
 property_value.title = What is the value of the residence at the date of death?
 property_value.guidance1 = Debts that are owed on the property would include the value of the mortgage that was owed along with any loans that had been taken out and secured against that home.
-property_value.guidance2 = You would have included the value of a home and what debts were owed on it on the IHT-400 form when working out the estate value.
-property_value.guidance3 = If the person who has died jointly owned their home with someone else, only include the value that they owned. If the IHT-400 form allowed you to take a discount off the value of the home, you can include that discount here before you take off any debts.
+property_value.guidance2 = You would have included the value of a home and what debts were owed on it on the IHT400 form when working out the estate value.
+property_value.guidance3 = If the person who has died jointly owned their home with someone else, only include the value that they owned. If the IHT400 form allowed you to take a discount off the value of the home, you can include that discount here before you take off any debts.
 property_value.guidance4 = If there was more than one property in the estate that the person who has died owned and had lived at, you must choose only one of them to give the value of and to answer more questions about.
 property_value.greater_than_value_of_estate.error = Property Value cannot be greater than the Value Of Estate
 
@@ -202,7 +202,7 @@ threshold_calculation_result.amount = Amount
 transfer_any_unused_threshold.browser_title = Do you wish to transfer any unused residence nil rate band?
 transfer_any_unused_threshold.title = Do you wish to transfer any unused residence nil rate band?
 transfer_any_unused_threshold.guidance1 = This transfer will be from the estate of a spouse or civil partner who died before the person who you are claiming an allowance for.
-transfer_any_unused_threshold.guidance2 = You will need a completed copy of the IHT-436 form if you are transferring any unused allowance from somebody else’s estate.
+transfer_any_unused_threshold.guidance2 = You will need a completed copy of the IHT436 form if you are transferring any unused allowance from somebody else’s estate.
 
 transfer_available_when_property_changed.browser_title = If a valid claim for RNRB had been made at the date of disposal would any transferable residence nil rate band have been available at that time?
 transfer_available_when_property_changed.title = If a valid claim for RNRB had been made at the date of disposal would any transferable residence nil rate band have been available at that time?
@@ -219,8 +219,8 @@ value_available_when_property_changed.guidance = This is the amount of transfera
 
 value_being_transferred.browser_title = How much transferable residence nil rate band are you claiming?
 value_being_transferred.title = How much transferable residence nil rate band are you claiming?
-value_being_transferred.guidance1 = This is the number in either box 15 or box 21 on the IHT-436 form.
-value_being_transferred.guidance2 = If the person who you are claiming an allowance for had been married or in a civil partnership more than once during their lifetime and their spouse or civil partner died first, you can transfer more than one unused allowance. Add together the numbers in either box 15 or box 21 on each IHT-436 form.
+value_being_transferred.guidance1 = This is the number in either box 15 or box 21 on the IHT436 form.
+value_being_transferred.guidance2 = If the person who you are claiming an allowance for had been married or in a civil partnership more than once during their lifetime and their spouse or civil partner died first, you can transfer more than one unused allowance. Add together the numbers in either box 15 or box 21 on each IHT436 form.
 value_being_transferred.guidance3 = You cannot transfer more than {0}
 value_being_transferred.error = You cannot transfer more than the maximum amount
 
@@ -238,8 +238,8 @@ value_of_changed_property.guidance3 = Do not deduct any solicitor or estate agen
 value_of_estate.browser_title = What is the total value of the estate before deducting any reliefs or exemptions?
 value_of_estate.title = What is the total value of the estate before deducting any reliefs or exemptions?
 value_of_estate.guidance1 = Add together the values that you have given in:
-value_of_estate.guidance1.bullet1 = box 91 on the IHT-400 form
-value_of_estate.guidance1.bullet2 = box 12 on the IHT-403 schedule
-value_of_estate.guidance1.bullet3 = box 10 on the IHT-418 schedule
-value_of_estate.guidance1.bullet4 = box 15 on the IHT-418 schedule
-value_of_estate.guidance2 = The IHT-403 and IHT-418 schedules are only completed if the estate included values for gifts given away and for assets held in trust.
+value_of_estate.guidance1.bullet1 = box 91 on the IHT400 form
+value_of_estate.guidance1.bullet2 = box 12 on the IHT403 schedule
+value_of_estate.guidance1.bullet3 = box 10 on the IHT418 schedule
+value_of_estate.guidance1.bullet4 = box 15 on the IHT418 schedule
+value_of_estate.guidance2 = The IHT403 and IHT418 schedules are only completed if the estate included values for gifts given away and for assets held in trust.
