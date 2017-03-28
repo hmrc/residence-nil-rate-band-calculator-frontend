@@ -40,7 +40,8 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     Constants.valueOfEstateId -> JsNumber(500000),
     Constants.chargeableEstateValueId -> JsNumber(450000),
     Constants.assetsPassingToDirectDescendantsId -> JsBoolean(true),
-    Constants.dateOfDeathId -> JsString("2017-5-12")
+    Constants.dateOfDeathId -> JsString("2017-5-12"),
+    Constants.propertyInEstateId -> JsBoolean(false)
   ))
 
   private def acroForm: PDAcroForm = {
@@ -88,10 +89,10 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
       acroForm.getField("IHT435_05").getValueAsString shouldBe "Yes"
     }
 
-//    "when \"Does the estate include any residential property that the deceased owned and lived in?\" (4) is set in the session, " +
-//      "it should appear as field IHT435_08 in the generated PDF" in {
-//      acroForm.getField("IHT435_08").getValueAsString shouldBe "No"
-//    }
+    "when \"Does the estate include any residential property that the deceased owned and lived in?\" (4) is set in the session, " +
+      "it should appear as field IHT435_08 in the generated PDF" in {
+      acroForm.getField("IHT435_08").getValueAsString shouldBe "No"
+    }
 
     "when \"Date of death\" is set in the session, it should appear as the appropriate fields in the generated PDF" in {
       checkDate(acroForm, "IHT435_03", "12052017")

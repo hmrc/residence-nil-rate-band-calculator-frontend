@@ -118,7 +118,8 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
       "IHT435_03_06",
       "IHT435_03_07",
       "IHT435_03_08"
-    )
+    ),
+    Constants.propertyInEstateId -> Seq("IHT435_08")
   )
 
   private def getValueForPDF(jsVal: JsValue, cacheId: String): String = {
