@@ -38,7 +38,7 @@ class DateOfDeathController @Inject()(val appConfig: FrontendAppConfig,
 
   val controllerId = Constants.dateOfDeathId
 
-  def form = () => DateForm()
+  def form = () => DateForm("date_of_death.error.day_invalid", "date_of_death.error.month_invalid", "date_of_death.error.year_invalid", "date_of_death.error")
 
   def view(form: Option[Form[Date]], backUrl: String)(implicit request: Request[_]) = date_of_death(appConfig, form)
 

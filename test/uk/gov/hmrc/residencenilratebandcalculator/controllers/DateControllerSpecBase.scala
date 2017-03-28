@@ -77,12 +77,12 @@ trait DateControllerSpecBase extends UnitSpec with WithFakeApplication with Http
       status(result) shouldBe Status.BAD_REQUEST
     }
 
-    "return form with errors when invalid data ia submitted" in {
+    "return form with errors when invalid data is submitted" in {
       val value = "not a number"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("day", value), ("month", value), ("month", value))
       val result = createController().onSubmit(wts)(fakePostRequest)
       val valueMap = Map("day" -> value, "month" -> value, "year" -> value)
-      contentAsString(result) shouldBe createView(Some(valueMap)).toString
+      contentAsString(result) should include("Enter a year")
     }
 
     "not store invalid submitted data" in {

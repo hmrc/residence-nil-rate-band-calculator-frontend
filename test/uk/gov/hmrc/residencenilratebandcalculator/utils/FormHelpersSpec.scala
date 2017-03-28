@@ -55,24 +55,24 @@ class FormHelpersSpec extends UnitSpec {
     }
 
     "return an empty string when given a form with no value" in {
-      FormHelpers.getDatePart(Some(DateForm()), Day) shouldBe ""
+      FormHelpers.getDatePart(Some(DateForm("", "", "", "")), Day) shouldBe ""
     }
 
     "return the day when asked for it" in {
       val date = Date(day, month, year)
-      val form = DateForm().fill(date)
+      val form = DateForm("", "", "", "").fill(date)
       FormHelpers.getDatePart(Some(form), Day) shouldBe day
     }
 
     "return the month when asked for it" in {
       val date = Date(day, month, year)
-      val form = DateForm().fill(date)
+      val form = DateForm("", "", "", "").fill(date)
       FormHelpers.getDatePart(Some(form), Month) shouldBe month
     }
 
     "return the year when asked for it" in {
       val date = Date(day, month, year)
-      val form = DateForm().fill(date)
+      val form = DateForm("", "", "", "").fill(date)
       FormHelpers.getDatePart(Some(form), Year) shouldBe year
     }
   }

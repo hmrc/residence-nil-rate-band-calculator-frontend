@@ -74,24 +74,24 @@ trait DateViewSpecBase extends ViewSpecBase {
 
       "rendered with a value" must {
         "include the day value in the day input" in {
-          val doc = asDocument(createView(Some(DateForm().fill(date))))
+          val doc = asDocument(createView(Some(DateForm("", "", "", "").fill(date))))
           doc.getElementById("day").attr("value") shouldBe day.toString
         }
 
         "include the month value in the month input" in {
-          val doc = asDocument(createView(Some(DateForm().fill(date))))
+          val doc = asDocument(createView(Some(DateForm("", "", "", "").fill(date))))
           doc.getElementById("month").attr("value") shouldBe month.toString
         }
 
         "include the year value in the year input" in {
-          val doc = asDocument(createView(Some(DateForm().fill(date))))
+          val doc = asDocument(createView(Some(DateForm("", "", "", "").fill(date))))
           doc.getElementById("year").attr("value") shouldBe year.toString
         }
       }
 
       "rendered with an error" must {
         "show an error summary" in {
-          val doc = asDocument(createView(Some(DateForm().withError(error))))
+          val doc = asDocument(createView(Some(DateForm("", "", "", "").withError(error))))
           assertRenderedById(doc, "error-summary-heading")
         }
       }

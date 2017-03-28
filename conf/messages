@@ -57,6 +57,10 @@ date_of_death.title = What was the date of death?
 date_of_death.guidance = Enter the date you have given in box 2 of the IHT-400 form.
 date_of_death.example = For example, 6 4 2017
 date_of_death.label = Date of death
+date_of_death.error = Give a correct date of death
+date_of_death.error.day_invalid = Give a correct day of death using numbers 1 to 31
+date_of_death.error.month_invalid = Give a correct month of death using numbers 1 to 12
+date_of_death.error.year_invalid = Give a correct year of death
 
 date_property_was_changed.browser_title = What was the date the property was disposed of?
 date_property_was_changed.title = What was the date the property was disposed of?
@@ -65,7 +69,13 @@ date_property_was_changed.guidance2 = The person who has died might have given a
 date_property_was_changed.hint = For example, 6 4 2017
 
 error.invalid_property_passing_to_direct_descendants_option = Give an answer for if any part of the property passed to a direct descendant
-error.invalid_date = Enter a valid date
+error.invalid_date = Give a correct date
+error.date.day_blank = Enter a day
+error.date.day_invalid = Give a correct day using numbers 1 to 31
+error.date.month_blank = Enter a month
+error.date.month_invalid = Give a correct month using numbers 1 to 12
+error.date.year_blank = Enter a year
+error.date.year_invalid = Give a correct year
 error.non_numeric = Give a value using only numbers
 error.number = Please enter a valid number
 error.required = Please enter a value
