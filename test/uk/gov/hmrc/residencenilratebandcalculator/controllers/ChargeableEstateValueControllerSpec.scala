@@ -24,13 +24,18 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 class ChargeableEstateValueControllerSpec extends SimpleControllerSpecBase {
 
+  val errorKeyBlank = "chargeable_estate_value.error.blank"
+  val errorKeyDecimal = "error.whole_pounds"
+  val errorKeyNonNumeric = "chargeable_estate_value.error.non_numeric"
+
   "Chargeable Estate Value Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfEstateController.onPageLoad().url
       value match {
         case None => chargeable_estate_value(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => chargeable_estate_value(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
+        case Some(v) => chargeable_estate_value(frontendAppConfig, url,
+          Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

@@ -39,7 +39,8 @@ class PropertyValueController @Inject()(override val appConfig: FrontendAppConfi
 
   override val controllerId = Constants.propertyValueId
 
-  override def form = () => NonNegativeIntForm()
+  override def form = () =>
+    NonNegativeIntForm("property_value.error.blank", "error.whole_pounds", "property_value.error.non_numeric")
 
   override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
     property_value(appConfig, backUrl, form, answerRows)

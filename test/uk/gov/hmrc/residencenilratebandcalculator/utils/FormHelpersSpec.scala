@@ -38,12 +38,12 @@ class FormHelpersSpec extends UnitSpec {
     }
 
     "return an empty string when given an Int form with no value" in {
-      FormHelpers.getValue[Int](Some(NonNegativeIntForm())) shouldBe ""
+      FormHelpers.getValue[Int](Some(NonNegativeIntForm("", "", ""))) shouldBe ""
     }
 
     "return the correct value when given an Int form with no value" in {
 
-      val form = NonNegativeIntForm().fill(number)
+      val form = NonNegativeIntForm("", "", "").fill(number)
       FormHelpers.getValue[Int](Some(form)) shouldBe number
     }
   }
@@ -84,18 +84,18 @@ class FormHelpersSpec extends UnitSpec {
     }
 
     "return an empty string when given a form with no errors" in {
-      FormHelpers.getErrorByKey[Int](Some(NonNegativeIntForm()), errorKey) shouldBe ""
+      FormHelpers.getErrorByKey[Int](Some(NonNegativeIntForm("", "", "")), errorKey) shouldBe ""
     }
 
     "return an empty string when given a form with an error for a different key" in {
       val error = FormError(errorKey, errorMessage)
-      val formWithErrors = NonNegativeIntForm().withError(error)
+      val formWithErrors = NonNegativeIntForm("", "", "").withError(error)
       FormHelpers.getErrorByKey[Int](Some(formWithErrors), otherErrorKey) shouldBe ""
     }
 
     "return the error when given a form with an error for this key" in {
       val error = FormError(errorKey, errorMessage)
-      val formWithErrors = NonNegativeIntForm().withError(error)
+      val formWithErrors = NonNegativeIntForm("", "", "").withError(error)
       FormHelpers.getErrorByKey[Int](Some(formWithErrors), errorKey) shouldBe errorMessage
     }
   }
@@ -107,12 +107,12 @@ class FormHelpersSpec extends UnitSpec {
     }
 
     "return an empty sequence when given a form with no errors" in {
-      FormHelpers.getAllErrors[Int](Some(NonNegativeIntForm())) shouldBe Seq[FormError]()
+      FormHelpers.getAllErrors[Int](Some(NonNegativeIntForm("", "", ""))) shouldBe Seq[FormError]()
     }
 
     "return all of the errors when given a form with errors" in {
       val errors = Seq(FormError(errorKey, errorMessage), FormError(otherErrorKey, errorMessage))
-      val formWithErrors = NonNegativeIntForm()
+      val formWithErrors = NonNegativeIntForm("", "", "")
         .withError(FormError(errorKey, errorMessage))
         .withError(FormError(otherErrorKey, errorMessage))
 

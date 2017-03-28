@@ -23,13 +23,17 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_available_whe
 
 class ValueAvailableWhenPropertyChangedControllerSpec extends SimpleControllerSpecBase {
 
+  val errorKeyBlank = "value_available_when_property_changed.error.blank"
+  val errorKeyDecimal = "error.whole_pounds"
+  val errorKeyNonNumeric = "error.non_numeric"
+
   "Value Available When Property Changed Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.TransferAvailableWhenPropertyChangedController.onPageLoad().url
       value match {
         case None => value_available_when_property_changed(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => value_available_when_property_changed(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
+        case Some(v) => value_available_when_property_changed(frontendAppConfig, url, Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

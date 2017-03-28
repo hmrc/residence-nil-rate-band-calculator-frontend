@@ -40,6 +40,10 @@ import scala.concurrent.Future
 
 class ValueBeingTransferredControllerSpec extends UnitSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
 
+  val errorKeyBlank = "value_being_transferred.error.blank"
+  val errorKeyDecimal = "error.whole_pounds"
+  val errorKeyNonNumeric = "error.non_numeric"
+
   val fakeRequest = FakeRequest("", "")
 
   val injector = fakeApplication.injector
@@ -63,7 +67,7 @@ class ValueBeingTransferredControllerSpec extends UnitSpec with WithFakeApplicat
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
       case None => value_being_transferred(frontendAppConfig, url, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages)
-      case Some(v) => value_being_transferred(frontendAppConfig, url, "£100,000.00", Some(NonNegativeIntForm().bind(v)), Seq(answerRow))(fakeRequest, messages)
+      case Some(v) => value_being_transferred(frontendAppConfig, url, "£100,000.00", Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(answerRow))(fakeRequest, messages)
     }
   }
 
@@ -72,7 +76,7 @@ class ValueBeingTransferredControllerSpec extends UnitSpec with WithFakeApplicat
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
       case None => value_being_transferred(frontendAppConfig, url, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages)
-      case Some(v) => value_being_transferred(frontendAppConfig, url, "£100,000.00", Some(NonNegativeIntForm().bind(v)), Seq(answerRow))(fakeRequest, messages)
+      case Some(v) => value_being_transferred(frontendAppConfig, url, "£100,000.00", Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(answerRow))(fakeRequest, messages)
     }
   }
 

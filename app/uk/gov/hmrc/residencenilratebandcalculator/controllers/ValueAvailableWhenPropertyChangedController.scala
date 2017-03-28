@@ -35,7 +35,8 @@ class ValueAvailableWhenPropertyChangedController @Inject()(override val appConf
 
   override val controllerId = Constants.valueAvailableWhenPropertyChangedId
 
-  override def form = () => NonNegativeIntForm()
+  override def form = () =>
+    NonNegativeIntForm("value_available_when_property_changed.error.blank", "error.whole_pounds", "error.non_numeric")
 
   override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
     value_available_when_property_changed(appConfig, backUrl, form, answerRows)

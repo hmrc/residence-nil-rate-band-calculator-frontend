@@ -23,6 +23,10 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_assets_pas
 
 class ValueOfAssetsPassingControllerSpec extends SimpleControllerSpecBase {
 
+  val errorKeyBlank = "value_of_assets_passing.error.blank"
+  val errorKeyDecimal = "error.whole_pounds"
+  val errorKeyNonNumeric = "error.non_numeric"
+
   "Value Of Assets Passing Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
@@ -30,7 +34,7 @@ class ValueOfAssetsPassingControllerSpec extends SimpleControllerSpecBase {
 
       value match {
         case None => value_of_assets_passing(frontendAppConfig, backUrl, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => value_of_assets_passing(frontendAppConfig, backUrl, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
+        case Some(v) => value_of_assets_passing(frontendAppConfig, backUrl, Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

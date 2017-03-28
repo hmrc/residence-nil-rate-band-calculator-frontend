@@ -44,6 +44,6 @@ object NonNegativeIntForm {
     def unbind(key: String, value: Int) = Map(key -> value.toString)
   }
 
-  def apply(errorKeyBlank: String = "a", errorKeyDecimal: String = "b", errorKeyNonNumeric: String = "c"): Form[Int] =
+  def apply(errorKeyBlank: String, errorKeyDecimal: String, errorKeyNonNumeric: String): Form[Int] =
     Form(single("value" -> of(nonNegativeIntFormatter(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric))))
 }

@@ -22,15 +22,20 @@ calculate_threshold_increase.sub_heading = Before you start
 chargeable_estate_value.browser_title = What is the amount of the total chargeable estate on death?
 chargeable_estate_value.title = What is the amount of the total chargeable estate on death?
 chargeable_estate_value.guidance = Enter the value you have given in box 108 on the IHT-400 form.
+chargeable_estate_value.error.blank = Give a chargable value of the estate
+chargeable_estate_value.error.non_numeric = Give a chargable value using only numbers
 
 chargeable_property_value.browser_title = What is the chargeable value of the residence for inheritance tax purposes?
 chargeable_property_value.title = What is the chargeable value of the residence for inheritance tax purposes?
 chargeable_property_value.guidance1 = This is the value of the property owned by the person who has died. This will either be the total value if they owned the property on their own, or the value of the part of the property that they owned.
+chargeable_property_value.error.blank = Give a value for the chargeable value of the property
+chargeable_property_value.error.non_numeric = Give a value for the property using only numbers
 chargeable_property_value.guidance2 = If the person who has died owned 50% of a property which was valued at £500,000 on the date of death, the value of their share would be £250,000.
 chargeable_inherited_property_value.browser_title = What is the chargeable value of the residence that passes to direct descendants?
 chargeable_inherited_property_value.title = What is the chargeable value of the residence that passes to direct descendants?
 chargeable_inherited_property_value.guidance1 = This is the value of the property that is being passed to a direct descendant. If all of the property is being passed, give the full value of that property on the date of death.
 chargeable_inherited_property_value.guidance2 = If only part of the property is being left to a direct descendant, you should work out the value of only what is being passed. If half of the property is being passed to a direct descendant and the full value at the date of death is £500,000, the value of what the direct descendant receives would be £250,000.
+chargeable_inherited_property_value.error.blank = Give a chargeable value of the property that passes to a direct descendant
 chargeable_property_value.greater_than_property_value.error = Chargeable Value cannot be greater than the Property Value
 chargeable_inherited_property_value.greater_than_chargeable_property_value.error = Value Closely Inherited cannot be greater than the Chargeable Value
 
@@ -61,10 +66,12 @@ date_property_was_changed.hint = For example, 6 4 2017
 
 error.invalid_property_passing_to_direct_descendants_option = Give an answer for if any part of the property passed to a direct descendant
 error.invalid_date = Enter a valid date
+error.non_numeric = Give a value using only numbers
 error.number = Please enter a valid number
 error.required = Please enter a value
 error.summary.title = Message to alert the user to a problem goes here
 error.summary.text = Optional description of the errors and how to correct them
+error.whole_pounds = Give a value in whole pounds only without any pence
 
 exemptions_and_relief_claimed.browser_title = Is any part of the residence exempt from inheritance tax, or does any part of it qualify for any relief on the death?
 exemptions_and_relief_claimed.title = Is any part of the residence exempt from inheritance tax, or does any part of it qualify for any relief on the death?
@@ -160,6 +167,8 @@ property_value.guidance2 = You would have included the value of a home and what 
 property_value.guidance3 = If the person who has died jointly owned their home with someone else, only include the value that they owned. If the IHT-400 form allowed you to take a discount off the value of the home, you can include that discount here before you take off any debts.
 property_value.guidance4 = If there was more than one property in the estate that the person who has died owned and had lived at, you must choose only one of them to give the value of and to answer more questions about.
 property_value.greater_than_value_of_estate.error = Property Value cannot be greater than the Value Of Estate
+property_value.error.blank = Give a value for the property at the date of death
+property_value.error.non_numeric = Give a value for the property using only numbers
 
 service.no_thanks = No thanks
 
@@ -232,6 +241,7 @@ unable_to_calculate_threshold_increase.grossing_up.guidance = HMRC will calculat
 value_available_when_property_changed.browser_title = What would the amount of transferable residence nil rate band have been at the date of disposal?
 value_available_when_property_changed.title = What would the amount of transferable residence nil rate band have been at the date of disposal?
 value_available_when_property_changed.guidance = This is the amount of transferable residence nil rate band that would have been available to the deceased at the date of disposal, as if that date had been the deceased’s date of death.
+value_available_when_property_changed.error.blank = Give a value for how much allowance would have been available if the death had happened on the same date as the property was sold or given away
 
 value_being_transferred.browser_title = How much transferable residence nil rate band are you claiming?
 value_being_transferred.title = How much transferable residence nil rate band are you claiming?
@@ -239,17 +249,20 @@ value_being_transferred.guidance1 = This is the number in either box 15 or box 2
 value_being_transferred.guidance2 = If the person who you are claiming an allowance for had been married or in a civil partnership more than once during their lifetime and their spouse or civil partner died first, you can transfer more than one unused allowance. Add together the numbers in either box 15 or box 21 on each IHT-436 form.
 value_being_transferred.guidance3 = You cannot transfer more than {0}
 value_being_transferred.error = You cannot transfer more than the maximum amount
+value_being_transferred.error.blank = Give a value for the amount of unused residence nil rate band that you are transferring from the IHT-436 form
 
 value_of_assets_passing.browser_title = What is the total value of the other assets passing to direct descendants?
 value_of_assets_passing.title = What is the total value of the other assets passing to direct descendants?
 value_of_assets_passing.guidance1 = You will need the will and the value of assets to work this out.
 value_of_assets_passing.guidance2 = Find out what was left to a direct descendant then add the values of each asset up to get the total value of assets passing to a direct descendant.
+value_of_assets_passing.error.blank = Give a value for the assets passing to a direct descendant
 
 value_of_changed_property.title = What was the value of the deceased’s interest in the property at the date it was disposed of?
 value_of_changed_property.browser_title = What was the value of the deceased’s interest in the property at the date it was disposed of?
 value_of_changed_property.guidance1 = This is the value of what the person who has died owned. If they owned all of the property when they sold it or gave it away, deduct any mortgage owed from the sale price and give that value.
 value_of_changed_property.guidance2 = If the person who has died owned half of the property, you should half the sale price and deduct the value of the mortgage that the person who has died was responsible for paying and then give that value.
 value_of_changed_property.guidance3 = Do not deduct any solicitor or estate agent fees from the values.
+value_of_changed_property.error.blank = Give a value for how much the person who died owned of the property
 
 value_of_estate.browser_title = What is the total value of the estate before deducting any reliefs or exemptions?
 value_of_estate.title = What is the total value of the estate before deducting any reliefs or exemptions?
@@ -259,3 +272,5 @@ value_of_estate.guidance1.bullet2 = box 12 on the IHT-403 schedule
 value_of_estate.guidance1.bullet3 = box 10 on the IHT-418 schedule
 value_of_estate.guidance1.bullet4 = box 15 on the IHT-418 schedule
 value_of_estate.guidance2 = The IHT-403 and IHT-418 schedules are only completed if the estate included values for gifts given away and for assets held in trust.
+value_of_estate.error.blank = Give an estate value
+value_of_estate.error.non_numeric = Give an estate value using only numbers

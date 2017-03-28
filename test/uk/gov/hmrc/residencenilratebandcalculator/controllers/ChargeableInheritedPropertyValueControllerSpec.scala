@@ -24,13 +24,17 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_inherite
 
 class ChargeableInheritedPropertyValueControllerSpec extends SimpleControllerSpecBase {
 
+  val errorKeyBlank = "chargeable_inherited_property_value.error.blank"
+  val errorKeyDecimal = "error.whole_pounds"
+  val errorKeyNonNumeric = "error.non_numeric"
+
   "Chargeable Inherited Property Value Controller"  must {
 
     val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeablePropertyValueController.onPageLoad().url
 
     def createView = (value: Option[Map[String, String]]) => value match {
       case None => chargeable_inherited_property_value(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-      case Some(v) => chargeable_inherited_property_value(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
+      case Some(v) => chargeable_inherited_property_value(frontendAppConfig, url, Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq())(fakeRequest, messages)
     }
 
     def createController = () => new ChargeableInheritedPropertyValueController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)

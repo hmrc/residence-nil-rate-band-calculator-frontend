@@ -38,7 +38,8 @@ class ChargeablePropertyValueController @Inject()(override val appConfig: Fronte
 
   override val controllerId: String = Constants.chargeablePropertyValueId
 
-  override def form: () => Form[Int] = () => NonNegativeIntForm()
+  override def form: () => Form[Int] = () =>
+    NonNegativeIntForm("chargeable_property_value.error.blank", "error.whole_pounds", "chargeable_property_value.error.non_numeric")
 
   override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) =
     chargeable_property_value(appConfig, backUrl, form, answerRows)
