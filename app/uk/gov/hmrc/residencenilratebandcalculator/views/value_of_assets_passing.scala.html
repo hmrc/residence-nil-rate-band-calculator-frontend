@@ -18,6 +18,10 @@
 
     <p>@messages("value_of_assets_passing.guidance2")</p>
 
+    <p>@messages("value_of_assets_passing.guidance3")</p>
+
+    <p>@messages("value_of_assets_passing.guidance4")</p>
+
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfAssetsPassingController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
