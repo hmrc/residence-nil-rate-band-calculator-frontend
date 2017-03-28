@@ -16,11 +16,34 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
-import play.api.data.Form
+import play.api.data.{Form, FormError}
 import play.api.data.Forms._
-import play.api.data.validation.Constraints
-import uk.gov.hmrc.residencenilratebandcalculator.forms.LargeIntFormatter.largeIntFormat
+import play.api.data.format.Formatter
 
 object NonNegativeIntForm {
-  def apply(): Form[Int] = Form(single("value" -> of[Int].verifying(Constraints.min(0))))
+
+  def nonNegativeIntFormatter(errorKeyBlank: String, errorKeyDecimal: String, errorKeyNonNumeric: String): Formatter[Int] = new Formatter[Int] {
+
+    val intRegex = """^(\d+)$""".r
+    val decimalRegex = """^(\d*\.\d*)$""".r
+
+    def produceError(key: String, error: String) = Left(Seq(FormError(key, error)))
+
+    def bind(key: String, data: Map[String, String]) = {
+      data.get(key) match {
+        case None => produceError(key, errorKeyBlank)
+        case Some("") => produceError(key, errorKeyBlank)
+        case Some(s) => s.trim.replace(",", "") match {
+          case intRegex(str) => Right(str.toInt)
+          case decimalRegex(_) => produceError(key, errorKeyDecimal)
+          case _ => produceError(key, errorKeyNonNumeric)
+        }
+      }
+    }
+
+    def unbind(key: String, value: Int) = Map(key -> value.toString)
+  }
+
+  def apply(errorKeyBlank: String = "a", errorKeyDecimal: String = "b", errorKeyNonNumeric: String = "c"): Form[Int] =
+    Form(single("value" -> of(nonNegativeIntFormatter(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric))))
 }
