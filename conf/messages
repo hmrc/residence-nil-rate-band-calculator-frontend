@@ -83,9 +83,7 @@ exit_questionnaire.user_research.guidance = This will help improve the service. 
 grossing_up_on_estate_assets.browser_title = Does grossing-up or interaction apply?
 grossing_up_on_estate_assets.title = Does grossing-up or interaction apply?
 grossing_up_on_estate_assets.guidance1 = This is against the assets in the estate of the person who has died.
-grossing_up_on_estate_assets.guidance2 = Grossing-up will apply if Inheritance Tax is due, and:
-grossing_up_on_estate_assets.guidance2.bullet1 = the will makes any gifts that are ‘free of tax’
-grossing_up_on_estate_assets.guidance2.bullet2 = any part of the residue is exempt (because, for example it passes to charity or the deceased’s spouse or civil partner). The residue is what is left in the estate after you have paid all debts, legacies and taxes
+grossing_up_on_estate_assets.guidance2 = When filling in the IHT400 form, grossing up or interaction might have been applied if the person who has died left any tax free gifts or if some part of the estate is exempt from Inheritance Tax.
 
 grossing_up_on_estate_property.browser_title = Does grossing-up or interaction apply?
 grossing_up_on_estate_property.title = Does grossing-up or interaction apply?
