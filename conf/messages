@@ -215,7 +215,10 @@ unable_to_calculate_threshold_increase.grossing_up.guidance = HMRC will calculat
 
 value_available_when_property_changed.browser_title = What would the amount of transferable residence nil rate band have been at the date of disposal?
 value_available_when_property_changed.title = What would the amount of transferable residence nil rate band have been at the date of disposal?
-value_available_when_property_changed.guidance = This is the amount of transferable residence nil rate band that would have been available to the deceased at the date of disposal, as if that date had been the deceased’s date of death.
+value_available_when_property_changed.guidance1 = You will need the IHT436 form to work this out.
+value_available_when_property_changed.guidance2 = Multiply the number in either box 13 or 19 by {0} to get the value needed.
+value_available_when_property_changed.guidance3 = If you have more than 1 IHT436 forms for this estate, you should add up the numbers in box 13 or 19 on every form, up to a maximum of 100, and then multiply that amount by {0}.
+value_available_when_property_changed.error = You cannot transfer more than the maximum amount
 
 value_being_transferred.browser_title = How much transferable residence nil rate band are you claiming?
 value_being_transferred.title = How much transferable residence nil rate band are you claiming?
