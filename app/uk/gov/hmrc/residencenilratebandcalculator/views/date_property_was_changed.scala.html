@@ -15,17 +15,17 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @rnrbHelpers.back_link(backUrl)
-
-    @rnrbHelpers.heading("date_property_was_changed.title")
-
-    <p>@messages("date_property_was_changed.guidance1")</p>
-
-    <p>@messages("date_property_was_changed.guidance2")</p>
-
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DatePropertyWasChangedController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
+        @rnrbHelpers.back_link(backUrl)
+
+        @rnrbHelpers.heading("date_property_was_changed.title")
+
+        <p>@messages("date_property_was_changed.guidance1")</p>
+
+        <p>@messages("date_property_was_changed.guidance2")</p>
 
         @rnrbHelpers.input_date(
             label = messages("date_property_was_changed.browser_title"),

@@ -69,8 +69,8 @@ error.invalid_date = Enter a valid date
 error.non_numeric = Give a value using only numbers
 error.number = Please enter a valid number
 error.required = Please enter a value
-error.summary.title = Message to alert the user to a problem goes here
-error.summary.text = Optional description of the errors and how to correct them
+error.summary.title = There’s been a problem
+error.summary.text = Check the following
 error.whole_pounds = Give a value in whole pounds only without any pence
 
 exemptions_and_relief_claimed.browser_title = Is any part of the residence exempt from inheritance tax, or does any part of it qualify for any relief on the death?

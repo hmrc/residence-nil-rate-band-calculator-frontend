@@ -11,28 +11,28 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @rnrbHelpers.back_link(backUrl)
-
-    @rnrbHelpers.heading("grossing_up_on_estate_property.title")
-
-    <p>@messages("grossing_up_on_estate_property.guidance1")</p>
-
-    <p>@messages("grossing_up_on_estate_property.guidance2")</p>
-    <ul class="list list-bullet">
-        <li>@messages("grossing_up_on_estate_property.guidance2.bullet1")</li>
-        <li>@messages("grossing_up_on_estate_property.guidance2.bullet2")</li>
-    </ul>
-
     @helpers.form(action = GrossingUpOnEstatePropertyController.onSubmit(), 'autoComplete -> "off") {
 
-    @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
 
-    @rnrbHelpers.input_yes_no(
-        id = "value",
-        label = messages("grossing_up_on_estate_property.title"),
-        labelClass = Some("visually-hidden"),
-        errorKey = FormHelpers.getErrorByKey(form, "value"),
-        value = Some(FormHelpers.getYesNo(form)))
+        @rnrbHelpers.back_link(backUrl)
+
+        @rnrbHelpers.heading("grossing_up_on_estate_property.title")
+
+        <p>@messages("grossing_up_on_estate_property.guidance1")</p>
+
+        <p>@messages("grossing_up_on_estate_property.guidance2")</p>
+        <ul class="list list-bullet">
+            <li>@messages("grossing_up_on_estate_property.guidance2.bullet1")</li>
+            <li>@messages("grossing_up_on_estate_property.guidance2.bullet2")</li>
+        </ul>
+
+        @rnrbHelpers.input_yes_no(
+            id = "value",
+            label = messages("grossing_up_on_estate_property.title"),
+            labelClass = Some("visually-hidden"),
+            errorKey = FormHelpers.getErrorByKey(form, "value"),
+            value = Some(FormHelpers.getYesNo(form)))
 
         @rnrbHelpers.submit_button()
     }

@@ -10,24 +10,24 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @rnrbHelpers.back_link(backUrl)
-
-    @rnrbHelpers.heading("value_of_estate.title")
-
-    <p>@messages("value_of_estate.guidance1")</p>
-    <ul class="list list-bullet">
-        <li>@messages("value_of_estate.guidance1.bullet1")</li>
-        <li>@messages("value_of_estate.guidance1.bullet2")</li>
-        <li>@messages("value_of_estate.guidance1.bullet3")</li>
-        <li>@messages("value_of_estate.guidance1.bullet4")</li>
-    </ul>
-
-    <p>@messages("value_of_estate.guidance2")</p>
-
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfEstateController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
 
+        @rnrbHelpers.back_link(backUrl)
+
+        @rnrbHelpers.heading("value_of_estate.title")
+
+        <p>@messages("value_of_estate.guidance1")</p>
+        <ul class="list list-bullet">
+            <li>@messages("value_of_estate.guidance1.bullet1")</li>
+            <li>@messages("value_of_estate.guidance1.bullet2")</li>
+            <li>@messages("value_of_estate.guidance1.bullet3")</li>
+            <li>@messages("value_of_estate.guidance1.bullet4")</li>
+        </ul>
+
+        <p>@messages("value_of_estate.guidance2")</p>
+        
         @rnrbHelpers.input_text(
             id = "value",
             errorKey = FormHelpers.getErrorByKey(form, "value"),

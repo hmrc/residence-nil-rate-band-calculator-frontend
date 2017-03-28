@@ -11,19 +11,19 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @rnrbHelpers.back_link(backUrl)
-
-    @rnrbHelpers.heading("assets_passing_to_direct_descendants.title")
-
-    @if(formattedPropertyValue.isDefined) {
-        <p>@messages("assets_passing_to_direct_descendants.guidance", formattedPropertyValue.get)</p>
-    } else {
-        <p>@messages("assets_passing_to_direct_descendants.guidance_no_property")</p>
-    }
-
     @helpers.form(action = AssetsPassingToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
+        @rnrbHelpers.back_link(backUrl)
+
+        @rnrbHelpers.heading("assets_passing_to_direct_descendants.title")
+
+        @if(formattedPropertyValue.isDefined) {
+            <p>@messages("assets_passing_to_direct_descendants.guidance", formattedPropertyValue.get)</p>
+        } else {
+            <p>@messages("assets_passing_to_direct_descendants.guidance_no_property")</p>
+        }
 
         @rnrbHelpers.input_yes_no(
             id = "value",

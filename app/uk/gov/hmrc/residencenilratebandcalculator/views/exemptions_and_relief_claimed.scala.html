@@ -11,20 +11,20 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @rnrbHelpers.back_link(backUrl)
-
-    @rnrbHelpers.heading("exemptions_and_relief_claimed.title")
-
-    <p>@messages("exemptions_and_relief_claimed.guidance")</p>
-    <ul class="list list-bullet">
-        <li>@messages("exemptions_and_relief_claimed.guidance.bullet1")</li>
-        <li>@messages("exemptions_and_relief_claimed.guidance.bullet2")</li>
-        <li>@messages("exemptions_and_relief_claimed.guidance.bullet3")</li>
-    </ul>
-
     @helpers.form(action = ExemptionsAndReliefClaimedController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
+        @rnrbHelpers.back_link(backUrl)
+
+        @rnrbHelpers.heading("exemptions_and_relief_claimed.title")
+
+        <p>@messages("exemptions_and_relief_claimed.guidance")</p>
+        <ul class="list list-bullet">
+            <li>@messages("exemptions_and_relief_claimed.guidance.bullet1")</li>
+            <li>@messages("exemptions_and_relief_claimed.guidance.bullet2")</li>
+            <li>@messages("exemptions_and_relief_claimed.guidance.bullet3")</li>
+        </ul>
 
         @rnrbHelpers.input_yes_no(
             id = "value",
