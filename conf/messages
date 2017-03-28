@@ -57,12 +57,13 @@ error.required = Please enter a value
 error.summary.title = Message to alert the user to a problem goes here
 error.summary.text = Optional description of the errors and how to correct them
 
-exemptions_and_relief_claimed.browser_title = Is any part of the residence exempt from inheritance tax, or does any part of it qualify for any relief on the death?
-exemptions_and_relief_claimed.title = Is any part of the residence exempt from inheritance tax, or does any part of it qualify for any relief on the death?
-exemptions_and_relief_claimed.guidance = Answer yes if any part of the property is exempt from Inheritance Tax because:
-exemptions_and_relief_claimed.guidance.bullet1 = it passed to a spouse or civil partner
-exemptions_and_relief_claimed.guidance.bullet2 = it passed to a charity
-exemptions_and_relief_claimed.guidance.bullet3 = relief, like agriculture relief, applies
+exemptions_and_relief_claimed.browser_title = Is any part of the residence exempt from Inheritance Tax, or does any part of it qualify for any relief on the death?
+exemptions_and_relief_claimed.title = Is any part of the residence exempt from Inheritance Tax, or does any part of it qualify for any relief on the death?
+exemptions_and_relief_claimed.guidance1 = These exemptions and relief will be in box 92 and box 93 on the IHT400 form.
+exemptions_and_relief_claimed.guidance2 = Answer yes if any part of the property is exempt from Inheritance Tax because:
+exemptions_and_relief_claimed.guidance2.bullet1 = it passed to a spouse or civil partner
+exemptions_and_relief_claimed.guidance2.bullet2 = it passed to a charity
+exemptions_and_relief_claimed.guidance2.bullet3 = relief, like agriculture relief, applies
 
 exit_questionnaire.browser_title = Survey
 exit_questionnaire.title = Survey
