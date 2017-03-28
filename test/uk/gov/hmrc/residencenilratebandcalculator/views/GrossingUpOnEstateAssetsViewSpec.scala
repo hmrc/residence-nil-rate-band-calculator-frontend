@@ -28,7 +28,7 @@ class GrossingUpOnEstateAssetsViewSpec extends BooleanViewSpecBase {
 
   "Grossing Up On Estate AssetsView" must {
 
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance2.bullet1", "guidance2.bullet2")
+    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")
 
     behave like pageWithBackLink[Boolean](createView)
 

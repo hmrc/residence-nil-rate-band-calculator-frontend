@@ -34,14 +34,15 @@ class PartOfEstatePassingToDirectDescendantsViewSpec extends BooleanViewSpecBase
       "guidance1",
       "reveal_title",
       "guidance2",
-      "guidance2.bullet1",
-      "guidance2.bullet2",
-      "guidance2.bullet3",
-      "guidance2.bullet4",
-      "guidance2.bullet5",
-      "guidance2.bullet6",
-      "guidance2.bullet7",
-      "guidance3"
+      "guidance3",
+      "guidance3.bullet1",
+      "guidance3.bullet2",
+      "guidance3.bullet3",
+      "guidance3.bullet4",
+      "guidance3.bullet5",
+      "guidance3.bullet6",
+      "guidance3.bullet7",
+      "guidance4"
     )
 
     behave like pageWithBackLink[Boolean](createView)
