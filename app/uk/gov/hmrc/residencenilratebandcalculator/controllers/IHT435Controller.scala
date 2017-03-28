@@ -55,7 +55,7 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     Constants.propertyPassingToDirectDescendantsId -> Seq("IHT435_??"), //??
     Constants.exemptionsAndReliefClaimedId -> Seq("IHT435_12"),
     Constants.grossingUpOnEstatePropertyId -> Seq("IHT435_13"),
-    Constants.chargeableEstateValueId -> Seq("IHT435_14"),
+//    Constants.chargeableEstateValueId -> Seq("IHT435_14"),
     Constants.chargeableInheritedPropertyValueId -> Seq("IHT435_15"),
     Constants.transferAnyUnusedThresholdId -> Seq("IHT435_16"),
     Constants.valueBeingTransferredId -> Seq("IHT435_17"),
@@ -92,30 +92,34 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
 
   private def generatePDF(cacheMap: CacheMap) = {
     val pdf = PDDocument.load(new File("conf/resource/IHT435.pdf"))
-    val form = pdf.getDocumentCatalog.getAcroForm
-
-    cacheMapIdToFieldName foreach {
-      case (cacheId, fieldNames) =>
-        val optionalJsVal = cacheMap.data.get(cacheId)
-        optionalJsVal match {
-          case Some(jsVal) =>
-            val valueForPDF = getValueForPDF(jsVal, cacheId)
-            val retrieveValueToStore: (String, Int) => String =
-              if (fieldNames.size == 1) retrieveValueToStoreFor1Field else retrieveValueToStoreForMoreThan1Field
-            var i = 0
-            fieldNames.foreach { currField =>
-              //println("\n&&&&&&&&&&&&&&&& SETTING FIELD " + currField + " TO " + storedValue)
-              form.getField(currField).setValue(retrieveValueToStore(valueForPDF, i))
-              i = i + 1
-            }
-          case None =>
-        }
-    }
-
-    pdf.setAllSecurityToBeRemoved(true)
     val baos = new ByteArrayOutputStream()
-    pdf.save(baos)
-    pdf.close()
+    try {
+      val form = pdf.getDocumentCatalog.getAcroForm
+
+      cacheMapIdToFieldName foreach {
+        case (cacheId, fieldNames) =>
+          val optionalJsVal = cacheMap.data.get(cacheId)
+          optionalJsVal match {
+            case Some(jsVal) =>
+              val valueForPDF = getValueForPDF(jsVal, cacheId)
+              val retrieveValueToStore: (String, Int) => String =
+                if (fieldNames.size == 1) retrieveValueToStoreFor1Field else retrieveValueToStoreForMoreThan1Field
+              var i = 0
+              fieldNames.foreach { currField =>
+                //println("\n&&&&&&&&&&&&&&&& SETTING FIELD " + currField + " TO " + storedValue)
+                form.getField(currField).setValue(retrieveValueToStore(valueForPDF, i))
+                i = i + 1
+              }
+            case None =>
+          }
+      }
+
+      pdf.setAllSecurityToBeRemoved(true)
+
+      pdf.save(baos)
+    } finally {
+      pdf.close()
+    }
     //"/Users/andy/Downloads/blat.pdf"
     val outputStream = new FileOutputStream("/home/grant/Downloads/blat.pdf")
     baos.writeTo(outputStream)

@@ -43,21 +43,21 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     Constants.chargeableEstateValueId -> JsNumber(450000),
     Constants.propertyInEstateId -> JsBoolean(false),
     Constants.propertyValueId -> JsNumber(9948),
-    Constants.propertyPassingToDirectDescendantsId -> JsString("88.8899"),
+//    Constants.propertyPassingToDirectDescendantsId -> JsString("88.8899"),
     Constants.exemptionsAndReliefClaimedId -> JsBoolean(true),
-    Constants.grossingUpOnEstatePropertyId -> JsBoolean(false),
-    Constants.chargeableEstateValueId -> JsNumber(8893),
-    Constants.chargeableInheritedPropertyValueId -> JsNumber(8894),
-    Constants.transferAnyUnusedThresholdId -> JsBoolean(true),
-    Constants.valueBeingTransferredId -> JsNumber(88728),
-    Constants.claimDownsizingThresholdId -> JsBoolean(false),
-    Constants.datePropertyWasChangedId -> JsString("2017-5-13"),
-    Constants.valueOfChangedPropertyId -> JsNumber(888),
-    Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
-    Constants.grossingUpOnEstateAssetsId -> JsBoolean(false),
-    Constants.valueOfAssetsPassingId -> JsNumber(777),
-    Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true),
-    Constants.valueAvailableWhenPropertyChangedId -> JsNumber(3333)
+    Constants.grossingUpOnEstatePropertyId -> JsBoolean(false)
+//    Constants.chargeableEstateValueId -> JsNumber(8893),
+//    Constants.chargeableInheritedPropertyValueId -> JsNumber(8894),
+//    Constants.transferAnyUnusedThresholdId -> JsBoolean(true),
+//    Constants.valueBeingTransferredId -> JsNumber(88728),
+//    Constants.claimDownsizingThresholdId -> JsBoolean(false),
+//    Constants.datePropertyWasChangedId -> JsString("2017-5-13"),
+//    Constants.valueOfChangedPropertyId -> JsNumber(888),
+//    Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
+//    Constants.grossingUpOnEstateAssetsId -> JsBoolean(false),
+//    Constants.valueOfAssetsPassingId -> JsNumber(777),
+//    Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true),
+//    Constants.valueAvailableWhenPropertyChangedId -> JsNumber(3333)
   ))
 
   private def acroForm: PDAcroForm = {
@@ -70,9 +70,11 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     acroForm
   }
 
-  def checkDate(acroForm: PDAcroForm, baseFieldName:String, expectedDate:String) = {
+  private def checkDate(acroForm: PDAcroForm, baseFieldName:String, expectedDate:String) = {
     acroForm.getField(baseFieldName + "_01").getValueAsString shouldBe expectedDate.charAt(0).toString
   }
+
+  def testText(fieldName:String) = s"Field $fieldName should be correctly generated in the generated PDF from the value stored in the cache"
 
   "onPageLoad" must {
     "return 200 for a GET" in {
@@ -87,28 +89,38 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
       redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
     }
 
-    "when the value of the estate (2) is set in the session, it should appear as field IHT435_06 in the generated PDF" in {
-      acroForm.getField("IHT435_06").getValueAsString shouldBe "500000"
+    testText("IHT435_03") in {
+      checkDate(acroForm, "IHT435_03", "12052017")
     }
 
-    "when the amount of the total chargeable estate (3) is set in the session, it should appear as field IHT435_07 in the generated PDF" in {
-      acroForm.getField("IHT435_07").getValueAsString shouldBe "450000"
-    }
-
-    "when \"Does any of the estate pass to the deceased’s children or other direct descendants?\" (1) is set in the session, " +
-      "it should appear as field IHT435_05 in the generated PDF" in {
+    testText("IHT435_05") in {
       acroForm.getField("IHT435_05").getValueAsString shouldBe "Yes"
     }
 
-    "when \"Does the estate include any residential property that the deceased owned and lived in?\" (4) is set in the session, " +
-      "it should appear as field IHT435_08 in the generated PDF" in {
+    testText("IHT435_06") in {
+      acroForm.getField("IHT435_06").getValueAsString shouldBe "500000"
+    }
+
+    testText("IHT435_07") in {
+      acroForm.getField("IHT435_07").getValueAsString shouldBe "450000"
+    }
+
+    testText("IHT435_08") in {
       acroForm.getField("IHT435_08").getValueAsString shouldBe "No"
     }
 
-    "when \"Date of death\" is set in the session, it should appear as the appropriate fields in the generated PDF" in {
-      checkDate(acroForm, "IHT435_03", "12052017")
-
-
+    testText("IHT435_10") in {
+      acroForm.getField("IHT435_10").getValueAsString shouldBe "9948"
     }
+
+    testText("IHT435_12") in {
+      acroForm.getField("IHT435_12").getValueAsString shouldBe "Yes"
+    }
+
+    testText("IHT435_13") in {
+      acroForm.getField("IHT435_13").getValueAsString shouldBe "No"
+    }
+
+
   }
 }
