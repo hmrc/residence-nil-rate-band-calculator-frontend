@@ -21,8 +21,8 @@ class PositivePercentFormSpec extends FormSpec {
   "Positive Percent Int Form" must {
 
     "bind positive numbers" in {
-      val form = PositivePercentForm().bind(Map("value" -> "1"))
-      form.get shouldBe 1
+      val form = PositivePercentForm().bind(Map("value" -> "0.0001"))
+      form.get shouldBe BigDecimal(0.0001)
     }
 
     "bind numbers as high as 100" in {
@@ -32,7 +32,7 @@ class PositivePercentFormSpec extends FormSpec {
 
     "fail to bind negative numbers" in {
       val expectedError = error("value", "error.unknown")
-      checkForError(PositivePercentForm(), Map("value" -> "-1"), expectedError)
+      checkForError(PositivePercentForm(), Map("value" -> "-0.0001"), expectedError)
     }
 
     "fail to bind zero" in {
@@ -42,7 +42,7 @@ class PositivePercentFormSpec extends FormSpec {
 
     "fail to bind numbers greater than 100" in {
       val expectedError = error("value", "error.unknown")
-      checkForError(PositivePercentForm(), Map("value" -> "101"), expectedError)
+      checkForError(PositivePercentForm(), Map("value" -> "100.0001"), expectedError)
     }
 
     "fail to bind non-numerics" in {
