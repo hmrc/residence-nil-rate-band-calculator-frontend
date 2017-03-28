@@ -22,8 +22,8 @@ calculate_threshold_increase.sub_heading = Before you start
 chargeable_estate_value.browser_title = What is the amount of the total chargeable estate on death?
 chargeable_estate_value.title = What is the amount of the total chargeable estate on death?
 chargeable_estate_value.guidance = Enter the value you have given in box 108 on the IHT-400 form.
-chargeable_estate_value.error.blank = Give a chargable value of the estate
-chargeable_estate_value.error.non_numeric = Give a chargable value using only numbers
+chargeable_estate_value.error.blank = Give a chargeable value of the estate
+chargeable_estate_value.error.non_numeric = Give a chargeable value using only numbers
 
 chargeable_property_value.browser_title = What is the chargeable value of the residence for inheritance tax purposes?
 chargeable_property_value.title = What is the chargeable value of the residence for inheritance tax purposes?
