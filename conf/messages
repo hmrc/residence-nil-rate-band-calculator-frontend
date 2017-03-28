@@ -141,11 +141,12 @@ property_passing_to_direct_descendants.guidance2 = Answer yes if any part of the
 
 property_value.browser_title = What is the value of the residence at the date of death?
 property_value.title = What is the value of the residence at the date of death?
-property_value.guidance1 = Debts that are owed on the property would include the value of the mortgage that was owed along with any loans that had been taken out and secured against that home.
-property_value.guidance2 = You would have included the value of a home and what debts were owed on it on the IHT400 form when working out the estate value.
-property_value.guidance3 = If the person who has died jointly owned their home with someone else, only include the value that they owned. If the IHT400 form allowed you to take a discount off the value of the home, you can include that discount here before you take off any debts.
-property_value.guidance4 = If there was more than one property in the estate that the person who has died owned and had lived at, you must choose only one of them to give the value of and to answer more questions about.
-property_value.greater_than_value_of_estate.error = Property Value cannot be greater than the Value Of Estate
+property_value.guidance1 = This is the full value of the property if the person who has died owned it on their own.
+property_value.guidance2 = If the person who has died jointly owned the property with someone else, only include their share of the value.
+property_value.guidance3 = You can take off any:
+property_value.guidance3.bullet1 = debts that were owed on the property, like a mortgage - if the person who has died jointly owned the property, only take off their share of the mortgage
+property_value.guidance3.bullet2 = discounts that were taken off the value of the property when you completed the IHT400 form
+property_value.guidance4 = If there is more than 1 property in the estate that the person who has doed owned and lived at, you must choose only 1 of them to use.
 
 service.no_thanks = No thanks
 
