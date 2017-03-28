@@ -122,7 +122,7 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
 
     "return a function that goes to the Exemptions And Relief Claimed controller when given PercentagePassedToDirectDescendants" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.percentagePassedToDirectDescendants) thenReturn Some(1)
+      when(mockCacheMap.percentagePassedToDirectDescendants) thenReturn Some(BigDecimal(1))
       navigator.nextPage(Constants.percentagePassedToDirectDescendantsId)(mockCacheMap) shouldBe routes.ExemptionsAndReliefClaimedController.onPageLoad()
     }
 

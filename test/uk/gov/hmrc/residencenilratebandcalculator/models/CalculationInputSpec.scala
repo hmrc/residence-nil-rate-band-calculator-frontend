@@ -60,7 +60,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
                 datePropertyWasChanged: Option[LocalDate] = None,
                 propertyInEstate: Option[Boolean] = None,
                 valueOfEstate: Option[Int] = None,
-                percentagePassedToDirectDescendants: Option[Int] = None,
+                percentagePassedToDirectDescendants: Option[BigDecimal] = None,
                 grossingUpOnEstateProperty: Option[Boolean] = None,
                 chargeablePropertyValue: Option[Int] = None,
                 chargeableInheritedPropertyValue: Option[Int] = None,

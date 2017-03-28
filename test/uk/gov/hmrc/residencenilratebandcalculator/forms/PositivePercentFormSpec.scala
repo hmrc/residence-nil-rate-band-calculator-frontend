@@ -31,27 +31,27 @@ class PositivePercentFormSpec extends FormSpec {
     }
 
     "fail to bind negative numbers" in {
-      val expectedError = error("value", "error.min")
+      val expectedError = error("value", "error.unknown")
       checkForError(PositivePercentForm(), Map("value" -> "-1"), expectedError)
     }
 
     "fail to bind zero" in {
-      val expectedError = error("value", "error.min")
+      val expectedError = error("value", "error.unknown")
       checkForError(PositivePercentForm(), Map("value" -> "0"), expectedError)
     }
 
     "fail to bind numbers greater than 100" in {
-      val expectedError = error("value", "error.max")
+      val expectedError = error("value", "error.unknown")
       checkForError(PositivePercentForm(), Map("value" -> "101"), expectedError)
     }
 
     "fail to bind non-numerics" in {
-      val expectedError = error("value", "error.number")
+      val expectedError = error("value", "error.real")
       checkForError(PositivePercentForm(), Map("value" -> "not a number"), expectedError)
     }
 
     "fail to bind a blank value" in {
-      val expectedError = error("value", "error.number")
+      val expectedError = error("value", "error.real")
       checkForError(PositivePercentForm(), Map("value" -> ""), expectedError)
     }
 

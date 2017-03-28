@@ -14,13 +14,19 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.forms
+package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import play.api.data.Forms._
+import play.twirl.api.HtmlFormat
 
-object PositivePercentForm {
+trait BigDecimalViewSpecBase extends ViewSpecBase {
 
-  def apply(): Form[BigDecimal] = Form(single("value" -> bigDecimal.verifying(x => x > 0 && x <= 100)))
+  val number = BigDecimal(50.01)
 
+  def bigDecimalPage(createView: (Option[Form[BigDecimal]]) => HtmlFormat.Appendable,
+                     messageKeyPrefix: String,
+                     expectedFormAction: String,
+                     form: Form[BigDecimal]) = {
+    behave like questionPage[BigDecimal](createView, messageKeyPrefix, expectedFormAction)
+  }
 }
