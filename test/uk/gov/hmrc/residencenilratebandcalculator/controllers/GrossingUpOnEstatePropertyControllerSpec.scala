@@ -23,6 +23,8 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_esta
 
 class GrossingUpOnEstatePropertyControllerSpec extends SimpleControllerSpecBase {
 
+  val messageKey = "grossing_up_on_estate_property.error.required"
+
   "Grossing Up On Estate Property Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
@@ -30,7 +32,7 @@ class GrossingUpOnEstatePropertyControllerSpec extends SimpleControllerSpecBase 
 
       value match {
         case None => grossing_up_on_estate_property(frontendAppConfig, backUrl, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => grossing_up_on_estate_property(frontendAppConfig, backUrl, Some(BooleanForm().bind(v)), Seq())(fakeRequest, messages)
+        case Some(v) => grossing_up_on_estate_property(frontendAppConfig, backUrl, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

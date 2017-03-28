@@ -23,6 +23,8 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_in_estate
 
 class PropertyInEstateControllerSpec extends SimpleControllerSpecBase {
 
+  val messageKey = "property_in_estate.error.required"
+
   "Property In Estate Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
@@ -30,7 +32,7 @@ class PropertyInEstateControllerSpec extends SimpleControllerSpecBase {
 
       value match {
         case None => property_in_estate(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => property_in_estate(frontendAppConfig, url, Some(BooleanForm().bind(v)), Seq())(fakeRequest, messages)
+        case Some(v) => property_in_estate(frontendAppConfig, url, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

@@ -20,31 +20,33 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 class BooleanFormSpec extends FormSpec {
 
+  val errorKey = "error.key"
+
   "Boolean Form" must {
 
     "bind true" in {
-      val form = BooleanForm().bind(Map("value" -> "true"))
+      val form = BooleanForm(errorKey).bind(Map("value" -> "true"))
       form.get shouldBe true
     }
 
     "bind false" in {
-      val form = BooleanForm().bind(Map("value" -> "false"))
+      val form = BooleanForm(errorKey).bind(Map("value" -> "false"))
       form.get shouldBe false
     }
 
     "fail to bind non-booleans" in {
-      val expectedError = error("value", "error.boolean")
-      checkForError(BooleanForm(), Map("value" -> "not a boolean"), expectedError)
+      val expectedError = error("value", errorKey)
+      checkForError(BooleanForm(errorKey), Map("value" -> "not a boolean"), expectedError)
     }
 
     "fail to bind a blank value" in {
-      val expectedError = error("value", "error.boolean")
-      checkForError(BooleanForm(), Map("value" -> ""), expectedError)
+      val expectedError = error("value", errorKey)
+      checkForError(BooleanForm(errorKey), Map("value" -> ""), expectedError)
     }
 
     "fail to bind when value is omitted" in {
-      val expectedError = error("value", "error.required")
-      checkForError(BooleanForm(), emptyForm, expectedError)
+      val expectedError = error("value", errorKey)
+      checkForError(BooleanForm(errorKey), emptyForm, expectedError)
     }
   }
 }

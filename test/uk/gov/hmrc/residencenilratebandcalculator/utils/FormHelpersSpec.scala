@@ -127,15 +127,15 @@ class FormHelpersSpec extends UnitSpec {
     }
 
     "return an empty string when given a form with no value" in {
-      FormHelpers.getYesNo(Some(BooleanForm())) shouldBe ""
+      FormHelpers.getYesNo(Some(BooleanForm(""))) shouldBe ""
     }
 
     "return 'Yes' when given a form with the value 'true'" in {
-      FormHelpers.getYesNo(Some(BooleanForm().fill(true))) shouldBe "Yes"
+      FormHelpers.getYesNo(Some(BooleanForm("").fill(true))) shouldBe "Yes"
     }
 
     "return 'No' when given a form with the value 'false'" in {
-      FormHelpers.getYesNo(Some(BooleanForm().fill(false))) shouldBe "No"
+      FormHelpers.getYesNo(Some(BooleanForm("").fill(false))) shouldBe "No"
     }
   }
 }
