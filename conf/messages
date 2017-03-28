@@ -146,7 +146,7 @@ property_value.guidance2 = If the person who has died jointly owned the property
 property_value.guidance3 = You can take off any:
 property_value.guidance3.bullet1 = debts that were owed on the property, like a mortgage - if the person who has died jointly owned the property, only take off their share of the mortgage
 property_value.guidance3.bullet2 = discounts that were taken off the value of the property when you completed the IHT400 form
-property_value.guidance4 = If there is more than 1 property in the estate that the person who has doed owned and lived at, you must choose only 1 of them to use.
+property_value.guidance4 = If there is more than 1 property in the estate that the person who has died owned and lived at, you must choose only 1 of them to use.
 
 service.no_thanks = No thanks
 
