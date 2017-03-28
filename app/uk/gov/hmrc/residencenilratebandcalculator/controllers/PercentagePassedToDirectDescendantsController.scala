@@ -30,14 +30,14 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_passed_t
 class PercentagePassedToDirectDescendantsController  @Inject()(override val appConfig: FrontendAppConfig,
                                                                val messagesApi: MessagesApi,
                                                                override val sessionConnector: SessionConnector,
-                                                               override val navigator: Navigator) extends SimpleControllerBase[Int] {
+                                                               override val navigator: Navigator) extends SimpleControllerBase[BigDecimal] {
 
 
   override val controllerId = Constants.percentagePassedToDirectDescendantsId
 
   override def form = () => PositivePercentForm()
 
-  override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+  override def view(form: Option[Form[BigDecimal]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
     percentage_passed_to_direct_descendants(appConfig, backUrl, form, answerRows)
   }
 }

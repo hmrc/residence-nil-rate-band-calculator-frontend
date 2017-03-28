@@ -21,6 +21,6 @@ import play.api.data.Forms._
 
 object PositivePercentForm {
 
-  def apply(): Form[Int] = Form(single("value" -> number(min=1, max=100)))
+  def apply(): Form[BigDecimal] = Form(single("value" -> bigDecimal))
 
 }
