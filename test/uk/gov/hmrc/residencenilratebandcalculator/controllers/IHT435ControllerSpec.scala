@@ -99,11 +99,6 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
   }
 
   "onPageLoad" must {
-
-//    "list all" in {
-//      controller.ook
-//    }
-
     "return 200 for a GET" in {
       val result = controller.onPageLoad()(fakeRequest)
       status(result) shouldBe Status.OK

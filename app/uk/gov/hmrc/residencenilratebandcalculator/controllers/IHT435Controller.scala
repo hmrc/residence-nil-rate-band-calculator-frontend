@@ -20,13 +20,11 @@ import java.io.{ByteArrayOutputStream, File, FileOutputStream}
 import javax.inject.{Inject, Singleton}
 
 import org.apache.pdfbox.pdmodel.PDDocument
-import org.apache.pdfbox.pdmodel.interactive.form.PDField
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 import uk.gov.hmrc.residencenilratebandcalculator.utils.Transformers
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 
@@ -34,81 +32,13 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
                                  val sessionConnector: SessionConnector) extends FrontendController {
 
-  //  val fieldNameMap = Map[String, String](
-  //    "IHT435_01" -> "IHT435_01",
-  //    "IHT435_02" -> "IHT435_02",
-  //    "IHT435_03_01" -> "IHT435_03_01",
-  //    "IHT435_03_02" -> "IHT435_03_02",
-  //    "IHT435_03_03" -> "IHT435_03_03",
-  //    "IHT435_03_04" -> "IHT435_03_04",
-  //    "IHT435_03_05" -> "IHT435_03_05",
-  //    "IHT435_03_06" -> "IHT435_03_06",
-  //    "IHT435_03_07" -> "IHT435_03_07",
-  //    "IHT435_03_08" -> "IHT435_03_08",
-  //    "IHT435_04" -> "IHT435_04",
-  //    "IHT435_05" -> "Yes",
-  //    "IHT435_06" -> "IHT435_06",
-  //    "IHT435_07" -> "IHT435_07",
-  //    "IHT435_08" -> "No",
-  //    "IHT435_09_01" -> "IHT435_09_01",
-  //    "IHT435_09_02" -> "IHT435_09_02",
-  //    "IHT435_09_03" -> "IHT435_09_03",
-  //    "IHT435_09_04" -> "IHT435_09_04",
-  //    "IHT435_10" -> "IHT435_10",
-  //    "IHT435_10_01" -> "IHT435_10_01",
-  //    "IHT435_10_02" -> "IHT435_10_02",
-  //    "IHT435_10_03" -> "IHT435_10_03",
-  //    "IHT435_10_04" -> "IHT435_10_04",
-  //    "IHT435_10_05" -> "IHT435_10_05",
-  //    "IHT435_10_06" -> "IHT435_10_06",
-  //    "IHT435_10_07" -> "IHT435_10_07",
-  //    "IHT435_11_01" -> "IHT435_11_01",
-  //    "IHT435_11_02" -> "IHT435_11_02",
-  //    "IHT435_11_03" -> "IHT435_11_03",
-  //    "IHT435_11_04" -> "IHT435_11_04",
-  //    "IHT435_11_05" -> "IHT435_11_05",
-  //    "IHT435_11_06" -> "IHT435_11_06",
-  //    "IHT435_12" -> "Yes",
-  //    "IHT435_13" -> "No",
-  //    "IHT435_14" -> "IHT435_14",
-  //    "IHT435_15" -> "IHT435_15",
-  //    "IHT435_16" -> "Yes",
-  //    "IHT435_17" -> "IHT435_17",
-  //    "IHT435_18" -> "No",
-  //    "IHT435_19_01" -> "IHT435_19_01",
-  //    "IHT435_19_02" -> "IHT435_19_02",
-  //    "IHT435_19_03" -> "IHT435_19_03",
-  //    "IHT435_19_04" -> "IHT435_19_04",
-  //    "IHT435_20_01" -> "IHT435_20_01",
-  //    "IHT435_20_02" -> "IHT435_20_02",
-  //    "IHT435_20_03" -> "IHT435_20_03",
-  //    "IHT435_20_04" -> "IHT435_20_04",
-  //    "IHT435_20_05" -> "IHT435_20_05",
-  //    "IHT435_20_06" -> "IHT435_20_06",
-  //    "IHT435_20_07" -> "IHT435_20_07",
-  //    "IHT435_20_08" -> "IHT435_20_08",
-  //    "IHT435_21" -> "IHT435_21",
-  //    "IHT435_22" -> "Yes",
-  //    "IHT435_23" -> "No",
-  //    "IHT435_24" -> "IHT435_24",
-  //    "IHT435_25_01" -> "IHT435_25_01",
-  //    "IHT435_25_02" -> "IHT435_25_02",
-  //    "IHT435_25_03" -> "IHT435_25_03",
-  //    "IHT435_25_04" -> "IHT435_25_04",
-  //    "IHT435_25_05" -> "IHT435_25_05",
-  //    "IHT435_25_06" -> "IHT435_25_06",
-  //    "IHT435_26" -> "Yes",
-  //    "IHT435_27" -> "IHT435_27",
-  //    "IHT435_28" -> "IHT435_28"
-  //  )
 
   private val retrieveValueToStoreFor1Field: (String, Int) => String = (v, _) => v
   private val retrieveValueToStoreForMoreThan1Field: (String, Int) => String = (v, i) => v.charAt(i).toString
 
   private val cacheMapIdToFieldName = Map[String, Seq[String]](
-    Constants.valueOfEstateId -> Seq("IHT435_06"),
-    Constants.chargeableEstateValueId -> Seq("IHT435_07"),
-    Constants.assetsPassingToDirectDescendantsId -> Seq("IHT435_05"),
+//    Constants.bla -> Seq("IHT435_01"),
+//    Constants.bla -> Seq("IHT435_02"),
     Constants.dateOfDeathId -> Seq(
       "IHT435_03_01",
       "IHT435_03_02",
@@ -119,7 +49,63 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
       "IHT435_03_07",
       "IHT435_03_08"
     ),
+//    Constants.bla -> Seq("IHT435_03_04"),
+    Constants.assetsPassingToDirectDescendantsId -> Seq("IHT435_05"),
+    Constants.valueOfEstateId -> Seq("IHT435_06"),
+    Constants.chargeableEstateValueId -> Seq("IHT435_07"),
     Constants.propertyInEstateId -> Seq("IHT435_08")
+//    Constants.bla -> Seq("IHT435_09_01"),
+//    Constants.bla -> Seq("IHT435_09_02"),
+//    Constants.bla -> Seq("IHT435_09_03"),
+//    Constants.bla -> Seq("IHT435_09_04"),
+//    Constants.bla -> Seq("IHT435_10"),
+//    Constants.bla -> Seq("IHT435_10_01"),
+//    Constants.bla -> Seq("IHT435_10_02"),
+//    Constants.bla -> Seq("IHT435_10_03"),
+//    Constants.bla -> Seq("IHT435_10_04"),
+//    Constants.bla -> Seq("IHT435_10_05"),
+//    Constants.bla -> Seq("IHT435_10_06"),
+//    Constants.bla -> Seq("IHT435_10_07"),
+//    Constants.bla -> Seq("IHT435_11_01"),
+//    Constants.bla -> Seq("IHT435_11_02"),
+//    Constants.bla -> Seq("IHT435_11_03"),
+//    Constants.bla -> Seq("IHT435_11_04"),
+//    Constants.bla -> Seq("IHT435_11_05"),
+//    Constants.bla -> Seq("IHT435_11_06"),
+//    Constants.bla -> Seq("IHT435_12"),
+//    Constants.bla -> Seq("IHT435_13"),
+//    Constants.bla -> Seq("IHT435_14"),
+//    Constants.bla -> Seq("IHT435_15"),
+//    Constants.bla -> Seq("IHT435_16"),
+//    Constants.bla -> Seq("IHT435_17"),
+//    Constants.bla -> Seq("IHT435_18"),
+//    Constants.bla -> Seq("IHT435_19_01"),
+//    Constants.bla -> Seq("IHT435_19_02"),
+//    Constants.bla -> Seq("IHT435_19_03"),
+//    Constants.bla -> Seq("IHT435_19_04"),
+//    Constants.bla -> Seq(
+//      "IHT435_20_01",
+//      "IHT435_20_02",
+//      "IHT435_20_03",
+//      "IHT435_20_04",
+//      "IHT435_20_05",
+//      "IHT435_20_06",
+//      "IHT435_20_07",
+//      "IHT435_20_08"
+//    ),
+//    Constants.bla -> Seq("IHT435_21"),
+//    Constants.bla -> Seq("IHT435_22"),
+//    Constants.bla -> Seq("IHT435_23"),
+//    Constants.bla -> Seq("IHT435_24"),
+//    Constants.bla -> Seq("IHT435_25_01"),
+//    Constants.bla -> Seq("IHT435_25_02"),
+//    Constants.bla -> Seq("IHT435_25_03"),
+//    Constants.bla -> Seq("IHT435_25_04"),
+//    Constants.bla -> Seq("IHT435_25_05"),
+//    Constants.bla -> Seq("IHT435_25_06"),
+//    Constants.bla -> Seq("IHT435_26"),
+//    Constants.bla -> Seq("IHT435_27"),
+//    Constants.bla -> Seq("IHT435_28")
   )
 
   private def getValueForPDF(jsVal: JsValue, cacheId: String): String = {
@@ -132,36 +118,6 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
       case s: JsString => s.toString
       case _ => ""
     }
-  }
-
-  def ook = {
-    val pdf = PDDocument.load(new File("conf/resource/IHT435.pdf"))
-    val form = pdf.getDocumentCatalog.getAcroForm
-
-    val it = form.getFields.iterator
-    while (it.hasNext) {
-      val gg: PDField = it.next
-      println("\n**" + gg + ":" + gg.getFieldType)
-      if (gg.getFieldType != "Btn") {
-        val fldName = gg.getPartialName
-        if (fldName == "IHT435_03_01") {
-          gg.setValue("3")
-        } else {
-          gg.setValue(fldName)
-        }
-
-      }
-    }
-
-
-    pdf.setAllSecurityToBeRemoved(true)
-    val baos = new ByteArrayOutputStream()
-    pdf.save(baos)
-    pdf.close()
-    //"/Users/andy/Downloads/blat.pdf"
-    val outputStream = new FileOutputStream("/home/grant/Downloads/blat.pdf")
-    baos.writeTo(outputStream)
-    baos
   }
 
   private def generatePDF(cacheMap: CacheMap) = {
