@@ -41,4 +41,22 @@ object Transformers {
   }
 
   val intToString: Int => Option[String] = (input) => Some(input.toString)
+
+  def stripOffQuotesIfPresent(s:String): String = s.replaceAll("^\"|\"$", "")
+
+  /**
+    * Change the format of a date from "2017-5-12" (with or without quotes) to 12052017.
+    */
+  def transformDateFormat(dateAsString:String): String = {
+    val dateComponents = stripOffQuotesIfPresent(dateAsString).split("-")
+    if (dateComponents.size != 3 || dateComponents(0).length != 4 ||
+      dateComponents(1).length == 0 || dateComponents(1).length > 2 ||
+      dateComponents(2).length == 0 || dateComponents(2).length > 2) {
+      throw new RuntimeException("Invalid date:" + dateAsString)
+    }
+    val year = dateComponents(0)
+    val month = ("0" + dateComponents(1)) takeRight 2
+    val day = ("0" + dateComponents(2)) takeRight 2
+    day + month + year
+  }
 }

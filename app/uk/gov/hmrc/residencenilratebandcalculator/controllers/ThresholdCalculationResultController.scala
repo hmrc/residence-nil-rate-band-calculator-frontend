@@ -24,6 +24,7 @@ import play.Logger
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._
 import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
@@ -73,6 +74,7 @@ class ThresholdCalculationResultController @Inject()(appConfig: FrontendAppConfi
           case (_, Failure(ex)) => fail(ex)
           case (Failure(ex), _) => fail(ex)
           case (Success(result), Success(answers)) =>
+            sessionConnector.cache[Int](Constants.thresholdCalculationResultId, result.residenceNilRateAmount)
             val messages = messagesApi.preferred(request)
             val residenceNilRateAmount = NumberFormat.getCurrencyInstance(Locale.UK).format(result.residenceNilRateAmount)
             Ok(threshold_calculation_result(appConfig, residenceNilRateAmount, AnswerRows(answers, messages)))

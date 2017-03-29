@@ -27,6 +27,9 @@
             legendClass = "visually-hidden",
             hint = Some(messages("date_of_death.example")),
             errorKey = FormHelpers.getErrorByKey(form, ""),
+            dayErrorKey = FormHelpers.getErrorByKey(form, "day"),
+            monthErrorKey = FormHelpers.getErrorByKey(form, "month"),
+            yearErrorKey = FormHelpers.getErrorByKey(form, "year"),
             valueDay = Some(FormHelpers.getDatePart(form, Day).toString),
             valueMonth = Some(FormHelpers.getDatePart(form, Month).toString),
             valueYear = Some(FormHelpers.getDatePart(form, Year).toString)

@@ -57,4 +57,51 @@ class TransformersSpec extends UnitSpec {
       }
     }
   }
+
+  "transformDateFormat" must {
+    "behave correctly for a valid date where there are no quotes" in {
+      transformDateFormat("2017-5-12") shouldBe "12052017"
+    }
+    "behave correctly for a valid date where month has no leading zero" in {
+      transformDateFormat("\"2017-5-12\"") shouldBe "12052017"
+    }
+    "behave correctly for a valid date where day has no leading zero" in {
+      transformDateFormat("\"2017-05-03\"") shouldBe "03052017"
+    }
+    "throw an exception where day is empty" in {
+      a[RuntimeException] shouldBe thrownBy {
+        transformDateFormat("\"2017--03\"")
+      }
+    }
+    "throw an exception where month is empty" in {
+      a[RuntimeException] shouldBe thrownBy {
+        transformDateFormat("\"2017-03-\"")
+      }
+    }
+    "throw an exception where year is empty" in {
+      a[RuntimeException] shouldBe thrownBy {
+        transformDateFormat("\"--03-04\"")
+      }
+    }
+    "throw an exception where day is too long" in {
+      a[RuntimeException] shouldBe thrownBy {
+        transformDateFormat("2017-5-124")
+      }
+    }
+    "throw an exception where month is too long" in {
+      a[RuntimeException] shouldBe thrownBy {
+        transformDateFormat("2017-124-5")
+      }
+    }
+  }
+
+  "stripOffQuotesIfPresent" must {
+    "strip off quotes" in {
+      stripOffQuotesIfPresent("\"abc\"") shouldBe "abc"
+    }
+    "work where no quotes" in {
+      stripOffQuotesIfPresent("abc") shouldBe "abc"
+    }
+
+  }
 }
