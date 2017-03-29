@@ -35,7 +35,7 @@ class ValueBeingTransferredViewSpec extends IntViewSpecBase {
 
     behave like pageWithBackLink[Int](createView)
 
-    behave like intPage(createView, messageKeyPrefix, ValueBeingTransferredController.onSubmit().url, NonNegativeIntForm())
+    behave like intPage(createView, messageKeyPrefix, ValueBeingTransferredController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage))
 
     behave like pageContainingPreviousAnswers(createView)
 

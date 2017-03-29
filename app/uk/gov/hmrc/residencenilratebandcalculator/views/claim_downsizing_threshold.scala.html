@@ -11,21 +11,21 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @rnrbHelpers.back_link(backUrl)
-
-    @rnrbHelpers.heading("claim_downsizing_threshold.title")
-
-    <p>@messages("claim_downsizing_threshold.guidance1")</p>
-    <ul class="list list-bullet">
-        <li>@messages("claim_downsizing_threshold.guidance1.bullet1")</li>
-        <li>@messages("claim_downsizing_threshold.guidance1.bullet2")</li>
-        <li>@messages("claim_downsizing_threshold.guidance1.bullet3")</li>
-        <li>@messages("claim_downsizing_threshold.guidance1.bullet4")</li>
-    </ul>
-
     @helpers.form(action = ClaimDownsizingThresholdController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
+        @rnrbHelpers.back_link(backUrl)
+
+        @rnrbHelpers.heading("claim_downsizing_threshold.title")
+
+        <p>@messages("claim_downsizing_threshold.guidance1")</p>
+        <ul class="list list-bullet">
+            <li>@messages("claim_downsizing_threshold.guidance1.bullet1")</li>
+            <li>@messages("claim_downsizing_threshold.guidance1.bullet2")</li>
+            <li>@messages("claim_downsizing_threshold.guidance1.bullet3")</li>
+            <li>@messages("claim_downsizing_threshold.guidance1.bullet4")</li>
+        </ul>
 
         @rnrbHelpers.input_yes_no(
             id = "value",

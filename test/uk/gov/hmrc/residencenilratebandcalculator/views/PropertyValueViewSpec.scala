@@ -31,11 +31,12 @@ class PropertyValueViewSpec extends IntViewSpecBase {
 
   "Property Value View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance3", "guidance4")
+    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance3",
+      "guidance3.bullet1", "guidance3.bullet2", "guidance4")
 
     behave like pageWithBackLink[Int](createView)
 
-    behave like intPage(createView, messageKeyPrefix, PropertyValueController.onSubmit().url, NonNegativeIntForm())
+    behave like intPage(createView, messageKeyPrefix, PropertyValueController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage))
 
     behave like pageContainingPreviousAnswers(createView)
 

@@ -11,17 +11,17 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @rnrbHelpers.back_link(backUrl)
-
-    @rnrbHelpers.heading("transfer_any_unused_threshold.title")
-
-    <p>@messages("transfer_any_unused_threshold.guidance1")</p>
-
-    <p>@messages("transfer_any_unused_threshold.guidance2")</p>
-
     @helpers.form(action = TransferAnyUnusedThresholdController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
+        @rnrbHelpers.back_link(backUrl)
+
+        @rnrbHelpers.heading("transfer_any_unused_threshold.title")
+
+        <p>@messages("transfer_any_unused_threshold.guidance1")</p>
+
+        <p>@messages("transfer_any_unused_threshold.guidance2")</p>
 
         @rnrbHelpers.input_yes_no(
             id = "value",

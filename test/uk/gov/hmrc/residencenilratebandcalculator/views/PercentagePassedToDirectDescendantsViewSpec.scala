@@ -23,21 +23,21 @@ import uk.gov.hmrc.residencenilratebandcalculator.forms.PositivePercentForm
 
 import scala.language.reflectiveCalls
 
-class PercentagePassedToDirectDescendantsViewSpec extends IntViewSpecBase {
+class PercentagePassedToDirectDescendantsViewSpec extends BigDecimalViewSpecBase {
 
   val messageKeyPrefix = "percentage_passed_to_direct_descendants"
 
-  def createView(form: Option[Form[Int]] = None) = percentage_passed_to_direct_descendants(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[BigDecimal]] = None) = percentage_passed_to_direct_descendants(frontendAppConfig, backUrl, form, Seq())(request, messages)
 
   "Percentage Passed To Direct Descendants View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance")
+    behave like rnrbPage[BigDecimal](createView, messageKeyPrefix, "guidance")
 
-    behave like pageWithBackLink[Int](createView)
+    behave like pageWithBackLink[BigDecimal](createView)
 
-    behave like intPage(createView, messageKeyPrefix, PercentagePassedToDirectDescendantsController.onSubmit().url, PositivePercentForm())
+    behave like bigDecimalPage(createView, messageKeyPrefix, PercentagePassedToDirectDescendantsController.onSubmit().url, PositivePercentForm("", "", ""))
 
     behave like pageContainingPreviousAnswers(createView)
-
   }
 }
+

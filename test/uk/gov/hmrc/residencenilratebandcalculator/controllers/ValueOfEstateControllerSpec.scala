@@ -23,6 +23,10 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_estate
 
 class ValueOfEstateControllerSpec extends SimpleControllerSpecBase {
 
+  val errorKeyBlank = "value_of_estate.error.blank"
+  val errorKeyDecimal = "error.whole_pounds"
+  val errorKeyNonNumeric = "value_of_estate.error.non_numeric"
+
   "Value Of Estate Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
@@ -30,7 +34,7 @@ class ValueOfEstateControllerSpec extends SimpleControllerSpecBase {
 
       value match {
         case None => value_of_estate(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => value_of_estate(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
+        case Some(v) => value_of_estate(frontendAppConfig, url, Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

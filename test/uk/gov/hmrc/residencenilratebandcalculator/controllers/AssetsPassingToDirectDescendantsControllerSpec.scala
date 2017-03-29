@@ -23,6 +23,8 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.assets_passing_to_d
 
 class AssetsPassingToDirectDescendantsControllerSpec extends SimpleControllerSpecBase {
 
+  val messageKey = "assets_passing_to_direct_descendants.error.required"
+
   "Assets Passing To Direct Descendants Controller" must {
 
     val propertyValue = 123456
@@ -35,7 +37,7 @@ class AssetsPassingToDirectDescendantsControllerSpec extends SimpleControllerSpe
         case None =>
           assets_passing_to_direct_descendants(frontendAppConfig, url, None, Seq(), formattedPropertyValue)(fakeRequest, messages)
         case Some(v) =>
-          assets_passing_to_direct_descendants(frontendAppConfig, url, Some(BooleanForm().bind(v)), Seq(), formattedPropertyValue)(fakeRequest, messages)
+          assets_passing_to_direct_descendants(frontendAppConfig, url, Some(BooleanForm(messageKey).bind(v)), Seq(), formattedPropertyValue)(fakeRequest, messages)
       }
     }
 

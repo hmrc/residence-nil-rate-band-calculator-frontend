@@ -10,15 +10,15 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @rnrbHelpers.back_link(backUrl)
-
-    @rnrbHelpers.heading("chargeable_estate_value.title")
-
-    <p>@messages("chargeable_estate_value.guidance")</p>
-
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeableEstateValueController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
+        @rnrbHelpers.back_link(backUrl)
+
+        @rnrbHelpers.heading("chargeable_estate_value.title")
+
+        <p>@messages("chargeable_estate_value.guidance")</p>
 
         @rnrbHelpers.input_text(
             id = "value",

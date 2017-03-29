@@ -23,6 +23,8 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.part_of_estate_pass
 
 class PartOfEstatePassingToDirectDescendantsControllerSpec extends SimpleControllerSpecBase {
 
+  val messageKey = "part_of_estate_passing_to_direct_descendants.error.required"
+
   "Part Of Estate Passing To Direct Descendants Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
@@ -30,7 +32,7 @@ class PartOfEstatePassingToDirectDescendantsControllerSpec extends SimpleControl
 
       value match {
         case None => part_of_estate_passing_to_direct_descendants(frontendAppConfig, backUrl, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => part_of_estate_passing_to_direct_descendants(frontendAppConfig, backUrl, Some(BooleanForm().bind(v)), Seq())(fakeRequest, messages)
+        case Some(v) => part_of_estate_passing_to_direct_descendants(frontendAppConfig, backUrl, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

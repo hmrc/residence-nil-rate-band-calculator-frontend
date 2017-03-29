@@ -31,11 +31,11 @@ class ValueOfAssetsPassingViewSpec extends IntViewSpecBase {
 
   "Value Of Assets Passing View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2")
+    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance3", "guidance4")
 
     behave like pageWithBackLink[Int](createView)
 
-    behave like intPage(createView, messageKeyPrefix, ValueOfAssetsPassingController.onSubmit().url, NonNegativeIntForm())
+    behave like intPage(createView, messageKeyPrefix, ValueOfAssetsPassingController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage))
 
     behave like pageContainingPreviousAnswers(createView)
 

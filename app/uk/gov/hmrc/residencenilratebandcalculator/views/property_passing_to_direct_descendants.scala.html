@@ -11,17 +11,17 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @rnrbHelpers.back_link(backUrl)
-
-    @rnrbHelpers.heading("property_passing_to_direct_descendants.title")
-
-    <p>@messages("property_passing_to_direct_descendants.guidance1")</p>
-
-    <p>@messages("property_passing_to_direct_descendants.guidance2")</p>
-
     @helpers.form(action = PropertyPassingToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
+        @rnrbHelpers.back_link(backUrl)
+
+        @rnrbHelpers.heading("property_passing_to_direct_descendants.title")
+
+        <p>@messages("property_passing_to_direct_descendants.guidance1")</p>
+
+        <p>@messages("property_passing_to_direct_descendants.guidance2")</p>
 
         @rnrbHelpers.input_radio(
             name = "value",

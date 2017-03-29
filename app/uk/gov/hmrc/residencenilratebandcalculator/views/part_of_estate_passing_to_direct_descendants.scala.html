@@ -11,42 +11,43 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @rnrbHelpers.back_link(backUrl)
-
-    @rnrbHelpers.heading("part_of_estate_passing_to_direct_descendants.title")
-
-    <p>@messages("part_of_estate_passing_to_direct_descendants.guidance1")</p>
-
-    <section class="section">
-
-        <details>
-            <summary>@messages("part_of_estate_passing_to_direct_descendants.reveal_title")</summary>
-            <div class="panel-indent panel-indent--gutter">
-                <p>@messages("part_of_estate_passing_to_direct_descendants.guidance2")</p>
-                <ul class="list list-bullet">
-                    <li>@messages("part_of_estate_passing_to_direct_descendants.guidance2.bullet1")</li>
-                    <li>@messages("part_of_estate_passing_to_direct_descendants.guidance2.bullet2")</li>
-                    <li>@messages("part_of_estate_passing_to_direct_descendants.guidance2.bullet3")</li>
-                    <li>@messages("part_of_estate_passing_to_direct_descendants.guidance2.bullet4")</li>
-                    <li>@messages("part_of_estate_passing_to_direct_descendants.guidance2.bullet5")</li>
-                    <li>@messages("part_of_estate_passing_to_direct_descendants.guidance2.bullet6")</li>
-                    <li>@messages("part_of_estate_passing_to_direct_descendants.guidance2.bullet7")</li>
-                </ul>
-                <p>@messages("part_of_estate_passing_to_direct_descendants.guidance3")</p>
-            </div>
-        </details>
-    </section>
-
     @helpers.form(action = PartOfEstatePassingToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
 
-    @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
 
-    @rnrbHelpers.input_yes_no(
-        id = "value",
-        label = messages("part_of_estate_passing_to_direct_descendants.title"),
-        labelClass = Some("visually-hidden"),
-        errorKey = FormHelpers.getErrorByKey(form, "value"),
-        value = Some(FormHelpers.getYesNo(form)))
+        @rnrbHelpers.back_link(backUrl)
+
+        @rnrbHelpers.heading("part_of_estate_passing_to_direct_descendants.title")
+
+        <p>@messages("part_of_estate_passing_to_direct_descendants.guidance1")</p>
+        <p>@messages("part_of_estate_passing_to_direct_descendants.guidance2")</p>
+
+        <section class="section">
+
+            <details>
+                <summary>@messages("part_of_estate_passing_to_direct_descendants.reveal_title")</summary>
+                <div class="panel-indent panel-indent--gutter">
+                    <p>@messages("part_of_estate_passing_to_direct_descendants.guidance3")</p>
+                    <ul class="list list-bullet">
+                        <li>@messages("part_of_estate_passing_to_direct_descendants.guidance3.bullet1")</li>
+                        <li>@messages("part_of_estate_passing_to_direct_descendants.guidance3.bullet2")</li>
+                        <li>@messages("part_of_estate_passing_to_direct_descendants.guidance3.bullet3")</li>
+                        <li>@messages("part_of_estate_passing_to_direct_descendants.guidance3.bullet4")</li>
+                        <li>@messages("part_of_estate_passing_to_direct_descendants.guidance3.bullet5")</li>
+                        <li>@messages("part_of_estate_passing_to_direct_descendants.guidance3.bullet6")</li>
+                        <li>@messages("part_of_estate_passing_to_direct_descendants.guidance3.bullet7")</li>
+                    </ul>
+                    <p>@messages("part_of_estate_passing_to_direct_descendants.guidance4")</p>
+                </div>
+            </details>
+        </section>
+
+        @rnrbHelpers.input_yes_no(
+            id = "value",
+            label = messages("part_of_estate_passing_to_direct_descendants.title"),
+            labelClass = Some("visually-hidden"),
+            errorKey = FormHelpers.getErrorByKey(form, "value"),
+            value = Some(FormHelpers.getYesNo(form)))
 
         @rnrbHelpers.submit_button()
     }

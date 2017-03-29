@@ -36,7 +36,7 @@ class ExemptionsAndReliefClaimedController @Inject()(override val appConfig: Fro
 
   override val controllerId: String = Constants.exemptionsAndReliefClaimedId
 
-  override def form: () => Form[Boolean] = () => BooleanForm()
+  override def form: () => Form[Boolean] = () => BooleanForm("exemptions_and_relief_claimed.error.required")
 
   override def view(form: Option[Form[Boolean]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
     exemptions_and_relief_claimed(appConfig, backUrl, form, answerRows)
