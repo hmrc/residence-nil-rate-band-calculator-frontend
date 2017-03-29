@@ -125,10 +125,8 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
               val valueForPDF = getValueForPDF(jsVal, cacheId)
               val retrieveValueToStore: (String, Int) => String =
                 if (fieldNames.size == 1) retrieveValueToStoreFor1Field else retrieveValueToStoreForMoreThan1Field
-              var i = 0
-              fieldNames.foreach { currField =>
-                form.getField(currField).setValue(retrieveValueToStore(valueForPDF, i))
-                i = i + 1
+              fieldNames.indices foreach { i =>
+                form.getField(fieldNames(i)).setValue(retrieveValueToStore(valueForPDF, i))
               }
             case None =>
           }
