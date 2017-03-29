@@ -46,8 +46,8 @@ class ChargeablePropertyValueController @Inject()(override val appConfig: Fronte
 
   override def validate(value: Int, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = {
     userAnswers.propertyValue match {
-      case None => Some(FormError("value", "chargeable_property_value.greater_than_property_value.error"))
-      case Some(g) if value > g => Some(FormError("value", "chargeable_property_value.greater_than_property_value.error"))
+      case None => throw new RuntimeException("Property value was not answered")
+      case Some(v) if value > v => Some(FormError("value", "chargeable_property_value.greater_than_property_value.error", Seq(v)))
       case _ => None
     }
   }

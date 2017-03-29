@@ -18,6 +18,7 @@ chargeable_estate_value.title = What is the amount of the total chargeable estat
 chargeable_estate_value.guidance = Enter the value you have given in box 108 on the IHT400 form.
 chargeable_estate_value.error.blank = Give a chargeable value of the estate
 chargeable_estate_value.error.non_numeric = Give a chargeable value using only numbers
+chargeable_estate_value.greater_than_estate_value.error = Give a chargeable value that is less than the estate value of £{0} that you have already given
 
 chargeable_property_value.browser_title = What is the chargeable value of the residence for Inheritance Tax purposes?
 chargeable_property_value.title = What is the chargeable value of the residence for Inheritance Tax purposes?
@@ -32,8 +33,8 @@ chargeable_inherited_property_value.title = What is the chargeable value of the 
 chargeable_inherited_property_value.guidance1 = This is the value of the property that is being passed to a direct descendant. If all of the property is being passed, give the full value of that property on the date of death.
 chargeable_inherited_property_value.guidance2 = If only part of the property is being left to a direct descendant, you should work out the value of only what is being passed. If half of the property is being passed to a direct descendant and the full value at the date of death is £500,000, the value of what the direct descendant receives would be £250,000.
 chargeable_inherited_property_value.error.blank = Give a chargeable value of the property that passes to a direct descendant
-chargeable_property_value.greater_than_property_value.error = Chargeable Value cannot be greater than the Property Value
-chargeable_inherited_property_value.greater_than_chargeable_property_value.error = Value Closely Inherited cannot be greater than the Chargeable Value
+chargeable_property_value.greater_than_property_value.error = Give a chargeable value of the property that is less than the property value of £{0} that you have already given
+chargeable_inherited_property_value.greater_than_chargeable_property_value.error = Give a value of the chargeable value of the property that is less than the total chargeable property value of £{0} that you have already given
 
 claim_downsizing_threshold.browser_title = Are you claiming any downsizing allowance?
 claim_downsizing_threshold.title = Are you claiming any downsizing allowance?
@@ -172,10 +173,9 @@ property_value.guidance3 = You can take off any:
 property_value.guidance3.bullet1 = debts that were owed on the property, like a mortgage - if the person who has died jointly owned the property, only take off their share of the mortgage
 property_value.guidance3.bullet2 = discounts that were taken off the value of the property when you completed the IHT400 form
 property_value.guidance4 = If there is more than 1 property in the estate that the person who has died owned and lived at, you must choose only 1 of them to use.
-property_value.greater_than_value_of_estate.error = Property Value cannot be greater than the Value Of Estate
 property_value.error.blank = Give a value for the property at the date of death
 property_value.error.non_numeric = Give a value for the property using only numbers
-
+property_value.greater_than_value_of_estate.error = Give a property value that is less than the estate value of £{0} that you have already given
 service.no_thanks = No thanks
 
 service_difficulty.very_easy = Very easy
@@ -257,7 +257,7 @@ value_being_transferred.title = How much transferable residence nil rate band ar
 value_being_transferred.guidance1 = This is the number in either box 15 or box 21 on the IHT436 form.
 value_being_transferred.guidance2 = If the person who has died had been married or in a civil partnership more than once during their lifetime and their spouse or civil partner died first, you can transfer more than one unused allowance. Add together the numbers in either box 15 or box 21 on each IHT436 form.
 value_being_transferred.guidance3 = You cannot transfer more than {0}
-value_being_transferred.error = You cannot transfer more than the maximum amount
+value_being_transferred.error = Give a value that is less than the maximum amount of £{0} allowed in {1}
 value_being_transferred.error.blank = Give a value for the amount of unused residence nil rate band that you are transferring from the IHT-436 form
 
 value_of_assets_passing.browser_title = What is the total value of the other assets passing to direct descendants?
