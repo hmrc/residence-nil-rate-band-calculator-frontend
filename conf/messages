@@ -193,8 +193,9 @@ service_feel.neither = Neither satisfied or dissatisfied
 service_feel.dissatisfied = Dissatisfied
 service_feel.very_dissatisfied = Very dissatisfied
 
-session_expired.browser_title = Timed out
-session_expired.title = Your session has timed out
+session_expired.browser_title = For your security, this service has been reset
+session_expired.title = For your security, this service has been reset
+session_expired.guidance = The details you have given have been deleted because you did not continue the service for 1 hour.
 
 site.no = No
 site.yes = Yes
