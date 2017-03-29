@@ -26,8 +26,11 @@ import play.api.mvc.Call
 case class AnswerRow(title: String, data: String, url: String)
 
 object AnswerRow {
-  def apply(titleKey: String, amount: Int, url: Call)(messages: Messages): AnswerRow =
-    AnswerRow(messages(titleKey), NumberFormat.getCurrencyInstance(Locale.UK).format(amount), url.url)
+  def apply(titleKey: String, amount: Int, url: Call)(messages: Messages): AnswerRow = {
+    val formatter = NumberFormat.getCurrencyInstance(Locale.UK)
+    formatter.setMaximumFractionDigits(0)
+    AnswerRow(messages(titleKey), formatter.format(amount), url.url)
+  }
 
   def apply(titleKey: String, yesNo: Boolean, url: Call)(messages: Messages): AnswerRow =
     AnswerRow(messages(titleKey), if (yesNo) messages("site.yes") else messages("site.no"), url.url)
