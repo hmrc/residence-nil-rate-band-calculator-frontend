@@ -23,6 +23,10 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_passed_t
 
 class PercentagePassedToDirectDescendantsControllerSpec extends SimpleControllerSpecBase {
 
+  val errorKeyBlank = "percentage_passed_to_direct_descendants.error.required"
+  val errorKeyNonNumeric = "percentage_passed_to_direct_descendants.error.non_numeric"
+  val errorKeyOutOfRange = "percentage_passed_to_direct_descendants.error.out_of_range"
+
   "Percentage Passed To Direct Descendants Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
@@ -30,7 +34,8 @@ class PercentagePassedToDirectDescendantsControllerSpec extends SimpleController
 
       value match {
         case None => percentage_passed_to_direct_descendants(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => percentage_passed_to_direct_descendants(frontendAppConfig, url, Some(PositivePercentForm().bind(v)), Seq())(fakeRequest, messages)
+        case Some(v) => percentage_passed_to_direct_descendants(frontendAppConfig, url,
+          Some(PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange).bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

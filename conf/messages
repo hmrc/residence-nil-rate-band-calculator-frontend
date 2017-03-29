@@ -150,6 +150,9 @@ part_of_estate_passing_to_direct_descendants.error.required = Give an answer for
 percentage_passed_to_direct_descendants.browser_title = What percentage of the residence passes to direct descendants following the deceased’s death?
 percentage_passed_to_direct_descendants.title = What percentage of the residence passes to direct descendants following the deceased’s death?
 percentage_passed_to_direct_descendants.guidance = If half of the property has been left to a direct descendant, the percentage to give is 50%.
+percentage_passed_to_direct_descendants.error.required = Give a percentage value for how much of the property was passed to a direct descendant
+percentage_passed_to_direct_descendants.error.non_numeric = Give a percentage value using only numbers
+percentage_passed_to_direct_descendants.error.out_of_range = Give a percentage vaue between 1 and 100
 
 property_in_estate.browser_title = Does the estate include any residential property that the deceased owned and lived in?
 property_in_estate.title = Does the estate include any residential property that the deceased owned and lived in?

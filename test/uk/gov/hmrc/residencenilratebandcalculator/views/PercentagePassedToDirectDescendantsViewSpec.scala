@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_passed_to_direct_descendants
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PositivePercentForm
 
 import scala.language.reflectiveCalls
@@ -34,7 +35,7 @@ class PercentagePassedToDirectDescendantsViewSpec extends BigDecimalViewSpecBase
 
     behave like pageWithBackLink[BigDecimal](createView)
 
-    behave like bigDecimalPage(createView, messageKeyPrefix, uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PercentagePassedToDirectDescendantsController.onSubmit().url, PositivePercentForm())
+    behave like bigDecimalPage(createView, messageKeyPrefix, PercentagePassedToDirectDescendantsController.onSubmit().url, PositivePercentForm("", "", ""))
 
     behave like pageContainingPreviousAnswers(createView)
   }
