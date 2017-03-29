@@ -53,7 +53,8 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     Constants.grossingUpOnEstateAssetsId -> JsBoolean(false),
     Constants.valueOfAssetsPassingId -> JsNumber(777),
     Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true),
-    Constants.valueAvailableWhenPropertyChangedId -> JsNumber(3333)
+    Constants.valueAvailableWhenPropertyChangedId -> JsNumber(3333),
+    Constants.thresholdCalculationResultId -> JsNumber(229988)
   ))
 
   private def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
@@ -144,5 +145,7 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     behave like pdfField("IHT435_26", "Yes")
 
     behave like pdfField("IHT435_27", "3333")
+
+    behave like pdfField("IHT435_28", "229988")
   }
 }

@@ -83,7 +83,8 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     Constants.grossingUpOnEstateAssetsId -> Seq("IHT435_23"),
     Constants.valueOfAssetsPassingId -> Seq("IHT435_24"),
     Constants.transferAvailableWhenPropertyChangedId -> Seq("IHT435_26"),
-    Constants.valueAvailableWhenPropertyChangedId -> Seq("IHT435_27")
+    Constants.valueAvailableWhenPropertyChangedId -> Seq("IHT435_27"),
+    Constants.thresholdCalculationResultId -> Seq("IHT435_28")
   )
 
   private def getValueForPDF(jsVal: JsValue, cacheId: String): String = {

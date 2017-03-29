@@ -48,6 +48,7 @@ object Constants {
   val chargeableInheritedPropertyValueId = "ChargeableInheritedPropertyValue"
   val propertyValueId = "PropertyValue"
   val valueOfChangedPropertyId = "ValueOfChangedProperty"
+  val thresholdCalculationResultId = "ThresholdCalculationResult"
 
   val all = "all"
   val some = "some"
