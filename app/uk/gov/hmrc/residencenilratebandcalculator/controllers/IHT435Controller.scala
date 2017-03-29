@@ -93,7 +93,6 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     val pdDocumentInformation: PDDocumentInformation = pdf.getDocumentInformation
     pdDocumentInformation.setTitle(Messages("threshold_calculation_result.pdf.title"))
     pdf.setDocumentInformation(pdDocumentInformation)
-    pdf.setAllSecurityToBeRemoved(true)
   }
 
   private def getValueForPDF(jsVal: JsValue, cacheId: String): String = {
@@ -113,6 +112,7 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
 
   private def generatePDF(cacheMap: CacheMap) = {
     val pdf = PDDocument.load(new File("conf/resource/IHT435.pdf"))
+    setupPDFDocument(pdf)
     val baos = new ByteArrayOutputStream()
     try {
       val form = pdf.getDocumentCatalog.getAcroForm
@@ -133,8 +133,6 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
             case None =>
           }
       }
-
-      setupPDFDocument(pdf)
 
       pdf.save(baos)
     } finally {
