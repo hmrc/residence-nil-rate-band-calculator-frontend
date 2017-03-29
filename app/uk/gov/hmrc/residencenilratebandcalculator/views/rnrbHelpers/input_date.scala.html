@@ -2,6 +2,9 @@
 label: String,
 legendClass: String = "",
 errorKey: String,
+dayErrorKey: String,
+monthErrorKey: String,
+yearErrorKey: String,
 valueDay: Option[String] = None,
 valueMonth: Option[String] = None,
 valueYear: Option[String] = None,
@@ -9,8 +12,7 @@ secondaryLabel: Option[String] = None,
 hint: Option[String] = None
 )(implicit messages: Messages)
 
-
-<div class="form-field @if(errorKey != ""){form-field--error}">
+<div class="form-field @if(errorKey != "" || dayErrorKey != "" || monthErrorKey != "" || yearErrorKey != ""){form-field--error}">
     <fieldset>
         <legend>
         <span class="form-label bold @if(legendClass != ""){@legendClass}">
@@ -19,22 +21,31 @@ hint: Option[String] = None
         @if(hint != ""){
             <span class="form-hint" id="date-hint">@hint</span>
         }
-        @if(errorKey != ""){
-        <span class="error-notification" id="error-message-this-date">@messages(errorKey)</span>
-        }
+            @if(errorKey != ""){
+                <span class="error-notification" id="error-message-this-date">@messages(errorKey)</span>
+            }
+            @if(dayErrorKey != ""){
+                <span class="error-notification" id="error-message-this-day">@messages(dayErrorKey)</span>
+            }
+            @if(monthErrorKey != ""){
+                <span class="error-notification" id="error-message-this-month">@messages(monthErrorKey)</span>
+            }
+            @if(yearErrorKey != ""){
+                <span class="error-notification" id="error-message-this-year">@messages(yearErrorKey)</span>
+            }
         </legend>
         <div class="form-date">
             <div class="form-group form-group-day">
                 <label class="form-label bold" for="day">@messages("date.day")</label>
-                <input class="form-control" id="day" name="day" type="number" min="1" max="31" aria-describedby="date-hint" value="@valueDay" />
+                <input class="form-control" id="day" name="day" type="number" min="1" max="31" aria-describedby="@if(dayErrorKey != ""){error-message-this-day} else {date-hint}" value="@valueDay" />
             </div>
             <div class="form-group form-group-month">
                 <label class="form-label bold" for="month">@messages("date.month")</label>
-                <input class="form-control" id="month" name="month" type="number" min="1" max="12" value="@valueMonth" />
+                <input class="form-control" id="month" name="month" type="number" min="1" max="12" @if(monthErrorKey != ""){aria-describedby="error-message-this-month" } value="@valueMonth" />
             </div>
             <div class="form-group form-group-year">
                 <label class="form-label bold" for="year">@messages("date.year")</label>
-                <input class="form-control" id="year" name="year" type="number" min="1900" max="2050" value="@valueYear" />
+                <input class="form-control" id="year" name="year" type="number" min="1900" max="2050" @if(yearErrorKey != ""){aria-describedby="error-message-this-year" } value="@valueYear" />
             </div>
         </div>
     </fieldset>
