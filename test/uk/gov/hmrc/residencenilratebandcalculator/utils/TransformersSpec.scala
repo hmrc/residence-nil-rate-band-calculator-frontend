@@ -94,4 +94,14 @@ class TransformersSpec extends UnitSpec {
       }
     }
   }
+
+  "stripOffQuotesIfPresent" must {
+    "strip off quotes" in {
+      stripOffQuotesIfPresent("\"abc\"") shouldBe "abc"
+    }
+    "work where no quotes" in {
+      stripOffQuotesIfPresent("abc") shouldBe "abc"
+    }
+
+  }
 }

@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import java.io.{ByteArrayOutputStream, File, FileOutputStream}
+import java.io.{ByteArrayOutputStream, File}
 import javax.inject.{Inject, Singleton}
 
 import org.apache.pdfbox.pdmodel.PDDocument
@@ -118,7 +118,6 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
                 if (fieldNames.size == 1) retrieveValueToStoreFor1Field else retrieveValueToStoreForMoreThan1Field
               var i = 0
               fieldNames.foreach { currField =>
-                val storedValue = retrieveValueToStore(valueForPDF, i)
                 form.getField(currField).setValue(retrieveValueToStore(valueForPDF, i))
                 i = i + 1
               }
@@ -132,8 +131,6 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     } finally {
       pdf.close()
     }
-    val outputStream = new FileOutputStream("/home/grant/Downloads/blat.pdf")
-    baos.writeTo(outputStream)
     baos
   }
 
