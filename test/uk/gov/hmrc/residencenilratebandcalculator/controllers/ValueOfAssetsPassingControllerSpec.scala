@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import play.api.http.Status
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
@@ -42,24 +43,34 @@ class ValueOfAssetsPassingControllerSpec extends SimpleControllerSpecBase {
 
     val testValue = 123
 
-    behave like rnrbController[Int](createController, createView, Constants.valueOfAssetsPassingId, testValue)(Reads.IntReads, Writes.IntWrites)
+    val valuesToCacheBeforeSubmission = Map(Constants.valueOfEstateId -> testValue)
+
+    behave like rnrbController[Int](createController, createView, Constants.valueOfAssetsPassingId,
+      testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
 
     behave like nonStartingController[Int](createController,
       List(Constants.dateOfDeathId,
-           Constants.partOfEstatePassingToDirectDescendantsId,
-           Constants.valueOfEstateId,
-           Constants.chargeableEstateValueId,
-           Constants.propertyInEstateId,
-           Constants.propertyValueId,
-           Constants.propertyPassingToDirectDescendantsId,
-           Constants.percentagePassedToDirectDescendantsId,
-           Constants.chargeablePropertyValueId,
-           Constants.transferAnyUnusedThresholdId,
-           Constants.valueBeingTransferredId,
-           Constants.claimDownsizingThresholdId,
-           Constants.datePropertyWasChangedId,
-           Constants.valueOfChangedPropertyId,
-           Constants.assetsPassingToDirectDescendantsId,
-           Constants.grossingUpOnEstateAssetsId))(Reads.IntReads, Writes.IntWrites)
+        Constants.partOfEstatePassingToDirectDescendantsId,
+        Constants.valueOfEstateId,
+        Constants.chargeableEstateValueId,
+        Constants.propertyInEstateId,
+        Constants.propertyValueId,
+        Constants.propertyPassingToDirectDescendantsId,
+        Constants.percentagePassedToDirectDescendantsId,
+        Constants.chargeablePropertyValueId,
+        Constants.transferAnyUnusedThresholdId,
+        Constants.valueBeingTransferredId,
+        Constants.claimDownsizingThresholdId,
+        Constants.datePropertyWasChangedId,
+        Constants.valueOfChangedPropertyId,
+        Constants.assetsPassingToDirectDescendantsId,
+        Constants.grossingUpOnEstateAssetsId))(Reads.IntReads, Writes.IntWrites)
+
+    "return bad request on submit with a value greater than the previously saved Value Of Estate" in {
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))
+      setCacheValue(Constants.valueOfEstateId, testValue - 1)
+      val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
+      status(result) shouldBe Status.BAD_REQUEST
+    }
   }
 }
