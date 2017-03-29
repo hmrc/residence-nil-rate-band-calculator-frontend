@@ -16,8 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import play.api.data.{Form, FormError}
-import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
+import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_available_when_property_changed
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 

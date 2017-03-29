@@ -37,7 +37,7 @@ class AssetsPassingToDirectDescendantsController @Inject()(override val appConfi
 
   override val controllerId: String = Constants.assetsPassingToDirectDescendantsId
 
-  override def form: () => Form[Boolean] = () => BooleanForm()
+  override def form: () => Form[Boolean] = () => BooleanForm("assets_passing_to_direct_descendants.error.required")
 
   override def view(form: Option[Form[Boolean]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
     val formattedPropertyValue = userAnswers.propertyValue match {

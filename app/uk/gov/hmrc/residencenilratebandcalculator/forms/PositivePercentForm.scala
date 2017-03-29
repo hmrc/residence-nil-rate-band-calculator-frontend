@@ -16,11 +16,34 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
-import play.api.data.Form
+import play.api.data.{Form, FormError}
 import play.api.data.Forms._
+import play.api.data.format.Formatter
 
 object PositivePercentForm {
 
-  def apply(): Form[BigDecimal] = Form(single("value" -> bigDecimal.verifying(x => x > 0 && x <= 100)))
+  def positivePercentFormatter(errorKeyBlank: String, errorKeyNonNumeric: String, errorKeyOutOfRange: String) = new Formatter[BigDecimal] {
+
+    val decimalRegex = """^(\d*\.?\d*)$""".r
+
+    def produceError(key: String, error: String) = Left(Seq(FormError(key, error)))
+
+    def bind(key: String, data: Map[String, String]) = {
+      data.get(key) match {
+        case None => produceError(key, errorKeyBlank)
+        case Some("") => produceError(key, errorKeyBlank)
+        case Some(s) => s.trim.replace(",", "") match {
+          case decimalRegex(str) if BigDecimal(str) <= 0 || BigDecimal(str) > 100 => produceError(key, errorKeyOutOfRange)
+          case decimalRegex(str) => Right(BigDecimal(str))
+          case _ => produceError(key, errorKeyNonNumeric)
+        }
+      }
+    }
+
+    def unbind(key: String, value: BigDecimal) = Map(key -> value.toString)
+  }
+
+  def apply(errorKeyBlank: String, errorKeyNonNumeric: String, errorKeyOutOfRange: String): Form[BigDecimal] =
+    Form(single("value" -> of(positivePercentFormatter(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange))))
 
 }

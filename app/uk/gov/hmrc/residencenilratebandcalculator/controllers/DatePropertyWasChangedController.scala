@@ -35,7 +35,7 @@ class DatePropertyWasChangedController @Inject()(override val appConfig: Fronten
 
   val controllerId: String = Constants.datePropertyWasChangedId
 
-  def form: () => Form[Date] = () => DateForm()
+  def form = () => DateForm("error.date.day_invalid", "error.date.month_invalid", "error.date.year_invalid", "error.invalid_date")
 
   def view(form: Option[Form[Date]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
     date_property_was_changed(appConfig, backUrl, form, answerRows)

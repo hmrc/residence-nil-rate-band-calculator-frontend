@@ -23,14 +23,16 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_any_unused
 
 class TransferAnyUnusedThresholdControllerSpec extends SimpleControllerSpecBase {
 
-  "Transfer Any Unused Allowance Controller" must {
+  val messageKey = "transfer_any_unused_threshold.error.required"
+
+  "Transfer Any Unused Threshold Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyInEstateController.onPageLoad().url
 
       value match {
         case None => transfer_any_unused_threshold(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => transfer_any_unused_threshold(frontendAppConfig, url, Some(BooleanForm().bind(v)), Seq())(fakeRequest, messages)
+        case Some(v) => transfer_any_unused_threshold(frontendAppConfig, url, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

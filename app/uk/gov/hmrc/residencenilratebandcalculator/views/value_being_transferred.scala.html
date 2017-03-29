@@ -10,19 +10,19 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @rnrbHelpers.back_link(backUrl)
-
-    @rnrbHelpers.heading("value_being_transferred.title")
-
-    <p>@messages("value_being_transferred.guidance1")</p>
-
-    <p>@messages("value_being_transferred.guidance2")</p>
-
-    <p>@messages("value_being_transferred.guidance3", nilRateBand)</p>
-
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueBeingTransferredController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
+        @rnrbHelpers.back_link(backUrl)
+
+        @rnrbHelpers.heading("value_being_transferred.title")
+
+        <p>@messages("value_being_transferred.guidance1")</p>
+
+        <p>@messages("value_being_transferred.guidance2")</p>
+
+        <p>@messages("value_being_transferred.guidance3", nilRateBand)</p>
 
         @rnrbHelpers.input_text(
             id = "value",

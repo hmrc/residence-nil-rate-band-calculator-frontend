@@ -28,7 +28,9 @@ class DatePropertyWasChangedControllerSpec extends DateControllerSpecBase {
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ClaimDownsizingThresholdController.onPageLoad().url
       value match {
         case None => date_property_was_changed(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => date_property_was_changed(frontendAppConfig, url, Some(DateForm().bind(v)), Seq())(fakeRequest, messages)
+        case Some(v) => date_property_was_changed(frontendAppConfig, url,
+          Some(DateForm("error.date.day_invalid", "error.date.month_invalid", "error.date.year_invalid", "error.invalid_date").
+            bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

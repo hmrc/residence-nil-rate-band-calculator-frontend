@@ -13,13 +13,14 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @rnrbHelpers.heading("date_of_death.title")
-
-    <p>@messages("date_of_death.guidance")</p>
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
+        @rnrbHelpers.heading("date_of_death.title")
+
+        <p>@messages("date_of_death.guidance")</p>
 
         @rnrbHelpers.input_date(
             label = messages("date_of_death.label"),

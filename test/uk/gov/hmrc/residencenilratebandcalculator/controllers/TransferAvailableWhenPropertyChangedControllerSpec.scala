@@ -23,6 +23,8 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_available_
 
 class TransferAvailableWhenPropertyChangedControllerSpec extends SimpleControllerSpecBase {
 
+  val messageKey = "transfer_available_when_property_changed.error.required"
+
   "Transfer Available When Property Changed Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
@@ -30,7 +32,7 @@ class TransferAvailableWhenPropertyChangedControllerSpec extends SimpleControlle
 
       value match {
         case None => transfer_available_when_property_changed(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => transfer_available_when_property_changed(frontendAppConfig, url, Some(BooleanForm().bind(v)), Seq())(fakeRequest, messages)
+        case Some(v) => transfer_available_when_property_changed(frontendAppConfig, url, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

@@ -40,6 +40,10 @@ import scala.concurrent.Future
 
 class ValueAvailableWhenPropertyChangedControllerSpec extends UnitSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
 
+  val errorKeyBlank = "value_available_when_property_changed.error.blank"
+  val errorKeyDecimal = "error.whole_pounds"
+  val errorKeyNonNumeric = "error.non_numeric"
+
   val fakeRequest = FakeRequest("", "")
 
   val injector = fakeApplication.injector
@@ -63,7 +67,8 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends UnitSpec with With
     val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.TransferAvailableWhenPropertyChangedController.onPageLoad().url
     value match {
       case None => value_available_when_property_changed(frontendAppConfig, url, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages)
-      case Some(v) => value_available_when_property_changed(frontendAppConfig, url, "£100,000.00", Some(NonNegativeIntForm().bind(v)), Seq(answerRow))(fakeRequest, messages)
+      case Some(v) => value_available_when_property_changed(frontendAppConfig, url, "£100,000.00",
+        Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(answerRow))(fakeRequest, messages)
     }
   }
 

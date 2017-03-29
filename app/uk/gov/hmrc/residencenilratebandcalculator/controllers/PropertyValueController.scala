@@ -39,7 +39,8 @@ class PropertyValueController @Inject()(override val appConfig: FrontendAppConfi
 
   override val controllerId = Constants.propertyValueId
 
-  override def form = () => NonNegativeIntForm()
+  override def form = () =>
+    NonNegativeIntForm("property_value.error.blank", "error.whole_pounds", "property_value.error.non_numeric")
 
   override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
     property_value(appConfig, backUrl, form, answerRows)
@@ -47,8 +48,8 @@ class PropertyValueController @Inject()(override val appConfig: FrontendAppConfi
 
   override def validate(value: Int, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = {
     userAnswers.valueOfEstate match {
-      case None => Some(FormError("value", "property_value.greater_than_value_of_estate.error"))
-      case Some(g) if value > g => Some(FormError("value", "property_value.greater_than_value_of_estate.error"))
+      case None => throw new RuntimeException("Value of estate was not answered")
+      case Some(v) if value > v => Some(FormError("value", "property_value.greater_than_value_of_estate.error", Seq(v)))
       case _ => None
     }
   }
