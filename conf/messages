@@ -249,7 +249,7 @@ value_available_when_property_changed.title = What would the amount of transfera
 value_available_when_property_changed.guidance1 = You will need the IHT436 form to work this out.
 value_available_when_property_changed.guidance2 = Multiply the number in either box 13 or 19 by {0} to get the value needed.
 value_available_when_property_changed.guidance3 = If you have more than 1 IHT436 forms for this estate, you should add up the numbers in box 13 or 19 on every form, up to a maximum of 100, and then multiply that amount by {0}.
-value_available_when_property_changed.error = You cannot transfer more than the maximum amount
+value_available_when_property_changed.error = Give a value that is less than the £{0} allowance limit that would have been available on the date the property was sold or given away
 value_available_when_property_changed.error.blank = Give a value for how much allowance would have been available if the death had happened on the same date as the property was sold or given away
 
 value_being_transferred.browser_title = How much transferable residence nil rate band are you claiming?

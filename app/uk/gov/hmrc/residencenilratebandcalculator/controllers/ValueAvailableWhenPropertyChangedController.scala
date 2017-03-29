@@ -142,7 +142,7 @@ class ValueAvailableWhenPropertyChangedController @Inject()(val appConfig: Front
     if (value <= nrb) {
       Future.successful(None)
     } else {
-      Future.successful(Some(FormError("value", "value_available_when_property_changed.error")))
+      Future.successful(Some(FormError("value", "value_available_when_property_changed.error", Seq(nrb))))
     }
   }
 }
