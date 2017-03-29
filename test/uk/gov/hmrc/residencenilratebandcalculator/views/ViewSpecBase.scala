@@ -90,7 +90,7 @@ trait ViewSpecBase extends HtmlSpec {
 
         "contain a submit button" in {
           val doc = asDocument(createView(None))
-          val input = assertRenderedByCssSelector(doc, "input[type=submit]")
+          val input = assertRenderedById(doc, "submit")
         }
       }
     }
