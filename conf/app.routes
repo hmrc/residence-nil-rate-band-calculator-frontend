@@ -96,3 +96,5 @@ POST       /value-of-changed-property                   uk.gov.hmrc.residencenil
 # Fake GOV.UK pages to assist user testing
 GET        /case-studies                                uk.gov.hmrc.residencenilratebandcalculator.controllers.FakeGovUkController.caseStudies
 GET        /guidance                                    uk.gov.hmrc.residencenilratebandcalculator.controllers.FakeGovUkController.guidance
+
+GET        /copy-of-iht435                              uk.gov.hmrc.residencenilratebandcalculator.controllers.IHT435Controller.onPageLoad
