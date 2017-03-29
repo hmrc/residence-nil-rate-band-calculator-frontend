@@ -43,21 +43,21 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     Constants.chargeableEstateValueId -> JsNumber(450000),
     Constants.propertyInEstateId -> JsBoolean(false),
     Constants.propertyValueId -> JsNumber(9948),
-//    Constants.propertyPassingToDirectDescendantsId -> JsString("88.8899"),
+//    Constants.percentagePassedToDirectDescendantsId -> JsString("234.8899"),
     Constants.exemptionsAndReliefClaimedId -> JsBoolean(true),
-    Constants.grossingUpOnEstatePropertyId -> JsBoolean(false)
-//    Constants.chargeableEstateValueId -> JsNumber(8893),
-//    Constants.chargeableInheritedPropertyValueId -> JsNumber(8894),
-//    Constants.transferAnyUnusedThresholdId -> JsBoolean(true),
-//    Constants.valueBeingTransferredId -> JsNumber(88728),
-//    Constants.claimDownsizingThresholdId -> JsBoolean(false),
-//    Constants.datePropertyWasChangedId -> JsString("2017-5-13"),
-//    Constants.valueOfChangedPropertyId -> JsNumber(888),
-//    Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
-//    Constants.grossingUpOnEstateAssetsId -> JsBoolean(false),
-//    Constants.valueOfAssetsPassingId -> JsNumber(777),
-//    Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true),
-//    Constants.valueAvailableWhenPropertyChangedId -> JsNumber(3333)
+    Constants.grossingUpOnEstatePropertyId -> JsBoolean(false),
+    Constants.chargeablePropertyValueId -> JsNumber(8893),
+    Constants.chargeableInheritedPropertyValueId -> JsNumber(8894),
+    Constants.transferAnyUnusedThresholdId -> JsBoolean(true),
+    Constants.valueBeingTransferredId -> JsNumber(88728),
+    Constants.claimDownsizingThresholdId -> JsBoolean(false),
+    Constants.datePropertyWasChangedId -> JsString("2017-5-13"),
+    Constants.valueOfChangedPropertyId -> JsNumber(888),
+    Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
+    Constants.grossingUpOnEstateAssetsId -> JsBoolean(false),
+    Constants.valueOfAssetsPassingId -> JsNumber(777),
+    Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true),
+    Constants.valueAvailableWhenPropertyChangedId -> JsNumber(3333)
   ))
 
   private def acroForm: PDAcroForm = {
@@ -74,53 +74,77 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     acroForm.getField(baseFieldName + "_01").getValueAsString shouldBe expectedDate.charAt(0).toString
   }
 
-  def testText(fieldName:String) = s"Field $fieldName should be correctly generated in the generated PDF from the value stored in the cache"
+  private def checkDecimal(acroForm: PDAcroForm, baseFieldName:String, expectedDate:String) = {
+    acroForm.getField(baseFieldName + "_01").getValueAsString shouldBe expectedDate.charAt(0).toString
+  }
+
+  private def describeTest(fieldName:String) = s"generate the correct value for field $fieldName in the generated PDF from the value stored in the cache"
+
+  private def pdfField(fieldName:String, expectedValue:String) = {
+    describeTest(fieldName) in {
+      acroForm.getField(fieldName).getValueAsString shouldBe expectedValue
+    }
+  }
 
   "onPageLoad" must {
-    "return 200 for a GET" in {
+    "return 200" in {
       val result = controller.onPageLoad()(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
-    "On a page load with an expired session, return an redirect to an expired session page" in {
+    "with an expired session return a redirect to an expired session page" in {
       expireSessionConnector()
       val result = controller.onPageLoad()(fakeRequest)
       status(result) shouldBe Status.SEE_OTHER
       redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
     }
 
-    testText("IHT435_03") in {
+    describeTest("IHT435_03") in {
       checkDate(acroForm, "IHT435_03", "12052017")
     }
 
-    testText("IHT435_05") in {
-      acroForm.getField("IHT435_05").getValueAsString shouldBe "Yes"
+    behave like pdfField("IHT435_05", "Yes")
+
+    behave like pdfField("IHT435_06", "500000")
+
+    behave like pdfField("IHT435_07", "450000")
+
+    behave like pdfField("IHT435_08", "No")
+
+    behave like pdfField("IHT435_10", "9948")
+
+//    describeTest("IHT435_10_1 to 7") in {
+//      checkDecimal(acroForm, "IHT435_10", "234.8899")
+//    }
+
+    behave like pdfField("IHT435_12", "Yes")
+
+    behave like pdfField("IHT435_13", "No")
+
+    behave like pdfField("IHT435_14", "8893")
+
+    behave like pdfField("IHT435_15", "8894")
+
+    behave like pdfField("IHT435_16", "Yes")
+
+    behave like pdfField("IHT435_17", "88728")
+
+    behave like pdfField("IHT435_18", "No")
+
+    describeTest("IHT435_20") in {
+      checkDate(acroForm, "IHT435_20", "13052017")
     }
 
-    testText("IHT435_06") in {
-      acroForm.getField("IHT435_06").getValueAsString shouldBe "500000"
-    }
+    behave like pdfField("IHT435_21", "888")
 
-    testText("IHT435_07") in {
-      acroForm.getField("IHT435_07").getValueAsString shouldBe "450000"
-    }
+    behave like pdfField("IHT435_22", "Yes")
 
-    testText("IHT435_08") in {
-      acroForm.getField("IHT435_08").getValueAsString shouldBe "No"
-    }
+    behave like pdfField("IHT435_23", "No")
 
-    testText("IHT435_10") in {
-      acroForm.getField("IHT435_10").getValueAsString shouldBe "9948"
-    }
+    behave like pdfField("IHT435_24", "777")
 
-    testText("IHT435_12") in {
-      acroForm.getField("IHT435_12").getValueAsString shouldBe "Yes"
-    }
+    behave like pdfField("IHT435_26", "Yes")
 
-    testText("IHT435_13") in {
-      acroForm.getField("IHT435_13").getValueAsString shouldBe "No"
-    }
-
-
+    behave like pdfField("IHT435_27", "3333")
   }
 }

@@ -52,10 +52,18 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     Constants.chargeableEstateValueId -> Seq("IHT435_07"),
     Constants.propertyInEstateId -> Seq("IHT435_08"),
     Constants.propertyValueId -> Seq("IHT435_10"),
-    Constants.propertyPassingToDirectDescendantsId -> Seq("IHT435_??"), //??
+    Constants.percentagePassedToDirectDescendantsId -> Seq(
+      "IHT435_10_01",
+      "IHT435_10_02",
+      "IHT435_10_03",
+      "IHT435_10_04",
+      "IHT435_10_05",
+      "IHT435_10_06",
+      "IHT435_10_07"
+    ),
     Constants.exemptionsAndReliefClaimedId -> Seq("IHT435_12"),
     Constants.grossingUpOnEstatePropertyId -> Seq("IHT435_13"),
-//    Constants.chargeableEstateValueId -> Seq("IHT435_14"),
+    Constants.chargeablePropertyValueId -> Seq("IHT435_14"),
     Constants.chargeableInheritedPropertyValueId -> Seq("IHT435_15"),
     Constants.transferAnyUnusedThresholdId -> Seq("IHT435_16"),
     Constants.valueBeingTransferredId -> Seq("IHT435_17"),
@@ -79,7 +87,7 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
   )
 
   private def getValueForPDF(jsVal: JsValue, cacheId: String): String = {
-    val dateCacheIds = Set(Constants.dateOfDeathId)
+    val dateCacheIds = Set(Constants.dateOfDeathId, Constants.datePropertyWasChangedId)
     jsVal match {
       case n: JsNumber => n.toString
       case b: JsBoolean => if (b.value) "Yes" else "No"
@@ -120,7 +128,6 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     } finally {
       pdf.close()
     }
-    //"/Users/andy/Downloads/blat.pdf"
     val outputStream = new FileOutputStream("/home/grant/Downloads/blat.pdf")
     baos.writeTo(outputStream)
     baos
