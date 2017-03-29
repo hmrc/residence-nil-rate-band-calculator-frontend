@@ -11,7 +11,7 @@ calculate_threshold_increase.guidance1 = Calculate the additional threshold for 
 calculate_threshold_increase.guidance2.bullet1 = an IHT400 account form with the value of what's in the estate already worked out
 calculate_threshold_increase.guidance2.bullet2 = a paper schedule IHT435 if you have already started filling one in
 calculate_threshold_increase.guidance2.bullet3 = a completed schedule IHT436 if you are transferring any unused home threshold
-calculate_threshold_increase.guidance3 = You will also need details of the property If there is any additional threshold because the person who died downsized or sold their home.
+calculate_threshold_increase.guidance3 = You will also need details of the property if there is any additional threshold because the person who died downsized or sold their home.
 
 chargeable_estate_value.browser_title = What is the amount of the total chargeable estate on death?
 chargeable_estate_value.title = What is the amount of the total chargeable estate on death?
