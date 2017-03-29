@@ -42,24 +42,24 @@ object Transformers {
 
   val intToString: Int => Option[String] = (input) => Some(input.toString)
 
+  def stripOffQuotesIfPresent(s:String): String = {
+    val leadingQuotesRemoved = if (s.startsWith("\"")) {
+      s.substring(1)
+    } else {
+      s
+    }
+
+    if (leadingQuotesRemoved.endsWith("\"")) {
+      leadingQuotesRemoved.substring(0, leadingQuotesRemoved.length - 1)
+    } else {
+      leadingQuotesRemoved
+    }
+  }
+
   /**
     * Change the format of a date from "2017-5-12" (with or without quotes) to 12052017.
     */
   def transformDateFormat(dateAsString:String): String = {
-    def stripOffQuotesIfPresent(s:String) = {
-      val leadingQuotesRemoved = if (s.startsWith("\"")) {
-        s.substring(1)
-      } else {
-        s
-      }
-
-      if (leadingQuotesRemoved.endsWith("\"")) {
-        leadingQuotesRemoved.substring(0, leadingQuotesRemoved.length - 1)
-      } else {
-        leadingQuotesRemoved
-      }
-    }
-
     val dateComponents = stripOffQuotesIfPresent(dateAsString).split("-")
     if (dateComponents.size != 3 || dateComponents(0).length != 4 ||
       dateComponents(1).length == 0 || dateComponents(1).length > 2 ||

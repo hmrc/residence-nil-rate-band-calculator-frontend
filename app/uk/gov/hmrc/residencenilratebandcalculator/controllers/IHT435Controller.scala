@@ -88,11 +88,14 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
 
   private def getValueForPDF(jsVal: JsValue, cacheId: String): String = {
     val dateCacheIds = Set(Constants.dateOfDeathId, Constants.datePropertyWasChangedId)
+    val decimalCacheIds = Set(Constants.percentagePassedToDirectDescendantsId)
     jsVal match {
       case n: JsNumber => n.toString
       case b: JsBoolean => if (b.value) "Yes" else "No"
       case s: JsString if dateCacheIds.contains(cacheId) =>
         Transformers.transformDateFormat(s.toString)
+      case s: JsString if decimalCacheIds.contains(cacheId) =>
+        Transformers.stripOffQuotesIfPresent(s.toString).replace(".", "")
       case s: JsString => s.toString
       case _ => ""
     }
@@ -114,7 +117,7 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
                 if (fieldNames.size == 1) retrieveValueToStoreFor1Field else retrieveValueToStoreForMoreThan1Field
               var i = 0
               fieldNames.foreach { currField =>
-                //println("\n&&&&&&&&&&&&&&&& SETTING FIELD " + currField + " TO " + storedValue)
+                val storedValue = retrieveValueToStore(valueForPDF, i)
                 form.getField(currField).setValue(retrieveValueToStore(valueForPDF, i))
                 i = i + 1
               }

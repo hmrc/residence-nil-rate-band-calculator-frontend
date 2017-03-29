@@ -28,14 +28,10 @@ import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 
 class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSessionConnector {
+  private val noDigitsInDate = 8
+  private val noDigitsInDecimal = 7
   private val fakeRequest = FakeRequest("", "")
-
   private val injector = fakeApplication.injector
-
-  private def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
-
-  private def controller = new IHT435Controller(frontendAppConfig, mockSessionConnector)
-
   private val filledcacheMap: CacheMap = new CacheMap("", Map[String, JsValue](
     Constants.dateOfDeathId -> JsString("2017-5-12"),
     Constants.assetsPassingToDirectDescendantsId -> JsBoolean(true),
@@ -43,7 +39,7 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     Constants.chargeableEstateValueId -> JsNumber(450000),
     Constants.propertyInEstateId -> JsBoolean(false),
     Constants.propertyValueId -> JsNumber(9948),
-//    Constants.percentagePassedToDirectDescendantsId -> JsString("234.8899"),
+    Constants.percentagePassedToDirectDescendantsId -> JsString("234.8899"),
     Constants.exemptionsAndReliefClaimedId -> JsBoolean(true),
     Constants.grossingUpOnEstatePropertyId -> JsBoolean(false),
     Constants.chargeablePropertyValueId -> JsNumber(8893),
@@ -59,6 +55,10 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true),
     Constants.valueAvailableWhenPropertyChangedId -> JsNumber(3333)
   ))
+
+  private def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
+
+  private def controller = new IHT435Controller(frontendAppConfig, mockSessionConnector)
 
   private def acroForm: PDAcroForm = {
     setCacheMap(filledcacheMap)
@@ -76,7 +76,7 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     }
   }
 
-  private def describeTest(fieldName:String) = s"generate the correct value for field $fieldName in the generated PDF from the value stored in the cache"
+  private def describeTest(fieldName:String) = s"generate the correct value for field $fieldName in the generated PDF from the cache value"
 
   private def pdfField(fieldName:String, expectedValue:String) = {
     describeTest(fieldName) in {
@@ -98,7 +98,7 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     }
 
     describeTest("IHT435_03") in {
-      checkParts(acroForm, "IHT435_03", "12052017", 8)
+      checkParts(acroForm, "IHT435_03", "12052017", noDigitsInDate)
     }
 
     behave like pdfField("IHT435_05", "Yes")
@@ -111,9 +111,9 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
 
     behave like pdfField("IHT435_10", "9948")
 
-//    describeTest("IHT435_10_1 to 7 (decimal number)") in {
-//      checkParts(acroForm, "IHT435_10", "2348899", 7)
-//    }
+    describeTest("IHT435_10_1 to 7 (decimal number)") in {
+      checkParts(acroForm, "IHT435_10", "2348899", noDigitsInDecimal)
+    }
 
     behave like pdfField("IHT435_12", "Yes")
 
@@ -130,7 +130,7 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     behave like pdfField("IHT435_18", "No")
 
     describeTest("IHT435_20") in {
-      checkParts(acroForm, "IHT435_20", "13052017", 8)
+      checkParts(acroForm, "IHT435_20", "13052017", noDigitsInDate)
     }
 
     behave like pdfField("IHT435_21", "888")
