@@ -148,7 +148,7 @@ class ValueBeingTransferredController @Inject()(val appConfig: FrontendAppConfig
     } else {
       val dateOfDeath = userAnswers.dateOfDeath.getOrElse(throw new RuntimeException("Date of death was not answered"))
       val taxYear = TaxYearResolver.taxYearFor(dateOfDeath)
-      Future.successful(Some(FormError("value", "value_being_transferred.error", Seq(nrb, taxYear.toString))))
+      Future.successful(Some(FormError("value", "value_being_transferred.error", Seq(nrb, taxYear.toString, (taxYear + 1).toString))))
     }
   }
 }

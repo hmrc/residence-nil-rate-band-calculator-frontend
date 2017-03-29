@@ -257,7 +257,7 @@ value_being_transferred.title = How much transferable residence nil rate band ar
 value_being_transferred.guidance1 = This is the number in either box 15 or box 21 on the IHT436 form.
 value_being_transferred.guidance2 = If the person who has died had been married or in a civil partnership more than once during their lifetime and their spouse or civil partner died first, you can transfer more than one unused allowance. Add together the numbers in either box 15 or box 21 on each IHT436 form.
 value_being_transferred.guidance3 = You cannot transfer more than {0}
-value_being_transferred.error = Give a value that is less than the maximum amount of £{0} allowed in {1}
+value_being_transferred.error = Give a value that is less than the maximum amount of £{0} allowed in {1} to {2}
 value_being_transferred.error.blank = Give a value for the amount of unused residence nil rate band that you are transferring from the IHT-436 form
 
 value_of_assets_passing.browser_title = What is the total value of the other assets passing to direct descendants?

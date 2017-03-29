@@ -200,7 +200,7 @@ class ValueBeingTransferredControllerSpec extends UnitSpec with WithFakeApplicat
         val testValue = 123000
         val controller = createController()
         val result = controller.validate(testValue, "100000", userAnswers)(new HeaderCarrier())
-        result.map(x => x should be(Some(FormError("value", "value_being_transferred.error", Seq(100000, "2019")))))
+        result.map(x => x should be(Some(FormError("value", "value_being_transferred.error", Seq(100000, "2019", "2020")))))
       }
 
       "return a None when given a value less than or equal to the nil rate band for the year of death" in {
