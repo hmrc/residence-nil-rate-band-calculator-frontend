@@ -70,12 +70,10 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     acroForm
   }
 
-  private def checkDate(acroForm: PDAcroForm, baseFieldName:String, expectedDate:String) = {
-    acroForm.getField(baseFieldName + "_01").getValueAsString shouldBe expectedDate.charAt(0).toString
-  }
-
-  private def checkDecimal(acroForm: PDAcroForm, baseFieldName:String, expectedDate:String) = {
-    acroForm.getField(baseFieldName + "_01").getValueAsString shouldBe expectedDate.charAt(0).toString
+  private def checkParts(acroForm: PDAcroForm, baseFieldName:String, expectedDate:String, totalParts:Int) = {
+    for(position <- 1 to totalParts) yield {
+      acroForm.getField(baseFieldName + "_0" + position).getValueAsString shouldBe expectedDate.charAt(position - 1).toString
+    }
   }
 
   private def describeTest(fieldName:String) = s"generate the correct value for field $fieldName in the generated PDF from the value stored in the cache"
@@ -100,7 +98,7 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     }
 
     describeTest("IHT435_03") in {
-      checkDate(acroForm, "IHT435_03", "12052017")
+      checkParts(acroForm, "IHT435_03", "12052017", 8)
     }
 
     behave like pdfField("IHT435_05", "Yes")
@@ -113,8 +111,8 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
 
     behave like pdfField("IHT435_10", "9948")
 
-//    describeTest("IHT435_10_1 to 7") in {
-//      checkDecimal(acroForm, "IHT435_10", "234.8899")
+//    describeTest("IHT435_10_1 to 7 (decimal number)") in {
+//      checkParts(acroForm, "IHT435_10", "2348899", 7)
 //    }
 
     behave like pdfField("IHT435_12", "Yes")
@@ -132,7 +130,7 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     behave like pdfField("IHT435_18", "No")
 
     describeTest("IHT435_20") in {
-      checkDate(acroForm, "IHT435_20", "13052017")
+      checkParts(acroForm, "IHT435_20", "13052017", 8)
     }
 
     behave like pdfField("IHT435_21", "888")
