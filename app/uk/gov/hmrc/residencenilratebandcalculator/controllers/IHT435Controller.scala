@@ -19,19 +19,21 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import java.io.{ByteArrayOutputStream, File}
 import javax.inject.{Inject, Singleton}
 
-import org.apache.pdfbox.pdmodel.PDDocument
-import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
+import org.apache.pdfbox.pdmodel.{PDDocument, PDDocumentInformation}
+import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.utils.Transformers
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
+import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
+
 
 @Singleton
 class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
-                                 val sessionConnector: SessionConnector) extends FrontendController {
-
+                                 val messagesApi: MessagesApi,
+                                 val sessionConnector: SessionConnector) extends FrontendController  with I18nSupport {
 
   private val retrieveValueToStoreFor1Field: (String, Int) => String = (v, _) => v
   private val retrieveValueToStoreForMoreThan1Field: (String, Int) => String = (v, i) => v.charAt(i).toString
@@ -87,6 +89,13 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     Constants.thresholdCalculationResultId -> Seq("IHT435_28")
   )
 
+  private def setupPDFDocument(pdf:PDDocument) = {
+    val pdDocumentInformation: PDDocumentInformation = pdf.getDocumentInformation
+    pdDocumentInformation.setTitle(Messages("threshold_calculation_result.pdf.title"))
+    pdf.setDocumentInformation(pdDocumentInformation)
+    pdf.setAllSecurityToBeRemoved(true)
+  }
+
   private def getValueForPDF(jsVal: JsValue, cacheId: String): String = {
     val dateCacheIds = Set(Constants.dateOfDeathId, Constants.datePropertyWasChangedId)
     val decimalCacheIds = Set(Constants.percentagePassedToDirectDescendantsId)
@@ -125,7 +134,7 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
           }
       }
 
-      pdf.setAllSecurityToBeRemoved(true)
+      setupPDFDocument(pdf)
 
       pdf.save(baos)
     } finally {

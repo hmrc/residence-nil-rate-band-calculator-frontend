@@ -20,6 +20,7 @@ import akka.util.ByteString
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm
 import play.api.http.Status
+import play.api.i18n.MessagesApi
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -57,9 +58,11 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     Constants.thresholdCalculationResultId -> JsNumber(229988)
   ))
 
+  private def messagesApi = injector.instanceOf[MessagesApi]
+
   private def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
-  private def controller = new IHT435Controller(frontendAppConfig, mockSessionConnector)
+  private def controller = new IHT435Controller(frontendAppConfig, messagesApi, mockSessionConnector)
 
   private def acroForm: PDAcroForm = {
     setCacheMap(filledcacheMap)
@@ -71,8 +74,8 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     acroForm
   }
 
-  private def checkParts(acroForm: PDAcroForm, baseFieldName:String, expectedDate:String, totalParts:Int) = {
-    for(position <- 1 to totalParts) yield {
+  private def checkMultipleFieldValues(acroForm: PDAcroForm, baseFieldName:String, expectedDate:String, totalFields:Int) = {
+    for(position <- 1 to totalFields) yield {
       acroForm.getField(baseFieldName + "_0" + position).getValueAsString shouldBe expectedDate.charAt(position - 1).toString
     }
   }
@@ -99,7 +102,7 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     }
 
     describeTest("IHT435_03") in {
-      checkParts(acroForm, "IHT435_03", "12052017", noDigitsInDate)
+      checkMultipleFieldValues(acroForm, "IHT435_03", "12052017", noDigitsInDate)
     }
 
     behave like pdfField("IHT435_05", "Yes")
@@ -113,7 +116,7 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     behave like pdfField("IHT435_10", "9948")
 
     describeTest("IHT435_10_1 to 7 (decimal number)") in {
-      checkParts(acroForm, "IHT435_10", "2348899", noDigitsInDecimal)
+      checkMultipleFieldValues(acroForm, "IHT435_10", "2348899", noDigitsInDecimal)
     }
 
     behave like pdfField("IHT435_12", "Yes")
@@ -131,7 +134,7 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     behave like pdfField("IHT435_18", "No")
 
     describeTest("IHT435_20") in {
-      checkParts(acroForm, "IHT435_20", "13052017", noDigitsInDate)
+      checkMultipleFieldValues(acroForm, "IHT435_20", "13052017", noDigitsInDate)
     }
 
     behave like pdfField("IHT435_21", "888")

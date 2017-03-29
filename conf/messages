@@ -232,6 +232,7 @@ threshold_calculation_result.allowance = Allowance
 threshold_calculation_result.amount = Amount
 threshold_calculation_result.pdf.guidance1 = View a copy of the IHT435 form with the details you have given on it (PDF <500KB)
 threshold_calculation_result.pdf.guidance2 = You will need to give more details on the form.
+threshold_calculation_result.pdf.title = Copy of IHT 435
 
 transfer_any_unused_threshold.browser_title = Do you wish to transfer any unused residence nil rate band?
 transfer_any_unused_threshold.title = Do you wish to transfer any unused residence nil rate band?
