@@ -16,20 +16,16 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import java.text.NumberFormat
-import java.util.Locale
-
 import org.joda.time.LocalDate
 import play.api.i18n.Messages
 import play.api.mvc.Call
+import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
 
 case class AnswerRow(title: String, data: String, url: String)
 
 object AnswerRow {
   def apply(titleKey: String, amount: Int, url: Call)(messages: Messages): AnswerRow = {
-    val formatter = NumberFormat.getCurrencyInstance(Locale.UK)
-    formatter.setMaximumFractionDigits(0)
-    AnswerRow(messages(titleKey), formatter.format(amount), url.url)
+    AnswerRow(messages(titleKey), CurrencyFormatter.format(amount), url.url)
   }
 
   def apply(titleKey: String, yesNo: Boolean, url: Call)(messages: Messages): AnswerRow =
