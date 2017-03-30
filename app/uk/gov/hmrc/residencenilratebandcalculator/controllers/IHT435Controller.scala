@@ -21,6 +21,7 @@ import javax.inject.{Inject, Singleton}
 
 import play.api.Environment
 import org.apache.pdfbox.pdmodel.{PDDocument, PDDocumentInformation}
+import play.Logger
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.http.cache.client.CacheMap
@@ -146,11 +147,16 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     }
   }
 
+  private def fail(msg: String) = {
+    Logger.error(msg)
+    throw new RuntimeException()
+  }
+
   def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.fetch().map {
       case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
       case Some(cacheMap) =>
-        generatePDF(cacheMap).fold(throw new RuntimeException()) { bytes =>
+        generatePDF(cacheMap).fold(fail("Unable to locate PDF resource")) { bytes =>
           Ok(bytes.toByteArray).as("application/pdf")
         }
     }
