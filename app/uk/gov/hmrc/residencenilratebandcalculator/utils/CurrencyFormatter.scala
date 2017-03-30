@@ -14,18 +14,19 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.models
+package uk.gov.hmrc.residencenilratebandcalculator.utils
 
 import java.text.NumberFormat
 import java.util.Locale
 
-import play.api.i18n.Messages
-import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
+object CurrencyFormatter {
+  def format(amount: Int): String = {
+    val formatter = NumberFormat.getCurrencyInstance(Locale.UK)
+    formatter.setMaximumFractionDigits(0)
+    formatter.format(amount)
+  }
 
-case class ResultsRow(summary: String, data: String)
-
-object ResultsRow {
-  def apply(summaryKey: String, amount: Int)(messages: Messages): ResultsRow = {
-    ResultsRow(messages(summaryKey), CurrencyFormatter.format(amount))
+  def format(amountStr: String): String = {
+    this.format(Integer.parseInt(amountStr))
   }
 }

@@ -16,9 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import java.text.NumberFormat
-import java.util.Locale
-
 import org.joda.time.LocalDate
 import org.mockito.ArgumentCaptor
 import org.mockito.Matchers._
@@ -32,6 +29,7 @@ import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, CalculationResult}
+import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
 
 import scala.concurrent.Future
 import scala.util.Success
@@ -106,7 +104,7 @@ class ThresholdCalculationResultControllerSpec extends SimpleControllerSpecBase 
       setCacheMap(cacheMap)
       val result = thresholdCalculationResultController().onPageLoad()(fakeRequest)
       val contents = contentAsString(result)
-      contents should include(NumberFormat.getCurrencyInstance(Locale.UK).format(expectedResidenceNilRateAmount))
+      contents should include(CurrencyFormatter.format(expectedResidenceNilRateAmount))
     }
   }
 }
