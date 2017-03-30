@@ -27,6 +27,7 @@ import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
+import play.api.Environment
 
 class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSessionConnector {
   private val noDigitsInDate = 8
@@ -61,7 +62,9 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
 
   private def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
-  private def controller = new IHT435Controller(frontendAppConfig, messagesApi, mockSessionConnector)
+  val env = injector.instanceOf[Environment]
+
+  private def controller = new IHT435Controller(frontendAppConfig, env, messagesApi, mockSessionConnector)
 
   private def acroForm(filledCacheMap:CacheMap = cacheMapAllNonDecimalFields): PDAcroForm = {
     setCacheMap(filledCacheMap)

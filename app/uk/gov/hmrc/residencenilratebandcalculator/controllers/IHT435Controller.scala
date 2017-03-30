@@ -149,7 +149,7 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
 
   private def fail(msg: String) = {
     Logger.error(msg)
-    throw new RuntimeException()
+    throw new RuntimeException(msg)
   }
 
   def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
