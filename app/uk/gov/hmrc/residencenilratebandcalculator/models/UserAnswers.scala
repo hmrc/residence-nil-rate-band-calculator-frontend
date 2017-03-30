@@ -52,8 +52,6 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def grossingUpOnEstateAssets = cacheMap.getEntry[Boolean](Constants.grossingUpOnEstateAssetsId)
 
-  def downsizingDetails = cacheMap.getEntry[Date](Constants.downsizingDetails)
-
   def propertyInEstate = cacheMap.getEntry[Boolean](Constants.propertyInEstateId)
 
   def valueOfEstate = cacheMap.getEntry[Int](Constants.valueOfEstateId)
