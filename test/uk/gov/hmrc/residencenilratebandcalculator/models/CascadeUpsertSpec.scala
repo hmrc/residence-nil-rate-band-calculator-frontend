@@ -56,6 +56,13 @@ class CascadeUpsertSpec extends UnitSpec {
 
   "Cascade Upsert" when {
 
+    "asked to save a value for date of death" must {
+      "not delete any other answers" in {
+        val updatedCacheMap = (new CascadeUpsert)(Constants.dateOfDeathId, Constants.eligibilityDate, fullCacheMap)
+        updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size
+      }
+    }
+
     "asked to save the answer 'false' for Property In Estate" must {
 
       "delete the existing 'Property Value'" in {

@@ -23,6 +23,10 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_passed_t
 
 class PercentagePassedToDirectDescendantsControllerSpec extends SimpleControllerSpecBase {
 
+  val errorKeyBlank = "percentage_passed_to_direct_descendants.error.required"
+  val errorKeyNonNumeric = "percentage_passed_to_direct_descendants.error.non_numeric"
+  val errorKeyOutOfRange = "percentage_passed_to_direct_descendants.error.out_of_range"
+
   "Percentage Passed To Direct Descendants Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
@@ -30,23 +34,24 @@ class PercentagePassedToDirectDescendantsControllerSpec extends SimpleController
 
       value match {
         case None => percentage_passed_to_direct_descendants(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => percentage_passed_to_direct_descendants(frontendAppConfig, url, Some(PositivePercentForm().bind(v)), Seq())(fakeRequest, messages)
+        case Some(v) => percentage_passed_to_direct_descendants(frontendAppConfig, url,
+          Some(PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange).bind(v)), Seq())(fakeRequest, messages)
       }
     }
 
     def createController = () => new PercentagePassedToDirectDescendantsController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
 
-    val testValue = 50
+    val testValue = BigDecimal(50)
 
-    behave like rnrbController[Int](createController, createView, Constants.percentagePassedToDirectDescendantsId, testValue)(Reads.IntReads, Writes.IntWrites)
+    behave like rnrbController[BigDecimal](createController, createView, Constants.percentagePassedToDirectDescendantsId, testValue)(Reads.bigDecReads, Writes.BigDecimalWrites)
 
-    behave like nonStartingController[Int](createController,
+    behave like nonStartingController[BigDecimal](createController,
       List(Constants.dateOfDeathId,
         Constants.partOfEstatePassingToDirectDescendantsId,
         Constants.valueOfEstateId,
         Constants.chargeableEstateValueId,
         Constants.propertyInEstateId,
         Constants.propertyValueId,
-        Constants.propertyPassingToDirectDescendantsId))(Reads.IntReads, Writes.IntWrites)
+        Constants.propertyPassingToDirectDescendantsId))(Reads.bigDecReads, Writes.BigDecimalWrites)
   }
 }

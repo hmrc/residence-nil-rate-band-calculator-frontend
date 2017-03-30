@@ -10,7 +10,7 @@
 
         <ul class="error-summary-list">
             @for(error <- errors) {
-            <li><a href="#@{error.key}">@messages(error.message)</a></li>
+                <li><a href="#@{error.key}">@messages(error.message, error.args:_*)</a></li>
             }
         </ul>
 

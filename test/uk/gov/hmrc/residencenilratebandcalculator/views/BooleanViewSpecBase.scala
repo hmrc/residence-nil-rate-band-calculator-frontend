@@ -66,12 +66,12 @@ trait BooleanViewSpecBase extends ViewSpecBase {
       "rendered with an error" must {
 
         "show an error summary" in {
-          val doc = asDocument(createView(Some(BooleanForm().withError(error))))
+          val doc = asDocument(createView(Some(BooleanForm("").withError(error))))
           assertRenderedById(doc, "error-summary-heading")
         }
 
         "show an error in the value field's label" in {
-          val doc = asDocument(createView(Some(BooleanForm().withError(error))))
+          val doc = asDocument(createView(Some(BooleanForm("").withError(error))))
           val errorSpan = doc.getElementsByClass("error-notification").first
           errorSpan.text shouldBe messages(errorMessage)
         }
@@ -83,13 +83,13 @@ trait BooleanViewSpecBase extends ViewSpecBase {
                           answer: Boolean) = {
 
     "have only the correct value checked" in {
-      val doc = asDocument(createView(Some(BooleanForm().fill(answer))))
+      val doc = asDocument(createView(Some(BooleanForm("").fill(answer))))
       assert(doc.getElementById("yes").hasAttr("checked") == answer)
       assert(doc.getElementById("no").hasAttr("checked") != answer)
     }
 
     "not render an error summary" in {
-      val doc = asDocument(createView(Some(BooleanForm().fill(answer))))
+      val doc = asDocument(createView(Some(BooleanForm("").fill(answer))))
       assertNotRenderedById(doc, "error-summary_header")
     }
   }

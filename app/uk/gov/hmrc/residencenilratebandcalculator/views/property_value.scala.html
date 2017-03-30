@@ -10,26 +10,26 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @rnrbHelpers.back_link(backUrl)
-
-    @rnrbHelpers.heading("property_value.title")
-
-    <p>@messages("property_value.guidance1")</p>
-
-    <p>@messages("property_value.guidance2")</p>
-
-    <p>@messages("property_value.guidance3")</p>
-
-    <ul class="list list-bullet">
-        <li>@messages("property_value.guidance3.bullet1")</li>
-        <li>@messages("property_value.guidance3.bullet2")</li>
-    </ul>
-
-    <p>@messages("property_value.guidance4")</p>
-
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyValueController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
+        @rnrbHelpers.back_link(backUrl)
+
+        @rnrbHelpers.heading("property_value.title")
+
+        <p>@messages("property_value.guidance1")</p>
+
+        <p>@messages("property_value.guidance2")</p>
+
+        <p>@messages("property_value.guidance3")</p>
+
+        <ul class="list list-bullet">
+            <li>@messages("property_value.guidance3.bullet1")</li>
+            <li>@messages("property_value.guidance3.bullet2")</li>
+        </ul>
+
+        <p>@messages("property_value.guidance4")</p>
 
         @rnrbHelpers.input_text(
             id = "value",

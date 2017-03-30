@@ -9,13 +9,23 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
-    <h1>@messages(s"${prefix}.title")</h1>
+    <h1 class="heading-large">@messages(s"${prefix}.title")</h1>
 
-    <div class="panel panel-border-wide">
+    <div class="panel-indent panel-indent--wide">
         <p>@messages(s"${prefix}.reason")</p>
     </div>
 
     <p>@messages(s"${prefix}.guidance")</p>
+
+    <h2 class="heading-medium">@messages(s"${prefix}.next.title")</h2>
+    <p>@messages(s"${prefix}.next.guidance1")</p>
+    <p>@messages(s"${prefix}.next.guidance2")</p>
+    <span>@messages(s"${prefix}.next.guidance3.addr1")</span><br/>
+    <span>@messages(s"${prefix}.next.guidance3.addr2")</span><br/>
+    <span>@messages(s"${prefix}.next.guidance3.addr3")</span>
+    <p>@messages(s"${prefix}.next.guidance4")</p>
+    <p>@messages(s"${prefix}.next.guidance5")</p>
+
 
     <a href="@ExitQuestionnaireController.onPageLoad().url" class="button u--no-print">@messages("site.finish")</a>
 

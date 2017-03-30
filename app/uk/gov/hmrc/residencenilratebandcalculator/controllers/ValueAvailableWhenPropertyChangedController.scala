@@ -44,7 +44,8 @@ class ValueAvailableWhenPropertyChangedController @Inject()(val appConfig: Front
 
   val controllerId = Constants.valueAvailableWhenPropertyChangedId
 
-  def form = () => NonNegativeIntForm()
+  def form = () =>
+    NonNegativeIntForm("value_available_when_property_changed.error.blank", "error.whole_pounds", "error.non_numeric")
 
   private def getCacheMap(implicit hc: HeaderCarrier): Future[CacheMap] = sessionConnector.fetch().map {
     case Some(cacheMap) => cacheMap
@@ -141,8 +142,7 @@ class ValueAvailableWhenPropertyChangedController @Inject()(val appConfig: Front
     if (value <= nrb) {
       Future.successful(None)
     } else {
-      Future.successful(Some(FormError("value", "value_available_when_property_changed.error")))
+      Future.successful(Some(FormError("value", "value_available_when_property_changed.error", Seq(nrb))))
     }
-
   }
 }

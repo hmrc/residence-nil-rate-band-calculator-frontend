@@ -20,6 +20,7 @@ import java.text.NumberFormat
 import java.util.Locale
 import javax.inject.{Inject, Singleton}
 
+import org.joda.time.LocalDate
 import play.api.Logger
 import play.api.data.{Form, FormError}
 import play.api.i18n.MessagesApi
@@ -34,6 +35,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_being_transferred
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.time.TaxYearResolver
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -46,7 +48,8 @@ class ValueBeingTransferredController @Inject()(val appConfig: FrontendAppConfig
 
   val controllerId = Constants.valueBeingTransferredId
 
-  def form = () => NonNegativeIntForm()
+  def form = () =>
+    NonNegativeIntForm("value_being_transferred.error.blank", "error.whole_pounds", "error.non_numeric")
 
   private def getCacheMap(implicit hc: HeaderCarrier): Future[CacheMap] = sessionConnector.fetch().map {
     case Some(cacheMap) => cacheMap
@@ -108,7 +111,7 @@ class ValueBeingTransferredController @Inject()(val appConfig: FrontendAppConfig
             formWithErrors => Future.successful(BadRequest(value_being_transferred(appConfig,
               navigator.lastPage(controllerId)(userAnswers).url, formattedNilRateBand, Some(formWithErrors), previousAnswers))),
             (value) => {
-              validate(value, nilRateBand).flatMap {
+              validate(value, nilRateBand, userAnswers).flatMap {
                 case Some(error) => Future.successful(BadRequest(value_being_transferred(appConfig,
                   navigator.lastPage(controllerId)(userAnswers).url,
                   formattedNilRateBand,
@@ -130,7 +133,7 @@ class ValueBeingTransferredController @Inject()(val appConfig: FrontendAppConfig
   }
 
 
-  def validate(value: Int, nilRateBandStr: String)(implicit hc: HeaderCarrier): Future[Option[FormError]] = {
+  def validate(value: Int, nilRateBandStr: String, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Future[Option[FormError]] = {
     val nrb = try {
       Integer.parseInt(nilRateBandStr)
     } catch {
@@ -143,9 +146,10 @@ class ValueBeingTransferredController @Inject()(val appConfig: FrontendAppConfig
     if (value <= nrb) {
       Future.successful(None)
     } else {
-      Future.successful(Some(FormError("value", "value_being_transferred.error")))
+      val dateOfDeath = userAnswers.dateOfDeath.getOrElse(throw new RuntimeException("Date of death was not answered"))
+      val taxYear = TaxYearResolver.taxYearFor(dateOfDeath)
+      Future.successful(Some(FormError("value", "value_being_transferred.error", Seq(nrb, taxYear.toString, (taxYear + 1).toString))))
     }
   }
-
 }
 

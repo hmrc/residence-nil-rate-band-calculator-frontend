@@ -33,12 +33,16 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_being_transfe
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
-import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows}
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, UserAnswers}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class ValueBeingTransferredControllerSpec extends UnitSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
+
+  val errorKeyBlank = "value_being_transferred.error.blank"
+  val errorKeyDecimal = "error.whole_pounds"
+  val errorKeyNonNumeric = "error.non_numeric"
 
   val fakeRequest = FakeRequest("", "")
 
@@ -63,7 +67,7 @@ class ValueBeingTransferredControllerSpec extends UnitSpec with WithFakeApplicat
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
       case None => value_being_transferred(frontendAppConfig, url, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages)
-      case Some(v) => value_being_transferred(frontendAppConfig, url, "£100,000.00", Some(NonNegativeIntForm().bind(v)), Seq(answerRow))(fakeRequest, messages)
+      case Some(v) => value_being_transferred(frontendAppConfig, url, "£100,000.00", Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(answerRow))(fakeRequest, messages)
     }
   }
 
@@ -72,7 +76,7 @@ class ValueBeingTransferredControllerSpec extends UnitSpec with WithFakeApplicat
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
       case None => value_being_transferred(frontendAppConfig, url, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages)
-      case Some(v) => value_being_transferred(frontendAppConfig, url, "£100,000.00", Some(NonNegativeIntForm().bind(v)), Seq(answerRow))(fakeRequest, messages)
+      case Some(v) => value_being_transferred(frontendAppConfig, url, "£100,000.00", Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(answerRow))(fakeRequest, messages)
     }
   }
 
@@ -191,24 +195,30 @@ class ValueBeingTransferredControllerSpec extends UnitSpec with WithFakeApplicat
     "validate" must {
 
       "return a FormError when given a value greater than the nil rate band for the year of death" in {
+        val cacheMap = CacheMap("a", Map(Constants.dateOfDeathId -> JsString("2020-01-01")))
+        val userAnswers = new UserAnswers(cacheMap)
         val testValue = 123000
         val controller = createController()
-        val result = controller.validate(testValue, "100000")(new HeaderCarrier())
-        result.map(x => x should be(Some(FormError("value", "value_being_transferred.error"))))
+        val result = controller.validate(testValue, "100000", userAnswers)(new HeaderCarrier())
+        result.map(x => x should be(Some(FormError("value", "value_being_transferred.error", Seq(100000, "2019", "2020")))))
       }
 
       "return a None when given a value less than or equal to the nil rate band for the year of death" in {
+        val cacheMap = CacheMap("a", Map(Constants.dateOfDeathId -> JsString("2020-01-01")))
+        val userAnswers = new UserAnswers(cacheMap)
         val testValue = 90000
         val controller = createController()
-        val result = controller.validate(testValue, "100000")(new HeaderCarrier())
+        val result = controller.validate(testValue, "100000", userAnswers)(new HeaderCarrier())
         result.map(x => x should be(None))
       }
 
       "throw an exception when given a nil rate band that cannot be parsed into an int" in {
         val exception = intercept[NumberFormatException] {
+          val cacheMap = CacheMap("a", Map(Constants.dateOfDeathId -> JsString("2020-01-01")))
+          val userAnswers = new UserAnswers(cacheMap)
           val testValue = 90000
           val controller = createController()
-          val result = controller.validate(testValue, "not a number")(new HeaderCarrier())
+          val result = controller.validate(testValue, "not a number", userAnswers)(new HeaderCarrier())
         }
         exception.getMessage shouldBe "Bad value in nil rate band"
       }

@@ -35,7 +35,7 @@ class GrossingUpOnEstateAssetsController @Inject()(override val appConfig: Front
 
   override val controllerId: String = Constants.grossingUpOnEstateAssetsId
 
-  override def form: () => Form[Boolean] = () => BooleanForm()
+  override def form: () => Form[Boolean] = () => BooleanForm("grossing_up_on_estate_assets.error.required")
 
   override def view(form: Option[Form[Boolean]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
     grossing_up_on_estate_assets(appConfig, backUrl, form, answerRows)

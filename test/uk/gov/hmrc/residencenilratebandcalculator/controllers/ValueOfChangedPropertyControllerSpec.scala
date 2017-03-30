@@ -23,6 +23,10 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_changed_pr
 
 class ValueOfChangedPropertyControllerSpec extends SimpleControllerSpecBase {
 
+  val errorKeyBlank = "value_of_changed_property.error.blank"
+  val errorKeyDecimal = "error.whole_pounds"
+  val errorKeyNonNumeric = "error.non_numeric"
+
   "Value Of Changed Property Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
@@ -30,7 +34,7 @@ class ValueOfChangedPropertyControllerSpec extends SimpleControllerSpecBase {
 
       value match {
         case None => value_of_changed_property(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => value_of_changed_property(frontendAppConfig, url, Some(NonNegativeIntForm().bind(v)), Seq())(fakeRequest, messages)
+        case Some(v) => value_of_changed_property(frontendAppConfig, url, Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

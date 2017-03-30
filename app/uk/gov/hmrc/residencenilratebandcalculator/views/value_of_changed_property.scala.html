@@ -10,19 +10,19 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @rnrbHelpers.back_link(backUrl)
-
-    @rnrbHelpers.heading("value_of_changed_property.title")
-
-    <p>@messages("value_of_changed_property.guidance1")</p>
-
-    <p>@messages("value_of_changed_property.guidance2")</p>
-
-    <p>@messages("value_of_changed_property.guidance3")</p>
-
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfChangedPropertyController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
+        @rnrbHelpers.back_link(backUrl)
+
+        @rnrbHelpers.heading("value_of_changed_property.title")
+
+        <p>@messages("value_of_changed_property.guidance1")</p>
+
+        <p>@messages("value_of_changed_property.guidance2")</p>
+
+        <p>@messages("value_of_changed_property.guidance3")</p>
 
         @rnrbHelpers.input_text(
             id = "value",

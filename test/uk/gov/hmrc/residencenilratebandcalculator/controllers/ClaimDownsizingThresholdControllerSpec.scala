@@ -23,12 +23,14 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.claim_downsizing_th
 
 class ClaimDownsizingThresholdControllerSpec extends SimpleControllerSpecBase {
 
+  val messageKey = "claim_downsizing_threshold.error.required"
+
   def createView = (value: Option[Map[String, String]]) => {
     val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.TransferAnyUnusedThresholdController.onPageLoad().url
 
     value match {
       case None => claim_downsizing_threshold(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-      case Some(v) => claim_downsizing_threshold(frontendAppConfig, url, Some(BooleanForm().bind(v)), Seq())(fakeRequest, messages)
+      case Some(v) => claim_downsizing_threshold(frontendAppConfig, url, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages)
     }
   }
 

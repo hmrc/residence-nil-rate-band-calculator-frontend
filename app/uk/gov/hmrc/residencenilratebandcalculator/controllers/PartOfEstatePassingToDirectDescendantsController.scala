@@ -35,7 +35,7 @@ class PartOfEstatePassingToDirectDescendantsController @Inject()(override val ap
 
   override val controllerId: String = Constants.partOfEstatePassingToDirectDescendantsId
 
-  override def form: () => Form[Boolean] = () => BooleanForm()
+  override def form: () => Form[Boolean] = () => BooleanForm("part_of_estate_passing_to_direct_descendants.error.required")
 
   override def view(form: Option[Form[Boolean]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
     part_of_estate_passing_to_direct_descendants(appConfig, backUrl, form, answerRows)

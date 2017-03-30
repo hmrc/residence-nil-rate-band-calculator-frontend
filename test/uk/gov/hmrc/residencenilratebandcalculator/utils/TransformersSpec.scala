@@ -57,4 +57,76 @@ class TransformersSpec extends UnitSpec {
       }
     }
   }
+
+  "transformDateFormat" must {
+    "behave correctly for a valid date where there are no quotes" in {
+      transformDateFormat("2017-5-12") shouldBe "12052017"
+    }
+    "behave correctly for a valid date where month has no leading zero" in {
+      transformDateFormat("\"2017-5-12\"") shouldBe "12052017"
+    }
+    "behave correctly for a valid date where day has no leading zero" in {
+      transformDateFormat("\"2017-05-03\"") shouldBe "03052017"
+    }
+    "throw an exception where day is empty" in {
+      a[RuntimeException] shouldBe thrownBy {
+        transformDateFormat("\"2017--03\"")
+      }
+    }
+    "throw an exception where month is empty" in {
+      a[RuntimeException] shouldBe thrownBy {
+        transformDateFormat("\"2017-03-\"")
+      }
+    }
+    "throw an exception where year is empty" in {
+      a[RuntimeException] shouldBe thrownBy {
+        transformDateFormat("\"--03-04\"")
+      }
+    }
+    "throw an exception where day is too long" in {
+      a[RuntimeException] shouldBe thrownBy {
+        transformDateFormat("2017-5-124")
+      }
+    }
+    "throw an exception where month is too long" in {
+      a[RuntimeException] shouldBe thrownBy {
+        transformDateFormat("2017-124-5")
+      }
+    }
+  }
+
+  "stripOffQuotesIfPresent" must {
+    "strip off quotes" in {
+      stripOffQuotesIfPresent("\"abc\"") shouldBe "abc"
+    }
+    "work where no quotes" in {
+      stripOffQuotesIfPresent("abc") shouldBe "abc"
+    }
+  }
+
+  "transformDecimalFormat" must {
+    "transform correctly where decimal number of less than maximum size" in {
+      transformDecimalFormat("34.8899") shouldBe " 348899"
+    }
+
+    "transform correctly where decimal number of maximum size" in {
+      transformDecimalFormat("234.8899") shouldBe "2348899"
+    }
+
+    "transform correctly where decimal number with less than max mantissa" in {
+      transformDecimalFormat("234.889") shouldBe "234889 "
+    }
+
+    "transform correctly where decimal number with no decimal point where max" in {
+      transformDecimalFormat("234") shouldBe "234    "
+    }
+
+    "transform correctly where decimal number with no decimal point where less than max" in {
+      transformDecimalFormat("34") shouldBe " 34    "
+    }
+
+    "transform correctly where empty string" in {
+      transformDecimalFormat("") shouldBe "       "
+    }
+  }
 }

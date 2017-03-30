@@ -23,6 +23,8 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.exemptions_and_reli
 
 class ExemptionsAndReliefClaimedControllerSpec extends SimpleControllerSpecBase {
 
+  val messageKey = "exemptions_and_relief_claimed.error.required"
+
   "Exemptions And Relief Claimed Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
@@ -30,7 +32,7 @@ class ExemptionsAndReliefClaimedControllerSpec extends SimpleControllerSpecBase 
 
       value match {
         case None => exemptions_and_relief_claimed(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => exemptions_and_relief_claimed(frontendAppConfig, url, Some(BooleanForm().bind(v)), Seq())(fakeRequest, messages)
+        case Some(v) => exemptions_and_relief_claimed(frontendAppConfig, url, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

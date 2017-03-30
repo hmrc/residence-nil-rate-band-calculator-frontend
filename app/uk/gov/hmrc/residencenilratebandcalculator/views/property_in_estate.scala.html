@@ -11,19 +11,19 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
-        @rnrbHelpers.back_link(backUrl)
-
-    @rnrbHelpers.heading("property_in_estate.title")
-
-    <p>@messages("property_in_estate.guidance1")</p>
-
-    <p>@messages("property_in_estate.guidance2")</p>
-
     @helpers.form(action = PropertyInEstateController.onSubmit(), 'autoComplete -> "off") {
 
-            @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
 
-            @rnrbHelpers.input_yes_no(
+        @rnrbHelpers.back_link(backUrl)
+
+        @rnrbHelpers.heading("property_in_estate.title")
+
+        <p>@messages("property_in_estate.guidance1")</p>
+
+        <p>@messages("property_in_estate.guidance2")</p>
+
+        @rnrbHelpers.input_yes_no(
                 id = "value",
                 label = messages("property_in_estate.title"),
                 labelClass = Some("visually-hidden"),
