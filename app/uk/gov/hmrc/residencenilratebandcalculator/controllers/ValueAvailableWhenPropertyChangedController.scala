@@ -32,8 +32,10 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, Ses
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, UserAnswers}
+import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_available_when_property_changed
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+
 import scala.concurrent.Future
 
 @Singleton
@@ -65,18 +67,13 @@ class ValueAvailableWhenPropertyChangedController @Inject()(val appConfig: Front
     messagesApi.preferred(request)
   )
 
-  def formatJsonNumber(numberStr: String): String = {
-    val number = Integer.parseInt(numberStr)
-    NumberFormat.getCurrencyInstance(Locale.UK).format(number)
-  }
-
   def onPageLoad(implicit rds: Reads[Int]) = Action.async {
     implicit request => {
       microserviceValues.map {
         case (nilRateValueJson, cacheMap) => {
           val previousAnswers = answerRows(cacheMap, request)
           val userAnswers = new UserAnswers(cacheMap)
-          val nilRateBand = formatJsonNumber(nilRateValueJson.json.toString())
+          val nilRateBand = CurrencyFormatter.format(nilRateValueJson.json.toString())
           implicit val messages = messagesApi.preferred(request)
           Ok(value_available_when_property_changed(appConfig, navigator.lastPage(controllerId)(userAnswers).url,
             nilRateBand,
@@ -99,7 +96,7 @@ class ValueAvailableWhenPropertyChangedController @Inject()(val appConfig: Front
         case (nilRateValueJson, cacheMap) => {
           val boundForm = form().bindFromRequest()
           val nilRateBand = nilRateValueJson.json.toString()
-          val formattedNilRateBand = formatJsonNumber(nilRateBand)
+          val formattedNilRateBand = CurrencyFormatter.format(nilRateBand)
           val previousAnswers = answerRows(cacheMap, request)
           val userAnswers = new UserAnswers(cacheMap)
           implicit val messages = messagesApi.preferred(request)

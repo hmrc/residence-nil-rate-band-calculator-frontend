@@ -25,4 +25,8 @@ object CurrencyFormatter {
     formatter.setMaximumFractionDigits(0)
     formatter.format(amount)
   }
+
+  def format(amountStr: String): String = {
+    this.format(Integer.parseInt(amountStr))
+  }
 }

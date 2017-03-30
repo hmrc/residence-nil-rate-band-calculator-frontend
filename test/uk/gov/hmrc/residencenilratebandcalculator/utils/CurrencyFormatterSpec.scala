@@ -36,5 +36,16 @@ class CurrencyFormatterSpec extends UnitSpec {
     "format -1000000 GBP as -£1,000,000 without a trailing fractional part" in {
       CurrencyFormatter.format(-1000000) shouldBe "-£1,000,000"
     }
+
+    "format \"0\" GBP as £0" in {
+      CurrencyFormatter.format("0") shouldBe "£0"
+    }
+
+    "format NotANumber by throwing a NumberFormatException" in {
+      val exception = intercept[NumberFormatException] {
+        CurrencyFormatter.format("NotANumber")
+      }
+      exception.getMessage shouldBe "For input string: \"NotANumber\""
+    }
   }
 }
