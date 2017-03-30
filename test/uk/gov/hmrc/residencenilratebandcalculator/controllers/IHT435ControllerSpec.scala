@@ -132,7 +132,7 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
       val cacheMap: CacheMap = new CacheMap("", Map[String, JsValue](
         Constants.percentagePassedToDirectDescendantsId -> JsString("234.889")
       ))
-      checkMultipleFieldValues(acroForm(cacheMap), "IHT435_10", " 234889", noDigitsInDecimal)
+      checkMultipleFieldValues(acroForm(cacheMap), "IHT435_10", "234889 ", noDigitsInDecimal)
     }
 
     behave like pdfField("IHT435_12", "Yes")

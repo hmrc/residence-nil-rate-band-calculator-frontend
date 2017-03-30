@@ -94,6 +94,8 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     pdf.setDocumentInformation(pdDocumentInformation)
   }
 
+
+
   private def getValueForPDF(jsVal: JsValue, cacheId: String): String = {
     val dateCacheIds = Set(Constants.dateOfDeathId, Constants.datePropertyWasChangedId)
     val decimalCacheIds = Set(Constants.percentagePassedToDirectDescendantsId)
@@ -103,7 +105,7 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
       case s: JsString if dateCacheIds.contains(cacheId) =>
         Transformers.transformDateFormat(s.toString)
       case s: JsString if decimalCacheIds.contains(cacheId) =>
-        (decimalLeftPadding + Transformers.stripOffQuotesIfPresent(s.toString).replace(".", "")) takeRight 7
+        Transformers.transformDecimalFormat(s.toString)
       case s: JsString => s.toString
       case _ => ""
     }

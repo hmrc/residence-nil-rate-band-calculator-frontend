@@ -59,4 +59,22 @@ object Transformers {
     val day = ("0" + dateComponents(2)) takeRight 2
     day + month + year
   }
+
+  /**
+    * Change the format of a decimal number from "889.9988" to "8899988", i.e.
+    * 3 digits for integer portion, 4 digits for mantissa. Pads integer to left with
+    * up to 3 spaces and mantissa to right with up to 4 spaces. If no decimal point then
+    * assumes this is integer portion.
+    */
+  def transformDecimalFormat(s:String):String = {
+    val splitDecimal = Transformers.stripOffQuotesIfPresent(s).split('.')
+    val decimalParts = if (splitDecimal.length == 2) {
+      splitDecimal.toSeq
+    } else {
+      Seq(s, "")
+    }
+    val integer = ("   " + decimalParts.head) takeRight 3
+    val mantissa = (decimalParts(1) + "    ") take 4
+    integer + mantissa
+  }
 }
