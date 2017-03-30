@@ -18,19 +18,17 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
 
-import java.text.NumberFormat
-import java.util.Locale
 import play.Logger
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.play.http.HeaderCarrier
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CalculationInput, UserAnswers}
+import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.threshold_calculation_result
 
 import scala.concurrent.Future
@@ -76,7 +74,7 @@ class ThresholdCalculationResultController @Inject()(appConfig: FrontendAppConfi
           case (Success(result), Success(answers)) =>
             sessionConnector.cache[Int](Constants.thresholdCalculationResultId, result.residenceNilRateAmount)
             val messages = messagesApi.preferred(request)
-            val residenceNilRateAmount = NumberFormat.getCurrencyInstance(Locale.UK).format(result.residenceNilRateAmount)
+            val residenceNilRateAmount = CurrencyFormatter.format(result.residenceNilRateAmount)
             Ok(threshold_calculation_result(appConfig, residenceNilRateAmount, AnswerRows(answers, messages)))
         }
       }
