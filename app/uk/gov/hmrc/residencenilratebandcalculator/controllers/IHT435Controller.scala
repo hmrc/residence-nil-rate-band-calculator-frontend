@@ -104,7 +104,7 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
       case s: JsString if dateCacheIds.contains(cacheId) =>
         Transformers.transformDateFormat(s.toString)
       case s: JsString if decimalCacheIds.contains(cacheId) =>
-        Transformers.stripOffQuotesIfPresent(s.toString).replace(".", "")
+        (" " * 7 + Transformers.stripOffQuotesIfPresent(s.toString).replace(".", "")) takeRight 7
       case s: JsString => s.toString
       case _ => ""
     }

@@ -40,7 +40,7 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     Constants.chargeableEstateValueId -> JsNumber(450000),
     Constants.propertyInEstateId -> JsBoolean(false),
     Constants.propertyValueId -> JsNumber(9948),
-    Constants.percentagePassedToDirectDescendantsId -> JsString("234.8899"),
+    Constants.percentagePassedToDirectDescendantsId -> JsString("34.8899"),
     Constants.exemptionsAndReliefClaimedId -> JsBoolean(true),
     Constants.grossingUpOnEstatePropertyId -> JsBoolean(false),
     Constants.chargeablePropertyValueId -> JsNumber(8893),
@@ -116,7 +116,7 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     behave like pdfField("IHT435_10", "9948")
 
     describeTest("IHT435_10_1 to 7 (decimal number)") in {
-      checkMultipleFieldValues(acroForm, "IHT435_10", "2348899", noDigitsInDecimal)
+      checkMultipleFieldValues(acroForm, "IHT435_10", " 348899", noDigitsInDecimal)
     }
 
     behave like pdfField("IHT435_12", "Yes")
