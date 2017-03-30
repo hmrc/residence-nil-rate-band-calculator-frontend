@@ -102,6 +102,31 @@ class TransformersSpec extends UnitSpec {
     "work where no quotes" in {
       stripOffQuotesIfPresent("abc") shouldBe "abc"
     }
+  }
 
+  "transformDecimalFormat" must {
+    "transform correctly where decimal number of less than maximum size" in {
+      transformDecimalFormat("34.8899") shouldBe " 348899"
+    }
+
+    "transform correctly where decimal number of maximum size" in {
+      transformDecimalFormat("234.8899") shouldBe "2348899"
+    }
+
+    "transform correctly where decimal number with less than max mantissa" in {
+      transformDecimalFormat("234.889") shouldBe "234889 "
+    }
+
+    "transform correctly where decimal number with no decimal point where max" in {
+      transformDecimalFormat("234") shouldBe "234    "
+    }
+
+    "transform correctly where decimal number with no decimal point where less than max" in {
+      transformDecimalFormat("34") shouldBe " 34    "
+    }
+
+    "transform correctly where empty string" in {
+      transformDecimalFormat("") shouldBe "       "
+    }
   }
 }

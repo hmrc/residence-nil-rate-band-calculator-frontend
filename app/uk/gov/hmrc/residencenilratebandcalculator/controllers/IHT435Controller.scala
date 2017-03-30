@@ -34,10 +34,9 @@ import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
                                  val messagesApi: MessagesApi,
                                  val sessionConnector: SessionConnector) extends FrontendController  with I18nSupport {
-
+  private val decimalLeftPadding = " " * 7
   private val retrieveValueToStoreFor1Field: (String, Int) => String = (v, _) => v
   private val retrieveValueToStoreForMoreThan1Field: (String, Int) => String = (v, i) => v.charAt(i).toString
-
   private val cacheMapIdToFieldName = Map[String, Seq[String]](
     Constants.dateOfDeathId -> Seq(
       "IHT435_03_01",
@@ -95,6 +94,8 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     pdf.setDocumentInformation(pdDocumentInformation)
   }
 
+
+
   private def getValueForPDF(jsVal: JsValue, cacheId: String): String = {
     val dateCacheIds = Set(Constants.dateOfDeathId, Constants.datePropertyWasChangedId)
     val decimalCacheIds = Set(Constants.percentagePassedToDirectDescendantsId)
@@ -104,7 +105,7 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
       case s: JsString if dateCacheIds.contains(cacheId) =>
         Transformers.transformDateFormat(s.toString)
       case s: JsString if decimalCacheIds.contains(cacheId) =>
-        Transformers.stripOffQuotesIfPresent(s.toString).replace(".", "")
+        Transformers.transformDecimalFormat(s.toString)
       case s: JsString => s.toString
       case _ => ""
     }
