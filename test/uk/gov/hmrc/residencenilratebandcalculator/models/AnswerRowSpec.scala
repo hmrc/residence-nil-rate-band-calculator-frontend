@@ -35,8 +35,8 @@ class AnswerRowSpec extends UnitSpec with WithFakeApplication {
 
   "Answer Row" must {
 
-    "correctly format an integer as money" in {
-      AnswerRow("", 1000, mockCall)(messages).data shouldBe "£1,000.00"
+    "correctly format an integer as money without a fractional part" in {
+      AnswerRow("", 1000, mockCall)(messages).data shouldBe "£1,000"
     }
 
     "correctly format a date" in {

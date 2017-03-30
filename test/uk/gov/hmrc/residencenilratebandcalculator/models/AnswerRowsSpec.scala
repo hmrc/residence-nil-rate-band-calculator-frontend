@@ -71,10 +71,10 @@ class AnswerRowsSpec extends UnitSpec with WithFakeApplication with MockSessionC
       AnswerRows.rowOrder.keys shouldEqual AnswerRows.answerRowFns.keys
     }
 
-    "correctly create Integer AnswerRows" in {
+    "correctly create Integer AnswerRows without a fractional part" in {
       val data = 100
       AnswerRows.intAnswerRowFn("message.key", "", () => Call("", "http://example.com"))(JsNumber(data))(messages) shouldBe
-        AnswerRow(messages("message.key"), "£100.00", "http://example.com")
+        AnswerRow(messages("message.key"), "£100", "http://example.com")
     }
 
     "throw an exception when intAnswerRowFn is not passed a JSON number" in {
@@ -115,15 +115,15 @@ class AnswerRowsSpec extends UnitSpec with WithFakeApplication with MockSessionC
         AnswerRows.percentAnswerRowFn("message.key", "", () => Call("", ""))(JsString(""))(messages)
     }
 
-    "correctly create Chargeable Property Value AnswerRows" in {
+    "correctly create Chargeable Property Value AnswerRows without a fractional part" in {
       val data = PropertyValueAfterExemption(1000, 5000)
       AnswerRows.intAnswerRowFn("message.key", "",
         () => Call("", "http://example.com"))(JsNumber(data.value))(messages) shouldBe
-        AnswerRow(messages("message.key"), "£1,000.00", "http://example.com")
+        AnswerRow(messages("message.key"), "£1,000", "http://example.com")
 
       AnswerRows.intAnswerRowFn("message.key", "",
         () => Call("", "http://example.com"))(JsNumber(data.inheritedValue))(messages) shouldBe
-        AnswerRow(messages("message.key"), "£5,000.00", "http://example.com")
+        AnswerRow(messages("message.key"), "£5,000", "http://example.com")
     }
 
     "correctly create Property Passing To Direct Descendants AnswerRow" in {
