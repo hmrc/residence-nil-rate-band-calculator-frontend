@@ -33,7 +33,7 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
   private val noDigitsInDecimal = 7
   private val fakeRequest = FakeRequest("", "")
   private val injector = fakeApplication.injector
-  private val cacheMapAllFields: CacheMap = new CacheMap("", Map[String, JsValue](
+  private val cacheMapAllNonDecimalFields: CacheMap = new CacheMap("", Map[String, JsValue](
     Constants.dateOfDeathId -> JsString("2017-5-12"),
     Constants.assetsPassingToDirectDescendantsId -> JsBoolean(true),
     Constants.valueOfEstateId -> JsNumber(500000),
@@ -63,7 +63,7 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
 
   private def controller = new IHT435Controller(frontendAppConfig, messagesApi, mockSessionConnector)
 
-  private def acroForm(filledCacheMap:CacheMap = cacheMapAllFields): PDAcroForm = {
+  private def acroForm(filledCacheMap:CacheMap = cacheMapAllNonDecimalFields): PDAcroForm = {
     setCacheMap(filledCacheMap)
     val result = controller.onPageLoad()(fakeRequest)
     val content: ByteString = contentAsBytes(result)
