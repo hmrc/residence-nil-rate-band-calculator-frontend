@@ -16,9 +16,10 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import java.io.{ByteArrayOutputStream, File}
+import java.io.{ByteArrayOutputStream, File, InputStream}
 import javax.inject.{Inject, Singleton}
 
+import play.api.Environment
 import org.apache.pdfbox.pdmodel.{PDDocument, PDDocumentInformation}
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
@@ -29,11 +30,14 @@ import uk.gov.hmrc.residencenilratebandcalculator.utils.Transformers
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 
+import scala.util.{Failure, Success}
+
 
 @Singleton
 class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
+                                 val env: Environment,
                                  val messagesApi: MessagesApi,
-                                 val sessionConnector: SessionConnector) extends FrontendController  with I18nSupport {
+                                 val sessionConnector: SessionConnector) extends FrontendController with I18nSupport {
   private val decimalLeftPadding = " " * 7
   private val retrieveValueToStoreFor1Field: (String, Int) => String = (v, _) => v
   private val retrieveValueToStoreForMoreThan1Field: (String, Int) => String = (v, i) => v.charAt(i).toString
@@ -88,13 +92,13 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     Constants.thresholdCalculationResultId -> Seq("IHT435_28")
   )
 
-  private def setupPDFDocument(pdf:PDDocument) = {
+  private def setupPDFDocument(pdf: PDDocument) = {
     val pdDocumentInformation: PDDocumentInformation = pdf.getDocumentInformation
     pdDocumentInformation.setTitle(Messages("threshold_calculation_result.pdf.title"))
     pdf.setDocumentInformation(pdDocumentInformation)
   }
 
-
+  private def loadFileFromResource(filePath: String): Option[InputStream] = env.resourceAsStream(filePath)
 
   private def getValueForPDF(jsVal: JsValue, cacheId: String): String = {
     val dateCacheIds = Set(Constants.dateOfDeathId, Constants.datePropertyWasChangedId)
@@ -111,40 +115,44 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
     }
   }
 
-  private def generatePDF(cacheMap: CacheMap) = {
-    val pdf = PDDocument.load(new File("conf/resource/IHT435.pdf"))
-    setupPDFDocument(pdf)
-    val baos = new ByteArrayOutputStream()
-    try {
-      val form = pdf.getDocumentCatalog.getAcroForm
+  private def generatePDF(cacheMap: CacheMap): Option[ByteArrayOutputStream] = {
+    loadFileFromResource("resource/IHT435.pdf").map { is =>
+      val pdf = PDDocument.load(is)
+      setupPDFDocument(pdf)
+      val baos = new ByteArrayOutputStream()
+      try {
+        val form = pdf.getDocumentCatalog.getAcroForm
 
-      cacheMapIdToFieldName foreach {
-        case (cacheId, fieldNames) =>
-          val optionalJsVal = cacheMap.data.get(cacheId)
-          optionalJsVal match {
-            case Some(jsVal) =>
-              val valueForPDF = getValueForPDF(jsVal, cacheId)
-              val retrieveValueToStore: (String, Int) => String =
-                if (fieldNames.size == 1) retrieveValueToStoreFor1Field else retrieveValueToStoreForMoreThan1Field
-              fieldNames.indices foreach { i =>
-                form.getField(fieldNames(i)).setValue(retrieveValueToStore(valueForPDF, i))
-              }
-            case None =>
-          }
+        cacheMapIdToFieldName foreach {
+          case (cacheId, fieldNames) =>
+            val optionalJsVal = cacheMap.data.get(cacheId)
+            optionalJsVal match {
+              case Some(jsVal) =>
+                val valueForPDF = getValueForPDF(jsVal, cacheId)
+                val retrieveValueToStore: (String, Int) => String =
+                  if (fieldNames.size == 1) retrieveValueToStoreFor1Field else retrieveValueToStoreForMoreThan1Field
+                fieldNames.indices foreach { i =>
+                  form.getField(fieldNames(i)).setValue(retrieveValueToStore(valueForPDF, i))
+                }
+              case None =>
+            }
+        }
+
+        pdf.save(baos)
+      } finally {
+        pdf.close()
       }
-
-      pdf.save(baos)
-    } finally {
-      pdf.close()
+      baos
     }
-    baos
   }
 
   def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.fetch().map {
       case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
       case Some(cacheMap) =>
-        Ok(generatePDF(cacheMap).toByteArray).as("application/pdf")
+        generatePDF(cacheMap).fold(throw new RuntimeException()) { bytes =>
+          Ok(bytes.toByteArray).as("application/pdf")
+        }
     }
   }
 }
