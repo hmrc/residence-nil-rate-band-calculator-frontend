@@ -33,14 +33,13 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
   private val noDigitsInDecimal = 7
   private val fakeRequest = FakeRequest("", "")
   private val injector = fakeApplication.injector
-  private val filledcacheMap: CacheMap = new CacheMap("", Map[String, JsValue](
+  private val cacheMapAllNonDecimalFields: CacheMap = new CacheMap("", Map[String, JsValue](
     Constants.dateOfDeathId -> JsString("2017-5-12"),
     Constants.assetsPassingToDirectDescendantsId -> JsBoolean(true),
     Constants.valueOfEstateId -> JsNumber(500000),
     Constants.chargeableEstateValueId -> JsNumber(450000),
     Constants.propertyInEstateId -> JsBoolean(false),
     Constants.propertyValueId -> JsNumber(9948),
-    Constants.percentagePassedToDirectDescendantsId -> JsString("234.8899"),
     Constants.exemptionsAndReliefClaimedId -> JsBoolean(true),
     Constants.grossingUpOnEstatePropertyId -> JsBoolean(false),
     Constants.chargeablePropertyValueId -> JsNumber(8893),
@@ -64,8 +63,8 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
 
   private def controller = new IHT435Controller(frontendAppConfig, messagesApi, mockSessionConnector)
 
-  private def acroForm: PDAcroForm = {
-    setCacheMap(filledcacheMap)
+  private def acroForm(filledCacheMap:CacheMap = cacheMapAllNonDecimalFields): PDAcroForm = {
+    setCacheMap(filledCacheMap)
     val result = controller.onPageLoad()(fakeRequest)
     val content: ByteString = contentAsBytes(result)
     val pdfDoc = PDDocument.load(content.toByteBuffer.array())
@@ -80,11 +79,11 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     }
   }
 
-  private def describeTest(fieldName:String) = s"generate the correct value for field $fieldName in the generated PDF from the cache value"
+  private def describeTest(fieldName:String) = s"generate from the cache the correct PDF value for $fieldName"
 
   private def pdfField(fieldName:String, expectedValue:String) = {
     describeTest(fieldName) in {
-      acroForm.getField(fieldName).getValueAsString shouldBe expectedValue
+      acroForm().getField(fieldName).getValueAsString shouldBe expectedValue
     }
   }
 
@@ -102,7 +101,7 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     }
 
     describeTest("IHT435_03") in {
-      checkMultipleFieldValues(acroForm, "IHT435_03", "12052017", noDigitsInDate)
+      checkMultipleFieldValues(acroForm(), "IHT435_03", "12052017", noDigitsInDate)
     }
 
     behave like pdfField("IHT435_05", "Yes")
@@ -115,8 +114,25 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
 
     behave like pdfField("IHT435_10", "9948")
 
-    describeTest("IHT435_10_1 to 7 (decimal number)") in {
-      checkMultipleFieldValues(acroForm, "IHT435_10", "2348899", noDigitsInDecimal)
+    describeTest("IHT435_10_1 to 7: decimal number of less than maximum size") in {
+      val cacheMap: CacheMap = new CacheMap("", Map[String, JsValue](
+        Constants.percentagePassedToDirectDescendantsId -> JsString("34.8899")
+      ))
+      checkMultipleFieldValues(acroForm(cacheMap), "IHT435_10", " 348899", noDigitsInDecimal)
+    }
+
+    describeTest("IHT435_10_1 to 7: decimal number of maximum size") in {
+      val cacheMap: CacheMap = new CacheMap("", Map[String, JsValue](
+        Constants.percentagePassedToDirectDescendantsId -> JsString("234.8899")
+      ))
+      checkMultipleFieldValues(acroForm(cacheMap), "IHT435_10", "2348899", noDigitsInDecimal)
+    }
+
+    describeTest("IHT435_10_1 to 7: decimal number with less than max mantissa") in {
+      val cacheMap: CacheMap = new CacheMap("", Map[String, JsValue](
+        Constants.percentagePassedToDirectDescendantsId -> JsString("234.889")
+      ))
+      checkMultipleFieldValues(acroForm(cacheMap), "IHT435_10", " 234889", noDigitsInDecimal)
     }
 
     behave like pdfField("IHT435_12", "Yes")
@@ -134,7 +150,7 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     behave like pdfField("IHT435_18", "No")
 
     describeTest("IHT435_20") in {
-      checkMultipleFieldValues(acroForm, "IHT435_20", "13052017", noDigitsInDate)
+      checkMultipleFieldValues(acroForm(), "IHT435_20", "13052017", noDigitsInDate)
     }
 
     behave like pdfField("IHT435_21", "888")
