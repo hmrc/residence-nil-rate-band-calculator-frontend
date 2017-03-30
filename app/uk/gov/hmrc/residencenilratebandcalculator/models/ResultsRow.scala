@@ -20,11 +20,12 @@ import java.text.NumberFormat
 import java.util.Locale
 
 import play.api.i18n.Messages
+import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
 
 case class ResultsRow(summary: String, data: String)
 
 object ResultsRow {
   def apply(summaryKey: String, amount: Int)(messages: Messages): ResultsRow = {
-    ResultsRow(messages(summaryKey), NumberFormat.getCurrencyInstance(Locale.UK).format(amount))
+    ResultsRow(messages(summaryKey), CurrencyFormatter.format(amount))
   }
 }

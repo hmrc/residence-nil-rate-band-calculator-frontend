@@ -16,8 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import java.text.NumberFormat
-import java.util.Locale
 import javax.inject.{Inject, Singleton}
 
 import play.api.Logger
