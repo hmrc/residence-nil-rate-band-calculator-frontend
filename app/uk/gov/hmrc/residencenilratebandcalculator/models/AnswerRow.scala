@@ -16,10 +16,15 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
+import java.math.RoundingMode
+import java.text.NumberFormat
+import java.util.Locale
+
 import org.joda.time.LocalDate
 import play.api.i18n.Messages
 import play.api.mvc.Call
-import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
+import uk.gov.hmrc.residencenilratebandcalculator.utils.{CurrencyFormatter, PercentageFormatter}
+
 
 case class AnswerRow(title: String, data: String, url: String)
 
@@ -34,8 +39,9 @@ object AnswerRow {
   def apply(titleKey: String, date: LocalDate, url: Call)(messages: Messages): AnswerRow =
     AnswerRow(messages(titleKey), date.toString("d MMMM yyyy"), url.url)
 
-  def apply(titleKey: String, percent: Double, url: Call)(messages: Messages): AnswerRow =
-    AnswerRow(messages(titleKey), s"$percent%", url.url)
+  def apply(titleKey: String, percent: Double, url: Call)(messages: Messages): AnswerRow = {
+    AnswerRow(messages(titleKey), PercentageFormatter.format(percent), url.url)
+  }
 
   def apply(titleKey: String, valueKey: String, url: Call)(messages: Messages): AnswerRow =
     AnswerRow(messages(titleKey), messages(valueKey), url.url)

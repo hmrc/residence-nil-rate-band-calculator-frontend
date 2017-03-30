@@ -107,7 +107,7 @@ class AnswerRowsSpec extends UnitSpec with WithFakeApplication with MockSessionC
     "correctly create percentage AnswerRows" in {
       val data = 55.0
       AnswerRows.percentAnswerRowFn("message.key", "", () => Call("", "http://example.com"))(JsNumber(data))(messages) shouldBe
-        AnswerRow(messages("message.key"), "55.0%", "http://example.com")
+        AnswerRow(messages("message.key"), "55%", "http://example.com")
     }
 
     "throw an exception when percentAnswerRowFn is not passed a double" in {
