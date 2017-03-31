@@ -169,5 +169,12 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
     behave like pdfField("IHT435_27", "3333")
 
     behave like pdfField("IHT435_28", "229988")
+
+    describeTest("IHT435_10_1 to 7: ") in {
+      val cacheMap: CacheMap = new CacheMap("", Map[String, JsValue](
+        Constants.percentagePassedToDirectDescendantsId -> JsString("234.889")
+      ))
+      checkMultipleFieldValues(acroForm(cacheMap), "IHT435_10", "234889 ", noDigitsInDecimal)
+    }
   }
 }

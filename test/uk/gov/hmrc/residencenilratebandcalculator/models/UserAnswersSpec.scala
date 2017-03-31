@@ -155,6 +155,112 @@ class UserAnswersSpec extends UnitSpec {
         val userAnswers = new UserAnswers(cacheMap)
         userAnswers.valueOfChangedProperty shouldBe Some(1)
       }
+
+      "return true from isTransferAvailableWhenPropertyChanged when " +
+        "claim downsizing threshold is answered yes and " +
+        "transferAnyUnusedThreshold is answered yes and " +
+        "datePropertyWasChanged is answered with a date equal to eligibility date and " +
+        "transferAvailableWhenPropertyChanged is answered yes" in {
+        val cacheMap = CacheMap(
+          cacheMapKey, Map(
+            Constants.claimDownsizingThresholdId -> JsBoolean(true),
+            Constants.transferAnyUnusedThresholdId -> JsBoolean(true),
+            Constants.datePropertyWasChangedId -> JsString("2017-04-06"),
+            Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true)
+          )
+        )
+        val userAnswers = new UserAnswers(cacheMap)
+        userAnswers.isTransferAvailableWhenPropertyChanged shouldBe Some(true)
+      }
+
+      "return false from isTransferAvailableWhenPropertyChanged when " +
+        "claim downsizing threshold is answered yes and " +
+        "transferAnyUnusedThreshold is answered yes and " +
+        "datePropertyWasChanged is answered with a date before eligibility date and " +
+        "transferAvailableWhenPropertyChanged is answered yes" in {
+        val cacheMap = CacheMap(
+          cacheMapKey, Map(
+            Constants.claimDownsizingThresholdId -> JsBoolean(true),
+            Constants.transferAnyUnusedThresholdId -> JsBoolean(true),
+            Constants.datePropertyWasChangedId -> JsString("2017-04-05"),
+            Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true)
+          )
+        )
+        val userAnswers = new UserAnswers(cacheMap)
+        userAnswers.isTransferAvailableWhenPropertyChanged shouldBe Some(false)
+      }
+
+      "return false from isTransferAvailableWhenPropertyChanged when " +
+        "claim downsizing threshold is answered yes and " +
+        "transferAnyUnusedThreshold is answered no and " +
+        "transferAvailableWhenPropertyChanged is answered yes" in {
+        val cacheMap = CacheMap(
+          cacheMapKey, Map(
+            Constants.claimDownsizingThresholdId -> JsBoolean(true),
+            Constants.transferAnyUnusedThresholdId -> JsBoolean(false),
+            Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true)
+          )
+        )
+        val userAnswers = new UserAnswers(cacheMap)
+        userAnswers.isTransferAvailableWhenPropertyChanged shouldBe Some(false)
+      }
+
+      "return transferAvailableWhenPropertyChanged from isTransferAvailableWhenPropertyChanged when " +
+        "claim downsizing threshold is answered no" in {
+        val cacheMap = CacheMap(
+          cacheMapKey, Map(
+            Constants.claimDownsizingThresholdId -> JsBoolean(false),
+            Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true)
+          )
+        )
+        val userAnswers = new UserAnswers(cacheMap)
+        userAnswers.isTransferAvailableWhenPropertyChanged shouldBe Some(true)
+      }
+
+      "return 100 from getPercentagePassedToDirectDescendants when " +
+        "propertyInEstate is true and " +
+        "propertyPassingToDirectDescendants is all and" +
+        "percentagePassedToDirectDescendants is 60.9999" in {
+        val cacheMap = CacheMap(
+          cacheMapKey, Map(
+            Constants.propertyInEstateId -> JsBoolean(true),
+            Constants.propertyPassingToDirectDescendantsId -> JsString(Constants.all),
+            Constants.percentagePassedToDirectDescendantsId -> JsString("60.9999")
+          )
+        )
+        val userAnswers = new UserAnswers(cacheMap)
+        userAnswers.getPercentagePassedToDirectDescendants shouldBe Constants.bigDecimal100
+      }
+
+      "return 60.9999 from getPercentagePassedToDirectDescendants when " +
+        "propertyInEstate is true and " +
+        "propertyPassingToDirectDescendants is some and" +
+        "percentagePassedToDirectDescendants is 60.9999" in {
+        val cacheMap = CacheMap(
+          cacheMapKey, Map(
+            Constants.propertyInEstateId -> JsBoolean(true),
+            Constants.propertyPassingToDirectDescendantsId -> JsString(Constants.some),
+            Constants.percentagePassedToDirectDescendantsId -> JsString("60.9999")
+          )
+        )
+        val userAnswers = new UserAnswers(cacheMap)
+        userAnswers.getPercentagePassedToDirectDescendants shouldBe BigDecimal(60.9999)
+      }
+
+      "return 0 from getPercentagePassedToDirectDescendants when " +
+        "propertyInEstate is false and " +
+        "propertyPassingToDirectDescendants is some and" +
+        "percentagePassedToDirectDescendants is 60.9999" in {
+        val cacheMap = CacheMap(
+          cacheMapKey, Map(
+            Constants.propertyInEstateId -> JsBoolean(false),
+            Constants.propertyPassingToDirectDescendantsId -> JsString(Constants.some),
+            Constants.percentagePassedToDirectDescendantsId -> JsString("60.9999")
+          )
+        )
+        val userAnswers = new UserAnswers(cacheMap)
+        userAnswers.getPercentagePassedToDirectDescendants shouldBe BigDecimal(0)
+      }
     }
 
     "values don't exist in the cache map" must {
@@ -248,6 +354,17 @@ class UserAnswersSpec extends UnitSpec {
       "return None for Value Of Changed Property" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
         userAnswers.valueOfChangedProperty shouldBe None
+      }
+
+
+      "return None from isTransferAvailableWhenPropertyChanged" in {
+        val userAnswers = new UserAnswers(emptyCacheMap)
+        userAnswers.isTransferAvailableWhenPropertyChanged shouldBe None
+      }
+
+      "return 0 from getPercentagePassedToDirectDescendants" in {
+        val userAnswers = new UserAnswers(emptyCacheMap)
+        userAnswers.getPercentagePassedToDirectDescendants shouldBe BigDecimal(0)
       }
     }
   }
