@@ -62,7 +62,7 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
 
   private def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
-  val env = injector.instanceOf[Environment]
+  private val env = injector.instanceOf[Environment]
 
   private def controller = new IHT435Controller(frontendAppConfig, env, messagesApi, mockSessionConnector)
 
