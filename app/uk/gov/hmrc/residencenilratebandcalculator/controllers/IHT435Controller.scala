@@ -39,7 +39,6 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
                                  val env: Environment,
                                  val messagesApi: MessagesApi,
                                  val sessionConnector: SessionConnector) extends FrontendController with I18nSupport {
-  private val decimalLeftPadding = " " * 7
   private val retrieveValueToStoreFor1Field: (String, Int) => String = (v, _) => v
   private val retrieveValueToStoreForMoreThan1Field: (String, Int) => String = (v, i) => v.charAt(i).toString
   private val cacheMapIdToFieldName = Map[String, Seq[String]](
