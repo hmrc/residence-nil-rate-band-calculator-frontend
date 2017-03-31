@@ -16,17 +16,15 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
-import play.api.data.{Form, FormError}
+import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.format.Formatter
 
-object PositivePercentForm {
+object PositivePercentForm extends FormErrorHelper {
 
   def positivePercentFormatter(errorKeyBlank: String, errorKeyNonNumeric: String, errorKeyOutOfRange: String) = new Formatter[BigDecimal] {
 
     val decimalRegex = """^(\d*\.?\d*)$""".r
-
-    def produceError(key: String, error: String) = Left(Seq(FormError(key, error)))
 
     def bind(key: String, data: Map[String, String]) = {
       data.get(key) match {
