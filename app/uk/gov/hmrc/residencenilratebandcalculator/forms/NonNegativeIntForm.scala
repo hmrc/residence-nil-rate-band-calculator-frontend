@@ -20,14 +20,12 @@ import play.api.data.{Form, FormError}
 import play.api.data.Forms._
 import play.api.data.format.Formatter
 
-object NonNegativeIntForm {
+object NonNegativeIntForm extends FormErrorHelper {
 
-  def nonNegativeIntFormatter(errorKeyBlank: String, errorKeyDecimal: String, errorKeyNonNumeric: String): Formatter[Int] = new Formatter[Int] {
+  def nonNegativeIntFormatter(errorKeyBlank: String, errorKeyDecimal: String, errorKeyNonNumeric: String) = new Formatter[Int] {
 
     val intRegex = """^(\d+)$""".r
     val decimalRegex = """^(\d*\.\d*)$""".r
-
-    def produceError(key: String, error: String) = Left(Seq(FormError(key, error)))
 
     def bind(key: String, data: Map[String, String]) = {
       data.get(key) match {
