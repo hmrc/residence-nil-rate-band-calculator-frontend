@@ -34,11 +34,16 @@ class SessionExpiredViewSpec extends ViewSpecBase {
       assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.title")
     }
 
+    "display the correct guidance" in {
+      val doc = asDocument(session_expired(frontendAppConfig)(request, messages))
+      assertContainsMessages(doc, s"$messageKeyPrefix.guidance")
+    }
+
     "display a Start Again button linking to the 'Calculate Threshold Increase' page" in {
       val doc = asDocument(session_expired(frontendAppConfig)(request, messages))
       val startLink = doc.getElementById("start-again")
       startLink.className shouldBe "button"
-      startLink.attr("href") shouldBe routes.CalculateThresholdIncreaseController.onPageLoad().url
+      startLink.attr("href") shouldBe routes.DateOfDeathController.onPageLoad().url
       startLink.text shouldBe messages("site.start_again")
     }
   }
