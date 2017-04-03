@@ -22,47 +22,63 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 class UserAnswers(cacheMap: CacheMap) {
 
-  def assetsPassingToDirectDescendants = cacheMap.getEntry[Boolean](Constants.assetsPassingToDirectDescendantsId)
+  def assetsPassingToDirectDescendants: Option[Boolean] = cacheMap.getEntry[Boolean](Constants.assetsPassingToDirectDescendantsId)
 
-  def transferAnyUnusedThreshold = cacheMap.getEntry[Boolean](Constants.transferAnyUnusedThresholdId)
+  def transferAnyUnusedThreshold: Option[Boolean] = cacheMap.getEntry[Boolean](Constants.transferAnyUnusedThresholdId)
 
-  def transferAvailableWhenPropertyChanged = cacheMap.getEntry[Boolean](Constants.transferAvailableWhenPropertyChangedId)
+  def transferAvailableWhenPropertyChanged: Option[Boolean] = cacheMap.getEntry[Boolean](Constants.transferAvailableWhenPropertyChangedId)
 
-  def claimDownsizingThreshold = cacheMap.getEntry[Boolean](Constants.claimDownsizingThresholdId)
+  def claimDownsizingThreshold: Option[Boolean] = cacheMap.getEntry[Boolean](Constants.claimDownsizingThresholdId)
 
-  def partOfEstatePassingToDirectDescendants = cacheMap.getEntry[Boolean](Constants.partOfEstatePassingToDirectDescendantsId)
+  def partOfEstatePassingToDirectDescendants: Option[Boolean] = cacheMap.getEntry[Boolean](Constants.partOfEstatePassingToDirectDescendantsId)
 
-  def exemptionsAndReliefClaimed = cacheMap.getEntry[Boolean](Constants.exemptionsAndReliefClaimedId)
+  def exemptionsAndReliefClaimed: Option[Boolean] = cacheMap.getEntry[Boolean](Constants.exemptionsAndReliefClaimedId)
 
-  def propertyPassingToDirectDescendants = cacheMap.getEntry[String](Constants.propertyPassingToDirectDescendantsId)
+  def propertyPassingToDirectDescendants: Option[String] = cacheMap.getEntry[String](Constants.propertyPassingToDirectDescendantsId)
 
-  def valueOfAssetsPassing = cacheMap.getEntry[Int](Constants.valueOfAssetsPassingId)
+  def valueOfAssetsPassing: Option[Int] = cacheMap.getEntry[Int](Constants.valueOfAssetsPassingId)
 
-  def valueBeingTransferred = cacheMap.getEntry[Int](Constants.valueBeingTransferredId)
+  def valueBeingTransferred: Option[Int] = cacheMap.getEntry[Int](Constants.valueBeingTransferredId)
 
-  def valueAvailableWhenPropertyChanged = cacheMap.getEntry[Int](Constants.valueAvailableWhenPropertyChangedId)
+  def valueAvailableWhenPropertyChanged: Option[Int] = cacheMap.getEntry[Int](Constants.valueAvailableWhenPropertyChangedId)
 
-  def chargeableEstateValue = cacheMap.getEntry[Int](Constants.chargeableEstateValueId)
+  def chargeableEstateValue: Option[Int] = cacheMap.getEntry[Int](Constants.chargeableEstateValueId)
 
-  def dateOfDeath = cacheMap.getEntry[LocalDate](Constants.dateOfDeathId)
+  def dateOfDeath: Option[LocalDate] = cacheMap.getEntry[LocalDate](Constants.dateOfDeathId)
 
-  def datePropertyWasChanged = cacheMap.getEntry[LocalDate](Constants.datePropertyWasChangedId)
+  def datePropertyWasChanged: Option[LocalDate] = cacheMap.getEntry[LocalDate](Constants.datePropertyWasChangedId)
 
-  def grossingUpOnEstateProperty = cacheMap.getEntry[Boolean](Constants.grossingUpOnEstatePropertyId)
+  def grossingUpOnEstateProperty: Option[Boolean] = cacheMap.getEntry[Boolean](Constants.grossingUpOnEstatePropertyId)
 
-  def grossingUpOnEstateAssets = cacheMap.getEntry[Boolean](Constants.grossingUpOnEstateAssetsId)
+  def grossingUpOnEstateAssets: Option[Boolean] = cacheMap.getEntry[Boolean](Constants.grossingUpOnEstateAssetsId)
 
-  def propertyInEstate = cacheMap.getEntry[Boolean](Constants.propertyInEstateId)
+  def propertyInEstate: Option[Boolean] = cacheMap.getEntry[Boolean](Constants.propertyInEstateId)
 
-  def valueOfEstate = cacheMap.getEntry[Int](Constants.valueOfEstateId)
+  def valueOfEstate: Option[Int] = cacheMap.getEntry[Int](Constants.valueOfEstateId)
 
-  def percentagePassedToDirectDescendants = cacheMap.getEntry[BigDecimal](Constants.percentagePassedToDirectDescendantsId)
+  def percentagePassedToDirectDescendants: Option[BigDecimal] = cacheMap.getEntry[BigDecimal](Constants.percentagePassedToDirectDescendantsId)
 
-  def chargeablePropertyValue = cacheMap.getEntry[Int](Constants.chargeablePropertyValueId)
+  def chargeablePropertyValue: Option[Int] = cacheMap.getEntry[Int](Constants.chargeablePropertyValueId)
 
-  def chargeableInheritedPropertyValue = cacheMap.getEntry[Int](Constants.chargeableInheritedPropertyValueId)
+  def chargeableInheritedPropertyValue: Option[Int] = cacheMap.getEntry[Int](Constants.chargeableInheritedPropertyValueId)
 
-  def propertyValue = cacheMap.getEntry[Int](Constants.propertyValueId)
+  def propertyValue: Option[Int] = cacheMap.getEntry[Int](Constants.propertyValueId)
 
-  def valueOfChangedProperty = cacheMap.getEntry[Int](Constants.valueOfChangedPropertyId)
+  def valueOfChangedProperty: Option[Int] = cacheMap.getEntry[Int](Constants.valueOfChangedPropertyId)
+
+  def getPercentagePassedToDirectDescendants: BigDecimal =
+    (propertyInEstate, propertyPassingToDirectDescendants) match {
+    case (Some(true), Some(directToDescendants)) if directToDescendants == Constants.all => Constants.bigDecimal100
+    case (Some(true), Some(directToDescendants)) if directToDescendants == Constants.some =>
+      percentagePassedToDirectDescendants.map(
+        _.setScale(Constants.intFour, BigDecimal.RoundingMode.HALF_UP)).fold(Constants.bigDecimalZero)(identity)
+    case _ => Constants.bigDecimalZero
+  }
+
+  def isTransferAvailableWhenPropertyChanged: Option[Boolean] =
+    (claimDownsizingThreshold, transferAnyUnusedThreshold, datePropertyWasChanged) match {
+      case (Some(true), Some(false), _) => Some(false)
+      case (Some(true), _, Some(date)) if date.isBefore(Constants.eligibilityDate) => Some(false)
+      case _ => transferAvailableWhenPropertyChanged
+    }
 }

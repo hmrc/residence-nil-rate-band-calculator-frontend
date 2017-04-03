@@ -87,6 +87,10 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
     when(userAnswers.chargeableInheritedPropertyValue) thenReturn chargeableInheritedPropertyValue
     when(userAnswers.propertyValue) thenReturn propertyValue
     when(userAnswers.valueOfChangedProperty) thenReturn valueOfChangedProperty
+    percentagePassedToDirectDescendants.foreach { percentage =>
+      when(userAnswers.getPercentagePassedToDirectDescendants) thenReturn percentage
+    }
+    when(userAnswers.isTransferAvailableWhenPropertyChanged) thenReturn transferAvailableWhenPropertyChanged
   }
 
   "Calculation Input" when {
@@ -95,7 +99,9 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
 
       def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate),
         chargeableEstateValue = Some(chargeableEstateValue), propertyInEstate = Some(false), transferAnyUnusedThreshold = Some(false),
-        claimDownsizingThreshold = Some(false))
+        claimDownsizingThreshold = Some(false),
+        percentagePassedToDirectDescendants = Some(BigDecimal(0))
+      )
 
       "construct correctly from user answers" in {
         buildAnswers
@@ -123,7 +129,9 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
       def buildAnswers = setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate),
         chargeableEstateValue = Some(chargeableEstateValue),
         propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.none),
-        transferAnyUnusedThreshold = Some(false), claimDownsizingThreshold = Some(false))
+        transferAnyUnusedThreshold = Some(false), claimDownsizingThreshold = Some(false),
+        percentagePassedToDirectDescendants = Some(BigDecimal(0))
+      )
 
       "construct correctly from user answers" in {
         buildAnswers
@@ -152,13 +160,14 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         chargeableEstateValue = Some(chargeableEstateValue),
         propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.all),
         percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(false),
-        transferAnyUnusedThreshold = Some(false), claimDownsizingThreshold = Some(false))
+        transferAnyUnusedThreshold = Some(false), claimDownsizingThreshold = Some(false)
+      )
 
       "construct correctly from user answers" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
         calculationInput shouldBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue,
-          propertyValue, 100, 0, None, None)
+          propertyValue, percentagePassedToDirectDescendants, 0, None, None)
       }
 
       "render to JSON" in {
@@ -170,7 +179,7 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
             |"valueOfEstate":1,
             |"chargeableEstateValue":2,
             |"propertyValue":3,
-            |"percentagePassedToDirectDescendants":100,
+            |"percentagePassedToDirectDescendants":4,
             |"valueBeingTransferred":0
             |}""".stripMargin.replaceAll("\\s+", "")
       }
@@ -183,7 +192,8 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         chargeableEstateValue = Some(chargeableEstateValue),
         propertyInEstate = Some(true), propertyValue = Some(propertyValue), propertyPassingToDirectDescendants = Some(Constants.some),
         percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(false),
-        transferAnyUnusedThreshold = Some(false), claimDownsizingThreshold = Some(false))
+        transferAnyUnusedThreshold = Some(false), claimDownsizingThreshold = Some(false)
+      )
 
       "construct correctly from user answers" in {
         buildAnswers
@@ -215,7 +225,8 @@ class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with
         percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants), exemptionsAndReliefClaimed = Some(true), grossingUpOnEstateProperty = Some(false),
         chargeablePropertyValue = Some(chargeablePropertyValue),
         chargeableInheritedPropertyValue = Some(chargeableInheritedPropertyValue),
-        transferAnyUnusedThreshold = Some(false), claimDownsizingThreshold = Some(false))
+        transferAnyUnusedThreshold = Some(false), claimDownsizingThreshold = Some(false)
+      )
 
       "construct correctly from user answers" in {
         buildAnswers

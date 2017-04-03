@@ -62,4 +62,8 @@ object Constants {
 
   val callExitService =
     Call("GET", "https://www.gov.uk/guidance/additional-inheritance-tax-threshold")
+
+  val bigDecimal100 = BigDecimal(100)
+  val bigDecimalZero = BigDecimal(0)
+  val intFour = 4
 }
