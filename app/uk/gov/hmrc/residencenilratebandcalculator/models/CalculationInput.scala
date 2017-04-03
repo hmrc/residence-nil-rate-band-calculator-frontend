@@ -47,7 +47,7 @@ object CalculationInput {
       userAnswers.valueOfEstate.get,
       userAnswers.chargeableEstateValue.get,
       getPropertyValue(userAnswers),
-      UserAnswers.getPercentagePassedToDirectDescendants(userAnswers),
+      userAnswers.getPercentagePassedToDirectDescendants,
       getValueBeingTransferred(userAnswers),
       getChargeablePropertyValue(userAnswers),
       getDownsizingDetails(userAnswers)
