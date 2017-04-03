@@ -30,6 +30,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.utils.Transformers
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
+import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 
 import scala.util.{Failure, Success}
 
@@ -52,7 +53,7 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
       "IHT435_03_07",
       "IHT435_03_08"
     ),
-    Constants.assetsPassingToDirectDescendantsId -> Seq("IHT435_05"),
+    Constants.partOfEstatePassingToDirectDescendantsId -> Seq("IHT435_05"),
     Constants.valueOfEstateId -> Seq("IHT435_06"),
     Constants.chargeableEstateValueId -> Seq("IHT435_07"),
     Constants.propertyInEstateId -> Seq("IHT435_08"),
@@ -84,7 +85,7 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
       "IHT435_20_08"
     ),
     Constants.valueOfChangedPropertyId -> Seq("IHT435_21"),
-    Constants.partOfEstatePassingToDirectDescendantsId -> Seq("IHT435_22"),
+    Constants.assetsPassingToDirectDescendantsId -> Seq("IHT435_22"),
     Constants.grossingUpOnEstateAssetsId -> Seq("IHT435_23"),
     Constants.valueOfAssetsPassingId -> Seq("IHT435_24"),
     Constants.transferAvailableWhenPropertyChangedId -> Seq("IHT435_26"),
@@ -100,18 +101,23 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
 
   private def loadFileFromResource(filePath: String): Option[InputStream] = env.resourceAsStream(filePath)
 
-  private def getValueForPDF(jsVal: JsValue, cacheId: String): String = {
+  private def booleanValueForPDF(b:Boolean) = if (b) "Yes" else "No"
+
+  private def jsValueToString(jsVal: JsValue): String = {
+    jsVal match {
+      case b: JsBoolean => booleanValueForPDF(b.value)
+      case s: JsString => s.toString
+      case _ => jsVal.toString
+    }
+  }
+
+  private def getValueForPDF(jsVal: String, cacheId: String): String = {
     val dateCacheIds = Set(Constants.dateOfDeathId, Constants.datePropertyWasChangedId)
     val decimalCacheIds = Set(Constants.percentagePassedToDirectDescendantsId)
     jsVal match {
-      case n: JsNumber => n.toString
-      case b: JsBoolean => if (b.value) "Yes" else "No"
-      case s: JsString if dateCacheIds.contains(cacheId) =>
-        Transformers.transformDateFormat(s.toString)
-      case s: JsString if decimalCacheIds.contains(cacheId) =>
-        Transformers.transformDecimalFormat(s.toString)
-      case s: JsString => s.toString
-      case _ => ""
+      case s if dateCacheIds.contains(cacheId) => Transformers.transformDateFormat(s)
+      case s if decimalCacheIds.contains(cacheId) => Transformers.transformDecimalFormat(s)
+      case s => s
     }
   }
 
@@ -123,21 +129,30 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
       try {
         val form = pdf.getDocumentCatalog.getAcroForm
 
+        def ua = new UserAnswers(cacheMap)
+
+        def storeValuesInPDF(fieldNames: Seq[String], valueForPDF: String) = {
+          val retrieveValueToStore: (String, Int) => String =
+            if (fieldNames.size == 1) retrieveValueToStoreFor1Field else retrieveValueToStoreForMoreThan1Field
+          fieldNames.indices foreach { i =>
+            form.getField(fieldNames(i)).setValue(retrieveValueToStore(valueForPDF, i))
+          }
+        }
+
         cacheMapIdToFieldName foreach {
           case (cacheId, fieldNames) =>
             val optionalJsVal = cacheMap.data.get(cacheId)
-            optionalJsVal match {
-              case Some(jsVal) =>
-                val valueForPDF = getValueForPDF(jsVal, cacheId)
-                val retrieveValueToStore: (String, Int) => String =
-                  if (fieldNames.size == 1) retrieveValueToStoreFor1Field else retrieveValueToStoreForMoreThan1Field
-                fieldNames.indices foreach { i =>
-                  form.getField(fieldNames(i)).setValue(retrieveValueToStore(valueForPDF, i))
+            (optionalJsVal, cacheId) match {
+              case (_, Constants.percentagePassedToDirectDescendantsId) =>
+                storeValuesInPDF(fieldNames, getValueForPDF(ua.getPercentagePassedToDirectDescendants.toString, cacheId))
+              case (_, Constants.transferAvailableWhenPropertyChangedId) =>
+                ua.isTransferAvailableWhenPropertyChanged.foreach { isAvailable =>
+                  storeValuesInPDF(fieldNames, getValueForPDF(booleanValueForPDF(isAvailable), cacheId))
                 }
-              case None =>
+              case (Some(jsVal), _) => storeValuesInPDF(fieldNames, getValueForPDF(jsValueToString(jsVal), cacheId))
+              case _ =>
             }
         }
-
         pdf.save(baos)
       } finally {
         pdf.close()

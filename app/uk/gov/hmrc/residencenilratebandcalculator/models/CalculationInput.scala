@@ -47,7 +47,7 @@ object CalculationInput {
       userAnswers.valueOfEstate.get,
       userAnswers.chargeableEstateValue.get,
       getPropertyValue(userAnswers),
-      getPercentagePassedToDirectDescendants(userAnswers),
+      userAnswers.getPercentagePassedToDirectDescendants,
       getValueBeingTransferred(userAnswers),
       getChargeablePropertyValue(userAnswers),
       getDownsizingDetails(userAnswers)
@@ -67,12 +67,6 @@ object CalculationInput {
     case true => userAnswers.propertyValue.get
     case _ => 0
   }
-
-  private def getPercentagePassedToDirectDescendants(userAnswers: UserAnswers) = userAnswers.propertyInEstate.get match {
-      case true if userAnswers.propertyPassingToDirectDescendants.get == Constants.all => BigDecimal(100)
-      case true if userAnswers.propertyPassingToDirectDescendants.get == Constants.some => userAnswers.percentagePassedToDirectDescendants.get.setScale(4, BigDecimal.RoundingMode.HALF_UP)
-      case _ => BigDecimal(0)
-    }
 
   private def getValueBeingTransferred(userAnswers: UserAnswers) = userAnswers.transferAnyUnusedThreshold.get match {
     case true => userAnswers.valueBeingTransferred.get

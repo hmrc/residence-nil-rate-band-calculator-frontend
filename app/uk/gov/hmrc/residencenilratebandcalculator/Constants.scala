@@ -58,4 +58,8 @@ object Constants {
     RadioOption("property_passing_to_direct_descendants", some),
     RadioOption("property_passing_to_direct_descendants", none)
   )
+
+  val bigDecimal100 = BigDecimal(100)
+  val bigDecimalZero = BigDecimal(0)
+  val intFour = 4
 }
