@@ -1,5 +1,5 @@
 # Add all the application routes to the app.routes file
-->         /inheritance-tax-residence-nil-rate-band-calculator              app.Routes
+->         /calculate-additional-inheritance-tax-threshold              app.Routes
 ->         /                          health.Routes
 ->     	   /template                  template.Routes
 
