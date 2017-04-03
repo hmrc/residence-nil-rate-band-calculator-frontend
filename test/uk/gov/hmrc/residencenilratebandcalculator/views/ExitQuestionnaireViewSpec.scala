@@ -21,6 +21,7 @@ import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.forms.ExitQuestionnaireForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.ExitQuestionnaire
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exit_questionnaire
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 class ExitQuestionnaireViewSpec extends ViewSpecBase {
 
@@ -43,7 +44,7 @@ class ExitQuestionnaireViewSpec extends ViewSpecBase {
         val links = doc.select("a.button")
         links.size shouldBe 1
         links.first.text shouldBe messages("service.no_thanks")
-        links.first.attr("href") shouldBe routes.ThankYouController.onPageLoad().url
+        links.first.attr("href") shouldBe Constants.callExitService.url
       }
 
       "contain a legend for the service feel" in {
