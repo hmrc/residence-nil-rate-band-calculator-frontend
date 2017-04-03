@@ -79,7 +79,9 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
 
   private def checkMultipleFieldValues(acroForm: PDAcroForm, baseFieldName: String, expectedDate: String, totalFields: Int) = {
     for (position <- 1 to totalFields) yield {
-      acroForm.getField(baseFieldName + "_0" + position).getValueAsString shouldBe expectedDate.charAt(position - 1).toString
+      val actualResult = acroForm.getField(baseFieldName + "_0" + position).getValueAsString
+      val expectedResult = expectedDate.charAt(position - 1).toString
+      assert(actualResult == expectedResult, s"(position $position)")
     }
   }
 
@@ -120,23 +122,29 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
 
     describeTest("IHT435_10_1 to 7: decimal number of less than maximum size") in {
       val cacheMap: CacheMap = new CacheMap(cacheMapKey, Map[String, JsValue](
-        Constants.percentagePassedToDirectDescendantsId -> JsString("34.8899")
+        Constants.percentagePassedToDirectDescendantsId -> JsString("34.8899"),
+        Constants.propertyInEstateId -> JsBoolean(true),
+        Constants.propertyPassingToDirectDescendantsId -> JsString(Constants.some)
       ))
       checkMultipleFieldValues(acroForm(cacheMap), "IHT435_10", " 348899", noDigitsInDecimal)
     }
 
     describeTest("IHT435_10_1 to 7: decimal number of maximum size") in {
       val cacheMap: CacheMap = new CacheMap(cacheMapKey, Map[String, JsValue](
-        Constants.percentagePassedToDirectDescendantsId -> JsString("234.8899")
+        Constants.percentagePassedToDirectDescendantsId -> JsString("234.8899"),
+        Constants.propertyInEstateId -> JsBoolean(true),
+        Constants.propertyPassingToDirectDescendantsId -> JsString(Constants.some)
       ))
       checkMultipleFieldValues(acroForm(cacheMap), "IHT435_10", "2348899", noDigitsInDecimal)
     }
 
     describeTest("IHT435_10_1 to 7: decimal number with less than max mantissa") in {
       val cacheMap: CacheMap = new CacheMap(cacheMapKey, Map[String, JsValue](
-        Constants.percentagePassedToDirectDescendantsId -> JsString("234.889")
+        Constants.percentagePassedToDirectDescendantsId -> JsString("234.889"),
+        Constants.propertyInEstateId -> JsBoolean(true),
+        Constants.propertyPassingToDirectDescendantsId -> JsString(Constants.some)
       ))
-      checkMultipleFieldValues(acroForm(cacheMap), "IHT435_10", "234889 ", noDigitsInDecimal)
+      checkMultipleFieldValues(acroForm(cacheMap), "IHT435_10", "2348890", noDigitsInDecimal)
     }
 
     behave like pdfField("IHT435_12", "Yes")
@@ -171,17 +179,19 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
 
     behave like pdfField("IHT435_28", "229988")
 
-    describeTest("IHT435_10_1 to 7 when field not in cache but it can be calculated") in {
+    describeTest("IHT435_10_1 to 7 when field in cache but it can be calculated") in {
       val cacheMap: CacheMap = new CacheMap(cacheMapKey, Map[String, JsValue](
+        Constants.percentagePassedToDirectDescendantsId -> JsString("34.8899"),
         Constants.propertyInEstateId -> JsBoolean(true),
         Constants.propertyPassingToDirectDescendantsId -> JsString(Constants.all)
       ))
       checkMultipleFieldValues(acroForm(cacheMap), "IHT435_10", "100    ", noDigitsInDecimal)
     }
 
-    describeTest("IHT435_26") + " when field not in cache but it can be calculated" in {
+    describeTest("IHT435_26") + " when field in cache but it can be calculated" in {
       val cacheMap = CacheMap(
         cacheMapKey, Map(
+          Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true),
           Constants.claimDownsizingThresholdId -> JsBoolean(true),
           Constants.transferAnyUnusedThresholdId -> JsBoolean(true),
           Constants.datePropertyWasChangedId -> JsString("2017-04-05")
