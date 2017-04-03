@@ -59,13 +59,13 @@ class Navigator @Inject()() {
   private def getRouteForOptionalBoolean(optionalProperty: Option[Boolean], onTrue: Call, onFalse: Call) = optionalProperty match {
     case Some(true) => onTrue
     case Some(false) => onFalse
-    case None => HomeController.onPageLoad()
+    case None => CalculateThresholdIncreaseController.onPageLoad()
   }
 
   private def getRouteForOptionalLocalDate(optionalDate: Option[LocalDate], transitionDate: LocalDate, transitionCall: Call, otherwise: Call) = optionalDate match {
     case Some(d) if d isBefore transitionDate => transitionCall
     case Some(_) => otherwise
-    case None => HomeController.onPageLoad()
+    case None => CalculateThresholdIncreaseController.onPageLoad()
   }
 
   private def getDateOfDeathRoute(userAnswers: UserAnswers) =
@@ -95,7 +95,7 @@ class Navigator @Inject()() {
     case Some(Constants.all) => ExemptionsAndReliefClaimedController.onPageLoad()
     case Some(Constants.some) => PercentagePassedToDirectDescendantsController.onPageLoad()
     case Some(_) => NoAdditionalThresholdAvailableController.onPageLoad()
-    case _ => HomeController.onPageLoad()
+    case _ => CalculateThresholdIncreaseController.onPageLoad()
   }
 
   private def getExemptionsAndReliefClaimedRoute(userAnswers: UserAnswers) =

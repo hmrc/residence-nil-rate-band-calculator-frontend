@@ -1,13 +1,11 @@
 # microservice specific routes
 
-GET        /                                            uk.gov.hmrc.residencenilratebandcalculator.controllers.HomeController.onPageLoad
+GET        /                                            uk.gov.hmrc.residencenilratebandcalculator.controllers.CalculateThresholdIncreaseController.onPageLoad
 
 GET        /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)
 
 GET        /assets-passing-to-direct-descendants        uk.gov.hmrc.residencenilratebandcalculator.controllers.AssetsPassingToDirectDescendantsController.onPageLoad
 POST       /assets-passing-to-direct-descendants        uk.gov.hmrc.residencenilratebandcalculator.controllers.AssetsPassingToDirectDescendantsController.onSubmit
-
-GET        /calculate-threshold-increase                uk.gov.hmrc.residencenilratebandcalculator.controllers.CalculateThresholdIncreaseController.onPageLoad
 
 GET        /chargeable-estate-value                     uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableEstateValueController.onPageLoad
 POST       /chargeable-estate-value                     uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableEstateValueController.onSubmit
