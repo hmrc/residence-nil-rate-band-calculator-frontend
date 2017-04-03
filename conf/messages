@@ -211,9 +211,6 @@ site.textarea.char_limit = (Limit is 1200 characters)
 site.finish = Finish
 site.service_name = Calculate the additional threshold
 
-thank_you.browser_title = Thank You
-thank_you.title = Thank You
-
 threshold_calculation_result.browser_title = Final calculation
 threshold_calculation_result.info.zero.header = There is no increase to the Inheritance Tax threshold
 threshold_calculation_result.info.zero.guidance = Based on the details you have given, the threshold can be increased by

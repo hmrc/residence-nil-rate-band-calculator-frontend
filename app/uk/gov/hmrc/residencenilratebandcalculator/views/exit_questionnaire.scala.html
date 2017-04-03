@@ -7,6 +7,7 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.models.FullName
 @import uk.gov.hmrc.residencenilratebandcalculator.models.Email
 @import uk.gov.hmrc.residencenilratebandcalculator.models.PhoneNumber
+@import uk.gov.hmrc.residencenilratebandcalculator.Constants
 @(appConfig: FrontendAppConfig, form: Option[Form[ExitQuestionnaire]] = None)(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
@@ -18,7 +19,7 @@
 
     <p>@messages("exit_questionnaire.guidance")</p>
 
-    @rnrbHelpers.button_link(messageKey = "service.no_thanks", href=ThankYouController.onPageLoad().url)
+    @rnrbHelpers.button_link(messageKey = "service.no_thanks", href=Constants.callExitService.url)
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ExitQuestionnaireController.onSubmit(), 'autoComplete -> "off") {
 

@@ -25,7 +25,7 @@ import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.forms.ExitQuestionnaireForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.ExitQuestionnaireEvent
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exit_questionnaire
-import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, FrontendAuditConnector, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, FrontendAuditConnector, Navigator}
 
 import scala.concurrent.Future
 
@@ -56,7 +56,7 @@ class ExitQuestionnaireController @Inject()(val appConfig: FrontendAppConfig,
           case e: Throwable => Logger.error(s"[ExitQuestionnaireController][post] ${e.getMessage}", e)
         }
 
-        Future.successful(Redirect(routes.ThankYouController.onPageLoad()))
+        Future.successful(Redirect(Constants.callExitService))
       }
     )
   }

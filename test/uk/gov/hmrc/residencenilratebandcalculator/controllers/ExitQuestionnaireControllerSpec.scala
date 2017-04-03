@@ -28,9 +28,10 @@ import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.forms.ExitQuestionnaireForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{ExitQuestionnaire, ExitQuestionnaireEvent}
-import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAuditConnector, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.FrontendAuditConnector
 import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exit_questionnaire
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Random
@@ -84,7 +85,7 @@ class ExitQuestionnaireControllerSpec extends HtmlSpec with WithFakeApplication 
       val result = submit(exitQuestionnaire)
 
       status(result) shouldBe SEE_OTHER
-      redirectLocation(result).get shouldBe routes.ThankYouController.onPageLoad().url
+      redirectLocation(result).get shouldBe Constants.callExitService.url
     }
 
     "redirect to the thank you page even when audit has failed" in {
@@ -98,7 +99,7 @@ class ExitQuestionnaireControllerSpec extends HtmlSpec with WithFakeApplication 
       val result = submit(exitQuestionnaire)
 
       status(result) shouldBe SEE_OTHER
-      redirectLocation(result).get shouldBe routes.ThankYouController.onPageLoad().url
+      redirectLocation(result).get shouldBe Constants.callExitService.url
     }
 
     "return a bad request when given invalid data" in {

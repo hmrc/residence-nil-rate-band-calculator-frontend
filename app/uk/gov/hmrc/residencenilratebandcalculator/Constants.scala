@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator
 
 import org.joda.time.LocalDate
+import play.api.mvc.Call
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.models.RadioOption
 
@@ -58,6 +59,9 @@ object Constants {
     RadioOption("property_passing_to_direct_descendants", some),
     RadioOption("property_passing_to_direct_descendants", none)
   )
+
+  val callExitService =
+    Call("GET", "https://www.gov.uk/guidance/additional-inheritance-tax-threshold")
 
   val bigDecimal100 = BigDecimal(100)
   val bigDecimalZero = BigDecimal(0)
