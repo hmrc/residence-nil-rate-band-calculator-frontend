@@ -20,7 +20,7 @@ import play.api.data.{Form, FormError}
 import play.api.data.Forms._
 import play.api.data.format.Formatter
 
-object BooleanForm {
+object BooleanForm extends FormErrorHelper {
   def booleanFormat(errorKey: String): Formatter[Boolean] = new Formatter[Boolean] {
 
     override val format = Some(("format.boolean", Nil))
@@ -29,8 +29,8 @@ object BooleanForm {
       data.get(key) match {
         case Some("true") => Right(true)
         case Some("false") => Right(false)
-        case Some(_) => Left(Seq(FormError(key, errorKey, Nil)))
-        case None => Left(Seq(FormError(key, errorKey, Nil)))
+        case Some(_) => produceError(key, errorKey)
+        case None => produceError(key, errorKey)
       }
     }
 

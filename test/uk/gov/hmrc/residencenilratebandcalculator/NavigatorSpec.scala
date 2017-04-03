@@ -63,10 +63,10 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.dateOfDeathId)(mockCacheMap) shouldBe routes.NoThresholdIncreaseController.onPageLoad()
     }
 
-    "return a function that goes to the Home controller when given DateOfDeath, and the date of death does not exist in keystore" in {
+    "return a function that goes to the Calculate Threshold Increase controller when given DateOfDeath, and the date of death does not exist in keystore" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.dateOfDeath) thenReturn None
-      navigator.nextPage(Constants.dateOfDeathId)(mockCacheMap) shouldBe routes.HomeController.onPageLoad()
+      navigator.nextPage(Constants.dateOfDeathId)(mockCacheMap) shouldBe routes.CalculateThresholdIncreaseController.onPageLoad()
     }
 
     "when the ChargeableEstateValue is used as the class id, the navigator must return a function that when executed against any" +
@@ -138,10 +138,10 @@ class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFa
       navigator.nextPage(Constants.propertyInEstateId)(mockCacheMap) shouldBe routes.NoAdditionalThresholdAvailableController.onPageLoad()
     }
 
-    "return a call to the HomeController onPageLoad method when there is no indication that there is a property in the estate" in {
+    "return a call to the Calculate Threshold Increase onPageLoad method when there is no indication that there is a property in the estate" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.propertyInEstate) thenReturn None
-      navigator.nextPage(Constants.propertyInEstateId)(mockCacheMap) shouldBe routes.HomeController.onPageLoad()
+      navigator.nextPage(Constants.propertyInEstateId)(mockCacheMap) shouldBe routes.CalculateThresholdIncreaseController.onPageLoad()
     }
 
     "return a call to the ValueBeingTransferredController onPageLoad method when there is some value being transferred" in {

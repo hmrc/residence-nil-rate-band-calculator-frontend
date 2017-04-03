@@ -13,6 +13,14 @@
 
 @serviceInfoContent = {}
 
+@betaBanner = {
+@layouts.betaBanner(
+    userLoggedIn = false,
+    betaFeedbackUrl = appConfig.betaFeedbackUrl,
+    betaFeedbackUnauthenticatedUrl = appConfig.betaFeedbackUnauthenticatedUrl,
+    showFeedbackLinkInBetaBanner = true)
+}
+
 @sidebar = {
     @if(sidebarLinks.isDefined) {
         @layouts.sidebar(sidebarLinks.get, Some("sidebar"))
@@ -29,7 +37,8 @@
         contentHeader = contentHeader,
         mainContent = layouts.article(mainContent),
         serviceInfoContent = serviceInfoContent,
-        scriptElem = scriptElem
+        scriptElem = scriptElem,
+        betaBanner = betaBanner
     )
 
 } else {
@@ -43,6 +52,7 @@
         contentHeader = contentHeader,
         mainContent = layouts.article(mainContent),
         serviceInfoContent = serviceInfoContent,
-        scriptElem = scriptElem
+        scriptElem = scriptElem,
+        betaBanner = betaBanner
     )
 }
