@@ -1,13 +1,11 @@
 # microservice specific routes
 
-GET        /                                            uk.gov.hmrc.residencenilratebandcalculator.controllers.HomeController.onPageLoad
+GET        /                                            uk.gov.hmrc.residencenilratebandcalculator.controllers.CalculateThresholdIncreaseController.onPageLoad
 
 GET        /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)
 
 GET        /assets-passing-to-direct-descendants        uk.gov.hmrc.residencenilratebandcalculator.controllers.AssetsPassingToDirectDescendantsController.onPageLoad
 POST       /assets-passing-to-direct-descendants        uk.gov.hmrc.residencenilratebandcalculator.controllers.AssetsPassingToDirectDescendantsController.onSubmit
-
-GET        /calculate-threshold-increase                uk.gov.hmrc.residencenilratebandcalculator.controllers.CalculateThresholdIncreaseController.onPageLoad
 
 GET        /chargeable-estate-value                     uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableEstateValueController.onPageLoad
 POST       /chargeable-estate-value                     uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableEstateValueController.onSubmit
@@ -33,7 +31,7 @@ POST       /exemptions-and-relief-claimed               uk.gov.hmrc.residencenil
 GET        /exit-questionnaire                          uk.gov.hmrc.residencenilratebandcalculator.controllers.ExitQuestionnaireController.onPageLoad
 POST       /exit-questionnaire                          uk.gov.hmrc.residencenilratebandcalculator.controllers.ExitQuestionnaireController.onSubmit
 
-GET        /expired                                     uk.gov.hmrc.residencenilratebandcalculator.controllers.SessionExpiredController.onPageLoad
+GET        /this-service-has-been-reset                 uk.gov.hmrc.residencenilratebandcalculator.controllers.SessionExpiredController.onPageLoad
 
 GET        /grossing-up-on-estate-assets                uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossingUpOnEstateAssetsController.onPageLoad
 POST       /grossing-up-on-estate-assets                uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossingUpOnEstateAssetsController.onSubmit

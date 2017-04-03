@@ -8,10 +8,11 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
-    <h1>@messages("session_expired.title")</h1>
+    <h1 class="heading-large">@messages("session_expired.title")</h1>
 
+    <p>@messages("session_expired.guidance")</p>
     <p>
-        <a href="@routes.CalculateThresholdIncreaseController.onPageLoad().url" class="button" role="button" id="start-again">@messages("site.start_again")</a>
+        <a href="@routes.DateOfDeathController.onPageLoad().url" class="button" role="button" id="start-again">@messages("site.start_again")</a>
     </p>
 
 }
