@@ -24,17 +24,14 @@
     <link rel="stylesheet" media="print" href='@routes.Assets.versioned("stylesheets/rnrb-print.css")' />
 }
 
-@headerNavLinks = {
-  <li><a id="homeNavHref" href="http://www.google.com"
-         data-journey-click="primary-navigation:Click:Home">Home</a></li>
-}
+@headerNavLinks = {}
 
 @insideHeader = {
     @uiLayouts.header_nav(
       navTitle = Some(messages("site.service_name")),
       navTitleLink = None,
       showBetaLink = false,
-      navLinks = Some(headerNavLinks))
+      navLinks = None)
 }
 
 @afterHeader = {}
