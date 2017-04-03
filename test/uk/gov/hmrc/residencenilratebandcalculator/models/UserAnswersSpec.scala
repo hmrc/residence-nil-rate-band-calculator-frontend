@@ -170,7 +170,7 @@ class UserAnswersSpec extends UnitSpec {
           )
         )
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.isTransferAvailableWhenPropertyChanged shouldBe Some(true)
+        UserAnswers.isTransferAvailableWhenPropertyChanged(userAnswers) shouldBe Some(true)
       }
 
       "return false from isTransferAvailableWhenPropertyChanged when " +
@@ -187,7 +187,7 @@ class UserAnswersSpec extends UnitSpec {
           )
         )
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.isTransferAvailableWhenPropertyChanged shouldBe Some(false)
+        UserAnswers.isTransferAvailableWhenPropertyChanged(userAnswers) shouldBe Some(false)
       }
 
       "return false from isTransferAvailableWhenPropertyChanged when " +
@@ -202,7 +202,7 @@ class UserAnswersSpec extends UnitSpec {
           )
         )
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.isTransferAvailableWhenPropertyChanged shouldBe Some(false)
+        UserAnswers.isTransferAvailableWhenPropertyChanged(userAnswers) shouldBe Some(false)
       }
 
       "return transferAvailableWhenPropertyChanged from isTransferAvailableWhenPropertyChanged when " +
@@ -214,7 +214,7 @@ class UserAnswersSpec extends UnitSpec {
           )
         )
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.isTransferAvailableWhenPropertyChanged shouldBe Some(true)
+        UserAnswers.isTransferAvailableWhenPropertyChanged(userAnswers) shouldBe Some(true)
       }
 
       "return 100 from getPercentagePassedToDirectDescendants when " +
@@ -229,7 +229,7 @@ class UserAnswersSpec extends UnitSpec {
           )
         )
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.getPercentagePassedToDirectDescendants shouldBe Constants.bigDecimal100
+        UserAnswers.getPercentagePassedToDirectDescendants(userAnswers) shouldBe Constants.bigDecimal100
       }
 
       "return 60.9999 from getPercentagePassedToDirectDescendants when " +
@@ -244,7 +244,7 @@ class UserAnswersSpec extends UnitSpec {
           )
         )
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.getPercentagePassedToDirectDescendants shouldBe BigDecimal(60.9999)
+        UserAnswers.getPercentagePassedToDirectDescendants(userAnswers) shouldBe BigDecimal(60.9999)
       }
 
       "return 0 from getPercentagePassedToDirectDescendants when " +
@@ -259,7 +259,7 @@ class UserAnswersSpec extends UnitSpec {
           )
         )
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.getPercentagePassedToDirectDescendants shouldBe BigDecimal(0)
+        UserAnswers.getPercentagePassedToDirectDescendants(userAnswers) shouldBe BigDecimal(0)
       }
     }
 
@@ -359,12 +359,12 @@ class UserAnswersSpec extends UnitSpec {
 
       "return None from isTransferAvailableWhenPropertyChanged" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.isTransferAvailableWhenPropertyChanged shouldBe None
+        UserAnswers.isTransferAvailableWhenPropertyChanged(userAnswers) shouldBe None
       }
 
       "return 0 from getPercentagePassedToDirectDescendants" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.getPercentagePassedToDirectDescendants shouldBe BigDecimal(0)
+        UserAnswers.getPercentagePassedToDirectDescendants(userAnswers) shouldBe BigDecimal(0)
       }
     }
   }

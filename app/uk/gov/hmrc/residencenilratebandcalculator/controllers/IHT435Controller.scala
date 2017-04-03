@@ -145,9 +145,9 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
             (optionalJsVal, cacheId) match {
               case (Some(jsVal), _) => storeValuesInPDF(fieldNames, getValueForPDF(jsValueToString(jsVal), cacheId))
               case (None, Constants.percentagePassedToDirectDescendantsId) =>
-                storeValuesInPDF(fieldNames, getValueForPDF(ua.getPercentagePassedToDirectDescendants.toString, cacheId))
+                storeValuesInPDF(fieldNames, getValueForPDF(UserAnswers.getPercentagePassedToDirectDescendants(ua).toString, cacheId))
               case (None, Constants.transferAvailableWhenPropertyChangedId) =>
-                ua.isTransferAvailableWhenPropertyChanged.foreach { isAvailable =>
+                UserAnswers.isTransferAvailableWhenPropertyChanged(ua).foreach { isAvailable =>
                   storeValuesInPDF(fieldNames, getValueForPDF(booleanValueForPDF(isAvailable), cacheId))
                 }
               case _ =>

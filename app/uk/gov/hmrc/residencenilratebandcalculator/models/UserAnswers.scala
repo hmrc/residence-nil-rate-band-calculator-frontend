@@ -20,6 +20,24 @@ import org.joda.time.LocalDate
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
+object UserAnswers {
+  def getPercentagePassedToDirectDescendants(userAnswers: UserAnswers): BigDecimal =
+    (userAnswers.propertyInEstate, userAnswers.propertyPassingToDirectDescendants) match {
+    case (Some(true), Some(directToDescendants)) if directToDescendants == Constants.all => Constants.bigDecimal100
+    case (Some(true), Some(directToDescendants)) if directToDescendants == Constants.some =>
+      userAnswers.percentagePassedToDirectDescendants.map(
+        _.setScale(Constants.intFour, BigDecimal.RoundingMode.HALF_UP)).fold(Constants.bigDecimalZero)(identity)
+    case _ => Constants.bigDecimalZero
+  }
+
+  def isTransferAvailableWhenPropertyChanged(userAnswers: UserAnswers): Option[Boolean] =
+    (userAnswers.claimDownsizingThreshold, userAnswers.transferAnyUnusedThreshold, userAnswers.datePropertyWasChanged) match {
+      case (Some(true), Some(false), _) => Some(false)
+      case (Some(true), _, Some(date)) if date.isBefore(Constants.eligibilityDate) => Some(false)
+      case _ => userAnswers.transferAvailableWhenPropertyChanged
+    }
+}
+
 class UserAnswers(cacheMap: CacheMap) {
 
   def assetsPassingToDirectDescendants: Option[Boolean] = cacheMap.getEntry[Boolean](Constants.assetsPassingToDirectDescendantsId)
@@ -65,19 +83,4 @@ class UserAnswers(cacheMap: CacheMap) {
   def propertyValue: Option[Int] = cacheMap.getEntry[Int](Constants.propertyValueId)
 
   def valueOfChangedProperty: Option[Int] = cacheMap.getEntry[Int](Constants.valueOfChangedPropertyId)
-
-  def getPercentagePassedToDirectDescendants: BigDecimal = (propertyInEstate, propertyPassingToDirectDescendants) match {
-    case (Some(true), Some(directToDescendants)) if directToDescendants == Constants.all => Constants.bigDecimal100
-    case (Some(true), Some(directToDescendants)) if directToDescendants == Constants.some =>
-      percentagePassedToDirectDescendants.map(
-        _.setScale(Constants.intFour, BigDecimal.RoundingMode.HALF_UP)).fold(Constants.bigDecimalZero)(identity)
-    case _ => Constants.bigDecimalZero
-  }
-
-  def isTransferAvailableWhenPropertyChanged: Option[Boolean] =
-    (claimDownsizingThreshold, transferAnyUnusedThreshold, datePropertyWasChanged) match {
-      case (Some(true), Some(false), _) => Some(false)
-      case (Some(true), _, Some(date)) if date.isBefore(Constants.eligibilityDate) => Some(false)
-      case _ => transferAvailableWhenPropertyChanged
-    }
 }
