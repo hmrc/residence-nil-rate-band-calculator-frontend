@@ -41,6 +41,8 @@ object CalculationInput {
     require(userAnswers.transferAnyUnusedThreshold.isDefined, "Transfer Any Unused Allowance was not answered")
     if (userAnswers.transferAnyUnusedThreshold.get) requireValueBeingTransferredDependencies(userAnswers)
     require(userAnswers.claimDownsizingThreshold.isDefined, "Claim Downsizing Threshold was not answered")
+
+    CalculationInput(
       userAnswers.dateOfDeath.get,
       userAnswers.valueOfEstate.get,
       userAnswers.chargeableEstateValue.get,
