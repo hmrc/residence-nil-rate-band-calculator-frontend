@@ -113,21 +113,21 @@ grossing_up_on_estate_property.guidance1 = This is against the property you have
 grossing_up_on_estate_property.guidance2 = When filling in the IHT400 form, grossing up or interaction might have been applied if the person who has died left any tax free gifts and some part of the estate is exempt from Inheritance Tax.
 grossing_up_on_estate_property.error.required = Give an answer for if grossing up or interaction applies to the property
 
-no_additional_threshold_available.browser_title = You can’t claim any RNRB allowance
-no_additional_threshold_available.title = You can’t claim any RNRB allowance
-no_additional_threshold_available.guidance = You might still be able to claim a downsizing allowance or transfer residence nil rate band if the person who has died was married during their lifetime and their spouse or civil partner died first.
-no_additional_threshold_available.no_property_reason = This is because the estate doesn’t include a property that the person who died lived in at any time while they also owned it
-no_additional_threshold_available.not_closely_inherited_reason = This is because none of the house passed to a direct descendant, or the spouse or civil partner of a direct descendant
+no_additional_threshold_available.browser_title = There is no additional home threshold available for the estate
+no_additional_threshold_available.title = There is no additional home threshold available for the estate
+no_additional_threshold_available.guidance = You might still be able to claim additional downsizing threshold or transfer any unused home threshold if the person who has died was married during their lifetime and their spouse or civil partner died first.
+no_additional_threshold_available.no_property_reason = This is because the estate doesn’t include a property that the person who died lived in at any time while they also owned it.
+no_additional_threshold_available.not_closely_inherited_reason = This is because no part of the property passed to a direct descendant, or the spouse or civil partner of a direct descendant.
 
-no_downsizing_threshold_increase.browser_title = There is no downsizing allowance available for the estate
-no_downsizing_threshold_increase.title = There is no downsizing allowance available for the estate
+no_downsizing_threshold_increase.browser_title = There is no additional downsizing threshold available for the estate
+no_downsizing_threshold_increase.title = There is no additional downsizing threshold available for the estate
 no_downsizing_threshold_increase.date_property_was_changed_too_early_reason = This is because the person who died downsized their home before 8 July 2015.
 no_downsizing_threshold_increase.no_assets_passing_to_direct_descendants_reason = This is because no other assets are being left to a direct descendant.
 
-no_threshold_increase.browser_title = There is no RNRB allowance available for this estate
-no_threshold_increase.date_of_death.title = There is no RNRB allowance available for the estate
+no_threshold_increase.browser_title = You’re not eligible
+no_threshold_increase.date_of_death.title = There is no additional threshold available for the estate
 no_threshold_increase.date_of_death.reason = This is because the date of death of the person who has died was before 6 April 2017.
-no_threshold_increase.direct_descendant.title = There is no RNRB allowance available for the estate
+no_threshold_increase.direct_descendant.title = There is no additional threshold available for the estate
 no_threshold_increase.direct_descendant.reason = This is because none of the estate is being left to a direct descendant.
 
 part_of_estate_passing_to_direct_descendants.browser_title = Does any of the estate pass to the deceased’s children or other direct descendants?
