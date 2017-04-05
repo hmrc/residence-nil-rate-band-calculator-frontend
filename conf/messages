@@ -283,7 +283,7 @@ value_of_assets_passing.greater_than_estate_value.error = Give a value that is l
 value_of_changed_property.title = What was the value of the deceased’s interest in the property at the date it was disposed of?
 value_of_changed_property.browser_title = What was the value of the deceased’s interest in the property at the date it was disposed of?
 value_of_changed_property.guidance1 = This is the value of what the person who has died owned. If they owned all of the property when they sold it or gave it away, deduct any mortgage owed from the sale price and give that value.
-value_of_changed_property.guidance2 = If the person who has died owned half of the property, you should half the sale price and deduct the value of the mortgage that the person who has died was responsible for paying and then give that value.
+value_of_changed_property.guidance2 = If the person who has died owned a share of the property, you should include the value of their share. If the property was sold, include their share of the sale price and deduct their share of any mortgage.
 value_of_changed_property.guidance3 = Do not deduct any solicitor or estate agent fees from the values.
 value_of_changed_property.error.blank = Give a value for how much the person who died owned of the property
 
