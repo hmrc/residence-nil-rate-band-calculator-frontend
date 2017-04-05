@@ -116,7 +116,7 @@ grossing_up_on_estate_property.error.required = Give an answer for if grossing u
 no_additional_threshold_available.browser_title = There is no additional home threshold available for the estate
 no_additional_threshold_available.title = There is no additional home threshold available for the estate
 no_additional_threshold_available.guidance = You might still be able to claim additional downsizing threshold or transfer any unused home threshold if the person who has died was married during their lifetime and their spouse or civil partner died first.
-no_additional_threshold_available.no_property_reason = This is because the estate doesn't include a property that the person who died lived in at any time while they also owned it.
+no_additional_threshold_available.no_property_reason = This is because the estate doesn’t include a property that the person who died lived in at any time while they also owned it.
 no_additional_threshold_available.not_closely_inherited_reason = This is because no part of the property passed to a direct descendant, or the spouse or civil partner of a direct descendant.
 
 no_downsizing_threshold_increase.browser_title = There is no additional downsizing threshold available for the estate
