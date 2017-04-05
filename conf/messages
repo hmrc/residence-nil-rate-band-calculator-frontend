@@ -1,7 +1,7 @@
 assets_passing_to_direct_descendants.browser_title = Other than the property that you are claiming residence nil rate band allowance on, do any other assets pass to a direct descendant following the death?
 assets_passing_to_direct_descendants.title = Other than the property that you are claiming residence nil rate band allowance on, do any other assets pass to a direct descendant following the death?
 
-assets_passing_to_direct_descendants.guidance = This doesn’t include the property worth {0}. A direct descendant must have received other assets from the estate for the additional downsizing threshold to be claimed.
+assets_passing_to_direct_descendants.guidance = This doesn’t include the property worth {0} that you have already told us is in the estate. A direct descendant must have received other assets from the estate for the additional downsizing threshold to be claimed.
 assets_passing_to_direct_descendants.guidance_no_property = A direct descendant must have received assets from the estate for the additional downsizing threshold to be claimed.
 assets_passing_to_direct_descendants.error.required = Give an answer for if any other assets apart from the property were passing to a direct descendant
 
@@ -25,8 +25,7 @@ chargeable_property_value.title = What is the chargeable value of the residence 
 chargeable_property_value.guidance1 = This is the value of the property owned by the person who has died. This will either be the total value if they owned the property on their own, or the value of the part of the property that they owned.
 chargeable_property_value.error.blank = Give a value for the chargeable value of the property
 chargeable_property_value.error.non_numeric = Give a value for the property using only numbers
-chargeable_property_value.guidance2 = If the person who has died owned 50% of a property which was valued at £500,000 on the date of death, the value of their share would be £250,000.
-chargeable_property_value.guidance3 = If the person who has died owned the property on their own, the value will be in box 7 on the IHT405 schedule. If the property was jointly owned, the value can be found in box 1 on the IHT404 schedule.
+chargeable_property_value.guidance2 = If the person who has died owned the property on their own, the value will be in box 7 on the IHT405 schedule. If the property was jointly owned, the value can be found in box 1 on the IHT404 schedule.
 
 chargeable_inherited_property_value.browser_title = What is the chargeable value of the residence that passes to direct descendants?
 chargeable_inherited_property_value.title = What is the chargeable value of the residence that passes to direct descendants?
@@ -40,7 +39,7 @@ claim_downsizing_threshold.browser_title = Are you claiming any downsizing allow
 claim_downsizing_threshold.title = Are you claiming any downsizing allowance?
 claim_downsizing_threshold.guidance1 = You can claim additional threshold for the estate if the person who has died:
 claim_downsizing_threshold.guidance1.bullet1 = downsized their home on or after 8 July 2015 by either selling it and buying a cheaper home or selling it and not buying another home
-claim_downsizing_threshold.guidance1.bullet2 = gave any part of their home away, like giving half of it away to a direct descendant
+claim_downsizing_threshold.guidance1.bullet2 = gave any part of their home away
 claim_downsizing_threshold.guidance1.bullet3 = had a home that would have qualified for the home threshold if they had not sold it and had kept it until they died
 claim_downsizing_threshold.guidance1.bullet4 = left anything in their estate to a direct descendant
 claim_downsizing_threshold.error.required = Give an answer for if you are claiming any downsizing allowance for this estate
@@ -105,13 +104,13 @@ exit_questionnaire.user_research.guidance = This will help improve the service. 
 grossing_up_on_estate_assets.browser_title = Does grossing-up or interaction apply?
 grossing_up_on_estate_assets.title = Does grossing-up or interaction apply?
 grossing_up_on_estate_assets.guidance1 = This is against the assets in the estate of the person who has died.
-grossing_up_on_estate_assets.guidance2 = When filling in the IHT400 form, grossing up or interaction might have been applied if the person who has died left any tax free gifts or if some part of the estate is exempt from Inheritance Tax.
+grossing_up_on_estate_assets.guidance2 = When filling in the IHT400 form, grossing up or interaction might have been applied if the person who has died left any tax free gifts and some part of the estate is exempt from Inheritance Tax.
 grossing_up_on_estate_assets.error.required = Give an answer for if grossing up or interaction applies to the assets in the estate
 
 grossing_up_on_estate_property.browser_title = Does grossing-up or interaction apply?
 grossing_up_on_estate_property.title = Does grossing-up or interaction apply?
 grossing_up_on_estate_property.guidance1 = This is against the property you have given the value of.
-grossing_up_on_estate_property.guidance2 = When filling in the IHT400 form, grossing up or interaction might have been applied if the person who has died left any tax free gifts or if some part of the estate is exempt from Inheritance Tax.
+grossing_up_on_estate_property.guidance2 = When filling in the IHT400 form, grossing up or interaction might have been applied if the person who has died left any tax free gifts and some part of the estate is exempt from Inheritance Tax.
 grossing_up_on_estate_property.error.required = Give an answer for if grossing up or interaction applies to the property
 
 no_additional_threshold_available.browser_title = You can’t claim any RNRB allowance
@@ -171,7 +170,7 @@ property_passing_to_direct_descendants.guidance2 = Answer yes if any part of the
 property_value.browser_title = What is the value of the residence at the date of death?
 property_value.title = What is the value of the residence at the date of death?
 property_value.guidance1 = This is the full value of the property if the person who has died owned it on their own.
-property_value.guidance2 = If the person who has died jointly owned the property with someone else, only include their share of the value.
+property_value.guidance2 = If the person who has died jointly owned the property with someone else, only include the value of their share.
 property_value.guidance3 = You can take off any:
 property_value.guidance3.bullet1 = debts that were owed on the property, like a mortgage - if the person who has died jointly owned the property, only take off their share of the mortgage
 property_value.guidance3.bullet2 = discounts that were taken off the value of the property when you completed the IHT400 form
@@ -260,7 +259,7 @@ value_available_when_property_changed.browser_title = What would the amount of t
 value_available_when_property_changed.title = What would the amount of transferable residence nil rate band have been at the date of disposal?
 value_available_when_property_changed.guidance1 = You will need the IHT436 form to work this out.
 value_available_when_property_changed.guidance2 = Multiply the number in either box 13 or 19 by {0} to get the value needed.
-value_available_when_property_changed.guidance3 = If you have more than 1 IHT436 forms for this estate, you should add up the numbers in box 13 or 19 on every form, up to a maximum of 100, and then multiply that amount by {0}.
+value_available_when_property_changed.guidance3 = If you have more than 1 IHT436 forms for this estate, you should add up the numbers in box 13 or 19 on every form, up to a maximum of 100%, and then multiply that amount by {0}.
 value_available_when_property_changed.error = Give a value that is less than the £{0} allowance limit that would have been available on the date the property was sold or given away
 value_available_when_property_changed.error.blank = Give a value for how much allowance would have been available if the death had happened on the same date as the property was sold or given away
 
@@ -284,7 +283,7 @@ value_of_assets_passing.greater_than_estate_value.error = Give a value that is l
 value_of_changed_property.title = What was the value of the deceased’s interest in the property at the date it was disposed of?
 value_of_changed_property.browser_title = What was the value of the deceased’s interest in the property at the date it was disposed of?
 value_of_changed_property.guidance1 = This is the value of what the person who has died owned. If they owned all of the property when they sold it or gave it away, deduct any mortgage owed from the sale price and give that value.
-value_of_changed_property.guidance2 = If the person who has died owned half of the property, you should half the sale price and deduct the value of the mortgage that the person who has died was responsible for paying and then give that value.
+value_of_changed_property.guidance2 = If the person who has died owned a share of the property, you should include the value of their share. If the property was sold, include their share of the sale price and deduct their share of any mortgage.
 value_of_changed_property.guidance3 = Do not deduct any solicitor or estate agent fees from the values.
 value_of_changed_property.error.blank = Give a value for how much the person who died owned of the property
 
