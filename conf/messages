@@ -104,7 +104,7 @@ exit_questionnaire.user_research.guidance = This will help improve the service. 
 grossing_up_on_estate_assets.browser_title = Does grossing-up or interaction apply?
 grossing_up_on_estate_assets.title = Does grossing-up or interaction apply?
 grossing_up_on_estate_assets.guidance1 = This is against the assets in the estate of the person who has died.
-grossing_up_on_estate_assets.guidance2 = When filling in the IHT400 form, grossing up or interaction might have been applied if the person who has died left any tax free gifts or if some part of the estate is exempt from Inheritance Tax.
+grossing_up_on_estate_assets.guidance2 = When filling in the IHT400 form, grossing up or interaction might have been applied if the person who has died left any tax free gifts and some part of the estate is exempt from Inheritance Tax.
 grossing_up_on_estate_assets.error.required = Give an answer for if grossing up or interaction applies to the assets in the estate
 
 grossing_up_on_estate_property.browser_title = Does grossing-up or interaction apply?
