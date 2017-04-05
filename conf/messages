@@ -111,7 +111,7 @@ grossing_up_on_estate_assets.error.required = Give an answer for if grossing up 
 grossing_up_on_estate_property.browser_title = Does grossing-up or interaction apply?
 grossing_up_on_estate_property.title = Does grossing-up or interaction apply?
 grossing_up_on_estate_property.guidance1 = This is against the property you have given the value of.
-grossing_up_on_estate_property.guidance2 = When filling in the IHT400 form, grossing up or interaction might have been applied if the person who has died left any tax free gifts or if some part of the estate is exempt from Inheritance Tax.
+grossing_up_on_estate_property.guidance2 = When filling in the IHT400 form, grossing up or interaction might have been applied if the person who has died left any tax free gifts and some part of the estate is exempt from Inheritance Tax.
 grossing_up_on_estate_property.error.required = Give an answer for if grossing up or interaction applies to the property
 
 no_additional_threshold_available.browser_title = You can’t claim any RNRB allowance
