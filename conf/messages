@@ -25,8 +25,7 @@ chargeable_property_value.title = What is the chargeable value of the residence 
 chargeable_property_value.guidance1 = This is the value of the property owned by the person who has died. This will either be the total value if they owned the property on their own, or the value of the part of the property that they owned.
 chargeable_property_value.error.blank = Give a value for the chargeable value of the property
 chargeable_property_value.error.non_numeric = Give a value for the property using only numbers
-chargeable_property_value.guidance2 = If the person who has died owned 50% of a property which was valued at £500,000 on the date of death, the value of their share would be £250,000.
-chargeable_property_value.guidance3 = If the person who has died owned the property on their own, the value will be in box 7 on the IHT405 schedule. If the property was jointly owned, the value can be found in box 1 on the IHT404 schedule.
+chargeable_property_value.guidance2 = If the person who has died owned the property on their own, the value will be in box 7 on the IHT405 schedule. If the property was jointly owned, the value can be found in box 1 on the IHT404 schedule.
 
 chargeable_inherited_property_value.browser_title = What is the chargeable value of the residence that passes to direct descendants?
 chargeable_inherited_property_value.title = What is the chargeable value of the residence that passes to direct descendants?
