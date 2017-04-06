@@ -124,7 +124,7 @@ no_downsizing_threshold_increase.title = There is no additional downsizing thres
 no_downsizing_threshold_increase.date_property_was_changed_too_early_reason = This is because the person who died downsized their home before 8 July 2015.
 no_downsizing_threshold_increase.no_assets_passing_to_direct_descendants_reason = This is because no other assets are being left to a direct descendant.
 
-no_threshold_increase.browser_title = You’re not eligible
+no_threshold_increase.browser_title = There is no additional threshold available for the estate
 no_threshold_increase.date_of_death.title = There is no additional threshold available for the estate
 no_threshold_increase.date_of_death.reason = This is because the date of death of the person who has died was before 6 April 2017.
 no_threshold_increase.direct_descendant.title = There is no additional threshold available for the estate
@@ -245,7 +245,7 @@ transfer_available_when_property_changed.error.required = Give an answer for if 
 unable_to_calculate_threshold_increase.browser_title = You cannot get a calculation using this service
 unable_to_calculate_threshold_increase.grossing_up.title = You cannot get a calculation using this service
 unable_to_calculate_threshold_increase.grossing_up.reason = This is because the estate includes grossing up.
-unable_to_calculate_threshold_increase.grossing_up.guidance = HMRC will calculate the allowance for you.
+unable_to_calculate_threshold_increase.grossing_up.guidance = HMRC will calculate the additional threshold for you.
 unable_to_calculate_threshold_increase.grossing_up.next.title = What to do next
 unable_to_calculate_threshold_increase.grossing_up.next.guidance1 = You should finish filling in the IHT435 form but leave box 25 empty. Fill in as much of the IHT400 form as you can.
 unable_to_calculate_threshold_increase.grossing_up.next.guidance2 = You should then post both forms, along with any other Inheritance Tax schedules you have had to complete, to:
