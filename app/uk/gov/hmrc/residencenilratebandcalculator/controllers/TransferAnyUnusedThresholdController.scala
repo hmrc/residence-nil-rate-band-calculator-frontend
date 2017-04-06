@@ -38,7 +38,7 @@ class TransferAnyUnusedThresholdController @Inject()(override val appConfig: Fro
 
   override def form: () => Form[Boolean] = () => BooleanForm("transfer_any_unused_threshold.error.required")
 
-  override def view(form: Option[Form[Boolean]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    transfer_any_unused_threshold(appConfig, backUrl, form, answerRows)
+  override def view(form: Option[Form[Boolean]], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+    transfer_any_unused_threshold(appConfig, form, answerRows)
   }
 }

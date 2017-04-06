@@ -73,7 +73,7 @@ class ValueAvailableWhenPropertyChangedController @Inject()(val appConfig: Front
           val userAnswers = new UserAnswers(cacheMap)
           val nilRateBand = CurrencyFormatter.format(nilRateValueJson.json.toString())
           implicit val messages = messagesApi.preferred(request)
-          Ok(value_available_when_property_changed(appConfig, navigator.lastPage(controllerId)(userAnswers).url,
+          Ok(value_available_when_property_changed(appConfig,
             nilRateBand,
             cacheMap.getEntry(controllerId).map(value => form().fill(value)),
             previousAnswers))
@@ -100,11 +100,10 @@ class ValueAvailableWhenPropertyChangedController @Inject()(val appConfig: Front
           implicit val messages = messagesApi.preferred(request)
           boundForm.fold(
             formWithErrors => Future.successful(BadRequest(value_available_when_property_changed(appConfig,
-              navigator.lastPage(controllerId)(userAnswers).url, formattedNilRateBand, Some(formWithErrors), previousAnswers))),
+              formattedNilRateBand, Some(formWithErrors), previousAnswers))),
             (value) => {
               validate(value, nilRateBand).flatMap {
                 case Some(error) => Future.successful(BadRequest(value_available_when_property_changed(appConfig,
-                  navigator.lastPage(controllerId)(userAnswers).url,
                   formattedNilRateBand,
                   Some(form().fill(value).withError(error)),
                   previousAnswers)))

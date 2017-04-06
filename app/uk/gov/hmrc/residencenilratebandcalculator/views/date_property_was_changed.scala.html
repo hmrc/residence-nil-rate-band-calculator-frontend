@@ -8,7 +8,7 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.models.Year
 
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
-@(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[Date]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, form: Option[Form[Date]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("date_property_was_changed.browser_title"),

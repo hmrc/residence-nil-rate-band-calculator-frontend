@@ -40,13 +40,13 @@ class DateOfDeathController @Inject()(val appConfig: FrontendAppConfig,
 
   def form = () => DateForm("date_of_death.error.day_invalid", "date_of_death.error.month_invalid", "date_of_death.error.year_invalid", "date_of_death.error")
 
-  def view(form: Option[Form[Date]], backUrl: String)(implicit request: Request[_]) = date_of_death(appConfig, form)
+  def view(form: Option[Form[Date]])(implicit request: Request[_]) = date_of_death(appConfig, form)
 
   def onPageLoad(implicit rds: Reads[Date]) = Action.async { implicit request =>
     sessionConnector.fetch().map(
       optionalCacheMap => {
         val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
-        Ok(view(cacheMap.getEntry(controllerId).map(value => form().fill(value)), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
+        Ok(view(cacheMap.getEntry(controllerId).map(value => form().fill(value))))
       })
   }
 
@@ -57,7 +57,7 @@ class DateOfDeathController @Inject()(val appConfig: FrontendAppConfig,
         sessionConnector.fetch().map {
           optionalCacheMap => {
             val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
-            BadRequest(view(Some(formWithErrors), navigator.lastPage(controllerId)(new UserAnswers(cacheMap)).url))
+            BadRequest(view(Some(formWithErrors)))
           }
         }
       },
