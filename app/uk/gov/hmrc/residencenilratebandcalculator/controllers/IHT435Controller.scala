@@ -156,6 +156,7 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
         pdf.save(baos)
       } finally {
         pdf.close()
+        is.close()
       }
       baos
     }
