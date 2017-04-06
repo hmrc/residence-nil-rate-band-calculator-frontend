@@ -33,7 +33,7 @@ class PropertyPassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
 
     behave like rnrbPage[String](createView, messageKeyPrefix, "guidance1", "guidance2")
 
-    behave like pageWithBackLink[String](createView)
+    behave like pageWithoutBackLink[String](createView)
 
     behave like questionPage[String](createView, messageKeyPrefix, PropertyPassingToDirectDescendantsController.onSubmit().url)
 

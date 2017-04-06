@@ -32,7 +32,7 @@ class PropertyInEstateViewSpec  extends BooleanViewSpecBase {
 
     behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")
 
-    behave like pageWithBackLink[Boolean](createView)
+    behave like pageWithoutBackLink[Boolean](createView)
 
     behave like booleanPage(createView, messageKeyPrefix, PropertyInEstateController.onSubmit().url)
 

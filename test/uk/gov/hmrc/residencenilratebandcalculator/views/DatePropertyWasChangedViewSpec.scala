@@ -33,7 +33,7 @@ class DatePropertyWasChangedViewSpec  extends DateViewSpecBase {
 
     behave like rnrbPage[Date](createView, messageKeyPrefix, "guidance1", "guidance2")
 
-    behave like pageWithBackLink[Date](createView)
+    behave like pageWithoutBackLink[Date](createView)
 
     behave like datePage(createView, messageKeyPrefix, DatePropertyWasChangedController.onSubmit().url)
 

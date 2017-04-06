@@ -37,7 +37,7 @@ class ClaimDownsizingThresholdViewSpec extends BooleanViewSpecBase {
       "guidance1.bullet3",
       "guidance1.bullet4")
 
-    behave like pageWithBackLink[Boolean](createView)
+    behave like pageWithoutBackLink[Boolean](createView)
 
     behave like booleanPage(createView, messageKeyPrefix, ClaimDownsizingThresholdController.onSubmit().url)
 

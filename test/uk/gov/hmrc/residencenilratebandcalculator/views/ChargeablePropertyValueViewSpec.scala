@@ -33,7 +33,7 @@ class ChargeablePropertyValueViewSpec extends IntViewSpecBase {
 
     behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2")
 
-    behave like pageWithBackLink[Int](createView)
+    behave like pageWithoutBackLink[Int](createView)
 
     behave like intPage(createView, messageKeyPrefix, ChargeablePropertyValueController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage))
 

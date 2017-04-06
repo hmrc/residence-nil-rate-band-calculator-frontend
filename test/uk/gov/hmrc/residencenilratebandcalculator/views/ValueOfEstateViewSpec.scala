@@ -40,7 +40,7 @@ class ValueOfEstateViewSpec extends IntViewSpecBase {
       "guidance2"
     )
 
-    behave like pageWithBackLink[Int](createView)
+    behave like pageWithoutBackLink[Int](createView)
 
     behave like intPage(createView, messageKeyPrefix, ValueOfEstateController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage))
 

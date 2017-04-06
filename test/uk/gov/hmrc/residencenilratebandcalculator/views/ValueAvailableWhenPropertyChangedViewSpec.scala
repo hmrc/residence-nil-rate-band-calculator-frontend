@@ -33,7 +33,7 @@ class ValueAvailableWhenPropertyChangedViewSpec extends IntViewSpecBase {
 
     behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1")
 
-    behave like pageWithBackLink[Int](createView)
+    behave like pageWithoutBackLink[Int](createView)
 
     behave like intPage(createView, messageKeyPrefix, ValueAvailableWhenPropertyChangedController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage))
 

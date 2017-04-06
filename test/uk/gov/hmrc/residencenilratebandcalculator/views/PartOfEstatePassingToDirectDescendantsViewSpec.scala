@@ -45,7 +45,7 @@ class PartOfEstatePassingToDirectDescendantsViewSpec extends BooleanViewSpecBase
       "guidance4"
     )
 
-    behave like pageWithBackLink[Boolean](createView)
+    behave like pageWithoutBackLink[Boolean](createView)
 
     behave like booleanPage(createView, messageKeyPrefix, PartOfEstatePassingToDirectDescendantsController.onSubmit().url)
 

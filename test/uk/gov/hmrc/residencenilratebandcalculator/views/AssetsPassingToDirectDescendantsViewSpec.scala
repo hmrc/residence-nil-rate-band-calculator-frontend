@@ -35,7 +35,7 @@ class AssetsPassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
 
     behave like rnrbPage[Boolean](createView, messageKeyPrefix)
 
-    behave like pageWithBackLink[Boolean](createView)
+    behave like pageWithoutBackLink[Boolean](createView)
 
     behave like booleanPage(createView, messageKeyPrefix, AssetsPassingToDirectDescendantsController.onSubmit().url)
 

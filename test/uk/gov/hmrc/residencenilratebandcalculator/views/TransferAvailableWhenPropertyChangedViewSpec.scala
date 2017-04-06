@@ -32,7 +32,7 @@ class TransferAvailableWhenPropertyChangedViewSpec extends BooleanViewSpecBase {
 
     behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance")
 
-    behave like pageWithBackLink[Boolean](createView)
+    behave like pageWithoutBackLink[Boolean](createView)
 
     behave like booleanPage(createView, messageKeyPrefix, TransferAvailableWhenPropertyChangedController.onSubmit().url)
 
