@@ -40,5 +40,11 @@ class NoThresholdIncreaseViewSpec extends HtmlSpec {
       val f = fixture()
       assertPageTitleEqualsMessage(f.doc, s"${prefix}.title")
     }
+
+    "not display the HMRC logo" in {
+      val f = fixture()
+      assertNotRenderedByCssSelector(f.doc, ".organisation-logo")
+    }
+
   }
 }

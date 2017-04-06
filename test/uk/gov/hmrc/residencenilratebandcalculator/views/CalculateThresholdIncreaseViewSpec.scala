@@ -53,5 +53,10 @@ class CalculateThresholdIncreaseViewSpec extends ViewSpecBase {
       startLink.attr("href") shouldBe routes.DateOfDeathController.onPageLoad().url
       startLink.text shouldBe messages("site.start_now")
     }
+
+    "not display the HMRC logo" in {
+      val doc = asDocument(calculate_threshold_increase(frontendAppConfig)(request, messages))
+      assertNotRenderedByCssSelector(doc, ".organisation-logo")
+    }
   }
 }

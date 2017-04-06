@@ -69,6 +69,12 @@ class ThresholdCalculationResultViewSpec extends HtmlSpec {
         links.size shouldBe 1
         links.first.text shouldBe messages("site.finish")
       }
+
+      "not display the HMRC logo" in {
+        val f = fixture()
+        assertNotRenderedByCssSelector(f.doc, ".organisation-logo")
+      }
+
     }
   }
 }

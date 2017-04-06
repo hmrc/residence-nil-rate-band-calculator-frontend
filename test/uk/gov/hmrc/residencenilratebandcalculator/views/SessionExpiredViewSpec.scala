@@ -46,5 +46,10 @@ class SessionExpiredViewSpec extends ViewSpecBase {
       startLink.attr("href") shouldBe routes.DateOfDeathController.onPageLoad().url
       startLink.text shouldBe messages("site.start_again")
     }
+
+    "not display the HMRC logo" in {
+      val doc = asDocument(session_expired(frontendAppConfig)(request, messages))
+      assertNotRenderedByCssSelector(doc, ".organisation-logo")
+    }
   }
 }

@@ -55,5 +55,11 @@ class UnableToCalculateThresholdIncreaseViewSpec extends HtmlSpec {
         s"$prefix.next.guidance5"
        )
     }
+
+    "not display the HMRC logo" in {
+      val f = fixture()
+      assertNotRenderedByCssSelector(f.doc, ".organisation-logo")
+    }
+
   }
 }
