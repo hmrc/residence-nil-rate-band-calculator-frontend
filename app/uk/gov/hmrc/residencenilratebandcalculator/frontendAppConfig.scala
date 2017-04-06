@@ -33,7 +33,7 @@ class FrontendAppConfig @Inject()(configuration: Configuration) extends AppConfi
 
   private def loadConfig(key: String) = configuration.getString(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
 
-  private lazy val contactHost = baseUrl("contact-frontend")
+  private lazy val contactHost = configuration.getString("contact-frontend.host").getOrElse("")
   private val contactFormServiceIdentifier = "RNRB"
 
   override lazy val analyticsToken = loadConfig(s"google-analytics.token")
