@@ -119,57 +119,6 @@ class Navigator @Inject()() {
     routeMap.getOrElse(controllerId, _ => PageNotFoundController.onPageLoad())
   }
 
-  private val reverseRouteMap: Map[String, UserAnswers => Call] = {
-    Map(
-      Constants.partOfEstatePassingToDirectDescendantsId -> (_ => DateOfDeathController.onPageLoad()),
-      Constants.valueOfEstateId -> (_ => PartOfEstatePassingToDirectDescendantsController.onPageLoad()),
-      Constants.chargeableEstateValueId -> (_ => ValueOfEstateController.onPageLoad()),
-      Constants.propertyInEstateId -> (_ => ChargeableEstateValueController.onPageLoad()),
-      Constants.propertyValueId -> (_ => PropertyInEstateController.onPageLoad()),
-      Constants.propertyPassingToDirectDescendantsId -> (_ => PropertyValueController.onPageLoad()),
-      Constants.percentagePassedToDirectDescendantsId -> (_ => PropertyPassingToDirectDescendantsController.onPageLoad()),
-      Constants.exemptionsAndReliefClaimedId -> (ua => getExemptionsAndReliefClaimedReverseRoute(ua)),
-      Constants.chargeablePropertyValueId -> (_ => GrossingUpOnEstatePropertyController.onPageLoad()),
-      Constants.chargeableInheritedPropertyValueId -> (_ => ChargeablePropertyValueController.onPageLoad()),
-      Constants.grossingUpOnEstatePropertyId -> (_ => ExemptionsAndReliefClaimedController.onPageLoad()),
-      Constants.transferAnyUnusedThresholdId -> (ua => getTransferAnyUnusedThresholdReverseRoute(ua)),
-      Constants.valueBeingTransferredId -> (_ => TransferAnyUnusedThresholdController.onPageLoad()),
-      Constants.claimDownsizingThresholdId -> (ua => getClaimDownsizingThresholdReverseRoute(ua)),
-      Constants.datePropertyWasChangedId -> (_ => ClaimDownsizingThresholdController.onPageLoad()),
-      Constants.valueOfChangedPropertyId -> (_ => DatePropertyWasChangedController.onPageLoad()),
-      Constants.assetsPassingToDirectDescendantsId -> (_ => ValueOfChangedPropertyController.onPageLoad()),
-      Constants.grossingUpOnEstateAssetsId -> (_ => AssetsPassingToDirectDescendantsController.onPageLoad()),
-      Constants.valueOfAssetsPassingId -> (_ => GrossingUpOnEstateAssetsController.onPageLoad()),
-      Constants.transferAvailableWhenPropertyChangedId -> (_ => ValueOfAssetsPassingController.onPageLoad()),
-      Constants.valueAvailableWhenPropertyChangedId -> (_ => TransferAvailableWhenPropertyChangedController.onPageLoad())
-    )
-  }
-
   private def goToPageNotFound: UserAnswers => Call = _ => PageNotFoundController.onPageLoad()
 
-  private def getTransferAnyUnusedThresholdReverseRoute(userAnswers: UserAnswers) = userAnswers.exemptionsAndReliefClaimed match {
-    case Some(true) => ChargeableInheritedPropertyValueController.onPageLoad()
-    case _ => userAnswers.propertyPassingToDirectDescendants match {
-      case Some(Constants.none) => PropertyPassingToDirectDescendantsController.onPageLoad()
-      case Some(_) => ExemptionsAndReliefClaimedController.onPageLoad()
-      case _ => userAnswers.propertyInEstate match {
-        case Some(true) => PropertyValueController.onPageLoad()
-        case _ => PropertyInEstateController.onPageLoad()
-      }
-    }
-  }
-
-  private def getExemptionsAndReliefClaimedReverseRoute(userAnswers: UserAnswers) = userAnswers.propertyPassingToDirectDescendants match {
-    case Some(Constants.some) => PercentagePassedToDirectDescendantsController.onPageLoad()
-    case _ => PropertyPassingToDirectDescendantsController.onPageLoad()
-  }
-
-  private def getClaimDownsizingThresholdReverseRoute(userAnswers: UserAnswers) = userAnswers.transferAnyUnusedThreshold match {
-    case Some(true) => ValueBeingTransferredController.onPageLoad()
-    case _ => TransferAnyUnusedThresholdController.onPageLoad()
-  }
-
-  def lastPage(controllerId: String): UserAnswers => Call = {
-    reverseRouteMap.getOrElse(controllerId, goToPageNotFound)
-  }
 }
