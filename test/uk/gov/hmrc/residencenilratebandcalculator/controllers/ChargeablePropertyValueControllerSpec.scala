@@ -29,11 +29,9 @@ class ChargeablePropertyValueControllerSpec extends SimpleControllerSpecBase {
   val errorKeyNonNumeric = "chargeable_property_value.error.non_numeric"
 
   "Chargeable Property Value Controller" must {
-    val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.GrossingUpOnEstatePropertyController.onPageLoad().url
-
     def createView = (value: Option[Map[String, String]]) => value match {
-      case None => chargeable_property_value(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-      case Some(v) => chargeable_property_value(frontendAppConfig, url, Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq())(fakeRequest, messages)
+      case None => chargeable_property_value(frontendAppConfig, answerRows = Seq())(fakeRequest, messages)
+      case Some(v) => chargeable_property_value(frontendAppConfig, Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq())(fakeRequest, messages)
     }
 
     def createController = () => new ChargeablePropertyValueController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)

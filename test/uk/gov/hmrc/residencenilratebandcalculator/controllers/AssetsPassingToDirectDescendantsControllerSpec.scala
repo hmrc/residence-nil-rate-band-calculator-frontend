@@ -31,13 +31,11 @@ class AssetsPassingToDirectDescendantsControllerSpec extends SimpleControllerSpe
     val formattedPropertyValue = Some("£123,456")
 
     def createView = (value: Option[Map[String, String]]) => {
-      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfChangedPropertyController.onPageLoad().url
-
       value match {
         case None =>
-          assets_passing_to_direct_descendants(frontendAppConfig, url, None, Seq(), formattedPropertyValue)(fakeRequest, messages)
+          assets_passing_to_direct_descendants(frontendAppConfig, None, Seq(), formattedPropertyValue)(fakeRequest, messages)
         case Some(v) =>
-          assets_passing_to_direct_descendants(frontendAppConfig, url, Some(BooleanForm(messageKey).bind(v)), Seq(), formattedPropertyValue)(fakeRequest, messages)
+          assets_passing_to_direct_descendants(frontendAppConfig, Some(BooleanForm(messageKey).bind(v)), Seq(), formattedPropertyValue)(fakeRequest, messages)
       }
     }
 

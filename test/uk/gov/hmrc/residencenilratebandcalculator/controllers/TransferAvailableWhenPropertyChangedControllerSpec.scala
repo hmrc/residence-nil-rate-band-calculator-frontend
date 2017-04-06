@@ -28,11 +28,9 @@ class TransferAvailableWhenPropertyChangedControllerSpec extends SimpleControlle
   "Transfer Available When Property Changed Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
-      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfAssetsPassingController.onPageLoad().url
-
       value match {
-        case None => transfer_available_when_property_changed(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => transfer_available_when_property_changed(frontendAppConfig, url, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages)
+        case None => transfer_available_when_property_changed(frontendAppConfig, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => transfer_available_when_property_changed(frontendAppConfig, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

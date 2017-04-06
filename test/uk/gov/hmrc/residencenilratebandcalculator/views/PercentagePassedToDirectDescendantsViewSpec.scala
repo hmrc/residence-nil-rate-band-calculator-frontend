@@ -27,7 +27,7 @@ class PercentagePassedToDirectDescendantsViewSpec extends BigDecimalViewSpecBase
 
   val messageKeyPrefix = "percentage_passed_to_direct_descendants"
 
-  def createView(form: Option[Form[BigDecimal]] = None) = percentage_passed_to_direct_descendants(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[BigDecimal]] = None) = percentage_passed_to_direct_descendants(frontendAppConfig, form, Seq())(request, messages)
 
   "Percentage Passed To Direct Descendants View" must {
 

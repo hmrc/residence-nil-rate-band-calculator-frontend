@@ -24,7 +24,6 @@ import scala.reflect.ClassTag
 
 trait ViewSpecBase extends HtmlSpec {
 
-  val backUrl = "backUrl"
   val errorKey = "value"
   val errorMessage = "error.number"
   val error = FormError(errorKey, errorMessage)

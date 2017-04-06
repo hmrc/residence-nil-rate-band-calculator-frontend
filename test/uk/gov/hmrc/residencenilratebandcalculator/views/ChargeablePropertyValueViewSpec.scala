@@ -27,7 +27,7 @@ class ChargeablePropertyValueViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "chargeable_property_value"
 
-  def createView(form: Option[Form[Int]] = None) = chargeable_property_value(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Int]] = None) = chargeable_property_value(frontendAppConfig, form, Seq())(request, messages)
 
   "Chargeable Property Value View" must {
 

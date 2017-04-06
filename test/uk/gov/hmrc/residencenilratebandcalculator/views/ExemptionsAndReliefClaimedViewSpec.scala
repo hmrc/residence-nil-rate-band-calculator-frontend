@@ -26,7 +26,7 @@ class ExemptionsAndReliefClaimedViewSpec  extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "exemptions_and_relief_claimed"
 
-  def createView(form: Option[Form[Boolean]] = None) = exemptions_and_relief_claimed(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = exemptions_and_relief_claimed(frontendAppConfig, form, Seq())(request, messages)
 
   "Exemptions And Relief Claimed View" must {
 
