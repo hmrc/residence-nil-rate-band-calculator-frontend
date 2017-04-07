@@ -27,13 +27,13 @@ class ValueAvailableWhenPropertyChangedViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "value_available_when_property_changed"
 
-  def createView(form: Option[Form[Int]] = None) = value_available_when_property_changed(frontendAppConfig,  backUrl, "100000", form, Seq())(request, messages)
+  def createView(form: Option[Form[Int]] = None) = value_available_when_property_changed(frontendAppConfig,  "100000", form, Seq())(request, messages)
 
   "Value Available When Property Changed View" must {
 
     behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1")
 
-    behave like pageWithBackLink[Int](createView)
+    behave like pageWithoutBackLink[Int](createView)
 
     behave like intPage(createView, messageKeyPrefix, ValueAvailableWhenPropertyChangedController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage))
 

@@ -26,14 +26,14 @@ class ExemptionsAndReliefClaimedViewSpec  extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "exemptions_and_relief_claimed"
 
-  def createView(form: Option[Form[Boolean]] = None) = exemptions_and_relief_claimed(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = exemptions_and_relief_claimed(frontendAppConfig, form, Seq())(request, messages)
 
   "Exemptions And Relief Claimed View" must {
 
     behave like rnrbPage[Boolean](createView, messageKeyPrefix,
       "guidance1", "guidance2", "guidance2.bullet1", "guidance2.bullet2", "guidance2.bullet3")
 
-    behave like pageWithBackLink[Boolean](createView)
+    behave like pageWithoutBackLink[Boolean](createView)
 
     behave like booleanPage(createView, messageKeyPrefix, ExemptionsAndReliefClaimedController.onSubmit().url)
 

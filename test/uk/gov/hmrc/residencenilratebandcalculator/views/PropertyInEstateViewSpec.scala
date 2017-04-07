@@ -26,13 +26,13 @@ class PropertyInEstateViewSpec  extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "property_in_estate"
 
-  def createView(form: Option[Form[Boolean]] = None) = property_in_estate(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = property_in_estate(frontendAppConfig, form, Seq())(request, messages)
 
   "Property In Estate View" must {
 
     behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")
 
-    behave like pageWithBackLink[Boolean](createView)
+    behave like pageWithoutBackLink[Boolean](createView)
 
     behave like booleanPage(createView, messageKeyPrefix, PropertyInEstateController.onSubmit().url)
 

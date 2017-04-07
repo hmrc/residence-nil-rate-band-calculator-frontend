@@ -27,13 +27,13 @@ class ValueBeingTransferredViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "value_being_transferred"
 
-  def createView(form: Option[Form[Int]] = None) = value_being_transferred(frontendAppConfig, backUrl, "100000", form, Seq())(request, messages)
+  def createView(form: Option[Form[Int]] = None) = value_being_transferred(frontendAppConfig, "100000", form, Seq())(request, messages)
 
   "Value Being Transferred View" must {
 
     behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2")
 
-    behave like pageWithBackLink[Int](createView)
+    behave like pageWithoutBackLink[Int](createView)
 
     behave like intPage(createView, messageKeyPrefix, ValueBeingTransferredController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage))
 

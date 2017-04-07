@@ -3,7 +3,7 @@
 @import uk.gov.hmrc.play.views.html._
 
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
-@(appConfig: FrontendAppConfig, backUrl: String, form: Option[Form[BigDecimal]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, form: Option[Form[BigDecimal]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("percentage_passed_to_direct_descendants.browser_title"),
@@ -13,8 +13,6 @@
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PercentagePassedToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
-
-        @rnrbHelpers.back_link(backUrl)
 
         @rnrbHelpers.heading("percentage_passed_to_direct_descendants.title")
 

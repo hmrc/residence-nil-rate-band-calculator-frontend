@@ -29,11 +29,9 @@ class PropertyValueControllerSpec extends SimpleControllerSpecBase {
   val errorKeyNonNumeric = "property_value.error.non_numeric"
 
   "Property Value Controller" must {
-   val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyInEstateController.onPageLoad().url
-
     def createView = (value: Option[Map[String, String]]) => value match {
-      case None => property_value(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-      case Some(v) => property_value(frontendAppConfig, url, Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq())(fakeRequest, messages)
+      case None => property_value(frontendAppConfig, answerRows = Seq())(fakeRequest, messages)
+      case Some(v) => property_value(frontendAppConfig, Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq())(fakeRequest, messages)
     }
 
     def createController = () => new PropertyValueController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)

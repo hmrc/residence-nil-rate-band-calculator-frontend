@@ -28,11 +28,9 @@ class PartOfEstatePassingToDirectDescendantsControllerSpec extends SimpleControl
   "Part Of Estate Passing To Direct Descendants Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
-      val backUrl = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onPageLoad().url
-
       value match {
-        case None => part_of_estate_passing_to_direct_descendants(frontendAppConfig, backUrl, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => part_of_estate_passing_to_direct_descendants(frontendAppConfig, backUrl, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages)
+        case None => part_of_estate_passing_to_direct_descendants(frontendAppConfig, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => part_of_estate_passing_to_direct_descendants(frontendAppConfig, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

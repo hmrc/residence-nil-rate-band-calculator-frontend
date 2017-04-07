@@ -31,11 +31,9 @@ class ValueOfAssetsPassingControllerSpec extends SimpleControllerSpecBase {
   "Value Of Assets Passing Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
-      val backUrl = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.GrossingUpOnEstateAssetsController.onPageLoad().url
-
       value match {
-        case None => value_of_assets_passing(frontendAppConfig, backUrl, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => value_of_assets_passing(frontendAppConfig, backUrl, Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq())(fakeRequest, messages)
+        case None => value_of_assets_passing(frontendAppConfig, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => value_of_assets_passing(frontendAppConfig, Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

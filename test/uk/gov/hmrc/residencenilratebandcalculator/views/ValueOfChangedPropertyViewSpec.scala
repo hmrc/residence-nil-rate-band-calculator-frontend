@@ -27,13 +27,13 @@ class ValueOfChangedPropertyViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "value_of_changed_property"
 
-  def createView(form: Option[Form[Int]] = None) = value_of_changed_property(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Int]] = None) = value_of_changed_property(frontendAppConfig, form, Seq())(request, messages)
 
   "Value Of Changed Property View" must {
 
     behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance3")
 
-    behave like pageWithBackLink[Int](createView)
+    behave like pageWithoutBackLink[Int](createView)
 
     behave like intPage(createView, messageKeyPrefix, ValueOfChangedPropertyController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage))
 

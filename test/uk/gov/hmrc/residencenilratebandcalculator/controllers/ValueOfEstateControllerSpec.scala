@@ -33,8 +33,8 @@ class ValueOfEstateControllerSpec extends SimpleControllerSpecBase {
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PartOfEstatePassingToDirectDescendantsController.onPageLoad().url
 
       value match {
-        case None => value_of_estate(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => value_of_estate(frontendAppConfig, url, Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq())(fakeRequest, messages)
+        case None => value_of_estate(frontendAppConfig,  answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => value_of_estate(frontendAppConfig, Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

@@ -30,11 +30,9 @@ class ValueOfChangedPropertyControllerSpec extends SimpleControllerSpecBase {
   "Value Of Changed Property Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
-      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DatePropertyWasChangedController.onPageLoad().url
-
       value match {
-        case None => value_of_changed_property(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => value_of_changed_property(frontendAppConfig, url, Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq())(fakeRequest, messages)
+        case None => value_of_changed_property(frontendAppConfig, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => value_of_changed_property(frontendAppConfig, Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

@@ -47,7 +47,7 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
 
   def form: () => Form[A]
 
-  def view(form: Option[Form[A]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]): HtmlFormat.Appendable
+  def view(form: Option[Form[A]], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]): HtmlFormat.Appendable
 
   val navigator: Navigator
 
@@ -65,7 +65,7 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
         val previousAnswers = answerRows(cacheMap, request)
         val userAnswers = new UserAnswers(cacheMap)
         Ok(view(cacheMap.getEntry(controllerId).map(value => form().fill(value)),
-          navigator.lastPage(controllerId)(userAnswers).url, previousAnswers, userAnswers))
+          previousAnswers, userAnswers))
       }
     }
   }
@@ -81,11 +81,11 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
         boundForm.fold(
           (formWithErrors: Form[A]) =>
             Future.successful(BadRequest(view(Some(formWithErrors),
-              navigator.lastPage(controllerId)(userAnswers).url, previousAnswers, userAnswers))),
+              previousAnswers, userAnswers))),
           (value) => validate(value, userAnswers) match {
             case Some(error) => {
               Future.successful(BadRequest(view(Some(form().fill(value).withError(error)),
-                navigator.lastPage(controllerId)(userAnswers).url, previousAnswers, userAnswers)))
+                previousAnswers, userAnswers)))
             }
             case None =>
               sessionConnector.cache[A](controllerId, value).map(cacheMap =>

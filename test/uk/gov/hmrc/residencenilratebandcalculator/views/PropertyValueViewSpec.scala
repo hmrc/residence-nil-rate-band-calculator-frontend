@@ -27,14 +27,14 @@ class PropertyValueViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "property_value"
 
-  def createView(form: Option[Form[Int]] = None) = property_value(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Int]] = None) = property_value(frontendAppConfig, form, Seq())(request, messages)
 
   "Property Value View" must {
 
     behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance3",
       "guidance3.bullet1", "guidance3.bullet2", "guidance4")
 
-    behave like pageWithBackLink[Int](createView)
+    behave like pageWithoutBackLink[Int](createView)
 
     behave like intPage(createView, messageKeyPrefix, PropertyValueController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage))
 

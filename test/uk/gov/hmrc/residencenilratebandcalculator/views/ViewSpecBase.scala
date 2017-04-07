@@ -24,7 +24,6 @@ import scala.reflect.ClassTag
 
 trait ViewSpecBase extends HtmlSpec {
 
-  val backUrl = "backUrl"
   val errorKey = "value"
   val errorMessage = "error.number"
   val error = FormError(errorKey, errorMessage)
@@ -64,15 +63,14 @@ trait ViewSpecBase extends HtmlSpec {
     }
   }
 
-  def pageWithBackLink[A: ClassTag](createView: (Option[Form[A]]) => HtmlFormat.Appendable) = {
+  def pageWithoutBackLink[A: ClassTag](createView: (Option[Form[A]]) => HtmlFormat.Appendable) = {
 
-    "behave like a page with a back link" when {
+    "behave like a page without a back link" when {
       "rendered" must {
-        "contain a back link pointing to another page" in {
+        "not contain a back link pointing to another page" in {
           val doc = asDocument(createView(None))
-          val backLink = doc.getElementById("back")
-          backLink.attr("href") shouldBe backUrl
-          backLink.hasClass("back-link") shouldBe true
+          assertNotRenderedById(doc, "back")
+          assert(doc.toString.contains(messages("site.back")) == false)
         }
       }
     }

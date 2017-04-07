@@ -26,13 +26,13 @@ class TransferAnyUnusedThresholdViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "transfer_any_unused_threshold"
 
-  def createView(form: Option[Form[Boolean]] = None) = transfer_any_unused_threshold(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = transfer_any_unused_threshold(frontendAppConfig, form, Seq())(request, messages)
 
   "Transfer Any Unused Allowance View" must {
 
     behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")
 
-    behave like pageWithBackLink[Boolean](createView)
+    behave like pageWithoutBackLink[Boolean](createView)
 
     behave like booleanPage(createView, messageKeyPrefix, TransferAnyUnusedThresholdController.onSubmit().url)
 

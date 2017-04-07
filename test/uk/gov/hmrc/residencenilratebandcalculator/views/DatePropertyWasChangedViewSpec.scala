@@ -27,13 +27,13 @@ class DatePropertyWasChangedViewSpec  extends DateViewSpecBase {
 
   val messageKeyPrefix = "date_property_was_changed"
 
-  def createView(form: Option[Form[Date]] = None) = date_property_was_changed(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Date]] = None) = date_property_was_changed(frontendAppConfig, form, Seq())(request, messages)
 
   "Date Property Was Changed View" must {
 
     behave like rnrbPage[Date](createView, messageKeyPrefix, "guidance1", "guidance2")
 
-    behave like pageWithBackLink[Date](createView)
+    behave like pageWithoutBackLink[Date](createView)
 
     behave like datePage(createView, messageKeyPrefix, DatePropertyWasChangedController.onSubmit().url)
 

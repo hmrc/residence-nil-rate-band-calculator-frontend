@@ -30,11 +30,9 @@ class PercentagePassedToDirectDescendantsControllerSpec extends SimpleController
   "Percentage Passed To Direct Descendants Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
-      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyPassingToDirectDescendantsController.onPageLoad().url
-
       value match {
-        case None => percentage_passed_to_direct_descendants(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => percentage_passed_to_direct_descendants(frontendAppConfig, url,
+        case None => percentage_passed_to_direct_descendants(frontendAppConfig, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => percentage_passed_to_direct_descendants(frontendAppConfig,
           Some(PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange).bind(v)), Seq())(fakeRequest, messages)
       }
     }

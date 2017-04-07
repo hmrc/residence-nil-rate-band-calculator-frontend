@@ -37,8 +37,8 @@ class ClaimDownsizingThresholdController @Inject()(override val appConfig: Front
 
   override def form: () => Form[Boolean] = () => BooleanForm("claim_downsizing_threshold.error.required")
 
-  override def view(form: Option[Form[Boolean]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    claim_downsizing_threshold(appConfig, backUrl, form, answerRows)
+  override def view(form: Option[Form[Boolean]], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+    claim_downsizing_threshold(appConfig, form, answerRows)
   }
 
 }

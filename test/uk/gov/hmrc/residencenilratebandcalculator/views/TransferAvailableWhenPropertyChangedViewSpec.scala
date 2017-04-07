@@ -26,13 +26,13 @@ class TransferAvailableWhenPropertyChangedViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "transfer_available_when_property_changed"
 
-  def createView(form: Option[Form[Boolean]] = None) = transfer_available_when_property_changed(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = transfer_available_when_property_changed(frontendAppConfig, form, Seq())(request, messages)
 
   "Transfer Available When Property Changed View" must {
 
     behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance")
 
-    behave like pageWithBackLink[Boolean](createView)
+    behave like pageWithoutBackLink[Boolean](createView)
 
     behave like booleanPage(createView, messageKeyPrefix, TransferAvailableWhenPropertyChangedController.onSubmit().url)
 

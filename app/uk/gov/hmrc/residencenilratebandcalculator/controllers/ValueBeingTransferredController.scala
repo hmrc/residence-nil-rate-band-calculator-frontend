@@ -82,7 +82,7 @@ class ValueBeingTransferredController @Inject()(val appConfig: FrontendAppConfig
           val userAnswers = new UserAnswers(cacheMap)
           val nilRateBand = formatJsonNumber(nilRateValueJson.json.toString())
           implicit val messages = messagesApi.preferred(request)
-          Ok(value_being_transferred(appConfig, navigator.lastPage(controllerId)(userAnswers).url,
+          Ok(value_being_transferred(appConfig,
             nilRateBand,
             cacheMap.getEntry(controllerId).map(value => form().fill(value)),
             previousAnswers))
@@ -109,11 +109,10 @@ class ValueBeingTransferredController @Inject()(val appConfig: FrontendAppConfig
           implicit val messages = messagesApi.preferred(request)
           boundForm.fold(
             formWithErrors => Future.successful(BadRequest(value_being_transferred(appConfig,
-              navigator.lastPage(controllerId)(userAnswers).url, formattedNilRateBand, Some(formWithErrors), previousAnswers))),
+              formattedNilRateBand, Some(formWithErrors), previousAnswers))),
             (value) => {
               validate(value, nilRateBand, userAnswers).flatMap {
                 case Some(error) => Future.successful(BadRequest(value_being_transferred(appConfig,
-                  navigator.lastPage(controllerId)(userAnswers).url,
                   formattedNilRateBand,
                   Some(form().fill(value).withError(error)),
                   previousAnswers)))

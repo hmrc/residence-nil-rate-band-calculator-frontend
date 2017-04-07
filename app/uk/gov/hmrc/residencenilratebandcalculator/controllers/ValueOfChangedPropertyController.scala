@@ -38,7 +38,7 @@ class ValueOfChangedPropertyController @Inject()(override val appConfig: Fronten
   override def form = () =>
     NonNegativeIntForm("value_of_changed_property.error.blank", "error.whole_pounds", "error.non_numeric")
 
-  override def view(form: Option[Form[Int]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    value_of_changed_property(appConfig, backUrl, form, answerRows)
+  override def view(form: Option[Form[Int]], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+    value_of_changed_property(appConfig, form, answerRows)
   }
 }

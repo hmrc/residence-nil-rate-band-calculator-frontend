@@ -28,11 +28,9 @@ class GrossingUpOnEstatePropertyControllerSpec extends SimpleControllerSpecBase 
   "Grossing Up On Estate Property Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
-      val backUrl = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ExemptionsAndReliefClaimedController.onPageLoad().url
-
       value match {
-        case None => grossing_up_on_estate_property(frontendAppConfig, backUrl, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => grossing_up_on_estate_property(frontendAppConfig, backUrl, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages)
+        case None => grossing_up_on_estate_property(frontendAppConfig, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => grossing_up_on_estate_property(frontendAppConfig, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

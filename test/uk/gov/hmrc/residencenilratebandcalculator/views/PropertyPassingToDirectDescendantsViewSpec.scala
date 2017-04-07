@@ -27,13 +27,13 @@ class PropertyPassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "property_passing_to_direct_descendants"
 
-  def createView(form: Option[Form[String]] = None) = property_passing_to_direct_descendants(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[String]] = None) = property_passing_to_direct_descendants(frontendAppConfig, form, Seq())(request, messages)
 
   "Property Passing To Direct Descendants View" must {
 
     behave like rnrbPage[String](createView, messageKeyPrefix, "guidance1", "guidance2")
 
-    behave like pageWithBackLink[String](createView)
+    behave like pageWithoutBackLink[String](createView)
 
     behave like questionPage[String](createView, messageKeyPrefix, PropertyPassingToDirectDescendantsController.onSubmit().url)
 

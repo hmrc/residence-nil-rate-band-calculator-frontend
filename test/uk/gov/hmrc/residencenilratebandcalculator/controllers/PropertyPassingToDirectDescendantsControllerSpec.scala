@@ -26,11 +26,9 @@ class PropertyPassingToDirectDescendantsControllerSpec extends SimpleControllerS
   "Property Passing To Direct Descendants Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
-      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyValueController.onPageLoad().url
-
       value match {
-        case None => property_passing_to_direct_descendants(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => property_passing_to_direct_descendants(frontendAppConfig, url, Some(PropertyPassingToDirectDescendantsForm().bind(v)), Seq())(fakeRequest, messages)
+        case None => property_passing_to_direct_descendants(frontendAppConfig, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => property_passing_to_direct_descendants(frontendAppConfig, Some(PropertyPassingToDirectDescendantsForm().bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

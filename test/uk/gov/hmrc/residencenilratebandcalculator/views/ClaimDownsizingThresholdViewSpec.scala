@@ -26,7 +26,7 @@ class ClaimDownsizingThresholdViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "claim_downsizing_threshold"
 
-  def createView(form: Option[Form[Boolean]] = None) = claim_downsizing_threshold(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = claim_downsizing_threshold(frontendAppConfig, form, Seq())(request, messages)
 
   "Claim Downsizing Threshold View" must {
 
@@ -37,7 +37,7 @@ class ClaimDownsizingThresholdViewSpec extends BooleanViewSpecBase {
       "guidance1.bullet3",
       "guidance1.bullet4")
 
-    behave like pageWithBackLink[Boolean](createView)
+    behave like pageWithoutBackLink[Boolean](createView)
 
     behave like booleanPage(createView, messageKeyPrefix, ClaimDownsizingThresholdController.onSubmit().url)
 

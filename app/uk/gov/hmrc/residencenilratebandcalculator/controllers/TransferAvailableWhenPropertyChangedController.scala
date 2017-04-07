@@ -38,7 +38,7 @@ class TransferAvailableWhenPropertyChangedController @Inject()(override val appC
 
   override def form: () => Form[Boolean] = () => BooleanForm("transfer_available_when_property_changed.error.required")
 
-  override def view(form: Option[Form[Boolean]], backUrl: String, answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    transfer_available_when_property_changed(appConfig, backUrl, form, answerRows)
+  override def view(form: Option[Form[Boolean]], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+    transfer_available_when_property_changed(appConfig, form, answerRows)
   }
 }

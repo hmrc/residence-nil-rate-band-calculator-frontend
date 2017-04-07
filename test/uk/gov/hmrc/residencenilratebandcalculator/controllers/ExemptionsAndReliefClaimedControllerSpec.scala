@@ -28,11 +28,9 @@ class ExemptionsAndReliefClaimedControllerSpec extends SimpleControllerSpecBase 
   "Exemptions And Relief Claimed Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
-      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyPassingToDirectDescendantsController.onPageLoad().url
-
       value match {
-        case None => exemptions_and_relief_claimed(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => exemptions_and_relief_claimed(frontendAppConfig, url, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages)
+        case None => exemptions_and_relief_claimed(frontendAppConfig, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => exemptions_and_relief_claimed(frontendAppConfig, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

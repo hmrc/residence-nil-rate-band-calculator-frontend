@@ -27,7 +27,7 @@ class ValueOfEstateViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "value_of_estate"
 
-  def createView(form: Option[Form[Int]] = None) = value_of_estate(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[Int]] = None) = value_of_estate(frontendAppConfig, form, Seq())(request, messages)
 
   "Value of Estate View" must {
 
@@ -40,7 +40,7 @@ class ValueOfEstateViewSpec extends IntViewSpecBase {
       "guidance2"
     )
 
-    behave like pageWithBackLink[Int](createView)
+    behave like pageWithoutBackLink[Int](createView)
 
     behave like intPage(createView, messageKeyPrefix, ValueOfEstateController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage))
 

@@ -28,11 +28,9 @@ class PropertyInEstateControllerSpec extends SimpleControllerSpecBase {
   "Property In Estate Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
-      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeableEstateValueController.onPageLoad().url
-
       value match {
-        case None => property_in_estate(frontendAppConfig, url, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => property_in_estate(frontendAppConfig, url, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages)
+        case None => property_in_estate(frontendAppConfig, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => property_in_estate(frontendAppConfig, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages)
       }
     }
 

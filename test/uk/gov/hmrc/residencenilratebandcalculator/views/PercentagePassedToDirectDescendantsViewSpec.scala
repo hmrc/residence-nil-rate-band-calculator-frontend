@@ -27,13 +27,13 @@ class PercentagePassedToDirectDescendantsViewSpec extends BigDecimalViewSpecBase
 
   val messageKeyPrefix = "percentage_passed_to_direct_descendants"
 
-  def createView(form: Option[Form[BigDecimal]] = None) = percentage_passed_to_direct_descendants(frontendAppConfig, backUrl, form, Seq())(request, messages)
+  def createView(form: Option[Form[BigDecimal]] = None) = percentage_passed_to_direct_descendants(frontendAppConfig, form, Seq())(request, messages)
 
   "Percentage Passed To Direct Descendants View" must {
 
     behave like rnrbPage[BigDecimal](createView, messageKeyPrefix, "guidance")
 
-    behave like pageWithBackLink[BigDecimal](createView)
+    behave like pageWithoutBackLink[BigDecimal](createView)
 
     behave like bigDecimalPage(createView, messageKeyPrefix, PercentagePassedToDirectDescendantsController.onSubmit().url, PositivePercentForm("", "", ""))
 
