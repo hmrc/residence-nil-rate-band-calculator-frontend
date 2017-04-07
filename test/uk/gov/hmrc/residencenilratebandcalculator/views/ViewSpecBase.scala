@@ -55,6 +55,11 @@ trait ViewSpecBase extends HtmlSpec {
           val doc = asDocument(createView(None))
           for (key <- expectedGuidanceKeys) assertContainsText(doc, messages(s"$messageKeyPrefix.$key"))
         }
+
+        "not display the HMRC logo" in {
+          val doc = asDocument(createView(None))
+          assertNotRenderedByCssSelector(doc, ".organisation-logo")
+        }
       }
     }
   }
