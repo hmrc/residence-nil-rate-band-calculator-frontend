@@ -69,7 +69,7 @@ class ThresholdCalculationResultController @Inject()(appConfig: FrontendAppConfi
         tryResult <- getResult(tryInput)
       } yield {
         (tryResult, tryAnswers) match {
-          case (_, Failure(ex)) => fail(ex)
+          case (_, Failure(ex)) => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
           case (Failure(ex), _) => fail(ex)
           case (Success(result), Success(answers)) =>
             sessionConnector.cache[Int](Constants.thresholdCalculationResultId, result.residenceNilRateAmount)
