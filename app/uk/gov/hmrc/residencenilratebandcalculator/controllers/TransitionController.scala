@@ -51,7 +51,7 @@ trait TransitionController extends FrontendController with I18nSupport {
           val userAnswers = new UserAnswers(cacheMap)
           Ok(createView(getReason(userAnswers), userAnswers, previousAnswers))
         }
-        case None => throw new RuntimeException("No cacheMap available")
+        case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
       }
   }
 }
