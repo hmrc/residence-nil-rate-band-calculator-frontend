@@ -16,16 +16,21 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import org.mockito.Matchers.any
+import org.mockito.Mockito.when
 import play.api.http.Status
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
+import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, GetReason, Reason, UserAnswers}
+
+import scala.concurrent.Future
 
 class TransitionControllerSpec extends UnitSpec with WithFakeApplication with MockSessionConnector {
 
@@ -59,7 +64,13 @@ class TransitionControllerSpec extends UnitSpec with WithFakeApplication with Mo
     "return the Unable To Calculate Threshold Increase view for a GET" in {
       val result = createController.onPageLoad()(fakeRequest)
       contentAsString(result) shouldBe ""
+    }
 
+    "redirect to the SessionExpiredController when no CacheMap can be found" in {
+      when(mockSessionConnector.fetch()(any[HeaderCarrier])) thenReturn Future.successful(None)
+      val result = createController.onPageLoad(fakeRequest)
+      status(result) shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(routes.SessionExpiredController.onPageLoad().url)
     }
   }
 }

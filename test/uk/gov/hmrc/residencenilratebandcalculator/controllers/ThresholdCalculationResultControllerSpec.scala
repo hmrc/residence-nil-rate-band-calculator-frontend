@@ -26,6 +26,7 @@ import play.api.http.Status
 import play.api.libs.json._
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, CalculationResult}
@@ -105,6 +106,13 @@ class ThresholdCalculationResultControllerSpec extends SimpleControllerSpecBase 
       val result = thresholdCalculationResultController().onPageLoad()(fakeRequest)
       val contents = contentAsString(result)
       contents should include(CurrencyFormatter.format(expectedResidenceNilRateAmount))
+    }
+
+    "redirect to the SessionExpiredController if no CacheMap can be found" in {
+      when(mockSessionConnector.fetch()(any[HeaderCarrier])) thenReturn Future.successful(None)
+      val result = thresholdCalculationResultController().onPageLoad()(fakeRequest)
+      status(result) shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
   }
 }
