@@ -1,7 +1,7 @@
 assets_passing_to_direct_descendants.browser_title = Other than the property that you are claiming residence nil rate band allowance on, do any other assets pass to a direct descendant following the death?
 assets_passing_to_direct_descendants.title = Other than the property that you are claiming residence nil rate band allowance on, do any other assets pass to a direct descendant following the death?
 
-assets_passing_to_direct_descendants.guidance = This doesn’t include the property worth {0} that you have already told us is in the estate. A direct descendant must have received other assets from the estate for the additional downsizing threshold to be claimed.
+assets_passing_to_direct_descendants.guidance = This doesn’t include the property worth {0} that you have already given. A direct descendant must have received other assets from the estate for the additional downsizing threshold to be claimed.
 assets_passing_to_direct_descendants.guidance_no_property = A direct descendant must have received assets from the estate for the additional downsizing threshold to be claimed.
 assets_passing_to_direct_descendants.error.required = Give an answer for if any other assets apart from the property were passing to a direct descendant
 
@@ -11,7 +11,7 @@ calculate_threshold_increase.guidance1 = Calculate the additional threshold for 
 calculate_threshold_increase.guidance2.bullet1 = an IHT400 account form with the value of what’s in the estate already worked out
 calculate_threshold_increase.guidance2.bullet2 = a paper schedule IHT435 if you have already started filling one in
 calculate_threshold_increase.guidance2.bullet3 = a completed schedule IHT436 if you are transferring any unused home threshold
-calculate_threshold_increase.guidance3 = You will also need details of the property if there is any additional threshold because the person who died downsized or sold their home.
+calculate_threshold_increase.guidance3 = You will also need details of the property if there is any additional threshold because the person who died downsized or sold that home.
 
 chargeable_estate_value.browser_title = What is the amount of the total chargeable estate on death?
 chargeable_estate_value.title = What is the amount of the total chargeable estate on death?
@@ -37,11 +37,11 @@ chargeable_inherited_property_value.greater_than_chargeable_property_value.error
 
 claim_downsizing_threshold.browser_title = Are you claiming any downsizing allowance?
 claim_downsizing_threshold.title = Are you claiming any downsizing allowance?
-claim_downsizing_threshold.guidance1 = You can claim additional threshold for the estate if the person who has died:
-claim_downsizing_threshold.guidance1.bullet1 = downsized their home on or after 8 July 2015 by either selling it and buying a cheaper home or selling it and not buying another home
-claim_downsizing_threshold.guidance1.bullet2 = gave any part of their home away
-claim_downsizing_threshold.guidance1.bullet3 = had a home that would have qualified for the home threshold if they had not sold it and had kept it until they died
-claim_downsizing_threshold.guidance1.bullet4 = left anything in their estate to a direct descendant
+claim_downsizing_threshold.guidance1 = There might be additional threshold to claim if any of the following applied to the estate of the person who has died:
+claim_downsizing_threshold.guidance1.bullet1 = they downsized their home on or after 8 July 2015 by either selling it and buying a cheaper home or selling it and not buying another home
+claim_downsizing_threshold.guidance1.bullet2 = they gave any part of their home away
+claim_downsizing_threshold.guidance1.bullet3 = they had a home that would have qualified for the home threshold if they had not sold it and had kept it until they died
+claim_downsizing_threshold.guidance1.bullet4 = they left anything in their estate to a direct descendant
 claim_downsizing_threshold.error.required = Give an answer for if you are claiming any downsizing allowance for this estate
 
 date.day = Day
@@ -61,7 +61,7 @@ date_of_death.error.year_invalid = Give a correct year of death
 date_property_was_changed.browser_title = What was the date the property was disposed of?
 date_property_was_changed.title = What was the date the property was disposed of?
 date_property_was_changed.guidance1 = This is the date that the person who has died sold their home or gave it away.
-date_property_was_changed.guidance2 = The person who has died might have given away different parts of their home at different times. If this happened, choose 1 date only for the downsizing date.
+date_property_was_changed.guidance2 = There may have been changes to who owned the property on different dates, like if the person who has died sold different parts of the property off on different dates. If this happened, you must choose 1 date as the downsizing date.
 date_property_was_changed.hint = For example, 6 4 2017
 
 error.invalid_property_passing_to_direct_descendants_option = Give an answer for if any part of the property passed to a direct descendant
@@ -81,7 +81,6 @@ error.whole_pounds = Give a value in whole pounds only without any pence
 
 exemptions_and_relief_claimed.browser_title = Is any part of the residence exempt from Inheritance Tax, or does any part of it qualify for any relief on the death?
 exemptions_and_relief_claimed.title = Is any part of the residence exempt from Inheritance Tax, or does any part of it qualify for any relief on the death?
-exemptions_and_relief_claimed.guidance1 = These exemptions and relief will be in box 92 and box 93 on the IHT400 form.
 exemptions_and_relief_claimed.guidance2 = Answer yes if any part of the property is exempt from Inheritance Tax because:
 exemptions_and_relief_claimed.guidance2.bullet1 = it passed to a spouse or civil partner
 exemptions_and_relief_claimed.guidance2.bullet2 = it passed to a charity
@@ -143,7 +142,8 @@ part_of_estate_passing_to_direct_descendants.guidance3.bullet4 = a child who is,
 part_of_estate_passing_to_direct_descendants.guidance3.bullet5 = an adopted child
 part_of_estate_passing_to_direct_descendants.guidance3.bullet6 = a child who they fostered at any time
 part_of_estate_passing_to_direct_descendants.guidance3.bullet7 = a child who they were appointed as a guardian or special guardian of when that child was under 18
-part_of_estate_passing_to_direct_descendants.guidance4 = Direct descendants do not include nephews, nieces, siblings or other relatives not included above.
+part_of_estate_passing_to_direct_descendants.guidance3.bullet8 = an adopted child of any children of the person who has died
+part_of_estate_passing_to_direct_descendants.guidance4 = Direct descendants do not include nephews, nieces, brothers, sisters or other relatives not included above.
 part_of_estate_passing_to_direct_descendants.error.required = Give an answer for if any of the estate passed to a direct descendant
 
 percentage_passed_to_direct_descendants.browser_title = What percentage of the residence passes to direct descendants following the deceased’s death?
@@ -164,13 +164,13 @@ property_passing_to_direct_descendants.some = Yes, some of it passed
 property_passing_to_direct_descendants.none = No
 property_passing_to_direct_descendants.browser_title = Did any part of this residence pass to a direct descendant or their spouse or civil partner?
 property_passing_to_direct_descendants.title = Did any part of this residence pass to a direct descendant or their spouse or civil partner?
-property_passing_to_direct_descendants.guidance1 = This will be listed in the will of the person who has died.
-property_passing_to_direct_descendants.guidance2 = Answer yes if any part of the property was left in the will to a direct descendant or to a spouse or civil partner of one.
+property_passing_to_direct_descendants.guidance1 = This will usually be listed in the will of the person who has died.
+property_passing_to_direct_descendants.guidance2 = Answer yes if any part of the property was left in the will to a direct descendant or a spouse or civil partner of one.
 
 property_value.browser_title = What is the value of the residence at the date of death?
 property_value.title = What is the value of the residence at the date of death?
 property_value.guidance1 = This is the full value of the property if the person who has died owned it on their own.
-property_value.guidance2 = If the person who has died jointly owned the property with someone else, only include the value of their share.
+property_value.guidance2 = If the person who has died jointly owned the property with someone else, only include the value of what they owned. This will not be the full value of the property.
 property_value.guidance3 = You can take off any:
 property_value.guidance3.bullet1 = debts that were owed on the property, like a mortgage - if the person who has died jointly owned the property, only take off their share of the mortgage
 property_value.guidance3.bullet2 = discounts that were taken off the value of the property when you completed the IHT400 form
@@ -233,13 +233,13 @@ threshold_calculation_result.pdf.title = Copy of IHT 435
 
 transfer_any_unused_threshold.browser_title = Do you wish to transfer any unused residence nil rate band?
 transfer_any_unused_threshold.title = Do you wish to transfer any unused residence nil rate band?
-transfer_any_unused_threshold.guidance1 = This transfer will be from the estate of a spouse or civil partner who died before the person who you are claiming an allowance for.
+transfer_any_unused_threshold.guidance1 = This transfer will be from the estate of a spouse or civil partner who died before the person who you are increasing the threshold for.
 transfer_any_unused_threshold.guidance2 = You will need a completed copy of the IHT436 form if you are transferring any unused home threshold from somebody else’s estate.
 transfer_any_unused_threshold.error.required = Give an answer for if you want to transfer any unused residence nil rate band from the estate of a spouse or civil partner of the person who has died
 
 transfer_available_when_property_changed.browser_title = If a valid claim for RNRB had been made at the date of disposal would any transferable residence nil rate band have been available at that time?
 transfer_available_when_property_changed.title = If a valid claim for RNRB had been made at the date of disposal would any transferable residence nil rate band have been available at that time?
-transfer_available_when_property_changed.guidance = Answer yes if the date that the person who has died sold or gave away their home was after the date that their spouse or civil partner died.
+transfer_available_when_property_changed.guidance = Answer yes if the date that the person who has died downsized their home was after the date that their spouse or civil partner died.
 transfer_available_when_property_changed.error.required = Give an answer for if a claim for any allowance at the date of sale or giving the property away would have left any of that allowance available to transfer
 
 unable_to_calculate_threshold_increase.browser_title = You cannot get a calculation using this service
@@ -259,7 +259,7 @@ value_available_when_property_changed.browser_title = What would the amount of t
 value_available_when_property_changed.title = What would the amount of transferable residence nil rate band have been at the date of disposal?
 value_available_when_property_changed.guidance1 = You will need the IHT436 form to work this out.
 value_available_when_property_changed.guidance2 = Multiply the number in either box 13 or 19 by {0} to get the value needed.
-value_available_when_property_changed.guidance3 = If you have more than 1 IHT436 forms for this estate, you should add up the numbers in box 13 or 19 on every form, up to a maximum of 100%, and then multiply that amount by {0}.
+value_available_when_property_changed.guidance3 = If you have more than 1 IHT436 form for this estate, you should add up the numbers in box 13 or 19 on every form, up to a maximum of 100%, and then multiply that amount by {0}.
 value_available_when_property_changed.error = Give a value that is less than the £{0} allowance limit that would have been available on the date the property was sold or given away
 value_available_when_property_changed.error.blank = Give a value for how much allowance would have been available if the death had happened on the same date as the property was sold or given away
 
@@ -267,16 +267,14 @@ value_being_transferred.browser_title = How much transferable residence nil rate
 value_being_transferred.title = How much transferable residence nil rate band are you claiming?
 value_being_transferred.guidance1 = This is the number in either box 15 or box 21 on the IHT436 form.
 value_being_transferred.guidance2 = If the person who has died had been married or in a civil partnership more than once during their lifetime and their spouse or civil partner died first, you can transfer more than one unused allowance. Add together the numbers in either box 15 or box 21 on each IHT436 form.
-value_being_transferred.guidance3 = You cannot transfer more than {0}
 value_being_transferred.error = Give a value that is less than the maximum amount of £{0} allowed in {1} to {2}
 value_being_transferred.error.blank = Give a value for the amount of unused residence nil rate band that you are transferring from the IHT-436 form
 
 value_of_assets_passing.browser_title = What is the total value of the other assets passing to direct descendants?
 value_of_assets_passing.title = What is the total value of the other assets passing to direct descendants?
-value_of_assets_passing.guidance1 = You will need the will and the value of assets to work this out.
-value_of_assets_passing.guidance2 = Find out what was left to a direct descendant using the will.
+value_of_assets_passing.guidance1 = If the person who has died left a will, you can use that to work out what assets were left to direct descendants.
 value_of_assets_passing.guidance3 = The values of each asset will have been used to complete the IHT400 form and each schedule that was needed. Add the values of each asset up to get the total value of assets passing to a direct descendant.
-value_of_assets_passing.guidance4 = Do not include the value of the property in the estate.
+value_of_assets_passing.guidance4 = This does not include the property worth {0} that you have already given.
 value_of_assets_passing.error.blank = Give a value for the assets passing to a direct descendant
 value_of_assets_passing.greater_than_estate_value.error = Give a value that is less than the £{0} value of the estate that you have already given
 

@@ -31,7 +31,7 @@ class ExemptionsAndReliefClaimedViewSpec  extends BooleanViewSpecBase {
   "Exemptions And Relief Claimed View" must {
 
     behave like rnrbPage[Boolean](createView, messageKeyPrefix,
-      "guidance1", "guidance2", "guidance2.bullet1", "guidance2.bullet2", "guidance2.bullet3")
+      "guidance2", "guidance2.bullet1", "guidance2.bullet2", "guidance2.bullet3")
 
     behave like pageWithoutBackLink[Boolean](createView)
 

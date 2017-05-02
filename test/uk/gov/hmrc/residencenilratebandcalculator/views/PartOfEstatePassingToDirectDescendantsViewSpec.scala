@@ -42,6 +42,7 @@ class PartOfEstatePassingToDirectDescendantsViewSpec extends BooleanViewSpecBase
       "guidance3.bullet5",
       "guidance3.bullet6",
       "guidance3.bullet7",
+      "guidance3.bullet8",
       "guidance4"
     )
 
