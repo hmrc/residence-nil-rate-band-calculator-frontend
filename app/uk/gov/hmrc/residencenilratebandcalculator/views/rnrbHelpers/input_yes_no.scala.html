@@ -13,7 +13,7 @@ labelClass: Option[String] = None
 
 
 <div class="form-field @if(errorKey.nonEmpty){form-field--error}">
-    <fieldset class="inline">
+    <fieldset class="inline" id="@{id}">
 
         <legend @if(labelClass.nonEmpty){class="@labelClass"}>@label</legend>
         @if(hint.nonEmpty){
