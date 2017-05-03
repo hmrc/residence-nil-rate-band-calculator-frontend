@@ -165,7 +165,7 @@ property_passing_to_direct_descendants.none = No
 property_passing_to_direct_descendants.browser_title = Did any part of this residence pass to a direct descendant or their spouse or civil partner?
 property_passing_to_direct_descendants.title = Did any part of this residence pass to a direct descendant or their spouse or civil partner?
 property_passing_to_direct_descendants.guidance1 = This will usually be listed in the will of the person who has died.
-property_passing_to_direct_descendants.guidance2 = Answer yes if any part of the property was left in the will to a direct descendant or a spouse or civil partner of one.
+property_passing_to_direct_descendants.guidance2 = Answer yes if any part of the property was left to a direct descendant or a spouse or civil partner of one.
 
 property_value.browser_title = What is the value of the residence at the date of death?
 property_value.title = What is the value of the residence at the date of death?
