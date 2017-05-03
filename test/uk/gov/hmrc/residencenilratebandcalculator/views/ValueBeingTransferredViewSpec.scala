@@ -39,11 +39,5 @@ class ValueBeingTransferredViewSpec extends IntViewSpecBase {
 
     behave like pageContainingPreviousAnswers(createView)
 
-    "contain the appropriate maximum value of transferable residence nil rate band" in {
-      val doc = asDocument(createView(None))
-      val maxValue = "100000"
-      assertContainsText(doc, maxValue)
-    }
-
   }
 }
