@@ -96,13 +96,14 @@ String.prototype.format = function () {
         '</div>' + 
         '<div id="timeout-overlay" class="timeout-overlay"></div>') 
         .appendTo('body')
+        self.activeElement = document.activeElement
         var modalFocus = document.getElementById("timeout-dialog")
         $('#timeout-keep-signin-btn').focus()
 
         // AL: disable the non-dialog page to prevent confusion for VoiceOver users
         $('#skiplink-container, body>header, #global-cookie-message, body>main, body>footer').attr('aria-hidden', 'true')
 
-        var activeElement = document.activeElement
+
 
         // set live region after focus to ensure dialog is not read out twice.
         modalFocus.setAttribute('aria-live','polite')
@@ -120,7 +121,7 @@ String.prototype.format = function () {
         self.closeDialog = function () {
           if (self.dialogOpen) {
             self.keepAlive()
-            activeElement.focus()
+            self.activeElement.focus()
           }
         }
 
