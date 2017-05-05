@@ -87,7 +87,7 @@ String.prototype.format = function () {
         var time = secondsToTime(settings.countdown)
         var timeout = secondsToTime(settings.timeout)
          // AL: Add live region and edit dialog structure
-        $('<div id="timeout-dialog" class="timeout-dialog" role="dialog" aria-labelledby="timeout-heading timeout-message" tabindex="-1">' + 
+        $('<div id="timeout-dialog" class="timeout-dialog" role="dialog" aria-labelledby="timeout-heading" aria-describedby="timeout-message">' + 
             '<h2 id="timeout-heading" class="heading-medium">' + settings.title + '</h2>' + 
             '<p id="timeout-message">' +
                 settings.message + ' <br /><span class="countdown" id="timeout-countdown" role="text">' + time.m + ' ' + settings.messageMinutes + '</span>' +
@@ -97,7 +97,7 @@ String.prototype.format = function () {
         '<div id="timeout-overlay" class="timeout-overlay"></div>') 
         .appendTo('body')
         var modalFocus = document.getElementById("timeout-dialog")
-        modalFocus.focus()
+        $('#timeout-keep-signin-btn').focus()
 
         // AL: disable the non-dialog page to prevent confusion for VoiceOver users
         $('#skiplink-container, body>header, #global-cookie-message, body>main, body>footer').attr('aria-hidden', 'true')
@@ -113,9 +113,7 @@ String.prototype.format = function () {
 
         self.escPress = function (event) {
           if (self.dialogOpen && event.keyCode === 27) {
-            // close the dialog
-            self.keepAlive()
-            activeElement.focus()
+            self.closeDialog()
           }
         }
 
