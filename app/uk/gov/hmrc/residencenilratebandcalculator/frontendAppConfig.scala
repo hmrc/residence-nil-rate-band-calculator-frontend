@@ -26,6 +26,8 @@ trait AppConfig {
   val analyticsHost: String
   val reportAProblemPartialUrl: String
   val reportAProblemNonJSUrl: String
+  val timeOutCountdownSeconds: Int
+  val timeOutSession: Int
 }
 
 @Singleton
@@ -38,6 +40,8 @@ class FrontendAppConfig @Inject()(configuration: Configuration) extends AppConfi
 
   override lazy val analyticsToken = loadConfig(s"google-analytics.token")
   override lazy val analyticsHost = loadConfig(s"google-analytics.host")
+  override lazy val timeOutCountdownSeconds = loadConfig("timeOutCountdownSeconds").toInt
+  override lazy val timeOutSession = loadConfig("mongodb.timeToLiveInSeconds").toInt
   override lazy val reportAProblemPartialUrl = s"$contactHost/contact/problem_reports_ajax?service=$contactFormServiceIdentifier"
   override lazy val reportAProblemNonJSUrl = s"$contactHost/contact/problem_reports_nonjs?service=$contactFormServiceIdentifier"
   lazy val betaFeedbackUrl = s"$contactHost/contact/beta-feedback"
