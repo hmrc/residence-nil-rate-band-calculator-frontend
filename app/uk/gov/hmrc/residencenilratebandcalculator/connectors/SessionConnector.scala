@@ -58,6 +58,8 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository, val c
     }
   }
 
+  def drop(implicit hc: HeaderCarrier): Future[Boolean] = sessionRepository().drop
+
   def fetch()(implicit hc: HeaderCarrier): Future[Option[CacheMap]] = {
     hc.sessionId match {
       case None => Future.successful(None)
