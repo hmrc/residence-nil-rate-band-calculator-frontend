@@ -72,6 +72,7 @@ String.prototype.format = function () {
         window.setTimeout(function () {
           self.setupDialog()
         }, ((settings.timeout) - (settings.countdown)) * 1000)
+        console.log((settings.timeout - settings.countdown) * 1000);
       },
 
       setupDialog: function () {
@@ -89,24 +90,20 @@ String.prototype.format = function () {
          // AL: Add live region and edit dialog structure
         $('<div id="timeout-dialog" class="timeout-dialog" role="dialog" aria-labelledby="timeout-heading" aria-describedby="timeout-message">' + 
             '<h2 id="timeout-heading" class="heading-medium">' + settings.title + '</h2>' + 
-            '<p id="timeout-message">' +
+            '<p id="timeout-message" aria-live="polite">' +
                 settings.message + ' <br /><span class="countdown" id="timeout-countdown" role="text">' + time.m + ' ' + settings.messageMinutes + '</span>' +
             '</p>' + 
             '<button id="timeout-keep-signin-btn" class="button">' + settings.keep_alive_button_text.format(settings.timeout / 60) + '</button>' + 
         '</div>' + 
         '<div id="timeout-overlay" class="timeout-overlay"></div>') 
-        .appendTo('body')
-        self.activeElement = document.activeElement
-        var modalFocus = document.getElementById("timeout-dialog")
-        $('#timeout-keep-signin-btn').focus()
+        .appendTo('body');
+        self.activeElement = document.activeElement;
 
-        // AL: disable the non-dialog page to prevent confusion for VoiceOver users
+       $('#timeout-keep-signin-btn').focus();
+
+        // AL: disable the non-dialog page to hide un-navigable accessibility tree
+        // can be removed once aria-modal is fully supported
         $('#skiplink-container, body>header, #global-cookie-message, body>main, body>footer').attr('aria-hidden', 'true')
-
-
-
-        // set live region after focus to ensure dialog is not read out twice.
-        modalFocus.setAttribute('aria-live','polite')
 
         self.addEvents();
 
@@ -200,6 +197,7 @@ String.prototype.format = function () {
                 var currentCounter = settings.countdown - expiredSeconds;
                 self.updateUI(currentCounter);
                 self.startCountdown(currentCounter);
+                $('#timeout-keep-signin-btn').focus();
             }
         }
 
@@ -233,9 +231,7 @@ String.prototype.format = function () {
 
         $.get(settings.keep_alive_url, function (data) {
           if (data === 'OK') {
-            if (settings.restart_on_yes) {
-              self.setupDialogTimer()
-            }
+            self.setupDialogTimer()
           }
           else {
             self.signOut()
