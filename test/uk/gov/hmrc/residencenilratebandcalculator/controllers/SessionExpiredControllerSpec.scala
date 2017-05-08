@@ -22,19 +22,19 @@ import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.session_expired
 
-class SessionExpiredControllerSpec extends HtmlSpec with WithFakeApplication {
+class SessionExpiredControllerSpec extends HtmlSpec with WithFakeApplication with MockSessionConnector {
 
   val fakeRequest = FakeRequest("", "")
 
   "Session Expired controller" must {
 
     "return 200 for a GET" in {
-      val result = new SessionExpiredController(frontendAppConfig, messagesApi).onPageLoad()(fakeRequest)
+      val result = new SessionExpiredController(frontendAppConfig, messagesApi, mockSessionConnector).onPageLoad()(fakeRequest)
       status(result) shouldBe 200
     }
 
     "return the View for a GET" in {
-      val result = new SessionExpiredController(frontendAppConfig, messagesApi).onPageLoad()(fakeRequest)
+      val result = new SessionExpiredController(frontendAppConfig, messagesApi, mockSessionConnector).onPageLoad()(fakeRequest)
       contentAsString(result) shouldBe session_expired(frontendAppConfig)(fakeRequest, messages).toString
     }
   }
