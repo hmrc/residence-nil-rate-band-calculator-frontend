@@ -88,7 +88,7 @@ String.prototype.format = function () {
         var time = secondsToTime(settings.countdown)
         var timeout = secondsToTime(settings.timeout)
          // AL: Add live region and edit dialog structure
-        $('<div id="timeout-dialog" class="timeout-dialog" role="dialog" aria-labelledby="timeout-heading" aria-describedby="timeout-message" aria-live="polite">' + 
+        $('<div id="timeout-dialog" class="timeout-dialog" role="dialog" aria-labelledby="timeout-heading" aria-live="polite">' + 
             '<h2 id="timeout-heading" class="heading-medium">' + settings.title + '</h2>' + 
             '<p id="timeout-message">' +
                 settings.message + ' <br /><span class="countdown" id="timeout-countdown" role="text">' + time.m + ' ' + settings.messageMinutes + '</span>' +
@@ -101,10 +101,6 @@ String.prototype.format = function () {
         self.activeElement = document.activeElement;
 
         $('#timeout-keep-signin-btn').focus();
-
-
-
-//       $('#timeout-keep-signin-btn').focus();
 
         // AL: disable the non-dialog page to hide un-navigable accessibility tree
         // can be removed once aria-modal is fully supported
