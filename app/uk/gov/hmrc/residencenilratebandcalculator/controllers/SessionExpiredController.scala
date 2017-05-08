@@ -36,7 +36,6 @@ class SessionExpiredController @Inject()(val appConfig: FrontendAppConfig,
 
   def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.drop.flatMap( isDropped => {
-      println(s"Drop of session connector cache return status: $isDropped")
         Logger.debug(s"Drop of session connector cache return status: $isDropped")
         Future.successful(Ok(session_expired(appConfig)))
       }
