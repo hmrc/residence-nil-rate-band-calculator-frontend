@@ -146,6 +146,7 @@ String.prototype.format = function () {
           $('#timeout-dialog').remove()
           $('html').removeClass('noScroll')
         }
+        
         // AL: re-enable the non-dialog page
         $('#skiplink-container, body>header, #global-cookie-message, body>main, body>footer').removeAttr('aria-hidden')
       },
