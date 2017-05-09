@@ -59,7 +59,7 @@ trait MockSessionConnector extends UnitSpec with MockitoSugar with Matchers with
     when(mockSessionConnector.fetchAndGetEntry[LocalDate](anyString())(any[HeaderCarrier], any())) thenReturn Future.successful(None)
 
     when(mockSessionConnector.fetch()(any[HeaderCarrier])) thenReturn Future.successful(Some(mockCacheMap))
-    when(mockSessionConnector.drop(any())) thenReturn Future.successful(true)
+    when(mockSessionConnector.removeAll(any())) thenReturn Future.successful(true)
   }
 
   def verifyValueIsCached[A: ClassTag](key: String, value: A) = {
