@@ -72,7 +72,6 @@ String.prototype.format = function () {
         window.setTimeout(function () {
           self.setupDialog()
         }, ((settings.timeout) - (settings.countdown)) * 1000)
-        console.log((settings.timeout - settings.countdown) * 1000);
       },
 
       setupDialog: function () {
@@ -88,7 +87,7 @@ String.prototype.format = function () {
         var time = secondsToTime(settings.countdown)
         var timeout = secondsToTime(settings.timeout)
          // AL: Add live region and edit dialog structure
-        $('<div id="timeout-dialog" class="timeout-dialog" role="dialog" aria-labelledby="timeout-heading" aria-live="polite">' + 
+        $('<div id="timeout-dialog" class="timeout-dialog" role="dialog" aria-labelledby="timeout-heading" aria-live="assertive">' + 
             '<h2 id="timeout-heading" class="heading-medium">' + settings.title + '</h2>' + 
             '<p id="timeout-message">' +
                 settings.message + ' <br /><span class="countdown" id="timeout-countdown" role="text">' + time.m + ' ' + settings.messageMinutes + '</span>' +
@@ -146,7 +145,7 @@ String.prototype.format = function () {
           $('#timeout-dialog').remove()
           $('html').removeClass('noScroll')
         }
-        
+
         // AL: re-enable the non-dialog page
         $('#skiplink-container, body>header, #global-cookie-message, body>main, body>footer').removeAttr('aria-hidden')
       },
