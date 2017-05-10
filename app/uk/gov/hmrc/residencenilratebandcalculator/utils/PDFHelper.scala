@@ -16,18 +16,19 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
-import java.io.{ByteArrayOutputStream, InputStream}
+import java.io.ByteArrayOutputStream
 import javax.inject.{Inject, Singleton}
 
 import org.apache.pdfbox.pdmodel.{PDDocument, PDDocumentInformation}
-import play.api.i18n.{Messages, MessagesApi}
+import play.api.Environment
+import play.api.i18n.MessagesApi
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 
 @Singleton
-class PDFHelper @Inject()(val messagesApi: MessagesApi){
+class PDFHelper @Inject()(val messagesApi: MessagesApi, val env: Environment){
   private val retrieveValueToStoreFor1Field: (String, Int) => String = (v, _) => v
   private val retrieveValueToStoreForMoreThan1Field: (String, Int) => String = (v, i) => v.charAt(i).toString
   private val cacheMapIdToFieldName = Map[String, Seq[String]](
@@ -107,42 +108,44 @@ class PDFHelper @Inject()(val messagesApi: MessagesApi){
     }
   }
 
-  def generatePDF(is: InputStream, cacheMap: CacheMap): ByteArrayOutputStream = {
-    val pdf = PDDocument.load(is)
-    setupPDFDocument(pdf)
-    val baos = new ByteArrayOutputStream()
-    try {
-      val form = pdf.getDocumentCatalog.getAcroForm
+  def generatePDF(cacheMap: CacheMap): Option[ByteArrayOutputStream] = {
+    env.resourceAsStream("resource/IHT435.pdf").map { is =>
+      val pdf = PDDocument.load(is)
+      setupPDFDocument(pdf)
+      val baos = new ByteArrayOutputStream()
+      try {
+        val form = pdf.getDocumentCatalog.getAcroForm
 
-      def ua = new UserAnswers(cacheMap)
+        def ua = new UserAnswers(cacheMap)
 
-      def storeValuesInPDF(fieldNames: Seq[String], valueForPDF: String) = {
-        val retrieveValueToStore: (String, Int) => String =
-          if (fieldNames.size == 1) retrieveValueToStoreFor1Field else retrieveValueToStoreForMoreThan1Field
-        fieldNames.indices foreach { i =>
-          form.getField(fieldNames(i)).setValue(retrieveValueToStore(valueForPDF, i))
-        }
-      }
-
-      cacheMapIdToFieldName foreach {
-        case (cacheId, fieldNames) =>
-          val optionalJsVal = cacheMap.data.get(cacheId)
-          (optionalJsVal, cacheId) match {
-            case (_, Constants.percentagePassedToDirectDescendantsId) =>
-              storeValuesInPDF(fieldNames, getValueForPDF(ua.getPercentagePassedToDirectDescendants.toString, cacheId))
-            case (_, Constants.transferAvailableWhenPropertyChangedId) =>
-              ua.isTransferAvailableWhenPropertyChanged.foreach { isAvailable =>
-                storeValuesInPDF(fieldNames, getValueForPDF(booleanValueForPDF(isAvailable), cacheId))
-              }
-            case (Some(jsVal), _) => storeValuesInPDF(fieldNames, getValueForPDF(jsValueToString(jsVal), cacheId))
-            case _ =>
+        def storeValuesInPDF(fieldNames: Seq[String], valueForPDF: String) = {
+          val retrieveValueToStore: (String, Int) => String =
+            if (fieldNames.size == 1) retrieveValueToStoreFor1Field else retrieveValueToStoreForMoreThan1Field
+          fieldNames.indices foreach { i =>
+            form.getField(fieldNames(i)).setValue(retrieveValueToStore(valueForPDF, i))
           }
+        }
+
+        cacheMapIdToFieldName foreach {
+          case (cacheId, fieldNames) =>
+            val optionalJsVal = cacheMap.data.get(cacheId)
+            (optionalJsVal, cacheId) match {
+              case (_, Constants.percentagePassedToDirectDescendantsId) =>
+                storeValuesInPDF(fieldNames, getValueForPDF(ua.getPercentagePassedToDirectDescendants.toString, cacheId))
+              case (_, Constants.transferAvailableWhenPropertyChangedId) =>
+                ua.isTransferAvailableWhenPropertyChanged.foreach { isAvailable =>
+                  storeValuesInPDF(fieldNames, getValueForPDF(booleanValueForPDF(isAvailable), cacheId))
+                }
+              case (Some(jsVal), _) => storeValuesInPDF(fieldNames, getValueForPDF(jsValueToString(jsVal), cacheId))
+              case _ =>
+            }
+        }
+        pdf.save(baos)
+      } finally {
+        pdf.close()
+        is.close()
       }
-      pdf.save(baos)
-    } finally {
-      pdf.close()
-      is.close()
+      baos
     }
-    baos
   }
 }

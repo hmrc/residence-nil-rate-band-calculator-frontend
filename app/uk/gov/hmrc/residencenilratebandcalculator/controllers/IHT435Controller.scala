@@ -41,9 +41,11 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
           Logger.error(msg)
           throw new RuntimeException(msg)
         }
-        env.resourceAsStream("resource/IHT435.pdf").map ( is =>
-            Ok(pdfHelper.generatePDF(is, cacheMap).toByteArray).as("application/pdf")
-        ).fold(fail("Unable to locate PDF resource"))(identity)
+        pdfHelper.generatePDF(cacheMap).map(baos => {
+          val result = Ok(baos.toByteArray).as("application/pdf")
+          baos.close()
+          result
+        }).fold(fail("Unable to locate PDF template resource"))(identity)
     }
   }
 }

@@ -18,21 +18,16 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import java.io.ByteArrayOutputStream
 
-import akka.util.ByteString
-import org.apache.pdfbox.pdmodel.PDDocument
-import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm
+import org.mockito.Matchers._
+import org.mockito.Mockito._
 import play.api.Environment
 import play.api.http.Status
 import play.api.i18n.MessagesApi
-import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
+import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.utils.PDFHelper
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
-import org.mockito.Matchers._
-import org.mockito.Mockito._
 
 class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSessionConnector {
   private val fakeRequest = FakeRequest("", "")
@@ -50,9 +45,16 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
 
   "onPageLoad" must {
     "return 200" in {
-      when(mockPDFHelper.generatePDF(any(), any())) thenReturn new ByteArrayOutputStream()
+      when(mockPDFHelper.generatePDF(any())) thenReturn Some(new ByteArrayOutputStream())
       val result = controller.onPageLoad()(fakeRequest)
       status(result) shouldBe Status.OK
+    }
+
+    "return exception when no resource" in {
+      when(mockPDFHelper.generatePDF(any())) thenReturn None
+      a[RuntimeException] shouldBe thrownBy {
+        status(controller.onPageLoad()(fakeRequest))
+      }
     }
 
     "with an expired session return a redirect to an expired session page" in {

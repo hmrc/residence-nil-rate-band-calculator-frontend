@@ -16,29 +16,14 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
-import java.io.ByteArrayOutputStream
-
-import akka.util.ByteString
-import org.apache.pdfbox.pdmodel.PDDocument
-import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm
-import play.api.http.Status
-import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
-import play.api.test.Helpers.{contentAsBytes, redirectLocation}
-import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.test.UnitSpec
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
-import akka.util.ByteString
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm
 import play.api.Environment
-import play.api.http.Status
 import play.api.i18n.MessagesApi
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
-import play.api.test.FakeRequest
-import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 class PDFHelperSpec extends UnitSpec with WithFakeApplication {
   private val injector = fakeApplication.injector
@@ -72,10 +57,10 @@ class PDFHelperSpec extends UnitSpec with WithFakeApplication {
   ))
 
   private def acroForm(filledCacheMap: CacheMap = cacheMapAllNonDecimalFields): PDAcroForm = {
-    val pdfHelper = new PDFHelper(messagesApi)
-    val optionPDAcroForm: Option[PDAcroForm] = env.resourceAsStream("resource/IHT435.pdf").map { is =>
-      val result: ByteArrayOutputStream = pdfHelper.generatePDF(is, filledCacheMap)
-      val pdfDoc = PDDocument.load(result.toByteArray)
+    val pdfHelper = new PDFHelper(messagesApi, env)
+    val optionPDAcroForm: Option[PDAcroForm] = pdfHelper.generatePDF(filledCacheMap).map { baos =>
+      val pdfDoc = PDDocument.load(baos.toByteArray)
+      baos.close()
       val acroForm = pdfDoc.getDocumentCatalog.getAcroForm
       pdfDoc.close()
       acroForm
