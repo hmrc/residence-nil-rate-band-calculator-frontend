@@ -11,7 +11,7 @@ inputs: Seq[RadioOption]
 )(implicit messages: Messages)
 
 <div class="form-field">
-    <fieldset class="form-group">
+    <fieldset class="form-group" id="@{name}">
         <legend class="bold-small @if(legendClass.nonEmpty){@{legendClass.get}}">@legend</legend>
         @if(hint.nonEmpty){
         <span class="form-hint">@{hint.get}</span>

@@ -1,4 +1,4 @@
 @(
-headingKey: String)(implicit messages: Messages)
+headingKey: String, headingSize: String = "heading-medium")(implicit messages: Messages)
 
-<h1 class="heading-medium">@messages(headingKey)</h1>
+<h1 class="@headingSize">@messages(headingKey)</h1>

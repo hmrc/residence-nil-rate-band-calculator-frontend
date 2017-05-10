@@ -20,7 +20,7 @@ $(document).ready(function() {
         var counter = 0;
         $('.error-summary-list a').each(function(){
             var linkhash = $(this).attr("href").split('#')[1];
-            $('#' + linkhash).parents('.form-field').first().attr('id', 'f-' + counter);
+            $('#' + linkhash).parents('.form-field, .form-group').first().attr('id', 'f-' + counter);
             $(this).attr('data-focuses', 'f-' + counter);
             counter++;
         });
