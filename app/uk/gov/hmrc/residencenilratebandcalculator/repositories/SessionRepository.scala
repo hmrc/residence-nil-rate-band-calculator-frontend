@@ -31,6 +31,7 @@ import uk.gov.hmrc.mongo.json.ReactiveMongoFormats
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.util.{Failure, Success}
 
 case class DatedCacheMap(id: String,
                          data: Map[String, JsValue],
@@ -76,6 +77,12 @@ class ReactiveMongoRepository(config: Configuration, mongo: () => DefaultDB)
     val modifier = BSONDocument("$set" -> cmDocument)
 
     collection.update(selector, modifier, upsert = true).map { lastError =>
+      lastError.ok
+    }
+  }
+
+  def removeAll(id: String): Future[Boolean] = {
+    collection.remove(Json.obj("id" -> id)).map { lastError =>
       lastError.ok
     }
   }

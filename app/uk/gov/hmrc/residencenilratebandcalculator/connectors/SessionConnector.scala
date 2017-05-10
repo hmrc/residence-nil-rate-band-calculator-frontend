@@ -58,6 +58,13 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository, val c
     }
   }
 
+  def removeAll(implicit hc: HeaderCarrier): Future[Boolean] =
+    hc.sessionId match {
+      case None => Future(false)
+      case Some(id) =>
+        sessionRepository().removeAll(id.toString)
+    }
+
   def fetch()(implicit hc: HeaderCarrier): Future[Option[CacheMap]] = {
     hc.sessionId match {
       case None => Future.successful(None)

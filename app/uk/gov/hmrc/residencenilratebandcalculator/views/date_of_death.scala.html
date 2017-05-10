@@ -11,7 +11,8 @@
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("date_of_death.browser_title"),
     appConfig = appConfig,
-    bodyClasses = None) {
+    bodyClasses = None,
+    enableTimeout = false) {
 
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onSubmit(), 'autoComplete -> "off") {

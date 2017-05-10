@@ -6,7 +6,9 @@
   contentHeader: Option[Html] = None,
   bodyClasses: Option[String] = None,
   mainClass: Option[String] = None,
-  scriptElem: Option[Html] = None)(mainContent: Html)(implicit request : Request[_], messages: Messages)
+  scriptElem: Option[Html] = None,
+  enableTimeout: Boolean = true
+)(mainContent: Html)(implicit request : Request[_], messages: Messages)
 
 @import uk.gov.hmrc.play.views.html.layouts
 
@@ -38,7 +40,8 @@
         mainContent = layouts.article(mainContent),
         serviceInfoContent = serviceInfoContent,
         scriptElem = scriptElem,
-        betaBanner = betaBanner
+        betaBanner = betaBanner,
+        enableTimeout = enableTimeout
     )
 
 } else {
@@ -53,6 +56,7 @@
         mainContent = layouts.article(mainContent),
         serviceInfoContent = serviceInfoContent,
         scriptElem = scriptElem,
-        betaBanner = betaBanner
+        betaBanner = betaBanner,
+        enableTimeout = enableTimeout
     )
 }

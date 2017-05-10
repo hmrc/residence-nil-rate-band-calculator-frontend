@@ -9,7 +9,8 @@ contentHeader: Option[Html] = None,
 mainContent: Html = HtmlFormat.empty,
 serviceInfoContent: Html = HtmlFormat.empty,
 scriptElem: Option[Html] = None,
-betaBanner: Html = HtmlFormat.empty)(implicit request: Request[_], messages: Messages)
+betaBanner: Html = HtmlFormat.empty,
+enableTimeout: Boolean = true)(implicit request: Request[_], messages: Messages)
 
 <!DOCTYPE html>
 <html lang="en">

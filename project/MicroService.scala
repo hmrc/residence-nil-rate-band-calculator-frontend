@@ -65,7 +65,7 @@ trait MicroService {
     .settings(
       // concatenate js
       Concat.groups := Seq(
-        "javascripts/rnrb-app.js" -> group(Seq("javascripts/show-hide-content.js", "javascripts/rnrb.js"))
+        "javascripts/rnrb-app.js" -> group(Seq("javascripts/timeout-dialog.js", "javascripts/show-hide-content.js", "javascripts/rnrb.js"))
       ),
       // prevent removal of unused code which generates warning errors due to use of third-party libs
       UglifyKeys.compressOptions := Seq("unused=false", "dead_code=false"),

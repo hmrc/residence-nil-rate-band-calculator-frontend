@@ -9,7 +9,9 @@
   mainContent: Html = HtmlFormat.empty,
   serviceInfoContent: Html = HtmlFormat.empty,
   scriptElem: Option[Html] = None,
-  betaBanner: Html = HtmlFormat.empty)(implicit request: Request[_], messages: Messages)
+  betaBanner: Html = HtmlFormat.empty,
+  enableTimeout: Boolean = true
+)(implicit request: Request[_], messages: Messages)
 
 @import layouts.{govuk_template => hmrcGovUkTemplate}
 @import uk.gov.hmrc.play.views.html.{layouts => uiLayouts}
@@ -21,6 +23,9 @@
       headScripts = None)
     <meta name="format-detection" content="telephone=no" />
     <link rel="stylesheet" href='@routes.Assets.versioned("stylesheets/rnrb-app.css")' />
+    <!--[if lte IE 8 ]>
+    <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/rnrb-ie.css")" />
+    <![endif]-->
     <link rel="stylesheet" media="print" href='@routes.Assets.versioned("stylesheets/rnrb-print.css")' />
 }
 
@@ -44,6 +49,24 @@
       scriptElem = scriptElem,
       gaCalls = None)
     <script src='@routes.Assets.versioned("javascripts/rnrb-app.min.js")'> </script>
+
+    @if(enableTimeout){
+    <script>
+        $.timeoutDialog({
+            timeout: @appConfig.timeOutSession,
+            countdown: @appConfig.timeOutCountdownSeconds,
+            keep_alive_url: "@uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.KeepAliveController.onPageLoad().url",
+            logout_url: "@uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url",
+            title: "@Messages("timeout_dialog.title")",
+            message: "@Messages("timeout_dialog.message")",
+            keep_alive_button_text: "@Messages("timeout_dialog.button")",
+            messageSeconds: "@Messages("timeout_dialog.seconds")",
+            messageMinutes: "@Messages("timeout_dialog.minutes")",
+            messageMinute: "@Messages("timeout_dialog.minute")"
+        });
+    </script>
+    }
+
 }
 
 @footerTop = {}
