@@ -35,8 +35,6 @@ import org.mockito.Matchers._
 import org.mockito.Mockito._
 
 class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSessionConnector {
-
-
   private val fakeRequest = FakeRequest("", "")
   private val injector = fakeApplication.injector
 

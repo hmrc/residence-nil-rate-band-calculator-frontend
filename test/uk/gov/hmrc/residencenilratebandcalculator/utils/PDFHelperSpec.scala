@@ -43,6 +43,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 class PDFHelperSpec extends UnitSpec with WithFakeApplication {
   private val injector = fakeApplication.injector
   private val env = injector.instanceOf[Environment]
+  private def messagesApi = injector.instanceOf[MessagesApi]
   private val cacheMapKey = "aa"
   private val noDigitsInDate = 8
   private val noDigitsInDecimal = 7
@@ -71,15 +72,15 @@ class PDFHelperSpec extends UnitSpec with WithFakeApplication {
   ))
 
   private def acroForm(filledCacheMap: CacheMap = cacheMapAllNonDecimalFields): PDAcroForm = {
-    val pdfHelper = new PDFHelper
-    env.resourceAsStream("resource/IHT435.pdf").map { is =>
+    val pdfHelper = new PDFHelper(messagesApi)
+    val optionPDAcroForm: Option[PDAcroForm] = env.resourceAsStream("resource/IHT435.pdf").map { is =>
       val result: ByteArrayOutputStream = pdfHelper.generatePDF(is, filledCacheMap)
-      val content: ByteString = contentAsBytes(result)
-      val pdfDoc = PDDocument.load(content.toByteBuffer.array())
+      val pdfDoc = PDDocument.load(result.toByteArray)
       val acroForm = pdfDoc.getDocumentCatalog.getAcroForm
       pdfDoc.close()
       acroForm
     }
+    optionPDAcroForm.fold[PDAcroForm](throw new RuntimeException("Unable to get stream"))(identity)
   }
 
   private def checkMultipleFieldValues(acroForm: PDAcroForm, baseFieldName: String, expectedDate: String, totalFields: Int) = {
@@ -98,10 +99,7 @@ class PDFHelperSpec extends UnitSpec with WithFakeApplication {
     }
   }
 
-  "PPP" must {
-
-
-
+  "PDFHelper" must {
     describeTest("IHT435_03") in {
       checkMultipleFieldValues(acroForm(), "IHT435_03", "12052017", noDigitsInDate)
     }
@@ -195,11 +193,5 @@ class PDFHelperSpec extends UnitSpec with WithFakeApplication {
       )
       acroForm(cacheMap).getField("IHT435_26").getValueAsString shouldBe "No"
     }
-
   }
-
-
-
-
-
 }

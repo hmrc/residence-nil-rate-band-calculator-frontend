@@ -17,17 +17,17 @@
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
 import java.io.{ByteArrayOutputStream, InputStream}
-import javax.inject.Singleton
+import javax.inject.{Inject, Singleton}
 
 import org.apache.pdfbox.pdmodel.{PDDocument, PDDocumentInformation}
-import play.api.i18n.Messages
+import play.api.i18n.{Messages, MessagesApi}
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 
 @Singleton
-class PDFHelper {
+class PDFHelper @Inject()(val messagesApi: MessagesApi){
   private val retrieveValueToStoreFor1Field: (String, Int) => String = (v, _) => v
   private val retrieveValueToStoreForMoreThan1Field: (String, Int) => String = (v, i) => v.charAt(i).toString
   private val cacheMapIdToFieldName = Map[String, Seq[String]](
@@ -83,7 +83,7 @@ class PDFHelper {
 
   private def setupPDFDocument(pdf: PDDocument) = {
     val pdDocumentInformation: PDDocumentInformation = pdf.getDocumentInformation
-    pdDocumentInformation.setTitle(Messages("threshold_calculation_result.pdf.title"))
+    pdDocumentInformation.setTitle(messagesApi("threshold_calculation_result.pdf.title"))
     pdf.setDocumentInformation(pdDocumentInformation)
   }
 
