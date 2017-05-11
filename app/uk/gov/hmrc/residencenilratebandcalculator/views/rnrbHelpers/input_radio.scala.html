@@ -9,12 +9,11 @@ value: Option[String] = None,
 hint: Option[String] = None,
 inputs: Seq[RadioOption]
 )(implicit messages: Messages)
-
-<div class="form-field">
-    <fieldset class="form-group" id="@{name}">
+<div class="form-group">
+    <fieldset id="@{name}">
         <legend class="bold-small @if(legendClass.nonEmpty){@{legendClass.get}}">@legend</legend>
         @if(hint.nonEmpty){
-        <span class="form-hint">@{hint.get}</span>
+        <p class="form-hint">@{hint.get}</p>
         }
         @if(errorKey.nonEmpty){
         <span class="error-notification" id="error-message-this-input">@messages(errorKey)</span>
