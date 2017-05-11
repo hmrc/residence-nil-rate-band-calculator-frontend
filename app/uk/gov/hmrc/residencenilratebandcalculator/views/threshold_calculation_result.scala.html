@@ -30,12 +30,12 @@
         <li>@messages("threshold_calculation_result.action.guidance.form_400")</li>
     </ul>
     <p>@messages("threshold_calculation_result.action.guidance.continue")</p>
-    <p>@messages("threshold_calculation_result.print_prefix")
-        <a class="u--no-print print-hidden js-visible" href="javascript:window.print()">@messages("threshold_calculation_result.link_to_print")</a>
+    <p class="u--no-print js-visible">@messages("threshold_calculation_result.print_prefix")
+        <a href="javascript:window.print()">@messages("threshold_calculation_result.link_to_print")</a>
         @messages("threshold_calculation_result.print_suffix")
     </p>
 
-    <div class="panel-indent panel-indent--gutter">
+    <div class="panel-indent panel-indent--gutter u--no-print">
         <p><a href="@routes.IHT435Controller.onPageLoad()">@messages("threshold_calculation_result.pdf.guidance1")</a>. @messages("threshold_calculation_result.pdf.guidance2")</p>
     </div>
 
