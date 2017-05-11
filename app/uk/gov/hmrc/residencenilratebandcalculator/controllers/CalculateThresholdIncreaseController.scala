@@ -24,12 +24,15 @@ import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.calculate_threshold_increase
 import scala.concurrent.Future
+import play.api.Application
 
 @Singleton
 class CalculateThresholdIncreaseController @Inject()(val appConfig: FrontendAppConfig,
-                                                     val messagesApi: MessagesApi) extends FrontendController with I18nSupport {
+                                                     val messagesApi: MessagesApi,
+                                                     val application: Application) extends FrontendController with I18nSupport {
 
   def onPageLoad = Action.async { implicit request =>
+    implicit val app = application
     Future.successful(Ok(calculate_threshold_increase(appConfig)))
   }
 }

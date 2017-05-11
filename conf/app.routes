@@ -91,4 +91,6 @@ POST       /value-of-estate                             uk.gov.hmrc.residencenil
 GET        /value-of-changed-property                   uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfChangedPropertyController.onPageLoad
 POST       /value-of-changed-property                   uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfChangedPropertyController.onSubmit
 
-GET        /copy-of-iht-435                              uk.gov.hmrc.residencenilratebandcalculator.controllers.IHT435Controller.onPageLoad
+GET        /copy-of-iht-435                             uk.gov.hmrc.residencenilratebandcalculator.controllers.IHT435Controller.onPageLoad
+
+GET         /language/:lang                             uk.gov.hmrc.residencenilratebandcalculator.controllers.CustomLanguageController.switchToLanguage(lang: String)

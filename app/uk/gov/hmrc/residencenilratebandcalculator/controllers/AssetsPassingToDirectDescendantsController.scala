@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
 
+import play.api.Application
 import play.api.data.Form
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
@@ -32,7 +33,8 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 class AssetsPassingToDirectDescendantsController @Inject()(override val appConfig: FrontendAppConfig,
                                                               val messagesApi: MessagesApi,
                                                               override val sessionConnector: SessionConnector,
-                                                              override val navigator: Navigator) extends SimpleControllerBase[Boolean] {
+                                                              override val navigator: Navigator,
+                                                              val application: Application) extends SimpleControllerBase[Boolean] {
 
   override val controllerId: String = Constants.assetsPassingToDirectDescendantsId
 
@@ -43,6 +45,7 @@ class AssetsPassingToDirectDescendantsController @Inject()(override val appConfi
       case Some(value) => Some(CurrencyFormatter.format(value))
       case _ => None
     }
+    implicit val app: Application = application
     assets_passing_to_direct_descendants(appConfig, form, answerRows, formattedPropertyValue)
   }
 }

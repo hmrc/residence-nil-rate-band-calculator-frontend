@@ -27,6 +27,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_estate_value
+import play.api.Application
 
 import scala.concurrent.Future
 
@@ -34,7 +35,8 @@ import scala.concurrent.Future
 class ChargeableEstateValueController  @Inject()(override val appConfig: FrontendAppConfig,
                                                     val messagesApi: MessagesApi,
                                                     override val sessionConnector: SessionConnector,
-                                                    override val navigator: Navigator) extends SimpleControllerBase[Int] {
+                                                    override val navigator: Navigator,
+                                                    val application: Application) extends SimpleControllerBase[Int] {
 
 
   override val controllerId = Constants.chargeableEstateValueId
@@ -43,6 +45,7 @@ class ChargeableEstateValueController  @Inject()(override val appConfig: Fronten
     NonNegativeIntForm("chargeable_estate_value.error.blank", "error.whole_pounds", "chargeable_estate_value.error.non_numeric")
 
   override def view(form: Option[Form[Int]], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+    implicit val app = application
     chargeable_estate_value(appConfig, form, answerRows)
   }
 
