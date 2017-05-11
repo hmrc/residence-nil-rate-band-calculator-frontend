@@ -27,23 +27,28 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_inherited_property_value
+import play.api.Application
 
 import scala.concurrent.Future
 
 class ChargeableInheritedPropertyValueController @Inject()(override val appConfig: FrontendAppConfig,
                                                                      val messagesApi: MessagesApi,
                                                                      override val sessionConnector: SessionConnector,
-                                                                     override val navigator: Navigator) extends SimpleControllerBase[Int] {
+                                                                     override val navigator: Navigator,
+                                                                     val application: Application) extends SimpleControllerBase[Int] {
 
   override val controllerId: String = Constants.chargeableInheritedPropertyValueId
 
   override def form: () => Form[Int] = () =>
     NonNegativeIntForm("chargeable_inherited_property_value.error.blank", "error.whole_pounds", "error.non_numeric")
 
-  override def view(form: Option[Form[Int]], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) =
+  override def view(form: Option[Form[Int]], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+    implicit val app = application
     chargeable_inherited_property_value(appConfig, form, answerRows)
+  }
 
   override def validate(value: Int, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = {
+    implicit val app = application
     userAnswers.chargeablePropertyValue match {
       case None => throw new RuntimeException("Chargeable property value was not answered")
       case Some(v) if value > v => Some(FormError("value", "chargeable_inherited_property_value.greater_than_chargeable_property_value.error", Seq(v)))
