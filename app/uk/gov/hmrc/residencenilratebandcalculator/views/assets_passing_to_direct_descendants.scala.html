@@ -1,10 +1,10 @@
+@import play.api.Application
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.play.views.html._
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
-@import play.api.Application
-
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+
 @(appConfig: FrontendAppConfig, form: Option[Form[Boolean]] = None, answerRows: Seq[AnswerRow], formattedPropertyValue: Option[String])(implicit request: Request[_], messages: Messages, application: Application)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(

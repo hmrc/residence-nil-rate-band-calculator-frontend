@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
 
+import play.api.Application
 import play.api.data.Form
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
@@ -31,7 +32,8 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.part_of_estate_pass
 class PartOfEstatePassingToDirectDescendantsController @Inject()(override val appConfig: FrontendAppConfig,
                                                                  val messagesApi: MessagesApi,
                                                                  override val sessionConnector: SessionConnector,
-                                                                 override val navigator: Navigator) extends SimpleControllerBase[Boolean] {
+                                                                 override val navigator: Navigator,
+                                                                 implicit val application: Application) extends SimpleControllerBase[Boolean] {
 
   override val controllerId: String = Constants.partOfEstatePassingToDirectDescendantsId
 

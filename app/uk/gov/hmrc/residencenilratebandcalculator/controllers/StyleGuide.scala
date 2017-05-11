@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
 
+import play.api.Application
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._
 import uk.gov.hmrc.play.frontend.controller.FrontendController
@@ -27,7 +28,8 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
 import scala.concurrent.Future
 
 @Singleton
-class StyleGuide @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi, val rnrbConnector: RnrbConnector)
+class StyleGuide @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi, val rnrbConnector: RnrbConnector,
+                           implicit val application: Application)
   extends FrontendController with I18nSupport {
   val styleGuide = Action.async { implicit request =>
 

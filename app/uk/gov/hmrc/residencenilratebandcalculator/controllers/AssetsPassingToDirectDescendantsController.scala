@@ -34,7 +34,7 @@ class AssetsPassingToDirectDescendantsController @Inject()(override val appConfi
                                                               val messagesApi: MessagesApi,
                                                               override val sessionConnector: SessionConnector,
                                                               override val navigator: Navigator,
-                                                              val application: Application) extends SimpleControllerBase[Boolean] {
+                                                           implicit val application: Application) extends SimpleControllerBase[Boolean] {
 
   override val controllerId: String = Constants.assetsPassingToDirectDescendantsId
 
@@ -45,7 +45,6 @@ class AssetsPassingToDirectDescendantsController @Inject()(override val appConfi
       case Some(value) => Some(CurrencyFormatter.format(value))
       case _ => None
     }
-    implicit val app: Application = application
     assets_passing_to_direct_descendants(appConfig, form, answerRows, formattedPropertyValue)
   }
 }

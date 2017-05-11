@@ -35,7 +35,7 @@ class ChargeableInheritedPropertyValueController @Inject()(override val appConfi
                                                                      val messagesApi: MessagesApi,
                                                                      override val sessionConnector: SessionConnector,
                                                                      override val navigator: Navigator,
-                                                                     val application: Application) extends SimpleControllerBase[Int] {
+                                                           implicit val application: Application) extends SimpleControllerBase[Int] {
 
   override val controllerId: String = Constants.chargeableInheritedPropertyValueId
 
@@ -43,7 +43,6 @@ class ChargeableInheritedPropertyValueController @Inject()(override val appConfi
     NonNegativeIntForm("chargeable_inherited_property_value.error.blank", "error.whole_pounds", "error.non_numeric")
 
   override def view(form: Option[Form[Int]], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    implicit val app = application
     chargeable_inherited_property_value(appConfig, form, answerRows)
   }
 

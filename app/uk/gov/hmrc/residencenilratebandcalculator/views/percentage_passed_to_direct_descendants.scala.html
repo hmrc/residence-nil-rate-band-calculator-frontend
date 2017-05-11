@@ -1,9 +1,10 @@
+@import play.api.Application
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 @import uk.gov.hmrc.play.views.html._
 
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
-@(appConfig: FrontendAppConfig, form: Option[Form[BigDecimal]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, form: Option[Form[BigDecimal]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, application: Application)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("percentage_passed_to_direct_descendants.browser_title"),

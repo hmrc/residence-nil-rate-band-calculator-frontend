@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
 
+import play.api.Application
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
@@ -30,7 +31,8 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 class NoAdditionalThresholdAvailableController @Inject()(val appConfig: FrontendAppConfig,
                                           override val messagesApi: MessagesApi,
                                           override val sessionConnector: SessionConnector,
-                                          val navigator: Navigator) extends TransitionController {
+                                          val navigator: Navigator,
+                                          implicit val application: Application) extends TransitionController {
 
   val getReason = GetNoAdditionalThresholdAvailableReason
 

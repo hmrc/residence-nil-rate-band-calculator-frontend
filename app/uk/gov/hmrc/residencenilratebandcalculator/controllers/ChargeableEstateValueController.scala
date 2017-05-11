@@ -36,7 +36,7 @@ class ChargeableEstateValueController  @Inject()(override val appConfig: Fronten
                                                     val messagesApi: MessagesApi,
                                                     override val sessionConnector: SessionConnector,
                                                     override val navigator: Navigator,
-                                                    val application: Application) extends SimpleControllerBase[Int] {
+                                                 implicit val application: Application) extends SimpleControllerBase[Int] {
 
 
   override val controllerId = Constants.chargeableEstateValueId
@@ -45,7 +45,6 @@ class ChargeableEstateValueController  @Inject()(override val appConfig: Fronten
     NonNegativeIntForm("chargeable_estate_value.error.blank", "error.whole_pounds", "chargeable_estate_value.error.non_numeric")
 
   override def view(form: Option[Form[Int]], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    implicit val app = application
     chargeable_estate_value(appConfig, form, answerRows)
   }
 

@@ -18,7 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
 
-import play.api.Logger
+import play.api.{Application, Logger}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.Action
 import uk.gov.hmrc.play.frontend.controller.FrontendController
@@ -32,7 +32,8 @@ import scala.concurrent.Future
 @Singleton
 class ExitQuestionnaireController @Inject()(val appConfig: FrontendAppConfig,
                                             val messagesApi: MessagesApi,
-                                            val auditConnector: FrontendAuditConnector) extends FrontendController with I18nSupport {
+                                            val auditConnector: FrontendAuditConnector,
+                                            implicit val application: Application) extends FrontendController with I18nSupport {
 
 
   def onPageLoad = Action.async { implicit request =>

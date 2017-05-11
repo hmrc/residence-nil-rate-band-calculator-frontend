@@ -23,7 +23,7 @@ import play.api.http.Status.{BAD_REQUEST, NOT_FOUND}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Request, RequestHeader, Result, Results}
 import play.api.routing.Router
-import play.api.{Configuration, Environment, OptionalSourceMapper, UsefulException}
+import play.api._
 import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, FrontendAuditConnector}
 import uk.gov.hmrc.play.audit.http.config.ErrorAuditingSettings
@@ -38,7 +38,8 @@ class ErrorHandler @Inject()(env: Environment,
                              router: Provider[Router],
                              appConfig: FrontendAppConfig,
                              val messagesApi: MessagesApi,
-                             frontendAuditConnector: FrontendAuditConnector)
+                             frontendAuditConnector: FrontendAuditConnector,
+                             implicit val application: Application)
   extends DefaultHttpErrorHandler(env, config, sourceMapper, router) with I18nSupport {
 
   val impl = new ErrorAuditingSettings with ShowErrorPage {

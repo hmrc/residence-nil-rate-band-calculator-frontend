@@ -1,8 +1,9 @@
+@import play.api.Application
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 
-@(appConfig: FrontendAppConfig, residenceNilRateAmount: String, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, residenceNilRateAmount: String, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, application: Application)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("threshold_calculation_result.browser_title"),
