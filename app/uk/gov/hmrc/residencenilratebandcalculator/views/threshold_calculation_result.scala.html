@@ -11,19 +11,19 @@
 
     @if(residenceNilRateAmount == "£0.00") {
         <h1 class="heading-large">@messages("threshold_calculation_result.info.zero.header")</h1>
-        <h1 class="heading-medium">@messages("threshold_calculation_result.info.zero.guidance")
-            <div class="data-item bold-xxlarge">@residenceNilRateAmount</div>
-        </h1>
+        <p class="heading-medium bold">@messages("threshold_calculation_result.info.zero.guidance")
+            <span class="data-item bold-xxlarge">@residenceNilRateAmount</span>
+        </p>
         <p>@messages("threshold_calculation_result.info.zero.threshold_change")</p>
     } else {
         <h1 class="heading-large">@messages("threshold_calculation_result.info.non_zero.header")</h1>
-        <h1 class="heading-medium">@messages("threshold_calculation_result.info.non_zero.guidance")
-            <div class="data-item bold-xxlarge">@residenceNilRateAmount</div>
-        </h1>
+        <p class="heading-medium bold">@messages("threshold_calculation_result.info.non_zero.guidance")
+            <span class="data-item bold-xxlarge">@residenceNilRateAmount</span>
+        </p>
         <p>@messages("threshold_calculation_result.info.non_zero.threshold_change")</p>
     }
 
-    <h2 class="heading-medium">@messages("threshold_calculation_result.action.header")</h2>
+    <h2 class="heading-medium u-margin-top--2em">@messages("threshold_calculation_result.action.header")</h2>
     <p>@messages("threshold_calculation_result.action.guidance", residenceNilRateAmount)</p>
     <ul class="list list-bullet">
         <li>@messages("threshold_calculation_result.action.guidance.form_435")</li>

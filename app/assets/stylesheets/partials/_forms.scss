@@ -151,3 +151,18 @@ override character count display
         display: block;
     }
 }
+
+
+/*
+Remove bottom padding on final section
+*/
+form .section:last-child {
+    padding-bottom: 0;
+}
+
+/*
+Add additional whitespace around field
+*/
+.form-field--padded {
+    padding: 1em 0;
+}

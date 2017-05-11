@@ -18,9 +18,6 @@ hint: Option[String] = None
         <span class="form-label bold @if(legendClass != ""){@legendClass}">
           @label
         </span>
-        @if(hint != ""){
-            <span class="form-hint" id="date-hint">@hint</span>
-        }
             @if(errorKey != ""){
                 <span class="error-notification" id="error-message-this-date">@messages(errorKey)</span>
             }
@@ -34,6 +31,9 @@ hint: Option[String] = None
                 <span class="error-notification" id="error-message-this-year">@messages(yearErrorKey)</span>
             }
         </legend>
+        @if(hint != ""){
+        <p class="form-hint" id="date-hint">@hint</p>
+        }
         <div class="form-date">
             <div class="form-group form-group-day">
                 <label class="form-label bold" for="day">@messages("date.day")</label>
