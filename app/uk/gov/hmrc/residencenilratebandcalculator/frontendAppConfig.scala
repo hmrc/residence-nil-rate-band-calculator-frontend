@@ -28,6 +28,7 @@ trait AppConfig {
   val reportAProblemNonJSUrl: String
   val timeOutCountdownSeconds: Int
   val timeOutSession: Int
+  val isWelshEnabled: Boolean
 }
 
 @Singleton
@@ -53,4 +54,6 @@ class FrontendAppConfig @Inject()(configuration: Configuration) extends AppConfi
   lazy val whitelist = whitelistConfig("whitelist")
   lazy val whitelistExcluded = whitelistConfig("whitelistExcludedCalls")
   lazy val fullStyle = configuration.getBoolean("featureToggle.fullStyle").getOrElse(true)
+
+  override val isWelshEnabled: Boolean = false
 }
