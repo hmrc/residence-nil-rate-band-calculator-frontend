@@ -26,7 +26,7 @@ import uk.gov.hmrc.play.language.{LanguageController, LanguageUtils}
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 
 @Singleton
-class CustomLanguageController @Inject()(override implicit val messagesApi: MessagesApi, application: Application, val appConfig: FrontendAppConfig)
+class CustomLanguageController @Inject()(override implicit val messagesApi: MessagesApi, val application: Application, val appConfig: FrontendAppConfig)
   extends LanguageController with RunMode {
 
   val englishLang = Lang("en")
