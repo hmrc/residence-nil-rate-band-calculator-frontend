@@ -5,7 +5,7 @@
 
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 
-@(appConfig: FrontendAppConfig, form: Option[Form[Int]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, application: Provider[Application])
+@(appConfig: FrontendAppConfig, form: Option[Form[Int]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application])
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("value_of_estate.browser_title"),

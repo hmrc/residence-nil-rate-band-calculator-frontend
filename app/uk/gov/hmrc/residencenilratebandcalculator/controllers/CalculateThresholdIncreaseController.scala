@@ -31,7 +31,7 @@ import play.api.Application
 @Singleton
 class CalculateThresholdIncreaseController @Inject()(val appConfig: FrontendAppConfig,
                                                      val messagesApi: MessagesApi,
-                                                     implicit val application: Provider[Application]) extends FrontendController with I18nSupport {
+                                                     implicit val applicationProvider: Provider[Application]) extends FrontendController with I18nSupport {
 
   def onPageLoad = Action.async { implicit request =>
     Future.successful(Ok(calculate_threshold_increase(appConfig)))

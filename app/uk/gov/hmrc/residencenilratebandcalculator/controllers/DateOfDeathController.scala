@@ -37,7 +37,7 @@ class DateOfDeathController @Inject()(val appConfig: FrontendAppConfig,
                                       val messagesApi: MessagesApi,
                                       val sessionConnector: SessionConnector,
                                       val navigator: Navigator,
-                                      implicit val application: Provider[Application]) extends ControllerBase[Date] {
+                                      implicit val applicationProvider: Provider[Application]) extends ControllerBase[Date] {
 
   val controllerId = Constants.dateOfDeathId
 

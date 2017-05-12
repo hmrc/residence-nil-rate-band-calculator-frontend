@@ -33,7 +33,7 @@ class NoAdditionalThresholdAvailableController @Inject()(val appConfig: Frontend
                                           override val messagesApi: MessagesApi,
                                           override val sessionConnector: SessionConnector,
                                           val navigator: Navigator,
-                                          implicit val application: Provider[Application]) extends TransitionController {
+                                          implicit val applicationProvider: Provider[Application]) extends TransitionController {
 
   val getReason = GetNoAdditionalThresholdAvailableReason
 

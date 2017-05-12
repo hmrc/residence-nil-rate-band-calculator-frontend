@@ -42,7 +42,7 @@ class ValueAvailableWhenPropertyChangedController @Inject()(val appConfig: Front
                                                             val messagesApi: MessagesApi,
                                                             val sessionConnector: SessionConnector,
                                                             val navigator: Navigator, val rnrbConnector: RnrbConnector,
-                                                            implicit val application: Provider[Application]) extends FrontendController {
+                                                            implicit val applicationProvider: Provider[Application]) extends FrontendController {
 
   val controllerId = Constants.valueAvailableWhenPropertyChangedId
 

@@ -36,7 +36,7 @@ class ChargeableInheritedPropertyValueController @Inject()(override val appConfi
                                                                      val messagesApi: MessagesApi,
                                                                      override val sessionConnector: SessionConnector,
                                                                      override val navigator: Navigator,
-                                                           implicit val application: Provider[Application]) extends SimpleControllerBase[Int] {
+                                                           implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[Int] {
 
   override val controllerId: String = Constants.chargeableInheritedPropertyValueId
 
@@ -48,7 +48,6 @@ class ChargeableInheritedPropertyValueController @Inject()(override val appConfi
   }
 
   override def validate(value: Int, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = {
-    implicit val app = application
     userAnswers.chargeablePropertyValue match {
       case None => throw new RuntimeException("Chargeable property value was not answered")
       case Some(v) if value > v => Some(FormError("value", "chargeable_inherited_property_value.greater_than_chargeable_property_value.error", Seq(v)))

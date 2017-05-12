@@ -39,7 +39,7 @@ import scala.util.{Failure, Success, Try}
 @Singleton
 class ThresholdCalculationResultController @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi,
                                                      rnrbConnector: RnrbConnector, sessionConnector: SessionConnector,
-                                                     implicit val application: Provider[Application])
+                                                     implicit val applicationProvider: Provider[Application])
   extends FrontendController with I18nSupport {
 
   private def fail(ex: Throwable) = {

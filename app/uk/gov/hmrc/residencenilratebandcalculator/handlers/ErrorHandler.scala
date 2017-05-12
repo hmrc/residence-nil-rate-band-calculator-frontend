@@ -40,7 +40,7 @@ class ErrorHandler @Inject()(env: Environment,
                              appConfig: FrontendAppConfig,
                              val messagesApi: MessagesApi,
                              frontendAuditConnector: FrontendAuditConnector,
-                             implicit val application: Provider[Application])
+                             implicit val applicationProvider: Provider[Application])
   extends DefaultHttpErrorHandler(env, config, sourceMapper, router) with I18nSupport {
 
   val impl = new ErrorAuditingSettings with ShowErrorPage {
@@ -49,7 +49,7 @@ class ErrorHandler @Inject()(env: Environment,
 
     override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(implicit rh: Request[_]): Html = {
       implicit val messages = messagesApi.preferred(rh)
-      uk.gov.hmrc.residencenilratebandcalculator.views.html.error_template(pageTitle, heading, message, appConfig)(rh, messages, application)
+      uk.gov.hmrc.residencenilratebandcalculator.views.html.error_template(pageTitle, heading, message, appConfig)(rh, messages, applicationProvider)
     }
   }
 

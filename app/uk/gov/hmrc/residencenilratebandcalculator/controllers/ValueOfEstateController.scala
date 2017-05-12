@@ -34,7 +34,7 @@ class ValueOfEstateController @Inject()(override val appConfig: FrontendAppConfi
                                         val messagesApi: MessagesApi,
                                         override val sessionConnector: SessionConnector,
                                         override val navigator: Navigator,
-                                        implicit val application: Provider[Application]) extends SimpleControllerBase[Int] {
+                                        implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[Int] {
 
   override val controllerId = Constants.valueOfEstateId
 

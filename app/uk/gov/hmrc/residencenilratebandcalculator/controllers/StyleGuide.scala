@@ -30,7 +30,7 @@ import scala.concurrent.Future
 
 @Singleton
 class StyleGuide @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi, val rnrbConnector: RnrbConnector,
-                           implicit val application: Provider[Application])
+                           implicit val applicationProvider: Provider[Application])
   extends FrontendController with I18nSupport {
   val styleGuide = Action.async { implicit request =>
 

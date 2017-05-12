@@ -34,7 +34,7 @@ import scala.concurrent.Future
 class ExitQuestionnaireController @Inject()(val appConfig: FrontendAppConfig,
                                             val messagesApi: MessagesApi,
                                             val auditConnector: FrontendAuditConnector,
-                                            implicit val application: Provider[Application]) extends FrontendController with I18nSupport {
+                                            implicit val applicationProvider: Provider[Application]) extends FrontendController with I18nSupport {
 
 
   def onPageLoad = Action.async { implicit request =>

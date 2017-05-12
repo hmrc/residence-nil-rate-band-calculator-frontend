@@ -34,7 +34,7 @@ class DatePropertyWasChangedController @Inject()(override val appConfig: Fronten
                                          val messagesApi: MessagesApi,
                                          override val sessionConnector: SessionConnector,
                                          override val navigator: Navigator,
-                                                 implicit val application: Provider[Application]) extends SimpleControllerBase[Date]{
+                                                 implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[Date]{
 
   val controllerId: String = Constants.datePropertyWasChangedId
 

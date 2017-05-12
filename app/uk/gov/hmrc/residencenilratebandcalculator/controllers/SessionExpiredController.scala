@@ -33,7 +33,7 @@ import scala.concurrent.Future
 class SessionExpiredController @Inject()(val appConfig: FrontendAppConfig,
                                          val messagesApi: MessagesApi,
                                          val sessionConnector: SessionConnector,
-                                         implicit val application: Provider[Application]
+                                         implicit val applicationProvider: Provider[Application]
                                         ) extends FrontendController with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = Action.async { implicit request =>

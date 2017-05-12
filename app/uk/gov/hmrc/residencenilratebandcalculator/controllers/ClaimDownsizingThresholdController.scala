@@ -34,7 +34,7 @@ class ClaimDownsizingThresholdController @Inject()(override val appConfig: Front
                                                  val messagesApi: MessagesApi,
                                                  override val sessionConnector: SessionConnector,
                                                  override val navigator: Navigator,
-                                                   implicit val application: Provider[Application]) extends SimpleControllerBase[Boolean] {
+                                                   implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[Boolean] {
 
   override val controllerId: String = Constants.claimDownsizingThresholdId
 
