@@ -1,3 +1,9 @@
+@import layouts.{govuk_template => hmrcGovUkTemplate}
+@import uk.gov.hmrc.play.views.html.{layouts => uiLayouts}
+@import uk.gov.hmrc.play.views.html.{helpers => uiHelpers}
+@import play.api.Application
+@import uk.gov.hmrc.residencenilratebandcalculator.controllers.CustomerLanguageController
+
 @(appConfig: uk.gov.hmrc.residencenilratebandcalculator.AppConfig,
   title: String,
   contentHead: Option[Html] = None,
@@ -12,10 +18,6 @@
   betaBanner: Html = HtmlFormat.empty,
   enableTimeout: Boolean = true
 )(implicit request: Request[_], messages: Messages)
-
-@import layouts.{govuk_template => hmrcGovUkTemplate}
-@import uk.gov.hmrc.play.views.html.{layouts => uiLayouts}
-@import uk.gov.hmrc.play.views.html.{helpers => uiHelpers}
 
 @head = {
     @uiLayouts.head(
@@ -79,6 +81,8 @@
       includeGridWrapper = false,
       serviceInfoContent = Some(serviceInfoContent))
 }
+
+@lc = @{Application.instanceCache[CustomLanguageController].apply(application) }
 
 @mainContentHeader = {
     @if(contentHeader.isDefined) {

@@ -32,7 +32,7 @@ private object AppDependencies {
   private val playReactivemongoVersion = "5.1.0"
   private val pdfBoxVersion = "2.0.4"
   private val graphiteVersion = "3.2.0"
-  private val playLanguageVersion = "3.0.0"
+  private val playLanguageVersion = "3.4.0"
 
   val compile = Seq(
     "uk.gov.hmrc" %% "play-reactivemongo" % playReactivemongoVersion,
