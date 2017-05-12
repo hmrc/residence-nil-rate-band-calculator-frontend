@@ -16,6 +16,8 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import com.google.inject.Provider
+import play.api.Application
 import play.api.http.Status
 import play.api.i18n._
 import play.api.libs.json._
@@ -42,6 +44,10 @@ trait SimpleControllerSpecBase extends UnitSpec with WithFakeApplication with Ht
   def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
   def messagesApi = injector.instanceOf[MessagesApi]
+
+  def applicationProvider: Provider[Application] = injector.instanceOf[Provider[Application]]
+  implicit val appProvider: Provider[Application] = applicationProvider
+
 
   def messages = messagesApi.preferred(fakeRequest)
 

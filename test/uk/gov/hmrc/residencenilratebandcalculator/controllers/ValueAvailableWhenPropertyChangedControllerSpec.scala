@@ -65,9 +65,9 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends UnitSpec with With
   def createView = (value: Option[Map[String, String]]) => {
     val answerRow = new AnswerRow("What was the date the property was disposed of?", "11 May 2018", routes.DatePropertyWasChangedController.onPageLoad().url)
     value match {
-      case None => value_available_when_property_changed(frontendAppConfig, "£100,000", answerRows = Seq(answerRow))(fakeRequest, messages)
+      case None => value_available_when_property_changed(frontendAppConfig, "£100,000", answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider)
       case Some(v) => value_available_when_property_changed(frontendAppConfig, "£100,000",
-        Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(answerRow))(fakeRequest, messages)
+        Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(answerRow))(fakeRequest, messages, applicationProvider)
     }
   }
 

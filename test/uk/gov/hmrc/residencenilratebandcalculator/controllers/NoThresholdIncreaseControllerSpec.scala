@@ -71,7 +71,7 @@ class NoThresholdIncreaseControllerSpec extends UnitSpec with WithFakeApplicatio
     "return the No Threshold Increase view for a GET" in {
       val result = new NoThresholdIncreaseController(frontendAppConfig, messagesApi, mockSessionConnector).onPageLoad()(fakeRequest)
       contentAsString(result) shouldBe
-        no_threshold_increase(frontendAppConfig, "no_threshold_increase.direct_descendant", Seq())(fakeRequest, messages).toString
+        no_threshold_increase(frontendAppConfig, "no_threshold_increase.direct_descendant", Seq())(fakeRequest, messages, applicationProvider).toString
     }
 
     "The answer constants should be the same as the calulated constants for the controller when the reason is DateOfDeath" in {

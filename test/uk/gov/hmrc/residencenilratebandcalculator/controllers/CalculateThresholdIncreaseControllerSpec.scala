@@ -35,7 +35,7 @@ class CalculateThresholdIncreaseControllerSpec extends HtmlSpec with WithFakeApp
 
     "return the View for a GET" in {
       val result = new CalculateThresholdIncreaseController(frontendAppConfig, messagesApi).onPageLoad()(fakeRequest)
-      contentAsString(result) shouldBe calculate_threshold_increase(frontendAppConfig)(fakeRequest, messages).toString
+      contentAsString(result) shouldBe calculate_threshold_increase(frontendAppConfig)(fakeRequest, messages, applicationProvider).toString
     }
   }
 }

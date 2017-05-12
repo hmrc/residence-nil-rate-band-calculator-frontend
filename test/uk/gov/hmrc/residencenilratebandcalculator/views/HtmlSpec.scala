@@ -16,10 +16,12 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
+import com.google.inject.Provider
 import play.api.test.FakeRequest
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import play.api.Application
 import play.api.i18n.MessagesApi
 import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
@@ -32,6 +34,9 @@ trait HtmlSpec extends UnitSpec with WithFakeApplication { self: UnitSpec =>
 
   def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
   def messagesApi = injector.instanceOf[MessagesApi]
+
+  def applicationProvider: Provider[Application] = injector.instanceOf[Provider[Application]]
+  implicit val appProvider: Provider[Application] = applicationProvider
 
   def messages = messagesApi.preferred(request)
 

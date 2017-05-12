@@ -65,16 +65,16 @@ class ValueBeingTransferredControllerSpec extends UnitSpec with WithFakeApplicat
   def createView = (value: Option[Map[String, String]]) => {
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
-      case None => value_being_transferred(frontendAppConfig, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages)
-      case Some(v) => value_being_transferred(frontendAppConfig, "£100,000.00", Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(answerRow))(fakeRequest, messages)
+      case None => value_being_transferred(frontendAppConfig, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider)
+      case Some(v) => value_being_transferred(frontendAppConfig, "£100,000.00", Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(answerRow))(fakeRequest, messages, applicationProvider)
     }
   }
 
   def createViewWithBacklink = (value: Option[Map[String, String]]) => {
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
-      case None => value_being_transferred(frontendAppConfig, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages)
-      case Some(v) => value_being_transferred(frontendAppConfig,  "£100,000.00", Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(answerRow))(fakeRequest, messages)
+      case None => value_being_transferred(frontendAppConfig, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider)
+      case Some(v) => value_being_transferred(frontendAppConfig,  "£100,000.00", Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(answerRow))(fakeRequest, messages, applicationProvider)
     }
   }
 

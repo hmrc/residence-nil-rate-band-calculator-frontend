@@ -71,7 +71,7 @@ class UnableToCalculateThresholdIncreaseControllerSpec extends UnitSpec with Wit
     "return the Unable To Calculate Threshold Increase view for a GET" in {
       val result = new UnableToCalculateThresholdIncreaseController(frontendAppConfig, messagesApi, mockSessionConnector).onPageLoad()(fakeRequest)
       contentAsString(result) shouldBe
-        unable_to_calculate_threshold_increase(frontendAppConfig, "unable_to_calculate_threshold_increase.grossing_up", Seq())(fakeRequest, messages).toString
+        unable_to_calculate_threshold_increase(frontendAppConfig, "unable_to_calculate_threshold_increase.grossing_up", Seq())(fakeRequest, messages, applicationProvider).toString
     }
 
     "The answer constants should be the same as the calulated constants for the controller when the reason is GrossingUpForResidence" in {

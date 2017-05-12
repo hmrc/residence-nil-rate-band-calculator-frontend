@@ -29,7 +29,7 @@ class AssetsPassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
   val formattedPropertyValue = "£123,456.78"
 
   def createView(form: Option[Form[Boolean]] = None) =
-    assets_passing_to_direct_descendants(frontendAppConfig, form, Seq(), None)(request, messages)
+    assets_passing_to_direct_descendants(frontendAppConfig, form, Seq(), None)(request, messages, applicationProvider)
 
   "Assets Passing To Direct Descendants View" must {
 
@@ -46,7 +46,7 @@ class AssetsPassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
 
     "there is a property in the estate" must {
       "contain guidance that includes the property value" in {
-        val doc = asDocument(assets_passing_to_direct_descendants(frontendAppConfig, None, Seq(), Some(formattedPropertyValue))(request, messages))
+        val doc = asDocument(assets_passing_to_direct_descendants(frontendAppConfig, None, Seq(), Some(formattedPropertyValue))(request, messages, applicationProvider))
         assertContainsText(doc, messages("assets_passing_to_direct_descendants.guidance", formattedPropertyValue))
       }
     }

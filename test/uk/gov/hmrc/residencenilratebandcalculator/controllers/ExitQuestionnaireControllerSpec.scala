@@ -58,7 +58,7 @@ class ExitQuestionnaireControllerSpec extends HtmlSpec with WithFakeApplication 
 
     "return the View for a GET" in {
       val result = new ExitQuestionnaireController(frontendAppConfig, messagesApi, mockAuditConnector).onPageLoad()(fakeRequest)
-      contentAsString(result) shouldBe exit_questionnaire(frontendAppConfig)(fakeRequest, messages).toString
+      contentAsString(result) shouldBe exit_questionnaire(frontendAppConfig)(fakeRequest, messages, applicationProvider).toString
     }
 
     "send an audit event on POST when given valid data" in {

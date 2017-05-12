@@ -29,12 +29,12 @@ class TransferAvailableWhenPropertyChangedControllerSpec extends SimpleControlle
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => transfer_available_when_property_changed(frontendAppConfig, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => transfer_available_when_property_changed(frontendAppConfig, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages)
+        case None => transfer_available_when_property_changed(frontendAppConfig, answerRows = Seq())(fakeRequest, messages, applicationProvider)
+        case Some(v) => transfer_available_when_property_changed(frontendAppConfig, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages, applicationProvider)
       }
     }
 
-    def createController = () => new TransferAvailableWhenPropertyChangedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
+    def createController = () => new TransferAvailableWhenPropertyChangedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider)
 
     val testValue = true
 
