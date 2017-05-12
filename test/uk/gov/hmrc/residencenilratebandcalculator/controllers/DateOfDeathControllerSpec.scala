@@ -16,6 +16,8 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import com.google.inject.Provider
+import play.api.Application
 import play.api.http.Status
 import play.api.libs.json.{Reads, Writes}
 import play.api.test.Helpers._
@@ -25,7 +27,8 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
 
 class DateOfDeathControllerSpec extends DateControllerSpecBase {
-
+  def applicationProvider: Provider[Application] = injector.instanceOf[Provider[Application]]
+  implicit val appProvider: Provider[Application] = applicationProvider
   "Date of Death Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => value match {

@@ -16,8 +16,10 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import com.google.inject.Provider
 import org.mockito.Matchers.any
 import org.mockito.Mockito.when
+import play.api.Application
 import play.api.data.FormError
 import play.api.http.Status
 import play.api.i18n.MessagesApi
@@ -56,6 +58,9 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends UnitSpec with With
 
   def messages = messagesApi.preferred(fakeRequest)
 
+  def applicationProvider: Provider[Application] = injector.instanceOf[Provider[Application]]
+  implicit val appProvider: Provider[Application] = applicationProvider
+
   def mockRnrbConnector = {
     val mockConnector = mock[RnrbConnector]
     when(mockConnector.getNilRateBand(any[String])) thenReturn Future.successful(HttpResponse(200, Some(JsNumber(100000))))
@@ -73,7 +78,7 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends UnitSpec with With
 
   def testValue = "100000"
 
-  def createController = () => new ValueAvailableWhenPropertyChangedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, mockRnrbConnector)
+  def createController = () => new ValueAvailableWhenPropertyChangedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, mockRnrbConnector, applicationProvider)
 
   "Value Available When Property Changed Controller" must {
 

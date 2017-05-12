@@ -52,12 +52,12 @@ class ExitQuestionnaireControllerSpec extends HtmlSpec with WithFakeApplication 
   "Exit Questionnaire controller" must {
 
     "return 200 for a GET" in {
-      val result = new ExitQuestionnaireController(frontendAppConfig, messagesApi, mockAuditConnector).onPageLoad()(fakeRequest)
+      val result = new ExitQuestionnaireController(frontendAppConfig, messagesApi, mockAuditConnector, applicationProvider).onPageLoad()(fakeRequest)
       status(result) shouldBe 200
     }
 
     "return the View for a GET" in {
-      val result = new ExitQuestionnaireController(frontendAppConfig, messagesApi, mockAuditConnector).onPageLoad()(fakeRequest)
+      val result = new ExitQuestionnaireController(frontendAppConfig, messagesApi, mockAuditConnector, applicationProvider).onPageLoad()(fakeRequest)
       contentAsString(result) shouldBe exit_questionnaire(frontendAppConfig)(fakeRequest, messages, applicationProvider).toString
     }
 
@@ -119,6 +119,6 @@ class ExitQuestionnaireControllerSpec extends HtmlSpec with WithFakeApplication 
   private def submit(exitQuestionnaire: ExitQuestionnaire) = {
     val postData = Json.toJson(exitQuestionnaire)
     val request = fakeRequest.withJsonBody(postData)
-    new ExitQuestionnaireController(frontendAppConfig, messagesApi, mockAuditConnector).onSubmit()(request)
+    new ExitQuestionnaireController(frontendAppConfig, messagesApi, mockAuditConnector, applicationProvider).onSubmit()(request)
   }
 }

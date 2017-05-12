@@ -16,7 +16,9 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import com.google.inject.Provider
 import org.scalatest.mock.MockitoSugar
+import play.api.Application
 import play.api.http.Status
 import play.api.i18n.MessagesApi
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
@@ -45,6 +47,9 @@ class NoDownsizingThresholdIncreaseControllerSpec extends UnitSpec with WithFake
   def messagesApi = injector.instanceOf[MessagesApi]
 
   def messages = messagesApi.preferred(fakeRequest)
+
+  def applicationProvider: Provider[Application] = injector.instanceOf[Provider[Application]]
+  implicit val appProvider: Provider[Application] = applicationProvider
 
   val filledOutCacheMap = new CacheMap("",
     Map[String, JsValue](
