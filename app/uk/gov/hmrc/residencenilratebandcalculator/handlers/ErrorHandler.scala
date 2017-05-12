@@ -16,8 +16,9 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.handlers
 
-import javax.inject.{Inject, Provider, Singleton}
+import javax.inject.{Inject, Singleton}
 
+import com.google.inject.Provider
 import play.api.http.DefaultHttpErrorHandler
 import play.api.http.Status.{BAD_REQUEST, NOT_FOUND}
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -39,15 +40,17 @@ class ErrorHandler @Inject()(env: Environment,
                              appConfig: FrontendAppConfig,
                              val messagesApi: MessagesApi,
                              frontendAuditConnector: FrontendAuditConnector,
-                             implicit val application: Application)
+                             implicit val application: Provider[Application])
   extends DefaultHttpErrorHandler(env, config, sourceMapper, router) with I18nSupport {
 
   val impl = new ErrorAuditingSettings with ShowErrorPage {
     override val auditConnector = frontendAuditConnector
     lazy val appName = config.getString("appName").getOrElse("APP NAME NOT SET")
 
-    override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(implicit rh: Request[_]): Html =
-      uk.gov.hmrc.residencenilratebandcalculator.views.html.error_template(pageTitle, heading, message, appConfig)
+    override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(implicit rh: Request[_]): Html = {
+      implicit val messages = messagesApi.preferred(rh)
+      uk.gov.hmrc.residencenilratebandcalculator.views.html.error_template(pageTitle, heading, message, appConfig)(rh, messages, application)
+    }
   }
 
   override def onProdServerError(request: RequestHeader, exception: UsefulException): Future[Result] = impl.onError(request, exception)

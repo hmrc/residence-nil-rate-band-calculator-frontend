@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
 
+import com.google.inject.Provider
 import play.Logger
 import play.api.Application
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -38,7 +39,7 @@ import scala.util.{Failure, Success, Try}
 @Singleton
 class ThresholdCalculationResultController @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi,
                                                      rnrbConnector: RnrbConnector, sessionConnector: SessionConnector,
-                                                     implicit val application: Application)
+                                                     implicit val application: Provider[Application])
   extends FrontendController with I18nSupport {
 
   private def fail(ex: Throwable) = {

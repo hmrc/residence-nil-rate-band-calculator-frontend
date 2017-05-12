@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
 
+import com.google.inject.Provider
 import play.api.Application
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
@@ -35,7 +36,7 @@ class ValueOfAssetsPassingController @Inject()(override val appConfig: FrontendA
                                                val messagesApi: MessagesApi,
                                                override val sessionConnector: SessionConnector,
                                                override val navigator: Navigator,
-                                               implicit val application: Application) extends SimpleControllerBase[Int] {
+                                               implicit val application: Provider[Application]) extends SimpleControllerBase[Int] {
 
   override val controllerId = Constants.valueOfAssetsPassingId
 

@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
 
+import com.google.inject.Provider
 import play.api.Application
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
@@ -32,7 +33,7 @@ class NoDownsizingThresholdIncreaseController @Inject()(val appConfig: FrontendA
                                                 override val messagesApi: MessagesApi,
                                                 override val sessionConnector: SessionConnector,
                                                 val navigator: Navigator,
-                                                implicit val application: Application) extends TransitionController {
+                                                implicit val application: Provider[Application]) extends TransitionController {
 
   val getReason = GetNoDownsizingThresholdIncreaseReason
 

@@ -18,18 +18,20 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
 
+import com.google.inject.Provider
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.Action
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.calculate_threshold_increase
+
 import scala.concurrent.Future
 import play.api.Application
 
 @Singleton
 class CalculateThresholdIncreaseController @Inject()(val appConfig: FrontendAppConfig,
                                                      val messagesApi: MessagesApi,
-                                                     implicit val application: Application) extends FrontendController with I18nSupport {
+                                                     implicit val application: Provider[Application]) extends FrontendController with I18nSupport {
 
   def onPageLoad = Action.async { implicit request =>
     Future.successful(Ok(calculate_threshold_increase(appConfig)))

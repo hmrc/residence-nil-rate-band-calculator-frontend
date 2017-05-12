@@ -1,4 +1,4 @@
-@import play.api.Application
+@import play.api.Application; import com.google.inject.Provider
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 @import uk.gov.hmrc.play.views.html._
@@ -7,7 +7,7 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.models.Month
 @import uk.gov.hmrc.residencenilratebandcalculator.models.Year
 
-@(appConfig: FrontendAppConfig, form: Option[Form[Date]] = None)(implicit request: Request[_], messages: Messages, application: Application)
+@(appConfig: FrontendAppConfig, form: Option[Form[Date]] = None)(implicit request: Request[_], messages: Messages, application: Provider[Application])
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("date_of_death.browser_title"),

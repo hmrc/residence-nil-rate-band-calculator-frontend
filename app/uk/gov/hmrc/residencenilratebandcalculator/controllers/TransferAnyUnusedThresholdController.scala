@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
 
+import com.google.inject.Provider
 import play.api.Application
 import play.api.data.Form
 import play.api.i18n.MessagesApi
@@ -34,7 +35,7 @@ class TransferAnyUnusedThresholdController @Inject()(override val appConfig: Fro
                                             val messagesApi: MessagesApi,
                                             override val sessionConnector: SessionConnector,
                                             override val navigator: Navigator,
-                                                     implicit val application: Application) extends SimpleControllerBase[Boolean] {
+                                                     implicit val application: Provider[Application]) extends SimpleControllerBase[Boolean] {
 
   override val controllerId: String = Constants.transferAnyUnusedThresholdId
 
