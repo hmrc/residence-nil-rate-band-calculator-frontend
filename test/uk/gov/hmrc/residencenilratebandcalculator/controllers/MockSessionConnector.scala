@@ -18,22 +18,21 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import org.joda.time.LocalDate
 import org.mockito.ArgumentCaptor
-import org.mockito.Mockito._
 import org.mockito.Matchers._
+import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.{BeforeAndAfter, Matchers}
 import play.api.libs.json.{JsValue, Reads, Writes}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.HeaderCarrier
-import uk.gov.hmrc.play.test.UnitSpec
+import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 
 import scala.concurrent.Future
-import scala.reflect.ClassTag
-import scala.reflect.classTag
+import scala.reflect.{ClassTag, classTag}
 
-trait MockSessionConnector extends UnitSpec with MockitoSugar with Matchers with BeforeAndAfter {
+trait MockSessionConnector extends BaseSpec with MockitoSugar with Matchers with BeforeAndAfter {
 
   var mockSessionConnector: SessionConnector = _
   var mockCacheMap: CacheMap = _

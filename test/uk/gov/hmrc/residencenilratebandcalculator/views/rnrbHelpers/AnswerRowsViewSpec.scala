@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views.rnrbHelpers
 
-import org.jsoup.select.Elements
 import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.rnrbHelpers.answer_rows

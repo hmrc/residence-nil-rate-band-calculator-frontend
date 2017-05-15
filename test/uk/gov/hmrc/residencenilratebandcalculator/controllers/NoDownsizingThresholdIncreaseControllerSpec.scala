@@ -25,16 +25,15 @@ import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
+import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRows
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThresholdIncreaseReason.{DatePropertyWasChangedTooEarly, NoAssetsPassingToDirectDescendants}
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.NotCloselyInherited
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_downsizing_threshold_increase
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants, FrontendAppConfig, Navigator}
 
-class NoDownsizingThresholdIncreaseControllerSpec extends UnitSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector with MockitoSugar {
+class NoDownsizingThresholdIncreaseControllerSpec extends BaseSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector with MockitoSugar {
 
   val fakeRequest = FakeRequest("", "")
 
@@ -47,9 +46,6 @@ class NoDownsizingThresholdIncreaseControllerSpec extends UnitSpec with WithFake
   def messagesApi = injector.instanceOf[MessagesApi]
 
   def messages = messagesApi.preferred(fakeRequest)
-
-  def applicationProvider: Provider[Application] = injector.instanceOf[Provider[Application]]
-  implicit val appProvider: Provider[Application] = applicationProvider
 
   val filledOutCacheMap = new CacheMap("",
     Map[String, JsValue](

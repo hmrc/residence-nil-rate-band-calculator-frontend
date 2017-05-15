@@ -17,14 +17,13 @@
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import org.joda.time.LocalDate
-import org.scalatest.{BeforeAndAfter, Matchers}
-import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
+import org.scalatest.mock.MockitoSugar
+import org.scalatest.{BeforeAndAfter, Matchers}
 import play.api.libs.json.Json
-import uk.gov.hmrc.play.test.UnitSpec
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
 
-class CalculationInputSpec extends UnitSpec with MockitoSugar with Matchers with BeforeAndAfter {
+class CalculationInputSpec extends BaseSpec with MockitoSugar with Matchers with BeforeAndAfter {
 
   val cacheMapKey = "a"
   val dateOfDeath = new LocalDate(2020, 1, 1)

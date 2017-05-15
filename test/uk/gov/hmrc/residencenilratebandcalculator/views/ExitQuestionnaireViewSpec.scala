@@ -16,12 +16,11 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import uk.gov.hmrc.residencenilratebandcalculator.controllers._
 import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.ExitQuestionnaireForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.ExitQuestionnaire
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exit_questionnaire
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 class ExitQuestionnaireViewSpec extends ViewSpecBase {
 

@@ -18,11 +18,11 @@ package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
-import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import uk.gov.hmrc.play.test.WithFakeApplication
+import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoThresholdIncreaseReason.{DateOfDeath, DirectDescendant}
 
-class GetNoThresholdIncreaseReasonSpec extends UnitSpec with WithFakeApplication with MockitoSugar {
+class GetNoThresholdIncreaseReasonSpec extends BaseSpec with WithFakeApplication with MockitoSugar {
 
   "Get No Threshold Increase Reason" must {
 

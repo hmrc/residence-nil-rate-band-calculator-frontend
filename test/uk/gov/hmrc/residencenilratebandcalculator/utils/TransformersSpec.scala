@@ -17,10 +17,10 @@
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
 import org.joda.time.LocalDate
-import uk.gov.hmrc.play.test.UnitSpec
+import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 import uk.gov.hmrc.residencenilratebandcalculator.utils.Transformers._
 
-class TransformersSpec extends UnitSpec {
+class TransformersSpec extends BaseSpec {
 
   "intToString" must {
     "convert an int to a string" in {

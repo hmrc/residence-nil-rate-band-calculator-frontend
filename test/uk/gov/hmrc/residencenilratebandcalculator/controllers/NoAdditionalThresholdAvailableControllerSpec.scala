@@ -25,15 +25,15 @@ import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
+import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRows
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.{NoProperty, NotCloselyInherited}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_additional_threshold_available
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants, FrontendAppConfig, Navigator}
 
-class NoAdditionalThresholdAvailableControllerSpec extends UnitSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector with MockitoSugar {
+class NoAdditionalThresholdAvailableControllerSpec extends BaseSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector with MockitoSugar {
 
   val fakeRequest = FakeRequest("", "")
 
@@ -46,9 +46,6 @@ class NoAdditionalThresholdAvailableControllerSpec extends UnitSpec with WithFak
   def messagesApi = injector.instanceOf[MessagesApi]
 
   def messages = messagesApi.preferred(fakeRequest)
-
-  def applicationProvider: Provider[Application] = injector.instanceOf[Provider[Application]]
-  implicit val appProvider: Provider[Application] = applicationProvider
 
   val filledOutCacheMap = new CacheMap("",
     Map[String, JsValue](

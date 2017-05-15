@@ -18,9 +18,9 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.http.Status
 import play.api.libs.json.{Reads, Writes}
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_estate_value
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 class ChargeableEstateValueControllerSpec extends SimpleControllerSpecBase {
 

@@ -16,8 +16,8 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import org.mockito.{ArgumentCaptor, Matchers}
 import org.mockito.Mockito._
+import org.mockito.{ArgumentCaptor, Matchers}
 import org.scalatest.BeforeAndAfter
 import org.scalatest.mock.MockitoSugar
 import play.api.libs.json.Json
@@ -26,12 +26,11 @@ import play.api.test.Helpers._
 import uk.gov.hmrc.play.audit.http.connector.AuditResult
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.test.WithFakeApplication
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAuditConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.forms.ExitQuestionnaireForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{ExitQuestionnaire, ExitQuestionnaireEvent}
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAuditConnector
 import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exit_questionnaire
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Random

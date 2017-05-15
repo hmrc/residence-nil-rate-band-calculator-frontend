@@ -17,9 +17,9 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_estate_value
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_estate_value
 
 import scala.language.reflectiveCalls
 

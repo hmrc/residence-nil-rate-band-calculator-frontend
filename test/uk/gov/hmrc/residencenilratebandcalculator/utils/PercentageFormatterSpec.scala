@@ -16,9 +16,9 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
-import uk.gov.hmrc.play.test.UnitSpec
+import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
-class PercentageFormatterSpec extends UnitSpec {
+class PercentageFormatterSpec extends BaseSpec {
   "PercentageFormatter" must {
     "format 0  as 0% without a trailing fractional part" in {
       PercentageFormatter.format(0) shouldBe "0%"

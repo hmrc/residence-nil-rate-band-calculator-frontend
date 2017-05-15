@@ -29,18 +29,18 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
-import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
+import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_available_when_property_changed
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants, FrontendAppConfig, Navigator}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class ValueAvailableWhenPropertyChangedControllerSpec extends UnitSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
+class ValueAvailableWhenPropertyChangedControllerSpec extends BaseSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
 
   val errorKeyBlank = "value_available_when_property_changed.error.blank"
   val errorKeyDecimal = "error.whole_pounds"
@@ -57,9 +57,6 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends UnitSpec with With
   def messagesApi = injector.instanceOf[MessagesApi]
 
   def messages = messagesApi.preferred(fakeRequest)
-
-  def applicationProvider: Provider[Application] = injector.instanceOf[Provider[Application]]
-  implicit val appProvider: Provider[Application] = applicationProvider
 
   def mockRnrbConnector = {
     val mockConnector = mock[RnrbConnector]

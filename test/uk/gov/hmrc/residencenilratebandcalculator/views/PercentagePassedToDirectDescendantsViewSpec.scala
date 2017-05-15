@@ -17,9 +17,9 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_passed_to_direct_descendants
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PositivePercentForm
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_passed_to_direct_descendants
 
 import scala.language.reflectiveCalls
 

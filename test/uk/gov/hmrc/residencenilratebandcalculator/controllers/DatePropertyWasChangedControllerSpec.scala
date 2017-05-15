@@ -24,7 +24,6 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_property_was_changed
 
 class DatePropertyWasChangedControllerSpec extends DateControllerSpecBase {
-  def applicationProvider: Provider[Application] = injector.instanceOf[Provider[Application]]
   implicit val appProvider: Provider[Application] = applicationProvider
   
   "Date Property Was Changed Controller" must {

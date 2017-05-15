@@ -16,9 +16,9 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import uk.gov.hmrc.play.test.UnitSpec
+import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
-class ExitQuestionnaireSpec extends UnitSpec {
+class ExitQuestionnaireSpec extends BaseSpec {
 
   "Exit Questionnaire" must {
     "give the correct options for service difficulty" in {

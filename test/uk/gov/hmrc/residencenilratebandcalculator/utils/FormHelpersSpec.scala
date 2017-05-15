@@ -17,11 +17,11 @@
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
 import play.api.data.FormError
-import uk.gov.hmrc.play.test.UnitSpec
+import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 import uk.gov.hmrc.residencenilratebandcalculator.forms.{BooleanForm, DateForm, NonNegativeIntForm}
 import uk.gov.hmrc.residencenilratebandcalculator.models.{Date, Day, Month, Year}
 
-class FormHelpersSpec extends UnitSpec {
+class FormHelpersSpec extends BaseSpec {
 
   val number = 123
   val day = 1

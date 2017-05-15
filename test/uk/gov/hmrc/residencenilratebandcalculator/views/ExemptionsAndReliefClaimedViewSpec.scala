@@ -17,8 +17,8 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.exemptions_and_relief_claimed
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.exemptions_and_relief_claimed
 
 import scala.language.reflectiveCalls
 

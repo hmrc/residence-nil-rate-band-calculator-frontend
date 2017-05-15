@@ -17,9 +17,9 @@
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
 import play.api.data.{Form, FormError}
-import uk.gov.hmrc.play.test.UnitSpec
+import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
-trait FormSpec extends UnitSpec {
+trait FormSpec extends BaseSpec {
   def checkForError(form: Form[_], data: Map[String, String], expectedErrors: Seq[FormError]) = {
     form.bind(data).fold(
       formWithErrors => {

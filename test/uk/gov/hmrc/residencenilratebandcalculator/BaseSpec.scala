@@ -14,21 +14,19 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.models
+package uk.gov.hmrc.residencenilratebandcalculator
 
-import play.api.libs.json._
-import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
+import com.google.inject.Provider
+import org.mockito.Mockito._
+import org.scalatest.Matchers
+import org.scalatest.mock.MockitoSugar
+import play.api.Application
+import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 
-class PropertyValueAfterExemptionSpec extends BaseSpec {
-
-  "Proeprty Values After Exemption model" must {
-
-    "be parsable as JSON" in {
-      Json.toJson(PropertyValueAfterExemption(1, 2)) shouldBe Json.parse("""{"value":1,"inheritedValue":2}""")
-    }
-
-    "give an error when trying to contruct itself from invalid JSON" in {
-      Json.fromJson[PropertyValueAfterExemption](JsString("invalid data")) shouldBe a [JsError]
-    }
+class BaseSpec extends UnitSpec with MockitoSugar with Matchers with WithFakeApplication {
+  def applicationProvider: Provider[Application] = {
+    val mockedProviderApplication: Provider[Application] = mock[Provider[Application]]
+    when(mockedProviderApplication.get) thenReturn fakeApplication
+    mockedProviderApplication
   }
 }

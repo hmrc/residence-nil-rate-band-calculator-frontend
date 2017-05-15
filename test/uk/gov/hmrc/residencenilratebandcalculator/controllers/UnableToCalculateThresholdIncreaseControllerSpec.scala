@@ -24,13 +24,13 @@ import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
+import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRows
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetUnableToCalculateThresholdIncreaseReason.GrossingUpForResidence
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.unable_to_calculate_threshold_increase
+import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants, FrontendAppConfig}
 
-class UnableToCalculateThresholdIncreaseControllerSpec extends UnitSpec with WithFakeApplication with MockSessionConnector {
+class UnableToCalculateThresholdIncreaseControllerSpec extends BaseSpec with WithFakeApplication with MockSessionConnector {
 
   val fakeRequest = FakeRequest("", "")
 
@@ -39,9 +39,6 @@ class UnableToCalculateThresholdIncreaseControllerSpec extends UnitSpec with Wit
   def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
   def messagesApi = injector.instanceOf[MessagesApi]
   def messages = messagesApi.preferred(fakeRequest)
-
-  def applicationProvider: Provider[Application] = injector.instanceOf[Provider[Application]]
-  implicit val appProvider: Provider[Application] = applicationProvider
 
   val filledOutCacheMap = new CacheMap("",
     Map[String, JsValue](

@@ -18,10 +18,11 @@ package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import play.api.i18n.MessagesApi
 import play.api.test.FakeRequest
-import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
+import uk.gov.hmrc.play.test.WithFakeApplication
+import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
 
-class ResultsRowSpec extends UnitSpec with WithFakeApplication {
+class ResultsRowSpec extends BaseSpec with WithFakeApplication {
   val injector = fakeApplication.injector
 
   val fakeRequest = FakeRequest("", "")

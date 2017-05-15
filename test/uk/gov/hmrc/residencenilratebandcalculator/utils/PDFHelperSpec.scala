@@ -22,10 +22,10 @@ import play.api.Environment
 import play.api.i18n.MessagesApi
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import uk.gov.hmrc.play.test.WithFakeApplication
+import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
 
-class PDFHelperSpec extends UnitSpec with WithFakeApplication {
+class PDFHelperSpec extends BaseSpec with WithFakeApplication {
   private val injector = fakeApplication.injector
   private val env = injector.instanceOf[Environment]
   private def messagesApi = injector.instanceOf[MessagesApi]

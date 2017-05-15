@@ -20,12 +20,11 @@ import org.joda.time.LocalDate
 import org.mockito.Mockito._
 import org.scalatest.Matchers
 import org.scalatest.mock.MockitoSugar
-import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
+import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 
-class NavigatorSpec extends UnitSpec with MockitoSugar with Matchers with WithFakeApplication {
+class NavigatorSpec extends BaseSpec with MockitoSugar with Matchers with WithFakeApplication {
   val navigator = new Navigator
 
   "Navigator" must {
