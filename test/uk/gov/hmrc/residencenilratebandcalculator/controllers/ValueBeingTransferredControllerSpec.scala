@@ -16,8 +16,10 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import com.google.inject.Provider
 import org.mockito.Matchers.any
 import org.mockito.Mockito.when
+import play.api.Application
 import play.api.data.FormError
 import play.api.http.Status
 import play.api.i18n.MessagesApi
@@ -27,18 +29,18 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
+import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_being_transferred
-import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, UserAnswers}
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_being_transferred
+import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants, FrontendAppConfig, Navigator}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class ValueBeingTransferredControllerSpec extends UnitSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
+class ValueBeingTransferredControllerSpec extends BaseSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
 
   val errorKeyBlank = "value_being_transferred.error.blank"
   val errorKeyDecimal = "error.whole_pounds"
@@ -65,20 +67,20 @@ class ValueBeingTransferredControllerSpec extends UnitSpec with WithFakeApplicat
   def createView = (value: Option[Map[String, String]]) => {
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
-      case None => value_being_transferred(frontendAppConfig, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages)
-      case Some(v) => value_being_transferred(frontendAppConfig, "£100,000.00", Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(answerRow))(fakeRequest, messages)
+      case None => value_being_transferred(frontendAppConfig, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider)
+      case Some(v) => value_being_transferred(frontendAppConfig, "£100,000.00", Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(answerRow))(fakeRequest, messages, applicationProvider)
     }
   }
 
   def createViewWithBacklink = (value: Option[Map[String, String]]) => {
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
-      case None => value_being_transferred(frontendAppConfig, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages)
-      case Some(v) => value_being_transferred(frontendAppConfig,  "£100,000.00", Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(answerRow))(fakeRequest, messages)
+      case None => value_being_transferred(frontendAppConfig, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider)
+      case Some(v) => value_being_transferred(frontendAppConfig,  "£100,000.00", Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(answerRow))(fakeRequest, messages, applicationProvider)
     }
   }
 
-  def createController = () => new ValueBeingTransferredController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, mockRnrbConnector)
+  def createController = () => new ValueBeingTransferredController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, mockRnrbConnector, applicationProvider)
 
   def testValue = "100000"
 

@@ -16,9 +16,8 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import org.jsoup.nodes.Document
-import play.twirl.api.HtmlFormat
 import play.api.data.{Form, FormError}
+import play.twirl.api.HtmlFormat
 
 import scala.reflect.ClassTag
 

@@ -1,3 +1,4 @@
+@import play.api.Application; import com.google.inject.Provider
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.play.views.html._
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
@@ -8,7 +9,8 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.models.Email
 @import uk.gov.hmrc.residencenilratebandcalculator.models.PhoneNumber
 @import uk.gov.hmrc.residencenilratebandcalculator.Constants
-@(appConfig: FrontendAppConfig, form: Option[Form[ExitQuestionnaire]] = None)(implicit request: Request[_], messages: Messages)
+
+@(appConfig: FrontendAppConfig, form: Option[Form[ExitQuestionnaire]] = None)(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application])
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("exit_questionnaire.browser_title"),

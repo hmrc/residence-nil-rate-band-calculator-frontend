@@ -16,12 +16,11 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import uk.gov.hmrc.residencenilratebandcalculator.controllers._
 import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.ExitQuestionnaireForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.ExitQuestionnaire
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exit_questionnaire
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 class ExitQuestionnaireViewSpec extends ViewSpecBase {
 
@@ -29,7 +28,7 @@ class ExitQuestionnaireViewSpec extends ViewSpecBase {
 
   override val errorKey = "fullName"
 
-  def createView(form: Option[Form[ExitQuestionnaire]]) = exit_questionnaire(frontendAppConfig, form)(request, messages)
+  def createView(form: Option[Form[ExitQuestionnaire]]) = exit_questionnaire(frontendAppConfig, form)(request, messages, applicationProvider)
 
   "Exit Questionnaire view" must {
     behave like rnrbPage[ExitQuestionnaire](createView, messageKeyPrefix,

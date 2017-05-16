@@ -18,6 +18,8 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
 
+import com.google.inject.Provider
+import play.api.Application
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
@@ -29,7 +31,8 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_threshold_increa
 @Singleton
 class NoThresholdIncreaseController  @Inject()(val appConfig: FrontendAppConfig,
                                                override val messagesApi: MessagesApi,
-                                               override val sessionConnector: SessionConnector) extends TransitionController {
+                                               override val sessionConnector: SessionConnector,
+                                               implicit val applicationProvider: Provider[Application]) extends TransitionController {
 
   val getReason = GetNoThresholdIncreaseReason
 

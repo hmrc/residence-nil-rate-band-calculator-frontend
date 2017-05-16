@@ -18,18 +18,19 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import java.io.ByteArrayOutputStream
 
+import com.google.inject.Provider
 import org.mockito.Matchers._
 import org.mockito.Mockito._
-import play.api.Environment
 import play.api.http.Status
 import play.api.i18n.MessagesApi
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+import play.api.{Application, Environment}
+import uk.gov.hmrc.play.test.WithFakeApplication
+import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, FrontendAppConfig}
 import uk.gov.hmrc.residencenilratebandcalculator.utils.PDFHelper
 
-class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSessionConnector {
+class IHT435ControllerSpec extends BaseSpec with WithFakeApplication with MockSessionConnector {
   private val fakeRequest = FakeRequest("", "")
   private val injector = fakeApplication.injector
 
@@ -41,7 +42,7 @@ class IHT435ControllerSpec extends UnitSpec with WithFakeApplication with MockSe
 
   private val mockPDFHelper = mock[PDFHelper]
 
-  private def controller = new IHT435Controller(frontendAppConfig, env, messagesApi, mockSessionConnector, mockPDFHelper)
+  private def controller = new IHT435Controller(frontendAppConfig, env, messagesApi, mockSessionConnector, mockPDFHelper, applicationProvider)
 
   "onPageLoad" must {
     "return 200" in {

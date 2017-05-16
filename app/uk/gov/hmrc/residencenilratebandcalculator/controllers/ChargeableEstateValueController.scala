@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
 
+import com.google.inject.Provider
 import play.api.data.{Form, FormError}
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
@@ -27,6 +28,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_estate_value
+import play.api.Application
 
 import scala.concurrent.Future
 
@@ -34,7 +36,8 @@ import scala.concurrent.Future
 class ChargeableEstateValueController  @Inject()(override val appConfig: FrontendAppConfig,
                                                     val messagesApi: MessagesApi,
                                                     override val sessionConnector: SessionConnector,
-                                                    override val navigator: Navigator) extends SimpleControllerBase[Int] {
+                                                    override val navigator: Navigator,
+                                                 implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[Int] {
 
 
   override val controllerId = Constants.chargeableEstateValueId

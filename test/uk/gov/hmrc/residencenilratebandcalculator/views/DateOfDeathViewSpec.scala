@@ -18,8 +18,8 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
 
 import scala.language.reflectiveCalls
 
@@ -27,7 +27,7 @@ class DateOfDeathViewSpec extends DateViewSpecBase {
 
   val messageKeyPrefix = "date_of_death"
 
-  def createView(form: Option[Form[Date]] = None) = date_of_death(frontendAppConfig, form)(request, messages)
+  def createView(form: Option[Form[Date]] = None) = date_of_death(frontendAppConfig, form)(request, messages, applicationProvider)
 
   "Date of Death View" must {
 

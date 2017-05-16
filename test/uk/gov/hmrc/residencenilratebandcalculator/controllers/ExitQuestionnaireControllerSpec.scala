@@ -16,8 +16,8 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import org.mockito.{ArgumentCaptor, Matchers}
 import org.mockito.Mockito._
+import org.mockito.{ArgumentCaptor, Matchers}
 import org.scalatest.BeforeAndAfter
 import org.scalatest.mock.MockitoSugar
 import play.api.libs.json.Json
@@ -26,12 +26,11 @@ import play.api.test.Helpers._
 import uk.gov.hmrc.play.audit.http.connector.AuditResult
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.test.WithFakeApplication
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAuditConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.forms.ExitQuestionnaireForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{ExitQuestionnaire, ExitQuestionnaireEvent}
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAuditConnector
 import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exit_questionnaire
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Random
@@ -52,13 +51,13 @@ class ExitQuestionnaireControllerSpec extends HtmlSpec with WithFakeApplication 
   "Exit Questionnaire controller" must {
 
     "return 200 for a GET" in {
-      val result = new ExitQuestionnaireController(frontendAppConfig, messagesApi, mockAuditConnector).onPageLoad()(fakeRequest)
+      val result = new ExitQuestionnaireController(frontendAppConfig, messagesApi, mockAuditConnector, applicationProvider).onPageLoad()(fakeRequest)
       status(result) shouldBe 200
     }
 
     "return the View for a GET" in {
-      val result = new ExitQuestionnaireController(frontendAppConfig, messagesApi, mockAuditConnector).onPageLoad()(fakeRequest)
-      contentAsString(result) shouldBe exit_questionnaire(frontendAppConfig)(fakeRequest, messages).toString
+      val result = new ExitQuestionnaireController(frontendAppConfig, messagesApi, mockAuditConnector, applicationProvider).onPageLoad()(fakeRequest)
+      contentAsString(result) shouldBe exit_questionnaire(frontendAppConfig)(fakeRequest, messages, applicationProvider).toString
     }
 
     "send an audit event on POST when given valid data" in {
@@ -119,6 +118,6 @@ class ExitQuestionnaireControllerSpec extends HtmlSpec with WithFakeApplication 
   private def submit(exitQuestionnaire: ExitQuestionnaire) = {
     val postData = Json.toJson(exitQuestionnaire)
     val request = fakeRequest.withJsonBody(postData)
-    new ExitQuestionnaireController(frontendAppConfig, messagesApi, mockAuditConnector).onSubmit()(request)
+    new ExitQuestionnaireController(frontendAppConfig, messagesApi, mockAuditConnector, applicationProvider).onSubmit()(request)
   }
 }

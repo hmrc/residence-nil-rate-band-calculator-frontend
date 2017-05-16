@@ -29,12 +29,12 @@ class ExemptionsAndReliefClaimedControllerSpec extends SimpleControllerSpecBase 
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => exemptions_and_relief_claimed(frontendAppConfig, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => exemptions_and_relief_claimed(frontendAppConfig, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages)
+        case None => exemptions_and_relief_claimed(frontendAppConfig, answerRows = Seq())(fakeRequest, messages, applicationProvider)
+        case Some(v) => exemptions_and_relief_claimed(frontendAppConfig, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages, applicationProvider)
       }
     }
 
-    def createController = () => new ExemptionsAndReliefClaimedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
+    def createController = () => new ExemptionsAndReliefClaimedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider)
 
     val testValue = true
 

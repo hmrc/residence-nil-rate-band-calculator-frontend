@@ -16,15 +16,19 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import play.api.test.FakeRequest
-import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
+import com.google.inject.Provider
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import play.api.Application
 import play.api.i18n.MessagesApi
+import play.api.test.FakeRequest
 import play.twirl.api.Html
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
+import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, FrontendAppConfig}
 
-trait HtmlSpec extends UnitSpec with WithFakeApplication { self: UnitSpec =>
+trait HtmlSpec extends BaseSpec with WithFakeApplication { self: UnitSpec =>
+
+  implicit val appProvider: Provider[Application] = applicationProvider
 
   implicit val request = FakeRequest()
 

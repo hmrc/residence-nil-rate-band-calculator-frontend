@@ -18,10 +18,9 @@ package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import play.api.libs.json.{JsBoolean, JsNumber, JsString}
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.test.UnitSpec
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
 
-class CascadeUpsertSpec extends UnitSpec {
+class CascadeUpsertSpec extends BaseSpec {
 
   val cacheMapKey = "a"
   val testNumber = 123

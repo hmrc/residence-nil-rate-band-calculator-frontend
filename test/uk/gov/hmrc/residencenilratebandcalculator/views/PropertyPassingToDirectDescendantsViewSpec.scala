@@ -17,9 +17,9 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_passing_to_direct_descendants
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PropertyPassingToDirectDescendantsForm
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_passing_to_direct_descendants
 
 import scala.language.reflectiveCalls
 
@@ -27,7 +27,7 @@ class PropertyPassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "property_passing_to_direct_descendants"
 
-  def createView(form: Option[Form[String]] = None) = property_passing_to_direct_descendants(frontendAppConfig, form, Seq())(request, messages)
+  def createView(form: Option[Form[String]] = None) = property_passing_to_direct_descendants(frontendAppConfig, form, Seq())(request, messages, applicationProvider)
 
   "Property Passing To Direct Descendants View" must {
 

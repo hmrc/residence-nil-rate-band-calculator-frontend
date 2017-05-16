@@ -19,10 +19,9 @@ package uk.gov.hmrc.residencenilratebandcalculator.models
 import org.joda.time.LocalDate
 import play.api.libs.json._
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.test.UnitSpec
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
 
-class UserAnswersSpec extends UnitSpec {
+class UserAnswersSpec extends BaseSpec {
 
   val cacheMapKey = "aa"
   

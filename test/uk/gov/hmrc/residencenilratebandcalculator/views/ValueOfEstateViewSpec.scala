@@ -27,7 +27,7 @@ class ValueOfEstateViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "value_of_estate"
 
-  def createView(form: Option[Form[Int]] = None) = value_of_estate(frontendAppConfig, form, Seq())(request, messages)
+  def createView(form: Option[Form[Int]] = None) = value_of_estate(frontendAppConfig, form, Seq())(request, messages, applicationProvider)
 
   "Value of Estate View" must {
 

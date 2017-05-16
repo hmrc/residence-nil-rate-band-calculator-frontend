@@ -33,13 +33,13 @@ class AssetsPassingToDirectDescendantsControllerSpec extends SimpleControllerSpe
     def createView = (value: Option[Map[String, String]]) => {
       value match {
         case None =>
-          assets_passing_to_direct_descendants(frontendAppConfig, None, Seq(), formattedPropertyValue)(fakeRequest, messages)
+          assets_passing_to_direct_descendants(frontendAppConfig, None, Seq(), formattedPropertyValue)(fakeRequest, messages, applicationProvider)
         case Some(v) =>
-          assets_passing_to_direct_descendants(frontendAppConfig, Some(BooleanForm(messageKey).bind(v)), Seq(), formattedPropertyValue)(fakeRequest, messages)
+          assets_passing_to_direct_descendants(frontendAppConfig, Some(BooleanForm(messageKey).bind(v)), Seq(), formattedPropertyValue)(fakeRequest, messages, applicationProvider)
       }
     }
 
-    def createController = () => new AssetsPassingToDirectDescendantsController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
+    def createController = () => new AssetsPassingToDirectDescendantsController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider)
 
     val testValue = true
 

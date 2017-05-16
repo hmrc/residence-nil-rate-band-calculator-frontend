@@ -17,14 +17,14 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_estate_property
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_estate_property
 
 class GrossingUpOnEstatePropertyViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "grossing_up_on_estate_property"
 
-  def createView(form: Option[Form[Boolean]] = None) = grossing_up_on_estate_property(frontendAppConfig, form, Seq())(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = grossing_up_on_estate_property(frontendAppConfig, form, Seq())(request, messages, applicationProvider)
 
   "Grossing Up On Estate Property View" must {
 

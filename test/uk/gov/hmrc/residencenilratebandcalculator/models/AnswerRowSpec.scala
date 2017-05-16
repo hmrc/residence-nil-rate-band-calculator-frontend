@@ -20,9 +20,10 @@ import org.joda.time.LocalDate
 import play.api.i18n.MessagesApi
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
+import uk.gov.hmrc.play.test.WithFakeApplication
+import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
-class AnswerRowSpec extends UnitSpec with WithFakeApplication {
+class AnswerRowSpec extends BaseSpec with WithFakeApplication {
   val injector = fakeApplication.injector
 
   val fakeRequest = FakeRequest("", "")

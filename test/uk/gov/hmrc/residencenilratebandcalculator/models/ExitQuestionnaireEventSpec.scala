@@ -18,9 +18,10 @@ package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import org.scalatest.mock.MockitoSugar
 import uk.gov.hmrc.play.http.HeaderCarrier
-import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
+import uk.gov.hmrc.play.test.WithFakeApplication
+import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
-class ExitQuestionnaireEventSpec extends UnitSpec with WithFakeApplication with MockitoSugar {
+class ExitQuestionnaireEventSpec extends BaseSpec with WithFakeApplication with MockitoSugar {
 
   val serviceDifficulty = "a"
   val serviceFeel = "b"

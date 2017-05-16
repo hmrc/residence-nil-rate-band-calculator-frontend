@@ -18,11 +18,11 @@ package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
-import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import uk.gov.hmrc.play.test.WithFakeApplication
+import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.{NoProperty, NotCloselyInherited}
 
-class GetNoAdditionalThresholdAvailableReasonSpec extends UnitSpec with WithFakeApplication with MockitoSugar {
+class GetNoAdditionalThresholdAvailableReasonSpec extends BaseSpec with WithFakeApplication with MockitoSugar {
   "GetNoAdditionalThresholdAvailableReason" must {
     "get the 'Not closely inherited' reason when there is no closely inherited property" in {
       val userAnswers = mock[UserAnswers]

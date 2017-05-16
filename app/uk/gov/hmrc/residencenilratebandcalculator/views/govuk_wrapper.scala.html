@@ -1,3 +1,11 @@
+@import play.api.Application; import com.google.inject.Provider
+@import layouts.{govuk_template => hmrcGovUkTemplate}
+@import uk.gov.hmrc.play.views.html.{layouts => uiLayouts}
+@import uk.gov.hmrc.play.views.html.{helpers => uiHelpers}
+@import uk.gov.hmrc.residencenilratebandcalculator.controllers.CustomLanguageController
+@import play.api.Application; import com.google.inject.Provider
+@import play.api.Play.current
+
 @(appConfig: uk.gov.hmrc.residencenilratebandcalculator.AppConfig,
   title: String,
   contentHead: Option[Html] = None,
@@ -11,11 +19,8 @@
   scriptElem: Option[Html] = None,
   betaBanner: Html = HtmlFormat.empty,
   enableTimeout: Boolean = true
-)(implicit request: Request[_], messages: Messages)
+)(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application])
 
-@import layouts.{govuk_template => hmrcGovUkTemplate}
-@import uk.gov.hmrc.play.views.html.{layouts => uiLayouts}
-@import uk.gov.hmrc.play.views.html.{helpers => uiHelpers}
 
 @head = {
     @uiLayouts.head(
@@ -80,7 +85,17 @@
       serviceInfoContent = Some(serviceInfoContent))
 }
 
-@mainContentHeader = {
+@lc = @{Application.instanceCache[CustomLanguageController].apply(applicationProvider.get) }
+    @mainContentHeader = {
+        @if(appConfig.isWelshEnabled){
+            @{
+                views.html.language_selection(
+                    lc.languageMap,
+                    lc.langToCall,
+                    Some("align-right")
+            )
+        }
+    }
     @if(contentHeader.isDefined) {
         @uiLayouts.main_content_header(contentHeader = contentHeader.get)
     }

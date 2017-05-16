@@ -17,8 +17,8 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_available_when_property_changed
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_available_when_property_changed
 
 import scala.language.reflectiveCalls
 
@@ -26,7 +26,7 @@ class TransferAvailableWhenPropertyChangedViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "transfer_available_when_property_changed"
 
-  def createView(form: Option[Form[Boolean]] = None) = transfer_available_when_property_changed(frontendAppConfig, form, Seq())(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = transfer_available_when_property_changed(frontendAppConfig, form, Seq())(request, messages, applicationProvider)
 
   "Transfer Available When Property Changed View" must {
 

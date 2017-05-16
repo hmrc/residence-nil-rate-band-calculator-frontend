@@ -20,8 +20,9 @@ import java.text.NumberFormat
 import java.util.Locale
 import javax.inject.{Inject, Singleton}
 
+import com.google.inject.Provider
 import org.joda.time.LocalDate
-import play.api.Logger
+import play.api.{Application, Logger}
 import play.api.data.{Form, FormError}
 import play.api.i18n.MessagesApi
 import play.api.libs.json.{Reads, Writes}
@@ -44,7 +45,8 @@ import scala.concurrent.Future
 class ValueBeingTransferredController @Inject()(val appConfig: FrontendAppConfig,
                                                   val messagesApi: MessagesApi,
                                                   val sessionConnector: SessionConnector,
-                                                  val navigator: Navigator, val rnrbConnector: RnrbConnector) extends FrontendController {
+                                                  val navigator: Navigator, val rnrbConnector: RnrbConnector,
+                                                implicit val applicationProvider: Provider[Application]) extends FrontendController {
 
   val controllerId = Constants.valueBeingTransferredId
 

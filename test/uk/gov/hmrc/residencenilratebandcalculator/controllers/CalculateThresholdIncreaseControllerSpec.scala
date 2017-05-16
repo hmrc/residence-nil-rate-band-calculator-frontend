@@ -29,13 +29,13 @@ class CalculateThresholdIncreaseControllerSpec extends HtmlSpec with WithFakeApp
   "Calculate Threshold Increase controller" must {
 
     "return 200 for a GET" in {
-      val result = new CalculateThresholdIncreaseController(frontendAppConfig, messagesApi).onPageLoad()(fakeRequest)
+      val result = new CalculateThresholdIncreaseController(frontendAppConfig, messagesApi, applicationProvider).onPageLoad()(fakeRequest)
       status(result) shouldBe 200
     }
 
     "return the View for a GET" in {
-      val result = new CalculateThresholdIncreaseController(frontendAppConfig, messagesApi).onPageLoad()(fakeRequest)
-      contentAsString(result) shouldBe calculate_threshold_increase(frontendAppConfig)(fakeRequest, messages).toString
+      val result = new CalculateThresholdIncreaseController(frontendAppConfig, messagesApi, applicationProvider).onPageLoad()(fakeRequest)
+      contentAsString(result) shouldBe calculate_threshold_increase(frontendAppConfig)(fakeRequest, messages, applicationProvider).toString
     }
   }
 }

@@ -18,7 +18,8 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
 
-import play.api.Logger
+import com.google.inject.Provider
+import play.api.{Application, Logger}
 import play.api.data.FormError
 import play.api.i18n.MessagesApi
 import play.api.libs.json.{Reads, Writes}
@@ -40,7 +41,8 @@ import scala.concurrent.Future
 class ValueAvailableWhenPropertyChangedController @Inject()(val appConfig: FrontendAppConfig,
                                                             val messagesApi: MessagesApi,
                                                             val sessionConnector: SessionConnector,
-                                                            val navigator: Navigator, val rnrbConnector: RnrbConnector) extends FrontendController {
+                                                            val navigator: Navigator, val rnrbConnector: RnrbConnector,
+                                                            implicit val applicationProvider: Provider[Application]) extends FrontendController {
 
   val controllerId = Constants.valueAvailableWhenPropertyChangedId
 

@@ -16,9 +16,9 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
-import uk.gov.hmrc.play.test.UnitSpec
+import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
-class CurrencyFormatterSpec extends UnitSpec {
+class CurrencyFormatterSpec extends BaseSpec {
   "CurrencyFormatter" must {
     "format 0 GBP as £0 without a trailing fractional part" in {
       CurrencyFormatter.format(0) shouldBe "£0"

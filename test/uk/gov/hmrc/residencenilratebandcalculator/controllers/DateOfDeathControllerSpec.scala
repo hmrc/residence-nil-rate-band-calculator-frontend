@@ -16,9 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import play.api.http.Status
-import play.api.libs.json.{Reads, Writes}
-import play.api.test.Helpers._
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
@@ -29,13 +26,13 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase {
   "Date of Death Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => value match {
-      case None => date_of_death(frontendAppConfig)(fakeRequest, messages)
+      case None => date_of_death(frontendAppConfig)(fakeRequest, messages, applicationProvider)
       case Some(v) => date_of_death(frontendAppConfig,
         Some(DateForm("date_of_death.error.day_invalid", "date_of_death.error.month_invalid", "date_of_death.error.year_invalid", "date_of_death.error").
-          bind(v)))(fakeRequest, messages)
+          bind(v)))(fakeRequest, messages, applicationProvider)
     }
 
-    def createController = () => new DateOfDeathController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
+    def createController = () => new DateOfDeathController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider)
 
     behave like rnrbDateController(createController, createView, Constants.dateOfDeathId)(Date.dateReads, Date.dateWrites)
   }

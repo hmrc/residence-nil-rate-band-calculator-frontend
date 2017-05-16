@@ -16,9 +16,9 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import uk.gov.hmrc.play.test.UnitSpec
+import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
-class RadioOptionSpec extends UnitSpec {
+class RadioOptionSpec extends BaseSpec {
 
   "Radio Option" must {
     "build correctly using the apply method" in {

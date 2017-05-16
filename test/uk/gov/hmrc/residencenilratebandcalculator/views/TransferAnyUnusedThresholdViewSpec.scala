@@ -17,8 +17,8 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_any_unused_threshold
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_any_unused_threshold
 
 import scala.language.reflectiveCalls
 
@@ -26,7 +26,7 @@ class TransferAnyUnusedThresholdViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "transfer_any_unused_threshold"
 
-  def createView(form: Option[Form[Boolean]] = None) = transfer_any_unused_threshold(frontendAppConfig, form, Seq())(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = transfer_any_unused_threshold(frontendAppConfig, form, Seq())(request, messages, applicationProvider)
 
   "Transfer Any Unused Allowance View" must {
 

@@ -16,24 +16,28 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import com.google.inject.Provider
+import play.api.Application
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_property_was_changed
 
 class DatePropertyWasChangedControllerSpec extends DateControllerSpecBase {
+  implicit val appProvider: Provider[Application] = applicationProvider
+  
   "Date Property Was Changed Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => date_property_was_changed(frontendAppConfig, answerRows = Seq())(fakeRequest, messages)
+        case None => date_property_was_changed(frontendAppConfig, answerRows = Seq())(fakeRequest, messages, applicationProvider)
         case Some(v) => date_property_was_changed(frontendAppConfig,
           Some(DateForm("error.date.day_invalid", "error.date.month_invalid", "error.date.year_invalid", "error.invalid_date").
-            bind(v)), Seq())(fakeRequest, messages)
+            bind(v)), Seq())(fakeRequest, messages, applicationProvider)
       }
     }
 
-    def createController = () => new DatePropertyWasChangedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator)
+    def createController = () => new DatePropertyWasChangedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider)
 
     behave like rnrbDateController(createController, createView, Constants.datePropertyWasChangedId)(Date.dateReads, Date.dateWrites)
 

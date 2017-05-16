@@ -25,15 +25,15 @@ import org.scalatest.mock.MockitoSugar
 import play.api.http.Status
 import play.api.libs.json._
 import uk.gov.hmrc.play.http.{HeaderCarrier, HttpReads, HttpResponse}
-import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
-import uk.gov.hmrc.residencenilratebandcalculator.WSHttp
+import uk.gov.hmrc.play.test.WithFakeApplication
+import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, WSHttp}
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.JsonInvalidException
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, CalculationResult}
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
-class RnrbConnectorSpec extends UnitSpec with WithFakeApplication with MockitoSugar {
+class RnrbConnectorSpec extends BaseSpec with WithFakeApplication with MockitoSugar {
 
   def getHttpMock(returnedData: JsValue) = {
     val httpMock = mock[WSHttp]

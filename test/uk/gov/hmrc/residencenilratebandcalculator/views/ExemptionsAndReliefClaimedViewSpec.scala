@@ -17,8 +17,8 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.exemptions_and_relief_claimed
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.exemptions_and_relief_claimed
 
 import scala.language.reflectiveCalls
 
@@ -26,7 +26,7 @@ class ExemptionsAndReliefClaimedViewSpec  extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "exemptions_and_relief_claimed"
 
-  def createView(form: Option[Form[Boolean]] = None) = exemptions_and_relief_claimed(frontendAppConfig, form, Seq())(request, messages)
+  def createView(form: Option[Form[Boolean]] = None) = exemptions_and_relief_claimed(frontendAppConfig, form, Seq())(request, messages, applicationProvider)
 
   "Exemptions And Relief Claimed View" must {
 

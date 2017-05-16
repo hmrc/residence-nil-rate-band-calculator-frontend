@@ -19,9 +19,9 @@ package uk.gov.hmrc.residencenilratebandcalculator.json
 import com.eclipsesource.schema.{SchemaType, SchemaValidator}
 import play.api.data.validation.ValidationError
 import play.api.libs.json._
-import uk.gov.hmrc.play.test.UnitSpec
+import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
-class JsonErrorProcessorSpec extends UnitSpec {
+class JsonErrorProcessorSpec extends BaseSpec {
   val schema = Json.fromJson[SchemaType](Json.parse("""{
                                 |"$$schema": "http://json-schema.org/draft-04/schema#",
                                 |"title": "Test JsonErrorProcessor",

@@ -16,11 +16,11 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
-import uk.gov.hmrc.play.test.UnitSpec
+import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 import uk.gov.hmrc.residencenilratebandcalculator.forms.ExitQuestionnaireForm
 import uk.gov.hmrc.residencenilratebandcalculator.models._
 
-class ExitQuestionnaireFormHelperSpec extends UnitSpec {
+class ExitQuestionnaireFormHelperSpec extends BaseSpec {
 
   val serviceDifficulty = "a"
   val serviceFeel = "b"
