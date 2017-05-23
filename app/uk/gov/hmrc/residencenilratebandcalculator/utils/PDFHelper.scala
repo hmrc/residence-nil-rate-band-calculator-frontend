@@ -139,24 +139,21 @@ class PDFHelper @Inject()(val messagesApi: MessagesApi, val env: Environment){
   }
 
   def generatePDF(cacheMap: CacheMap): Option[ByteArrayOutputStream] = {
-    env.resourceAsStream("resource/IHT435.pdf").flatMap { is =>
+    env.resourceAsStream("resource/IHT435.pdf").map { is =>
       var pdd: Option[PDDocument] = None
-      var optionBAOS:Option[ByteArrayOutputStream] = None
-
+      val baos = new ByteArrayOutputStream()
       try {
         pdd = Option(PDDocument.load(is))
         pdd.foreach { pdf =>
           setupPDFDocument(pdf)
           storeValuesInPDF(cacheMap, pdf.getDocumentCatalog.getAcroForm)
-          optionBAOS = Option(new ByteArrayOutputStream())
-          optionBAOS.foreach(baos => pdf.save(baos))
+          pdf.save(baos)
         }
       } finally {
         pdd.foreach(pdf => pdf.close())
-        optionBAOS.foreach(baos => baos.close())
         is.close()
       }
-      optionBAOS
+      baos
     }
   }
 }
