@@ -58,7 +58,7 @@ class PDFHelperSpec extends BaseSpec with WithFakeApplication {
 
   private def acroForm(filledCacheMap: CacheMap = cacheMapAllNonDecimalFields): PDAcroForm = {
     val pdfHelper = new PDFHelper(messagesApi, env)
-    val optionPDAcroForm: Option[PDAcroForm] = pdfHelper.generatePDF(filledCacheMap).map { baos =>
+    val optionPDAcroForm: Option[PDAcroForm] = pdfHelper.generatePDF(filledCacheMap, generateWelshPDF=false).map { baos =>
       val pdfDoc = PDDocument.load(baos.toByteArray)
       baos.close()
       val acroForm = pdfDoc.getDocumentCatalog.getAcroForm
