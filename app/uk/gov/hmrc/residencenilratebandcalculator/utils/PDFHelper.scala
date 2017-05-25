@@ -32,6 +32,41 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 class PDFHelper @Inject()(val messagesApi: MessagesApi, val env: Environment){
   private val retrieveValueToStoreFor1Field: (String, Int) => String = (v, _) => v
   private val retrieveValueToStoreForMoreThan1Field: (String, Int) => String = (v, i) => v.charAt(i).toString
+
+  private val welshYesNo1 = ("Oes", "Nac oes")
+  private val welshYesNo2 = ("Ydw", "Nac ydw")
+  private val welshYesNo3 = ("Ydy", "Nac ydy")
+
+  private val cacheMapIdToEnglishYesNo:String => (String, String) = _ => ("Yes", "No")
+
+  private val cacheMapIdToWelshYesNo:String => (String, String) = cacheMapId => {
+    val cacheMapIdToWelshYesNo = Map[String, (String, String)](
+      Constants.dateOfDeathId -> welshYesNo1,
+    Constants.partOfEstatePassingToDirectDescendantsId -> welshYesNo1,
+    Constants.valueOfEstateId -> welshYesNo1,
+    Constants.chargeableEstateValueId -> welshYesNo1,
+    Constants.propertyInEstateId -> welshYesNo3,
+    Constants.propertyValueId -> welshYesNo1,
+    Constants.percentagePassedToDirectDescendantsId -> welshYesNo1,
+    Constants.exemptionsAndReliefClaimedId -> welshYesNo1,
+    Constants.grossingUpOnEstatePropertyId -> welshYesNo1,
+    Constants.chargeablePropertyValueId -> welshYesNo1,
+    Constants.chargeableInheritedPropertyValueId -> welshYesNo1,
+    Constants.transferAnyUnusedThresholdId -> welshYesNo2,
+    Constants.valueBeingTransferredId -> welshYesNo1,
+    Constants.claimDownsizingThresholdId -> welshYesNo2,
+    Constants.datePropertyWasChangedId -> welshYesNo1,
+    Constants.valueOfChangedPropertyId -> welshYesNo1,
+    Constants.assetsPassingToDirectDescendantsId -> welshYesNo1,
+    Constants.grossingUpOnEstateAssetsId -> welshYesNo1,
+    Constants.valueOfAssetsPassingId -> welshYesNo1,
+    Constants.transferAvailableWhenPropertyChangedId -> welshYesNo1,
+    Constants.valueAvailableWhenPropertyChangedId -> welshYesNo1,
+    Constants.thresholdCalculationResultId -> welshYesNo1
+    )
+    cacheMapIdToWelshYesNo(cacheMapId)
+  }
+
   private val cacheMapIdToFieldName = Map[String, Seq[String]](
     Constants.dateOfDeathId -> Seq(
       "IHT435_03_01",
@@ -89,11 +124,22 @@ class PDFHelper @Inject()(val messagesApi: MessagesApi, val env: Environment){
     pdf.setDocumentInformation(pdDocumentInformation)
   }
 
-  private def booleanValueForPDF(b: Boolean) = if (b) "Yes" else "No"
+  private def booleanValueForPDF(b: Boolean, generateWelshValue: Boolean, cacheId: String) = {
+    val yesNos = if (generateWelshValue) {
+      cacheMapIdToWelshYesNo(cacheId)
+    } else {
+      cacheMapIdToEnglishYesNo(cacheId)
+    }
+    if (b) {
+      yesNos._1
+    } else {
+      yesNos._2
+    }
+  }
 
-  private def jsValueToString(jsVal: JsValue): String = {
+  private def jsValueToString(jsVal: JsValue, generateWelshValue: Boolean, cacheId: String): String = {
     jsVal match {
-      case b: JsBoolean => booleanValueForPDF(b.value)
+      case b: JsBoolean => booleanValueForPDF(b.value, generateWelshValue, cacheId)
       case s: JsString => s.toString
       case _ => jsVal.toString
     }
@@ -117,7 +163,7 @@ class PDFHelper @Inject()(val messagesApi: MessagesApi, val env: Environment){
     }
   }
 
-  private def storeValuesInPDF(cacheMap: CacheMap, form: PDAcroForm) = {
+  private def storeValuesInPDF(cacheMap: CacheMap, form: PDAcroForm, storeWelshValues: Boolean) = {
     val ua = new UserAnswers(cacheMap)
     cacheMapIdToFieldName foreach {
       case (cacheId, fieldNames) =>
@@ -127,9 +173,9 @@ class PDFHelper @Inject()(val messagesApi: MessagesApi, val env: Environment){
             Some(formatValueForPDF(ua.getPercentagePassedToDirectDescendants.toString, cacheId))
           case (_, Constants.transferAvailableWhenPropertyChangedId) =>
             ua.isTransferAvailableWhenPropertyChanged.map( isAvailable =>
-              formatValueForPDF(booleanValueForPDF(isAvailable), cacheId)
+              formatValueForPDF(booleanValueForPDF(isAvailable, storeWelshValues, cacheId), cacheId)
             )
-          case (Some(jsVal), _) => Some(formatValueForPDF(jsValueToString(jsVal), cacheId))
+          case (Some(jsVal), _) => Some(formatValueForPDF(jsValueToString(jsVal, storeWelshValues, cacheId), cacheId))
           case _ => None
         }
         valueFormattedForPDF.foreach{ value =>
@@ -151,7 +197,7 @@ class PDFHelper @Inject()(val messagesApi: MessagesApi, val env: Environment){
         pdd = Option(PDDocument.load(is))
         pdd.foreach { pdf =>
           setupPDFDocument(pdf)
-          storeValuesInPDF(cacheMap, pdf.getDocumentCatalog.getAcroForm)
+          storeValuesInPDF(cacheMap, pdf.getDocumentCatalog.getAcroForm, generateWelshPDF)
           pdf.save(baos)
         }
       } finally {
