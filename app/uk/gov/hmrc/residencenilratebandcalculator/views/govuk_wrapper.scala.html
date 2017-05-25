@@ -88,17 +88,16 @@
 @lc = @{Application.instanceCache[CustomLanguageController].apply(applicationProvider.get) }
     @mainContentHeader = {
         @if(appConfig.isWelshEnabled){
-<li style="text-align = right;">
 @{
 
                     views.html.language_selection(
                     lc.languageMap,
                     lc.langToCall,
-                    Some("translation-last")
+                    Some("u-align--right")
 
             )
         }
-</li>
+
     }
     @if(contentHeader.isDefined) {
         @uiLayouts.main_content_header(contentHeader = contentHeader.get)
