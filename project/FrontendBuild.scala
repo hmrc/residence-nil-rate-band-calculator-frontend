@@ -32,6 +32,7 @@ private object AppDependencies {
   private val playReactivemongoVersion = "5.1.0"
   private val pdfBoxVersion = "2.0.4"
   private val graphiteVersion = "3.2.0"
+  private val metricsGraphiteVersion = "3.0.2"
   private val playLanguageVersion = "3.0.0"
 
   val compile = Seq(
@@ -48,6 +49,7 @@ private object AppDependencies {
     "uk.gov.hmrc" %% "play-whitelist-filter" % whitelistVersion,
     "uk.gov.hmrc" %% "http-caching-client" % httpCachingClientVersion,
     "com.eclipsesource" %% "play-json-schema-validator" % playJsonValidatorVersion,
+     "com.codahale.metrics" % "metrics-graphite" % metricsGraphiteVersion,
     "uk.gov.hmrc" %% "play-graphite" % graphiteVersion,
     "org.apache.pdfbox" % "pdfbox" % pdfBoxVersion,
     "uk.gov.hmrc" %% "play-language" % playLanguageVersion
