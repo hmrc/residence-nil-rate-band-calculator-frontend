@@ -18,13 +18,7 @@
 
 @serviceInfoContent = {}
 
-@betaBanner = {
-@layouts.betaBanner(
-    userLoggedIn = false,
-    betaFeedbackUrl = appConfig.betaFeedbackUrl,
-    betaFeedbackUnauthenticatedUrl = appConfig.betaFeedbackUnauthenticatedUrl,
-    showFeedbackLinkInBetaBanner = true)
-}
+@betaBanner = {}
 
 @sidebar = {
     @if(sidebarLinks.isDefined) {
