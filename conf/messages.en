@@ -1,7 +1,7 @@
 assets_passing_to_direct_descendants.browser_title = Other than the property that you are claiming residence nil rate band allowance on, do any other assets pass to a direct descendant following the death?
 assets_passing_to_direct_descendants.title = Other than the property that you are claiming residence nil rate band allowance on, do any other assets pass to a direct descendant following the death?
 
-assets_passing_to_direct_descendants.guidance = This doesn’t include the property worth {0} that you have already given. A direct descendant must have received other assets from the estate for the additional downsizing threshold to be claimed.
+assets_passing_to_direct_descendants.guidance = This doesn’t include the property worth {0} that you have already added to this calculator. A direct descendant must have received other assets from the estate for the additional downsizing threshold to be claimed.
 assets_passing_to_direct_descendants.guidance_no_property = A direct descendant must have received assets from the estate for the additional downsizing threshold to be claimed.
 assets_passing_to_direct_descendants.error.required = Give an answer for if any other assets apart from the property were passing to a direct descendant
 
@@ -281,7 +281,7 @@ value_of_assets_passing.browser_title = What is the total value of the other ass
 value_of_assets_passing.title = What is the total value of the other assets passing to direct descendants?
 value_of_assets_passing.guidance1 = If the person who has died left a will, you can use that to work out what assets were left to direct descendants.
 value_of_assets_passing.guidance3 = The values of each asset will have been used to complete the IHT400 form and each schedule that was needed. Add the values of each asset up to get the total value of assets passing to a direct descendant.
-value_of_assets_passing.guidance4 = This does not include the property worth {0} that you have already given.
+value_of_assets_passing.guidance4 = This does not include the property worth {0} that you have already added to this calculator.
 value_of_assets_passing.error.blank = Give a value for the assets passing to a direct descendant
 value_of_assets_passing.greater_than_estate_value.error = Give a value that is less than the £{0} value of the estate that you have already given
 
