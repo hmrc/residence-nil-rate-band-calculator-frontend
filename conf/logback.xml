@@ -65,9 +65,9 @@
 
     <logger name="play.core" level="WARN"/>
 
-    <logger name="org.apache.pdfbox" level="WARN"/>
+    <logger name="org.apache.pdfbox" level="ERROR"/>
 
-    <logger name="org.apache.fontbox" level="WARN"/>
+    <logger name="org.apache.fontbox" level="ERROR"/>
 
     <root level="DEBUG">
         <appender-ref ref="FILE"/>
