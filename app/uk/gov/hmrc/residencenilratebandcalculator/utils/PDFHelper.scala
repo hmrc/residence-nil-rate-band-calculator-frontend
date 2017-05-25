@@ -25,7 +25,7 @@ import play.api.Environment
 import play.api.i18n.MessagesApi
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 
 @Singleton
