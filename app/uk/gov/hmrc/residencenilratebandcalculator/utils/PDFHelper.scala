@@ -19,6 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.utils
 import java.io.ByteArrayOutputStream
 import javax.inject.{Inject, Singleton}
 
+import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm
 import org.apache.pdfbox.pdmodel.{PDDocument, PDDocumentInformation}
 import play.api.Environment
 import play.api.i18n.MessagesApi
@@ -31,6 +32,21 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 class PDFHelper @Inject()(val messagesApi: MessagesApi, val env: Environment){
   private val retrieveValueToStoreFor1Field: (String, Int) => String = (v, _) => v
   private val retrieveValueToStoreForMoreThan1Field: (String, Int) => String = (v, i) => v.charAt(i).toString
+  private val cacheMapIdToEnglishYesNo:String => (String, String) = _ => ("Yes", "No")
+  private val welshYesNo1 = ("Oes", "Nac oes")
+  private val welshYesNo2 = ("Ydw", "Nac ydw")
+  private val welshYesNo3 = ("Ydy", "Nac ydy")
+  private val welshYesNo4 = ("Byddai", "Na fyddai")
+  private val cacheMapIdToWelshYesNo:String => (String, String) = {
+      case Constants.propertyInEstateId => welshYesNo3
+      case Constants.transferAnyUnusedThresholdId => welshYesNo2
+      case Constants.transferAvailableWhenPropertyChangedId => welshYesNo4
+      case Constants.claimDownsizingThresholdId => welshYesNo2
+      case Constants.grossingUpOnEstateAssetsId => welshYesNo3
+      case Constants.grossingUpOnEstatePropertyId => welshYesNo3
+      case _ => welshYesNo1
+  }
+
   private val cacheMapIdToFieldName = Map[String, Seq[String]](
     Constants.dateOfDeathId -> Seq(
       "IHT435_03_01",
@@ -88,17 +104,28 @@ class PDFHelper @Inject()(val messagesApi: MessagesApi, val env: Environment){
     pdf.setDocumentInformation(pdDocumentInformation)
   }
 
-  private def booleanValueForPDF(b: Boolean) = if (b) "Yes" else "No"
+  private def booleanValueForPDF(b: Boolean, generateWelshValue: Boolean, cacheId: String) = {
+    val yesNos = if (generateWelshValue) {
+      cacheMapIdToWelshYesNo(cacheId)
+    } else {
+      cacheMapIdToEnglishYesNo(cacheId)
+    }
+    if (b) {
+      yesNos._1
+    } else {
+      yesNos._2
+    }
+  }
 
-  private def jsValueToString(jsVal: JsValue): String = {
+  private def jsValueToString(jsVal: JsValue, generateWelshValue: Boolean, cacheId: String): String = {
     jsVal match {
-      case b: JsBoolean => booleanValueForPDF(b.value)
+      case b: JsBoolean => booleanValueForPDF(b.value, generateWelshValue, cacheId)
       case s: JsString => s.toString
       case _ => jsVal.toString
     }
   }
 
-  private def getValueForPDF(jsVal: String, cacheId: String): String = {
+  private def formatValueForPDF(jsVal: String, cacheId: String): String = {
     val dateCacheIds = Set(Constants.dateOfDeathId, Constants.datePropertyWasChangedId)
     val decimalCacheIds = Set(Constants.percentagePassedToDirectDescendantsId)
     jsVal match {
@@ -108,41 +135,53 @@ class PDFHelper @Inject()(val messagesApi: MessagesApi, val env: Environment){
     }
   }
 
-  def generatePDF(cacheMap: CacheMap): Option[ByteArrayOutputStream] = {
-    env.resourceAsStream("resource/IHT435.pdf").map { is =>
-      val pdf = PDDocument.load(is)
-      setupPDFDocument(pdf)
+  private def storeFormattedValueInPDFFields(fieldNames: Seq[String], valueFormattedForPDF: String, form: PDAcroForm) = {
+    val retrieveValueToStore: (String, Int) => String =
+      if (fieldNames.size == 1) retrieveValueToStoreFor1Field else retrieveValueToStoreForMoreThan1Field
+    fieldNames.indices foreach { i =>
+      form.getField(fieldNames(i)).setValue(retrieveValueToStore(valueFormattedForPDF, i))
+    }
+  }
+
+  private def storeValuesInPDF(cacheMap: CacheMap, form: PDAcroForm, storeWelshValues: Boolean) = {
+    val ua = new UserAnswers(cacheMap)
+    cacheMapIdToFieldName foreach {
+      case (cacheId, fieldNames) =>
+        val optionalJsVal = cacheMap.data.get(cacheId)
+        val valueFormattedForPDF: Option[String] = (optionalJsVal, cacheId) match {
+          case (_, Constants.percentagePassedToDirectDescendantsId) =>
+            Some(formatValueForPDF(ua.getPercentagePassedToDirectDescendants.toString, cacheId))
+          case (_, Constants.transferAvailableWhenPropertyChangedId) =>
+            ua.isTransferAvailableWhenPropertyChanged.map( isAvailable =>
+              formatValueForPDF(booleanValueForPDF(isAvailable, storeWelshValues, cacheId), cacheId)
+            )
+          case (Some(jsVal), _) => Some(formatValueForPDF(jsValueToString(jsVal, storeWelshValues, cacheId), cacheId))
+          case _ => None
+        }
+        valueFormattedForPDF.foreach{ value =>
+          storeFormattedValueInPDFFields(fieldNames, value, form)
+        }
+    }
+  }
+
+  def generatePDF(cacheMap: CacheMap, generateWelshPDF:Boolean): Option[ByteArrayOutputStream] = {
+    val resourceName = if (generateWelshPDF) {
+      "IHT435Cymraeg.pdf"
+    } else {
+      "IHT435.pdf"
+    }
+    env.resourceAsStream(s"resource/$resourceName").map { is =>
+      var pdd: Option[PDDocument] = None
       val baos = new ByteArrayOutputStream()
       try {
-        val form = pdf.getDocumentCatalog.getAcroForm
-
-        def ua = new UserAnswers(cacheMap)
-
-        def storeValuesInPDF(fieldNames: Seq[String], valueForPDF: String) = {
-          val retrieveValueToStore: (String, Int) => String =
-            if (fieldNames.size == 1) retrieveValueToStoreFor1Field else retrieveValueToStoreForMoreThan1Field
-          fieldNames.indices foreach { i =>
-            form.getField(fieldNames(i)).setValue(retrieveValueToStore(valueForPDF, i))
-          }
+        pdd = Option(PDDocument.load(is))
+        pdd.foreach { pdf =>
+          setupPDFDocument(pdf)
+          storeValuesInPDF(cacheMap, pdf.getDocumentCatalog.getAcroForm, generateWelshPDF)
+          pdf.save(baos)
         }
-
-        cacheMapIdToFieldName foreach {
-          case (cacheId, fieldNames) =>
-            val optionalJsVal = cacheMap.data.get(cacheId)
-            (optionalJsVal, cacheId) match {
-              case (_, Constants.percentagePassedToDirectDescendantsId) =>
-                storeValuesInPDF(fieldNames, getValueForPDF(ua.getPercentagePassedToDirectDescendants.toString, cacheId))
-              case (_, Constants.transferAvailableWhenPropertyChangedId) =>
-                ua.isTransferAvailableWhenPropertyChanged.foreach { isAvailable =>
-                  storeValuesInPDF(fieldNames, getValueForPDF(booleanValueForPDF(isAvailable), cacheId))
-                }
-              case (Some(jsVal), _) => storeValuesInPDF(fieldNames, getValueForPDF(jsValueToString(jsVal), cacheId))
-              case _ =>
-            }
-        }
-        pdf.save(baos)
       } finally {
-        pdf.close()
+        pdd.foreach(pdf => pdf.close())
         is.close()
       }
       baos

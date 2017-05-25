@@ -56,9 +56,9 @@ class PDFHelperSpec extends BaseSpec with WithFakeApplication {
     Constants.thresholdCalculationResultId -> JsNumber(229988)
   ))
 
-  private def acroForm(filledCacheMap: CacheMap = cacheMapAllNonDecimalFields): PDAcroForm = {
+  private def acroForm(filledCacheMap: CacheMap = cacheMapAllNonDecimalFields, generateWelshPDF: Boolean = false): PDAcroForm = {
     val pdfHelper = new PDFHelper(messagesApi, env)
-    val optionPDAcroForm: Option[PDAcroForm] = pdfHelper.generatePDF(filledCacheMap).map { baos =>
+    val optionPDAcroForm: Option[PDAcroForm] = pdfHelper.generatePDF(filledCacheMap, generateWelshPDF=generateWelshPDF).map { baos =>
       val pdfDoc = PDDocument.load(baos.toByteArray)
       baos.close()
       val acroForm = pdfDoc.getDocumentCatalog.getAcroForm
@@ -76,98 +76,156 @@ class PDFHelperSpec extends BaseSpec with WithFakeApplication {
     }
   }
 
-  private def describeTest(fieldName: String) = s"generate from the cache the correct PDF value for $fieldName"
+  private def describeTest(fieldName: String, isWelshTest: Boolean) = {
+    val suffix = if(isWelshTest) {" in the welsh language"} else {""}
+    s"generate from the cache the correct PDF value for $fieldName$suffix"
+  }
 
-  private def pdfField(fieldName: String, expectedValue: String) = {
-    describeTest(fieldName) in {
-      acroForm().getField(fieldName).getValueAsString shouldBe expectedValue
+  private def pdfField(fieldName: String, expectedValue: String, generateWelshPDF: Boolean) = {
+    describeTest(fieldName, isWelshTest = generateWelshPDF) in {
+      acroForm(generateWelshPDF=generateWelshPDF).getField(fieldName).getValueAsString shouldBe expectedValue
     }
   }
 
-  "PDFHelper" must {
-    describeTest("IHT435_03") in {
-      checkMultipleFieldValues(acroForm(), "IHT435_03", "12052017", noDigitsInDate)
+  private def yes(welsh: Option[String] = None) = welsh.fold("Yes")(identity)
+
+  private def no(welsh: Option[String] = None) = welsh.fold("No")(identity)
+
+  private def pdfFieldTestPart1(generateWelshPDF: Boolean) = {
+    describeTest("IHT435_03", isWelshTest = generateWelshPDF) in {
+      checkMultipleFieldValues(acroForm(generateWelshPDF=generateWelshPDF), "IHT435_03", "12052017", noDigitsInDate)
     }
 
-    behave like pdfField("IHT435_05", "Yes")
+    behave like pdfField(fieldName = "IHT435_05",
+      expectedValue = yes(if(generateWelshPDF) Some("Oes") else None),
+      generateWelshPDF=generateWelshPDF)
+    behave like pdfField(fieldName = "IHT435_06",
+      expectedValue = "500000",
+      generateWelshPDF=generateWelshPDF)
+    behave like pdfField(fieldName = "IHT435_07",
+      expectedValue = "450000",
+      generateWelshPDF=generateWelshPDF)
+    behave like pdfField(fieldName = "IHT435_08",
+      expectedValue = no(if(generateWelshPDF) Some("Nac ydy") else None),
+      generateWelshPDF=generateWelshPDF)
+    behave like pdfField(fieldName = "IHT435_10",
+      expectedValue = "9948",
+      generateWelshPDF=generateWelshPDF)
 
-    behave like pdfField("IHT435_06", "500000")
-
-    behave like pdfField("IHT435_07", "450000")
-
-    behave like pdfField("IHT435_08", "No")
-
-    behave like pdfField("IHT435_10", "9948")
-
-    describeTest("IHT435_10_1 to 7: decimal number of less than maximum size") in {
+    describeTest("IHT435_10_1 to 7: decimal number of less than maximum size",
+      isWelshTest = generateWelshPDF) in {
       val cacheMap: CacheMap = new CacheMap(cacheMapKey, Map[String, JsValue](
         Constants.percentagePassedToDirectDescendantsId -> JsString("34.8899"),
         Constants.propertyInEstateId -> JsBoolean(true),
         Constants.propertyPassingToDirectDescendantsId -> JsString(Constants.some)
       ))
-      checkMultipleFieldValues(acroForm(cacheMap), "IHT435_10", " 348899", noDigitsInDecimal)
+      checkMultipleFieldValues(
+        acroForm = acroForm(filledCacheMap=cacheMap, generateWelshPDF=generateWelshPDF),
+        baseFieldName = "IHT435_10",
+        expectedDate = " 348899",
+        totalFields = noDigitsInDecimal)
     }
 
-    describeTest("IHT435_10_1 to 7: decimal number of maximum size") in {
+    describeTest("IHT435_10_1 to 7: decimal number of maximum size", isWelshTest = generateWelshPDF) in {
       val cacheMap: CacheMap = new CacheMap(cacheMapKey, Map[String, JsValue](
         Constants.percentagePassedToDirectDescendantsId -> JsString("234.8899"),
         Constants.propertyInEstateId -> JsBoolean(true),
         Constants.propertyPassingToDirectDescendantsId -> JsString(Constants.some)
       ))
-      checkMultipleFieldValues(acroForm(cacheMap), "IHT435_10", "2348899", noDigitsInDecimal)
+      checkMultipleFieldValues(
+        acroForm = acroForm(filledCacheMap=cacheMap, generateWelshPDF=generateWelshPDF),
+        baseFieldName = "IHT435_10",
+        expectedDate = "2348899",
+        totalFields = noDigitsInDecimal)
     }
+  }
 
-    describeTest("IHT435_10_1 to 7: decimal number with less than max mantissa") in {
+  private def pdfFieldTestPart2(generateWelshPDF: Boolean) = {
+    describeTest("IHT435_10_1 to 7: decimal number with less than max mantissa", isWelshTest = generateWelshPDF) in {
       val cacheMap: CacheMap = new CacheMap(cacheMapKey, Map[String, JsValue](
         Constants.percentagePassedToDirectDescendantsId -> JsString("234.889"),
         Constants.propertyInEstateId -> JsBoolean(true),
         Constants.propertyPassingToDirectDescendantsId -> JsString(Constants.some)
       ))
-      checkMultipleFieldValues(acroForm(cacheMap), "IHT435_10", "2348890", noDigitsInDecimal)
+      checkMultipleFieldValues(
+        acroForm = acroForm(filledCacheMap=cacheMap, generateWelshPDF=generateWelshPDF),
+        baseFieldName = "IHT435_10",
+        expectedDate = "2348890",
+        totalFields = noDigitsInDecimal)
     }
 
-    behave like pdfField("IHT435_12", "Yes")
+    behave like pdfField(fieldName = "IHT435_12",
+      expectedValue = yes(if(generateWelshPDF) Some("Oes") else None),
+      generateWelshPDF=generateWelshPDF)
 
-    behave like pdfField("IHT435_13", "No")
+    behave like pdfField(fieldName = "IHT435_13",
+      expectedValue = no(if(generateWelshPDF) Some("Nac ydy") else None),
+      generateWelshPDF=generateWelshPDF)
 
-    behave like pdfField("IHT435_14", "8893")
+    behave like pdfField(fieldName = "IHT435_14",
+      expectedValue = "8893",
+      generateWelshPDF=generateWelshPDF)
 
-    behave like pdfField("IHT435_15", "8894")
+    behave like pdfField(fieldName = "IHT435_15",
+      expectedValue = "8894",
+      generateWelshPDF=generateWelshPDF)
 
-    behave like pdfField("IHT435_16", "Yes")
+    behave like pdfField(fieldName = "IHT435_16",
+      expectedValue = yes(if(generateWelshPDF) Some("Ydw") else None),
+      generateWelshPDF=generateWelshPDF)
 
-    behave like pdfField("IHT435_17", "88728")
+    behave like pdfField(fieldName = "IHT435_17",
+      expectedValue = "88728",
+      generateWelshPDF=generateWelshPDF)
 
-    behave like pdfField("IHT435_18", "No")
+    behave like pdfField(fieldName = "IHT435_18",
+      expectedValue = no(if(generateWelshPDF) Some("Nac ydw") else None),
+      generateWelshPDF=generateWelshPDF)
 
-    describeTest("IHT435_20") in {
-      checkMultipleFieldValues(acroForm(), "IHT435_20", "13052017", noDigitsInDate)
+    describeTest("IHT435_20", isWelshTest = generateWelshPDF) in {
+      checkMultipleFieldValues(
+        acroForm = acroForm(generateWelshPDF=generateWelshPDF),
+        baseFieldName = "IHT435_20",
+        expectedDate = "13052017",
+        totalFields = noDigitsInDate)
     }
+  }
 
-    behave like pdfField("IHT435_21", "888")
+  private def pdfFieldTestPart3(generateWelshPDF: Boolean) = {
+    behave like pdfField(fieldName = "IHT435_21",
+      expectedValue = "888",
+      generateWelshPDF = generateWelshPDF)
+    behave like pdfField(fieldName = "IHT435_22",
+      expectedValue = yes(if (generateWelshPDF) Some("Oes") else None),
+      generateWelshPDF = generateWelshPDF)
+    behave like pdfField(fieldName = "IHT435_23",
+      expectedValue = no(if (generateWelshPDF) Some("Nac ydy") else None),
+      generateWelshPDF = generateWelshPDF)
+    behave like pdfField(fieldName = "IHT435_24", "777", generateWelshPDF = generateWelshPDF)
+    behave like pdfField(fieldName = "IHT435_26",
+      expectedValue = yes(if (generateWelshPDF) Some("Byddai") else None),
+      generateWelshPDF = generateWelshPDF)
+    behave like pdfField(fieldName = "IHT435_27",
+      expectedValue = "3333",
+      generateWelshPDF = generateWelshPDF)
+    behave like pdfField(fieldName = "IHT435_28",
+      expectedValue = "229988",
+      generateWelshPDF = generateWelshPDF)
 
-    behave like pdfField("IHT435_22", "Yes")
-
-    behave like pdfField("IHT435_23", "No")
-
-    behave like pdfField("IHT435_24", "777")
-
-    behave like pdfField("IHT435_26", "Yes")
-
-    behave like pdfField("IHT435_27", "3333")
-
-    behave like pdfField("IHT435_28", "229988")
-
-    describeTest("IHT435_10_1 to 7 when field in cache but it can be calculated") in {
+    describeTest("IHT435_10_1 to 7 when field in cache but it can be calculated", isWelshTest = generateWelshPDF) in {
       val cacheMap: CacheMap = new CacheMap(cacheMapKey, Map[String, JsValue](
         Constants.percentagePassedToDirectDescendantsId -> JsString("34.8899"),
         Constants.propertyInEstateId -> JsBoolean(true),
         Constants.propertyPassingToDirectDescendantsId -> JsString(Constants.all)
       ))
-      checkMultipleFieldValues(acroForm(cacheMap), "IHT435_10", "100    ", noDigitsInDecimal)
+      checkMultipleFieldValues(
+        acroForm = acroForm(filledCacheMap = cacheMap, generateWelshPDF = generateWelshPDF),
+        baseFieldName = "IHT435_10",
+        expectedDate = "100    ",
+        totalFields = noDigitsInDecimal)
     }
 
-    describeTest("IHT435_26") + " when field in cache but it can be calculated" in {
+    describeTest("IHT435_26", isWelshTest = generateWelshPDF) + " when field in cache but it can be calculated" in {
       val cacheMap = CacheMap(
         cacheMapKey, Map(
           Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true),
@@ -176,7 +234,20 @@ class PDFHelperSpec extends BaseSpec with WithFakeApplication {
           Constants.datePropertyWasChangedId -> JsString("2017-04-05")
         )
       )
-      acroForm(cacheMap).getField("IHT435_26").getValueAsString shouldBe "No"
+      acroForm(filledCacheMap = cacheMap, generateWelshPDF = generateWelshPDF).getField("IHT435_26")
+        .getValueAsString shouldBe no(if (generateWelshPDF) Some("Na fyddai") else None)
     }
+  }
+
+  private def pdfFieldTest(generateWelshPDF: Boolean) = {
+    pdfFieldTestPart1(generateWelshPDF = generateWelshPDF)
+    pdfFieldTestPart2(generateWelshPDF = generateWelshPDF)
+    pdfFieldTestPart3(generateWelshPDF = generateWelshPDF)
+  }
+
+  "PDFHelper" must {
+    behave like pdfFieldTest(generateWelshPDF = false)
+
+    behave like pdfFieldTest(generateWelshPDF = true)
   }
 }
