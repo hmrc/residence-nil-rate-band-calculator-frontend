@@ -87,10 +87,11 @@ class PDFHelperSpec extends BaseSpec with WithFakeApplication {
     }
   }
 
-  private def pdfFieldTest(generateWelshPDF: Boolean) = {
-    def yes(welsh: Option[String] = None) = welsh.fold("Yes")(identity)
-    def no(welsh: Option[String] = None) = welsh.fold("No")(identity)
+  private def yes(welsh: Option[String] = None) = welsh.fold("Yes")(identity)
 
+  private def no(welsh: Option[String] = None) = welsh.fold("No")(identity)
+
+  private def pdfFieldTestPart1(generateWelshPDF: Boolean) = {
     describeTest("IHT435_03", isWelshTest = generateWelshPDF) in {
       checkMultipleFieldValues(acroForm(generateWelshPDF=generateWelshPDF), "IHT435_03", "12052017", noDigitsInDate)
     }
@@ -98,19 +99,15 @@ class PDFHelperSpec extends BaseSpec with WithFakeApplication {
     behave like pdfField(fieldName = "IHT435_05",
       expectedValue = yes(if(generateWelshPDF) Some("Oes") else None),
       generateWelshPDF=generateWelshPDF)
-
     behave like pdfField(fieldName = "IHT435_06",
       expectedValue = "500000",
       generateWelshPDF=generateWelshPDF)
-
     behave like pdfField(fieldName = "IHT435_07",
       expectedValue = "450000",
       generateWelshPDF=generateWelshPDF)
-
     behave like pdfField(fieldName = "IHT435_08",
       expectedValue = no(if(generateWelshPDF) Some("Nac ydy") else None),
       generateWelshPDF=generateWelshPDF)
-
     behave like pdfField(fieldName = "IHT435_10",
       expectedValue = "9948",
       generateWelshPDF=generateWelshPDF)
@@ -141,7 +138,9 @@ class PDFHelperSpec extends BaseSpec with WithFakeApplication {
         expectedDate = "2348899",
         totalFields = noDigitsInDecimal)
     }
+  }
 
+  private def pdfFieldTestPart2(generateWelshPDF: Boolean) = {
     describeTest("IHT435_10_1 to 7: decimal number with less than max mantissa", isWelshTest = generateWelshPDF) in {
       val cacheMap: CacheMap = new CacheMap(cacheMapKey, Map[String, JsValue](
         Constants.percentagePassedToDirectDescendantsId -> JsString("234.889"),
@@ -190,32 +189,28 @@ class PDFHelperSpec extends BaseSpec with WithFakeApplication {
         expectedDate = "13052017",
         totalFields = noDigitsInDate)
     }
+  }
 
+  private def pdfFieldTestPart3(generateWelshPDF: Boolean) = {
     behave like pdfField(fieldName = "IHT435_21",
       expectedValue = "888",
-      generateWelshPDF=generateWelshPDF)
-
+      generateWelshPDF = generateWelshPDF)
     behave like pdfField(fieldName = "IHT435_22",
-      expectedValue = yes(if(generateWelshPDF) Some("Oes") else None),
-      generateWelshPDF=generateWelshPDF)
-
+      expectedValue = yes(if (generateWelshPDF) Some("Oes") else None),
+      generateWelshPDF = generateWelshPDF)
     behave like pdfField(fieldName = "IHT435_23",
-      expectedValue = no(if(generateWelshPDF) Some("Nac ydy") else None),
-      generateWelshPDF=generateWelshPDF)
-
-    behave like pdfField(fieldName = "IHT435_24", "777", generateWelshPDF=generateWelshPDF)
-
+      expectedValue = no(if (generateWelshPDF) Some("Nac ydy") else None),
+      generateWelshPDF = generateWelshPDF)
+    behave like pdfField(fieldName = "IHT435_24", "777", generateWelshPDF = generateWelshPDF)
     behave like pdfField(fieldName = "IHT435_26",
-      expectedValue = yes(if(generateWelshPDF) Some("Byddai") else None),
-      generateWelshPDF=generateWelshPDF)
-
+      expectedValue = yes(if (generateWelshPDF) Some("Byddai") else None),
+      generateWelshPDF = generateWelshPDF)
     behave like pdfField(fieldName = "IHT435_27",
       expectedValue = "3333",
-      generateWelshPDF=generateWelshPDF)
-
+      generateWelshPDF = generateWelshPDF)
     behave like pdfField(fieldName = "IHT435_28",
       expectedValue = "229988",
-      generateWelshPDF=generateWelshPDF)
+      generateWelshPDF = generateWelshPDF)
 
     describeTest("IHT435_10_1 to 7 when field in cache but it can be calculated", isWelshTest = generateWelshPDF) in {
       val cacheMap: CacheMap = new CacheMap(cacheMapKey, Map[String, JsValue](
@@ -224,7 +219,7 @@ class PDFHelperSpec extends BaseSpec with WithFakeApplication {
         Constants.propertyPassingToDirectDescendantsId -> JsString(Constants.all)
       ))
       checkMultipleFieldValues(
-        acroForm = acroForm(filledCacheMap=cacheMap, generateWelshPDF=generateWelshPDF),
+        acroForm = acroForm(filledCacheMap = cacheMap, generateWelshPDF = generateWelshPDF),
         baseFieldName = "IHT435_10",
         expectedDate = "100    ",
         totalFields = noDigitsInDecimal)
@@ -239,9 +234,15 @@ class PDFHelperSpec extends BaseSpec with WithFakeApplication {
           Constants.datePropertyWasChangedId -> JsString("2017-04-05")
         )
       )
-      acroForm(filledCacheMap=cacheMap, generateWelshPDF=generateWelshPDF).getField("IHT435_26")
-        .getValueAsString shouldBe no(if(generateWelshPDF) Some("Na fyddai") else None)
+      acroForm(filledCacheMap = cacheMap, generateWelshPDF = generateWelshPDF).getField("IHT435_26")
+        .getValueAsString shouldBe no(if (generateWelshPDF) Some("Na fyddai") else None)
     }
+  }
+
+  private def pdfFieldTest(generateWelshPDF: Boolean) = {
+    pdfFieldTestPart1(generateWelshPDF = generateWelshPDF)
+    pdfFieldTestPart2(generateWelshPDF = generateWelshPDF)
+    pdfFieldTestPart3(generateWelshPDF = generateWelshPDF)
   }
 
   "PDFHelper" must {
