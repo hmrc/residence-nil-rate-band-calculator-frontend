@@ -32,39 +32,15 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 class PDFHelper @Inject()(val messagesApi: MessagesApi, val env: Environment){
   private val retrieveValueToStoreFor1Field: (String, Int) => String = (v, _) => v
   private val retrieveValueToStoreForMoreThan1Field: (String, Int) => String = (v, i) => v.charAt(i).toString
-
+  private val cacheMapIdToEnglishYesNo:String => (String, String) = _ => ("Yes", "No")
   private val welshYesNo1 = ("Oes", "Nac oes")
   private val welshYesNo2 = ("Ydw", "Nac ydw")
   private val welshYesNo3 = ("Ydy", "Nac ydy")
-
-  private val cacheMapIdToEnglishYesNo:String => (String, String) = _ => ("Yes", "No")
-
-  private val cacheMapIdToWelshYesNo:String => (String, String) = cacheMapId => {
-    val cacheMapIdToWelshYesNo = Map[String, (String, String)](
-      Constants.dateOfDeathId -> welshYesNo1,
-    Constants.partOfEstatePassingToDirectDescendantsId -> welshYesNo1,
-    Constants.valueOfEstateId -> welshYesNo1,
-    Constants.chargeableEstateValueId -> welshYesNo1,
-    Constants.propertyInEstateId -> welshYesNo3,
-    Constants.propertyValueId -> welshYesNo1,
-    Constants.percentagePassedToDirectDescendantsId -> welshYesNo1,
-    Constants.exemptionsAndReliefClaimedId -> welshYesNo1,
-    Constants.grossingUpOnEstatePropertyId -> welshYesNo1,
-    Constants.chargeablePropertyValueId -> welshYesNo1,
-    Constants.chargeableInheritedPropertyValueId -> welshYesNo1,
-    Constants.transferAnyUnusedThresholdId -> welshYesNo2,
-    Constants.valueBeingTransferredId -> welshYesNo1,
-    Constants.claimDownsizingThresholdId -> welshYesNo2,
-    Constants.datePropertyWasChangedId -> welshYesNo1,
-    Constants.valueOfChangedPropertyId -> welshYesNo1,
-    Constants.assetsPassingToDirectDescendantsId -> welshYesNo1,
-    Constants.grossingUpOnEstateAssetsId -> welshYesNo1,
-    Constants.valueOfAssetsPassingId -> welshYesNo1,
-    Constants.transferAvailableWhenPropertyChangedId -> welshYesNo1,
-    Constants.valueAvailableWhenPropertyChangedId -> welshYesNo1,
-    Constants.thresholdCalculationResultId -> welshYesNo1
-    )
-    cacheMapIdToWelshYesNo(cacheMapId)
+  private val cacheMapIdToWelshYesNo:String => (String, String) = {
+      case Constants.propertyInEstateId => welshYesNo3
+      case Constants.transferAnyUnusedThresholdId => welshYesNo2
+      case Constants.claimDownsizingThresholdId => welshYesNo2
+      case _ => welshYesNo1
   }
 
   private val cacheMapIdToFieldName = Map[String, Seq[String]](
