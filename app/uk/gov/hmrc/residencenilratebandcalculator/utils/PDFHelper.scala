@@ -36,10 +36,14 @@ class PDFHelper @Inject()(val messagesApi: MessagesApi, val env: Environment){
   private val welshYesNo1 = ("Oes", "Nac oes")
   private val welshYesNo2 = ("Ydw", "Nac ydw")
   private val welshYesNo3 = ("Ydy", "Nac ydy")
+  private val welshYesNo4 = ("Byddai", "Na fyddai")
   private val cacheMapIdToWelshYesNo:String => (String, String) = {
       case Constants.propertyInEstateId => welshYesNo3
       case Constants.transferAnyUnusedThresholdId => welshYesNo2
+      case Constants.transferAvailableWhenPropertyChangedId => welshYesNo4
       case Constants.claimDownsizingThresholdId => welshYesNo2
+      case Constants.grossingUpOnEstateAssetsId => welshYesNo3
+      case Constants.grossingUpOnEstatePropertyId => welshYesNo3
       case _ => welshYesNo1
   }
 
