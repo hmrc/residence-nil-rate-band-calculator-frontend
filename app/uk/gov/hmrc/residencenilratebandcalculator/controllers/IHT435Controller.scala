@@ -21,7 +21,7 @@ import javax.inject.{Inject, Singleton}
 import com.google.inject.Provider
 import play.Logger
 import play.api.{Application, Environment}
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
@@ -43,7 +43,9 @@ class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
           Logger.error(msg)
           throw new RuntimeException(msg)
         }
-        pdfHelper.generatePDF(cacheMap).map(baos => {
+
+        val generateWelshPDF = messagesApi.preferred(request).lang.code == "cy"
+        pdfHelper.generatePDF(cacheMap = cacheMap, generateWelshPDF = generateWelshPDF).map(baos => {
           val result = Ok(baos.toByteArray).as("application/pdf")
           baos.close()
           result

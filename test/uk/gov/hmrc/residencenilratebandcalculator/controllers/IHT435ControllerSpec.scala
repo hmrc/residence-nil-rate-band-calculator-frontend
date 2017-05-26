@@ -46,13 +46,13 @@ class IHT435ControllerSpec extends BaseSpec with WithFakeApplication with MockSe
 
   "onPageLoad" must {
     "return 200" in {
-      when(mockPDFHelper.generatePDF(any())) thenReturn Some(new ByteArrayOutputStream())
+      when(mockPDFHelper.generatePDF(any(), any())) thenReturn Some(new ByteArrayOutputStream())
       val result = controller.onPageLoad()(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return exception when no resource" in {
-      when(mockPDFHelper.generatePDF(any())) thenReturn None
+      when(mockPDFHelper.generatePDF(any(), any())) thenReturn None
       a[RuntimeException] shouldBe thrownBy {
         status(controller.onPageLoad()(fakeRequest))
       }
