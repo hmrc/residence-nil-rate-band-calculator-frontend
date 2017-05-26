@@ -256,7 +256,7 @@ unable_to_calculate_threshold_increase.grossing_up.next.guidance1 = Dylech orffe
 unable_to_calculate_threshold_increase.grossing_up.next.guidance2 = Dylech wedyn anfon y ddwy ffurflen, ynghyd ag unrhyw atodlen Treth Etifeddiant arall y bu’n rhaid i chi ei llenwi, drwy’r post i:
 unable_to_calculate_threshold_increase.grossing_up.next.guidance3.addr1 = Treth Etifeddiant/Inheritance Tax,
 unable_to_calculate_threshold_increase.grossing_up.next.guidance3.addr2 = Cyllid a Thollau EM/HM Revenue & Customs,
-unable_to_calculate_threshold_increase.grossing_up.next.guidance3.addr3 = BS9 1HT.
+unable_to_calculate_threshold_increase.grossing_up.next.guidance3.addr3 = BX9 1HT.
 unable_to_calculate_threshold_increase.grossing_up.next.guidance4 = Bydd CThEM yn gweithio allan beth yw’r trothwy ychwanegol ac yn rhoi gwybod i chi beth yw’r swm ychwanegol drwy’r post cyn pen 15 diwrnod gwaith. 
 unable_to_calculate_threshold_increase.grossing_up.next.guidance5 = Cewch wybod hefyd faint o Dreth Etifeddiant sydd i’w thalu.
 
