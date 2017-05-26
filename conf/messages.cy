@@ -29,7 +29,7 @@ chargeable_property_value.guidance2 = Os oedd yr ymadawedig yn berchen ar yr eid
 chargeable_inherited_property_value.browser_title = Beth yw gwerth trethadwy’r breswylfa sy’n cael ei basio i ddisgynyddion uniongyrchol?
 chargeable_inherited_property_value.title = Beth yw gwerth trethadwy’r breswylfa sy’n cael ei basio i ddisgynyddion uniongyrchol?
 chargeable_inherited_property_value.guidance1 = Dyma werth yr eiddo sy’n cael ei drosglwyddo i ddisgynnydd uniongyrchol. Os yw’r eiddo cyfan wedi’i drosglwyddo, rhowch werth llawn yr eiddo ar ddyddiad y farwolaeth.
-chargeable_inherited_property_value.guidance2 = Os mai dim ond rhan o’r eiddo sy’n cael ei adael i ddisgynnydd uniongyrchol, dylech weithio allan gwerth yr hyn sy’n cael ei drosglwyddo’n unig. Os yw hanner yr eiddo’n cael ei drosglwyddo i ddisgynnydd uniongyrchol a £500,00 yw’r gwerth llawn ar ddyddiad y farwolaeth, £250,00 fyddai gwerth yr hyn y byddai’r disgynnydd uniongyrchol yn ei gael.
+chargeable_inherited_property_value.guidance2 = Os mai dim ond rhan o’r eiddo sy’n cael ei adael i ddisgynnydd uniongyrchol, dylech weithio allan gwerth yr hyn sy’n cael ei drosglwyddo’n unig. Os yw hanner yr eiddo’n cael ei drosglwyddo i ddisgynnydd uniongyrchol a £500,000 yw’r gwerth llawn ar ddyddiad y farwolaeth, £250,000 fyddai gwerth yr hyn y byddai’r disgynnydd uniongyrchol yn ei gael.
 chargeable_inherited_property_value.error.blank = Rhowch werth trethadwy’r eiddo sy’n cael ei drosglwyddo i ddisgynnydd uniongyrchol
 
 chargeable_property_value.greater_than_property_value.error = Rhowch werth trethadwy’r eiddo sy’n llai na gwerth yr eiddo, sef £{0}, yr ydych eisoes wedi’i nodi
@@ -220,7 +220,7 @@ threshold_calculation_result.info.zero.header = Nid oes cynnydd i drothwy’r Dr
 threshold_calculation_result.info.zero.guidance = Yn seiliedig ar y manylion yr ydych wedi’u rhoi, gellir cynyddu’r trothwy gan
 threshold_calculation_result.info.zero.threshold_change = Nid oes newid i’r trothwy presennol.
 threshold_calculation_result.info.non_zero.header = Gellir cynyddu trothwy’r Dreth Etifeddiant
-threshold_calculation_result.info.non_zero.guidance = Gellir cynyddu’r trothwy gan {0} ychwanegol
+threshold_calculation_result.info.non_zero.guidance = Gellir cynyddu’r trothwy gan {0} ychwanegol.
 threshold_calculation_result.info.non_zero.threshold_change = Mae hyn ar ben beth yw’r trothwy presennol.
 threshold_calculation_result.action.header = Yr hyn i’w wneud nesaf
 threshold_calculation_result.action.guidance = Ysgrifennwch {0} yn:
