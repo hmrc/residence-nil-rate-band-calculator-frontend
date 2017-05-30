@@ -47,7 +47,7 @@
 
     <logger name="uk.gov" level="WARN"/>
 
-    <logger name="application" level="WARN"/>
+    <logger name="application" level="DEBUG"/>
 
     <logger name="connector" level="WARN">
         <appender-ref ref="STDOUT"/>
@@ -65,9 +65,9 @@
 
     <logger name="play.core" level="WARN"/>
 
-    <logger name="org.apache.pdfbox" level="WARN"/>
+    <logger name="org.apache.pdfbox" level="ERROR"/>
 
-    <logger name="org.apache.fontbox" level="WARN"/>
+    <logger name="org.apache.fontbox" level="ERROR"/>
 
     <root level="DEBUG">
         <appender-ref ref="FILE"/>
