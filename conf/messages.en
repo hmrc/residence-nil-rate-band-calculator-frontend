@@ -258,7 +258,7 @@ unable_to_calculate_threshold_increase.grossing_up.next.guidance1 = You should f
 unable_to_calculate_threshold_increase.grossing_up.next.guidance2 = You should then post both forms, along with any other Inheritance Tax schedules you have had to complete, to:
 unable_to_calculate_threshold_increase.grossing_up.next.guidance3.addr1 = Inheritance Tax,
 unable_to_calculate_threshold_increase.grossing_up.next.guidance3.addr2 = HM Revenue & Customs,
-unable_to_calculate_threshold_increase.grossing_up.next.guidance3.addr3 = BS9 1HT.
+unable_to_calculate_threshold_increase.grossing_up.next.guidance3.addr3 = BX9 1HT.
 unable_to_calculate_threshold_increase.grossing_up.next.guidance4 = HMRC will work out the additional threshold and let you know the extra amount by post within 15 working days.
 unable_to_calculate_threshold_increase.grossing_up.next.guidance5 = You will also be told how much Inheritance Tax to pay.
 
