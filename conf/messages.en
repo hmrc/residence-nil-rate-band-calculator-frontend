@@ -47,6 +47,7 @@ claim_downsizing_threshold.error.required = Give an answer for if you are claimi
 date.day = Day
 date.month = Month
 date.year = Year
+error.invalid.date.format = You must specify a valid date
 
 date_of_death.browser_title = What was the date of death?
 date_of_death.title = What was the date of death?
@@ -57,6 +58,19 @@ date_of_death.error = Give a correct date of death
 date_of_death.error.day_invalid = Give a correct day of death using numbers 1 to 31
 date_of_death.error.month_invalid = Give a correct month of death using numbers 1 to 12
 date_of_death.error.year_invalid = Give a correct year of death
+
+error.date_Of_Death.incorrect = Enter a valid date of death
+error.date_Of_Death.incorrect.summary = enter a valid date of death
+error.date_Of_Death.giveCorrectDateUsingOnlyNumbers = Give a correct date of death only using numbers
+error.date_Of_Death.giveCorrectDay = Give a correct day of death using numbers 1 to 31
+error.date_Of_Death.giveCorrectDayForMonth = Give the correct date of death using the correct number of days for that month
+error.date_Of_Death.giveCorrectMonth = Give a correct month of death using numbers 1 to 12
+error.date_Of_Death.giveCorrectYear = Give a correct year of death
+error.date_Of_Death.giveFull = Give a full date of death
+error.date_Of_Death.giveNoneFuture = Give a date of death that is not in the future
+error.date_Of_Death.incorrect = Enter a valid date of death
+error.date_Of_Death.incorrect.summary = enter a valid date of death
+
 
 date_property_was_changed.browser_title = What was the date the property was disposed of?
 date_property_was_changed.title = What was the date the property was disposed of?
