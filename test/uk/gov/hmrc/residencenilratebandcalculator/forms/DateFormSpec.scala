@@ -22,19 +22,18 @@ import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 
 class DateFormSpec extends FormSpec {
 
-  val errorKeyInvalidDay = "invalid day"
-  val errorKeyInvalidMonth = "invalid month"
-  val errorKeyInvalidYear = "invalid year"
-  val errorKeyInvalidDate = "invalid date"
-
   def date(day: String, month: String, year: String) = Map("day" -> day, "month" -> month, "year" -> year)
 
   def dateOfDeath(day: String, month: String, year: String) =
     Map("dateOfDeath.day" -> day, "dateOfDeath.month" -> month, "dateOfDeath.year" -> year)
 
-  lazy val completeDateOfDeath = dateOfDeath("01", "01", "2015")
+  def dateOfDownsizing(day: String, month: String, year: String) =
+    Map("dateOfDownsizing.day" -> day, "dateOfDownsizing.month" -> month, "dateOfDownsizing.year" -> year)
 
-  "Date of Death form" must {
+  lazy val completeDateOfDeath = dateOfDeath("01", "01", "2015")
+  lazy val completeDateOfDownsizing = dateOfDownsizing("01", "01", "2015")
+
+  "dateOfDeathForm" must {
 
     "not give an error for a valid date" in {
       dateOfDeathForm.bind(completeDateOfDeath).get shouldBe Date(new LocalDate(2015, 1, 1))
@@ -42,7 +41,7 @@ class DateFormSpec extends FormSpec {
 
     "give an error when the day is blank" in {
       val data = dateOfDeath("", "01", "2014")
-      val expectedErrors = error("dateOfDeath", "error.dateOfDeath.giveFull")
+      val expectedErrors = error("dateOfDeath", "date_Of_death.error.date_not_complete")
 
       checkForError(dateOfDeathForm, data, expectedErrors)
     }
@@ -56,21 +55,21 @@ class DateFormSpec extends FormSpec {
 
     "give an error when the day is invalid" in {
       val data = dateOfDeath("INVALID", "01", "2014")
-      val expectedErrors = error("dateOfDeath", "error.dateOfDeath.giveCorrectDateUsingOnlyNumbers")
+      val expectedErrors = error("dateOfDeath", "date_Of_death.error.only_using_numbers")
 
       checkForError(dateOfDeathForm, data, expectedErrors)
     }
 
     "give an error when the day is too high for the month" in {
-      val data = dateOfDeath("29", "02", "2013")
-      val expectedErrors = error("dateOfDeath", "error.dateOfDeath.giveCorrectDayForMonth")
+      val data = dateOfDeath("29", "22", "2013")
+      val expectedErrors = error("dateOfDeath", "date_of_death.error.month_invalid")
 
       checkForError(dateOfDeathForm, data, expectedErrors)
     }
 
     "give an error when the month is blank" in {
       val data = dateOfDeath("01", "", "2014")
-      val expectedErrors = error("dateOfDeath", "error.dateOfDeath.giveFull")
+      val expectedErrors = error("dateOfDeath", "date_Of_death.error.date_not_complete")
 
       checkForError(dateOfDeathForm, data, expectedErrors)
     }
@@ -84,21 +83,21 @@ class DateFormSpec extends FormSpec {
 
     "give an error when the month is invalid" in {
       val data = dateOfDeath("01", "INVALID", "2014")
-      val expectedErrors = error("dateOfDeath", "error.dateOfDeath.giveCorrectDateUsingOnlyNumbers")
+      val expectedErrors = error("dateOfDeath", "date_Of_death.error.only_using_numbers")
 
       checkForError(dateOfDeathForm, data, expectedErrors)
     }
 
     "give an error when the month is too high" in {
       val data = dateOfDeath("01", "13", "2013")
-      val expectedErrors = error("dateOfDeath", "error.dateOfDeath.giveCorrectMonth")
+      val expectedErrors = error("dateOfDeath", "date_of_death.error.month_invalid")
 
       checkForError(dateOfDeathForm, data, expectedErrors)
     }
 
     "give an error when the year is blank" in {
       val data = dateOfDeath("01", "01", "")
-      val expectedErrors = error("dateOfDeath", "error.dateOfDeath.giveFull")
+      val expectedErrors = error("dateOfDeath", "date_Of_death.error.date_not_complete")
 
       checkForError(dateOfDeathForm, data, expectedErrors)
     }
@@ -112,21 +111,21 @@ class DateFormSpec extends FormSpec {
 
     "give an error when the year is invalid" in {
       val data = dateOfDeath("01", "01", "INVALID")
-      val expectedErrors = error("dateOfDeath", "error.dateOfDeath.giveCorrectDateUsingOnlyNumbers")
+      val expectedErrors = error("dateOfDeath", "date_Of_death.error.only_using_numbers")
 
       checkForError(dateOfDeathForm, data, expectedErrors)
     }
 
     "give an error when the year is supplied as a two-digit number" in {
       val data = dateOfDeath("01", "01", "14")
-      val expectedErrors = error("dateOfDeath", "error.dateOfDeath.giveCorrectYear")
+      val expectedErrors = error("dateOfDeath", "date_of_death.error.year_invalid")
 
       checkForError(dateOfDeathForm, data, expectedErrors)
     }
 
     "give only one error when two fields are invalid" in {
       val data = dateOfDeath("32", "XX", "14")
-      val expectedErrors = error("dateOfDeath", "error.dateOfDeath.giveCorrectDateUsingOnlyNumbers")
+      val expectedErrors = error("dateOfDeath", "date_Of_death.error.only_using_numbers")
 
       checkForError(dateOfDeathForm, data, expectedErrors)
     }
@@ -140,81 +139,109 @@ class DateFormSpec extends FormSpec {
     }
   }
 
+  "dateOfDownsizingForm" must {
 
- /* "Date Form" must {
-
-    "bind valid values" in {
-      val form =
-        DateForm(errorKeyInvalidDay, errorKeyInvalidMonth, errorKeyInvalidYear, errorKeyInvalidDate).bind(date("01", "01", "2000"))
-      form.get shouldBe Date(1, 1, 2000)
+    "not give an error for a valid date" in {
+      dateOfDownsizingForm.bind(completeDateOfDownsizing).get shouldBe Date(new LocalDate(2015, 1, 1))
     }
 
-    "fail to bind a negative day value" in {
-      val expectedError = error("day", errorKeyInvalidDay)
-      checkForError(DateForm(errorKeyInvalidDay, errorKeyInvalidMonth, errorKeyInvalidYear, errorKeyInvalidDate), date("-1", "01", "2000"), expectedError)
+    "give an error when the day is blank" in {
+      val data = dateOfDownsizing("", "01", "2014")
+      val expectedErrors = error("dateOfDownsizing", "date_of_downsizing.error.date_not_complete")
+
+      checkForError(dateOfDownsizingForm, data, expectedErrors)
     }
 
-    "fail to bind a negative month value" in {
-      val expectedError = error("month", errorKeyInvalidMonth)
-      checkForError(DateForm(errorKeyInvalidDay, errorKeyInvalidMonth, errorKeyInvalidYear, errorKeyInvalidDate), date("1", "-1", "2000"), expectedError)
+    "give an error when the day is not supplied" in {
+      val data = completeDateOfDownsizing - "dateOfDownsizing.day"
+      val expectedErrors = error("dateOfDownsizing.day", "error.required")
+
+      checkForError(dateOfDownsizingForm, data, expectedErrors)
     }
 
-    "fail to bind a negative year value" in {
-      val expectedError = error("year", errorKeyInvalidYear)
-      checkForError(DateForm(errorKeyInvalidDay, errorKeyInvalidMonth, errorKeyInvalidYear, errorKeyInvalidDate), date("1", "1", "-1"), expectedError)
+    "give an error when the day is invalid" in {
+      val data = dateOfDownsizing("INVALID", "01", "2014")
+      val expectedErrors = error("dateOfDownsizing", "date_of_downsizing.error.only_using_numbers")
+
+      checkForError(dateOfDownsizingForm, data, expectedErrors)
     }
 
-    "fail to bind a non existant date" in {
-      val expectedError = error("", errorKeyInvalidDate)
-      checkForError(DateForm(errorKeyInvalidDay, errorKeyInvalidMonth, errorKeyInvalidYear, errorKeyInvalidDate), date("30", "2", "2000"), expectedError)
+    "give an error when the day is too high for the month" in {
+      val data = dateOfDownsizing("29", "22", "2013")
+      val expectedErrors = error("dateOfDownsizing", "date_of_downsizing.error.month_invalid")
+
+      checkForError(dateOfDownsizingForm, data, expectedErrors)
     }
 
-    "fail to bind a non-numeric day" in {
-      val expectedError = error("day", errorKeyInvalidDay)
-      checkForError(DateForm(errorKeyInvalidDay, errorKeyInvalidMonth, errorKeyInvalidYear, errorKeyInvalidDate), date("one", "1", "2000"), expectedError)
+    "give an error when the month is blank" in {
+      val data = dateOfDownsizing("01", "", "2014")
+      val expectedErrors = error("dateOfDownsizing", "date_of_downsizing.error.date_not_complete")
+
+      checkForError(dateOfDownsizingForm, data, expectedErrors)
     }
 
-    "fail to bind a non-numeric month" in {
-      val expectedError = error("month", errorKeyInvalidMonth)
-      checkForError(DateForm(errorKeyInvalidDay, errorKeyInvalidMonth, errorKeyInvalidYear, errorKeyInvalidDate), date("1", "one", "2000"), expectedError)
+    "give an error when the month is not supplied" in {
+      val data = completeDateOfDownsizing - "dateOfDownsizing.month"
+      val expectedErrors = error("dateOfDownsizing.month", "error.required")
+
+      checkForError(dateOfDownsizingForm, data, expectedErrors)
     }
 
-    "fail to bind a non-numeric year" in {
-      val expectedError = error("year", errorKeyInvalidYear)
-      checkForError(DateForm(errorKeyInvalidDay, errorKeyInvalidMonth, errorKeyInvalidYear, errorKeyInvalidDate), date("1", "1", "one"), expectedError)
+    "give an error when the month is invalid" in {
+      val data = dateOfDownsizing("01", "INVALID", "2014")
+      val expectedErrors = error("dateOfDownsizing", "date_of_downsizing.error.only_using_numbers")
+
+      checkForError(dateOfDownsizingForm, data, expectedErrors)
     }
 
-    "fail to bind a date with a blank day" in {
-      val expectedError = error("day", "error.date.day_blank")
-      checkForError(DateForm(errorKeyInvalidDay, errorKeyInvalidMonth, errorKeyInvalidYear, errorKeyInvalidDate), date("", "1", "2000"), expectedError)
+    "give an error when the month is too high" in {
+      val data = dateOfDownsizing("01", "13", "2013")
+      val expectedErrors = error("dateOfDownsizing", "date_of_downsizing.error.month_invalid")
+
+      checkForError(dateOfDownsizingForm, data, expectedErrors)
     }
 
-    "fail to bind a date with a blank month" in {
-      val expectedError = error("month", "error.date.month_blank")
-      checkForError(DateForm(errorKeyInvalidDay, errorKeyInvalidMonth, errorKeyInvalidYear, errorKeyInvalidDate), date("1", "", "2000"), expectedError)
+    "give an error when the year is blank" in {
+      val data = dateOfDownsizing("01", "01", "")
+      val expectedErrors = error("dateOfDownsizing", "date_of_downsizing.error.date_not_complete")
+
+      checkForError(dateOfDownsizingForm, data, expectedErrors)
     }
 
-    "fail to bind a date with a blank year" in {
-      val expectedError = error("year", "error.date.year_blank")
-      checkForError(DateForm(errorKeyInvalidDay, errorKeyInvalidMonth, errorKeyInvalidYear, errorKeyInvalidDate), date("1", "1", ""), expectedError)
+    "give an error when the year is not supplied" in {
+      val data = completeDateOfDownsizing - "dateOfDownsizing.year"
+      val expectedErrors = error("dateOfDownsizing.year", "error.required")
+
+      checkForError(dateOfDownsizingForm, data, expectedErrors)
     }
 
-    "fail to bind when day is omitted" in {
-      val data = Map[String, String]("month" -> "1", "year" -> "2000")
-      val expectedError = error("day", "error.date.day_blank")
-      checkForError(DateForm(errorKeyInvalidDay, errorKeyInvalidMonth, errorKeyInvalidYear, errorKeyInvalidDate), data, expectedError)
+    "give an error when the year is invalid" in {
+      val data = dateOfDownsizing("01", "01", "INVALID")
+      val expectedErrors = error("dateOfDownsizing", "date_of_downsizing.error.only_using_numbers")
+
+      checkForError(dateOfDownsizingForm, data, expectedErrors)
     }
 
-    "fail to bind when month is omitted" in {
-      val data = Map[String, String]("day" -> "1", "year" -> "2000")
-      val expectedError = error("month", "error.date.month_blank")
-      checkForError(DateForm(errorKeyInvalidDay, errorKeyInvalidMonth, errorKeyInvalidYear, errorKeyInvalidDate), data, expectedError)
+    "give an error when the year is supplied as a two-digit number" in {
+      val data = dateOfDownsizing("01", "01", "14")
+      val expectedErrors = error("dateOfDownsizing", "date_of_downsizing.error.year_invalid")
+
+      checkForError(dateOfDownsizingForm, data, expectedErrors)
     }
 
-    "fail to bind when year is omitted" in {
-      val data = Map[String, String]("day" -> "1", "month" -> "1")
-      val expectedError = error("year", "error.date.year_blank")
-      checkForError(DateForm(errorKeyInvalidDay, errorKeyInvalidMonth, errorKeyInvalidYear, errorKeyInvalidDate), data, expectedError)
+    "give only one error when two fields are invalid" in {
+      val data = dateOfDownsizing("32", "XX", "14")
+      val expectedErrors = error("dateOfDownsizing", "date_of_downsizing.error.only_using_numbers")
+
+      checkForError(dateOfDownsizingForm, data, expectedErrors)
     }
-  }*/
+
+    "give an error when no data is supplied" in {
+      val expectedErrors = error("dateOfDownsizing.day", "error.required") ++
+        error("dateOfDownsizing.month", "error.required") ++
+        error("dateOfDownsizing.year", "error.required")
+
+      checkForError(dateOfDownsizingForm, emptyForm, expectedErrors)
+    }
+  }
 }

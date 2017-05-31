@@ -37,7 +37,7 @@ class DatePropertyWasChangedControllerSpec extends DateControllerSpecBase {
 
     def createController = () => new DatePropertyWasChangedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider)
 
-    behave like rnrbDateController(createController, createView, Constants.datePropertyWasChangedId)(Date.dateReads, Date.dateWrites)
+    behave like rnrbDateController(createController, createView, Constants.datePropertyWasChangedId, "dateOfDownsizing")(Date.dateReads, Date.dateWrites)
 
     behave like nonStartingDateController(createController,
       List(Constants.dateOfDeathId,

@@ -43,4 +43,3 @@ object Date {
 
   implicit val dateFormat: Format[Date] = Format(dateReads, dateWrites)
 }
-

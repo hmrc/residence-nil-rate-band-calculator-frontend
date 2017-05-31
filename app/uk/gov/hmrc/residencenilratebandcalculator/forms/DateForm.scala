@@ -16,16 +16,14 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
+import play.api.data.Form
 import play.api.data.Forms._
-import play.api.data.format.Formatter
-import play.api.data.{Form, FormError}
-import uk.gov.hmrc.residencenilratebandcalculator.forms.FormValidators._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.mappings.DateMapping
-import uk.gov.hmrc.residencenilratebandcalculator.models.{DateFull, Date}
+import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 
 object DateForm {
 
-  val dateOfDeathForm = Form(
+  val dateOfDeathForm: Form[Date] = Form(
     mapping(
       "dateOfDeath" -> DateMapping.dateOfDeath
     )(Date.apply)(Date.unapply)
@@ -37,4 +35,3 @@ object DateForm {
     )(Date.apply)(Date.unapply)
   )
 }
-
