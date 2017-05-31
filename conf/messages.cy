@@ -197,9 +197,9 @@ session_expired.guidance = Mae’r manylion yr ydych wedi’u nodi wedi cael eu 
 timeout_dialog.title = Mae’ch sesiwn ar fin dod i ben
 timeout_dialog.message = Er eich diogelwch, bydd eich sesiwn yn dod i ben a bydd yn rhaid i chi ailddechrau’ch cyfrifiad mewn:
 timeout_dialog.button = Mynd yn eich blaen gyda’r cyfrifiad
-timeout_dialog.seconds =
-timeout_dialog.minutes = 
-timeout_dialog.minute =
+timeout_dialog.seconds = eiliad
+timeout_dialog.minutes = munud
+timeout_dialog.minute = munud
 
 site.no = Na
 site.yes = Iawn
