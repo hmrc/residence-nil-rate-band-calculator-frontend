@@ -20,16 +20,15 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
+import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 
 class DateOfDeathControllerSpec extends DateControllerSpecBase {
 
   "Date of Death Controller" must {
 
-    def createView = (value: Option[Map[String, String]]) => value match {
-      case None => date_of_death(frontendAppConfig)(fakeRequest, messages, applicationProvider)
-      case Some(v) => date_of_death(frontendAppConfig,
-        Some(DateForm("date_of_death.error.day_invalid", "date_of_death.error.month_invalid", "date_of_death.error.year_invalid", "date_of_death.error").
-          bind(v)))(fakeRequest, messages, applicationProvider)
+    def createView = (value: Option[Date]) => value match {
+      case None => date_of_death(frontendAppConfig, dateOfDeathForm)(fakeRequest, messages, applicationProvider)
+      case Some(v) => date_of_death(frontendAppConfig, dateOfDeathForm.fill(v))(fakeRequest, messages, applicationProvider)
     }
 
     def createController = () => new DateOfDeathController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider)

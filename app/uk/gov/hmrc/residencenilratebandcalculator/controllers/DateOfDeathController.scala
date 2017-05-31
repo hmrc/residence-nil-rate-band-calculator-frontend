@@ -48,7 +48,8 @@ class DateOfDeathController @Inject()(val appConfig: FrontendAppConfig,
   def onPageLoad(implicit rds: Reads[Date]) = Action.async { implicit request =>
     sessionConnector.fetch().map(
       optionalCacheMap => {
-        val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
+        val cacheMap: CacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
+        println("************** Value of Map ****************"+cacheMap.data)
         val dateOfDeath = cacheMap.getEntry[Date](controllerId)
 
         Ok(view(dateOfDeath.fold(form)(value => form.fill(value))))

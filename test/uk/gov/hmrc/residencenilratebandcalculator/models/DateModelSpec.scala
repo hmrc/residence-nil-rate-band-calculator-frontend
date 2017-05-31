@@ -23,7 +23,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 class DateModelSpec extends BaseSpec {
   "Date Model" must {
     "write itself as JSON exactly as if it were a Joda LocalDate" in {
-      val dateToJson = Json.toJson(Date(1, 1, 2000))
+      val dateToJson = Json.toJson(Date(new LocalDate(2000, 1, 1)))
       val localDateToJson = Json.toJson(new LocalDate(2000, 1, 1))
       dateToJson shouldBe localDateToJson
     }
@@ -32,7 +32,7 @@ class DateModelSpec extends BaseSpec {
       val day = 1
       val month = 6
       val year = 2017
-      val date = Date(day, month, year)
+      val date = Date(new LocalDate(year, month, day))
       val jodaDate = new LocalDate(year, month, day)
 
       Json.fromJson[LocalDate](Json.toJson(date)).get shouldBe jodaDate
@@ -40,8 +40,8 @@ class DateModelSpec extends BaseSpec {
     }
 
     "construct itself from a valid JSON representation" in {
-      Json.fromJson[Date](JsString("2000-01-01")).get shouldBe Date(1, 1, 2000)
-      Json.fromJson[Date](JsString("2000-1-1")).get shouldBe Date(1, 1, 2000)
+      Json.fromJson[Date](JsString("2000-01-01")).get shouldBe Date(new LocalDate(2000, 1, 1))
+      Json.fromJson[Date](JsString("2000-1-1")).get shouldBe Date(new LocalDate(2000, 1, 1))
     }
 
     "return JsFailure when constructing itself from invalid data" in {

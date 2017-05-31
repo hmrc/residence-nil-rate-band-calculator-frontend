@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
+import org.joda.time.LocalDate
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm
@@ -26,7 +27,7 @@ trait DateViewSpecBase extends ViewSpecBase {
   val day = 1
   val month = 2
   val year = 2000
-  val date = Date(day, month, year)
+  val date = Date(new LocalDate(year, month, day))
 
   def datePage(createView: (Option[Form[Date]]) => HtmlFormat.Appendable,
                messageKeyPrefix: String,

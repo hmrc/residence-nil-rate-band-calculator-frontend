@@ -41,7 +41,7 @@ trait DateControllerSpecBase extends BaseSpec with WithFakeApplication with Http
   def messages = messagesApi.preferred(fakeRequest)
 
   def rnrbDateController(createController: () => ControllerBase[Date],
-                     createView: (Option[Map[String, String]]) => HtmlFormat.Appendable,
+                     createView: (Option[Date]) => HtmlFormat.Appendable,
                      cacheKey: String)(rds: Reads[Date], wts: Writes[Date]) = {
 
     "return 200 for a GET" in {
@@ -62,7 +62,7 @@ trait DateControllerSpecBase extends BaseSpec with WithFakeApplication with Http
     }
 
     "store valid submitted data" in {
-      val value = Date(1, 1, 2018)
+      val value = Date(new LocalDate(2018, 1, 1))
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("day", "01"), ("month", "01"), ("year", "2018"))
       setCacheValue(cacheKey, new LocalDate(2018, 1, 1))
       await (createController().onSubmit(wts)(fakePostRequest))
@@ -95,12 +95,12 @@ trait DateControllerSpecBase extends BaseSpec with WithFakeApplication with Http
       val day = 1
       val month = 1
       val year = 2018
-      val value = new Date(day, month, year)
+      val value = Date(new LocalDate(year, month, day))
       setCacheValue(cacheKey, value)
       val result = createController().onPageLoad(rds)(fakeRequest)
 
       val valueMap = Map("day" -> day.toString, "month" -> month.toString, "year" -> year.toString)
-      contentAsString(result) shouldBe createView(Some(valueMap)).toString
+      contentAsString(result) shouldBe createView(Some(value)).toString
     }
   }
 
