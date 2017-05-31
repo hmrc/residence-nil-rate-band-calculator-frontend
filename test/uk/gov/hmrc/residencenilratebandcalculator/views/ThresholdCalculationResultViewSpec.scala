@@ -48,8 +48,9 @@ class ThresholdCalculationResultViewSpec extends HtmlSpec {
         val view = threshold_calculation_result(frontendAppConfig, residenceNilRateAmount, Nil)(request, messages, applicationProvider)
         val doc = asDocument(view)
 
-        assertContainsMessages(doc, "threshold_calculation_result.info.zero.header", "threshold_calculation_result.info.zero.guidance",
+        assertContainsMessages(doc, "threshold_calculation_result.info.zero.header",
           "threshold_calculation_result.info.zero.threshold_change")
+        assertContainsText(doc, messages("threshold_calculation_result.info.zero.guidance", residenceNilRateAmount))
         assertContainsText(doc, messages("threshold_calculation_result.action.guidance", residenceNilRateAmount))
       }
 
@@ -58,8 +59,9 @@ class ThresholdCalculationResultViewSpec extends HtmlSpec {
         val view = threshold_calculation_result(frontendAppConfig, residenceNilRateAmount, Nil)(request, messages, applicationProvider)
         val doc = asDocument(view)
 
-        assertContainsMessages(doc, "threshold_calculation_result.info.non_zero.header", "threshold_calculation_result.info.non_zero.guidance",
+        assertContainsMessages(doc, "threshold_calculation_result.info.non_zero.header",
           "threshold_calculation_result.info.non_zero.threshold_change")
+        assertContainsText(doc, messages("threshold_calculation_result.info.non_zero.guidance", residenceNilRateAmount))
         assertContainsText(doc, messages("threshold_calculation_result.action.guidance", residenceNilRateAmount))
       }
 

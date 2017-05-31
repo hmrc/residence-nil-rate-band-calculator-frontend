@@ -12,14 +12,14 @@
 
     @if(residenceNilRateAmount == "£0.00") {
         <h1 class="heading-large">@messages("threshold_calculation_result.info.zero.header")</h1>
-        <p class="heading-medium bold">
-            @messages("threshold_calculation_result.info.zero.guidance") <span class="data-item">@residenceNilRateAmount</span>.
+        <p class="heading-medium bold data-item">
+            @messages("threshold_calculation_result.info.zero.guidance", residenceNilRateAmount)
         </p>
         <p>@messages("threshold_calculation_result.info.zero.threshold_change")</p>
     } else {
         <h1 class="heading-large">@messages("threshold_calculation_result.info.non_zero.header")</h1>
-        <p class="heading-medium bold">
-            @messages("threshold_calculation_result.info.non_zero.guidance") <span class="data-item">@residenceNilRateAmount</span>.
+        <p class="heading-medium bold data-item">
+            @messages("threshold_calculation_result.info.non_zero.guidance", residenceNilRateAmount)
         </p>
         <p>@messages("threshold_calculation_result.info.non_zero.threshold_change")</p>
     }
