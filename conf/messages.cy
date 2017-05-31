@@ -200,6 +200,7 @@ timeout_dialog.button = Mynd yn eich blaen gyda’r cyfrifiad
 timeout_dialog.seconds = eiliad
 timeout_dialog.minutes = munud
 timeout_dialog.minute = munud
+timeout_dialog.minutes.two = funud
 
 site.no = Na
 site.yes = Iawn
