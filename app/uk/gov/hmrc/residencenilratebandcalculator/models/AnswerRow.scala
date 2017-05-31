@@ -23,6 +23,7 @@ import java.util.Locale
 import org.joda.time.LocalDate
 import play.api.i18n.Messages
 import play.api.mvc.Call
+import uk.gov.hmrc.play.language.LanguageUtils
 import uk.gov.hmrc.residencenilratebandcalculator.utils.{CurrencyFormatter, PercentageFormatter}
 
 
@@ -37,7 +38,7 @@ object AnswerRow {
     AnswerRow(messages(titleKey), if (yesNo) messages("site.yes") else messages("site.no"), url.url)
 
   def apply(titleKey: String, date: LocalDate, url: Call)(messages: Messages): AnswerRow =
-    AnswerRow(messages(titleKey), date.toString("d MMMM yyyy"), url.url)
+    AnswerRow(messages(titleKey), LanguageUtils.Dates.formatDate(date)(messages.lang), url.url)
 
   def apply(titleKey: String, percent: Double, url: Call)(messages: Messages): AnswerRow = {
     AnswerRow(messages(titleKey), PercentageFormatter.format(percent), url.url)
