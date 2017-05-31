@@ -1,6 +1,6 @@
 assets_passing_to_direct_descendants.browser_title = Heblaw’r eiddo yr ydych yn hawlio lwfans haen gyfradd sero preswyl arno, a oes unrhyw asedion eraill yn cael eu trosglwyddo i ddisgynnydd uniongyrchol yn dilyn y farwolaeth?
 assets_passing_to_direct_descendants.title = Heblaw’r eiddo yr ydych yn hawlio lwfans haen gyfradd sero preswyl arno, a oes unrhyw asedion eraill yn cael eu trosglwyddo i ddisgynnydd uniongyrchol yn dilyn y farwolaeth?
-assets_passing_to_direct_descendants.guidance = Nid yw hyn yn cynnwys yr eiddo, sydd werth {0}, yr ydych eisoes wedi’i roi. Rhaid bod disgynnydd uniongyrchol wedi cael asedion eraill o’r ystâd er mwyn i’r trothwy ychwanegol ar gyfer symud i gartref llai o faint gael ei hawlio?
+assets_passing_to_direct_descendants.guidance = Nid yw hyn yn cynnwys yr eiddo, sydd werth {0}, yr ydych eisoes wedi’i ychwanegu i’r gyfrifiannell hon. Rhaid bod disgynnydd uniongyrchol wedi cael asedion eraill o’r ystâd er mwyn i’r trothwy ychwanegol ar gyfer symud i gartref llai o faint gael ei hawlio.
 assets_passing_to_direct_descendants.guidance_no_property = Rhaid bod disgynnydd uniongyrchol wedi cael asedion eraill o’r ystâd er mwyn i’r trothwy ychwanegol ar gyfer symud i gartref llai o faint gael ei hawlio?
 assets_passing_to_direct_descendants.error.required = Rhowch ateb ar gyfer a oedd unrhyw asedion eraill heblaw’r eiddo’n cael eu trosglwyddo i ddisgynnydd uniongyrchol
 
@@ -279,7 +279,7 @@ value_of_assets_passing.browser_title = Beth yw cyfanswm gwerth yr asedion erail
 value_of_assets_passing.title = Beth yw cyfanswm gwerth yr asedion eraill sy’n cael eu trosglwyddo i ddisgynyddion uniongyrchol?
 value_of_assets_passing.guidance1 = Os gadawodd yr ymadawedig ewyllys, gallwch ei defnyddio i weithio allan pa asedion a adawyd i ddisgynyddion uniongyrchol.
 value_of_assets_passing.guidance3 = Bydd gwerthoedd pob ased wedi cael eu defnyddio i lenwi’r ffurflen IHT400 a phob atodlen oedd ei hangen.  Asdiwch werthoedd pob ased i gael cyfanswm gwerth yr asedion sy’n cael eu trosglwyddo i ddisgynnydd uniongyrchol.
-value_of_assets_passing.guidance4 = Nid yw hyn yn cynnwys eiddo gwerth {0} yr ydych eisoes wedi’i roi.
+value_of_assets_passing.guidance4 = Nid yw hyn yn cynnwys yr eiddo, sydd werth {0}, yr ydych eisoes wedi’i ychwanegu i’r gyfrifiannell hon.
 value_of_assets_passing.error.blank = Rhowch werth am yr asedion yr ydych eisoes yn eu trosglwyddo i ddisgynnydd uniongyrchol.
 value_of_assets_passing.greater_than_estate_value.error = Rhowch werth sy’n llai na gwerth yr ystâd o £{0} yr ydych eisoes wedi’i nodi.  
 
