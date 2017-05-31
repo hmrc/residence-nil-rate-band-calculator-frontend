@@ -27,8 +27,8 @@ import play.api.mvc.{Action, Request}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.logging.SessionId
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.forms.DateFullForm._
-import uk.gov.hmrc.residencenilratebandcalculator.models.{DateFull, Date, UserAnswers}
+import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
+import uk.gov.hmrc.residencenilratebandcalculator.models.{Date, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
@@ -37,30 +37,28 @@ class DateOfDeathController @Inject()(val appConfig: FrontendAppConfig,
                                       val messagesApi: MessagesApi,
                                       val sessionConnector: SessionConnector,
                                       val navigator: Navigator,
-                                      implicit val applicationProvider: Provider[Application]) extends ControllerBase[DateFull] {
+                                      implicit val applicationProvider: Provider[Application]) extends ControllerBase[Date] {
 
   val controllerId = Constants.dateOfDeathId
 
-  def form: Form[DateFull] = dateOfDeathForm
+  def form: Form[Date] = dateOfDeathForm
 
-  def view(form: Form[DateFull])(implicit request: Request[_]) = date_of_death(appConfig, form)
+  def view(form: Form[Date])(implicit request: Request[_]) = date_of_death(appConfig, form)
 
-  def onPageLoad(implicit rds: Reads[DateFull]) = Action.async { implicit request =>
+  def onPageLoad(implicit rds: Reads[Date]) = Action.async { implicit request =>
     sessionConnector.fetch().map(
       optionalCacheMap => {
         val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
-        Ok(view({
-          val t: Option[DateFull] = cacheMap.getEntry[DateFull](controllerId)
+        val dateOfDeath = cacheMap.getEntry[Date](controllerId)
 
-          t.fold(form)(value => form.fill(value))
-        }))
+        Ok(view(dateOfDeath.fold(form)(value => form.fill(value))))
       })
   }
 
-  def onSubmit(implicit rds: Writes[DateFull]) = Action.async { implicit request =>
+  def onSubmit(implicit rds: Writes[Date]) = Action.async { implicit request =>
     val boundForm = form.bindFromRequest()
     boundForm.fold(
-      (formWithErrors: Form[DateFull]) => {
+      (formWithErrors: Form[Date]) => {
         sessionConnector.fetch().map {
           optionalCacheMap => {
             val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
@@ -69,7 +67,7 @@ class DateOfDeathController @Inject()(val appConfig: FrontendAppConfig,
         }
       },
       (value) =>
-        sessionConnector.cache[DateFull](controllerId, value).map(cacheMap =>
+        sessionConnector.cache[Date](controllerId, value).map(cacheMap =>
           Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
     )
   }

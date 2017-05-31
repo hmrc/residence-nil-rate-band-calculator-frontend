@@ -32,7 +32,7 @@ object FormHelpers {
     either.merge
   }
 
-  def getDatePart(form: Option[Form[Date]], datePart: DatePart) = {
+/*  def getDatePart(form: Option[Form[Date]], datePart: DatePart) = {
     val either = for {
       theForm <- form.toRight("").right
       theDate <- theForm.value.toRight("").right
@@ -46,7 +46,7 @@ object FormHelpers {
         case Year => d.year
       }
     }
-  }
+  }*/
 
   def getErrorByKey[A](form: Option[Form[A]], errorKey: String) = {
     val either = for {
