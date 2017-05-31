@@ -139,8 +139,7 @@ object DateMapping {
             errorInvalidDayForMonthKey: String,
             errorInvalidMonthKey: String,
             errorInvalidYearKey: String,
-            errorInvalidAllKey: String,
-            errorDateInFutureKey: String) =
+            errorInvalidAllKey: String) =
   dateMapping(
     dateConstraint(
       errorBlankFieldKey,
@@ -154,14 +153,23 @@ object DateMapping {
   )
 
   val dateOfDeath: Mapping[LocalDate] = DateMapping(
-    "error.date_Of_Death.giveFull",
-    "error.date_Of_Death.giveCorrectDateUsingOnlyNumbers",
-    "error.date_Of_Death.giveCorrectDay",
-    "error.date_Of_Death.giveCorrectDayForMonth",
-    "error.date_Of_Death.giveCorrectMonth",
-    "error.date_Of_Death.giveCorrectYear",
-    "error.date_Of_Death.giveFull",
-    "error.date_Of_Death.giveNoneFuture"
+    "date_Of_death.error.date_not_complete",
+    "date_Of_death.error.only_using_numbers",
+    "date_of_death.error.day_invalid",
+    "date_Of_death.error.month_days_invalid",
+    "date_of_death.error.month_invalid",
+    "date_of_death.error.year_invalid",
+    "date_Of_death.error.date_not_complete"
+  )
+
+  val downSizingDate: Mapping[LocalDate] = DateMapping(
+    "date_of_downsizing.error.date_not_complete",
+    "date_of_downsizing.error.only_using_numbers",
+    "date_of_downsizing.error.day_invalid",
+    "date_of_downsizing.error.month_days_invalid",
+    "date_of_downsizing.error.month_invalid",
+    "date_of_downsizing.error.year_invalid",
+    "date_of_downsizing.error.date_not_complete"
   )
 
     /**

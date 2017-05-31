@@ -22,7 +22,7 @@ import play.api.libs.json._
 
 import scala.util.{Failure, Success, Try}
 
-case class DateFull(dateOfDeath: LocalDate)
+case class DateFull(date: LocalDate)
 
 object DateFull {
 
@@ -37,13 +37,9 @@ object DateFull {
 
   val dateWrites = new Writes[DateFull] {
     override def writes(date: DateFull) = {
-      JsString(date.dateOfDeath.toString)
+      JsString(date.date.toString)
     }
   }
 
   implicit val dateFormat: Format[DateFull] = Format(dateReads, dateWrites)
-
-  //implicit val formats = Json.format[DateFull]
 }
-
-

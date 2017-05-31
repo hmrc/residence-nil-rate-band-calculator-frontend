@@ -58,18 +58,19 @@ date_of_death.error = Give a correct date of death
 date_of_death.error.day_invalid = Give a correct day of death using numbers 1 to 31
 date_of_death.error.month_invalid = Give a correct month of death using numbers 1 to 12
 date_of_death.error.year_invalid = Give a correct year of death
+date_Of_death.error.date_not_complete = Give a full date of death
+date_Of_death.error.month_days_invalid = Give the correct date using the correct number of days for that month
+date_Of_death.error.only_using_numbers = Give a correct date of death only using numbers
 
 error.date_Of_Death.incorrect = Enter a valid date of death
 error.date_Of_Death.incorrect.summary = enter a valid date of death
-error.date_Of_Death.giveCorrectDateUsingOnlyNumbers = Give a correct date of death only using numbers
-error.date_Of_Death.giveCorrectDay = Give a correct day of death using numbers 1 to 31
-error.date_Of_Death.giveCorrectDayForMonth = Give the correct date of death using the correct number of days for that month
-error.date_Of_Death.giveCorrectMonth = Give a correct month of death using numbers 1 to 12
-error.date_Of_Death.giveCorrectYear = Give a correct year of death
-error.date_Of_Death.giveFull = Give a full date of death
-error.date_Of_Death.giveNoneFuture = Give a date of death that is not in the future
-error.date_Of_Death.incorrect = Enter a valid date of death
-error.date_Of_Death.incorrect.summary = enter a valid date of death
+
+date_of_downsizing.error.day_invalid = Give a correct day for downsizing using numbers 1 to 31
+date_of_downsizing.error.month_invalid = Give a correct month for downsizing using numbers 1 to 12
+date_of_downsizing.error.year_invalid = Give a correct year for downsizing
+date_of_downsizing.error.date_not_complete = Give a full date for downsizing
+date_of_downsizing.error.month_days_invalid = Give the correct date using the correct number of days for that month
+date_of_downsizing.error.only_using_numbers = Give a correct date for downsizing only using numbers
 
 
 date_property_was_changed.browser_title = What was the date the property was disposed of?
@@ -79,13 +80,6 @@ date_property_was_changed.guidance2 = There may have been changes to who owned t
 date_property_was_changed.hint = For example, 6 4 2017
 
 error.invalid_property_passing_to_direct_descendants_option = Give an answer for if any part of the property passed to a direct descendant
-error.invalid_date = Give a correct date
-error.date.day_blank = Enter a day
-error.date.day_invalid = Give a correct day using numbers 1 to 31
-error.date.month_blank = Enter a month
-error.date.month_invalid = Give a correct month using numbers 1 to 12
-error.date.year_blank = Enter a year
-error.date.year_invalid = Give a correct year
 error.non_numeric = Give a value using only numbers
 error.number = Please enter a valid number
 error.required = Please enter a value
