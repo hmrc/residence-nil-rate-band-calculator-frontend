@@ -302,3 +302,4 @@ value_of_estate.guidance1.bullet4 = box 15 on the IHT418 schedule
 value_of_estate.guidance2 = The IHT403 and IHT418 schedules are only completed if the estate included values for gifts given away and for assets held in trust.
 value_of_estate.error.blank = Give an estate value
 value_of_estate.error.non_numeric = Give an estate value using only numbers
+report.a.problem.link = Is there anything wrong with this page?
