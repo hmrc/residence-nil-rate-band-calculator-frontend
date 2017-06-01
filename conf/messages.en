@@ -48,7 +48,6 @@ date.day = Day
 date.month = Month
 date.year = Year
 error.invalid.date.format = You must specify a valid date
-date.year.
 
 date_of_death.browser_title = What was the date of death?
 date_of_death.title = What was the date of death?

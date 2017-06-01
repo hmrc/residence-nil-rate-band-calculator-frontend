@@ -21,6 +21,7 @@ import play.api.data.Forms._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.mappings.DateMapping
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 
+
 object DateForm {
 
   val dateOfDeathForm: Form[Date] = Form(

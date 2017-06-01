@@ -19,6 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.forms
 import org.joda.time.LocalDate
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
+import scala.language.reflectiveCalls
 
 class DateFormSpec extends FormSpec {
 
@@ -233,7 +234,7 @@ class DateFormSpec extends FormSpec {
       val data = dateOfDownsizing("01", "01", "10000")
       val expectedErrors = error("dateOfDownsizing", "date_of_downsizing.error.year_beyond_upper_bound")
 
-      checkForError(dateOfDeathForm, data, expectedErrors)
+      checkForError(dateOfDownsizingForm, data, expectedErrors)
     }
 
     "give an error when the year is supplied as a two-digit number" in {
