@@ -174,17 +174,4 @@ object DateMapping {
     "date_of_downsizing.error.year_beyond_upper_bound"
   )
 
-    /**
-    * errorBlankFieldKey
-    * errorInvalidFieldKey - if any invalid chars in date
-    * errorInvalidDateKey - if can't form a date from numeric parts, e.g. 33/2/2000
-    * errorDateInFutureKey
-    */
-
-  def apply(errorBlankFieldKey: String = "error.invalid.date.format",
-            errorInvalidFieldKey: String = "error.invalid.date.format",
-            errorInvalidDateKey: String = "error.invalid.date.format",
-            errorDateInFutureKey: String = "error.date_Of_Death.incorrect"): Mapping[LocalDate] = {
-    dateMapping(dateConstraint(errorBlankFieldKey, errorInvalidFieldKey, errorInvalidDateKey, errorDateInFutureKey))
-  }
 }
