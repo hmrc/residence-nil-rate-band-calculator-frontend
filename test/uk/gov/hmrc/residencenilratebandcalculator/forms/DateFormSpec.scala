@@ -116,6 +116,13 @@ class DateFormSpec extends FormSpec {
       checkForError(dateOfDeathForm, data, expectedErrors)
     }
 
+    "give an error when the year is beyond the upper bound" in {
+      val data = dateOfDeath("01", "01", "10000")
+      val expectedErrors = error("dateOfDeath", "date_Of_death.error.year_beyond_upper_bound")
+
+      checkForError(dateOfDeathForm, data, expectedErrors)
+    }
+
     "give an error when the year is supplied as a two-digit number" in {
       val data = dateOfDeath("01", "01", "14")
       val expectedErrors = error("dateOfDeath", "date_of_death.error.year_invalid")
@@ -220,6 +227,13 @@ class DateFormSpec extends FormSpec {
       val expectedErrors = error("dateOfDownsizing", "date_of_downsizing.error.only_using_numbers")
 
       checkForError(dateOfDownsizingForm, data, expectedErrors)
+    }
+
+    "give an error when the year is beyond the upper bound" in {
+      val data = dateOfDownsizing("01", "01", "10000")
+      val expectedErrors = error("dateOfDownsizing", "date_of_downsizing.error.year_beyond_upper_bound")
+
+      checkForError(dateOfDeathForm, data, expectedErrors)
     }
 
     "give an error when the year is supplied as a two-digit number" in {

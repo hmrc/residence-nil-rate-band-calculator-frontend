@@ -55,7 +55,7 @@ class DateOfDeathController @Inject()(val appConfig: FrontendAppConfig,
       })
   }
 
-  def onSubmit(implicit rds: Writes[Date]) = Action.async { implicit request =>
+  def onSubmit(implicit wts: Writes[Date]) = Action.async { implicit request =>
     val boundForm = form.bindFromRequest()
     boundForm.fold(
       (formWithErrors: Form[Date]) => {

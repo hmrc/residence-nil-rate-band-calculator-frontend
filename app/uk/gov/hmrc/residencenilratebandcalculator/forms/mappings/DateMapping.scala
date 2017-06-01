@@ -30,6 +30,7 @@ object DateMapping {
   private val isYearValidPredicate: Int => Boolean = _ > 999
   private val isMonthValidPredicate: Int => Boolean = month => month > 0 && month < 13
   private val isDayValidPredicate: Int => Boolean = day => day > 0 && day < 32
+  private val isYearBeyondUpperBound: Int => Boolean = _ < 10000
 
   private def parseTupleAsDate(dateAsTuple: (String, String, String)) = {
     val requiredYearLength = 4
@@ -48,7 +49,10 @@ object DateMapping {
     }
   }
 
-  private def dateConstraint(errorBlankFieldKey: String, errorInvalidFieldKey: String, errorInvalidDateKey: String, errorDateInFutureKey: String) =
+  private def dateConstraint(errorBlankFieldKey: String,
+                             errorInvalidFieldKey: String,
+                             errorInvalidDateKey: String,
+                             errorDateInFutureKey: String) =
     Constraint[(String, String, String)](
       (dateAsTuple: (String, String, String)) =>
         dateAsTuple match {
@@ -71,7 +75,8 @@ object DateMapping {
                              errorInvalidDayForMonthKey: String,
                              errorInvalidMonthKey: String,
                              errorInvalidYearKey: String,
-                             errorInvalidAllKey: String
+                             errorInvalidAllKey: String,
+                             errorInvalidYearUpperBound: String
                             ): Constraint[(String, String, String)] =
     Constraint[(String, String, String)](
       (dateAsTuple: (String, String, String)) => {
@@ -94,21 +99,14 @@ object DateMapping {
               Invalid(errorInvalidMonthKey)
             } else if (!isDayValidPredicate(day)) {
               Invalid(errorInvalidDayKey)
+            } else if(!isYearBeyondUpperBound(year)) {
+              Invalid(errorInvalidYearUpperBound)
             } else {
               Valid
             }
         }
-}
+      }
     )
-
-  private def checkDateElementsMakeValidNonFutureDate(dateAsTuple: (String, String, String),
-                                                      errorInvalidDateKey: String,
-                                                      errorFutureDateKey: String): ValidationResult =
-    parseTupleAsDate(dateAsTuple) match {
-      case None => Invalid(errorInvalidDateKey)
-      case Some(date) if date.compareTo(LocalDate.now()) > 0 => Invalid(errorFutureDateKey)
-      case _ => Valid
-    }
 
   private def dateMapping(constraint: Constraint[(String, String, String)]) = mapping(
     "day" -> text,
@@ -131,7 +129,7 @@ object DateMapping {
     * errorInvalidMonthKey - if the month portion of the date is numeric but invalid, e.g. 13
     * errorInvalidYearKey - if the year potion of the date is numeric but of less than 4 digits
     * errorInvalidAllKey - if all portions of the date are numeric but invalid as described above
-    * errorDateInFutureKey - if the date is in the future
+    * errorInvalidYearUpperBound - if year of date is greater than 2050
     */
   def apply(errorBlankFieldKey: String,
             errorInvalidCharsKey: String,
@@ -139,7 +137,8 @@ object DateMapping {
             errorInvalidDayForMonthKey: String,
             errorInvalidMonthKey: String,
             errorInvalidYearKey: String,
-            errorInvalidAllKey: String) =
+            errorInvalidAllKey: String,
+            errorInvalidYearUpperBound: String) =
   dateMapping(
     dateConstraint(
       errorBlankFieldKey,
@@ -148,7 +147,8 @@ object DateMapping {
       errorInvalidDayForMonthKey,
       errorInvalidMonthKey,
       errorInvalidYearKey,
-      errorInvalidAllKey
+      errorInvalidAllKey,
+      errorInvalidYearUpperBound
     )
   )
 
@@ -159,7 +159,8 @@ object DateMapping {
     "date_Of_death.error.month_days_invalid",
     "date_of_death.error.month_invalid",
     "date_of_death.error.year_invalid",
-    "date_Of_death.error.date_not_complete"
+    "date_Of_death.error.date_not_complete",
+    "date_Of_death.error.year_beyond_upper_bound"
   )
 
   val downSizingDate: Mapping[LocalDate] = DateMapping(
@@ -169,7 +170,8 @@ object DateMapping {
     "date_of_downsizing.error.month_days_invalid",
     "date_of_downsizing.error.month_invalid",
     "date_of_downsizing.error.year_invalid",
-    "date_of_downsizing.error.date_not_complete"
+    "date_of_downsizing.error.date_not_complete",
+    "date_of_downsizing.error.year_beyond_upper_bound"
   )
 
     /**

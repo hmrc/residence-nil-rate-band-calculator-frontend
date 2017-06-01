@@ -50,45 +50,45 @@
 
     @dayElem = @{fieldName + "." + day}
     @date_input(
-    formItem(childFormField+dayElem),
-    '_label -> Messages("date.day"),
-    '_labelClass -> "label--inlineTextinput",
-    '_inputClass -> ("form-control " + (if(elements.errors.size>0) "error-field" else "" )),
-    '_autoComplete -> "off",
-    '_hint -> elements.args.get('_hintId),
-    '_lengthMax -> 2,
-    '_type -> "number",
-    '_dataAttributes -> (if(elements.args.contains('_inputDataAttributes) ){ elements.args.get('_inputDataAttributes)} else "")
-    )
+        formItem(childFormField+dayElem),
+        '_label -> Messages("date.day"),
+        '_labelClass -> "label--inlineTextinput",
+        '_inputClass -> ("form-control " + (if(elements.errors.size>0) "error-field" else "" )),
+        '_autoComplete -> "off",
+        '_hint -> elements.args.get('_hintId),
+        '_lengthMax -> 2,
+        '_type -> "number",
+        '_dataAttributes -> (if(elements.args.contains('_inputDataAttributes) ){ elements.args.get('_inputDataAttributes)} else "")
+        )
 
 
     @monthElem = @{fieldName + "." + month}
     @date_input(
-    formItem(childFormField+monthElem),
-    '_label -> Messages("date.month"),
-    '_labelClass -> "label--inlineTextinput ",
-    '_inputClass -> ("form-control " + (if(elements.errors.size>0) "error-field" else "" )),
-    '_autoComplete -> "off",
-    '_hint -> elements.args.get('_hintId),
-    '_lengthMax -> 2,
-    '_type -> "number",
-    '_dataAttributes -> (if(elements.args.contains('_inputDataAttributes) ){ elements.args.get('_inputDataAttributes)} else "")
-    )
+        formItem(childFormField+monthElem),
+        '_label -> Messages("date.month"),
+        '_labelClass -> "label--inlineTextinput ",
+        '_inputClass -> ("form-control " + (if(elements.errors.size>0) "error-field" else "" )),
+        '_autoComplete -> "off",
+        '_hint -> elements.args.get('_hintId),
+        '_lengthMax -> 2,
+        '_type -> "number",
+        '_dataAttributes -> (if(elements.args.contains('_inputDataAttributes) ){ elements.args.get('_inputDataAttributes)} else "")
+        )
 
 
 
     @yearElem = @{fieldName + "." + year}
     @date_input(
-    formItem(childFormField+yearElem),
-    '_label -> Messages("date.year"),
-    '_labelClass -> "label--inlineTextinput ",
-    '_inputClass -> ("form-control " + (if(elements.errors.size>0) "error-field" else "" )),
-    '_autoComplete -> "off",
-    '_hint -> elements.args.get('_hintId),
-    '_lengthMax -> 4,
-    '_type -> "number",
-    '_dataAttributes -> (if(elements.args.contains('_inputDataAttributes) ){ elements.args.get('_inputDataAttributes)} else "")
-    )
+        formItem(childFormField+yearElem),
+        '_label -> Messages("date.year"),
+        '_labelClass -> "label--inlineTextinput ",
+        '_inputClass -> ("form-control " + (if(elements.errors.size>0) "error-field" else "" )),
+        '_autoComplete -> "off",
+        '_hint -> elements.args.get('_hintId),
+        '_lengthMax -> 4,
+        '_type -> "number",
+        '_dataAttributes -> (if(elements.args.contains('_inputDataAttributes) ){ elements.args.get('_inputDataAttributes)} else "")
+        )
 
 @if(elements.args.get('_legend).isDefined) {
 </fieldset>

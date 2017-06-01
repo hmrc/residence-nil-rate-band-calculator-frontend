@@ -48,6 +48,7 @@ date.day = Day
 date.month = Month
 date.year = Year
 error.invalid.date.format = You must specify a valid date
+date.year.
 
 date_of_death.browser_title = What was the date of death?
 date_of_death.title = What was the date of death?
@@ -61,6 +62,7 @@ date_of_death.error.year_invalid = Give a correct year of death
 date_Of_death.error.date_not_complete = Give a full date of death
 date_Of_death.error.month_days_invalid = Give the correct date using the correct number of days for that month
 date_Of_death.error.only_using_numbers = Give a correct date of death only using numbers
+date_Of_death.error.year_beyond_upper_bound = Give a valid date of death
 
 error.date_Of_Death.incorrect = Enter a valid date of death
 error.date_Of_Death.incorrect.summary = enter a valid date of death
@@ -71,7 +73,7 @@ date_of_downsizing.error.year_invalid = Give a correct year for downsizing
 date_of_downsizing.error.date_not_complete = Give a full date for downsizing
 date_of_downsizing.error.month_days_invalid = Give the correct date using the correct number of days for that month
 date_of_downsizing.error.only_using_numbers = Give a correct date for downsizing only using numbers
-
+date_of_downsizing.error.year_beyond_upper_bound = Give a valid date for downsizing
 
 date_property_was_changed.browser_title = What was the date the property was disposed of?
 date_property_was_changed.title = What was the date the property was disposed of?
