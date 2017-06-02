@@ -202,6 +202,7 @@ timeout_dialog.button = Continue with calculation
 timeout_dialog.seconds = seconds
 timeout_dialog.minutes = minutes
 timeout_dialog.minute = minute
+timeout_dialog.minutes.two = minutes
 
 site.no = No
 site.yes = Yes

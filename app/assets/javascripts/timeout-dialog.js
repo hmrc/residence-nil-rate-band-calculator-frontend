@@ -158,7 +158,7 @@ String.prototype.format = function () {
             counter = 0;
           }
           $("#timeout-dialog").removeAttr('aria-live');
-          $('#timeout-countdown').html(counter + " seconds")
+          $('#timeout-countdown').html(counter + " " + settings.messageSeconds)
         } else {
           var newCounter = Math.ceil(counter / 60);
           if(newCounter < self.currentMin){
@@ -166,6 +166,8 @@ String.prototype.format = function () {
               var newMessage = "";
               if(newCounter == 1){
                   newMessage = newCounter + " " + settings.messageMinute
+              } else if(newCounter > 1 && newCounter < 3) {
+                  newMessage = newCounter + " " + settings.messageMinutesTwo
               } else {
                   newMessage = newCounter + " " + settings.messageMinutes
               }
