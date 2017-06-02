@@ -89,6 +89,13 @@ class DateFormSpec extends FormSpec {
       checkForError(dateOfDeathForm, data, expectedErrors)
     }
 
+    "give an error when the day for month is invalid" in {
+      val data = dateOfDeath("31", "11", "2013")
+      val expectedErrors = error("dateOfDeath", "date_Of_death.error.month_days_invalid")
+
+      checkForError(dateOfDeathForm, data, expectedErrors)
+    }
+
     "give an error when the month is too high" in {
       val data = dateOfDeath("01", "13", "2013")
       val expectedErrors = error("dateOfDeath", "date_of_death.error.month_invalid")
@@ -205,6 +212,13 @@ class DateFormSpec extends FormSpec {
     "give an error when the month is too high" in {
       val data = dateOfDownsizing("01", "13", "2013")
       val expectedErrors = error("dateOfDownsizing", "date_of_downsizing.error.month_invalid")
+
+      checkForError(dateOfDownsizingForm, data, expectedErrors)
+    }
+
+    "give an error when the day for month is invalid" in {
+      val data = dateOfDownsizing("31", "11", "2013")
+      val expectedErrors = error("dateOfDownsizing", "date_of_downsizing.error.month_days_invalid")
 
       checkForError(dateOfDownsizingForm, data, expectedErrors)
     }

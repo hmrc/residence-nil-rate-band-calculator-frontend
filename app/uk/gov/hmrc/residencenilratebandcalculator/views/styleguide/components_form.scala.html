@@ -2,6 +2,7 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.play.views.html._
 @import uk.gov.hmrc.residencenilratebandcalculator.views.html._
+@import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 
 @(appConfig: FrontendAppConfig)(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application])
 
@@ -46,15 +47,17 @@
 
         <h2>Date input</h2>
         @rnrbHelpers.input_date(
-        errorKey = "Error message goes here",
-        dayErrorKey = "",
-        monthErrorKey = "",
-        yearErrorKey = "",
-        valueDay = Some("10"),
-        valueMonth = Some("2"),
-        valueYear = Some("2016"),
-        label = "Label",
-        hint = Some("This is an date hint")
+        formItem = dateOfDeathForm,
+        fieldName = "dateOfDeath",
+        label = "",
+        childFormName = None,
+        '_hintText -> messages("date_of_death.example"),
+        '_groupId -> "responsibleFromDateFieldSet",
+        '_groupClass -> "",
+        '_labelTextClass -> "bold",
+        '_legend -> Messages("date_of_death.label"),
+        '_legendClass -> "visually-hidden",
+        '_fieldsetId -> "dateOfDeath"
         )
 
         <h2>Yes/No input</h2>

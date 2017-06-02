@@ -44,8 +44,10 @@ object DateMapping {
       .toFormatter
 
     dateAsTuple match {
-      case (day: String, month: String, year: String) =>
+      case (day: String, month: String, year: String) =>{
         Try(LocalDate.parse(s"$day $month $year", dateFormatter)).toOption
+      }
+
     }
   }
 
@@ -102,11 +104,18 @@ object DateMapping {
             } else if(!isYearBeyondUpperBound(year)) {
               Invalid(errorInvalidYearUpperBound)
             } else {
-              Valid
+              checkDateElementsMakeValidNonFutureDate(dateAsTuple, errorInvalidDayForMonthKey)
             }
         }
       }
     )
+
+  private def checkDateElementsMakeValidNonFutureDate(dateAsTuple: (String, String, String),
+                                                      errorInvalidDateKey: String): ValidationResult =
+    parseTupleAsDate(dateAsTuple) match {
+      case None => Invalid(errorInvalidDateKey)
+      case _ => Valid
+    }
 
   private def dateMapping(constraint: Constraint[(String, String, String)]) = mapping(
     "day" -> text,
