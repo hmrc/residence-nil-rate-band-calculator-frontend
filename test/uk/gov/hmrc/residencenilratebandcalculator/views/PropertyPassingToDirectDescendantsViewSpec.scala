@@ -27,7 +27,7 @@ class PropertyPassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "property_passing_to_direct_descendants"
 
-  def createView(form: Option[Form[String]] = None) = property_passing_to_direct_descendants(frontendAppConfig, form, Seq())(request, messages, applicationProvider)
+  def createView(form: Option[Form[String]] = None) = property_passing_to_direct_descendants(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
 
   "Property Passing To Direct Descendants View" must {
 

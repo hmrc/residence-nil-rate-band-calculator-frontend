@@ -27,7 +27,7 @@ class ChargeableEstateValueViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "chargeable_estate_value"
 
-  def createView(form: Option[Form[Int]] = None) = chargeable_estate_value(frontendAppConfig, form, Seq())(request, messages, applicationProvider)
+  def createView(form: Option[Form[Int]] = None) = chargeable_estate_value(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
 
   "Chargeable Estate Value View" must {
 

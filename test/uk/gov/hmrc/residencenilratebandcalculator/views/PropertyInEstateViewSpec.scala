@@ -26,7 +26,7 @@ class PropertyInEstateViewSpec  extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "property_in_estate"
 
-  def createView(form: Option[Form[Boolean]] = None) = property_in_estate(frontendAppConfig, form, Seq())(request, messages, applicationProvider)
+  def createView(form: Option[Form[Boolean]] = None) = property_in_estate(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
 
   "Property In Estate View" must {
 

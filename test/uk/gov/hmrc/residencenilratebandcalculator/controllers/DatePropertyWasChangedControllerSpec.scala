@@ -30,14 +30,14 @@ class DatePropertyWasChangedControllerSpec extends DateControllerSpecBase {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => date_property_was_changed(frontendAppConfig, answerRows = Seq())(fakeRequest, messages, applicationProvider)
+        case None => date_property_was_changed(frontendAppConfig, answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
         case Some(v) => date_property_was_changed(frontendAppConfig,
           Some(DateForm("error.date.day_invalid", "error.date.month_invalid", "error.date.year_invalid", "error.invalid_date").
-            bind(v)), Seq())(fakeRequest, messages, applicationProvider)
+            bind(v)), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
       }
     }
 
-    def createController = () => new DatePropertyWasChangedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider)
+    def createController = () => new DatePropertyWasChangedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
 
     behave like rnrbDateController(createController, createView, Constants.datePropertyWasChangedId)(Date.dateReads, Date.dateWrites)
 

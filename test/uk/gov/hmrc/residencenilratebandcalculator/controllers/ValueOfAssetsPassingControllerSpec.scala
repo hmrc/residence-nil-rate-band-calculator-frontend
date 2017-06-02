@@ -32,12 +32,12 @@ class ValueOfAssetsPassingControllerSpec extends SimpleControllerSpecBase {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => value_of_assets_passing(frontendAppConfig, answerRows = Seq(), formattedPropertyValue = None)(fakeRequest, messages, applicationProvider)
-        case Some(v) => value_of_assets_passing(frontendAppConfig, Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(), None)(fakeRequest, messages, applicationProvider)
+        case None => value_of_assets_passing(frontendAppConfig, answerRows = Seq(), formattedPropertyValue = None)(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case Some(v) => value_of_assets_passing(frontendAppConfig, Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(), None)(fakeRequest, messages, applicationProvider, localPartialRetriever)
       }
     }
 
-    def createController = () => new ValueOfAssetsPassingController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider)
+    def createController = () => new ValueOfAssetsPassingController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
 
     val testValue = 123
 
