@@ -1,0 +1,8 @@
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
+@import uk.gov.hmrc.residencenilratebandcalculator.AppConfig
+@(supportLinkEnabled: Boolean = true, includeGridWrapper: Boolean = true, appConfig: AppConfig)(implicit localPartialRetriever: LocalPartialRetriever, messages: play.api.i18n.Messages, requestHeader: RequestHeader)
+
+<div class="grid-wrapper">
+    @localPartialRetriever.getPartialContent(appConfig.reportAProblemPartialUrl)(requestHeader)
+</div>
+

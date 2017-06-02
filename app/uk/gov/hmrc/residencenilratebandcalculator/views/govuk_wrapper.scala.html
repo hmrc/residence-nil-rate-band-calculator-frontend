@@ -19,9 +19,7 @@
   serviceInfoContent: Html = HtmlFormat.empty,
   scriptElem: Option[Html] = None,
   betaBanner: Html = HtmlFormat.empty,
-  enableTimeout: Boolean = true,
-  localPartialRetriever: LocalPartialRetriever
-)(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application])
+  enableTimeout: Boolean = true)(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
 
 
 @head = {
@@ -105,7 +103,7 @@
 }
 
 @getHelpForm = {
-    @localPartialRetriever.getPartialContent(appConfig.reportAProblemPartialUrl)
+    @rnrbHelpers.get_help_form(appConfig = appConfig)
 }
 
 @content = {

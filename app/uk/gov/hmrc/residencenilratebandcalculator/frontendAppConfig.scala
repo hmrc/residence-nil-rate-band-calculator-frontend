@@ -38,13 +38,14 @@ class FrontendAppConfig @Inject()(configuration: Configuration) extends AppConfi
 
   private lazy val contactHost = configuration.getString("contact-frontend.host").getOrElse("")
   private val contactFormServiceIdentifier = "RNRB"
+  private lazy val contactFrontendService = baseUrl("contact-frontend")
 
   override lazy val analyticsToken = loadConfig(s"google-analytics.token")
   override lazy val analyticsHost = loadConfig(s"google-analytics.host")
   override lazy val timeOutCountdownSeconds = loadConfig("timeOutCountdownSeconds").toInt
   override lazy val timeOutSession = loadConfig("mongodb.timeToLiveInSeconds").toInt
-  override lazy val reportAProblemPartialUrl = s"$contactHost/contact/problem_reports_ajax?service=$contactFormServiceIdentifier"
-  override lazy val reportAProblemNonJSUrl = s"$contactHost/contact/problem_reports_nonjs?service=$contactFormServiceIdentifier"
+  lazy val reportAProblemPartialUrl = s"$contactFrontendService/contact/problem_reports"
+  override lazy val reportAProblemNonJSUrl = s"$contactFrontendService/contact/problem_reports_nonjs?service=$contactFormServiceIdentifier"
   lazy val betaFeedbackUrl = s"$contactHost/contact/beta-feedback"
   lazy val betaFeedbackUnauthenticatedUrl = s"$contactHost/contact/beta-feedback-unauthenticated"
 

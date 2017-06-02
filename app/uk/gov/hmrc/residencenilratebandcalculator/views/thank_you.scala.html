@@ -1,7 +1,7 @@
 @import play.api.Application; import com.google.inject.Provider
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
-
-@(appConfig: FrontendAppConfig)(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application])
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
+@(appConfig: FrontendAppConfig)(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("thank_you.browser_title"),

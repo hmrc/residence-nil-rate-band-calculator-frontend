@@ -25,6 +25,7 @@ import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetUnableToCalculateThresholdIncreaseReason.{GrossingUpForOtherProperty, GrossingUpForResidence}
 import uk.gov.hmrc.residencenilratebandcalculator.models._
+import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.unable_to_calculate_threshold_increase
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 
@@ -32,7 +33,8 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 class UnableToCalculateThresholdIncreaseController @Inject()(val appConfig: FrontendAppConfig,
                                         override val messagesApi: MessagesApi,
                                         override val sessionConnector: SessionConnector,
-                                                             implicit val applicationProvider: Provider[Application]) extends TransitionController {
+                                                             implicit val applicationProvider: Provider[Application],
+                                                             implicit val localPartialRetriever: LocalPartialRetriever) extends TransitionController {
 
   val getReason = GetUnableToCalculateThresholdIncreaseReason
 

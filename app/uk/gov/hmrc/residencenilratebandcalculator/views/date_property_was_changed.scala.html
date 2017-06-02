@@ -9,8 +9,9 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.models.Year
 
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
-@(appConfig: FrontendAppConfig, form: Option[Form[Date]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application])
+@(appConfig: FrontendAppConfig, form: Option[Form[Date]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("date_property_was_changed.browser_title"),

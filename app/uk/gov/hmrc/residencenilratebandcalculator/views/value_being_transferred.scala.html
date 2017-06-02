@@ -3,8 +3,8 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 @import uk.gov.hmrc.play.views.html._
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
-
-@(appConfig: FrontendAppConfig, nilRateBand: String, form: Option[Form[Int]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application])
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
+@(appConfig: FrontendAppConfig, nilRateBand: String, form: Option[Form[Int]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("value_being_transferred.browser_title"),
