@@ -37,7 +37,6 @@ trait HtmlSpec extends BaseSpec with WithFakeApplication { self: UnitSpec =>
 
   def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
   def messagesApi = injector.instanceOf[MessagesApi]
-  def localPartialRetriever = injector.instanceOf[LocalPartialRetriever]
 
   def messages = messagesApi.preferred(request)
 

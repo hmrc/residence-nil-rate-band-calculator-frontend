@@ -59,8 +59,6 @@ class ValueBeingTransferredControllerSpec extends BaseSpec with WithFakeApplicat
 
   def messages = messagesApi.preferred(fakeRequest)
 
-  def localPartialRetriever = injector.instanceOf[LocalPartialRetriever]
-
   def mockRnrbConnector = {
     val mockConnector = mock[RnrbConnector]
     when(mockConnector.getNilRateBand(any[String])) thenReturn Future.successful(HttpResponse(200, Some(JsNumber(100000))))

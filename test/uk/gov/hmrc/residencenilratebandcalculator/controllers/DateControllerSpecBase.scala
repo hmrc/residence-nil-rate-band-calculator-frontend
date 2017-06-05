@@ -35,8 +35,6 @@ trait DateControllerSpecBase extends BaseSpec with WithFakeApplication with Http
 
   val injector = fakeApplication.injector
 
-  def localPartialRetriever = injector.instanceOf[LocalPartialRetriever]
-
   val navigator = injector.instanceOf[Navigator]
 
   def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
