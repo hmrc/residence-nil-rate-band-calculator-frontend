@@ -84,7 +84,7 @@ trait ViewSpecBase extends HtmlSpec {
         "contain a form that POSTs to the correct action" in {
           val doc = asDocument(createView(None))
           val forms = doc.getElementsByTag("form")
-          forms.size shouldBe 2
+          forms.size shouldBe 1
           val form = forms.first
           form.attr("method") shouldBe "POST"
           form.attr("action") shouldBe expectedFormAction

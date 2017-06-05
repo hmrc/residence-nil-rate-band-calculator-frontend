@@ -33,7 +33,7 @@ trait BooleanViewSpecBase extends ViewSpecBase {
         "contain a legend for the question" in {
           val doc = asDocument(createView(None))
           val legends = doc.getElementsByTag("legend")
-          legends.size shouldBe 2
+          legends.size shouldBe 1
           legends.first.text shouldBe messages(s"$messageKeyPrefix.title")
         }
 

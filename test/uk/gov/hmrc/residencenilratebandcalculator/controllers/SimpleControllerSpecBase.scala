@@ -45,8 +45,6 @@ trait SimpleControllerSpecBase extends BaseSpec with WithFakeApplication with Ht
 
   def messages = messagesApi.preferred(fakeRequest)
 
-  def localPartialRetriever = injector.instanceOf[LocalPartialRetriever]
-
   def rnrbController[A: ClassTag](createController: () => ControllerBase[A],
                                   createView: (Option[Map[String, String]]) => HtmlFormat.Appendable,
                                   cacheKey: String,

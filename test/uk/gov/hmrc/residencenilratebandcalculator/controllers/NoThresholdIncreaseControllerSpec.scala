@@ -40,7 +40,6 @@ class NoThresholdIncreaseControllerSpec extends BaseSpec with WithFakeApplicatio
   def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
   def messagesApi = injector.instanceOf[MessagesApi]
   def messages = messagesApi.preferred(fakeRequest)
-  def localPartialRetriever = injector.instanceOf[LocalPartialRetriever]
 
   val filledOutCacheMap = new CacheMap("",
     Map[String, JsValue](

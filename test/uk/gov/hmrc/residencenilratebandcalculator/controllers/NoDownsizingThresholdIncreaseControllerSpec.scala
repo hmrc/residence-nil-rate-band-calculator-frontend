@@ -48,8 +48,6 @@ class NoDownsizingThresholdIncreaseControllerSpec extends BaseSpec with WithFake
 
   def messages = messagesApi.preferred(fakeRequest)
 
-  def localPartialRetriever = injector.instanceOf[LocalPartialRetriever]
-
   val filledOutCacheMap = new CacheMap("",
     Map[String, JsValue](
       Constants.dateOfDeathId -> JsString("2019-03-04"),

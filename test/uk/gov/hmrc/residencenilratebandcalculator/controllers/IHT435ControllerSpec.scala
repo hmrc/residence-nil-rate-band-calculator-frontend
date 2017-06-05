@@ -42,8 +42,6 @@ class IHT435ControllerSpec extends BaseSpec with WithFakeApplication with MockSe
 
   private val mockPDFHelper = mock[PDFHelper]
 
-  def localPartialRetriever = injector.instanceOf[LocalPartialRetriever]
-
   private def controller = new IHT435Controller(frontendAppConfig, env, messagesApi, mockSessionConnector, mockPDFHelper, applicationProvider, localPartialRetriever)
 
   "onPageLoad" must {
