@@ -27,7 +27,7 @@ class ChargeableInheritedPropertyValueViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "chargeable_inherited_property_value"
 
-  def createView(form: Option[Form[Int]] = None) = chargeable_inherited_property_value(frontendAppConfig, form, Seq())(request, messages, applicationProvider)
+  def createView(form: Option[Form[Int]] = None) = chargeable_inherited_property_value(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
 
   "Chargeable Inherited Property Value View" must {
 

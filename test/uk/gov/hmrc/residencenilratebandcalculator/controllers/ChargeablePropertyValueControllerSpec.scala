@@ -30,11 +30,11 @@ class ChargeablePropertyValueControllerSpec extends SimpleControllerSpecBase {
 
   "Chargeable Property Value Controller" must {
     def createView = (value: Option[Map[String, String]]) => value match {
-      case None => chargeable_property_value(frontendAppConfig, answerRows = Seq())(fakeRequest, messages, applicationProvider)
-      case Some(v) => chargeable_property_value(frontendAppConfig, Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq())(fakeRequest, messages, applicationProvider)
+      case None => chargeable_property_value(frontendAppConfig, answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+      case Some(v) => chargeable_property_value(frontendAppConfig, Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
     }
 
-    def createController = () => new ChargeablePropertyValueController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider)
+    def createController = () => new ChargeablePropertyValueController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
 
     val testValue = 123
 

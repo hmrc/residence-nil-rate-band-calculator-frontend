@@ -26,13 +26,13 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase {
   "Date of Death Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => value match {
-      case None => date_of_death(frontendAppConfig)(fakeRequest, messages, applicationProvider)
+      case None => date_of_death(frontendAppConfig)(fakeRequest, messages, applicationProvider, localPartialRetriever)
       case Some(v) => date_of_death(frontendAppConfig,
         Some(DateForm("date_of_death.error.day_invalid", "date_of_death.error.month_invalid", "date_of_death.error.year_invalid", "date_of_death.error").
-          bind(v)))(fakeRequest, messages, applicationProvider)
+          bind(v)))(fakeRequest, messages, applicationProvider, localPartialRetriever)
     }
 
-    def createController = () => new DateOfDeathController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider)
+    def createController = () => new DateOfDeathController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
 
     behave like rnrbDateController(createController, createView, Constants.dateOfDeathId)(Date.dateReads, Date.dateWrites)
   }

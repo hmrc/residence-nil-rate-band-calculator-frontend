@@ -28,7 +28,7 @@ import play.api.test.Helpers._
 import play.api.{Application, Environment}
 import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, FrontendAppConfig}
-import uk.gov.hmrc.residencenilratebandcalculator.utils.PDFHelper
+import uk.gov.hmrc.residencenilratebandcalculator.utils.{LocalPartialRetriever, PDFHelper}
 
 class IHT435ControllerSpec extends BaseSpec with WithFakeApplication with MockSessionConnector {
   private val fakeRequest = FakeRequest("", "")
@@ -42,7 +42,9 @@ class IHT435ControllerSpec extends BaseSpec with WithFakeApplication with MockSe
 
   private val mockPDFHelper = mock[PDFHelper]
 
-  private def controller = new IHT435Controller(frontendAppConfig, env, messagesApi, mockSessionConnector, mockPDFHelper, applicationProvider)
+  def localPartialRetriever = injector.instanceOf[LocalPartialRetriever]
+
+  private def controller = new IHT435Controller(frontendAppConfig, env, messagesApi, mockSessionConnector, mockPDFHelper, applicationProvider, localPartialRetriever)
 
   "onPageLoad" must {
     "return 200" in {

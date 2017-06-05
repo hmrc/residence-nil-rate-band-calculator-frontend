@@ -26,6 +26,7 @@ import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.models._
+import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants, FrontendAppConfig, Navigator}
 
 import scala.reflect.ClassTag
@@ -43,6 +44,8 @@ trait SimpleControllerSpecBase extends BaseSpec with WithFakeApplication with Ht
   def messagesApi = injector.instanceOf[MessagesApi]
 
   def messages = messagesApi.preferred(fakeRequest)
+
+  def localPartialRetriever = injector.instanceOf[LocalPartialRetriever]
 
   def rnrbController[A: ClassTag](createController: () => ControllerBase[A],
                                   createView: (Option[Map[String, String]]) => HtmlFormat.Appendable,

@@ -25,12 +25,13 @@ import play.api.mvc._
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
+import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
 import scala.concurrent.Future
 
 @Singleton
 class StyleGuide @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi, val rnrbConnector: RnrbConnector,
-                           implicit val applicationProvider: Provider[Application])
+                           implicit val applicationProvider: Provider[Application], implicit val localPartialRetriever: LocalPartialRetriever)
   extends FrontendController with I18nSupport {
   val styleGuide = Action.async { implicit request =>
 

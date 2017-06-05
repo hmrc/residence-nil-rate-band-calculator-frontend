@@ -31,7 +31,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, Ses
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
+import uk.gov.hmrc.residencenilratebandcalculator.utils.{CurrencyFormatter, LocalPartialRetriever}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_available_when_property_changed
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
@@ -42,7 +42,8 @@ class ValueAvailableWhenPropertyChangedController @Inject()(val appConfig: Front
                                                             val messagesApi: MessagesApi,
                                                             val sessionConnector: SessionConnector,
                                                             val navigator: Navigator, val rnrbConnector: RnrbConnector,
-                                                            implicit val applicationProvider: Provider[Application]) extends FrontendController {
+                                                            implicit val applicationProvider: Provider[Application],
+                                                            implicit val localPartialRetriever: LocalPartialRetriever) extends FrontendController {
 
   val controllerId = Constants.valueAvailableWhenPropertyChangedId
 

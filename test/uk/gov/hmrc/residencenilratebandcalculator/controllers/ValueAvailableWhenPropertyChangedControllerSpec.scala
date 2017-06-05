@@ -34,6 +34,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows}
+import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_available_when_property_changed
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants, FrontendAppConfig, Navigator}
 
@@ -58,6 +59,8 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends BaseSpec with With
 
   def messages = messagesApi.preferred(fakeRequest)
 
+  def localPartialRetriever = injector.instanceOf[LocalPartialRetriever]
+
   def mockRnrbConnector = {
     val mockConnector = mock[RnrbConnector]
     when(mockConnector.getNilRateBand(any[String])) thenReturn Future.successful(HttpResponse(200, Some(JsNumber(100000))))
@@ -67,15 +70,15 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends BaseSpec with With
   def createView = (value: Option[Map[String, String]]) => {
     val answerRow = new AnswerRow("What was the date the property was disposed of?", "11 May 2018", routes.DatePropertyWasChangedController.onPageLoad().url)
     value match {
-      case None => value_available_when_property_changed(frontendAppConfig, "£100,000", answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider)
+      case None => value_available_when_property_changed(frontendAppConfig, "£100,000", answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
       case Some(v) => value_available_when_property_changed(frontendAppConfig, "£100,000",
-        Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(answerRow))(fakeRequest, messages, applicationProvider)
+        Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
     }
   }
 
   def testValue = "100000"
 
-  def createController = () => new ValueAvailableWhenPropertyChangedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, mockRnrbConnector, applicationProvider)
+  def createController = () => new ValueAvailableWhenPropertyChangedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, mockRnrbConnector, applicationProvider, localPartialRetriever)
 
   "Value Available When Property Changed Controller" must {
 

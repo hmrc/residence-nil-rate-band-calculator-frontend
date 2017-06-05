@@ -32,13 +32,13 @@ class ChargeableEstateValueControllerSpec extends SimpleControllerSpecBase {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => chargeable_estate_value(frontendAppConfig, answerRows = Seq())(fakeRequest, messages, applicationProvider)
+        case None => chargeable_estate_value(frontendAppConfig, answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
         case Some(v) => chargeable_estate_value(frontendAppConfig,
-          Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq())(fakeRequest, messages, applicationProvider)
+          Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
       }
     }
 
-    def createController = () => new ChargeableEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider)
+    def createController = () => new ChargeableEstateValueController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
 
     val testValue = 123
 

@@ -27,7 +27,7 @@ class PropertyValueViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "property_value"
 
-  def createView(form: Option[Form[Int]] = None) = property_value(frontendAppConfig, form, Seq())(request, messages, applicationProvider)
+  def createView(form: Option[Form[Int]] = None) = property_value(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
 
   "Property Value View" must {
 

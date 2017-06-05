@@ -29,6 +29,7 @@ import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAuditConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.forms.ExitQuestionnaireForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{ExitQuestionnaire, ExitQuestionnaireEvent}
+import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exit_questionnaire
 
@@ -51,13 +52,13 @@ class ExitQuestionnaireControllerSpec extends HtmlSpec with WithFakeApplication 
   "Exit Questionnaire controller" must {
 
     "return 200 for a GET" in {
-      val result = new ExitQuestionnaireController(frontendAppConfig, messagesApi, mockAuditConnector, applicationProvider).onPageLoad()(fakeRequest)
+      val result = new ExitQuestionnaireController(frontendAppConfig, messagesApi, mockAuditConnector, applicationProvider, localPartialRetriever).onPageLoad()(fakeRequest)
       status(result) shouldBe 200
     }
 
     "return the View for a GET" in {
-      val result = new ExitQuestionnaireController(frontendAppConfig, messagesApi, mockAuditConnector, applicationProvider).onPageLoad()(fakeRequest)
-      contentAsString(result) shouldBe exit_questionnaire(frontendAppConfig)(fakeRequest, messages, applicationProvider).toString
+      val result = new ExitQuestionnaireController(frontendAppConfig, messagesApi, mockAuditConnector, applicationProvider, localPartialRetriever).onPageLoad()(fakeRequest)
+      contentAsString(result) shouldBe exit_questionnaire(frontendAppConfig)(fakeRequest, messages, applicationProvider, localPartialRetriever).toString
     }
 
     "send an audit event on POST when given valid data" in {
@@ -118,6 +119,6 @@ class ExitQuestionnaireControllerSpec extends HtmlSpec with WithFakeApplication 
   private def submit(exitQuestionnaire: ExitQuestionnaire) = {
     val postData = Json.toJson(exitQuestionnaire)
     val request = fakeRequest.withJsonBody(postData)
-    new ExitQuestionnaireController(frontendAppConfig, messagesApi, mockAuditConnector, applicationProvider).onSubmit()(request)
+    new ExitQuestionnaireController(frontendAppConfig, messagesApi, mockAuditConnector, applicationProvider, localPartialRetriever).onSubmit()(request)
   }
 }

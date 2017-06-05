@@ -1,7 +1,7 @@
 @import play.api.Application; import com.google.inject.Provider
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import play.api.Application; import com.google.inject.Provider
-
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
 @(title: String,
   appConfig: FrontendAppConfig,
@@ -11,10 +11,9 @@
   mainClass: Option[String] = None,
   scriptElem: Option[Html] = None,
   enableTimeout: Boolean = true
-)(mainContent: Html)(implicit request : Request[_], messages: Messages, applicationProvider: Provider[Application])
+)(mainContent: Html)(implicit request : Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
 
 @import uk.gov.hmrc.play.views.html.layouts
-
 
 @serviceInfoContent = {}
 
@@ -60,6 +59,5 @@
         serviceInfoContent = serviceInfoContent,
         scriptElem = scriptElem,
         betaBanner = betaBanner,
-        enableTimeout = enableTimeout
-    )
+        enableTimeout = enableTimeout)
 }

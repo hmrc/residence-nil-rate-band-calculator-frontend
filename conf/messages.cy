@@ -301,3 +301,4 @@ value_of_estate.guidance1.bullet4 = blwch 15 ar yr atodlen IHT418
 value_of_estate.guidance2 = Bydd yr atodlenni IHT403 ac IHT418 dim ond yn cael eu llenwi os oedd yr ystâd yn cynnwys gwerthoedd am roddion a roddwyd i ffwrdd ac asedion a gedwir mewn ymddiriedolaeth.  
 value_of_estate.error.blank = Rhowch werth yr ystâd
 value_of_estate.error.non_numeric = Rhowch werth yr ystâd gan ddefnyddio rhifau’n unig
+report.a.problem.link = A oes unrhyw beth o'i le gyda'r dudalen hon?
