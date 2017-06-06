@@ -5,6 +5,7 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.CustomLanguageController
 @import play.api.Application; import com.google.inject.Provider
 @import play.api.Play.current
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
 @(appConfig: uk.gov.hmrc.residencenilratebandcalculator.AppConfig,
   title: String,
@@ -18,8 +19,7 @@
   serviceInfoContent: Html = HtmlFormat.empty,
   scriptElem: Option[Html] = None,
   betaBanner: Html = HtmlFormat.empty,
-  enableTimeout: Boolean = true
-)(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application])
+  enableTimeout: Boolean = true)(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
 
 
 @head = {
@@ -67,7 +67,8 @@
             keep_alive_button_text: "@Messages("timeout_dialog.button")",
             messageSeconds: "@Messages("timeout_dialog.seconds")",
             messageMinutes: "@Messages("timeout_dialog.minutes")",
-            messageMinute: "@Messages("timeout_dialog.minute")"
+            messageMinute: "@Messages("timeout_dialog.minute")",
+            messageMinutesTwo: "@Messages("timeout_dialog.minutes.two")"
         });
     </script>
     }
@@ -102,7 +103,9 @@
     }
 }
 
-@getHelpForm = @{uiHelpers.reportAProblemLink(appConfig.reportAProblemPartialUrl, appConfig.reportAProblemNonJSUrl)}
+@getHelpForm = {
+    @rnrbHelpers.get_help_form(appConfig = appConfig)
+}
 
 @content = {
     @uiLayouts.main_content(

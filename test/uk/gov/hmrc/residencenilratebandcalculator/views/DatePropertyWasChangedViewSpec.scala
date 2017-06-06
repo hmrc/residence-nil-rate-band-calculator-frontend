@@ -29,7 +29,7 @@ class DatePropertyWasChangedViewSpec  extends DateViewSpecBase {
   val messageKeyPrefix = "date_property_was_changed"
 
   def createView(form: Option[Form[Date]] = None) =
-    date_property_was_changed(frontendAppConfig, form.fold(dateOfDownsizingForm)(identity), Seq())(request, messages, applicationProvider)
+    date_property_was_changed(frontendAppConfig, form.fold(dateOfDownsizingForm)(identity), Seq())(request, messages, applicationProvider, localPartialRetriever)
 
   "Date Property Was Changed View" must {
 

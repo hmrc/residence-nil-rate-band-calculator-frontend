@@ -5,8 +5,8 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 @import uk.gov.hmrc.residencenilratebandcalculator.Constants
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
-
-@(appConfig: FrontendAppConfig, form: Option[Form[String]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application])
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
+@(appConfig: FrontendAppConfig, form: Option[Form[String]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("property_passing_to_direct_descendants.browser_title"),

@@ -207,6 +207,7 @@ timeout_dialog.button = Continue with calculation
 timeout_dialog.seconds = seconds
 timeout_dialog.minutes = minutes
 timeout_dialog.minute = minute
+timeout_dialog.minutes.two = minutes
 
 site.no = No
 site.yes = Yes
@@ -224,10 +225,10 @@ site.service_name = Calculate the additional threshold
 
 threshold_calculation_result.browser_title = Final calculation
 threshold_calculation_result.info.zero.header = There is no increase to the Inheritance Tax threshold
-threshold_calculation_result.info.zero.guidance = Based on the details you have given, the threshold can be increased by
+threshold_calculation_result.info.zero.guidance = Based on the details you have given, the threshold can be increased by {0}.
 threshold_calculation_result.info.zero.threshold_change = There is no change to the current threshold.
 threshold_calculation_result.info.non_zero.header = The Inheritance Tax threshold can be increased
-threshold_calculation_result.info.non_zero.guidance = The threshold can be increased by an extra
+threshold_calculation_result.info.non_zero.guidance = The threshold can be increased by an extra {0}.
 threshold_calculation_result.info.non_zero.threshold_change = This is on top of what the current threshold is.
 threshold_calculation_result.action.header = What to do next
 threshold_calculation_result.action.guidance = Write {0} in:
@@ -307,3 +308,4 @@ value_of_estate.guidance1.bullet4 = box 15 on the IHT418 schedule
 value_of_estate.guidance2 = The IHT403 and IHT418 schedules are only completed if the estate included values for gifts given away and for assets held in trust.
 value_of_estate.error.blank = Give an estate value
 value_of_estate.error.non_numeric = Give an estate value using only numbers
+report.a.problem.link = Is there anything wrong with this page?

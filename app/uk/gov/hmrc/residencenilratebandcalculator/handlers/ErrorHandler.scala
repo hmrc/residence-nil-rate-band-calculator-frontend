@@ -29,6 +29,7 @@ import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, FrontendAuditConnector}
 import uk.gov.hmrc.play.audit.http.config.ErrorAuditingSettings
 import uk.gov.hmrc.play.frontend.bootstrap.ShowErrorPage
+import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
 import scala.concurrent.Future
 
@@ -40,7 +41,8 @@ class ErrorHandler @Inject()(env: Environment,
                              appConfig: FrontendAppConfig,
                              val messagesApi: MessagesApi,
                              frontendAuditConnector: FrontendAuditConnector,
-                             implicit val applicationProvider: Provider[Application])
+                             implicit val applicationProvider: Provider[Application],
+                            implicit val localPartialRetriever: LocalPartialRetriever)
   extends DefaultHttpErrorHandler(env, config, sourceMapper, router) with I18nSupport {
 
   val impl = new ErrorAuditingSettings with ShowErrorPage {
@@ -49,7 +51,7 @@ class ErrorHandler @Inject()(env: Environment,
 
     override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(implicit rh: Request[_]): Html = {
       implicit val messages = messagesApi.preferred(rh)
-      uk.gov.hmrc.residencenilratebandcalculator.views.html.error_template(pageTitle, heading, message, appConfig)(rh, messages, applicationProvider)
+      uk.gov.hmrc.residencenilratebandcalculator.views.html.error_template(pageTitle, heading, message, appConfig)(rh, messages, applicationProvider, localPartialRetriever = localPartialRetriever)
     }
   }
 

@@ -3,8 +3,9 @@
 @import uk.gov.hmrc.play.views.html._
 @import uk.gov.hmrc.residencenilratebandcalculator.views.html._
 @import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
-@(appConfig: FrontendAppConfig)(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application])
+@(appConfig: FrontendAppConfig)(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
   title = "Style Guide",

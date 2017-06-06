@@ -34,6 +34,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, UserAnswers}
+import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_being_transferred
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants, FrontendAppConfig, Navigator}
 
@@ -67,20 +68,20 @@ class ValueBeingTransferredControllerSpec extends BaseSpec with WithFakeApplicat
   def createView = (value: Option[Map[String, String]]) => {
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
-      case None => value_being_transferred(frontendAppConfig, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider)
-      case Some(v) => value_being_transferred(frontendAppConfig, "£100,000.00", Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(answerRow))(fakeRequest, messages, applicationProvider)
+      case None => value_being_transferred(frontendAppConfig, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
+      case Some(v) => value_being_transferred(frontendAppConfig, "£100,000.00", Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
     }
   }
 
   def createViewWithBacklink = (value: Option[Map[String, String]]) => {
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
-      case None => value_being_transferred(frontendAppConfig, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider)
-      case Some(v) => value_being_transferred(frontendAppConfig,  "£100,000.00", Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(answerRow))(fakeRequest, messages, applicationProvider)
+      case None => value_being_transferred(frontendAppConfig, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
+      case Some(v) => value_being_transferred(frontendAppConfig,  "£100,000.00", Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
     }
   }
 
-  def createController = () => new ValueBeingTransferredController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, mockRnrbConnector, applicationProvider)
+  def createController = () => new ValueBeingTransferredController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, mockRnrbConnector, applicationProvider, localPartialRetriever)
 
   def testValue = "100000"
 

@@ -22,11 +22,21 @@ import org.scalatest.Matchers
 import org.scalatest.mock.MockitoSugar
 import play.api.Application
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
+import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
+import org.mockito.Matchers._
+import play.twirl.api.Html
 
 class BaseSpec extends UnitSpec with MockitoSugar with Matchers with WithFakeApplication {
   def applicationProvider: Provider[Application] = {
     val mockedProviderApplication: Provider[Application] = mock[Provider[Application]]
     when(mockedProviderApplication.get) thenReturn fakeApplication
     mockedProviderApplication
+  }
+
+  def localPartialRetriever: LocalPartialRetriever = {
+    val mockedLocalPartialRetriever = mock[LocalPartialRetriever]
+    when(mockedLocalPartialRetriever.getPartialContent(any(), any(), any())(any()))
+        .thenReturn(Html(""))
+    mockedLocalPartialRetriever
   }
 }

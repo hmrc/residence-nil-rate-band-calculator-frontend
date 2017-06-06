@@ -17,11 +17,13 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.mvc.Call
+import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_additional_threshold_available
 
 class NoAdditionalThresholdAvailableViewSpec extends HtmlSpec {
   implicit val msg = messages
   val messageKeyPrefix = "no_additional_threshold_available"
+  implicit val partials = localPartialRetriever
 
   "No Additional Threshold Available View" must {
     "display the correct browser title" in {

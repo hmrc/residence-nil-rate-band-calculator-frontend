@@ -30,6 +30,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRows
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.{NoProperty, NotCloselyInherited}
+import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_additional_threshold_available
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants, FrontendAppConfig, Navigator}
 
@@ -73,29 +74,29 @@ class NoAdditionalThresholdAvailableControllerSpec extends BaseSpec with WithFak
 
   "No Additional Threshold Available Controller" must {
     "return 200 for a GET" in {
-      val controller = new NoAdditionalThresholdAvailableController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider)
+      val controller = new NoAdditionalThresholdAvailableController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
 
       val result = controller.onPageLoad(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return the View for a GET" in {
-      val controller = new NoAdditionalThresholdAvailableController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider)
+      val controller = new NoAdditionalThresholdAvailableController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
 
       val result = controller.onPageLoad(fakeRequest)
       contentAsString(result) shouldBe
-        no_additional_threshold_available(frontendAppConfig, "no_additional_threshold_available.no_property_reason", routes.TransferAnyUnusedThresholdController.onPageLoad, Seq())(fakeRequest, messages, applicationProvider).toString
+        no_additional_threshold_available(frontendAppConfig, "no_additional_threshold_available.no_property_reason", routes.TransferAnyUnusedThresholdController.onPageLoad, Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever).toString
     }
 
     "throw an exception when the cache is unavailable" in {
       val mockSessionConnector = mock[SessionConnector]
-      val controller = new NoAdditionalThresholdAvailableController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider)
+      val controller = new NoAdditionalThresholdAvailableController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
 
       an[RuntimeException] should be thrownBy controller.onPageLoad(fakeRequest)
     }
 
     "The answer constants should be the same as the calulated constants for the controller when the reason is NotCloselyInherited" in {
-      val controller = new NoAdditionalThresholdAvailableController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider)
+      val controller = new NoAdditionalThresholdAvailableController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
       val controllerId = controller.getControllerId(NotCloselyInherited)
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
@@ -109,7 +110,7 @@ class NoAdditionalThresholdAvailableControllerSpec extends BaseSpec with WithFak
     }
 
     "The answer constants should be the same as the calulated constants for the controller when the reason is NoProperty" in {
-      val controller = new NoAdditionalThresholdAvailableController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider)
+      val controller = new NoAdditionalThresholdAvailableController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
       val controllerId = controller.getControllerId(NoProperty)
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)

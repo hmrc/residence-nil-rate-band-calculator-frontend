@@ -26,7 +26,7 @@ class TransferAvailableWhenPropertyChangedViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "transfer_available_when_property_changed"
 
-  def createView(form: Option[Form[Boolean]] = None) = transfer_available_when_property_changed(frontendAppConfig, form, Seq())(request, messages, applicationProvider)
+  def createView(form: Option[Form[Boolean]] = None) = transfer_available_when_property_changed(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
 
   "Transfer Available When Property Changed View" must {
 
