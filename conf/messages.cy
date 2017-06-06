@@ -57,6 +57,18 @@ date_of_death.error = Rhowch ddyddiad dilys ar gyfer y farwolaeth
 date_of_death.error.day_invalid = Rhowch ddyddiad dilys ar gyfer y farwolaeth gan ddefnyddio’r rhifau 1 i 31
 date_of_death.error.month_invalid = Rhowch fis dilys ar gyfer y farwolaeth gan ddefnyddio’r rhifau 1 i 12
 date_of_death.error.year_invalid = Rhowch flwyddyn ddilys ar gyfer y farwolaeth
+date_Of_death.error.date_not_complete = Rhowch ddyddiad llawn ar gyfer y farwolaeth
+date_Of_death.error.month_days_invalid= Rhowch y dyddiad cywir gan ddefnyddio’r nifer cywir o ddyddiau ar gyfer y mis hwnnw
+date_Of_death.error.only_using_numbers = Rhowch ddyddiad cywir ar gyfer y farwolaeth gan ddefnyddio rhifau’n unig
+date_Of_death.error.year_beyond_upper_bound = Rhowch ddyddiad dilys ar gyfer y farwolaeth
+
+date_of_downsizing.error.day_invalid = Rhowch ddyddiad cywir ar gyfer symud i gartref llai o faint gan ddefnyddio’r rhifau 1 i 31
+date_of_downsizing.error.month_invalid = Rhowch fis cywir ar gyfer symud i gartref llai o faint gan ddefnyddio’r rhifau 1 i 12
+date_of_downsizing.error.year_invalid = Rhowch flwyddyn gywir ar gyfer symud i gartref llai o faint
+date_of_downsizing.error.date_not_complete = Rhowch ddyddiad llawn ar gyfer symud i gartref llai o faint
+date_of_downsizing.error.month_days_invalid = Rhowch y dyddiad cywir gan ddefnyddio’r nifer cywir o ddyddiau ar gyfer y mis hwnnw
+date_of_downsizing.error.only_using_numbers = Rhowch ddyddiad cywir ar gyfer symud i gartref llai o faint gan ddefnyddio rhifau’n unig
+date_of_downsizing.error.year_beyond_upper_bound = Rhowch ddyddiad dilys ar gyfer symud i gartref llai o faint
 
 date_property_was_changed.browser_title = Beth oedd y dyddiad pan waredwyd ar yr eiddo?
 date_property_was_changed.title = Beth oedd y dyddiad pan waredwyd ar yr eiddo?
@@ -301,4 +313,4 @@ value_of_estate.guidance1.bullet4 = blwch 15 ar yr atodlen IHT418
 value_of_estate.guidance2 = Bydd yr atodlenni IHT403 ac IHT418 dim ond yn cael eu llenwi os oedd yr ystâd yn cynnwys gwerthoedd am roddion a roddwyd i ffwrdd ac asedion a gedwir mewn ymddiriedolaeth.  
 value_of_estate.error.blank = Rhowch werth yr ystâd
 value_of_estate.error.non_numeric = Rhowch werth yr ystâd gan ddefnyddio rhifau’n unig
-report.a.problem.link = A oes unrhyw beth o'i le gyda'r dudalen hon?
+report.a.problem.link = A oes unrhyw beth o’i le gyda’r dudalen hon?

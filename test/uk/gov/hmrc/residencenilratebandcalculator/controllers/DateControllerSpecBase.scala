@@ -42,8 +42,9 @@ trait DateControllerSpecBase extends BaseSpec with WithFakeApplication with Http
   def messages = messagesApi.preferred(fakeRequest)
 
   def rnrbDateController(createController: () => ControllerBase[Date],
-                     createView: (Option[Map[String, String]]) => HtmlFormat.Appendable,
-                     cacheKey: String)(rds: Reads[Date], wts: Writes[Date]) = {
+                     createView: (Option[Date]) => HtmlFormat.Appendable,
+                     cacheKey: String,
+                     date: String = "dateOfDeath")(rds: Reads[Date], wts: Writes[Date]) = {
 
     "return 200 for a GET" in {
       val result = createController().onPageLoad(rds)(fakeRequest)
@@ -56,15 +57,15 @@ trait DateControllerSpecBase extends BaseSpec with WithFakeApplication with Http
     }
 
     "return a redirect on submit with valid data" in {
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("day", "01"), ("month", "01"), ("year", "2018"))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody((s"$date${".day"}", "01"), (s"$date${".month"}", "01"), (s"$date${".year"}", "2018"))
       setCacheValue(cacheKey, new LocalDate(2018, 1, 1))
       val result = createController().onSubmit(wts)(fakePostRequest)
       status(result) shouldBe Status.SEE_OTHER
     }
 
     "store valid submitted data" in {
-      val value = Date(1, 1, 2018)
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("day", "01"), ("month", "01"), ("year", "2018"))
+      val value = Date(new LocalDate(2018, 1, 1))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody((s"$date${".day"}", "01"), (s"$date${".month"}", "01"), (s"$date${".year"}", "2018"))
       setCacheValue(cacheKey, new LocalDate(2018, 1, 1))
       await (createController().onSubmit(wts)(fakePostRequest))
       verifyValueIsCached(cacheKey, value)
@@ -72,17 +73,17 @@ trait DateControllerSpecBase extends BaseSpec with WithFakeApplication with Http
 
     "return bad request on submit with invalid data" in {
       val value = "not a number"
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("day", value), ("month", value), ("month", value))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody((s"$date${".day"}", value), (s"$date${".month"}", value), (s"$date${".year"}", value))
       val result = createController().onSubmit(wts)(fakePostRequest)
       status(result) shouldBe Status.BAD_REQUEST
     }
 
     "return form with errors when invalid data is submitted" in {
       val value = "not a number"
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("day", value), ("month", value), ("month", value))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody((s"$date${".day"}", value), (s"$date${".month"}", value), (s"$date${".year"}", value))
       val result = createController().onSubmit(wts)(fakePostRequest)
       val valueMap = Map("day" -> value, "month" -> value, "year" -> value)
-      contentAsString(result) should include("Enter a year")
+      contentAsString(result) should include("Give a correct date")
     }
 
     "not store invalid submitted data" in {
@@ -96,12 +97,12 @@ trait DateControllerSpecBase extends BaseSpec with WithFakeApplication with Http
       val day = 1
       val month = 1
       val year = 2018
-      val value = new Date(day, month, year)
+      val value = Date(new LocalDate(year, month, day))
       setCacheValue(cacheKey, value)
       val result = createController().onPageLoad(rds)(fakeRequest)
 
       val valueMap = Map("day" -> day.toString, "month" -> month.toString, "year" -> year.toString)
-      contentAsString(result) shouldBe createView(Some(valueMap)).toString
+      contentAsString(result) shouldBe createView(Some(value)).toString
     }
   }
 

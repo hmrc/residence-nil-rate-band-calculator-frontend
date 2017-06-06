@@ -18,8 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.utils
 
 import play.api.data.FormError
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
-import uk.gov.hmrc.residencenilratebandcalculator.forms.{BooleanForm, DateForm, NonNegativeIntForm}
-import uk.gov.hmrc.residencenilratebandcalculator.models.{Date, Day, Month, Year}
+import uk.gov.hmrc.residencenilratebandcalculator.forms.{BooleanForm, NonNegativeIntForm}
 
 class FormHelpersSpec extends BaseSpec {
 
@@ -45,35 +44,6 @@ class FormHelpersSpec extends BaseSpec {
 
       val form = NonNegativeIntForm("", "", "").fill(number)
       FormHelpers.getValue[Int](Some(form)) shouldBe number
-    }
-  }
-
-  "Get Date Part" must {
-
-    "return an empty string when given nothing" in {
-      FormHelpers.getDatePart(None, Day) shouldBe ""
-    }
-
-    "return an empty string when given a form with no value" in {
-      FormHelpers.getDatePart(Some(DateForm("", "", "", "")), Day) shouldBe ""
-    }
-
-    "return the day when asked for it" in {
-      val date = Date(day, month, year)
-      val form = DateForm("", "", "", "").fill(date)
-      FormHelpers.getDatePart(Some(form), Day) shouldBe day
-    }
-
-    "return the month when asked for it" in {
-      val date = Date(day, month, year)
-      val form = DateForm("", "", "", "").fill(date)
-      FormHelpers.getDatePart(Some(form), Month) shouldBe month
-    }
-
-    "return the year when asked for it" in {
-      val date = Date(day, month, year)
-      val form = DateForm("", "", "", "").fill(date)
-      FormHelpers.getDatePart(Some(form), Year) shouldBe year
     }
   }
 

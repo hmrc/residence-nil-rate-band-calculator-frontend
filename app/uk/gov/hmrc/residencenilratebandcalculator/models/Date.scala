@@ -22,13 +22,14 @@ import play.api.libs.json._
 
 import scala.util.{Failure, Success, Try}
 
-case class Date (day: Int, month: Int, year: Int) {}
+case class Date(date: LocalDate)
 
 object Date {
+
   val dateReads = new Reads[Date] {
     override def reads(json: JsValue) = {
       Try(LocalDate.parse(json.as[JsString].value)) match {
-        case Success(jodaLocalDate) => JsSuccess(Date(jodaLocalDate.getDayOfMonth, jodaLocalDate.getMonthOfYear, jodaLocalDate.getYear))
+        case Success(jodaLocalDate) => JsSuccess(Date(jodaLocalDate))
         case Failure(e) => JsError(ValidationError(e.getMessage))
       }
     }
@@ -36,14 +37,9 @@ object Date {
 
   val dateWrites = new Writes[Date] {
     override def writes(date: Date) = {
-      JsString(new LocalDate(date.year, date.month, date.day).toString)
+      JsString(date.date.toString)
     }
   }
 
   implicit val dateFormat: Format[Date] = Format(dateReads, dateWrites)
 }
-
-sealed abstract class DatePart
-case object Day extends DatePart
-case object Month extends DatePart
-case object Year extends DatePart

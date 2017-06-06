@@ -24,7 +24,7 @@ import play.api.data.Form
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, Date, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_property_was_changed
@@ -40,9 +40,9 @@ class DatePropertyWasChangedController @Inject()(override val appConfig: Fronten
 
   val controllerId: String = Constants.datePropertyWasChangedId
 
-  def form = () => DateForm("error.date.day_invalid", "error.date.month_invalid", "error.date.year_invalid", "error.invalid_date")
+  def form = () => dateOfDownsizingForm
 
   def view(form: Option[Form[Date]], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    date_property_was_changed(appConfig, form, answerRows)
+      date_property_was_changed(appConfig, form.fold(dateOfDownsizingForm)(identity), answerRows)
   }
 }

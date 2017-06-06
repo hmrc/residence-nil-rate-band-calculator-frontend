@@ -19,7 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import com.google.inject.Provider
 import play.api.Application
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
-import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_property_was_changed
 
@@ -28,18 +28,16 @@ class DatePropertyWasChangedControllerSpec extends DateControllerSpecBase {
   
   "Date Property Was Changed Controller" must {
 
-    def createView = (value: Option[Map[String, String]]) => {
+    def createView = (value: Option[Date]) => {
       value match {
-        case None => date_property_was_changed(frontendAppConfig, answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
-        case Some(v) => date_property_was_changed(frontendAppConfig,
-          Some(DateForm("error.date.day_invalid", "error.date.month_invalid", "error.date.year_invalid", "error.invalid_date").
-            bind(v)), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case None => date_property_was_changed(frontendAppConfig, dateOfDownsizingForm, answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case Some(v) => date_property_was_changed(frontendAppConfig, dateOfDownsizingForm.fill(v) , Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
       }
     }
 
     def createController = () => new DatePropertyWasChangedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
 
-    behave like rnrbDateController(createController, createView, Constants.datePropertyWasChangedId)(Date.dateReads, Date.dateWrites)
+    behave like rnrbDateController(createController, createView, Constants.datePropertyWasChangedId, "dateOfDownsizing")(Date.dateReads, Date.dateWrites)
 
     behave like nonStartingDateController(createController,
       List(Constants.dateOfDeathId,

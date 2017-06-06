@@ -3,13 +3,10 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 @import uk.gov.hmrc.play.views.html._
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
-@import uk.gov.hmrc.residencenilratebandcalculator.models.Day
-@import uk.gov.hmrc.residencenilratebandcalculator.models.Month
-@import uk.gov.hmrc.residencenilratebandcalculator.models.Year
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
-
-@(appConfig: FrontendAppConfig, form: Option[Form[Date]] = None)(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
+@(appConfig: FrontendAppConfig, form: Form[Date])(implicit request: Request[_], messages: Messages,
+                                                applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("date_of_death.browser_title"),
@@ -20,23 +17,24 @@
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(Some(form)))
 
         @rnrbHelpers.heading("date_of_death.title")
 
         <p>@messages("date_of_death.guidance")</p>
 
         @rnrbHelpers.input_date(
-            label = messages("date_of_death.label"),
-            legendClass = "visually-hidden",
-            hint = Some(messages("date_of_death.example")),
-            errorKey = FormHelpers.getErrorByKey(form, ""),
-            dayErrorKey = FormHelpers.getErrorByKey(form, "day"),
-            monthErrorKey = FormHelpers.getErrorByKey(form, "month"),
-            yearErrorKey = FormHelpers.getErrorByKey(form, "year"),
-            valueDay = Some(FormHelpers.getDatePart(form, Day).toString),
-            valueMonth = Some(FormHelpers.getDatePart(form, Month).toString),
-            valueYear = Some(FormHelpers.getDatePart(form, Year).toString)
+            form,
+            "dateOfDeath",
+            "",
+            None,
+            '_hintText -> messages("date_of_death.example"),
+            '_groupId -> "responsibleFromDateFieldSet",
+            '_groupClass -> "",
+            '_labelTextClass -> "bold",
+            '_legend -> Messages("date_of_death.label"),
+            '_legendClass -> "visually-hidden",
+            '_fieldsetId -> "dateOfDeath"
         )
 
         @rnrbHelpers.submit_button()

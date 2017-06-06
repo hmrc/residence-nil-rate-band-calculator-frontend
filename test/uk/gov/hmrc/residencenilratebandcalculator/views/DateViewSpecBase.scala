@@ -16,9 +16,10 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
+import org.joda.time.LocalDate
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 
 trait DateViewSpecBase extends ViewSpecBase {
@@ -26,11 +27,13 @@ trait DateViewSpecBase extends ViewSpecBase {
   val day = 1
   val month = 2
   val year = 2000
-  val date = Date(day, month, year)
+  val date = Date(new LocalDate(year, month, day))
 
   def datePage(createView: (Option[Form[Date]]) => HtmlFormat.Appendable,
                messageKeyPrefix: String,
-               expectedFormAction: String) = {
+               expectedFormAction: String,
+               pageType: String = "dateOfDeath",
+               form: Form[Date] = dateOfDeathForm) = {
 
     behave like questionPage[Date](createView, messageKeyPrefix, expectedFormAction)
 
@@ -38,32 +41,32 @@ trait DateViewSpecBase extends ViewSpecBase {
       "rendered" must {
         "contain a label for the day" in {
           val doc = asDocument(createView(None))
-          assertContainsLabel(doc, "day", messages("date.day"))
+          assertContainsLabel(doc, s"$pageType${".day"}", messages("date.day"))
         }
 
         "contain an input for the day" in {
           val doc = asDocument(createView(None))
-          assertRenderedById(doc, "day")
+          assertRenderedById(doc, s"$pageType${".day"}")
         }
 
         "contain a label for the month" in {
           val doc = asDocument(createView(None))
-          assertContainsLabel(doc, "month", messages("date.month"))
+          assertContainsLabel(doc, s"$pageType${".month"}", messages("date.month"))
         }
 
         "contain an input for the month" in {
           val doc = asDocument(createView(None))
-          assertRenderedById(doc, "month")
+          assertRenderedById(doc, s"$pageType${".month"}")
         }
 
         "contain a label for the year" in {
           val doc = asDocument(createView(None))
-          assertContainsLabel(doc, "year", messages("date.year"))
+          assertContainsLabel(doc, s"$pageType${".year"}", messages("date.year"))
         }
 
         "contain an input for the year" in {
           val doc = asDocument(createView(None))
-          assertRenderedById(doc, "year")
+          assertRenderedById(doc, s"$pageType${".year"}")
         }
 
         "not render an error summary" in {
@@ -74,24 +77,24 @@ trait DateViewSpecBase extends ViewSpecBase {
 
       "rendered with a value" must {
         "include the day value in the day input" in {
-          val doc = asDocument(createView(Some(DateForm("", "", "", "").fill(date))))
-          doc.getElementById("day").attr("value") shouldBe day.toString
+          val doc = asDocument(createView(Some(form.fill(date))))
+          doc.getElementById(s"$pageType${".day"}").attr("value") shouldBe day.toString
         }
 
         "include the month value in the month input" in {
-          val doc = asDocument(createView(Some(DateForm("", "", "", "").fill(date))))
-          doc.getElementById("month").attr("value") shouldBe month.toString
+          val doc = asDocument(createView(Some(form.fill(date))))
+          doc.getElementById(s"$pageType${".month"}").attr("value") shouldBe month.toString
         }
 
         "include the year value in the year input" in {
-          val doc = asDocument(createView(Some(DateForm("", "", "", "").fill(date))))
-          doc.getElementById("year").attr("value") shouldBe year.toString
+          val doc = asDocument(createView(Some(form.fill(date))))
+          doc.getElementById(s"$pageType${".year"}").attr("value") shouldBe year.toString
         }
       }
 
       "rendered with an error" must {
         "show an error summary" in {
-          val doc = asDocument(createView(Some(DateForm("", "", "", "").withError(error))))
+          val doc = asDocument(createView(Some(form.withError(error))))
           assertRenderedById(doc, "error-summary-heading")
         }
       }

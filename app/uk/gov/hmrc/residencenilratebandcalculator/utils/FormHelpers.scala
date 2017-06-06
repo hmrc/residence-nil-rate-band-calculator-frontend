@@ -19,6 +19,8 @@ package uk.gov.hmrc.residencenilratebandcalculator.utils
 import play.api.data.{Form, FormError}
 import uk.gov.hmrc.residencenilratebandcalculator.models._
 
+import scala.util.Try
+
 object FormHelpers {
 
   def getValue[A](form: Option[Form[A]]) = {
@@ -28,22 +30,6 @@ object FormHelpers {
     } yield theValue
 
     either.merge
-  }
-
-  def getDatePart(form: Option[Form[Date]], datePart: DatePart) = {
-    val either = for {
-      theForm <- form.toRight("").right
-      theDate <- theForm.value.toRight("").right
-    } yield theDate
-
-    either match {
-      case Left(_) => ""
-      case Right(d) => datePart match {
-        case Day => d.day
-        case Month => d.month
-        case Year => d.year
-      }
-    }
   }
 
   def getErrorByKey[A](form: Option[Form[A]], errorKey: String) = {
@@ -83,4 +69,29 @@ object FormHelpers {
       }
     }
   }
+
+  /**
+    * Converts each element in a string seq into a number. If any of the elements are blank then
+    * a Left of anyBlankValue is returned. If any of the elements are non-numeric then a Left of
+    * anyNonNumericValue is returned. Otherwise a Right of an integer seq is returned.
+    */
+  def convertToNumbers(dateElements: Seq[String],
+                       anyBlankValue: String,
+                       anyNonNumericValue: String): Either[String, Seq[Int]] = {
+    if (dateElements.exists(x => x.trim().isEmpty)) {
+      Left(anyBlankValue)
+    } else {
+      val attemptedConvertedElements = dateElements.map { x =>
+        Try(x.toInt)
+      }
+      if (attemptedConvertedElements.exists(_.isFailure)) {
+        Left(anyNonNumericValue)
+      } else {
+        Right(attemptedConvertedElements.map(_.get))
+      }
+    }
+  }
+
+  def getOrException[A](option: Option[A], errorMessage: String = "No element found"): A =
+    option.fold(throw new RuntimeException(errorMessage))(identity)
 }

@@ -20,6 +20,7 @@ import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_property_was_changed
+import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 
 import scala.language.reflectiveCalls
 
@@ -27,7 +28,8 @@ class DatePropertyWasChangedViewSpec  extends DateViewSpecBase {
 
   val messageKeyPrefix = "date_property_was_changed"
 
-  def createView(form: Option[Form[Date]] = None) = date_property_was_changed(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Option[Form[Date]] = None) =
+    date_property_was_changed(frontendAppConfig, form.fold(dateOfDownsizingForm)(identity), Seq())(request, messages, applicationProvider, localPartialRetriever)
 
   "Date Property Was Changed View" must {
 
@@ -35,7 +37,8 @@ class DatePropertyWasChangedViewSpec  extends DateViewSpecBase {
 
     behave like pageWithoutBackLink[Date](createView)
 
-    behave like datePage(createView, messageKeyPrefix, DatePropertyWasChangedController.onSubmit().url)
+    behave like datePage(createView, messageKeyPrefix,
+      DatePropertyWasChangedController.onSubmit().url, "dateOfDownsizing", dateOfDownsizingForm)
 
     behave like pageContainingPreviousAnswers(createView)
 
