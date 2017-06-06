@@ -51,27 +51,7 @@ object DateMapping {
     }
   }
 
-  private def dateConstraint(errorBlankFieldKey: String,
-                             errorInvalidFieldKey: String,
-                             errorInvalidDateKey: String,
-                             errorDateInFutureKey: String) =
-    Constraint[(String, String, String)](
-      (dateAsTuple: (String, String, String)) =>
-        dateAsTuple match {
-          case (day: String, month: String, year: String) if List[String](day, month, year).exists { x => x.trim().isEmpty } =>
-            Invalid(errorBlankFieldKey)
-          case (day: String, month: String, year: String) if List[String](day, month, year).exists { x => Try(x.toInt).isFailure } =>
-            Invalid(errorInvalidFieldKey)
-          case _ =>
-            parseTupleAsDate(dateAsTuple) match {
-              case None => Invalid(errorInvalidDateKey)
-              case Some(date) if date.compareTo(LocalDate.now()) > 0 => Invalid(errorDateInFutureKey)
-              case _ => Valid
-            }
-        }
-    )
-
-  private def dateConstraint(errorBlankFieldKey: String,
+ private def dateConstraint(errorBlankFieldKey: String,
                              errorInvalidCharsKey: String,
                              errorInvalidDayKey: String,
                              errorInvalidDayForMonthKey: String,
