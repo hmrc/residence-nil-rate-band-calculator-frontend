@@ -171,8 +171,8 @@ property_in_estate.guidance1 = Gall hwn fod yn unrhyw eiddo y mae’r ymadawedig
 property_in_estate.guidance2 = Nid oes yn rhaid i’r eiddo fod yn un a adawyd i ddisgynnydd uniongyrchol.
 property_in_estate.error.required = Rhowch ateb ar gyfer a oedd yr ystâd yn cynnwys unrhyw eiddo y bu’r ymadawedig yn berchen arno ac yn byw ynddo
 
-property_passing_to_direct_descendants.all = Iawn, cafodd y cyfan ohono'i droslwyddo
-property_passing_to_direct_descendants.some = Iawn, cafodd rhan ohono'i droslwyddo
+property_passing_to_direct_descendants.all = Iawn, cafodd y cyfan ohono’i droslwyddo
+property_passing_to_direct_descendants.some = Iawn, cafodd rhan ohono’i droslwyddo
 property_passing_to_direct_descendants.none = Na
 property_passing_to_direct_descendants.browser_title = A drosglwyddwyd unrhyw ran o’r breswylfa hon i ddisgynnydd uniongyrchol neu i’w briod/phriod neu bartner/phartner sifil?
 property_passing_to_direct_descendants.title = A drosglwyddwyd unrhyw ran o’r breswylfa hon i ddisgynnydd uniongyrchol neu i’w briod/phriod neu bartner/phartner sifil?
