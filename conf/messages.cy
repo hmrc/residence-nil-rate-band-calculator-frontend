@@ -21,7 +21,7 @@ chargeable_estate_value.greater_than_estate_value.error = Rhowch werth trethadwy
 
 chargeable_property_value.browser_title = Beth yw gwerth trethadwy’r breswylfa at ddibenion Treth Etifeddiant?
 chargeable_property_value.title = Beth yw gwerth trethadwy’r breswylfa at ddibenion Treth Etifeddiant?
-chargeable_property_value.guidance1 = Dyma werth yr eiddo a oedd yn berchen i’r ymadawedig. Bydd hyn naill ai’r cyfanswm os oedd ef/hi’n berchen ar yr eiddo’i hun, neu werth y rhan o’r eiddo yr oedd ef hi’n berchen arni.
+chargeable_property_value.guidance1 = Dyma werth yr eiddo a oedd yn berchen i’r ymadawedig. Bydd hyn naill ai’r cyfanswm os oedd ef/hi’n berchen ar yr eiddo’i hun, neu werth y rhan o’r eiddo yr oedd ef/hi’n berchen arni.
 chargeable_property_value.error.blank = Rhowch werth ar gyfer gwerth trethadwy’r eiddo.
 chargeable_property_value.error.non_numeric = Rhowch werth ar gyfer yr eiddo gan ddefnyddio rhifau’n unig.
 chargeable_property_value.guidance2 = Os oedd yr ymadawedig yn berchen ar yr eiddo ar ben ei hun, bydd y gwerth ym mlwch 7 ar yr atodlen IHT405. Os oedd yr eiddo mewn perchenogaeth ar y cyd, mae’r gwerth i’w weld ym mlwch 1 ar yr atodlen IHT404.
@@ -171,9 +171,9 @@ property_in_estate.guidance1 = Gall hwn fod yn unrhyw eiddo y mae’r ymadawedig
 property_in_estate.guidance2 = Nid oes yn rhaid i’r eiddo fod yn un a adawyd i ddisgynnydd uniongyrchol.
 property_in_estate.error.required = Rhowch ateb ar gyfer a oedd yr ystâd yn cynnwys unrhyw eiddo y bu’r ymadawedig yn berchen arno ac yn byw ynddo
 
-property_passing_to_direct_descendants.all = Oedd, cafodd y cyfan ohono’i drosglwyddo
-property_passing_to_direct_descendants.some = Oedd, cafodd rhan ohono’i drosglwyddo
-property_passing_to_direct_descendants.none = Nag oedd
+property_passing_to_direct_descendants.all = Iawn, cafodd y cyfan ohono’i droslwyddo
+property_passing_to_direct_descendants.some = Iawn, cafodd rhan ohono’i droslwyddo
+property_passing_to_direct_descendants.none = Na
 property_passing_to_direct_descendants.browser_title = A drosglwyddwyd unrhyw ran o’r breswylfa hon i ddisgynnydd uniongyrchol neu i’w briod/phriod neu bartner/phartner sifil?
 property_passing_to_direct_descendants.title = A drosglwyddwyd unrhyw ran o’r breswylfa hon i ddisgynnydd uniongyrchol neu i’w briod/phriod neu bartner/phartner sifil?
 property_passing_to_direct_descendants.guidance1 = Bydd hyn fel arfer wedi’i restru yn ewyllys yr ymadawedig.
@@ -257,7 +257,7 @@ transfer_any_unused_threshold.error.required = Rhowch ateb os ydych am drosglwyd
 
 transfer_available_when_property_changed.browser_title = Os gwnaed cais dilys am haen gyfradd sero preswyl (RNRB) ar y dyddiad gwaredu, a fyddai unrhyw haen gyfradd sero preswyl drosglwyddadwy wedi bod ar gael ar yr adeg honno?
 transfer_available_when_property_changed.title = Os gwnaed cais dilys am haen gyfradd sero preswyl (RNRB) ar y dyddiad gwaredu, a fyddai unrhyw haen gyfradd sero preswyl drosglwyddadwy wedi bod ar gael ar yr adeg honno?
-transfer_available_when_property_changed.guidance = Atebwch iawn os oedd y dyddiad y symudodd yr ymadawedig i gartref llai o faint ar ol y dyddiad y bu i’w briod/phriod neu’i bartner/phartner sifil farw.
+transfer_available_when_property_changed.guidance = Atebwch iawn os oedd y dyddiad y symudodd yr ymadawedig i gartref llai o faint ar ôl y dyddiad y bu i’w briod/phriod neu’i bartner/phartner sifil farw.
 transfer_available_when_property_changed.error.required = Rhowch ateb ar gyfer a fyddai cais am unrhyw lwfans ar ddyddiad gwerthu’r eiddo neu’i roi i ffwrdd wedi gadael unrhyw ran o’r lwfans hwnnw ar gael i’w drosglwyddo
 
 unable_to_calculate_threshold_increase.browser_title = Ni allwch gael cyfrifiad wrth ddefnyddio’r gwasanaeth hwn
@@ -291,7 +291,7 @@ value_being_transferred.error.blank = Rhowch werth ar gyfer swm yr haen gyfradd 
 value_of_assets_passing.browser_title = Beth yw cyfanswm gwerth yr asedion eraill sy’n cael eu trosglwyddo i ddisgynyddion uniongyrchol?
 value_of_assets_passing.title = Beth yw cyfanswm gwerth yr asedion eraill sy’n cael eu trosglwyddo i ddisgynyddion uniongyrchol?
 value_of_assets_passing.guidance1 = Os gadawodd yr ymadawedig ewyllys, gallwch ei defnyddio i weithio allan pa asedion a adawyd i ddisgynyddion uniongyrchol.
-value_of_assets_passing.guidance3 = Bydd gwerthoedd pob ased wedi cael eu defnyddio i lenwi’r ffurflen IHT400 a phob atodlen oedd ei hangen.  Asdiwch werthoedd pob ased i gael cyfanswm gwerth yr asedion sy’n cael eu trosglwyddo i ddisgynnydd uniongyrchol.
+value_of_assets_passing.guidance3 = Bydd gwerthoedd pob ased wedi cael eu defnyddio i lenwi’r ffurflen IHT400 a phob atodlen oedd ei hangen.  Adiwch werthoedd pob ased i gael cyfanswm gwerth yr asedion sy’n cael eu trosglwyddo i ddisgynnydd uniongyrchol.
 value_of_assets_passing.guidance4 = Nid yw hyn yn cynnwys yr eiddo, sydd werth {0}, yr ydych eisoes wedi’i ychwanegu i’r gyfrifiannell hon.
 value_of_assets_passing.error.blank = Rhowch werth am yr asedion yr ydych eisoes yn eu trosglwyddo i ddisgynnydd uniongyrchol.
 value_of_assets_passing.greater_than_estate_value.error = Rhowch werth sy’n llai na gwerth yr ystâd o £{0} yr ydych eisoes wedi’i nodi.  
