@@ -121,13 +121,13 @@ class DateFormSpec extends FormSpec {
   }
 
   private def dateFieldCheckMultipleFields(dateForm: Form[Date], fieldName:String, errorKeyPrefix: String) = {
-    "give only one error when two fields are invalid" in {
-      val data = dateMap(fieldName, "32", "XX", "14")
-      val expectedErrors = error(s"$fieldName", s"$errorKeyPrefix.error.only_using_numbers")
+    "give only one error when day and month are invalid" in {
+      val data = dateMap(fieldName, "32", "15", "14")
+      val expectedErrors = error(s"$fieldName", s"$errorKeyPrefix.error.day_and_month_invalid")
       checkForError(dateForm, data, expectedErrors)
     }
 
-    "give an error when no data is supplied" in {
+    "give an error when no date is supplied" in {
       val expectedErrors = error(s"$fieldName.day", "error.required") ++
         error(s"$fieldName.month", "error.required") ++
         error(s"$fieldName.year", "error.required")
@@ -139,10 +139,10 @@ class DateFormSpec extends FormSpec {
     "not give an error for a valid date" in {
       dateForm.bind(completeDate(fieldName)).get shouldBe Date(new LocalDate(2015, 1, 1))
     }
+    dateFieldCheckMultipleFields(dateForm, fieldName, errorKeyPrefix)
     dateFieldCheckDay(dateForm, fieldName, errorKeyPrefix)
     dateFieldCheckMonth(dateForm, fieldName, errorKeyPrefix)
     dateFieldCheckYear(dateForm, fieldName, errorKeyPrefix)
-    dateFieldCheckMultipleFields(dateForm, fieldName, errorKeyPrefix)
   }
 
   "dateOfDeathForm" must {
