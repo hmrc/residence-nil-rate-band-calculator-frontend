@@ -26,12 +26,37 @@ import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 import scala.util.Try
 
 object DateMapping {
-
   private val isYearValidPredicate: Int => Boolean = _ > 999
   private val isMonthValidPredicate: Int => Boolean = month => month > 0 && month < 13
   private val isDayValidPredicate: Int => Boolean = day => day > 0 && day < 32
   private val isYearWithinUpperBound: Int => Boolean = _ < 10000
   private val isYearValidAndWithinUpperBound: Int => Boolean = x => isYearValidPredicate(x) && isYearWithinUpperBound(x)
+
+  /**
+    * errorBlankFieldKey - if the date, or any portion of it, is blank
+    * errorInvalidCharsKey - if any invalid chars in date
+    * errorInvalidDayKey - if the day portion of the date is numeric but invalid, e.g. 33
+    * errorInvalidDayForMonthKey - if the day portion of the date is numeric but invalid for the month, e.g. 30 for month of 2
+    * errorInvalidMonthKey - if the month portion of the date is numeric but invalid, e.g. 13
+    * errorInvalidYearKey - if the year potion of the date is numeric but of less than 4 digits
+    * errorInvalidAllKey - if all portions of the date are numeric but invalid as described above
+    * errorInvalidYearUpperBound - if year of date is greater than 2050
+    * errorInvalidDayAndMonthKey - if day and month only are invalid for any reason
+    * errorInvalidDayAndYearKey - if day and year only are invalid for any reason
+    * errorInvalidMonthAndYearKey - if month and year only are invalid for any reason
+    */
+  private case class ErrorMessageProfile(errorBlankFieldKey: String,
+                                         errorInvalidCharsKey: String,
+                                         errorInvalidDayKey: String,
+                                         errorInvalidDayForMonthKey: String,
+                                         errorInvalidMonthKey: String,
+                                         errorInvalidYearKey: String,
+                                         errorInvalidAllKey: String,
+                                         errorInvalidYearUpperBound: String,
+                                         errorInvalidDayAndMonthKey: String,
+                                         errorInvalidDayAndYearKey: String,
+                                         errorInvalidMonthAndYearKey: String
+                                        )
 
   private def parseTupleAsDate(dateAsTuple: (String, String, String)) = {
     val requiredYearLength = 4
@@ -45,10 +70,8 @@ object DateMapping {
       .toFormatter
 
     dateAsTuple match {
-      case (day: String, month: String, year: String) => {
+      case (day: String, month: String, year: String) =>
         Try(LocalDate.parse(s"$day $month $year", dateFormatter)).toOption
-      }
-
     }
   }
 
@@ -88,24 +111,13 @@ object DateMapping {
       case _ => None
     }
 
-  // scalastyle:off parameter.number
-  private def dateConstraint(errorBlankFieldKey: String,
-                             errorInvalidCharsKey: String,
-                             errorInvalidDayKey: String,
-                             errorInvalidDayForMonthKey: String,
-                             errorInvalidMonthKey: String,
-                             errorInvalidYearKey: String,
-                             errorInvalidAllKey: String,
-                             errorInvalidYearUpperBound: String,
-                             errorInvalidDayAndMonthKey: String,
-                             errorInvalidDayAndYearKey: String,
-                             errorInvalidMonthAndYearKey: String): Constraint[(String, String, String)] =
+  private def dateConstraint(errorMessageProfile: ErrorMessageProfile): Constraint[(String, String, String)] =
     Constraint[(String, String, String)](
       (dateAsTuple: (String, String, String)) => {
         FormHelpers.convertToNumbers(
           Seq(dateAsTuple._1, dateAsTuple._2, dateAsTuple._3),
-          errorBlankFieldKey,
-          errorInvalidCharsKey
+          errorMessageProfile.errorBlankFieldKey,
+          errorMessageProfile.errorInvalidCharsKey
         ) match {
           case Left(errorKey) => Invalid(errorKey)
           case Right(numericElements) =>
@@ -113,34 +125,32 @@ object DateMapping {
             val month = numericElements(1)
             val year = numericElements(2)
 
-            val optionInvalidErrorKey: Option[String] = checkForAllDateElementsInvalid(day, month, year, errorInvalidAllKey)
+            val optionInvalidErrorKey: Option[String] = checkForAllDateElementsInvalid(day, month, year, errorMessageProfile.errorInvalidAllKey)
               .fold(
                 checkForTwoDateElementsOnlyInvalid(day, month, year,
-                  errorInvalidDayAndMonthKey,
-                  errorInvalidDayAndYearKey,
-                  errorInvalidMonthAndYearKey
+                  errorMessageProfile.errorInvalidDayAndMonthKey,
+                  errorMessageProfile.errorInvalidDayAndYearKey,
+                  errorMessageProfile.errorInvalidMonthAndYearKey
                 )
               )(Some(_))
               .fold(
                 checkForIndividualDateElementsInvalid(day, month, year,
-                  errorInvalidDayKey,
-                  errorInvalidMonthKey,
-                  errorInvalidYearKey,
-                  errorInvalidYearUpperBound
+                  errorMessageProfile.errorInvalidDayKey,
+                  errorMessageProfile.errorInvalidMonthKey,
+                  errorMessageProfile.errorInvalidYearKey,
+                  errorMessageProfile.errorInvalidYearUpperBound
                 )
               )(Some(_))
               .fold(
-                checkForDateElementsMakeValidNonFutureDate(dateAsTuple, errorInvalidDayForMonthKey)
+                checkForDateElementsMakeValidDate(dateAsTuple, errorMessageProfile.errorInvalidDayForMonthKey)
               )(Some(_))
             optionInvalidErrorKey.fold[ValidationResult](Valid)(Invalid(_))
         }
       }
     )
 
-  // scalastyle:on parameter.number
-
-  private def checkForDateElementsMakeValidNonFutureDate(dateAsTuple: (String, String, String),
-                                                         errorInvalidDateKey: String): Option[String] =
+  private def checkForDateElementsMakeValidDate(dateAsTuple: (String, String, String),
+                                                errorInvalidDateKey: String): Option[String] =
     parseTupleAsDate(dateAsTuple) match {
       case None => Some(errorInvalidDateKey)
       case _ => None
@@ -158,52 +168,9 @@ object DateMapping {
       case _ => ("", "", "")
     })
 
+  private def apply(errorMessageProfile: ErrorMessageProfile): Mapping[LocalDate] = dateMapping(dateConstraint(errorMessageProfile))
 
-  /**
-    * errorBlankFieldKey - if the date, or any portion of it, is blank
-    * errorInvalidCharsKey - if any invalid chars in date
-    * errorInvalidDayKey - if the day portion of the date is numeric but invalid, e.g. 33
-    * errorInvalidDayForMonthKey - if the day portion of the date is numeric but invalid for the month, e.g. 30 for month of 2
-    * errorInvalidMonthKey - if the month portion of the date is numeric but invalid, e.g. 13
-    * errorInvalidYearKey - if the year potion of the date is numeric but of less than 4 digits
-    * errorInvalidAllKey - if all portions of the date are numeric but invalid as described above
-    * errorInvalidYearUpperBound - if year of date is greater than 2050
-    * errorInvalidDayAndMonthKey - if day and month only are invalid for any reason
-    * errorInvalidDayAndYearKey - if day and year only are invalid for any reason
-    * errorInvalidMonthAndYearKey - if month and year only are invalid for any reason
-    */
-  // scalastyle:off parameter.number
-  def apply(errorBlankFieldKey: String,
-            errorInvalidCharsKey: String,
-            errorInvalidDayKey: String,
-            errorInvalidDayForMonthKey: String,
-            errorInvalidMonthKey: String,
-            errorInvalidYearKey: String,
-            errorInvalidAllKey: String,
-            errorInvalidYearUpperBound: String,
-            errorInvalidDayAndMonthKey: String,
-            errorInvalidDayAndYearKey: String,
-            errorInvalidMonthAndYearKey: String
-           ) =
-  dateMapping(
-    dateConstraint(
-      errorBlankFieldKey,
-      errorInvalidCharsKey,
-      errorInvalidDayKey,
-      errorInvalidDayForMonthKey,
-      errorInvalidMonthKey,
-      errorInvalidYearKey,
-      errorInvalidAllKey,
-      errorInvalidYearUpperBound,
-      errorInvalidDayAndMonthKey,
-      errorInvalidDayAndYearKey,
-      errorInvalidMonthAndYearKey
-    )
-  )
-
-  // scalastyle:on parameter.number
-
-  val dateOfDeath: Mapping[LocalDate] = DateMapping(
+  private val dateOfDeathErrorMessageProfile = ErrorMessageProfile(
     "date_of_death.error.date_not_complete",
     "date_of_death.error.only_using_numbers",
     "date_of_death.error.day_invalid",
@@ -217,7 +184,7 @@ object DateMapping {
     "date_of_death.error.month_and_year_invalid"
   )
 
-  val downSizingDate: Mapping[LocalDate] = DateMapping(
+  private val downSizingDateErrorMessageProfile = ErrorMessageProfile(
     "date_of_downsizing.error.date_not_complete",
     "date_of_downsizing.error.only_using_numbers",
     "date_of_downsizing.error.day_invalid",
@@ -230,4 +197,7 @@ object DateMapping {
     "date_of_downsizing.error.day_and_year_invalid",
     "date_of_downsizing.error.month_and_year_invalid"
   )
+
+  val dateOfDeath: Mapping[LocalDate] = DateMapping(dateOfDeathErrorMessageProfile)
+  val downSizingDate: Mapping[LocalDate] = DateMapping(downSizingDateErrorMessageProfile)
 }
