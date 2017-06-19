@@ -63,6 +63,7 @@ date_of_death.error.only_using_numbers = Give a correct date of death only using
 date_of_death.error.year_beyond_upper_bound = Give a valid date of death
 date_of_death.error.day_and_month_invalid = Give a correct day and month for date of death
 date_of_death.error.day_and_year_invalid = Give a correct day and year for date of death
+date_of_death.error.month_and_year_invalid = Give a correct month and year for date of death
 
 date_of_downsizing.error.day_invalid = Give a correct day for downsizing using numbers 1 to 31
 date_of_downsizing.error.month_invalid = Give a correct month for downsizing using numbers 1 to 12
@@ -72,7 +73,8 @@ date_of_downsizing.error.month_days_invalid = Give the correct date using the co
 date_of_downsizing.error.only_using_numbers = Give a correct date for downsizing only using numbers
 date_of_downsizing.error.year_beyond_upper_bound = Give a valid date for downsizing
 date_of_downsizing.error.day_and_month_invalid = Give a correct day and month for date of downsizing
-date_of_downsizing.error.day_and_year_invalid = Give a correct day and year for date of death
+date_of_downsizing.error.day_and_year_invalid = Give a correct day and year for date of downsizing
+date_of_downsizing.error.month_and_year_invalid = Give a correct month and year for date of downsizing
 
 date_property_was_changed.browser_title = What was the date the property was disposed of?
 date_property_was_changed.title = What was the date the property was disposed of?

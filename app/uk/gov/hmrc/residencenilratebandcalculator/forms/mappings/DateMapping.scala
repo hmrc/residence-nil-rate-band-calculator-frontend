@@ -62,8 +62,7 @@ object DateMapping {
                              errorInvalidYearUpperBound: String,
                              errorInvalidDayAndMonthKey: String,
                              errorInvalidDayAndYearKey: String,
-                             errorInvalidMonthAndYearKey: String
-                            ): Constraint[(String, String, String)] =
+                             errorInvalidMonthAndYearKey: String): Constraint[(String, String, String)] =
     Constraint[(String, String, String)](
       (dateAsTuple: (String, String, String)) => {
         FormHelpers.convertToNumbers(
@@ -83,6 +82,8 @@ object DateMapping {
               Invalid(errorInvalidDayAndMonthKey)
             } else if (!isYearValidPredicate(year) && !isDayValidPredicate(day)) {
               Invalid(errorInvalidDayAndYearKey)
+            } else if (!isYearValidPredicate(year) && !isMonthValidPredicate(month)) {
+              Invalid(errorInvalidMonthAndYearKey)
             } else if (!isYearValidPredicate(year)) {
               Invalid(errorInvalidYearKey)
             } else if (!isMonthValidPredicate(month)) {
@@ -173,7 +174,7 @@ object DateMapping {
     "date_of_death.error.year_beyond_upper_bound",
     "date_of_death.error.day_and_month_invalid",
     "date_of_death.error.day_and_year_invalid",
-    ""
+    "date_of_death.error.month_and_year_invalid"
   )
 
   val downSizingDate: Mapping[LocalDate] = DateMapping(
@@ -187,6 +188,6 @@ object DateMapping {
     "date_of_downsizing.error.year_beyond_upper_bound",
     "date_of_downsizing.error.day_and_month_invalid",
     "date_of_downsizing.error.day_and_year_invalid",
-    ""
+    "date_of_downsizing.error.month_and_year_invalid"
   )
 }

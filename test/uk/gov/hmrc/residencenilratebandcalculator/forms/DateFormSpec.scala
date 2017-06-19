@@ -134,8 +134,14 @@ class DateFormSpec extends FormSpec {
     }
 
     "give only one error when day and year only are invalid" in {
-      val data = dateMap(fieldName, "32", "8", "14")
+      val data = dateMap(fieldName, "32", "8", "10000")
       val expectedErrors = error(s"$fieldName", s"$errorKeyPrefix.error.day_and_year_invalid")
+      checkForError(dateForm, data, expectedErrors)
+    }
+
+    "give only one error when month and year only are invalid" in {
+      val data = dateMap(fieldName, "15", "15", "10000")
+      val expectedErrors = error(s"$fieldName", s"$errorKeyPrefix.error.month_and_year_invalid")
       checkForError(dateForm, data, expectedErrors)
     }
 
