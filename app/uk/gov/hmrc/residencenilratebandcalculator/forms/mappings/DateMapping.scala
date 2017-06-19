@@ -142,14 +142,14 @@ object DateMapping {
   )
 
   val dateOfDeath: Mapping[LocalDate] = DateMapping(
-    "date_Of_death.error.date_not_complete",
-    "date_Of_death.error.only_using_numbers",
+    "date_of_death.error.date_not_complete",
+    "date_of_death.error.only_using_numbers",
     "date_of_death.error.day_invalid",
-    "date_Of_death.error.month_days_invalid",
+    "date_of_death.error.month_days_invalid",
     "date_of_death.error.month_invalid",
     "date_of_death.error.year_invalid",
-    "date_Of_death.error.date_not_complete",
-    "date_Of_death.error.year_beyond_upper_bound"
+    "date_of_death.error.date_not_complete",
+    "date_of_death.error.year_beyond_upper_bound"
   )
 
   val downSizingDate: Mapping[LocalDate] = DateMapping(
