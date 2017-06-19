@@ -121,8 +121,14 @@ class DateFormSpec extends FormSpec {
   }
 
   private def dateFieldCheckMultipleFields(dateForm: Form[Date], fieldName:String, errorKeyPrefix: String) = {
-    "give only one error when day and month are invalid" in {
-      val data = dateMap(fieldName, "32", "15", "14")
+    "give only one error when three fields are invalid" in {
+      val data = dateMap(fieldName, "32", "XX", "14")
+      val expectedErrors = error(s"$fieldName", s"$errorKeyPrefix.error.only_using_numbers")
+      checkForError(dateForm, data, expectedErrors)
+    }
+
+    "give only one error when day and month only are invalid" in {
+      val data = dateMap(fieldName, "32", "15", "2014")
       val expectedErrors = error(s"$fieldName", s"$errorKeyPrefix.error.day_and_month_invalid")
       checkForError(dateForm, data, expectedErrors)
     }

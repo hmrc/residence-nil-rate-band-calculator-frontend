@@ -51,6 +51,7 @@ object DateMapping {
     }
   }
 
+  // scalastyle:off
  private def dateConstraint(errorBlankFieldKey: String,
                              errorInvalidCharsKey: String,
                              errorInvalidDayKey: String,
@@ -58,7 +59,10 @@ object DateMapping {
                              errorInvalidMonthKey: String,
                              errorInvalidYearKey: String,
                              errorInvalidAllKey: String,
-                             errorInvalidYearUpperBound: String
+                             errorInvalidYearUpperBound: String,
+                             errorInvalidDayAndMonthKey: String,
+                             errorInvalidDayAndYearKey: String,
+                             errorInvalidMonthAndYearKey: String
                             ): Constraint[(String, String, String)] =
     Constraint[(String, String, String)](
       (dateAsTuple: (String, String, String)) => {
@@ -75,6 +79,8 @@ object DateMapping {
 
             if (!isYearValidPredicate(year) && !isMonthValidPredicate(month) && !isDayValidPredicate(day)) {
               Invalid(errorInvalidAllKey)
+            } else if (!isMonthValidPredicate(month) && !isDayValidPredicate(day)) {
+              Invalid(errorInvalidDayAndMonthKey)
             } else if (!isYearValidPredicate(year)) {
               Invalid(errorInvalidYearKey)
             } else if (!isMonthValidPredicate(month)) {
@@ -89,6 +95,7 @@ object DateMapping {
         }
       }
     )
+  // scalastyle:on
 
   private def checkDateElementsMakeValidNonFutureDate(dateAsTuple: (String, String, String),
                                                       errorInvalidDateKey: String): ValidationResult =
@@ -119,7 +126,11 @@ object DateMapping {
     * errorInvalidYearKey - if the year potion of the date is numeric but of less than 4 digits
     * errorInvalidAllKey - if all portions of the date are numeric but invalid as described above
     * errorInvalidYearUpperBound - if year of date is greater than 2050
+    * errorInvalidDayAndMonthKey - if day and month only are invalid for any reason
+    * errorInvalidDayAndYearKey - if day and year only are invalid for any reason
+    * errorInvalidMonthAndYearKey - if month and year only are invalid for any reason
     */
+  // scalastyle:off
   def apply(errorBlankFieldKey: String,
             errorInvalidCharsKey: String,
             errorInvalidDayKey: String,
@@ -127,7 +138,11 @@ object DateMapping {
             errorInvalidMonthKey: String,
             errorInvalidYearKey: String,
             errorInvalidAllKey: String,
-            errorInvalidYearUpperBound: String) =
+            errorInvalidYearUpperBound: String,
+            errorInvalidDayAndMonthKey: String,
+            errorInvalidDayAndYearKey: String,
+            errorInvalidMonthAndYearKey: String
+           ) =
   dateMapping(
     dateConstraint(
       errorBlankFieldKey,
@@ -137,9 +152,13 @@ object DateMapping {
       errorInvalidMonthKey,
       errorInvalidYearKey,
       errorInvalidAllKey,
-      errorInvalidYearUpperBound
+      errorInvalidYearUpperBound,
+      errorInvalidDayAndMonthKey,
+      errorInvalidDayAndYearKey,
+      errorInvalidMonthAndYearKey
     )
   )
+  // scalastyle:on
 
   val dateOfDeath: Mapping[LocalDate] = DateMapping(
     "date_of_death.error.date_not_complete",
@@ -149,7 +168,10 @@ object DateMapping {
     "date_of_death.error.month_invalid",
     "date_of_death.error.year_invalid",
     "date_of_death.error.date_not_complete",
-    "date_of_death.error.year_beyond_upper_bound"
+    "date_of_death.error.year_beyond_upper_bound",
+    "date_of_death.error.day_and_month_invalid",
+    "",
+    ""
   )
 
   val downSizingDate: Mapping[LocalDate] = DateMapping(
@@ -160,7 +182,9 @@ object DateMapping {
     "date_of_downsizing.error.month_invalid",
     "date_of_downsizing.error.year_invalid",
     "date_of_downsizing.error.date_not_complete",
-    "date_of_downsizing.error.year_beyond_upper_bound"
+    "date_of_downsizing.error.year_beyond_upper_bound",
+    "date_of_downsizing.error.day_and_month_invalid",
+    "",
+    ""
   )
-
 }
