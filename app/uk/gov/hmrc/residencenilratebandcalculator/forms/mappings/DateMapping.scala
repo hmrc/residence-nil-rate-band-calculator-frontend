@@ -30,7 +30,8 @@ object DateMapping {
   private val isYearValidPredicate: Int => Boolean = _ > 999
   private val isMonthValidPredicate: Int => Boolean = month => month > 0 && month < 13
   private val isDayValidPredicate: Int => Boolean = day => day > 0 && day < 32
-  private val isYearBeyondUpperBound: Int => Boolean = _ < 10000
+  private val isYearWithinUpperBound: Int => Boolean = _ < 10000
+  private val isYearValidAndWithinUpperBound: Int => Boolean = x => isYearValidPredicate(x) && isYearWithinUpperBound(x)
 
   private def parseTupleAsDate(dateAsTuple: (String, String, String)) = {
     val requiredYearLength = 4
@@ -80,9 +81,9 @@ object DateMapping {
               Invalid(errorInvalidAllKey)
             } else if (!isMonthValidPredicate(month) && !isDayValidPredicate(day)) {
               Invalid(errorInvalidDayAndMonthKey)
-            } else if (!isYearValidPredicate(year) && !isDayValidPredicate(day)) {
+            } else if (!isYearValidAndWithinUpperBound(year) && !isDayValidPredicate(day)) {
               Invalid(errorInvalidDayAndYearKey)
-            } else if (!isYearValidPredicate(year) && !isMonthValidPredicate(month)) {
+            } else if (!isYearValidAndWithinUpperBound(year) && !isMonthValidPredicate(month)) {
               Invalid(errorInvalidMonthAndYearKey)
             } else if (!isYearValidPredicate(year)) {
               Invalid(errorInvalidYearKey)
@@ -90,7 +91,7 @@ object DateMapping {
               Invalid(errorInvalidMonthKey)
             } else if (!isDayValidPredicate(day)) {
               Invalid(errorInvalidDayKey)
-            } else if(!isYearBeyondUpperBound(year)) {
+            } else if(!isYearWithinUpperBound(year)) {
               Invalid(errorInvalidYearUpperBound)
             } else {
               checkDateElementsMakeValidNonFutureDate(dateAsTuple, errorInvalidDayForMonthKey)
