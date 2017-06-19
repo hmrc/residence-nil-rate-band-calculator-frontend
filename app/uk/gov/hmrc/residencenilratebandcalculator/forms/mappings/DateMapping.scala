@@ -53,19 +53,18 @@ object DateMapping {
   }
 
   private def checkForAllDateElementsInvalid(day: Int, month: Int, year: Int,
-                                             errorInvalidAllKey: String): Option[String] = {
+                                             errorInvalidAllKey: String): Option[String] =
     (day, month, year) match {
       case (d, m, y)
         if !isYearValidPredicate(y) && !isMonthValidPredicate(m) && !isDayValidPredicate(d) =>
         Some(errorInvalidAllKey)
       case _ => None
     }
-  }
 
   private def checkForTwoDateElementsOnlyInvalid(day: Int, month: Int, year: Int,
-                                             errorInvalidDayAndMonthKey: String,
-                                             errorInvalidDayAndYearKey: String,
-                                             errorInvalidMonthAndYearKey: String): Option[String] = {
+                                                 errorInvalidDayAndMonthKey: String,
+                                                 errorInvalidDayAndYearKey: String,
+                                                 errorInvalidMonthAndYearKey: String): Option[String] =
     if (!isMonthValidPredicate(month) && !isDayValidPredicate(day)) {
       Some(errorInvalidDayAndMonthKey)
     } else if (!isYearValidAndWithinUpperBound(year) && !isDayValidPredicate(day)) {
@@ -75,13 +74,12 @@ object DateMapping {
     } else {
       None
     }
-  }
 
   private def checkForIndividualDateElementsInvalid(day: Int, month: Int, year: Int,
                                                     errorInvalidDayKey: String,
                                                     errorInvalidMonthKey: String,
                                                     errorInvalidYearKey: String,
-                                                    errorInvalidYearUpperBound: String): Option[String] = {
+                                                    errorInvalidYearUpperBound: String): Option[String] =
     (day, month, year) match {
       case (_, _, y) if !isYearValidPredicate(y) => Some(errorInvalidYearKey)
       case (_, m, _) if !isMonthValidPredicate(m) => Some(errorInvalidMonthKey)
@@ -89,7 +87,6 @@ object DateMapping {
       case (_, _, y) if !isYearWithinUpperBound(y) => Some(errorInvalidYearUpperBound)
       case _ => None
     }
-  }
 
   // scalastyle:off parameter.number
   private def dateConstraint(errorBlankFieldKey: String,
@@ -139,6 +136,7 @@ object DateMapping {
         }
       }
     )
+
   // scalastyle:on parameter.number
 
   private def checkForDateElementsMakeValidNonFutureDate(dateAsTuple: (String, String, String),
