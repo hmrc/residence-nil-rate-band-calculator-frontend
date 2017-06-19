@@ -81,6 +81,8 @@ object DateMapping {
               Invalid(errorInvalidAllKey)
             } else if (!isMonthValidPredicate(month) && !isDayValidPredicate(day)) {
               Invalid(errorInvalidDayAndMonthKey)
+            } else if (!isYearValidPredicate(year) && !isDayValidPredicate(day)) {
+              Invalid(errorInvalidDayAndYearKey)
             } else if (!isYearValidPredicate(year)) {
               Invalid(errorInvalidYearKey)
             } else if (!isMonthValidPredicate(month)) {
@@ -170,7 +172,7 @@ object DateMapping {
     "date_of_death.error.date_not_complete",
     "date_of_death.error.year_beyond_upper_bound",
     "date_of_death.error.day_and_month_invalid",
-    "",
+    "date_of_death.error.day_and_year_invalid",
     ""
   )
 
@@ -184,7 +186,7 @@ object DateMapping {
     "date_of_downsizing.error.date_not_complete",
     "date_of_downsizing.error.year_beyond_upper_bound",
     "date_of_downsizing.error.day_and_month_invalid",
-    "",
+    "date_of_downsizing.error.day_and_year_invalid",
     ""
   )
 }
