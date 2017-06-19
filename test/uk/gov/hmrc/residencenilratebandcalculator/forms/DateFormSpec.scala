@@ -30,11 +30,7 @@ class DateFormSpec extends FormSpec {
 
   private def completeDate(fieldName:String) = dateMap(fieldName, "01", "01", "2015")
 
-  private def dateFieldPart1(dateForm: Form[Date], fieldName:String, errorKeyPrefix: String) = {
-    "not give an error for a valid date" in {
-      dateForm.bind(completeDate(fieldName)).get shouldBe Date(new LocalDate(2015, 1, 1))
-    }
-
+  private def dateFieldCheckDay(dateForm: Form[Date], fieldName:String, errorKeyPrefix: String) = {
     "give an error when the day is blank" in {
       val data = dateMap(fieldName, "", "01", "2014")
       val expectedErrors = error(s"$fieldName", s"$errorKeyPrefix.error.date_not_complete")
@@ -59,7 +55,15 @@ class DateFormSpec extends FormSpec {
       checkForError(dateForm, data, expectedErrors)
     }
 
-    "give an error when the month is blank" in {
+    "give an error when the day for month is invalid" in {
+      val data = dateMap(fieldName, "31", "11", "2013")
+      val expectedErrors = error(s"$fieldName", s"$errorKeyPrefix.error.month_days_invalid")
+      checkForError(dateForm, data, expectedErrors)
+    }
+  }
+
+  private def dateFieldCheckMonth(dateForm: Form[Date], fieldName:String, errorKeyPrefix: String) = {
+     "give an error when the month is blank" in {
       val data = dateMap(fieldName, "01", "", "2014")
       val expectedErrors = error(s"$fieldName", s"$errorKeyPrefix.error.date_not_complete")
       checkForError(dateForm, data, expectedErrors)
@@ -77,18 +81,14 @@ class DateFormSpec extends FormSpec {
       checkForError(dateForm, data, expectedErrors)
     }
 
-    "give an error when the day for month is invalid" in {
-      val data = dateMap(fieldName, "31", "11", "2013")
-      val expectedErrors = error(s"$fieldName", s"$errorKeyPrefix.error.month_days_invalid")
-      checkForError(dateForm, data, expectedErrors)
-    }
-
     "give an error when the month is too high" in {
       val data = dateMap(fieldName, "01", "13", "2013")
       val expectedErrors = error(s"$fieldName", s"$errorKeyPrefix.error.month_invalid")
       checkForError(dateForm, data, expectedErrors)
     }
+  }
 
+  private def dateFieldCheckYear(dateForm: Form[Date], fieldName:String, errorKeyPrefix: String) = {
     "give an error when the year is blank" in {
       val data = dateMap(fieldName, "01", "01", "")
       val expectedErrors = error(s"$fieldName", s"$errorKeyPrefix.error.date_not_complete")
@@ -118,7 +118,9 @@ class DateFormSpec extends FormSpec {
       val expectedErrors = error(s"$fieldName", s"$errorKeyPrefix.error.year_invalid")
       checkForError(dateForm, data, expectedErrors)
     }
+  }
 
+  private def dateFieldCheckMultipleFields(dateForm: Form[Date], fieldName:String, errorKeyPrefix: String) = {
     "give only one error when two fields are invalid" in {
       val data = dateMap(fieldName, "32", "XX", "14")
       val expectedErrors = error(s"$fieldName", s"$errorKeyPrefix.error.only_using_numbers")
@@ -134,7 +136,13 @@ class DateFormSpec extends FormSpec {
   }
 
   private def dateField(dateForm: Form[Date], fieldName:String, errorKeyPrefix: String) = {
-    dateFieldPart1(dateForm, fieldName, errorKeyPrefix)
+    "not give an error for a valid date" in {
+      dateForm.bind(completeDate(fieldName)).get shouldBe Date(new LocalDate(2015, 1, 1))
+    }
+    dateFieldCheckDay(dateForm, fieldName, errorKeyPrefix)
+    dateFieldCheckMonth(dateForm, fieldName, errorKeyPrefix)
+    dateFieldCheckYear(dateForm, fieldName, errorKeyPrefix)
+    dateFieldCheckMultipleFields(dateForm, fieldName, errorKeyPrefix)
   }
 
   "dateOfDeathForm" must {
