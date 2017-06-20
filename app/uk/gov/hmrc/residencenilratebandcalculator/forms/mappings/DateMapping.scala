@@ -75,41 +75,54 @@ object DateMapping {
     }
   }
 
-  private def checkForAllDateElementsInvalid(day: Int, month: Int, year: Int,
-                                             errorInvalidAllKey: String): Option[String] =
+
+
+  private val checkForAllDateElementsInvalid:(Int,Int,Int,ValidationErrorMessageKeyProfile) => Option[String] =
+    (day,month,year,errorKeys) =>
     (day, month, year) match {
       case (d, m, y)
         if !isYearValidPredicate(y) && !isMonthValidPredicate(m) && !isDayValidPredicate(d) =>
-        Some(errorInvalidAllKey)
+        Some(errorKeys.errorInvalidAllKey)
       case _ => None
     }
 
-  private def checkForTwoDateElementsOnlyInvalid(day: Int, month: Int, year: Int,
-                                                 errorInvalidDayAndMonthKey: String,
-                                                 errorInvalidDayAndYearKey: String,
-                                                 errorInvalidMonthAndYearKey: String): Option[String] =
+  private val checkForTwoDateElementsOnlyInvalid:(Int,Int,Int,ValidationErrorMessageKeyProfile) => Option[String] =
+    (day,month,year,errorKeys) =>
     if (!isMonthValidPredicate(month) && !isDayValidPredicate(day)) {
-      Some(errorInvalidDayAndMonthKey)
+      Some(errorKeys.errorInvalidDayAndMonthKey)
     } else if (!isYearValidAndWithinUpperBound(year) && !isDayValidPredicate(day)) {
-      Some(errorInvalidDayAndYearKey)
+      Some(errorKeys.errorInvalidDayAndYearKey)
     } else if (!isYearValidAndWithinUpperBound(year) && !isMonthValidPredicate(month)) {
-      Some(errorInvalidMonthAndYearKey)
+      Some(errorKeys.errorInvalidMonthAndYearKey)
     } else {
       None
     }
 
-  private def checkForIndividualDateElementsInvalid(day: Int, month: Int, year: Int,
-                                                    errorInvalidDayKey: String,
-                                                    errorInvalidMonthKey: String,
-                                                    errorInvalidYearKey: String,
-                                                    errorInvalidYearUpperBound: String): Option[String] =
+  private val checkForIndividualDateElementsInvalid:(Int,Int,Int,ValidationErrorMessageKeyProfile)=>Option[String] =
+    (day,month,year,errorKeys) =>
     (day, month, year) match {
-      case (_, _, y) if !isYearValidPredicate(y) => Some(errorInvalidYearKey)
-      case (_, m, _) if !isMonthValidPredicate(m) => Some(errorInvalidMonthKey)
-      case (d, _, _) if !isDayValidPredicate(d) => Some(errorInvalidDayKey)
-      case (_, _, y) if !isYearWithinUpperBound(y) => Some(errorInvalidYearUpperBound)
+      case (_, _, y) if !isYearValidPredicate(y) => Some(errorKeys.errorInvalidYearKey)
+      case (_, m, _) if !isMonthValidPredicate(m) => Some(errorKeys.errorInvalidMonthKey)
+      case (d, _, _) if !isDayValidPredicate(d) => Some(errorKeys.errorInvalidDayKey)
+      case (_, _, y) if !isYearWithinUpperBound(y) => Some(errorKeys.errorInvalidYearUpperBound)
       case _ => None
     }
+
+  private def firstValidationFailure(day: Int, month: Int, year: Int,
+                                errorKeys: ValidationErrorMessageKeyProfile,
+                                validationFunctions:Seq[(Int,Int,Int,ValidationErrorMessageKeyProfile)=>Option[String]]) = {
+    validationFunctions.foldLeft[Option[String]](None){
+      (currentState:Option[String], currentFunction:(Int, Int, Int, ValidationErrorMessageKeyProfile) => Option[String]) =>
+      if(currentState.isEmpty) {
+        currentFunction(day, month, year, errorKeys)
+      } else {
+        currentState
+      }
+    }
+  }
+
+  private val validationFunctions =
+    Seq(checkForAllDateElementsInvalid, checkForTwoDateElementsOnlyInvalid, checkForIndividualDateElementsInvalid)
 
   private def dateConstraint(errorKeys: ValidationErrorMessageKeyProfile): Constraint[(String, String, String)] =
     Constraint[(String, String, String)](
@@ -121,28 +134,10 @@ object DateMapping {
         ) match {
           case Left(errorKey) => Invalid(errorKey)
           case Right(numericElements) =>
-            val day = numericElements.head
-            val month = numericElements(1)
-            val year = numericElements(2)
-
-            val optionInvalidErrorKey: Option[String] = checkForAllDateElementsInvalid(day, month, year, errorKeys.errorInvalidAllKey)
+            val optionInvalidErrorKey =
+              firstValidationFailure(numericElements.head, numericElements(1), numericElements(2), errorKeys, validationFunctions)
               .fold(
-                checkForTwoDateElementsOnlyInvalid(day, month, year,
-                  errorKeys.errorInvalidDayAndMonthKey,
-                  errorKeys.errorInvalidDayAndYearKey,
-                  errorKeys.errorInvalidMonthAndYearKey
-                )
-              )(Some(_))
-              .fold(
-                checkForIndividualDateElementsInvalid(day, month, year,
-                  errorKeys.errorInvalidDayKey,
-                  errorKeys.errorInvalidMonthKey,
-                  errorKeys.errorInvalidYearKey,
-                  errorKeys.errorInvalidYearUpperBound
-                )
-              )(Some(_))
-              .fold(
-                checkForDateElementsMakeValidDate(dateAsTuple, errorKeys.errorInvalidDayForMonthKey)
+                checkForDateElementsMakeValidDate(dateAsTuple, errorKeys)
               )(Some(_))
             optionInvalidErrorKey.fold[ValidationResult](Valid)(Invalid(_))
         }
@@ -150,9 +145,9 @@ object DateMapping {
     )
 
   private def checkForDateElementsMakeValidDate(dateAsTuple: (String, String, String),
-                                                errorInvalidDateKey: String): Option[String] =
+                                                errorKeys: ValidationErrorMessageKeyProfile): Option[String] =
     parseTupleAsDate(dateAsTuple) match {
-      case None => Some(errorInvalidDateKey)
+      case None => Some(errorKeys.errorInvalidDayForMonthKey)
       case _ => None
     }
 
