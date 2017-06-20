@@ -75,8 +75,6 @@ object DateMapping {
     }
   }
 
-
-
   private val checkForAllDateElementsInvalid:(Int,Int,Int,ValidationErrorMessageKeyProfile) => Option[String] =
     (day,month,year,errorKeys) =>
     (day, month, year) match {
@@ -121,6 +119,13 @@ object DateMapping {
     }
   }
 
+  private def checkForDateElementsMakeValidDate(dateAsTuple: (String, String, String),
+                                                errorKeys: ValidationErrorMessageKeyProfile): Option[String] =
+    parseTupleAsDate(dateAsTuple) match {
+      case None => Some(errorKeys.errorInvalidDayForMonthKey)
+      case _ => None
+    }
+
   private val validationFunctions =
     Seq(checkForAllDateElementsInvalid, checkForTwoDateElementsOnlyInvalid, checkForIndividualDateElementsInvalid)
 
@@ -143,13 +148,6 @@ object DateMapping {
         }
       }
     )
-
-  private def checkForDateElementsMakeValidDate(dateAsTuple: (String, String, String),
-                                                errorKeys: ValidationErrorMessageKeyProfile): Option[String] =
-    parseTupleAsDate(dateAsTuple) match {
-      case None => Some(errorKeys.errorInvalidDayForMonthKey)
-      case _ => None
-    }
 
   private def dateMapping(constraint: Constraint[(String, String, String)]) = mapping(
     "day" -> text,
