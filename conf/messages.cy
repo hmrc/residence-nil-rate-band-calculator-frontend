@@ -61,6 +61,9 @@ date_Of_death.error.date_not_complete = Rhowch ddyddiad llawn ar gyfer y farwola
 date_Of_death.error.month_days_invalid= Rhowch y dyddiad cywir gan ddefnyddio’r nifer cywir o ddyddiau ar gyfer y mis hwnnw
 date_Of_death.error.only_using_numbers = Rhowch ddyddiad cywir ar gyfer y farwolaeth gan ddefnyddio rhifau’n unig
 date_Of_death.error.year_beyond_upper_bound = Rhowch ddyddiad dilys ar gyfer y farwolaeth
+date_of_death.error.day_and_month_invalid = Rhowch ddiwrnod cywir a mis cywir ar gyfer dyddiad y farwolaeth
+date_of_death.error.day_and_year_invalid = Rhowch ddiwrnod cywir a blwyddyn gywir ar gyfer dyddiad y farwolaeth
+date_of_death.error.month_and_year_invalid = Rhowch fis cywir a blwyddyn gywir ar gyfer dyddiad y farwolaeth
 
 date_of_downsizing.error.day_invalid = Rhowch ddyddiad cywir ar gyfer symud i gartref llai o faint gan ddefnyddio’r rhifau 1 i 31
 date_of_downsizing.error.month_invalid = Rhowch fis cywir ar gyfer symud i gartref llai o faint gan ddefnyddio’r rhifau 1 i 12
@@ -69,6 +72,9 @@ date_of_downsizing.error.date_not_complete = Rhowch ddyddiad llawn ar gyfer symu
 date_of_downsizing.error.month_days_invalid = Rhowch y dyddiad cywir gan ddefnyddio’r nifer cywir o ddyddiau ar gyfer y mis hwnnw
 date_of_downsizing.error.only_using_numbers = Rhowch ddyddiad cywir ar gyfer symud i gartref llai o faint gan ddefnyddio rhifau’n unig
 date_of_downsizing.error.year_beyond_upper_bound = Rhowch ddyddiad dilys ar gyfer symud i gartref llai o faint
+date_of_downsizing.error.day_and_month_invalid = Rhowch ddiwrnod cywir a mis cywir ar gyfer y dyddiad symud i gartref llai o faint
+date_of_downsizing.error.day_and_year_invalid = Rhowch ddiwrnod cywir a blwyddyn gywir ar gyfer y dyddiad symud i gartref llai o faint
+date_of_downsizing.error.month_and_year_invalid = Rhowch fis cywir a blwyddyn gywir ar gyfer y dyddiad symud i gartref llai o faint
 
 date_property_was_changed.browser_title = Beth oedd y dyddiad pan waredwyd ar yr eiddo?
 date_property_was_changed.title = Beth oedd y dyddiad pan waredwyd ar yr eiddo?
