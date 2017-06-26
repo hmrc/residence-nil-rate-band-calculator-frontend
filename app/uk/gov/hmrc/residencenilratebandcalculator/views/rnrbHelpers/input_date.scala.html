@@ -63,19 +63,21 @@ args:(Symbol,Any)*)(implicit messages: Messages)
     @yearElements = @{ new FieldElements(yearField.id, yearField, null, args.toMap, messages) }
     @yearValue = @{ yearField.value match { case Some(x) => x case None => "" case x => x }}
 
+    @inputClass = @{if(elements.errors.size>0) "form-control error-field" else "form-control"}
+
         <div class="form-group form-group-day">
             <label class="form-label bold" for="@dayElements.field.name">@messages("date.day")</label>
-            <input class="form-control + (if(elements.errors.size>0) "error-field" else "" )" id="@dayElements.field.name"
+            <input class="@inputClass" id="@dayElements.field.name"
                                 name="@dayElements.field.name" type="number" value="@dayValue" />
         </div>
         <div class="form-group form-group-month">
             <label class="form-label bold" for="@monthElements.field.name">@messages("date.month")</label>
-            <input class="form-control + (if(elements.errors.size>0) "error-field" else "" )" id="@monthElements.field.name"
+            <input class="@inputClass" id="@monthElements.field.name"
                                 name="@monthElements.field.name" type="number" value="@monthValue" />
         </div>
         <div class="form-group form-group-year">
             <label class="form-label bold" for="@yearElements.field.name">@messages("date.year")</label>
-            <input class="form-control + (if(elements.errors.size>0) "error-field" else "" )" id="@yearElements.field.name"
+            <input class="@inputClass" id="@yearElements.field.name"
                                name="@yearElements.field.name" type="number" value="@yearValue" />
         </div>
 
