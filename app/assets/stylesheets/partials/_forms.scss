@@ -166,3 +166,18 @@ Add additional whitespace around field
 .form-field--padded {
     padding: 1em 0;
 }
+
+
+/*
+Date field spacing
+Fixes issue when translated to Welsh
+*/
+.date-of-birth .form-group {
+    width: auto;
+}
+.date-of-birth .form-group input {
+    width: 2.7em;
+}
+.date-of-birth .form-group-year input {
+    width: 3.7em;
+}
