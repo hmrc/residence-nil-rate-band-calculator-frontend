@@ -83,13 +83,6 @@ date_property_was_changed.guidance2 = Mae’n bosibl y bu newidiadau ym mhwy a o
 date_property_was_changed.hint = Er enghraifft, 6 4 2017
 
 error.invalid_property_passing_to_direct_descendants_option = Rhowch ateb os trosglwyddwyd unrhyw ran o’r eiddo i ddisgynnydd uniongyrchol
-error.invalid_date = Rhowch ddyddiad dilys
-error.date.day_blank = Nodwch ddiwrnod
-error.date.day_invalid = Rhowch ddiwrnod dilys gan ddefnyddio’r rhifau 1 i 31
-error.date.month_blank = Nodwch fis
-error.date.month_invalid = Rhowch fis dilys gan ddefnyddio’r rhifau 1 i 12
-error.date.year_blank = Nodwch flwyddyn
-error.date.year_invalid = Rhowch flwyddyn ddilys
 error.non_numeric = Rhowch werth gan ddefnyddio rhifau’n unig
 error.number = Rhowch rif dilys
 error.required = Nodwch werth
