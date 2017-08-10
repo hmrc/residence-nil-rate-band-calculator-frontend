@@ -56,6 +56,6 @@ class FrontendAppConfig @Inject()(configuration: Configuration) extends AppConfi
   lazy val whitelistExcluded = whitelistConfig("whitelistExcludedCalls")
   lazy val fullStyle = configuration.getBoolean("featureToggle.fullStyle").getOrElse(true)
 
-  override val isWelshEnabled: Boolean = false
+  override val isWelshEnabled: Boolean = true
 
 }
