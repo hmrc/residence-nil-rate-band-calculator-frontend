@@ -37,6 +37,8 @@ class ValueOfEstateViewSpec extends IntViewSpecBase {
       "guidance1.bullet2",
       "guidance1.bullet3",
       "guidance1.bullet4",
+      "guidance1.bullet5",
+      "guidance1.bullet6",
       "guidance2"
     )
 
