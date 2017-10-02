@@ -317,3 +317,10 @@ value_of_estate.guidance2 = The IHT403 and IHT418 schedules are only completed i
 value_of_estate.error.blank = Give an estate value
 value_of_estate.error.non_numeric = Give an estate value using only numbers
 report.a.problem.link = Is there anything wrong with this page?
+
+# BETA header
+label.beta = BETA
+label.beta.newservice =  This is a new service
+label.beta.improve =  will help us to improve it.
+label.beta.feedback = feedback
+label.beta.yours = - your
