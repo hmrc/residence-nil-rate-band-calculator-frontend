@@ -315,3 +315,10 @@ value_of_estate.guidance2 = Bydd yr atodlenni IHT403 ac IHT418 dim ond yn cael e
 value_of_estate.error.blank = Rhowch werth yr ystâd
 value_of_estate.error.non_numeric = Rhowch werth yr ystâd gan ddefnyddio rhifau’n unig
 report.a.problem.link = A oes unrhyw beth o’i le gyda’r dudalen hon?
+
+# BETA header
+label.beta = BETA
+label.beta.newservice = Mae hwn yn wasanaeth newydd
+label.beta.improve = yn ein helpu i''w wella.
+label.beta.feedback = adborth
+label.beta.yours = - bydd eich
