@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.connectors
+package uk.gov.hmrc.residencenilratebandcalculator
 
 import javax.inject.{Inject, Singleton}
 
