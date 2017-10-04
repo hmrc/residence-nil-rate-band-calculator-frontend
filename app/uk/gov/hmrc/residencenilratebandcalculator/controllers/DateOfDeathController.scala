@@ -25,13 +25,13 @@ import play.api.i18n.MessagesApi
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.{Action, Request}
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.http.logging.SessionId
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 import uk.gov.hmrc.residencenilratebandcalculator.models.{Date, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.http.logging.SessionId
 
 @Singleton
 class DateOfDeathController @Inject()(val appConfig: FrontendAppConfig,

@@ -22,8 +22,8 @@ import akka.stream.Materializer
 import play.api.mvc.EssentialFilter
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAuditConnector
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.ControllerConfiguration
-import uk.gov.hmrc.play.audit.filters.FrontendAuditFilter
 import uk.gov.hmrc.play.config.{AppName, RunMode}
+import uk.gov.hmrc.play.frontend.filters.FrontendAuditFilter
 
 class Audit @Inject()(controllerConfiguration: ControllerConfiguration, frontendAuditConnector: FrontendAuditConnector)
                      (implicit val mat: Materializer)

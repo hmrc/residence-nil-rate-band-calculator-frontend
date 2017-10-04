@@ -20,10 +20,9 @@ import javax.inject.{Inject, Singleton}
 
 import uk.gov.hmrc.play.frontend.filters.SessionCookieCryptoFilter
 import uk.gov.hmrc.play.partials.FormPartialRetriever
-import uk.gov.hmrc.residencenilratebandcalculator.services.http.WsAllMethods
-
+import uk.gov.hmrc.residencenilratebandcalculator.WSHttp
 
 @Singleton
-class LocalPartialRetriever @Inject() (override val httpGet: WsAllMethods) extends FormPartialRetriever {
+class LocalPartialRetriever @Inject() (override val httpGet: WSHttp) extends FormPartialRetriever {
   override def crypto = SessionCookieCryptoFilter.encrypt
 }

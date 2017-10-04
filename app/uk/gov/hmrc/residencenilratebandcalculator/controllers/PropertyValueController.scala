@@ -23,7 +23,6 @@ import play.api.Application
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
 import play.api.data.{Form, FormError}
-import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
@@ -32,6 +31,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_value
 
 import scala.concurrent.Future
+import uk.gov.hmrc.http.HeaderCarrier
 
 @Singleton
 class PropertyValueController @Inject()(override val appConfig: FrontendAppConfig,

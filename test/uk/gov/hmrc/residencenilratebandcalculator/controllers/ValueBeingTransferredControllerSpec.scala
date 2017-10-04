@@ -28,7 +28,6 @@ import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
@@ -40,6 +39,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants, Frontend
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import uk.gov.hmrc.http.{ HeaderCarrier, HttpResponse }
 
 class ValueBeingTransferredControllerSpec extends BaseSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
 

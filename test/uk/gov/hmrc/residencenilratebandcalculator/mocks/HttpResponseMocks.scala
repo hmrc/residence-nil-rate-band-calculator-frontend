@@ -18,7 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.mocks
 
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
-import uk.gov.hmrc.play.http.HttpResponse
+import uk.gov.hmrc.http.HttpResponse
 
 trait HttpResponseMocks extends MockitoSugar {
 

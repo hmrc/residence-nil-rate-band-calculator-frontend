@@ -21,7 +21,7 @@ import javax.inject.Inject
 import akka.stream.Materializer
 import play.api.mvc.Filter
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.ControllerConfiguration
-import uk.gov.hmrc.play.http.logging.filters.FrontendLoggingFilter
+import uk.gov.hmrc.play.frontend.filters.FrontendLoggingFilter
 
 class Logging @Inject()(config: ControllerConfiguration)(implicit val mat: Materializer) extends Filter with FrontendLoggingFilter {
   override def controllerNeedsLogging(controllerName: String) = config.paramsForController(controllerName).needsLogging

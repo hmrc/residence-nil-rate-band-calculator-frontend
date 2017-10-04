@@ -17,9 +17,9 @@
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import org.scalatest.mock.MockitoSugar
-import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
+import uk.gov.hmrc.http.HeaderCarrier
 
 class ExitQuestionnaireEventSpec extends BaseSpec with WithFakeApplication with MockitoSugar {
 

@@ -26,7 +26,6 @@ import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.{Action, Request}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.frontend.controller.FrontendController
-import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
@@ -36,6 +35,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_available_whe
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 import scala.concurrent.Future
+import uk.gov.hmrc.http.{ HeaderCarrier, HttpResponse }
 
 @Singleton
 class ValueAvailableWhenPropertyChangedController @Inject()(val appConfig: FrontendAppConfig,

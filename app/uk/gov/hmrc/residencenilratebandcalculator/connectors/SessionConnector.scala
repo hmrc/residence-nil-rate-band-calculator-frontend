@@ -21,12 +21,12 @@ import play.api.Logger
 import javax.inject.{Inject, Singleton}
 
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.models.CascadeUpsert
 import uk.gov.hmrc.residencenilratebandcalculator.repositories.SessionRepository
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import uk.gov.hmrc.http.HeaderCarrier
 
 @Singleton
 class SessionConnector @Inject()(val sessionRepository: SessionRepository, val cascadeUpsert: CascadeUpsert) {

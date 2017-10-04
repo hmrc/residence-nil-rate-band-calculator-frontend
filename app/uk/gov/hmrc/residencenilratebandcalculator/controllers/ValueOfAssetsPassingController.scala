@@ -23,13 +23,13 @@ import play.api.Application
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
 import play.api.data.{Form, FormError}
-import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.utils.{CurrencyFormatter, LocalPartialRetriever}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_assets_passing
+import uk.gov.hmrc.http.HeaderCarrier
 
 @Singleton
 class ValueOfAssetsPassingController @Inject()(override val appConfig: FrontendAppConfig,

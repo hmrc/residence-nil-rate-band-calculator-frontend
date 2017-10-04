@@ -24,13 +24,13 @@ import play.api.mvc.Request
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, FrontendAppConfig}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, GetReason, Reason, UserAnswers}
 
 import scala.concurrent.Future
+import uk.gov.hmrc.http.HeaderCarrier
 
 class TransitionControllerSpec extends BaseSpec with WithFakeApplication with MockSessionConnector {
 

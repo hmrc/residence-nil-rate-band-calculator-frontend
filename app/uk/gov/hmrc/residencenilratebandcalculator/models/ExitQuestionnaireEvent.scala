@@ -17,8 +17,8 @@
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import uk.gov.hmrc.play.audit.model.DataEvent
-import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.AuditExtensions._
+import uk.gov.hmrc.http.HeaderCarrier
 
 class ExitQuestionnaireEvent (serviceDifficulty:String,
                               serviceFeel: String,

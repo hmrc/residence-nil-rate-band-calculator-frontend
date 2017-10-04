@@ -22,7 +22,6 @@ import com.google.inject.Provider
 import play.api.data.{Form, FormError}
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
-import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
@@ -32,6 +31,7 @@ import play.api.Application
 import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
 import scala.concurrent.Future
+import uk.gov.hmrc.http.HeaderCarrier
 
 class ChargeableInheritedPropertyValueController @Inject()(override val appConfig: FrontendAppConfig,
                                                                      val messagesApi: MessagesApi,

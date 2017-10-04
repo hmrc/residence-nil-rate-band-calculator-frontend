@@ -20,9 +20,9 @@ import javax.inject.Inject
 
 import akka.stream.Materializer
 import play.api.mvc.{Filter, RequestHeader, Result}
-import uk.gov.hmrc.play.filters.CacheControlFilter
 
 import scala.concurrent.Future
+import uk.gov.hmrc.play.frontend.filters.CacheControlFilter
 
 class CacheControl @Inject()(implicit val mat: Materializer) extends Filter {
   val filter = CacheControlFilter.fromConfig("caching.allowedContentTypes")
