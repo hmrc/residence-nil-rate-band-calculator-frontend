@@ -20,9 +20,9 @@ import javax.inject.Inject
 
 import akka.stream.Materializer
 import play.api.mvc.{Filter, RequestHeader, Result}
-import uk.gov.hmrc.play.filters.frontend.CSRFExceptionsFilter
 
 import scala.concurrent.Future
+import uk.gov.hmrc.play.frontend.filters.CSRFExceptionsFilter
 
 class CSRFExceptions @Inject()(implicit val mat: Materializer) extends Filter {
   override def apply(f: (RequestHeader) => Future[Result])(rh: RequestHeader): Future[Result] = CSRFExceptionsFilter(f)(rh)

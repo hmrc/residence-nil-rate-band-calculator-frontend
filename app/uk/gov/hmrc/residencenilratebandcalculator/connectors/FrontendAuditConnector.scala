@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator
+package uk.gov.hmrc.residencenilratebandcalculator.connectors
 
 import javax.inject.{Inject, Singleton}
 
-import uk.gov.hmrc.play.audit.http.config.LoadAuditingConfig
 import uk.gov.hmrc.play.audit.http.connector.{AuditConnector => Auditing}
 import uk.gov.hmrc.play.config.AppName
+import uk.gov.hmrc.play.frontend.config.LoadAuditingConfig
 
 @Singleton
 class FrontendAuditConnector @Inject()() extends Auditing with AppName {

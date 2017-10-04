@@ -24,12 +24,12 @@ import play.api.mvc._
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.frontend.controller.FrontendController
-import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, Navigator}
 
 import scala.concurrent.Future
+import uk.gov.hmrc.http.HeaderCarrier
 
 trait ControllerBase[A] extends FrontendController with I18nSupport {
   def onPageLoad(implicit rds: Reads[A]): Action[AnyContent]

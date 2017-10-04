@@ -24,7 +24,6 @@ import org.mockito.Mockito.{verify, when}
 import org.scalatest.mock.MockitoSugar
 import play.api.http.Status
 import play.api.libs.json._
-import uk.gov.hmrc.play.http.{HeaderCarrier, HttpReads, HttpResponse}
 import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, WSHttp}
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.JsonInvalidException
@@ -32,14 +31,17 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, Calc
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
+import uk.gov.hmrc.http.{ HeaderCarrier, HttpReads, HttpResponse }
+
+import uk.gov.hmrc.play.http.logging.MdcLoggingExecutionContext._
 
 class RnrbConnectorSpec extends BaseSpec with WithFakeApplication with MockitoSugar {
 
   def getHttpMock(returnedData: JsValue) = {
     val httpMock = mock[WSHttp]
     when(httpMock.POST(anyString, any[JsValue], any[Seq[(String, String)]])(any[Writes[Any]], any[HttpReads[Any]],
-      any[HeaderCarrier])) thenReturn Future.successful(HttpResponse(Status.OK, Some(returnedData)))
-    when(httpMock.GET(anyString)(any[HttpReads[Any]], any[HeaderCarrier])) thenReturn Future.successful(HttpResponse(Status.OK, Some(returnedData)))
+      any[HeaderCarrier], any())) thenReturn Future.successful(HttpResponse(Status.OK, Some(returnedData)))
+    when(httpMock.GET(anyString)(any[HttpReads[Any]], any[HeaderCarrier], any())) thenReturn Future.successful(HttpResponse(Status.OK, Some(returnedData)))
     httpMock
   }
 
@@ -66,7 +68,7 @@ class RnrbConnectorSpec extends BaseSpec with WithFakeApplication with MockitoSu
         await(connector.send(calculationInput))
 
         verify(httpMock).POST(urlCaptor.capture, bodyCaptor.capture, headersCaptor.capture)(jsonWritesNapper.capture,
-          httpReadsNapper.capture, headerCarrierNapper.capture)
+          httpReadsNapper.capture, headerCarrierNapper.capture, any())
         urlCaptor.getValue should endWith(s"${connector.baseSegment}calculate")
         bodyCaptor.getValue shouldBe Json.toJson(calculationInput)
         headersCaptor.getValue shouldBe Seq(connector.jsonContentTypeHeader)
@@ -116,7 +118,7 @@ class RnrbConnectorSpec extends BaseSpec with WithFakeApplication with MockitoSu
         await(connector.sendJson(minimalJson))
 
         verify(httpMock).POST(urlCaptor.capture, bodyCaptor.capture, headersCaptor.capture)(jsonWritesNapper.capture,
-          httpReadsNapper.capture, headerCarrierNapper.capture)
+          httpReadsNapper.capture, headerCarrierNapper.capture, any())
         urlCaptor.getValue should endWith(s"${connector.baseSegment}calculate")
         bodyCaptor.getValue shouldBe minimalJson
         headersCaptor.getValue shouldBe Seq(connector.jsonContentTypeHeader)

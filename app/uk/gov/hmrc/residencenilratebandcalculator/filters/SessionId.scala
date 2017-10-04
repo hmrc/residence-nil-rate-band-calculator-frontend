@@ -22,10 +22,10 @@ import javax.inject.Inject
 import akka.stream.Materializer
 import play.api.http.HeaderNames.COOKIE
 import play.api.mvc._
-import uk.gov.hmrc.play.http.SessionKeys
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import uk.gov.hmrc.http.SessionKeys
 
 class SessionId @Inject()()(implicit val mat: Materializer) extends Filter {
 

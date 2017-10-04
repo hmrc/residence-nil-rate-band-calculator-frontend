@@ -24,13 +24,13 @@ import org.scalatest.mock.MockitoSugar
 import org.scalatest.{BeforeAndAfter, Matchers}
 import play.api.libs.json.{JsValue, Reads, Writes}
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 
 import scala.concurrent.Future
 import scala.reflect.{ClassTag, classTag}
+import uk.gov.hmrc.http.HeaderCarrier
 
 trait MockSessionConnector extends BaseSpec with MockitoSugar with Matchers with BeforeAndAfter {
 

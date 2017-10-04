@@ -21,7 +21,6 @@ import javax.inject.{Inject, Singleton}
 import com.eclipsesource.schema.SchemaType
 import play.api.libs.json._
 import uk.gov.hmrc.play.config.ServicesConfig
-import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.residencenilratebandcalculator.WSHttp
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.JsonInvalidException
 import uk.gov.hmrc.residencenilratebandcalculator.json.JsonErrorProcessor
@@ -30,6 +29,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, Calc
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
+import uk.gov.hmrc.http.{CoreGet, CorePost, HeaderCarrier, HttpResponse}
 
 @Singleton
 class RnrbConnector @Inject()(http: WSHttp) extends ServicesConfig {

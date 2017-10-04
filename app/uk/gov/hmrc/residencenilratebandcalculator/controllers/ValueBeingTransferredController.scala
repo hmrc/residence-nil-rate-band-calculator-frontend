@@ -29,7 +29,6 @@ import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.{Action, Request, Result}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.frontend.controller.FrontendController
-import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
@@ -41,6 +40,7 @@ import uk.gov.hmrc.time.TaxYearResolver
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import uk.gov.hmrc.http.{ HeaderCarrier, HttpResponse }
 
 @Singleton
 class ValueBeingTransferredController @Inject()(val appConfig: FrontendAppConfig,

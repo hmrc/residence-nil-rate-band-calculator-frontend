@@ -27,8 +27,8 @@ import play.api.routing.Router
 import play.api._
 import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, FrontendAuditConnector}
-import uk.gov.hmrc.play.audit.http.config.ErrorAuditingSettings
 import uk.gov.hmrc.play.frontend.bootstrap.ShowErrorPage
+import uk.gov.hmrc.play.frontend.config.ErrorAuditingSettings
 import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
 import scala.concurrent.Future

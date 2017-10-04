@@ -26,7 +26,6 @@ import play.api.http.Status
 import play.api.libs.json._
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, CalculationResult}
@@ -34,6 +33,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
 
 import scala.concurrent.Future
 import scala.util.Success
+import uk.gov.hmrc.http.HeaderCarrier
 
 class ThresholdCalculationResultControllerSpec extends SimpleControllerSpecBase with MockitoSugar with Matchers {
 

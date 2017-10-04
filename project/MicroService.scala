@@ -5,22 +5,19 @@ import scoverage.ScoverageKeys
 import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin._
 
 // imports for Asset Pipeline
+import com.typesafe.sbt.digest.Import._
+import com.typesafe.sbt.uglify.Import._
 import com.typesafe.sbt.web.Import._
 import net.ground5hark.sbt.concat.Import._
-import com.typesafe.sbt.uglify.Import._
-import com.typesafe.sbt.digest.Import._
 
 trait MicroService {
 
   import uk.gov.hmrc._
   import DefaultBuildSettings._
-  import uk.gov.hmrc.{SbtBuildInfo, ShellPrompt, SbtAutoBuildPlugin}
+  import TestPhases._
+  import uk.gov.hmrc.SbtAutoBuildPlugin
   import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin
   import uk.gov.hmrc.versioning.SbtGitVersioning
-  import play.sbt.routes.RoutesKeys.routesGenerator
-
-
-  import TestPhases._
 
   val appName: String
 
@@ -41,6 +38,7 @@ trait MicroService {
       parallelExecution in Test := false
     )
     .settings(scalaSettings: _*)
+    .settings(scalaVersion:="2.11.11")
     .settings(publishingSettings: _*)
     .settings(defaultSettings(): _*)
     .settings(
