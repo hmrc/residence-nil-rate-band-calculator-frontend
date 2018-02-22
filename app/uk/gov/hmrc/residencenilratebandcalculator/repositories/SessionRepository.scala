@@ -58,16 +58,12 @@ class ReactiveMongoRepository(config: Configuration, mongo: () => DefaultDB)
     collection.indexesManager.ensure(Index(Seq((field, IndexType.Ascending)), Some(indexName),
       options = BSONDocument(expireAfterSeconds -> ttl))) map {
       result => {
-        // $COVERAGE-OFF$
         Logger.debug(s"set [$indexName] with value $ttl -> result : $result")
-        // $COVERAGE-ON$
         result
       }
     } recover {
-      // $COVERAGE-OFF$
       case e => Logger.error("Failed to set TTL index", e)
         false
-      // $COVERAGE-ON$
     }
   }
 

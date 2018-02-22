@@ -39,7 +39,7 @@ class NoDownsizingThresholdIncreaseController @Inject()(val appConfig: FrontendA
 
   val getReason = GetNoDownsizingThresholdIncreaseReason
 
-  def getControllerId(reason: Reason) =
+  def getControllerId(reason: Reason): String =
     reason match {
       case NoAssetsPassingToDirectDescendants => Constants.assetsPassingToDirectDescendantsId
       case _ => Constants.datePropertyWasChangedId

@@ -17,9 +17,12 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.http.Status
-import play.api.libs.json.{Reads, Writes}
+import play.api.libs.json.{Json, Reads, Writes}
+import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
+import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
+import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_assets_passing
 
 class ValueOfAssetsPassingControllerSpec extends SimpleControllerSpecBase {
@@ -69,6 +72,17 @@ class ValueOfAssetsPassingControllerSpec extends SimpleControllerSpecBase {
       setCacheValue(Constants.valueOfEstateId, testValue - 1)
       val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
       status(result) shouldBe Status.BAD_REQUEST
+    }
+
+    "return the correct view when provided with answers including a valid property value" in {
+      val result = createController().view(None, Seq(), new UserAnswers(CacheMap("id", Map(Constants.propertyValueId -> Json.toJson(1)))))(fakeRequest)
+      result shouldBe value_of_assets_passing(frontendAppConfig, None, Seq(), Some(CurrencyFormatter.format(1)))(fakeRequest,
+        messages, applicationProvider, localPartialRetriever)
+    }
+
+    "throw a runtime exception when provided with no answer for value of estate" in {
+      the[RuntimeException] thrownBy createController().validate(1,
+        new UserAnswers(CacheMap("id", Map())))(headnapper.getValue) should have message "Value of estate was not answered"
     }
   }
 }

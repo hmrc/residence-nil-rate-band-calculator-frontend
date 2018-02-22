@@ -16,12 +16,69 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import akka.stream.Materializer
+import org.jsoup.Jsoup
+import org.mockito.Matchers
+import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
+import org.mockito.Mockito._
+import uk.gov.hmrc.http.HeaderCarrier
+
+import scala.concurrent.Future
 
 class DateOfDeathControllerSpec extends DateControllerSpecBase {
+
+  val mockConnector = mock[SessionConnector]
+  val controller = new DateOfDeathController(frontendAppConfig, messagesApi, mockConnector, navigator, applicationProvider, localPartialRetriever)
+  implicit val mat = fakeApplication.injector.instanceOf[Materializer]
+
+  def setupMock(result: Future[Option[CacheMap]]) = {
+    when(mockConnector.fetch()(Matchers.any[HeaderCarrier]))
+      .thenReturn(result)
+  }
+
+  "Loading the page" when {
+
+    "sessionConnector returns a fail" should {
+
+      "return the exception" in {
+        setupMock(Future.failed(new Exception("Test message")))
+        val result = controller.onPageLoad(implicitly)(fakeRequest)
+
+        the[Exception] thrownBy await(result) should have message "Test message"
+      }
+    }
+
+    "sessionConnector returns a none" should {
+      lazy val result = controller.onPageLoad(implicitly)(fakeRequest)
+
+      "return a status of OK" in {
+        setupMock(Future.successful(None))
+        status(result) shouldBe 200
+      }
+
+      "load the correct page" in {
+        Jsoup.parse(await(bodyOf(result))).title shouldBe "What was the date of death?"
+      }
+    }
+
+    "sessionConnector returns a cachemap" should {
+      lazy val result = controller.onPageLoad(implicitly)(fakeRequest)
+
+      "return a status of OK" in {
+        setupMock(Future.successful(Some(CacheMap("id", Map()))))
+        status(result) shouldBe 200
+      }
+
+      "load the correct page" in {
+        Jsoup.parse(await(bodyOf(result))).title shouldBe "What was the date of death?"
+      }
+    }
+  }
 
   "Date of Death Controller" must {
 
