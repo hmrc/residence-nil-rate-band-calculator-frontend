@@ -16,18 +16,28 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
-import uk.gov.hmrc.residencenilratebandcalculator.utils.Transformers._
+import uk.gov.hmrc.play.test.UnitSpec
 
-import scala.util.{Success, Try}
+class FormValidatorsSpec extends UnitSpec {
 
-object FormValidators {
+  "The isValidDate method" should {
 
-  def isValidDate(day: Int, month: Int, year: Int): Boolean = Try(constructDate(day, month, year)) match {
-    case Success(_) => true
-    case _ => false
+    "return a response of true" when{
+
+      "provided with a valid date" in {
+        FormValidators.isValidDate(4,6,2017) shouldBe true
+      }
+    }
+
+    "return a response of false" when {
+
+      "provided with an invalid day" in {
+        FormValidators.isValidDate(80,6,2017) shouldBe false
+      }
+
+      "provided with an invalid month" in {
+        FormValidators.isValidDate(4,13,2017) shouldBe false
+      }
+    }
   }
-
-  def isValidPropertyPassingToDirectDescendantsOption(value: String) =
-    Constants.propertyPassingToDirectDescendantsOptions.exists(radioOption => radioOption.value == value)
 }

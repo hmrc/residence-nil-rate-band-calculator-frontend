@@ -16,19 +16,24 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import akka.stream.Materializer
 import play.api.test.FakeRequest
-import uk.gov.hmrc.play.test.WithFakeApplication
-import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
+import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 
-class PageNotFoundControllerSpec extends HtmlSpec with WithFakeApplication {
+class KeepAliveControllerSpec extends UnitSpec with WithFakeApplication {
 
   val fakeRequest = FakeRequest("", "")
 
-  "Calculate Threshold Increase controller" must {
+  "Calling the onPageLoad action" should {
+    lazy val result = fakeApplication.injector.instanceOf[KeepAliveController].onPageLoad(fakeRequest)
+    lazy implicit val mat = fakeApplication.injector.instanceOf[Materializer]
 
-    "return 200 for a GET" in {
-      val result = new PageNotFoundController().onPageLoad()(fakeRequest)
+    "return a status of 200" in {
       status(result) shouldBe 200
+    }
+
+    "return the message 'OK'" in {
+      await(bodyOf(result)) shouldBe "OK"
     }
   }
 }

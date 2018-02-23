@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import com.google.inject.Provider
 import org.scalatest.mock.MockitoSugar
 import play.api.Application
 import play.api.http.Status
-import play.api.i18n.MessagesApi
+import play.api.i18n.{Messages, MessagesApi}
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -28,7 +28,8 @@ import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
-import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRows
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.NotCloselyInherited
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, GetNoAdditionalThresholdAvailableReason, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThresholdIncreaseReason.{DatePropertyWasChangedTooEarly, NoAssetsPassingToDirectDescendants}
 import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_downsizing_threshold_increase
@@ -89,6 +90,17 @@ class NoDownsizingThresholdIncreaseControllerSpec extends BaseSpec with WithFake
           routes.ThresholdCalculationResultController.onPageLoad, Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever).toString
     }
 
+    "return the view with the no assets key when that is the reason" in {
+      val controller = new NoDownsizingThresholdIncreaseController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
+      val userAnswers = new UserAnswers(filledOutCacheMap)
+
+      val result = controller.createView(NoAssetsPassingToDirectDescendants, userAnswers, Seq())(fakeRequest)
+      val target = no_downsizing_threshold_increase(frontendAppConfig, "no_downsizing_threshold_increase.no_assets_passing_to_direct_descendants_reason",
+        navigator.nextPage(Constants.noDownsizingThresholdIncrease)(userAnswers), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever).toString()
+      result.toString() shouldBe target
+
+    }
+
     "throw an exception when the cache is unavailable" in {
       val mockSessionConnector = mock[SessionConnector]
       val controller = new NoDownsizingThresholdIncreaseController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
@@ -118,6 +130,19 @@ class NoDownsizingThresholdIncreaseControllerSpec extends BaseSpec with WithFake
         Constants.valueOfEstateId,
         Constants.chargeableEstateValueId)
       answerList shouldBe (calculatedList)
+    }
+
+    "getControllerId" should {
+
+      "return assetsPassingToDirectDescendantsId constant when no assets is passed in as the reason" in {
+        val controller = fakeApplication.injector.instanceOf[NoDownsizingThresholdIncreaseController]
+        controller.getControllerId(NoAssetsPassingToDirectDescendants) shouldBe Constants.assetsPassingToDirectDescendantsId
+      }
+
+      "return datePropertyWasChangedId constant when assets are passed as the reason" in {
+        val controller = fakeApplication.injector.instanceOf[NoDownsizingThresholdIncreaseController]
+        controller.getControllerId(NotCloselyInherited) shouldBe Constants.datePropertyWasChangedId
+      }
     }
   }
 }

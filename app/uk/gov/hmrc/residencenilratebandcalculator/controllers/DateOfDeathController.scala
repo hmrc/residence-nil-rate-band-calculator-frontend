@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,13 +25,15 @@ import play.api.i18n.MessagesApi
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.{Action, Request}
 import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.http.logging.SessionId
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 import uk.gov.hmrc.residencenilratebandcalculator.models.{Date, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
-import uk.gov.hmrc.http.logging.SessionId
+
+import scala.concurrent.Future
 
 @Singleton
 class DateOfDeathController @Inject()(val appConfig: FrontendAppConfig,
@@ -61,12 +63,7 @@ class DateOfDeathController @Inject()(val appConfig: FrontendAppConfig,
     val boundForm = form.bindFromRequest()
     boundForm.fold(
       (formWithErrors: Form[Date]) => {
-        sessionConnector.fetch().map {
-          optionalCacheMap => {
-            val cacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
-            BadRequest(view(formWithErrors))
-          }
-        }
+        Future.successful(BadRequest(view(formWithErrors)))
       },
       (value) =>
         sessionConnector.cache[Date](controllerId, value).map(cacheMap =>
