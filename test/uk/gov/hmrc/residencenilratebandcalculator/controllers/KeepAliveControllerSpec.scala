@@ -20,9 +20,6 @@ import akka.stream.Materializer
 import play.api.test.FakeRequest
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 
-/**
-  * Created by james-forster on 21/02/18.
-  */
 class KeepAliveControllerSpec extends UnitSpec with WithFakeApplication {
 
   val fakeRequest = FakeRequest("", "")
