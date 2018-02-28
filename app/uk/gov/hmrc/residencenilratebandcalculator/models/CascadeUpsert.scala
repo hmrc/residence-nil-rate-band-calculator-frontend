@@ -148,7 +148,7 @@ class CascadeUpsert {
             cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemoveWhenDateBeforeEligibilityDate.contains(s)))
           case Failure(e) =>
             val msg = s"Unable to parse value $value as the Date Property Was Changed"
-            Logger.error(msg)
+            Logger.error(msg, e)
             throw new RuntimeException(msg)
           case _ => cacheMap
         }
