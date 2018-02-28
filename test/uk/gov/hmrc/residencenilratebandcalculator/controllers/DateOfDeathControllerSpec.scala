@@ -18,7 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import akka.stream.Materializer
 import org.jsoup.Jsoup
-import org.mockito.Matchers
+import org.mockito.ArgumentMatchers
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
@@ -37,7 +37,7 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase {
   implicit val mat = fakeApplication.injector.instanceOf[Materializer]
 
   def setupMock(result: Future[Option[CacheMap]]) = {
-    when(mockConnector.fetch()(Matchers.any[HeaderCarrier]))
+    when(mockConnector.fetch()(ArgumentMatchers.any[HeaderCarrier]))
       .thenReturn(result)
   }
 

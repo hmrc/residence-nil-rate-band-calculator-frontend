@@ -16,52 +16,50 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.repositories
 
-import org.mockito.Matchers
-import org.scalatest.mock.MockitoSugar
-import play.api.{Configuration, Play}
-import reactivemongo.api.{CursorProducer, DefaultDB}
+import org.mockito.ArgumentMatchers
+import org.scalatest.mockito.MockitoSugar
+import play.api.Configuration
+import reactivemongo.api.DefaultDB
 import reactivemongo.api.indexes.{CollectionIndexesManager, Index}
-import reactivemongo.json.collection.JSONCollection
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import org.mockito.Mockito._
+import org.mockito.stubbing.OngoingStubbing
 import play.api.libs.json.{JsObject, Json}
-import reactivemongo.api.collections.GenericQueryBuilder
 import reactivemongo.api.commands.{DefaultWriteResult, UpdateWriteResult, WriteConcern, WriteResult}
 import reactivemongo.bson.BSONDocument
-import reactivemongo.json.ImplicitBSONHandlers._
+import reactivemongo.play.json.collection.JSONCollection
 import uk.gov.hmrc.http.cache.client.CacheMap
 
 import scala.concurrent.{ExecutionContext, Future}
-import scala.concurrent.ExecutionContext.Implicits.global
 
 class SessionRepositorySpec extends UnitSpec with MockitoSugar with WithFakeApplication {
 
   lazy val configuration: Configuration = fakeApplication.injector.instanceOf[Configuration]
-  val mockCollection = mock[JSONCollection]
-  val mockConnection = mock[DefaultDB]
+  val mockCollection: JSONCollection = mock[JSONCollection]
+  val mockConnection: DefaultDB = mock[DefaultDB]
 
-  def setupIndexMocks(response: Boolean, errors: Boolean = false) = {
+  def setupIndexMocks(response: Boolean, errors: Boolean = false): OngoingStubbing[Future[Boolean]] = {
       val mockIndexesManager = mock[CollectionIndexesManager]
 
-      when(mockCollection.indexesManager(Matchers.any[ExecutionContext]))
+      when(mockCollection.indexesManager(ArgumentMatchers.any[ExecutionContext]))
       .thenReturn(mockIndexesManager)
 
-      when(mockIndexesManager.ensure(Matchers.any[Index]))
+      when(mockIndexesManager.ensure(ArgumentMatchers.any[Index]))
       .thenReturn(if (errors) throw new Exception("Error message") else response)
   }
 
-  def setupUpsertMocks(result: Future[UpdateWriteResult]) = {
+  def setupUpsertMocks(result: Future[UpdateWriteResult]): OngoingStubbing[Future[UpdateWriteResult]] = {
     setupIndexMocks(response = true)
 
-    when(mockCollection.update(Matchers.any[BSONDocument], Matchers.any[BSONDocument], Matchers.any[WriteConcern],
-      Matchers.eq(true), Matchers.any[Boolean])(Matchers.any(), Matchers.any(), Matchers.any()))
+    when(mockCollection.update(ArgumentMatchers.any[BSONDocument], ArgumentMatchers.any[BSONDocument], ArgumentMatchers.any[WriteConcern],
+      ArgumentMatchers.eq(true), ArgumentMatchers.any[Boolean])(ArgumentMatchers.any(), ArgumentMatchers.any(), ArgumentMatchers.any()))
       .thenReturn(result)
   }
 
-  def setupRemoveMocks(result: Future[WriteResult]) = {
+  def setupRemoveMocks(result: Future[WriteResult]): OngoingStubbing[Future[WriteResult]] = {
     setupIndexMocks(response = true)
 
-    when(mockCollection.remove(Matchers.any[JsObject], Matchers.any[WriteConcern], Matchers.any[Boolean])(Matchers.any(), Matchers.any()))
+    when(mockCollection.remove(ArgumentMatchers.any[JsObject], ArgumentMatchers.any[WriteConcern], ArgumentMatchers.any[Boolean])(ArgumentMatchers.any(), ArgumentMatchers.any()))
       .thenReturn(result)
   }
 
