@@ -19,9 +19,9 @@ package uk.gov.hmrc.residencenilratebandcalculator.connectors
 import com.eclipsesource.schema.SchemaType
 import org.joda.time.LocalDate
 import org.mockito.ArgumentCaptor
-import org.mockito.Matchers._
-import org.mockito.Mockito.{verify, when}
-import org.scalatest.mock.MockitoSugar
+import org.mockito.Mockito._
+import org.mockito.ArgumentMatchers._
+import org.scalatest.mockito.MockitoSugar
 import play.api.http.Status
 import play.api.libs.json._
 import uk.gov.hmrc.play.test.WithFakeApplication
