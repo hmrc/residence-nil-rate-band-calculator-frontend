@@ -45,22 +45,8 @@ case class DatedCacheMap(id: String,
                         )
 
 object DatedCacheMap {
-  val mongoWrites = OWrites[DatedCacheMap] { datedCacheMap =>
-    Json.obj(
-      "_id" -> datedCacheMap.id,
-      "data" -> datedCacheMap.data,
-      "lastUpdated" -> datedCacheMap.lastUpdated
-    )
-  }
 
-  val mongoReads: Reads[DatedCacheMap] = (
-    (JsPath \ "_id").read[String] and
-      (JsPath \ "data").read[Map[String, JsValue]] and
-      (JsPath \ "lastUpdated").read[DateTime]
-    ) ((id, data, lastUpdated) => DatedCacheMap(id, data, lastUpdated))
-
-  val formats = Format(mongoReads, mongoWrites)
-
+  implicit val formats = Json.format[DatedCacheMap]
 
   def apply(cacheMap: CacheMap): DatedCacheMap = DatedCacheMap(cacheMap.id, cacheMap.data)
 }
