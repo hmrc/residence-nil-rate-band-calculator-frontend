@@ -18,14 +18,15 @@ package uk.gov.hmrc.residencenilratebandcalculator
 
 import com.google.inject.Provider
 import org.mockito.Mockito._
-import org.mockito.ArgumentMatchers._
-import org.scalatest.mockito.MockitoSugar
+import org.scalatest.Matchers
+import org.scalatest.mock.MockitoSugar
 import play.api.Application
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
+import org.mockito.Matchers._
 import play.twirl.api.Html
 
-class BaseSpec extends UnitSpec with MockitoSugar with WithFakeApplication {
+class BaseSpec extends UnitSpec with MockitoSugar with Matchers with WithFakeApplication {
   def applicationProvider: Provider[Application] = {
     val mockedProviderApplication: Provider[Application] = mock[Provider[Application]]
     when(mockedProviderApplication.get) thenReturn fakeApplication

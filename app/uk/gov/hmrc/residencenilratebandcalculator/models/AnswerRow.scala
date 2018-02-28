@@ -38,7 +38,7 @@ object AnswerRow {
     AnswerRow(messages(titleKey), if (yesNo) messages("site.yes") else messages("site.no"), url.url)
 
   def apply(titleKey: String, date: LocalDate, url: Call)(messages: Messages): AnswerRow =
-    AnswerRow(messages(titleKey), LanguageUtils.Dates.formatDate(date)(messages), url.url)
+    AnswerRow(messages(titleKey), LanguageUtils.Dates.formatDate(date)(messages.lang), url.url)
 
   def apply(titleKey: String, percent: Double, url: Call)(messages: Messages): AnswerRow = {
     AnswerRow(messages(titleKey), PercentageFormatter.format(percent), url.url)

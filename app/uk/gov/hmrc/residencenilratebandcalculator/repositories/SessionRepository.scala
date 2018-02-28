@@ -22,45 +22,24 @@ import org.joda.time.{DateTime, DateTimeZone}
 import play.api.{Configuration, Logger}
 import play.api.libs.json.{JsValue, Json}
 import play.modules.reactivemongo.MongoDbConnection
-import reactivemongo.api.{Cursor, DefaultDB}
-import reactivemongo.bson._
+import reactivemongo.api.DefaultDB
+import reactivemongo.api.indexes.{Index, IndexType}
+import reactivemongo.bson.{BSONDocument, BSONObjectID}
 import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.mongo.ReactiveRepository
+import uk.gov.hmrc.mongo.json.ReactiveMongoFormats
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import play.api.libs.functional.syntax._
-import play.api.libs.json.Reads.StringReads
-import play.api.libs.json.Writes.StringWrites
-import play.api.libs.json._
-import reactivemongo.api.indexes.{Index, IndexType}
-import reactivemongo.bson.BSONDocument
-import reactivemongo.play.json.ImplicitBSONHandlers._
-import uk.gov.hmrc.mongo.json.ReactiveMongoFormats.dateTimeFormats
-import uk.gov.hmrc.mongo.ReactiveRepository
-
 import scala.concurrent.Future
+import scala.util.{Failure, Success}
 
 case class DatedCacheMap(id: String,
                          data: Map[String, JsValue],
-                         lastUpdated: DateTime = DateTime.now(DateTimeZone.UTC)
-                        )
+                         lastUpdated: DateTime = DateTime.now(DateTimeZone.UTC))
 
 object DatedCacheMap {
-  val mongoWrites = OWrites[DatedCacheMap] { datedCacheMap =>
-    Json.obj(
-      "_id" -> datedCacheMap.id,
-      "data" -> datedCacheMap.data,
-      "lastUpdated" -> datedCacheMap.lastUpdated
-    )
-  }
-
-  val mongoReads: Reads[DatedCacheMap] = (
-    (JsPath \ "_id").read[String] and
-      (JsPath \ "data").read[Map[String, JsValue]] and
-      (JsPath \ "lastUpdated").read[DateTime]
-    ) ((id, data, lastUpdated) => DatedCacheMap(id, data, lastUpdated))
-
-  val formats = Format(mongoReads, mongoWrites)
-
+  implicit val dateFormat = ReactiveMongoFormats.dateTimeFormats
+  implicit val formats = Json.format[DatedCacheMap]
 
   def apply(cacheMap: CacheMap): DatedCacheMap = DatedCacheMap(cacheMap.id, cacheMap.data)
 }
@@ -91,7 +70,7 @@ class ReactiveMongoRepository(config: Configuration, mongo: () => DefaultDB)
   def upsert(cm: CacheMap): Future[Boolean] = {
     val selector = BSONDocument("id" -> cm.id)
     val cmDocument = Json.toJson(DatedCacheMap(cm))
-    val modifier = BSONDocument("$set" -> cmDocument.as[BSONValue])
+    val modifier = BSONDocument("$set" -> cmDocument)
 
     collection.update(selector, modifier, upsert = true).map { lastError =>
       lastError.ok
@@ -105,7 +84,7 @@ class ReactiveMongoRepository(config: Configuration, mongo: () => DefaultDB)
   }
 
   def get(id: String): Future[Option[CacheMap]] = {
-    collection.find(Json.obj("id" -> id)).cursor[CacheMap]().collect[Seq](Int.MaxValue, Cursor.FailOnError[Seq[CacheMap]]()).map { (cmSeq: Seq[CacheMap]) =>
+    collection.find(Json.obj("id" -> id)).cursor[CacheMap]().collect[Seq]().map { (cmSeq: Seq[CacheMap]) =>
       if (cmSeq.length != 1) {
         None
       } else {

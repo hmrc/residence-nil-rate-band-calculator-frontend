@@ -16,8 +16,8 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import org.mockito.Mockito._
-import org.mockito.ArgumentMatchers._
+import org.mockito.Matchers.any
+import org.mockito.Mockito.when
 import play.api.http.Status
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request

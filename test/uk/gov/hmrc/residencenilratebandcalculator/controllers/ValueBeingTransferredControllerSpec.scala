@@ -16,8 +16,10 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import org.mockito.Mockito._
-import org.mockito.ArgumentMatchers._
+import com.google.inject.Provider
+import org.mockito.Matchers.any
+import org.mockito.Mockito.when
+import play.api.Application
 import play.api.data.FormError
 import play.api.http.Status
 import play.api.i18n.MessagesApi
@@ -31,6 +33,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, UserAnswers}
+import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_being_transferred
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants, FrontendAppConfig, Navigator}
 

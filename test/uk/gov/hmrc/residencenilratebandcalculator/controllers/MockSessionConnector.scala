@@ -18,9 +18,9 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import org.joda.time.LocalDate
 import org.mockito.ArgumentCaptor
+import org.mockito.Matchers._
 import org.mockito.Mockito._
-import org.mockito.ArgumentMatchers._
-import org.scalatest.mockito.MockitoSugar
+import org.scalatest.mock.MockitoSugar
 import org.scalatest.{BeforeAndAfter, Matchers}
 import play.api.libs.json.{JsValue, Reads, Writes}
 import uk.gov.hmrc.http.cache.client.CacheMap

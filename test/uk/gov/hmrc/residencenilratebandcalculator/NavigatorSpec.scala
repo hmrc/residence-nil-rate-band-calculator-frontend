@@ -19,7 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator
 import org.joda.time.LocalDate
 import org.mockito.Mockito._
 import org.scalatest.Matchers
-import org.scalatest.mockito.MockitoSugar
+import org.scalatest.mock.MockitoSugar
 import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers

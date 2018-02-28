@@ -20,13 +20,12 @@ import javax.inject.{Inject, Singleton}
 
 import play.api.inject.ApplicationLifecycle
 import play.api.{Application, Configuration}
-import uk.gov.hmrc.play.graphite.MicroserviceMetrics
-import uk.gov.hmrc.play.frontend.bootstrap.DefaultFrontendGlobal
+import uk.gov.hmrc.play.graphite.GraphiteConfig
 
 import scala.concurrent.Future
 
 @Singleton
-abstract class Graphite @Inject()(app: Application, lifecycle: ApplicationLifecycle) extends DefaultFrontendGlobal {
+class Graphite @Inject()(app: Application, lifecycle: ApplicationLifecycle) extends GraphiteConfig {
   override def microserviceMetricsConfig(implicit app: Application): Option[Configuration] = app.configuration.getConfig(s"microservice.metrics")
 
   lifecycle.addStopHook {

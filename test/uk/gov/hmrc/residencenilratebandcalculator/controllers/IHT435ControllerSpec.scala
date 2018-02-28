@@ -19,8 +19,8 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import java.io.ByteArrayOutputStream
 
 import com.google.inject.Provider
+import org.mockito.Matchers._
 import org.mockito.Mockito._
-import org.mockito.ArgumentMatchers._
 import play.api.http.Status
 import play.api.i18n.MessagesApi
 import play.api.test.FakeRequest

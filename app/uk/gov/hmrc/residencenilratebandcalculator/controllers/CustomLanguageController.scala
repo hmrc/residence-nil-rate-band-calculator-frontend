@@ -16,18 +16,17 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import javax.inject.{Inject, _}
+import javax.inject.{Inject, Singleton}
 
-import play.api.i18n.{I18nSupport, Lang, MessagesApi}
+import play.api.i18n.{Lang, MessagesApi}
 import play.api.mvc.{Action, AnyContent, Call}
 import uk.gov.hmrc.play.config.RunMode
-import uk.gov.hmrc.play.language.LanguageUtils
+import uk.gov.hmrc.play.language.{LanguageController, LanguageUtils}
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
-import play.api.mvc._
 
 @Singleton
 class CustomLanguageController @Inject()(val appConfig: FrontendAppConfig, implicit val messagesApi: MessagesApi)
-extends Controller with RunMode with I18nSupport {
+  extends LanguageController with RunMode {
 
   val englishLang = Lang("en")
 
@@ -39,7 +38,7 @@ extends Controller with RunMode with I18nSupport {
     }
   }
 
-  def switchToLanguage(language: String): Action[AnyContent] =  Action { implicit request =>
+  override def switchToLanguage(language: String): Action[AnyContent] =  Action { implicit request =>
     val lang =
       if(appConfig.isWelshEnabled) {
         languageMap.getOrElse(language, LanguageUtils.getCurrentLang)
@@ -51,8 +50,8 @@ extends Controller with RunMode with I18nSupport {
     Redirect(redirectURL).withLang(Lang.apply(lang.code)).flashing(LanguageUtils.FlashWithSwitchIndicator)
   }
 
-  protected def fallbackURL: String = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.CalculateThresholdIncreaseController.onPageLoad().url
+  override protected def fallbackURL: String = routes.CalculateThresholdIncreaseController.onPageLoad().url
 
-  def languageMap: Map[String, Lang] = Map("english" -> Lang("en"), "cymraeg" -> Lang("cy"))
+  override def languageMap: Map[String, Lang] = Map("english" -> Lang("en"), "cymraeg" -> Lang("cy"))
 
 }

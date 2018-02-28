@@ -14,19 +14,19 @@ private object AppDependencies {
   import play.sbt.PlayImport._
   import play.core.PlayVersion
 
-  private val frontendBootstrapVersion = "8.17.0"
+  private val frontendBootstrapVersion = "8.8.0"
   private val playPartialsVersion = "6.1.0"
-  private val hmrcTestVersion = "3.0.0"
-  private val scalaTestVersion = "3.0.0"
+  private val hmrcTestVersion = "2.4.0"
+  private val scalaTestVersion = "2.2.6"
   private val pegdownVersion = "1.6.0"
-  private val mockitoCoreVersion = "2.13.0"
+  private val mockitoAllVersion = "1.10.19"
   private val whitelistVersion = "2.0.0"
-  private val httpCachingClientVersion = "7.1.0"
+  private val httpCachingClientVersion = "7.0.0"
   private val playJsonValidatorVersion = "0.8.6"
-  private val playReactivemongoVersion = "6.2.0"
+  private val playReactivemongoVersion = "5.1.0"
   private val pdfBoxVersion = "2.0.4"
   private val metricsGraphiteVersion = "3.0.2"
-  private val playLanguageVersion = "3.4.0"
+  private val playLanguageVersion = "3.0.0"
 
   val compile = Seq(
     "uk.gov.hmrc" %% "play-reactivemongo" % playReactivemongoVersion,
@@ -52,9 +52,9 @@ private object AppDependencies {
         "uk.gov.hmrc" %% "hmrctest" % hmrcTestVersion % scope,
         "org.scalatest" %% "scalatest" % scalaTestVersion % scope,
         "org.pegdown" % "pegdown" % pegdownVersion % scope,
-        "org.jsoup" % "jsoup" % "1.10.2" % scope,
+        "org.jsoup" % "jsoup" % "1.8.1" % scope,
         "com.typesafe.play" %% "play-test" % PlayVersion.current % scope,
-        "org.mockito" % "mockito-core" % mockitoCoreVersion % scope
+        "org.mockito" % "mockito-all" % mockitoAllVersion % scope
       )
     }.test
   }
