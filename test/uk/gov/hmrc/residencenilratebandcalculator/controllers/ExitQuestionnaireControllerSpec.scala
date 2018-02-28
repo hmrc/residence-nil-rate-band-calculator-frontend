@@ -16,10 +16,10 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import org.mockito.{ArgumentCaptor, ArgumentMatchers}
 import org.mockito.Mockito._
-import org.mockito.{ArgumentCaptor, Matchers}
+import org.scalatest.mockito.MockitoSugar
 import org.scalatest.BeforeAndAfter
-import org.scalatest.mock.MockitoSugar
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -28,7 +28,6 @@ import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAuditConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.forms.ExitQuestionnaireForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{ExitQuestionnaire, ExitQuestionnaireEvent}
-import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exit_questionnaire
 
@@ -62,7 +61,7 @@ class ExitQuestionnaireControllerSpec extends HtmlSpec with WithFakeApplication 
     }
 
     "send an audit event on POST when given valid data" in {
-      when(mockAuditConnector.sendEvent(Matchers.any())(Matchers.any(), Matchers.any())).thenReturn(Future.successful(AuditResult.Success))
+      when(mockAuditConnector.sendEvent(ArgumentMatchers.any())(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(Future.successful(AuditResult.Success))
       val exitQuestionnaire = ExitQuestionnaire(Some(ExitQuestionnaire.VERY_EASY),
         Some(ExitQuestionnaire.VERY_SATISFIED),
         Some("Comments"),
@@ -75,7 +74,7 @@ class ExitQuestionnaireControllerSpec extends HtmlSpec with WithFakeApplication 
     }
 
     "redirect to the thank you page on POST when given valid data" in {
-      when(mockAuditConnector.sendEvent(Matchers.any())(Matchers.any(), Matchers.any())).thenReturn(Future.successful(AuditResult.Success))
+      when(mockAuditConnector.sendEvent(ArgumentMatchers.any())(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(Future.successful(AuditResult.Success))
       val exitQuestionnaire = ExitQuestionnaire(Some(ExitQuestionnaire.VERY_EASY),
                                                 Some(ExitQuestionnaire.VERY_SATISFIED),
                                                 Some("Comments"),
@@ -89,7 +88,7 @@ class ExitQuestionnaireControllerSpec extends HtmlSpec with WithFakeApplication 
     }
 
     "redirect to the thank you page even when audit has failed" in {
-      when(mockAuditConnector.sendEvent(Matchers.any())(Matchers.any(), Matchers.any())).thenReturn(Future.failed(new Exception()))
+      when(mockAuditConnector.sendEvent(ArgumentMatchers.any())(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(Future.failed(new Exception()))
       val exitQuestionnaire = ExitQuestionnaire(Some(ExitQuestionnaire.VERY_EASY),
         Some(ExitQuestionnaire.VERY_SATISFIED),
         Some("Comments"),
