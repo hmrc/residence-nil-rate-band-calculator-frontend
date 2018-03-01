@@ -43,7 +43,7 @@ class ThresholdCalculationResultController @Inject()(appConfig: FrontendAppConfi
   extends FrontendController with I18nSupport {
 
   private def fail(ex: Throwable) = {
-    Logger.error(ex.getMessage, ex.getStackTrace.toString)
+    Logger.error(ex.getMessage, ex)
     InternalServerError(ex.getMessage)
   }
 
