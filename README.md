@@ -4,7 +4,7 @@
 
 This service provides a frontend for the [residence nil-rate band](https://www.gov.uk/guidance/inheritance-tax-residence-nil-rate-band) calculator service.
 
-### Requirements
+### Requirements 
 This service is written in Scala and Play 2.5, so needs at least a JRE to run.
 
 ### Running locally
