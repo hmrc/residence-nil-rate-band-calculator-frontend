@@ -17,7 +17,8 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.PartOfEstatePassingToDirectDescendantsController
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.part_of_estate_passing_to_direct_descendants
 
 import scala.language.reflectiveCalls
@@ -44,11 +45,11 @@ class PartOfEstatePassingToDirectDescendantsViewSpec extends BooleanViewSpecBase
       "guidance3.bullet7",
       "guidance3.bullet8",
       "guidance4"
-    )
+    )(Some(fakeApplication.injector.instanceOf[PartOfEstatePassingToDirectDescendantsController].form()))
 
     behave like pageWithoutBackLink[Boolean](createView)
 
-    behave like booleanPage(createView, messageKeyPrefix, PartOfEstatePassingToDirectDescendantsController.onSubmit().url)
+    behave like booleanPage(createView, messageKeyPrefix, routes.PartOfEstatePassingToDirectDescendantsController.onSubmit().url)
 
     behave like pageContainingPreviousAnswers(createView)
   }

@@ -18,7 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.{Form, FormError}
 import play.twirl.api.HtmlFormat
-
+import play.api.data.Forms._
 import scala.reflect.ClassTag
 
 trait ViewSpecBase extends HtmlSpec {
@@ -27,9 +27,10 @@ trait ViewSpecBase extends HtmlSpec {
   val errorMessage = "error.number"
   val error = FormError(errorKey, errorMessage)
 
+
   def rnrbPage[A: ClassTag](createView: (Option[Form[A]]) => HtmlFormat.Appendable,
                             messageKeyPrefix: String,
-                            expectedGuidanceKeys: String*) = {
+                            expectedGuidanceKeys: String*)(emptyForm: Option[Form[A]] = None) = {
     "behave like a standard RNRB page" when {
       "rendered" must {
         "have the correct banner title" in {
