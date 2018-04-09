@@ -38,6 +38,7 @@ class ValueOfEstateControllerSpec extends SimpleControllerSpecBase {
       }
     }
 
+    
     def createController = () => new ValueOfEstateController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
 
     val testValue = 123
