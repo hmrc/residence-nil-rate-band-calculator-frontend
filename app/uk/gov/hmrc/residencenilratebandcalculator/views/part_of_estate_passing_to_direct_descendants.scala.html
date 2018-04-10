@@ -35,6 +35,7 @@ implicit request: Request[_], messages: Messages, applicationProvider: Provider[
 
     @helpers.form(action = PartOfEstatePassingToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
 
+        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(oform))
 
         @rnrbHelpers.heading("part_of_estate_passing_to_direct_descendants.title")
 
@@ -65,14 +66,12 @@ implicit request: Request[_], messages: Messages, applicationProvider: Provider[
             <fieldset class="form-field-group">
                 @govHelpers.inputRadioGroup(
                 oform.get("value"),
-                Seq("true" -> "yes", "false" -> "no")
+                Seq("true" -> "yes", "false" -> "no"),
+                '_legend -> messages("part_of_estate_passing_to_direct_descendants.browser_title")
                 )
             </fieldset>
             @rnrbHelpers.submit_button()
         </div>
-
-
-
 
     }
 

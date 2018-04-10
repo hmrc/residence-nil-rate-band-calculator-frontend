@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.ExemptionsAndReliefClaimedController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exemptions_and_relief_claimed
 
@@ -31,7 +32,7 @@ class ExemptionsAndReliefClaimedViewSpec  extends BooleanViewSpecBase {
   "Exemptions And Relief Claimed View" must {
 
     behave like rnrbPage[Boolean](createView, messageKeyPrefix,
-      "guidance2", "guidance2.bullet1", "guidance2.bullet2", "guidance2.bullet3")
+      "guidance2", "guidance2.bullet1", "guidance2.bullet2", "guidance2.bullet3")(Some(fakeApplication.injector.instanceOf[ExemptionsAndReliefClaimedController].form()))
 
     behave like pageWithoutBackLink[Boolean](createView)
 

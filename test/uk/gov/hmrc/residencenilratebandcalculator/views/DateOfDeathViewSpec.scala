@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.DateOfDeathController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
@@ -32,7 +33,7 @@ class DateOfDeathViewSpec extends DateViewSpecBase {
 
   "Date of Death View" must {
 
-    behave like rnrbPage[Date](createView, messageKeyPrefix, "guidance")
+    behave like rnrbPage[Date](createView, messageKeyPrefix, "guidance")()
 
     behave like datePage(createView, messageKeyPrefix, DateOfDeathController.onSubmit().url)
 

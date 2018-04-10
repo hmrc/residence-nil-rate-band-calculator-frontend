@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyInEstateController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_in_estate
 
@@ -30,7 +31,7 @@ class PropertyInEstateViewSpec  extends BooleanViewSpecBase {
 
   "Property In Estate View" must {
 
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")
+    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")(Some(fakeApplication.injector.instanceOf[PropertyInEstateController].form()))
 
     behave like pageWithoutBackLink[Boolean](createView)
 

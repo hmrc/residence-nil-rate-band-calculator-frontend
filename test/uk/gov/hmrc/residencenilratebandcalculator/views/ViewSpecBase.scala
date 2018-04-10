@@ -18,7 +18,6 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.{Form, FormError}
 import play.twirl.api.HtmlFormat
-import play.api.data.Forms._
 import scala.reflect.ClassTag
 
 trait ViewSpecBase extends HtmlSpec {
@@ -34,41 +33,41 @@ trait ViewSpecBase extends HtmlSpec {
     "behave like a standard RNRB page" when {
       "rendered" must {
         "have the correct banner title" in {
-          val doc = asDocument(createView(None))
+          val doc = asDocument(createView(emptyForm))
           val nav = doc.getElementById("proposition-menu")
           val span = nav.children.first
           span.text shouldBe messagesApi("site.service_name")
         }
 
         "display the correct browser title" in {
-          val doc = asDocument(createView(None))
+          val doc = asDocument(createView(emptyForm))
           assertEqualsMessage(doc, "title", s"$messageKeyPrefix.browser_title")
         }
 
         "display the correct page title" in {
-          val doc = asDocument(createView(None))
+          val doc = asDocument(createView(emptyForm))
           assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.title")
         }
 
         "display the correct guidance" in {
-          val doc = asDocument(createView(None))
+          val doc = asDocument(createView(emptyForm))
           for (key <- expectedGuidanceKeys) assertContainsText(doc, messages(s"$messageKeyPrefix.$key"))
         }
 
         "not display the HMRC logo" in {
-          val doc = asDocument(createView(None))
+          val doc = asDocument(createView(emptyForm))
           assertNotRenderedByCssSelector(doc, ".organisation-logo")
         }
       }
     }
   }
 
-  def pageWithoutBackLink[A: ClassTag](createView: (Option[Form[A]]) => HtmlFormat.Appendable) = {
+  def pageWithoutBackLink[A: ClassTag](createView: (Option[Form[A]]) => HtmlFormat.Appendable, emptyForm: Option[Form[A]] = None) = {
 
     "behave like a page without a back link" when {
       "rendered" must {
         "not contain a back link pointing to another page" in {
-          val doc = asDocument(createView(None))
+          val doc = asDocument(createView(emptyForm))
           assertNotRenderedById(doc, "back")
           assert(doc.toString.contains(messages("site.back")) == false)
         }
@@ -78,12 +77,12 @@ trait ViewSpecBase extends HtmlSpec {
 
   def questionPage[A: ClassTag](createView: (Option[Form[A]]) => HtmlFormat.Appendable,
                                 messageKeyPrefix: String,
-                                expectedFormAction: String) = {
+                                expectedFormAction: String, emptyForm: Option[Form[A]] = None) = {
 
     "behave like a page with a question" when {
       "rendered" must {
         "contain a form that POSTs to the correct action" in {
-          val doc = asDocument(createView(None))
+          val doc = asDocument(createView(emptyForm))
           val forms = doc.getElementsByTag("form")
           forms.size shouldBe 1
           val form = forms.first
@@ -92,18 +91,18 @@ trait ViewSpecBase extends HtmlSpec {
         }
 
         "contain a submit button" in {
-          val doc = asDocument(createView(None))
+          val doc = asDocument(createView(emptyForm))
           val input = assertRenderedById(doc, "submit")
         }
       }
     }
   }
 
-  def pageContainingPreviousAnswers[A: ClassTag](createView: (Option[Form[A]]) => HtmlFormat.Appendable) = {
+  def pageContainingPreviousAnswers[A: ClassTag](createView: (Option[Form[A]]) => HtmlFormat.Appendable, emptyForm: Option[Form[A]] = None) = {
     "behave like a page containing previous answers" when {
       "rendered" must {
         "contain the Show previous answers link" in {
-          val doc = asDocument(createView(None))
+          val doc = asDocument(createView(emptyForm))
           assertContainsMessages(doc, "site.show_previous_answers")
         }
       }

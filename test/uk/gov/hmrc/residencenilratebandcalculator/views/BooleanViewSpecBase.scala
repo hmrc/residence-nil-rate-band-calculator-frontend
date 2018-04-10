@@ -24,43 +24,46 @@ trait BooleanViewSpecBase extends ViewSpecBase {
 
   def booleanPage(createView: (Option[Form[Boolean]]) => HtmlFormat.Appendable,
                   messageKeyPrefix: String,
-                  expectedFormAction: String) = {
+                  expectedFormAction: String, emptyForm: Option[Form[Boolean]] = None, useNewValues: Boolean = false) = {
 
-    behave like questionPage[Boolean](createView, messageKeyPrefix, expectedFormAction)
+    behave like questionPage[Boolean](createView, messageKeyPrefix, expectedFormAction, emptyForm)
+
+    val yes = if(useNewValues) "value-true" else "yes"
+    val no = if(useNewValues) "value-false" else "no"
 
     "behave like a page with a Yes/No question" when {
       "rendered" must {
         "contain a legend for the question" in {
-          val doc = asDocument(createView(None))
+          val doc = asDocument(createView(emptyForm))
           val legends = doc.getElementsByTag("legend")
           legends.size shouldBe 1
           legends.first.text shouldBe messages(s"$messageKeyPrefix.title")
         }
 
         "contain an input for the value" in {
-          val doc = asDocument(createView(None))
-          assertRenderedById(doc, "yes")
-          assertRenderedById(doc, "no")
+          val doc = asDocument(createView(emptyForm))
+          assertRenderedById(doc, yes)
+          assertRenderedById(doc, no)
         }
 
         "have no values checked when rendered with no form" in {
-          val doc = asDocument(createView(None))
-          assert(!doc.getElementById("yes").hasAttr("checked"))
-          assert(!doc.getElementById("no").hasAttr("checked"))
+          val doc = asDocument(createView(emptyForm))
+          assert(!doc.getElementById(yes).hasAttr("checked"))
+          assert(!doc.getElementById(no).hasAttr("checked"))
         }
 
         "not render an error summary" in {
-          val doc = asDocument(createView(None))
+          val doc = asDocument(createView(emptyForm))
           assertNotRenderedById(doc, "error-summary_header")
         }
       }
 
       "rendered with a value of true" must {
-        behave like answeredBooleanPage(createView, true)
+        behave like answeredBooleanPage(createView, true, emptyForm, useNewValues)
       }
 
       "rendered with a value of false" must {
-        behave like answeredBooleanPage(createView, false)
+        behave like answeredBooleanPage(createView, false, emptyForm, useNewValues)
       }
 
       "rendered with an error" must {
@@ -80,12 +83,16 @@ trait BooleanViewSpecBase extends ViewSpecBase {
   }
 
   def answeredBooleanPage(createView: (Option[Form[Boolean]]) => HtmlFormat.Appendable,
-                          answer: Boolean) = {
+                          answer: Boolean, emptyForm: Option[Form[Boolean]] = None, useNewValues: Boolean = false) = {
+
+    val yes = if(useNewValues) "value-true" else "yes"
+    val no = if(useNewValues) "value-false" else "no"
 
     "have only the correct value checked" in {
       val doc = asDocument(createView(Some(BooleanForm("").fill(answer))))
-      assert(doc.getElementById("yes").hasAttr("checked") == answer)
-      assert(doc.getElementById("no").hasAttr("checked") != answer)
+      val test = asDocument(createView(Some(emptyForm).get))
+      assert(doc.getElementById(yes).hasAttr("checked") == answer)
+      assert(doc.getElementById(no).hasAttr("checked") != answer)
     }
 
     "not render an error summary" in {

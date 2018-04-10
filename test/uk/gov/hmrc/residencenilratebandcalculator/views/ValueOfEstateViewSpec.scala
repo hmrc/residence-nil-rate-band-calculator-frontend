@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfEstateController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_estate
@@ -40,7 +41,7 @@ class ValueOfEstateViewSpec extends IntViewSpecBase {
       "guidance1.bullet5",
       "guidance1.bullet6",
       "guidance2"
-    )
+    )(Some(fakeApplication.injector.instanceOf[ValueOfEstateController].form()))
 
     behave like pageWithoutBackLink[Int](createView)
 

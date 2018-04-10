@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableEstateValueController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_estate_value
@@ -31,7 +32,7 @@ class ChargeableEstateValueViewSpec extends IntViewSpecBase {
 
   "Chargeable Estate Value View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance")
+    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance")(Some(fakeApplication.injector.instanceOf[ChargeableEstateValueController].form()))
 
     behave like pageWithoutBackLink[Int](createView)
 

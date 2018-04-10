@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueAvailableWhenPropertyChangedController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_available_when_property_changed
@@ -31,7 +32,7 @@ class ValueAvailableWhenPropertyChangedViewSpec extends IntViewSpecBase {
 
   "Value Available When Property Changed View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1")
+    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1")(Some(fakeApplication.injector.instanceOf[ValueAvailableWhenPropertyChangedController].form()))
 
     behave like pageWithoutBackLink[Int](createView)
 

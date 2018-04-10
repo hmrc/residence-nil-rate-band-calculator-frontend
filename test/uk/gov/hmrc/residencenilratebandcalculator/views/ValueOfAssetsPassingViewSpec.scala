@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfAssetsPassingController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_assets_passing
@@ -31,7 +32,7 @@ class ValueOfAssetsPassingViewSpec extends IntViewSpecBase {
 
   "Value Of Assets Passing View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance3")
+    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance3")(Some(fakeApplication.injector.instanceOf[ValueOfAssetsPassingController].form()))
 
     behave like pageWithoutBackLink[Int](createView)
 

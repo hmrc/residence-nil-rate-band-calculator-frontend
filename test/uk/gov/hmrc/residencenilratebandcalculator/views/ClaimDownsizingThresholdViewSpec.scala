@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.ClaimDownsizingThresholdController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.claim_downsizing_threshold
 
@@ -35,7 +36,7 @@ class ClaimDownsizingThresholdViewSpec extends BooleanViewSpecBase {
       "guidance1.bullet1",
       "guidance1.bullet2",
       "guidance1.bullet3",
-      "guidance1.bullet4")
+      "guidance1.bullet4")(Some(fakeApplication.injector.instanceOf[ClaimDownsizingThresholdController].form()))
 
     behave like pageWithoutBackLink[Boolean](createView)
 

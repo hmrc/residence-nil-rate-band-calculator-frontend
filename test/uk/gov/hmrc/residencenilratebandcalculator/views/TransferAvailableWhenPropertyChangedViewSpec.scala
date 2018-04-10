@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.TransferAvailableWhenPropertyChangedController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_available_when_property_changed
 
@@ -30,7 +31,7 @@ class TransferAvailableWhenPropertyChangedViewSpec extends BooleanViewSpecBase {
 
   "Transfer Available When Property Changed View" must {
 
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance")
+    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance")(Some(fakeApplication.injector.instanceOf[TransferAvailableWhenPropertyChangedController].form()))
 
     behave like pageWithoutBackLink[Boolean](createView)
 

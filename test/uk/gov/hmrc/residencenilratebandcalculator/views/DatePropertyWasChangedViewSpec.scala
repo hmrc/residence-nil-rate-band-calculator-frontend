@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.DatePropertyWasChangedController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_property_was_changed
@@ -33,7 +34,7 @@ class DatePropertyWasChangedViewSpec  extends DateViewSpecBase {
 
   "Date Property Was Changed View" must {
 
-    behave like rnrbPage[Date](createView, messageKeyPrefix, "guidance1", "guidance2")
+    behave like rnrbPage[Date](createView, messageKeyPrefix, "guidance1", "guidance2")(Some(fakeApplication.injector.instanceOf[DatePropertyWasChangedController].form()))
 
     behave like pageWithoutBackLink[Date](createView)
 

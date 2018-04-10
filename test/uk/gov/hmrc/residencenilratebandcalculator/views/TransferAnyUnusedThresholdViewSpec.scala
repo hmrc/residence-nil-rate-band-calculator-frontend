@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.TransferAnyUnusedThresholdController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_any_unused_threshold
 
@@ -30,7 +31,7 @@ class TransferAnyUnusedThresholdViewSpec extends BooleanViewSpecBase {
 
   "Transfer Any Unused Allowance View" must {
 
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")
+    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")(Some(fakeApplication.injector.instanceOf[TransferAnyUnusedThresholdController].form()))
 
     behave like pageWithoutBackLink[Boolean](createView)
 

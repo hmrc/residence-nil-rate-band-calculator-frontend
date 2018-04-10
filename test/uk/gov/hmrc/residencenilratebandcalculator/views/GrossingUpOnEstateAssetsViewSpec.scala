@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossingUpOnEstateAssetsController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_estate_assets
 
@@ -28,7 +29,7 @@ class GrossingUpOnEstateAssetsViewSpec extends BooleanViewSpecBase {
 
   "Grossing Up On Estate AssetsView" must {
 
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")
+    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")(Some(fakeApplication.injector.instanceOf[GrossingUpOnEstateAssetsController].form()))
 
     behave like pageWithoutBackLink[Boolean](createView)
 

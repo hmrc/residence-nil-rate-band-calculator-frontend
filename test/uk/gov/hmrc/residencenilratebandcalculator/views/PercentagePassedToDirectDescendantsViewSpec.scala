@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.PercentagePassedToDirectDescendantsController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PositivePercentForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_passed_to_direct_descendants
@@ -31,7 +32,7 @@ class PercentagePassedToDirectDescendantsViewSpec extends BigDecimalViewSpecBase
 
   "Percentage Passed To Direct Descendants View" must {
 
-    behave like rnrbPage[BigDecimal](createView, messageKeyPrefix, "guidance")
+    behave like rnrbPage[BigDecimal](createView, messageKeyPrefix, "guidance")(Some(fakeApplication.injector.instanceOf[PercentagePassedToDirectDescendantsController].form()))
 
     behave like pageWithoutBackLink[BigDecimal](createView)
 

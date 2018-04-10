@@ -47,11 +47,11 @@ class PartOfEstatePassingToDirectDescendantsViewSpec extends BooleanViewSpecBase
       "guidance4"
     )(Some(fakeApplication.injector.instanceOf[PartOfEstatePassingToDirectDescendantsController].form()))
 
-    behave like pageWithoutBackLink[Boolean](createView)
+    behave like pageWithoutBackLink[Boolean](createView, Some(fakeApplication.injector.instanceOf[PartOfEstatePassingToDirectDescendantsController].form()))
 
-    behave like booleanPage(createView, messageKeyPrefix, routes.PartOfEstatePassingToDirectDescendantsController.onSubmit().url)
+    behave like booleanPage(createView, messageKeyPrefix, routes.PartOfEstatePassingToDirectDescendantsController.onSubmit().url, Some(fakeApplication.injector.instanceOf[PartOfEstatePassingToDirectDescendantsController].form()), true)
 
-    behave like pageContainingPreviousAnswers(createView)
+    behave like pageContainingPreviousAnswers(createView, Some(fakeApplication.injector.instanceOf[PartOfEstatePassingToDirectDescendantsController].form()))
   }
 
 }

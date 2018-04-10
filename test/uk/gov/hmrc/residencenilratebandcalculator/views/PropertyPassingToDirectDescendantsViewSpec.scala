@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyPassingToDirectDescendantsController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PropertyPassingToDirectDescendantsForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_passing_to_direct_descendants
@@ -31,7 +32,7 @@ class PropertyPassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
 
   "Property Passing To Direct Descendants View" must {
 
-    behave like rnrbPage[String](createView, messageKeyPrefix, "guidance1", "guidance2")
+    behave like rnrbPage[String](createView, messageKeyPrefix, "guidance1", "guidance2")(Some(fakeApplication.injector.instanceOf[PropertyPassingToDirectDescendantsController].form()))
 
     behave like pageWithoutBackLink[String](createView)
 
