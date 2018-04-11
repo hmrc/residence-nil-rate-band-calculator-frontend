@@ -36,25 +36,25 @@ class AssetsPassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
 
     behave like rnrbPage[Boolean](createView, messageKeyPrefix)(Some(fakeApplication.injector.instanceOf[AssetsPassingToDirectDescendantsController].form()))
 
-    behave like pageWithoutBackLink[Boolean](createView)
+    behave like pageWithoutBackLink[Boolean](createView, Some(fakeApplication.injector.instanceOf[AssetsPassingToDirectDescendantsController].form()))
 
-    behave like booleanPage(createView, messageKeyPrefix, AssetsPassingToDirectDescendantsController.onSubmit().url)
+    behave like booleanPage(createView, messageKeyPrefix, AssetsPassingToDirectDescendantsController.onSubmit().url, Some(fakeApplication.injector.instanceOf[AssetsPassingToDirectDescendantsController].form()), true)
 
-    behave like pageContainingPreviousAnswers(createView)
+    behave like pageContainingPreviousAnswers(createView, Some(fakeApplication.injector.instanceOf[AssetsPassingToDirectDescendantsController].form()))
   }
 
   "Assets Passing To Direct Descendants View" when {
 
     "there is a property in the estate" must {
       "contain guidance that includes the property value" in {
-        val doc = asDocument(assets_passing_to_direct_descendants(frontendAppConfig, None, Seq(), Some(formattedPropertyValue))(request, messages, applicationProvider, localPartialRetriever))
+        val doc = asDocument(assets_passing_to_direct_descendants(frontendAppConfig, Some(fakeApplication.injector.instanceOf[AssetsPassingToDirectDescendantsController].form()), Seq(), Some(formattedPropertyValue))(request, messages, applicationProvider, localPartialRetriever))
         assertContainsText(doc, messages("assets_passing_to_direct_descendants.guidance", formattedPropertyValue))
       }
     }
 
     "there is no property in the estate" must {
       "contain guidance that does not include the property value" in {
-        val doc = asDocument(createView(None))
+        val doc = asDocument(createView(Some(fakeApplication.injector.instanceOf[AssetsPassingToDirectDescendantsController].form())))
         assertContainsText(doc, messages("assets_passing_to_direct_descendants.guidance_no_property"))
       }
     }

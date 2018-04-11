@@ -17,12 +17,15 @@
 @import play.api.Application; import com.google.inject.Provider
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
+@import uk.gov.hmrc.play.views.html.{helpers => govHelpers}
 @import uk.gov.hmrc.play.views.html._
 @import play.api.Application; import com.google.inject.Provider
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
-@(appConfig: FrontendAppConfig, form: Option[Form[Int]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
+@(appConfig: FrontendAppConfig, oform: Option[Form[Int]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
+
+@defining(oform.get) {form =>
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("chargeable_estate_value.browser_title"),
@@ -31,23 +34,28 @@
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeableEstateValueController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(oform))
 
         @rnrbHelpers.heading("chargeable_estate_value.title")
 
         <p>@messages("chargeable_estate_value.guidance")</p>
 
-        @rnrbHelpers.input_text(
-            id = "value",
-            errorKey = FormHelpers.getErrorByKey(form, "value"),
-            label = messages("chargeable_estate_value.title"),
-            labelClass = Some("visually-hidden"),
-            secondaryLabel = Some("currency"),
-            value = Some(FormHelpers.getValue[Int](form).toString)
-        )
-        @rnrbHelpers.submit_button()
+        <div class="form-group">
+            @rnrbHelpers.input_value(
+            oform.get("value"),
+            '_inputClass -> "form-control",
+            '_type -> "number",
+            '_label -> Messages("sign.pound"),
+            '_labelClass -> "form-label-bold")
+        </div>
+
+        <div>
+            @rnrbHelpers.submit_button()
+        </div>
+
+
     }
 
     @rnrbHelpers.answer_rows(answerRows)
-
+}
 }@import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever

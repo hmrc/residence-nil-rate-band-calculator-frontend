@@ -47,6 +47,7 @@ claim_downsizing_threshold.error.required = Rhowch ateb ar gyfer a ydych yn hawl
 date.day = Diwrnod
 date.month = Mis
 date.year = Blwyddyn
+sign.pound = £
 
 date_of_death.browser_title = Beth oedd dyddiad y farwolaeth?
 date_of_death.title = Beth oedd dyddiad y farwolaeth?

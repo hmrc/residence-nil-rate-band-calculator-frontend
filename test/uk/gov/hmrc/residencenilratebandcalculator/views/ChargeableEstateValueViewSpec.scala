@@ -34,11 +34,11 @@ class ChargeableEstateValueViewSpec extends IntViewSpecBase {
 
     behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance")(Some(fakeApplication.injector.instanceOf[ChargeableEstateValueController].form()))
 
-    behave like pageWithoutBackLink[Int](createView)
+    behave like pageWithoutBackLink[Int](createView, Some(fakeApplication.injector.instanceOf[ChargeableEstateValueController].form()))
 
-    behave like intPage(createView, messageKeyPrefix, ChargeableEstateValueController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage))
+    behave like intPage(createView, messageKeyPrefix, ChargeableEstateValueController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage), Some(fakeApplication.injector.instanceOf[ChargeableEstateValueController].form()))
 
-    behave like pageContainingPreviousAnswers(createView)
+    behave like pageContainingPreviousAnswers(createView, Some(fakeApplication.injector.instanceOf[ChargeableEstateValueController].form()))
 
   }
 }

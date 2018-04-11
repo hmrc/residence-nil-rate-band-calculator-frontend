@@ -25,6 +25,7 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.models.Email
 @import uk.gov.hmrc.residencenilratebandcalculator.models.PhoneNumber
 @import uk.gov.hmrc.residencenilratebandcalculator.Constants
+@import uk.gov.hmrc.play.views.html.{helpers => govHelpers}
 
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
@@ -44,6 +45,13 @@
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ExitQuestionnaireController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+
+        @govHelpers.inputRadioGroup(
+        form.get("serviceFeel"),
+        ExitQuestionnaire.serviceFeelOptions,
+        '_legend -> messages("assets_passing_to_direct_descendants.title"),
+        '_legendClass -> Some("visually-hidden")
+        )
 
         @rnrbHelpers.input_radio(
             name = "serviceFeel",

@@ -21,8 +21,11 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
+@import uk.gov.hmrc.play.views.html.{helpers => govHelpers}
 
-@(appConfig: FrontendAppConfig, form: Option[Form[Boolean]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
+@(appConfig: FrontendAppConfig, oform: Option[Form[Boolean]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
+
+@defining(oform.get) {form =>
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("claim_downsizing_threshold.browser_title"),
@@ -31,7 +34,7 @@
 
     @helpers.form(action = ClaimDownsizingThresholdController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(oform))
 
         @rnrbHelpers.heading("claim_downsizing_threshold.title")
 
@@ -43,15 +46,19 @@
             <li>@messages("claim_downsizing_threshold.guidance1.bullet4")</li>
         </ul>
 
-        @rnrbHelpers.input_yes_no(
-            id = "value",
-            label = messages("claim_downsizing_threshold.title"),
-            labelClass = Some("visually-hidden"),
-            errorKey = FormHelpers.getErrorByKey(form, "value"),
-            value = Some(FormHelpers.getYesNo(form))
-        )
+        <div class="form-group">
+            <fieldset class="form-field-group">
+                @govHelpers.inputRadioGroup(
+                oform.get("value"),
+                Seq("true" -> "yes", "false" -> "no"),
+                '_legend -> messages("claim_downsizing_threshold.title"),
+                '_legendClass -> Some("visually-hidden")
+                )
+            </fieldset>
+            @rnrbHelpers.submit_button()
+        </div>
 
-        @rnrbHelpers.submit_button()
     }
     @rnrbHelpers.answer_rows(answerRows)
+}
 }

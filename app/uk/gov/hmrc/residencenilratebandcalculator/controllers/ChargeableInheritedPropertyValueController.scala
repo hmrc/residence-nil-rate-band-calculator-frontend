@@ -46,12 +46,11 @@ class ChargeableInheritedPropertyValueController @Inject()(override val appConfi
     NonNegativeIntForm("chargeable_inherited_property_value.error.blank", "error.whole_pounds", "error.non_numeric")
 
   override def view(form: Option[Form[Int]], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    chargeable_inherited_property_value(appConfig, form, answerRows)
+    chargeable_inherited_property_value(appConfig, form.orElse(Some(this.form())), answerRows)
   }
 
   override def validate(value: Int, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = {
     userAnswers.chargeablePropertyValue match {
-      case None => throw new RuntimeException("Chargeable property value was not answered")
       case Some(v) if value > v => Some(FormError("value", "chargeable_inherited_property_value.greater_than_chargeable_property_value.error", Seq(v)))
       case _ => None
     }

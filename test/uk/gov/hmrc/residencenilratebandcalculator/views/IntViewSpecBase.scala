@@ -26,19 +26,19 @@ trait IntViewSpecBase extends ViewSpecBase {
   def intPage(createView: (Option[Form[Int]]) => HtmlFormat.Appendable,
               messageKeyPrefix: String,
               expectedFormAction: String,
-              form: Form[Int]) = {
+              form: Form[Int], emptyForm: Option[Form[Int]] = None) = {
 
-    behave like questionPage[Int](createView, messageKeyPrefix, expectedFormAction)
+    behave like questionPage[Int](createView, messageKeyPrefix, expectedFormAction, emptyForm)
 
     "behave like a page with an integer value field" when {
       "rendered" must {
 
-        "contain a label for the value" in {
-          val doc = asDocument(createView(None))
-          assertContainsLabel(doc, "value", messages(s"$messageKeyPrefix.title"))
+        "contain a h1 with title" in {
+          val doc = asDocument(createView(emptyForm))
+          doc.select("h1").text() shouldBe messages(s"$messageKeyPrefix.title")
         }
         "contain an input for the value" in {
-          val doc = asDocument(createView(None))
+          val doc = asDocument(createView(emptyForm))
           assertRenderedById(doc, "value")
         }
       }

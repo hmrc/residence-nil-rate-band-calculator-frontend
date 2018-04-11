@@ -22,7 +22,9 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
-@(appConfig: FrontendAppConfig, form: Option[Form[Int]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
+@(appConfig: FrontendAppConfig, oform: Option[Form[Int]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
+
+@defining(oform.get) {form =>
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("chargeable_inherited_property_value.browser_title"),
@@ -32,7 +34,7 @@
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeableInheritedPropertyValueController.onSubmit(),
         'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(oform))
 
         @rnrbHelpers.heading("chargeable_inherited_property_value.title")
 
@@ -40,19 +42,22 @@
 
         <p>@messages("chargeable_inherited_property_value.guidance2")</p>
 
-        @rnrbHelpers.input_text(
-            id = "value",
-            name = "value",
-            value = Some(FormHelpers.getValue[Int](form).toString),
-            label = messages("chargeable_inherited_property_value.title"),
-            labelClass = Some("visually-hidden"),
-            secondaryLabel = Some("currency"),
-            errorKey = FormHelpers.getErrorByKey(form, "value")
-        )
+        <div class="form-group">
+            @rnrbHelpers.input_value(
+            oform.get("value"),
+            '_inputClass -> "form-control",
+            '_type -> "number",
+            '_label -> Messages("sign.pound"),
+            '_labelClass -> "form-label-bold")
+        </div>
 
-        @rnrbHelpers.submit_button()
+        <div>
+            @rnrbHelpers.submit_button()
+        </div>
+
 
     }
     @rnrbHelpers.answer_rows(answerRows)
 
+}
 }

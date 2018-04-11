@@ -34,11 +34,11 @@ class ExemptionsAndReliefClaimedViewSpec  extends BooleanViewSpecBase {
     behave like rnrbPage[Boolean](createView, messageKeyPrefix,
       "guidance2", "guidance2.bullet1", "guidance2.bullet2", "guidance2.bullet3")(Some(fakeApplication.injector.instanceOf[ExemptionsAndReliefClaimedController].form()))
 
-    behave like pageWithoutBackLink[Boolean](createView)
+    behave like pageWithoutBackLink[Boolean](createView, Some(fakeApplication.injector.instanceOf[ExemptionsAndReliefClaimedController].form()))
 
-    behave like booleanPage(createView, messageKeyPrefix, ExemptionsAndReliefClaimedController.onSubmit().url)
+    behave like booleanPage(createView, messageKeyPrefix, ExemptionsAndReliefClaimedController.onSubmit().url, Some(fakeApplication.injector.instanceOf[ExemptionsAndReliefClaimedController].form()), true)
 
-    behave like pageContainingPreviousAnswers(createView)
+    behave like pageContainingPreviousAnswers(createView, Some(fakeApplication.injector.instanceOf[ExemptionsAndReliefClaimedController].form()))
 
   }
 }

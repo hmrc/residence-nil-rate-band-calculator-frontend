@@ -47,6 +47,6 @@ class AssetsPassingToDirectDescendantsController @Inject()(override val appConfi
       case Some(value) => Some(CurrencyFormatter.format(value))
       case _ => None
     }
-    assets_passing_to_direct_descendants(appConfig, form, answerRows, formattedPropertyValue)
+    assets_passing_to_direct_descendants(appConfig, form.orElse(Some(this.form())), answerRows, formattedPropertyValue)
   }
 }

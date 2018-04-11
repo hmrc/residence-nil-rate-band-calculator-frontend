@@ -40,7 +40,7 @@ class ExitQuestionnaireController @Inject()(val appConfig: FrontendAppConfig,
 
 
   def onPageLoad = Action.async { implicit request =>
-    Future.successful(Ok(exit_questionnaire(appConfig)))
+    Future.successful(Ok(exit_questionnaire(appConfig, Some(ExitQuestionnaireForm.apply()))))
   }
 
   def onSubmit = Action.async { implicit request =>
