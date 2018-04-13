@@ -50,7 +50,7 @@
             <fieldset class="form-field-group">
                 @govHelpers.inputRadioGroup(
                 oform.get("value"),
-                Seq("true" -> "yes", "false" -> "no"),
+                Seq("true" -> messages("site.yes"), "false" -> messages("site.no")),
                 '_legend -> messages("claim_downsizing_threshold.title"),
                 '_legendClass -> Some("visually-hidden")
                 )

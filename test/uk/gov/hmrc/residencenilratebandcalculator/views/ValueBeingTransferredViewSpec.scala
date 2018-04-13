@@ -34,11 +34,11 @@ class ValueBeingTransferredViewSpec extends IntViewSpecBase {
 
     behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2")(Some(fakeApplication.injector.instanceOf[ValueBeingTransferredController].form()))
 
-    behave like pageWithoutBackLink[Int](createView)
+    behave like pageWithoutBackLink[Int](createView, Some(fakeApplication.injector.instanceOf[ValueBeingTransferredController].form()))
 
-    behave like intPage(createView, messageKeyPrefix, ValueBeingTransferredController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage))
+    behave like intPage(createView, messageKeyPrefix, ValueBeingTransferredController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage), Some(fakeApplication.injector.instanceOf[ValueBeingTransferredController].form()))
 
-    behave like pageContainingPreviousAnswers(createView)
+    behave like pageContainingPreviousAnswers(createView, Some(fakeApplication.injector.instanceOf[ValueBeingTransferredController].form()))
 
   }
 }

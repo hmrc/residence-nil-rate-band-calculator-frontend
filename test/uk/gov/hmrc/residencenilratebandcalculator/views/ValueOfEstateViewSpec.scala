@@ -43,11 +43,11 @@ class ValueOfEstateViewSpec extends IntViewSpecBase {
       "guidance2"
     )(Some(fakeApplication.injector.instanceOf[ValueOfEstateController].form()))
 
-    behave like pageWithoutBackLink[Int](createView)
+    behave like pageWithoutBackLink[Int](createView, Some(fakeApplication.injector.instanceOf[ValueOfEstateController].form()))
 
-    behave like intPage(createView, messageKeyPrefix, ValueOfEstateController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage))
+    behave like intPage(createView, messageKeyPrefix, ValueOfEstateController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage), Some(fakeApplication.injector.instanceOf[ValueOfEstateController].form()))
 
-    behave like pageContainingPreviousAnswers(createView)
+    behave like pageContainingPreviousAnswers(createView, Some(fakeApplication.injector.instanceOf[ValueOfEstateController].form()))
 
   }
 }

@@ -44,6 +44,6 @@ class PropertyInEstateController @Inject()(override val appConfig: FrontendAppCo
   override def form: () => Form[Boolean] = () => BooleanForm("property_in_estate.error.required")
 
   override def view(form: Option[Form[Boolean]], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    property_in_estate(appConfig, form, answerRows)
+    property_in_estate(appConfig, form.orElse(Some(this.form())), answerRows)
   }
 }

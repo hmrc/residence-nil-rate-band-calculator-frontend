@@ -34,11 +34,11 @@ class PropertyPassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
 
     behave like rnrbPage[String](createView, messageKeyPrefix, "guidance1", "guidance2")(Some(fakeApplication.injector.instanceOf[PropertyPassingToDirectDescendantsController].form()))
 
-    behave like pageWithoutBackLink[String](createView)
+    behave like pageWithoutBackLink[String](createView, Some(fakeApplication.injector.instanceOf[PropertyPassingToDirectDescendantsController].form()))
 
-    behave like questionPage[String](createView, messageKeyPrefix, PropertyPassingToDirectDescendantsController.onSubmit().url)
+    behave like questionPage[String](createView, messageKeyPrefix, PropertyPassingToDirectDescendantsController.onSubmit().url, Some(fakeApplication.injector.instanceOf[PropertyPassingToDirectDescendantsController].form()))
 
-    behave like pageContainingPreviousAnswers(createView)
+    behave like pageContainingPreviousAnswers(createView, Some(fakeApplication.injector.instanceOf[PropertyPassingToDirectDescendantsController].form()))
 
   }
 
@@ -47,7 +47,7 @@ class PropertyPassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
     "rendered" must {
 
       "contain radio buttons for the value" in {
-        val doc = asDocument(createView(None))
+        val doc = asDocument(createView(Some(PropertyPassingToDirectDescendantsForm.apply())))
         assertContainsRadioButton(doc, "property_passing_to_direct_descendants.all", "value", "all", false)
         assertContainsRadioButton(doc, "property_passing_to_direct_descendants.some", "value", "some", false)
         assertContainsRadioButton(doc, "property_passing_to_direct_descendants.none", "value", "none", false)
@@ -57,7 +57,7 @@ class PropertyPassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
     "rendered with a value of 'all'" must {
 
       "have the 'all' radion button selected" in {
-        val doc = asDocument(createView(Some(PropertyPassingToDirectDescendantsForm().bind(Map("value" -> "all")))))
+        val doc = asDocument(createView(Some(PropertyPassingToDirectDescendantsForm.apply().bind(Map("value" -> "all")))))
         assertContainsRadioButton(doc, "property_passing_to_direct_descendants.all", "value", "all", true)
         assertContainsRadioButton(doc, "property_passing_to_direct_descendants.some", "value", "some", false)
         assertContainsRadioButton(doc, "property_passing_to_direct_descendants.none", "value", "none", false)

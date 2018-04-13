@@ -37,16 +37,17 @@
         <p>@messages("value_available_when_property_changed.guidance2", nilRateBand)</p>
         <p>@messages("value_available_when_property_changed.guidance3", nilRateBand)</p>
 
-        @rnrbHelpers.input_text(
-            id = "value",
-            errorKey = FormHelpers.getErrorByKey(form, "value"),
-            label = messages("value_available_when_property_changed.title"),
-            labelClass = Some("visually-hidden"),
-            secondaryLabel = Some("currency"),
-            value = Some(FormHelpers.getValue[Int](form).toString)
-        )
-
-        @rnrbHelpers.submit_button()
+        <div class="form-group">
+            @rnrbHelpers.input_value(
+                form.get("value"),
+                '_inputClass -> "form-control",
+                '_type -> "number",
+                '_label -> Messages("sign.pound"),
+                '_labelClass -> "form-label-bold")
+        </div>
+        <div>
+            @rnrbHelpers.submit_button()
+        </div>
 
     }
     @rnrbHelpers.answer_rows(answerRows)

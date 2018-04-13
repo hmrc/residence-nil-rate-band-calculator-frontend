@@ -88,7 +88,7 @@ class ValueBeingTransferredController @Inject()(val appConfig: FrontendAppConfig
           implicit val messages = messagesApi.preferred(request)
           Ok(value_being_transferred(appConfig,
             nilRateBand,
-            cacheMap.getEntry(controllerId).map(value => form().fill(value)),
+            Some(form.apply()),
             previousAnswers))
         }
       } recover {

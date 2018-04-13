@@ -26,18 +26,18 @@ trait BigDecimalViewSpecBase extends ViewSpecBase {
   def bigDecimalPage(createView: (Option[Form[BigDecimal]]) => HtmlFormat.Appendable,
                      messageKeyPrefix: String,
                      expectedFormAction: String,
-                     form: Form[BigDecimal]) = {
-    behave like questionPage[BigDecimal](createView, messageKeyPrefix, expectedFormAction)
+                     form: Form[BigDecimal], emptyForm: Option[Form[BigDecimal]] = None) = {
+    behave like questionPage[BigDecimal](createView, messageKeyPrefix, expectedFormAction, emptyForm)
 
     "behave like a page with an big decimal value field" when {
       "rendered" must {
 
         "contain a label for the value" in {
-          val doc = asDocument(createView(None))
-          assertContainsLabel(doc, "value", messages(s"$messageKeyPrefix.title"))
+          val doc = asDocument(createView(emptyForm))
+          doc.select("h1").text() shouldBe messages(s"$messageKeyPrefix.title")
         }
         "contain an input for the value" in {
-          val doc = asDocument(createView(None))
+          val doc = asDocument(createView(emptyForm))
           assertRenderedById(doc, "value")
         }
 

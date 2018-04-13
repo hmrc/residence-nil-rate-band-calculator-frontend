@@ -48,6 +48,7 @@ date.day = Diwrnod
 date.month = Mis
 date.year = Blwyddyn
 sign.pound = £
+sign.percentage = %
 
 date_of_death.browser_title = Beth oedd dyddiad y farwolaeth?
 date_of_death.title = Beth oedd dyddiad y farwolaeth?

@@ -34,14 +34,14 @@ class ValueAvailableWhenPropertyChangedViewSpec extends IntViewSpecBase {
 
     behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1")(Some(fakeApplication.injector.instanceOf[ValueAvailableWhenPropertyChangedController].form()))
 
-    behave like pageWithoutBackLink[Int](createView)
+    behave like pageWithoutBackLink[Int](createView, Some(fakeApplication.injector.instanceOf[ValueAvailableWhenPropertyChangedController].form()))
 
-    behave like intPage(createView, messageKeyPrefix, ValueAvailableWhenPropertyChangedController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage))
+    behave like intPage(createView, messageKeyPrefix, ValueAvailableWhenPropertyChangedController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage), Some(fakeApplication.injector.instanceOf[ValueAvailableWhenPropertyChangedController].form()))
 
-    behave like pageContainingPreviousAnswers(createView)
+    behave like pageContainingPreviousAnswers(createView, Some(fakeApplication.injector.instanceOf[ValueAvailableWhenPropertyChangedController].form()))
 
     "contain the appropriate maximum value of transferable residence nil rate band" in {
-      val doc = asDocument(createView(None))
+      val doc = asDocument(createView(Some(fakeApplication.injector.instanceOf[ValueAvailableWhenPropertyChangedController].form())))
       val maxValue = "100000"
       assertContainsText(doc, maxValue)
     }

@@ -66,7 +66,7 @@ implicit request: Request[_], messages: Messages, applicationProvider: Provider[
             <fieldset class="form-field-group">
                 @govHelpers.inputRadioGroup(
                 oform.get("value"),
-                Seq("true" -> "yes", "false" -> "no"),
+                Seq("true" -> messages("site.yes"), "false" -> messages("site.no")),
                 '_legend -> messages("part_of_estate_passing_to_direct_descendants.browser_title"),
                 '_legendClass -> Some("visually-hidden")
                 )

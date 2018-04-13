@@ -78,7 +78,7 @@ class ValueAvailableWhenPropertyChangedController @Inject()(val appConfig: Front
           implicit val messages = messagesApi.preferred(request)
           Ok(value_available_when_property_changed(appConfig,
             nilRateBand,
-            cacheMap.getEntry(controllerId).map(value => form().fill(value)),
+            Some(form.apply()),
             previousAnswers))
         }
       } recover {

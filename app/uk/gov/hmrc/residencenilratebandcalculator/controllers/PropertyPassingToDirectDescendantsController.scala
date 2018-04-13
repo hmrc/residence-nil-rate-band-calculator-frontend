@@ -44,6 +44,6 @@ class PropertyPassingToDirectDescendantsController @Inject()(override val appCon
   override def form: () => Form[String] = () => PropertyPassingToDirectDescendantsForm()
 
   override def view(form: Option[Form[String]], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    property_passing_to_direct_descendants(appConfig, form, answerRows)
+    property_passing_to_direct_descendants(appConfig, form.orElse(Some(this.form())), answerRows)
   }
 }

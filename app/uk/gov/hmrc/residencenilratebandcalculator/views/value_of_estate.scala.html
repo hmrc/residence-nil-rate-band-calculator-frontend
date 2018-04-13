@@ -46,17 +46,18 @@
         </ul>
 
         <p>@messages("value_of_estate.guidance2")</p>
-        
-        @rnrbHelpers.input_text(
-            id = "value",
-            errorKey = FormHelpers.getErrorByKey(form, "value"),
-            label = messages("value_of_estate.title"),
-            labelClass = Some("visually-hidden"),
-            secondaryLabel = Some("currency"),
-            value = Some(FormHelpers.getValue[Int](form).toString)
-        )
 
-        @rnrbHelpers.submit_button()
+        <div class="form-group">
+            @rnrbHelpers.input_value(
+                form.get("value"),
+                '_inputClass -> "form-control",
+                '_type -> "number",
+                '_label -> Messages("sign.pound"),
+                '_labelClass -> "form-label-bold")
+        </div>
+        <div>
+            @rnrbHelpers.submit_button()
+        </div>
     }
 
     @rnrbHelpers.answer_rows(answerRows)

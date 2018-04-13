@@ -40,15 +40,19 @@
 
         <p>@messages("value_of_changed_property.guidance3")</p>
 
-        @rnrbHelpers.input_text(
-            id = "value",
-            value = Some(FormHelpers.getValue[Int](form).toString),
-            label = messages("value_of_changed_property.browser_title"),
-            labelClass = Some("visually-hidden"),
-            secondaryLabel = Some("currency"),
-            errorKey = FormHelpers.getErrorByKey(form, "value")
-        )
-        @rnrbHelpers.submit_button()
+        <div class="form-group">
+            @rnrbHelpers.input_value(
+                form.get("value"),
+                '_inputClass -> "form-control",
+                '_type -> "number",
+                '_label -> Messages("sign.pound"),
+                '_labelClass -> "form-label-bold")
+        </div>
+        <div>
+            @rnrbHelpers.submit_button()
+        </div>
+
+
     }
     @rnrbHelpers.answer_rows(answerRows)
 

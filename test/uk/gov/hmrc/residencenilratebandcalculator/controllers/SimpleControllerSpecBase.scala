@@ -62,7 +62,7 @@ trait SimpleControllerSpecBase extends BaseSpec with WithFakeApplication with Ht
     "return the View for a GET" in {
       for (v <- valuesToCacheBeforeLoad) setCacheValue(v._1, v._2)
       val result = createController().onPageLoad(rds)(fakeRequest)
-      contentAsString(result) shouldBe createView(None).toString
+      contentAsString(result) shouldBe createView(None.get).toString
     }
 
     "return a redirect on submit with valid data" in {

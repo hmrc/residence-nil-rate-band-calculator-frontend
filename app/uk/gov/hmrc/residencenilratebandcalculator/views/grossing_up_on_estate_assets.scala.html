@@ -19,11 +19,13 @@
 @import uk.gov.hmrc.play.views.html._
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.GrossingUpOnEstateAssetsController
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
+@import uk.gov.hmrc.play.views.html.{helpers => govHelpers}
 
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
-@(appConfig: FrontendAppConfig, form: Option[Form[Boolean]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
+@(appConfig: FrontendAppConfig, oform: Option[Form[Boolean]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
+@defining(oform.get) {form =>
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("grossing_up_on_estate_assets.browser_title"),
@@ -32,7 +34,7 @@
 
     @helpers.form(action = GrossingUpOnEstateAssetsController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(oform))
 
         @rnrbHelpers.heading("grossing_up_on_estate_assets.title")
 
@@ -40,15 +42,20 @@
 
         <p>@messages("grossing_up_on_estate_assets.guidance2")</p>
 
-        @rnrbHelpers.input_yes_no(
-            id = "value",
-            label = messages("grossing_up_on_estate_assets.title"),
-            labelClass = Some("visually-hidden"),
-            errorKey = FormHelpers.getErrorByKey(form, "value"),
-            value = Some(FormHelpers.getYesNo(form)))
+        <div class="form-group">
+            <fieldset class="form-field-group">
+                @govHelpers.inputRadioGroup(
+                    form("value"),
+                    Seq("true" -> messages("site.yes"), "false" -> messages("site.no")),
+                    '_legend -> messages("grossing_up_on_estate_assets.title"),
+                    '_legendClass -> Some("visually-hidden")
+                    )
+            </fieldset>
+               @rnrbHelpers.submit_button()
+        </div>
 
-        @rnrbHelpers.submit_button()
     }
     @rnrbHelpers.answer_rows(answerRows)
 
+}
 }

@@ -46,33 +46,44 @@
 
         @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
 
-        @govHelpers.inputRadioGroup(
-        form.get("serviceFeel"),
-        ExitQuestionnaire.serviceFeelOptions,
-        '_legend -> messages("assets_passing_to_direct_descendants.title"),
-        '_legendClass -> Some("visually-hidden")
-        )
+        <legend class="bold-small ">@messages("exit_questionnaire.service_feel.label")</legend>
+        <div class="form-group">
+            <fieldset class="form-field-group">
+                @govHelpers.inputRadioGroup(
+                    form.get("serviceFeel"),
+                    Seq("very_satisfied" -> Messages("service_feel.very_satisfied"),
+                    "satisfied" -> Messages("service_feel.satisfied"),
+                    "neither" -> Messages("service_feel.neither"),
+                    "dissatisfied" -> Messages("service_feel.dissatisfied"),
+                    "very_dissatisfied" -> Messages("service_feel.very_dissatisfied")),
+                    '_legend -> messages("exit_questionnaire.service_feel.label"),
+                    '_legendClass -> Some("visually-hidden")
+                    )
+            </fieldset>
+        </div>
 
-        @rnrbHelpers.input_radio(
-            name = "serviceFeel",
-            legend = messages("exit_questionnaire.service_feel.label"),
-            errorKey = FormHelpers.getErrorByKey(form, "serviceFeel"),
-            inputs = ExitQuestionnaire.serviceFeelOptions
-        )
 
-        @rnrbHelpers.input_radio(
-            name = "serviceDifficulty",
-            legend = messages("exit_questionnaire.service_difficulty.label"),
-            errorKey = FormHelpers.getErrorByKey(form, "serviceDifficulty"),
-            inputs = ExitQuestionnaire.serviceDifficultyOptions
-        )
+        <legend class="bold-small ">@messages("exit_questionnaire.service_difficulty.label")</legend>
+        <div class="form-group">
+            <fieldset class="form-field-group">
+                @govHelpers.inputRadioGroup(
+                    form.get("serviceDifficulty"),
+                    Seq("very_easy" -> Messages("service_difficulty.very_easy"),
+                    "easy" -> Messages("service_difficulty.easy"),
+                    "neither" -> Messages("service_difficulty.neither"),
+                    "difficult" -> Messages("service_difficulty.difficult"),
+                    "very_difficult" -> Messages("service_difficulty.very_difficult")),
+                    '_legend -> messages("exit_questionnaire.service_difficulty.label"),
+                    '_legendClass -> Some("visually-hidden")
+                )
+            </fieldset>
+        </div>
 
-        @rnrbHelpers.input_textarea(
-            id = "comments",
-            name = "comments",
-            label = messages("exit_questionnaire.comments.label"),
-            inputClass = Some("textarea--fullwidth"),
-            errorKey = FormHelpers.getErrorByKey(form, "comments")
+        @govHelpers.textArea(
+            form.get("comments"),
+            '_inputClass -> "form-control-2-3",
+            '_label -> messages("exit_questionnaire.comments.label"),
+            '_labelClass -> "form-label-bold"
         )
 
         <p>@messages("exit_questionnaire.comments.help.2")</p>
@@ -81,29 +92,36 @@
 
         <p>@messages("exit_questionnaire.user_research.guidance")</p>
 
-        @rnrbHelpers.input_text(
-            id = "fullName",
-            name = "fullName",
-            value = Some(ExitQuestionnaireFormHelper.getValueByKey(form, FullName)),
-            label = messages("exit_questionnaire.full_name.label"),
-            errorKey = FormHelpers.getErrorByKey(form, "fullName")
-        )
+        <div class="form-group">
+            @rnrbHelpers.input_value(
+                form.get("fullName"),
+                '_inputClass -> "form-control",
+                '_type -> "text",
+                '_labelTextClass -> "form-label form-label-bold",
+                '_label -> messages("exit_questionnaire.full_name.label")
+            )
+        </div>
 
-        @rnrbHelpers.input_text(
-            id = "email",
-            name = "email",
-            value = Some(ExitQuestionnaireFormHelper.getValueByKey(form, Email)),
-            label = messages("exit_questionnaire.email.label"),
-            errorKey = FormHelpers.getErrorByKey(form, "email")
-        )
+        <div class="form-group">
+            @rnrbHelpers.input_value(
+                form.get("email"),
+                '_inputClass -> "form-control",
+                '_type -> "text",
+                '_labelTextClass -> "form-label form-label-bold",
+                '_label -> messages("exit_questionnaire.email.label")
+            )
+        </div>
 
-        @rnrbHelpers.input_text(
-            id = "phoneNumber",
-            name = "phoneNumber",
-            value = Some(ExitQuestionnaireFormHelper.getValueByKey(form, PhoneNumber)),
-            label = messages("exit_questionnaire.phone_number.label"),
-            errorKey = FormHelpers.getErrorByKey(form, "phoneNumber")
-        )
+
+        <div class="form-group">
+            @rnrbHelpers.input_value(
+                form.get("phoneNumber"),
+                '_inputClass -> "form-control",
+                '_type -> "text",
+                '_labelTextClass -> "form-label form-label-bold",
+                '_label -> messages("exit_questionnaire.phone_number.label")
+            )
+        </div>
 
         @rnrbHelpers.submit_button()
     }

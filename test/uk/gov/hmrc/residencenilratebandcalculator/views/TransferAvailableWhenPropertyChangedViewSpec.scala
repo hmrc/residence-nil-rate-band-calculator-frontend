@@ -33,11 +33,11 @@ class TransferAvailableWhenPropertyChangedViewSpec extends BooleanViewSpecBase {
 
     behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance")(Some(fakeApplication.injector.instanceOf[TransferAvailableWhenPropertyChangedController].form()))
 
-    behave like pageWithoutBackLink[Boolean](createView)
+    behave like pageWithoutBackLink[Boolean](createView, Some(fakeApplication.injector.instanceOf[TransferAvailableWhenPropertyChangedController].form()))
 
-    behave like booleanPage(createView, messageKeyPrefix, TransferAvailableWhenPropertyChangedController.onSubmit().url)
+    behave like booleanPage(createView, messageKeyPrefix, TransferAvailableWhenPropertyChangedController.onSubmit().url, Some(fakeApplication.injector.instanceOf[TransferAvailableWhenPropertyChangedController].form()), true)
 
-    behave like pageContainingPreviousAnswers(createView)
+    behave like pageContainingPreviousAnswers(createView, Some(fakeApplication.injector.instanceOf[TransferAvailableWhenPropertyChangedController].form()))
 
   }
 }

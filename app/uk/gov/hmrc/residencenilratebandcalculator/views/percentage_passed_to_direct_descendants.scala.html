@@ -19,9 +19,11 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 @import uk.gov.hmrc.play.views.html._
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
+@import uk.gov.hmrc.play.views.html.{helpers => govHelpers}
 
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
-@(appConfig: FrontendAppConfig, form: Option[Form[BigDecimal]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
+@(appConfig: FrontendAppConfig, oform: Option[Form[BigDecimal]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
+@defining(oform.get) {form =>
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("percentage_passed_to_direct_descendants.browser_title"),
@@ -30,22 +32,28 @@
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PercentagePassedToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(oform))
 
         @rnrbHelpers.heading("percentage_passed_to_direct_descendants.title")
 
         <p>@messages("percentage_passed_to_direct_descendants.guidance")</p>
 
-        @rnrbHelpers.input_text(
-            id = "value",
-            errorKey = FormHelpers.getErrorByKey(form, "value"),
-            label = messages("percentage_passed_to_direct_descendants.title"),
-            labelClass = Some("visually-hidden"),
-            secondaryLabel = Some("percentage"),
-            value = Some(FormHelpers.getValue[BigDecimal](form).toString)
-        )
-        @rnrbHelpers.submit_button()
+        <div class="form-group">
+            @rnrbHelpers.input_value(
+                form("value"),
+                '_inputClass -> "form-control",
+                '_type -> "number",
+                '_labelAfter -> true,
+                '_label -> Messages("sign.percentage"),
+                '_labelClass -> "form-label-bold")
+        </div>
+        <div>
+            @rnrbHelpers.submit_button()
+        </div>
+
+
     }
     @rnrbHelpers.answer_rows(answerRows)
 
+}
 }
