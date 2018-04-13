@@ -53,11 +53,11 @@ class ExitQuestionnaireViewSpec extends ViewSpecBase {
 
       "contain radio buttons for service feel" in {
         val doc = asDocument(createView(Some(ExitQuestionnaireForm.apply())))
-        assertContainsRadioButton(doc, "service_feel.very_satisfied", "serviceFeel", "very_satisfied", false)
-        assertContainsRadioButton(doc, "service_feel.satisfied", "serviceFeel", "satisfied", false)
-        assertContainsRadioButton(doc, "service_feel.neither", "serviceFeel", "neither", false)
-        assertContainsRadioButton(doc, "service_feel.dissatisfied", "serviceFeel", "dissatisfied", false)
-        assertContainsRadioButton(doc, "service_feel.very_dissatisfied", "serviceFeel", "very_dissatisfied", false)
+        assertContainsRadioButton(doc, "serviceFeel-very_satisfied", "serviceFeel", "very_satisfied", false)
+        assertContainsRadioButton(doc, "serviceFeel-satisfied", "serviceFeel", "satisfied", false)
+        assertContainsRadioButton(doc, "serviceFeel-neither", "serviceFeel", "neither", false)
+        assertContainsRadioButton(doc, "serviceFeel-dissatisfied", "serviceFeel", "dissatisfied", false)
+        assertContainsRadioButton(doc, "serviceFeel-very_dissatisfied", "serviceFeel", "very_dissatisfied", false)
       }
 
       "contain a legend for the service difficulty" in {
@@ -67,11 +67,11 @@ class ExitQuestionnaireViewSpec extends ViewSpecBase {
 
       "contain radio buttons for service difficuly" in {
         val doc = asDocument(createView(Some(ExitQuestionnaireForm.apply())))
-        assertContainsRadioButton(doc, "service_difficulty.very_easy", "serviceDifficulty", "very_easy", false)
-        assertContainsRadioButton(doc, "service_difficulty.easy", "serviceDifficulty", "easy", false)
-        assertContainsRadioButton(doc, "service_difficulty.neither", "serviceDifficulty", "neither", false)
-        assertContainsRadioButton(doc, "service_difficulty.difficult", "serviceDifficulty", "difficult", false)
-        assertContainsRadioButton(doc, "service_difficulty.very_difficult", "serviceDifficulty", "very_difficult", false)
+        assertContainsRadioButton(doc, "serviceDifficulty-very_easy", "serviceDifficulty", "very_easy", false)
+        assertContainsRadioButton(doc, "serviceDifficulty-easy", "serviceDifficulty", "easy", false)
+        assertContainsRadioButton(doc, "serviceDifficulty-neither", "serviceDifficulty", "neither", false)
+        assertContainsRadioButton(doc, "serviceDifficulty-difficult", "serviceDifficulty", "difficult", false)
+        assertContainsRadioButton(doc, "serviceDifficulty-very_difficult", "serviceDifficulty", "very_difficult", false)
       }
 
       "contain a label for the comments" in {
