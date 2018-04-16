@@ -34,7 +34,7 @@
 
     @helpers.form(action = TransferAnyUnusedThresholdController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(oform))
+        @rnrbHelpers.error_summary(oform)
 
         @rnrbHelpers.heading("transfer_any_unused_threshold.title")
 

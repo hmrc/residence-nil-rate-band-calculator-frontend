@@ -33,7 +33,7 @@
 
     @helpers.form(action = PropertyInEstateController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(oform))
+        @rnrbHelpers.error_summary(oform)
 
         @rnrbHelpers.heading("property_in_estate.title")
 

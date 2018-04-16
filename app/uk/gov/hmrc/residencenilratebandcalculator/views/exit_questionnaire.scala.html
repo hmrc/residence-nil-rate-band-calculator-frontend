@@ -44,7 +44,7 @@
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ExitQuestionnaireController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+        @rnrbHelpers.error_summary(form)
 
         <legend class="bold-small ">@messages("exit_questionnaire.service_feel.label")</legend>
         <div class="form-group">

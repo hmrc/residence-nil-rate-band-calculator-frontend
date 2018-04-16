@@ -34,7 +34,7 @@
 
     @helpers.form(action = TransferAvailableWhenPropertyChangedController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(oform))
+        @rnrbHelpers.error_summary(oform)
 
         @rnrbHelpers.heading("transfer_available_when_property_changed.title")
 

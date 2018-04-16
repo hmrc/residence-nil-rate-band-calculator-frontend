@@ -34,7 +34,7 @@
 
     @helpers.form(action = ExemptionsAndReliefClaimedController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(oform))
+        @rnrbHelpers.error_summary(oform)
 
         @rnrbHelpers.heading("exemptions_and_relief_claimed.title")
 

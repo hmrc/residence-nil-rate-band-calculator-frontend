@@ -33,7 +33,7 @@
 
     @helpers.form(action = PropertyPassingToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+        @rnrbHelpers.error_summary(form)
 
         @rnrbHelpers.heading("property_passing_to_direct_descendants.title")
 

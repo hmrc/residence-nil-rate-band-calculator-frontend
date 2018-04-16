@@ -35,7 +35,7 @@
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DatePropertyWasChangedController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(Some(form)))
+        @rnrbHelpers.error_summary(Some(form))
 
         @rnrbHelpers.heading("date_property_was_changed.title")
 

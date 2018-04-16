@@ -17,11 +17,9 @@
 @import uk.gov.hmrc.play.views.html.{helpers => govHelpers}
 
 @(form: Option[Form[_]])(implicit messages: Messages)
-@if(form.nonEmpty) {
-    <div class="error-summary error-summary--show" role="group" aria-labelledby="error-summary-heading" tabindex="-1">
+@if(form.get.hasErrors) {
 
         @govHelpers.errorSummary(messages("error.summary.title"), form.get)
 
 
-    </div>
 }
