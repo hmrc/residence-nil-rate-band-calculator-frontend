@@ -24,6 +24,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.assets_passing_to_d
 class AssetsPassingToDirectDescendantsControllerSpec extends SimpleControllerSpecBase {
 
   val messageKey = "assets_passing_to_direct_descendants.error.required"
+  val messageKeyPrefix = "assets_passing_to_direct_descendants"
 
   "Assets Passing To Direct Descendants Controller" must {
 
@@ -45,7 +46,7 @@ class AssetsPassingToDirectDescendantsControllerSpec extends SimpleControllerSpe
 
     val valuesToCacheBeforeLoad = Map(Constants.propertyValueId -> propertyValue)
 
-    behave like rnrbController[Boolean](createController, createView, Constants.assetsPassingToDirectDescendantsId, testValue,
+    behave like rnrbController[Boolean](createController, createView, Constants.assetsPassingToDirectDescendantsId, messageKeyPrefix ,testValue,
       valuesToCacheBeforeLoad = valuesToCacheBeforeLoad)(Reads.BooleanReads, Writes.BooleanWrites)
 
     behave like nonStartingController[Boolean](createController,

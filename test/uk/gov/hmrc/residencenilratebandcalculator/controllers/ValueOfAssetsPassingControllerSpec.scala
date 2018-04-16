@@ -30,6 +30,7 @@ class ValueOfAssetsPassingControllerSpec extends SimpleControllerSpecBase {
   val errorKeyBlank = "value_of_assets_passing.error.blank"
   val errorKeyDecimal = "error.whole_pounds"
   val errorKeyNonNumeric = "error.non_numeric"
+  val messageKeyPrefix = "value_of_assets_passing"
 
   "Value Of Assets Passing Controller" must {
 
@@ -47,7 +48,7 @@ class ValueOfAssetsPassingControllerSpec extends SimpleControllerSpecBase {
     val valuesToCacheBeforeSubmission = Map(Constants.valueOfEstateId -> testValue)
 
     behave like rnrbController[Int](createController, createView, Constants.valueOfAssetsPassingId,
-      testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
+      messageKeyPrefix, testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
 
     behave like nonStartingController[Int](createController,
       List(Constants.dateOfDeathId,
@@ -75,14 +76,9 @@ class ValueOfAssetsPassingControllerSpec extends SimpleControllerSpecBase {
     }
 
     "return the correct view when provided with answers including a valid property value" in {
-      val result = createController().view(None, Seq(), new UserAnswers(CacheMap("id", Map(Constants.propertyValueId -> Json.toJson(1)))))(fakeRequest)
-      result shouldBe value_of_assets_passing(frontendAppConfig, None, Seq(), Some(CurrencyFormatter.format(1)))(fakeRequest,
+      val result = createController().view(Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric)), Seq(), new UserAnswers(CacheMap("id", Map(Constants.propertyValueId -> Json.toJson(1)))))(fakeRequest)
+      result shouldBe value_of_assets_passing(frontendAppConfig, Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric)), Seq(), Some(CurrencyFormatter.format(1)))(fakeRequest,
         messages, applicationProvider, localPartialRetriever)
-    }
-
-    "throw a runtime exception when provided with no answer for value of estate" in {
-      the[RuntimeException] thrownBy createController().validate(1,
-        new UserAnswers(CacheMap("id", Map())))(headnapper.getValue) should have message "Value of estate was not answered"
     }
   }
 }

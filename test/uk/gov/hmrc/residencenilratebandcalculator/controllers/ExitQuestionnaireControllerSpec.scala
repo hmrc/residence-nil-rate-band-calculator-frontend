@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import org.jsoup.Jsoup
 import org.mockito.{ArgumentCaptor, ArgumentMatchers}
 import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
@@ -57,7 +58,7 @@ class ExitQuestionnaireControllerSpec extends HtmlSpec with WithFakeApplication 
 
     "return the View for a GET" in {
       val result = new ExitQuestionnaireController(frontendAppConfig, messagesApi, mockAuditConnector, applicationProvider, localPartialRetriever).onPageLoad()(fakeRequest)
-      contentAsString(result) shouldBe exit_questionnaire(frontendAppConfig)(fakeRequest, messages, applicationProvider, localPartialRetriever).toString
+      Jsoup.parse(contentAsString(result)).title() shouldBe messages("exit_questionnaire.title")
     }
 
     "send an audit event on POST when given valid data" in {

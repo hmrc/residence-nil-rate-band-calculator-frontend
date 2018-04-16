@@ -27,6 +27,7 @@ class ChargeablePropertyValueControllerSpec extends SimpleControllerSpecBase {
   val errorKeyBlank = "chargeable_property_value.error.blank"
   val errorKeyDecimal = "error.whole_pounds"
   val errorKeyNonNumeric = "chargeable_property_value.error.non_numeric"
+  val messageKeyPrefix = "chargeable_property_value"
 
   "Chargeable Property Value Controller" must {
     def createView = (value: Option[Map[String, String]]) => value match {
@@ -41,7 +42,7 @@ class ChargeablePropertyValueControllerSpec extends SimpleControllerSpecBase {
     val valuesToCacheBeforeSubmission = Map(Constants.propertyValueId -> testValue)
 
     behave like rnrbController(createController, createView, Constants.chargeablePropertyValueId,
-      testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
+      messageKeyPrefix, testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
 
     behave like nonStartingController[Int](createController,
       List(Constants.dateOfDeathId,

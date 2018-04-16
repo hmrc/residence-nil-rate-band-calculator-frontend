@@ -26,6 +26,7 @@ class ValueOfChangedPropertyControllerSpec extends SimpleControllerSpecBase {
   val errorKeyBlank = "value_of_changed_property.error.blank"
   val errorKeyDecimal = "error.whole_pounds"
   val errorKeyNonNumeric = "error.non_numeric"
+  val messageKeyPrefix = "value_of_changed_property"
 
   "Value Of Changed Property Controller" must {
 
@@ -40,7 +41,7 @@ class ValueOfChangedPropertyControllerSpec extends SimpleControllerSpecBase {
 
     val testValue = 123
 
-    behave like rnrbController(createController, createView, Constants.valueOfChangedPropertyId, testValue)(Reads.IntReads, Writes.IntWrites)
+    behave like rnrbController(createController, createView, Constants.valueOfChangedPropertyId, messageKeyPrefix,testValue)(Reads.IntReads, Writes.IntWrites)
 
     behave like nonStartingController[Int](createController,
       List(Constants.dateOfDeathId,

@@ -24,6 +24,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.claim_downsizing_th
 class ClaimDownsizingThresholdControllerSpec extends SimpleControllerSpecBase {
 
   val messageKey = "claim_downsizing_threshold.error.required"
+  val messageKeyPrefix = "claim_downsizing_threshold"
 
   def createView = (value: Option[Map[String, String]]) => {
     value match {
@@ -36,7 +37,7 @@ class ClaimDownsizingThresholdControllerSpec extends SimpleControllerSpecBase {
 
   val testValue = true
 
-  behave like rnrbController(createController, createView, Constants.claimDownsizingThresholdId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+  behave like rnrbController(createController, createView, Constants.claimDownsizingThresholdId, messageKeyPrefix, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
 
   behave like nonStartingController[Boolean](createController,
     List(Constants.dateOfDeathId,

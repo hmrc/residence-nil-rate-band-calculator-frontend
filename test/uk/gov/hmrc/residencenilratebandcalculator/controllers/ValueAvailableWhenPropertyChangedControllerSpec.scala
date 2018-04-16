@@ -16,10 +16,12 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import org.jsoup.Jsoup
 import org.mockito.Mockito._
 import org.mockito.ArgumentMatchers._
 import play.api.data.FormError
 import play.api.http.Status
+import play.api.i18n.Messages.Message
 import play.api.i18n.MessagesApi
 import play.api.libs.json.{Reads, Writes, _}
 import play.api.mvc.Result
@@ -36,7 +38,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants, Frontend
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import uk.gov.hmrc.http.{ HeaderCarrier, HttpResponse }
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 
 class ValueAvailableWhenPropertyChangedControllerSpec extends BaseSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
 
@@ -86,7 +88,8 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends BaseSpec with With
     "return the View for a GET" in {
       setCacheMap(new CacheMap("", Map(Constants.datePropertyWasChangedId -> JsString("2018-5-11"))))
       val result = createController().onPageLoad(Reads.IntReads)(fakeRequest)
-      contentAsString(result) shouldBe createView(None).toString
+      Jsoup.parse(contentAsString(result)).title() shouldBe messages("value_available_when_property_changed.title")
+
     }
 
     "if the date property was changed key is not set throw an exception" in {

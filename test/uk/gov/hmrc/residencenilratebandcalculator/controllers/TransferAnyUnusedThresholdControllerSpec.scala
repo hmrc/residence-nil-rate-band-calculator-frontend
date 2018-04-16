@@ -24,6 +24,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_any_unused
 class TransferAnyUnusedThresholdControllerSpec extends SimpleControllerSpecBase {
 
   val messageKey = "transfer_any_unused_threshold.error.required"
+  val messageKeyPrefix = "transfer_any_unused_threshold"
 
   "Transfer Any Unused Threshold Controller" must {
 
@@ -38,7 +39,7 @@ class TransferAnyUnusedThresholdControllerSpec extends SimpleControllerSpecBase 
 
     val testValue = true
 
-    behave like rnrbController(createController, createView, Constants.transferAnyUnusedThresholdId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+    behave like rnrbController(createController, createView, Constants.transferAnyUnusedThresholdId, messageKeyPrefix, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
 
     behave like nonStartingController[Boolean](createController,
       List(Constants.dateOfDeathId,

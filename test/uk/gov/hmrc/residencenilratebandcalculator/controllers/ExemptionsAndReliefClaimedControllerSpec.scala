@@ -24,6 +24,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.exemptions_and_reli
 class ExemptionsAndReliefClaimedControllerSpec extends SimpleControllerSpecBase {
 
   val messageKey = "exemptions_and_relief_claimed.error.required"
+  val messageKeyPrefix = "exemptions_and_relief_claimed"
 
   "Exemptions And Relief Claimed Controller" must {
 
@@ -38,7 +39,7 @@ class ExemptionsAndReliefClaimedControllerSpec extends SimpleControllerSpecBase 
 
     val testValue = true
 
-    behave like rnrbController[Boolean](createController, createView, Constants.exemptionsAndReliefClaimedId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+    behave like rnrbController[Boolean](createController, createView, Constants.exemptionsAndReliefClaimedId, messageKeyPrefix, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
 
     behave like nonStartingController[Boolean](createController,
       List(Constants.dateOfDeathId,

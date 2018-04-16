@@ -24,6 +24,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_esta
 class GrossingUpOnEstatePropertyControllerSpec extends SimpleControllerSpecBase {
 
   val messageKey = "grossing_up_on_estate_property.error.required"
+  val messageKeyPrefix = "grossing_up_on_estate_property"
 
   "Grossing Up On Estate Property Controller" must {
 
@@ -39,7 +40,7 @@ class GrossingUpOnEstatePropertyControllerSpec extends SimpleControllerSpecBase 
     val testValue = false
 
     behave like
-      rnrbController[Boolean](createController, createView, Constants.grossingUpOnEstatePropertyId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+      rnrbController[Boolean](createController, createView, Constants.grossingUpOnEstatePropertyId, messageKeyPrefix, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
 
     behave like nonStartingController[Boolean](createController,
       List(Constants.dateOfDeathId,

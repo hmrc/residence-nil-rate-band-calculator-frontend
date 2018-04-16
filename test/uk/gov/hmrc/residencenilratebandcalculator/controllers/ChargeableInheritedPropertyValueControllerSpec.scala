@@ -27,6 +27,7 @@ class ChargeableInheritedPropertyValueControllerSpec extends SimpleControllerSpe
   val errorKeyBlank = "chargeable_inherited_property_value.error.blank"
   val errorKeyDecimal = "error.whole_pounds"
   val errorKeyNonNumeric = "error.non_numeric"
+  val messageKeyPrefix = "chargeable_inherited_property_value"
 
   "Chargeable Inherited Property Value Controller"  must {
 
@@ -42,7 +43,7 @@ class ChargeableInheritedPropertyValueControllerSpec extends SimpleControllerSpe
     val valuesToCacheBeforeSubmission = Map(Constants.chargeablePropertyValueId -> testValue)
 
     behave like rnrbController(createController, createView, Constants.chargeableInheritedPropertyValueId,
-      testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
+      messageKeyPrefix, testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
 
     behave like nonStartingController[Int](createController,
       List(Constants.dateOfDeathId,

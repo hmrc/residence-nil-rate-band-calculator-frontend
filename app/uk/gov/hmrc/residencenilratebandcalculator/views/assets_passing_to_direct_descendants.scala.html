@@ -34,7 +34,7 @@
 
     @helpers.form(action = AssetsPassingToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(oform))
+        @rnrbHelpers.error_summary(oform)
 
         @rnrbHelpers.heading("assets_passing_to_direct_descendants.title")
 

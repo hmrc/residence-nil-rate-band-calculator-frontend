@@ -27,6 +27,7 @@ class ChargeableEstateValueControllerSpec extends SimpleControllerSpecBase {
   val errorKeyBlank = "chargeable_estate_value.error.blank"
   val errorKeyDecimal = "error.whole_pounds"
   val errorKeyNonNumeric = "chargeable_estate_value.error.non_numeric"
+  val messageKeyPrefix = "chargeable_estate_value"
 
   "Chargeable Estate Value Controller" must {
 
@@ -45,7 +46,7 @@ class ChargeableEstateValueControllerSpec extends SimpleControllerSpecBase {
     val valuesToCacheBeforeSubmission = Map(Constants.valueOfEstateId -> testValue)
 
     behave like rnrbController(createController, createView, Constants.chargeableEstateValueId,
-      testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
+      messageKeyPrefix, testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
 
     behave like nonStartingController[Int](createController,
       List(Constants.dateOfDeathId,

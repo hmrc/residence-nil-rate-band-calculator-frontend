@@ -26,6 +26,7 @@ class ValueOfEstateControllerSpec extends SimpleControllerSpecBase {
   val errorKeyBlank = "value_of_estate.error.blank"
   val errorKeyDecimal = "error.whole_pounds"
   val errorKeyNonNumeric = "value_of_estate.error.non_numeric"
+  val messageKeyPrefix = "value_of_estate"
 
   "Value Of Estate Controller" must {
 
@@ -42,7 +43,7 @@ class ValueOfEstateControllerSpec extends SimpleControllerSpecBase {
 
     val testValue = 123
 
-    behave like rnrbController[Int](createController, createView, Constants.valueOfEstateId, testValue)(Reads.IntReads, Writes.IntWrites)
+    behave like rnrbController[Int](createController, createView, Constants.valueOfEstateId, messageKeyPrefix,testValue)(Reads.IntReads, Writes.IntWrites)
 
     behave like nonStartingController[Int](createController, List(Constants.dateOfDeathId, Constants.partOfEstatePassingToDirectDescendantsId))(Reads.IntReads, Writes.IntWrites)
   }

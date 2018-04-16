@@ -24,6 +24,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.part_of_estate_pass
 class PartOfEstatePassingToDirectDescendantsControllerSpec extends SimpleControllerSpecBase {
 
   val messageKey = "part_of_estate_passing_to_direct_descendants.error.required"
+  val messageKeyPrefix = "part_of_estate_passing_to_direct_descendants"
 
   "Part Of Estate Passing To Direct Descendants Controller" must {
 
@@ -39,7 +40,7 @@ class PartOfEstatePassingToDirectDescendantsControllerSpec extends SimpleControl
     val testValue = true
 
     behave like
-      rnrbController[Boolean](createController, createView, Constants.partOfEstatePassingToDirectDescendantsId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+      rnrbController[Boolean](createController, createView, Constants.partOfEstatePassingToDirectDescendantsId, messageKeyPrefix, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
 
     behave like nonStartingController[Boolean](createController, answerRowConstants = List(Constants.dateOfDeathId))(Reads.BooleanReads, Writes.BooleanWrites)
   }
