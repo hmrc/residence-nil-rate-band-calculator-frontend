@@ -42,7 +42,7 @@ class GrossingUpOnEstatePropertyController @Inject()(override val appConfig: Fro
 
   override def form: () => Form[Boolean] = () => BooleanForm("grossing_up_on_estate_property.error.required")
 
-  override def view(form: Option[Form[Boolean]], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    grossing_up_on_estate_property(appConfig, form.orElse(Some(this.form())), answerRows)
+  override def view(form: Form[Boolean], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+    grossing_up_on_estate_property(appConfig, form, answerRows)
   }
 }

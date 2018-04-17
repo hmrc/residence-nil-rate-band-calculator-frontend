@@ -29,16 +29,16 @@ class DateOfDeathViewSpec extends DateViewSpecBase {
 
   val messageKeyPrefix = "date_of_death"
 
-  def createView(form: Option[Form[Date]] = None) = date_of_death(frontendAppConfig, form.getOrElse(dateOfDeathForm))(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Form[Date]) = date_of_death(frontendAppConfig, form)(request, messages, applicationProvider, localPartialRetriever)
 
   "Date of Death View" must {
 
-    behave like rnrbPage[Date](createView, messageKeyPrefix, "guidance")()
+    behave like rnrbPage[Date](createView, messageKeyPrefix, "guidance")(fakeApplication.injector.instanceOf[DateOfDeathController].form)
 
-    behave like datePage(createView, messageKeyPrefix, DateOfDeathController.onSubmit().url)
+    behave like datePage(createView, messageKeyPrefix, DateOfDeathController.onSubmit().url, "dateOfDeath",dateOfDeathForm,fakeApplication.injector.instanceOf[DateOfDeathController].form)
 
     "display the correct example" in {
-      val doc = asDocument(createView(None))
+      val doc = asDocument(createView(fakeApplication.injector.instanceOf[DateOfDeathController].form))
       assertContainsMessages(doc, s"$messageKeyPrefix.example")
     }
   }

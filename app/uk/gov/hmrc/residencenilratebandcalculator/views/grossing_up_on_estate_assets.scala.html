@@ -24,8 +24,7 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
-@(appConfig: FrontendAppConfig, oform: Option[Form[Boolean]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
-@defining(oform.get) {form =>
+@(appConfig: FrontendAppConfig, form: Form[Boolean], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("grossing_up_on_estate_assets.browser_title"),
@@ -34,7 +33,7 @@
 
     @helpers.form(action = GrossingUpOnEstateAssetsController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(oform)
+        @rnrbHelpers.error_summary(form)
 
         @rnrbHelpers.heading("grossing_up_on_estate_assets.title")
 
@@ -57,5 +56,4 @@
     }
     @rnrbHelpers.answer_rows(answerRows)
 
-}
 }

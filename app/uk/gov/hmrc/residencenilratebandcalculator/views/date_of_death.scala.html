@@ -34,7 +34,7 @@
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(Some(form))
+        @rnrbHelpers.error_summary(form)
 
         @rnrbHelpers.heading("date_of_death.title")
 

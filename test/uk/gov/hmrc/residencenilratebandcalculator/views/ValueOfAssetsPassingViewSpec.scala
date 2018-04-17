@@ -28,17 +28,17 @@ class ValueOfAssetsPassingViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "value_of_assets_passing"
 
-  def createView(form: Option[Form[Int]] = None) = value_of_assets_passing(frontendAppConfig, form, Seq(), None)(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Form[Int]) = value_of_assets_passing(frontendAppConfig, form, Seq(), None)(request, messages, applicationProvider, localPartialRetriever)
 
   "Value Of Assets Passing View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance3")(Some(fakeApplication.injector.instanceOf[ValueOfAssetsPassingController].form()))
+    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance3")(fakeApplication.injector.instanceOf[ValueOfAssetsPassingController].form())
 
-    behave like pageWithoutBackLink[Int](createView, Some(fakeApplication.injector.instanceOf[ValueOfAssetsPassingController].form()))
+    behave like pageWithoutBackLink[Int](createView, fakeApplication.injector.instanceOf[ValueOfAssetsPassingController].form())
 
-    behave like intPage(createView, messageKeyPrefix, ValueOfAssetsPassingController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage), Some(fakeApplication.injector.instanceOf[ValueOfAssetsPassingController].form()))
+    behave like intPage(createView, messageKeyPrefix, ValueOfAssetsPassingController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage), fakeApplication.injector.instanceOf[ValueOfAssetsPassingController].form())
 
-    behave like pageContainingPreviousAnswers(createView, Some(fakeApplication.injector.instanceOf[ValueOfAssetsPassingController].form()))
+    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[ValueOfAssetsPassingController].form())
 
   }
 }

@@ -27,7 +27,7 @@ class ClaimDownsizingThresholdViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "claim_downsizing_threshold"
 
-  def createView(form: Option[Form[Boolean]] = None) = claim_downsizing_threshold(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Form[Boolean]) = claim_downsizing_threshold(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
 
   "Claim Downsizing Threshold View" must {
 
@@ -36,13 +36,13 @@ class ClaimDownsizingThresholdViewSpec extends BooleanViewSpecBase {
       "guidance1.bullet1",
       "guidance1.bullet2",
       "guidance1.bullet3",
-      "guidance1.bullet4")(Some(fakeApplication.injector.instanceOf[ClaimDownsizingThresholdController].form()))
+      "guidance1.bullet4")(fakeApplication.injector.instanceOf[ClaimDownsizingThresholdController].form())
 
-    behave like pageWithoutBackLink[Boolean](createView, Some(fakeApplication.injector.instanceOf[ClaimDownsizingThresholdController].form()))
+    behave like pageWithoutBackLink[Boolean](createView, fakeApplication.injector.instanceOf[ClaimDownsizingThresholdController].form())
 
-    behave like booleanPage(createView, messageKeyPrefix, ClaimDownsizingThresholdController.onSubmit().url, Some(fakeApplication.injector.instanceOf[ClaimDownsizingThresholdController].form()), true)
+    behave like booleanPage(createView, messageKeyPrefix, ClaimDownsizingThresholdController.onSubmit().url, fakeApplication.injector.instanceOf[ClaimDownsizingThresholdController].form(), true)
 
-    behave like pageContainingPreviousAnswers(createView, Some(fakeApplication.injector.instanceOf[ClaimDownsizingThresholdController].form()))
+    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[ClaimDownsizingThresholdController].form())
 
   }
 }

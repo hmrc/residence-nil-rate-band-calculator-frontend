@@ -42,7 +42,7 @@ class DatePropertyWasChangedController @Inject()(override val appConfig: Fronten
 
   def form = () => dateOfDownsizingForm
 
-  def view(form: Option[Form[Date]], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-      date_property_was_changed(appConfig, form.fold(dateOfDownsizingForm)(identity), answerRows)
+  def view(form: Form[Date], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+      date_property_was_changed(appConfig, form, answerRows)
   }
 }

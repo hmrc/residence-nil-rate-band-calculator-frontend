@@ -78,7 +78,7 @@ class ValueAvailableWhenPropertyChangedController @Inject()(val appConfig: Front
           implicit val messages = messagesApi.preferred(request)
           Ok(value_available_when_property_changed(appConfig,
             nilRateBand,
-            cacheMap.getEntry(controllerId).map(value => form().fill(value)).orElse(Some(form())),
+            cacheMap.getEntry(controllerId).fold(form())(value => form().fill(value)),
             previousAnswers))
         }
       } recover {
@@ -103,12 +103,12 @@ class ValueAvailableWhenPropertyChangedController @Inject()(val appConfig: Front
           implicit val messages = messagesApi.preferred(request)
           boundForm.fold(
             formWithErrors => Future.successful(BadRequest(value_available_when_property_changed(appConfig,
-              formattedNilRateBand, Some(formWithErrors), previousAnswers))),
+              formattedNilRateBand, formWithErrors, previousAnswers))),
             (value) => {
               validate(value, nilRateBand).flatMap {
                 case Some(error) => Future.successful(BadRequest(value_available_when_property_changed(appConfig,
                   formattedNilRateBand,
-                  Some(form().fill(value).withError(error)),
+                  form().fill(value).withError(error),
                   previousAnswers)))
                 case None => sessionConnector.cache[Int](controllerId, value).map(cacheMap => Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
               }

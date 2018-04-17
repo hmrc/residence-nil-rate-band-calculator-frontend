@@ -29,72 +29,72 @@ trait DateViewSpecBase extends ViewSpecBase {
   val year = 2000
   val date = Date(new LocalDate(year, month, day))
 
-  def datePage(createView: (Option[Form[Date]]) => HtmlFormat.Appendable,
+  def datePage(createView: (Form[Date]) => HtmlFormat.Appendable,
                messageKeyPrefix: String,
                expectedFormAction: String,
                pageType: String = "dateOfDeath",
-               form: Form[Date] = dateOfDeathForm) = {
+               form: Form[Date] = dateOfDeathForm, emptyForm: Form[Date]) = {
 
-    behave like questionPage[Date](createView, messageKeyPrefix, expectedFormAction)
+    behave like questionPage[Date](createView, messageKeyPrefix, expectedFormAction, emptyForm)
 
     "behave like a date page" when {
       "rendered" must {
         "contain a label for the day" in {
-          val doc = asDocument(createView(None))
+          val doc = asDocument(createView(emptyForm))
           assertContainsLabel(doc, s"$pageType${".day"}", messages("date.day"))
         }
 
         "contain an input for the day" in {
-          val doc = asDocument(createView(None))
+          val doc = asDocument(createView(emptyForm))
           assertRenderedById(doc, s"$pageType${".day"}")
         }
 
         "contain a label for the month" in {
-          val doc = asDocument(createView(None))
+          val doc = asDocument(createView(emptyForm))
           assertContainsLabel(doc, s"$pageType${".month"}", messages("date.month"))
         }
 
         "contain an input for the month" in {
-          val doc = asDocument(createView(None))
+          val doc = asDocument(createView(emptyForm))
           assertRenderedById(doc, s"$pageType${".month"}")
         }
 
         "contain a label for the year" in {
-          val doc = asDocument(createView(None))
+          val doc = asDocument(createView(emptyForm))
           assertContainsLabel(doc, s"$pageType${".year"}", messages("date.year"))
         }
 
         "contain an input for the year" in {
-          val doc = asDocument(createView(None))
+          val doc = asDocument(createView(emptyForm))
           assertRenderedById(doc, s"$pageType${".year"}")
         }
 
         "not render an error summary" in {
-          val doc = asDocument(createView(None))
+          val doc = asDocument(createView(emptyForm))
           assertNotRenderedById(doc, "error-summary_header")
         }
       }
 
       "rendered with a value" must {
         "include the day value in the day input" in {
-          val doc = asDocument(createView(Some(form.fill(date))))
+          val doc = asDocument(createView(form.fill(date)))
           doc.getElementById(s"$pageType${".day"}").attr("value") shouldBe day.toString
         }
 
         "include the month value in the month input" in {
-          val doc = asDocument(createView(Some(form.fill(date))))
+          val doc = asDocument(createView(form.fill(date)))
           doc.getElementById(s"$pageType${".month"}").attr("value") shouldBe month.toString
         }
 
         "include the year value in the year input" in {
-          val doc = asDocument(createView(Some(form.fill(date))))
+          val doc = asDocument(createView(form.fill(date)))
           doc.getElementById(s"$pageType${".year"}").attr("value") shouldBe year.toString
         }
       }
 
       "rendered with an error" must {
         "show an error summary" in {
-          val doc = asDocument(createView(Some(form.withError(error))))
+          val doc = asDocument(createView(form.withError(error)))
           assertRenderedById(doc, "error-summary-heading")
         }
       }

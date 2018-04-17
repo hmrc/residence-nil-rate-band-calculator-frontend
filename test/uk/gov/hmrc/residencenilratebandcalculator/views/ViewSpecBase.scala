@@ -27,9 +27,9 @@ trait ViewSpecBase extends HtmlSpec {
   val error = FormError(errorKey, errorMessage)
 
 
-  def rnrbPage[A: ClassTag](createView: (Option[Form[A]]) => HtmlFormat.Appendable,
+  def rnrbPage[A: ClassTag](createView: (Form[A]) => HtmlFormat.Appendable,
                             messageKeyPrefix: String,
-                            expectedGuidanceKeys: String*)(emptyForm: Option[Form[A]] = None) = {
+                            expectedGuidanceKeys: String*)(emptyForm: Form[A]) = {
     "behave like a standard RNRB page" when {
       "rendered" must {
         "have the correct banner title" in {
@@ -62,7 +62,7 @@ trait ViewSpecBase extends HtmlSpec {
     }
   }
 
-  def pageWithoutBackLink[A: ClassTag](createView: (Option[Form[A]]) => HtmlFormat.Appendable, emptyForm: Option[Form[A]] = None) = {
+  def pageWithoutBackLink[A: ClassTag](createView: (Form[A]) => HtmlFormat.Appendable, emptyForm: Form[A]) = {
 
     "behave like a page without a back link" when {
       "rendered" must {
@@ -75,9 +75,9 @@ trait ViewSpecBase extends HtmlSpec {
     }
   }
 
-  def questionPage[A: ClassTag](createView: (Option[Form[A]]) => HtmlFormat.Appendable,
+  def questionPage[A: ClassTag](createView: (Form[A]) => HtmlFormat.Appendable,
                                 messageKeyPrefix: String,
-                                expectedFormAction: String, emptyForm: Option[Form[A]] = None) = {
+                                expectedFormAction: String, emptyForm: Form[A]) = {
 
     "behave like a page with a question" when {
       "rendered" must {
@@ -98,7 +98,7 @@ trait ViewSpecBase extends HtmlSpec {
     }
   }
 
-  def pageContainingPreviousAnswers[A: ClassTag](createView: (Option[Form[A]]) => HtmlFormat.Appendable, emptyForm: Option[Form[A]] = None) = {
+  def pageContainingPreviousAnswers[A: ClassTag](createView: (Form[A]) => HtmlFormat.Appendable, emptyForm: Form[A]) = {
     "behave like a page containing previous answers" when {
       "rendered" must {
         "contain the Show previous answers link" in {

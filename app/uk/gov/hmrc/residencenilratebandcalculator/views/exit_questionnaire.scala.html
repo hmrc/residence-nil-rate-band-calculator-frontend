@@ -29,7 +29,7 @@
 
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
-@(appConfig: FrontendAppConfig, form: Option[Form[ExitQuestionnaire]] = None)(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
+@(appConfig: FrontendAppConfig, form: Form[ExitQuestionnaire])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("exit_questionnaire.browser_title"),
@@ -50,7 +50,7 @@
         <div class="form-group">
             <fieldset class="form-field-group">
                 @govHelpers.inputRadioGroup(
-                    form.get("serviceFeel"),
+                    form("serviceFeel"),
                     Seq("very_satisfied" -> Messages("service_feel.very_satisfied"),
                     "satisfied" -> Messages("service_feel.satisfied"),
                     "neither" -> Messages("service_feel.neither"),
@@ -67,7 +67,7 @@
         <div class="form-group">
             <fieldset class="form-field-group">
                 @govHelpers.inputRadioGroup(
-                    form.get("serviceDifficulty"),
+                    form("serviceDifficulty"),
                     Seq("very_easy" -> Messages("service_difficulty.very_easy"),
                     "easy" -> Messages("service_difficulty.easy"),
                     "neither" -> Messages("service_difficulty.neither"),
@@ -80,7 +80,7 @@
         </div>
 
         @govHelpers.textArea(
-            form.get("comments"),
+            form("comments"),
             '_inputClass -> "form-control-2-3",
             '_label -> messages("exit_questionnaire.comments.label"),
             '_labelClass -> "form-label-bold"
@@ -94,7 +94,7 @@
 
         <div class="form-group">
             @rnrbHelpers.input_value(
-                form.get("fullName"),
+                form("fullName"),
                 '_inputClass -> "form-control",
                 '_type -> "text",
                 '_labelTextClass -> "form-label form-label-bold",
@@ -104,7 +104,7 @@
 
         <div class="form-group">
             @rnrbHelpers.input_value(
-                form.get("email"),
+                form("email"),
                 '_inputClass -> "form-control",
                 '_type -> "text",
                 '_labelTextClass -> "form-label form-label-bold",
@@ -115,7 +115,7 @@
 
         <div class="form-group">
             @rnrbHelpers.input_value(
-                form.get("phoneNumber"),
+                form("phoneNumber"),
                 '_inputClass -> "form-control",
                 '_type -> "text",
                 '_labelTextClass -> "form-label form-label-bold",

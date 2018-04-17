@@ -23,10 +23,10 @@ trait IntViewSpecBase extends ViewSpecBase {
 
   val number = 123
 
-  def intPage(createView: (Option[Form[Int]]) => HtmlFormat.Appendable,
+  def intPage(createView: (Form[Int]) => HtmlFormat.Appendable,
               messageKeyPrefix: String,
               expectedFormAction: String,
-              form: Form[Int], emptyForm: Option[Form[Int]] = None) = {
+              form: Form[Int], emptyForm: Form[Int]) = {
 
     behave like questionPage[Int](createView, messageKeyPrefix, expectedFormAction, emptyForm)
 
@@ -45,7 +45,7 @@ trait IntViewSpecBase extends ViewSpecBase {
 
       "rendered with a valid form" must {
         "include the form's value in the value input" in {
-          val doc = asDocument(createView(Some(form.fill(number))))
+          val doc = asDocument(createView(form.fill(number)))
           doc.getElementById("value").attr("value") shouldBe number.toString
         }
       }
@@ -53,12 +53,12 @@ trait IntViewSpecBase extends ViewSpecBase {
       "rendered with an error" must {
 
         "show an error summary" in {
-          val doc = asDocument(createView(Some(form.withError(error))))
+          val doc = asDocument(createView(form.withError(error)))
           assertRenderedById(doc, "error-summary-heading")
         }
 
         "show an error in the value field's label" in {
-          val doc = asDocument(createView(Some(form.withError(error))))
+          val doc = asDocument(createView(form.withError(error)))
           val errorSpan = doc.getElementsByClass("error-notification").first
           errorSpan.text shouldBe messages(errorMessage)
         }

@@ -30,8 +30,8 @@ class PartOfEstatePassingToDirectDescendantsControllerSpec extends SimpleControl
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => part_of_estate_passing_to_direct_descendants(frontendAppConfig, answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
-        case Some(v) => part_of_estate_passing_to_direct_descendants(frontendAppConfig, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case None => part_of_estate_passing_to_direct_descendants(frontendAppConfig, BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case Some(v) => part_of_estate_passing_to_direct_descendants(frontendAppConfig, BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
       }
     }
 

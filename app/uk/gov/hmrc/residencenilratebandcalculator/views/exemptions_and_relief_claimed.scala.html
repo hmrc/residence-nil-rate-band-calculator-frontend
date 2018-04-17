@@ -23,9 +23,7 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 @import uk.gov.hmrc.play.views.html.{helpers => govHelpers}
 
-@(appConfig: FrontendAppConfig, oform: Option[Form[Boolean]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
-
-@defining(oform.get) {form =>
+@(appConfig: FrontendAppConfig, form: Form[Boolean], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("exemptions_and_relief_claimed.browser_title"),
@@ -34,7 +32,7 @@
 
     @helpers.form(action = ExemptionsAndReliefClaimedController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(oform)
+        @rnrbHelpers.error_summary(form)
 
         @rnrbHelpers.heading("exemptions_and_relief_claimed.title")
 
@@ -48,7 +46,7 @@
         <div class="form-group">
             <fieldset class="form-field-group">
                 @govHelpers.inputRadioGroup(
-                oform.get("value"),
+                form("value"),
                 Seq("true" -> messages("site.yes"), "false" -> messages("site.no")),
                 '_legend -> messages("exemptions_and_relief_claimed.title"),
                 '_legendClass -> Some("visually-hidden")
@@ -59,5 +57,4 @@
 
     }
     @rnrbHelpers.answer_rows(answerRows)
-}
 }

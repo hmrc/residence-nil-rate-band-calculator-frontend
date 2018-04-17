@@ -28,17 +28,17 @@ class ChargeableEstateValueViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "chargeable_estate_value"
 
-  def createView(form: Option[Form[Int]] = None) = chargeable_estate_value(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Form[Int]) = chargeable_estate_value(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
 
   "Chargeable Estate Value View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance")(Some(fakeApplication.injector.instanceOf[ChargeableEstateValueController].form()))
+    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance")(fakeApplication.injector.instanceOf[ChargeableEstateValueController].form())
 
-    behave like pageWithoutBackLink[Int](createView, Some(fakeApplication.injector.instanceOf[ChargeableEstateValueController].form()))
+    behave like pageWithoutBackLink[Int](createView, fakeApplication.injector.instanceOf[ChargeableEstateValueController].form())
 
-    behave like intPage(createView, messageKeyPrefix, ChargeableEstateValueController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage), Some(fakeApplication.injector.instanceOf[ChargeableEstateValueController].form()))
+    behave like intPage(createView, messageKeyPrefix, ChargeableEstateValueController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage), fakeApplication.injector.instanceOf[ChargeableEstateValueController].form())
 
-    behave like pageContainingPreviousAnswers(createView, Some(fakeApplication.injector.instanceOf[ChargeableEstateValueController].form()))
+    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[ChargeableEstateValueController].form())
 
   }
 }

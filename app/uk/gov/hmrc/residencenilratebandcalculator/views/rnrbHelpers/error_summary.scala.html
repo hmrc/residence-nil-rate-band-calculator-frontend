@@ -16,10 +16,10 @@
 
 @import uk.gov.hmrc.play.views.html.{helpers => govHelpers}
 
-@(form: Option[Form[_]])(implicit messages: Messages)
-@if(form.get.hasErrors) {
+@(form: Form[_])(implicit messages: Messages)
+@if(form.hasErrors) {
 
-        @govHelpers.errorSummary(messages("error.summary.title"), form.get)
+        @govHelpers.errorSummary(messages("error.summary.title"), form)
 
 
 }

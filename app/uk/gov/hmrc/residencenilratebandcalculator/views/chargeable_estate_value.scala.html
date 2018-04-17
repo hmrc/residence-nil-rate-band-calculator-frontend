@@ -23,9 +23,7 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
-@(appConfig: FrontendAppConfig, oform: Option[Form[Int]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
-
-@defining(oform.get) {form =>
+@(appConfig: FrontendAppConfig, form: Form[Int], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("chargeable_estate_value.browser_title"),
@@ -34,7 +32,7 @@
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeableEstateValueController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(oform)
+        @rnrbHelpers.error_summary(form)
 
         @rnrbHelpers.heading("chargeable_estate_value.title")
 
@@ -42,7 +40,7 @@
 
         <div class="form-group">
             @rnrbHelpers.input_value(
-            oform.get("value"),
+            form("value"),
             '_inputClass -> "form-control",
             '_type -> "number",
             '_label -> Messages("sign.pound"),
@@ -57,5 +55,4 @@
     }
 
     @rnrbHelpers.answer_rows(answerRows)
-}
 }@import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever

@@ -28,18 +28,18 @@ class ExitQuestionnaireViewSpec extends ViewSpecBase {
 
   override val errorKey = "fullName"
 
-  def createView(form: Option[Form[ExitQuestionnaire]]) = exit_questionnaire(frontendAppConfig, form)(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Form[ExitQuestionnaire]) = exit_questionnaire(frontendAppConfig, form)(request, messages, applicationProvider, localPartialRetriever)
 
   "Exit Questionnaire view" must {
     behave like rnrbPage[ExitQuestionnaire](createView, messageKeyPrefix,
-      "guidance", "comments.help.2", "user_research.title", "user_research.guidance")(Some(ExitQuestionnaireForm.apply()))
+      "guidance", "comments.help.2", "user_research.title", "user_research.guidance")(ExitQuestionnaireForm.apply())
   }
 
   "Exit Questionnaire view" when {
     "rendered" must {
 
       "contain a 'no thanks' link" in {
-        val doc = asDocument(createView(Some(ExitQuestionnaireForm.apply())))
+        val doc = asDocument(createView(ExitQuestionnaireForm.apply()))
         val links = doc.select("a.button")
         links.size shouldBe 1
         links.first.text shouldBe messages("service.no_thanks")
@@ -47,12 +47,12 @@ class ExitQuestionnaireViewSpec extends ViewSpecBase {
       }
 
       "contain a legend for the service feel" in {
-        val doc = asDocument(createView(Some(ExitQuestionnaireForm.apply())))
+        val doc = asDocument(createView(ExitQuestionnaireForm.apply()))
         assertContainsMessages(doc, messages(s"$messageKeyPrefix.service_feel.label"))
       }
 
       "contain radio buttons for service feel" in {
-        val doc = asDocument(createView(Some(ExitQuestionnaireForm.apply())))
+        val doc = asDocument(createView(ExitQuestionnaireForm.apply()))
         assertContainsRadioButton(doc, "serviceFeel-very_satisfied", "serviceFeel", "very_satisfied", false)
         assertContainsRadioButton(doc, "serviceFeel-satisfied", "serviceFeel", "satisfied", false)
         assertContainsRadioButton(doc, "serviceFeel-neither", "serviceFeel", "neither", false)
@@ -61,12 +61,12 @@ class ExitQuestionnaireViewSpec extends ViewSpecBase {
       }
 
       "contain a legend for the service difficulty" in {
-        val doc = asDocument(createView(Some(ExitQuestionnaireForm.apply())))
+        val doc = asDocument(createView(ExitQuestionnaireForm.apply()))
         assertContainsMessages(doc, messages(s"$messageKeyPrefix.service_difficulty.label"))
       }
 
       "contain radio buttons for service difficuly" in {
-        val doc = asDocument(createView(Some(ExitQuestionnaireForm.apply())))
+        val doc = asDocument(createView(ExitQuestionnaireForm.apply()))
         assertContainsRadioButton(doc, "serviceDifficulty-very_easy", "serviceDifficulty", "very_easy", false)
         assertContainsRadioButton(doc, "serviceDifficulty-easy", "serviceDifficulty", "easy", false)
         assertContainsRadioButton(doc, "serviceDifficulty-neither", "serviceDifficulty", "neither", false)
@@ -75,42 +75,42 @@ class ExitQuestionnaireViewSpec extends ViewSpecBase {
       }
 
       "contain a label for the comments" in {
-        val doc = asDocument(createView(Some(ExitQuestionnaireForm.apply())))
+        val doc = asDocument(createView(ExitQuestionnaireForm.apply()))
         assertContainsLabel(doc, "comments", messages(s"$messageKeyPrefix.comments.label"))
       }
 
       "contain a textarea for the comments" in {
-        val doc = asDocument(createView(Some(ExitQuestionnaireForm.apply())))
+        val doc = asDocument(createView(ExitQuestionnaireForm.apply()))
         assertRenderedById(doc, "comments")
       }
 
       "contain a label for the full name" in {
-        val doc = asDocument(createView(Some(ExitQuestionnaireForm.apply())))
+        val doc = asDocument(createView(ExitQuestionnaireForm.apply()))
         assertContainsLabel(doc, "fullName", messages(s"$messageKeyPrefix.full_name.label"))
       }
 
       "contain an input for the full name" in {
-        val doc = asDocument(createView(Some(ExitQuestionnaireForm.apply())))
+        val doc = asDocument(createView(ExitQuestionnaireForm.apply()))
         assertRenderedById(doc, "fullName")
       }
 
       "contain a label for the email" in {
-        val doc = asDocument(createView(Some(ExitQuestionnaireForm.apply())))
+        val doc = asDocument(createView(ExitQuestionnaireForm.apply()))
         assertContainsLabel(doc, "email", messages(s"$messageKeyPrefix.email.label"))
       }
 
       "contain an input for the email" in {
-        val doc = asDocument(createView(Some(ExitQuestionnaireForm.apply())))
+        val doc = asDocument(createView(ExitQuestionnaireForm.apply()))
         assertRenderedById(doc, "email")
       }
 
       "contain a label for the phone number" in {
-        val doc = asDocument(createView(Some(ExitQuestionnaireForm.apply())))
+        val doc = asDocument(createView(ExitQuestionnaireForm.apply()))
         assertContainsLabel(doc, "phoneNumber", messages(s"$messageKeyPrefix.phone_number.label"))
       }
 
       "contain an input for the phone number" in {
-        val doc = asDocument(createView(Some(ExitQuestionnaireForm.apply())))
+        val doc = asDocument(createView(ExitQuestionnaireForm.apply()))
         assertRenderedById(doc, "phoneNumber")
       }
     }
@@ -128,24 +128,24 @@ class ExitQuestionnaireViewSpec extends ViewSpecBase {
         ExitQuestionnaire(Some(serviceDifficulty), Some(serviceFeel), Some(comments), Some(fullName), Some(email), Some(phoneNumber)))
 
       "include the form's full name in the correct input" in {
-        val doc = asDocument(createView(Some(filledForm)))
+        val doc = asDocument(createView(filledForm))
         doc.getElementById("fullName").attr("value") shouldBe fullName
       }
 
       "include the form's email in the correct input" in {
-        val doc = asDocument(createView(Some(filledForm)))
+        val doc = asDocument(createView(filledForm))
         doc.getElementById("email").attr("value") shouldBe email
       }
 
       "include the form's phone number in the correct input" in {
-        val doc = asDocument(createView(Some(filledForm)))
+        val doc = asDocument(createView(filledForm))
         doc.getElementById("phoneNumber").attr("value") shouldBe phoneNumber
       }
     }
 
     "rendered with an error" must {
       "show an error summary" in {
-        val doc = asDocument(createView(Some(ExitQuestionnaireForm().withError(error))))
+        val doc = asDocument(createView(ExitQuestionnaireForm().withError(error)))
         assertRenderedById(doc, "error-summary-heading")
       }
     }

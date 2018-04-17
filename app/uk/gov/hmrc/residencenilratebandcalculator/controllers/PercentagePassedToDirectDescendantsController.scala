@@ -43,7 +43,7 @@ class PercentagePassedToDirectDescendantsController  @Inject()(override val appC
   override def form = () => PositivePercentForm("percentage_passed_to_direct_descendants.error.required",
     "percentage_passed_to_direct_descendants.error.non_numeric", "percentage_passed_to_direct_descendants.error.out_of_range")
 
-  override def view(form: Option[Form[BigDecimal]], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    percentage_passed_to_direct_descendants(appConfig, form.orElse(Some(this.form())), answerRows)
+  override def view(form: Form[BigDecimal], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+    percentage_passed_to_direct_descendants(appConfig, form, answerRows)
   }
 }

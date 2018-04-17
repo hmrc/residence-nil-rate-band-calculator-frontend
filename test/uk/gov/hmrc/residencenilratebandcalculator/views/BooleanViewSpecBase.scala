@@ -22,9 +22,9 @@ import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 
 trait BooleanViewSpecBase extends ViewSpecBase {
 
-  def booleanPage(createView: (Option[Form[Boolean]]) => HtmlFormat.Appendable,
+  def booleanPage(createView: Form[Boolean] => HtmlFormat.Appendable,
                   messageKeyPrefix: String,
-                  expectedFormAction: String, emptyForm: Option[Form[Boolean]] = None, useNewValues: Boolean = false) = {
+                  expectedFormAction: String, emptyForm: Form[Boolean], useNewValues: Boolean = false) = {
 
     behave like questionPage[Boolean](createView, messageKeyPrefix, expectedFormAction, emptyForm)
 
@@ -69,12 +69,12 @@ trait BooleanViewSpecBase extends ViewSpecBase {
       "rendered with an error" must {
 
         "show an error summary" in {
-          val doc = asDocument(createView(Some(BooleanForm("").withError(error))))
+          val doc = asDocument(createView(BooleanForm("").withError(error)))
           assertRenderedById(doc, "error-summary-heading")
         }
 
         "show an error in the value field's label" in {
-          val doc = asDocument(createView(Some(BooleanForm("").withError(error))))
+          val doc = asDocument(createView(BooleanForm("").withError(error)))
           val errorSpan = doc.getElementsByClass("error-notification").first
           errorSpan.text shouldBe messages(errorMessage)
         }
@@ -82,21 +82,21 @@ trait BooleanViewSpecBase extends ViewSpecBase {
     }
   }
 
-  def answeredBooleanPage(createView: (Option[Form[Boolean]]) => HtmlFormat.Appendable,
-                          answer: Boolean, emptyForm: Option[Form[Boolean]] = None, useNewValues: Boolean = false) = {
+  def answeredBooleanPage(createView: (Form[Boolean]) => HtmlFormat.Appendable,
+                          answer: Boolean, emptyForm: Form[Boolean], useNewValues: Boolean = false) = {
 
     val yes = if(useNewValues) "value-true" else "yes"
     val no = if(useNewValues) "value-false" else "no"
 
     "have only the correct value checked" in {
-      val doc = asDocument(createView(Some(BooleanForm("").fill(answer))))
-      val test = asDocument(createView(Some(emptyForm).get))
+      val doc = asDocument(createView(BooleanForm("").fill(answer)))
+      val test = asDocument(createView(emptyForm))
       assert(doc.getElementById(yes).hasAttr("checked") == answer)
       assert(doc.getElementById(no).hasAttr("checked") != answer)
     }
 
     "not render an error summary" in {
-      val doc = asDocument(createView(Some(BooleanForm("").fill(answer))))
+      val doc = asDocument(createView(BooleanForm("").fill(answer)))
       assertNotRenderedById(doc, "error-summary_header")
     }
   }

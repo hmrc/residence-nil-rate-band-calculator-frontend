@@ -28,18 +28,18 @@ class PropertyValueViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "property_value"
 
-  def createView(form: Option[Form[Int]] = None) = property_value(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Form[Int]) = property_value(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
 
   "Property Value View" must {
 
     behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance3",
-      "guidance3.bullet1", "guidance3.bullet2", "guidance4")(Some(fakeApplication.injector.instanceOf[PropertyValueController].form()))
+      "guidance3.bullet1", "guidance3.bullet2", "guidance4")(fakeApplication.injector.instanceOf[PropertyValueController].form())
 
-    behave like pageWithoutBackLink[Int](createView, Some(fakeApplication.injector.instanceOf[PropertyValueController].form()))
+    behave like pageWithoutBackLink[Int](createView, fakeApplication.injector.instanceOf[PropertyValueController].form())
 
-    behave like intPage(createView, messageKeyPrefix, PropertyValueController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage), Some(fakeApplication.injector.instanceOf[PropertyValueController].form()))
+    behave like intPage(createView, messageKeyPrefix, PropertyValueController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage), fakeApplication.injector.instanceOf[PropertyValueController].form())
 
-    behave like pageContainingPreviousAnswers(createView, Some(fakeApplication.injector.instanceOf[PropertyValueController].form()))
+    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[PropertyValueController].form())
 
   }
 }

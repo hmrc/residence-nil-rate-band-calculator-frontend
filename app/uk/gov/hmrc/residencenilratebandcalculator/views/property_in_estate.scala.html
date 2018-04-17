@@ -23,8 +23,7 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 @import uk.gov.hmrc.play.views.html.{helpers => govHelpers}
 
-@(appConfig: FrontendAppConfig, oform: Option[Form[Boolean]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
-@defining(oform.get) {form =>
+@(appConfig: FrontendAppConfig, form: Form[Boolean], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("property_in_estate.browser_title"),
@@ -33,7 +32,7 @@
 
     @helpers.form(action = PropertyInEstateController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(oform)
+        @rnrbHelpers.error_summary(form)
 
         @rnrbHelpers.heading("property_in_estate.title")
 
@@ -57,5 +56,4 @@
 
     @rnrbHelpers.answer_rows(answerRows)
 
-}
 }

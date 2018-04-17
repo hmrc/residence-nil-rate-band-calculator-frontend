@@ -28,16 +28,16 @@ class PercentagePassedToDirectDescendantsViewSpec extends BigDecimalViewSpecBase
 
   val messageKeyPrefix = "percentage_passed_to_direct_descendants"
 
-  def createView(form: Option[Form[BigDecimal]] = None) = percentage_passed_to_direct_descendants(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Form[BigDecimal]) = percentage_passed_to_direct_descendants(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
 
   "Percentage Passed To Direct Descendants View" must {
 
-    behave like rnrbPage[BigDecimal](createView, messageKeyPrefix, "guidance")(Some(fakeApplication.injector.instanceOf[PercentagePassedToDirectDescendantsController].form()))
+    behave like rnrbPage[BigDecimal](createView, messageKeyPrefix, "guidance")(fakeApplication.injector.instanceOf[PercentagePassedToDirectDescendantsController].form())
 
-    behave like pageWithoutBackLink[BigDecimal](createView, Some(fakeApplication.injector.instanceOf[PercentagePassedToDirectDescendantsController].form()))
+    behave like pageWithoutBackLink[BigDecimal](createView, fakeApplication.injector.instanceOf[PercentagePassedToDirectDescendantsController].form())
 
-    behave like bigDecimalPage(createView, messageKeyPrefix, PercentagePassedToDirectDescendantsController.onSubmit().url, PositivePercentForm("", "", ""), Some(fakeApplication.injector.instanceOf[PercentagePassedToDirectDescendantsController].form()))
+    behave like bigDecimalPage(createView, messageKeyPrefix, PercentagePassedToDirectDescendantsController.onSubmit().url, PositivePercentForm("", "", ""), fakeApplication.injector.instanceOf[PercentagePassedToDirectDescendantsController].form())
 
-    behave like pageContainingPreviousAnswers(createView, Some(fakeApplication.injector.instanceOf[PercentagePassedToDirectDescendantsController].form()))
+    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[PercentagePassedToDirectDescendantsController].form())
   }
 }

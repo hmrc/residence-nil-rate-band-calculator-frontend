@@ -28,17 +28,17 @@ class ChargeablePropertyValueViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "chargeable_property_value"
 
-  def createView(form: Option[Form[Int]] = None) = chargeable_property_value(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Form[Int]) = chargeable_property_value(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
 
   "Chargeable Property Value View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2")(Some(fakeApplication.injector.instanceOf[ChargeablePropertyValueController].form()))
+    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2")(fakeApplication.injector.instanceOf[ChargeablePropertyValueController].form())
 
-    behave like pageWithoutBackLink[Int](createView, Some(fakeApplication.injector.instanceOf[ChargeablePropertyValueController].form()))
+    behave like pageWithoutBackLink[Int](createView, fakeApplication.injector.instanceOf[ChargeablePropertyValueController].form())
 
-    behave like intPage(createView, messageKeyPrefix, ChargeablePropertyValueController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage), Some(fakeApplication.injector.instanceOf[ChargeablePropertyValueController].form()))
+    behave like intPage(createView, messageKeyPrefix, ChargeablePropertyValueController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage), fakeApplication.injector.instanceOf[ChargeablePropertyValueController].form())
 
-    behave like pageContainingPreviousAnswers(createView, Some(fakeApplication.injector.instanceOf[ChargeablePropertyValueController].form()))
+    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[ChargeablePropertyValueController].form())
 
   }
 

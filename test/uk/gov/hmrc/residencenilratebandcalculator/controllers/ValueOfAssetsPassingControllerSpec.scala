@@ -36,8 +36,8 @@ class ValueOfAssetsPassingControllerSpec extends SimpleControllerSpecBase {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => value_of_assets_passing(frontendAppConfig, answerRows = Seq(), formattedPropertyValue = None)(fakeRequest, messages, applicationProvider, localPartialRetriever)
-        case Some(v) => value_of_assets_passing(frontendAppConfig, Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(), None)(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case None => value_of_assets_passing(frontendAppConfig, NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric),answerRows = Seq(), formattedPropertyValue = None)(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case Some(v) => value_of_assets_passing(frontendAppConfig, NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v), Seq(), None)(fakeRequest, messages, applicationProvider, localPartialRetriever)
       }
     }
 
@@ -76,8 +76,8 @@ class ValueOfAssetsPassingControllerSpec extends SimpleControllerSpecBase {
     }
 
     "return the correct view when provided with answers including a valid property value" in {
-      val result = createController().view(Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric)), Seq(), new UserAnswers(CacheMap("id", Map(Constants.propertyValueId -> Json.toJson(1)))))(fakeRequest)
-      result shouldBe value_of_assets_passing(frontendAppConfig, Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric)), Seq(), Some(CurrencyFormatter.format(1)))(fakeRequest,
+      val result = createController().view(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric), Seq(), new UserAnswers(CacheMap("id", Map(Constants.propertyValueId -> Json.toJson(1)))))(fakeRequest)
+      result shouldBe value_of_assets_passing(frontendAppConfig, NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric), Seq(), Some(CurrencyFormatter.format(1)))(fakeRequest,
         messages, applicationProvider, localPartialRetriever)
     }
   }

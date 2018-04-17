@@ -88,7 +88,7 @@ class ValueBeingTransferredController @Inject()(val appConfig: FrontendAppConfig
           implicit val messages = messagesApi.preferred(request)
           Ok(value_being_transferred(appConfig,
             nilRateBand,
-            cacheMap.getEntry(controllerId).map(value => form().fill(value)).orElse(Some(form())),
+            cacheMap.getEntry(controllerId).fold(form())(value => form().fill(value)),
             previousAnswers))
         }
       } recover {
@@ -113,12 +113,12 @@ class ValueBeingTransferredController @Inject()(val appConfig: FrontendAppConfig
           implicit val messages = messagesApi.preferred(request)
           boundForm.fold(
             formWithErrors => Future.successful(BadRequest(value_being_transferred(appConfig,
-              formattedNilRateBand, Some(formWithErrors), previousAnswers))),
+              formattedNilRateBand, formWithErrors, previousAnswers))),
             (value) => {
               validate(value, nilRateBand, userAnswers).flatMap {
                 case Some(error) => Future.successful(BadRequest(value_being_transferred(appConfig,
                   formattedNilRateBand,
-                  Some(form().fill(value).withError(error)),
+                  form().fill(value).withError(error),
                   previousAnswers)))
                 case None => sessionConnector.cache[Int](controllerId, value).map(cacheMap => Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
               }

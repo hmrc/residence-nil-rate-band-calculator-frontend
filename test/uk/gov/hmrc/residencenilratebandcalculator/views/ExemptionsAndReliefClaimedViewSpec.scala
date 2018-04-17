@@ -27,18 +27,18 @@ class ExemptionsAndReliefClaimedViewSpec  extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "exemptions_and_relief_claimed"
 
-  def createView(form: Option[Form[Boolean]] = None) = exemptions_and_relief_claimed(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Form[Boolean]) = exemptions_and_relief_claimed(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
 
   "Exemptions And Relief Claimed View" must {
 
     behave like rnrbPage[Boolean](createView, messageKeyPrefix,
-      "guidance2", "guidance2.bullet1", "guidance2.bullet2", "guidance2.bullet3")(Some(fakeApplication.injector.instanceOf[ExemptionsAndReliefClaimedController].form()))
+      "guidance2", "guidance2.bullet1", "guidance2.bullet2", "guidance2.bullet3")(fakeApplication.injector.instanceOf[ExemptionsAndReliefClaimedController].form())
 
-    behave like pageWithoutBackLink[Boolean](createView, Some(fakeApplication.injector.instanceOf[ExemptionsAndReliefClaimedController].form()))
+    behave like pageWithoutBackLink[Boolean](createView, fakeApplication.injector.instanceOf[ExemptionsAndReliefClaimedController].form())
 
-    behave like booleanPage(createView, messageKeyPrefix, ExemptionsAndReliefClaimedController.onSubmit().url, Some(fakeApplication.injector.instanceOf[ExemptionsAndReliefClaimedController].form()), true)
+    behave like booleanPage(createView, messageKeyPrefix, ExemptionsAndReliefClaimedController.onSubmit().url, fakeApplication.injector.instanceOf[ExemptionsAndReliefClaimedController].form(), true)
 
-    behave like pageContainingPreviousAnswers(createView, Some(fakeApplication.injector.instanceOf[ExemptionsAndReliefClaimedController].form()))
+    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[ExemptionsAndReliefClaimedController].form())
 
   }
 }

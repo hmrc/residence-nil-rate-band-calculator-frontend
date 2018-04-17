@@ -44,12 +44,12 @@ class ValueOfAssetsPassingController @Inject()(override val appConfig: FrontendA
   override def form = () =>
     NonNegativeIntForm("value_of_assets_passing.error.blank", "error.whole_pounds", "error.non_numeric")
 
-  override def view(form: Option[Form[Int]], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+  override def view(form: Form[Int], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
     val formattedPropertyValue = userAnswers.propertyValue match {
       case Some(value) => Some(CurrencyFormatter.format(value))
       case _ => None
     }
-    value_of_assets_passing(appConfig, form.orElse(Some(this.form())), answerRows, formattedPropertyValue)
+    value_of_assets_passing(appConfig, form, answerRows, formattedPropertyValue)
   }
 
   override def validate(value: Int, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = {

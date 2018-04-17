@@ -34,9 +34,9 @@ class AssetsPassingToDirectDescendantsControllerSpec extends SimpleControllerSpe
     def createView = (value: Option[Map[String, String]]) => {
       value match {
         case None =>
-          assets_passing_to_direct_descendants(frontendAppConfig, None, Seq(), formattedPropertyValue)(fakeRequest, messages, applicationProvider, localPartialRetriever)
+          assets_passing_to_direct_descendants(frontendAppConfig, BooleanForm(messageKey), Seq(), formattedPropertyValue)(fakeRequest, messages, applicationProvider, localPartialRetriever)
         case Some(v) =>
-          assets_passing_to_direct_descendants(frontendAppConfig, Some(BooleanForm(messageKey).bind(v)), Seq(), formattedPropertyValue)(fakeRequest, messages, applicationProvider, localPartialRetriever)
+          assets_passing_to_direct_descendants(frontendAppConfig, BooleanForm(messageKey).bind(v), Seq(), formattedPropertyValue)(fakeRequest, messages, applicationProvider, localPartialRetriever)
       }
     }
 
