@@ -42,6 +42,7 @@
 
      @govHelpers.input(
          formItem(s"${fieldName}.day"),
+         '_type -> "number",
          '_label -> Messages("date.fields.day"),
          '_labelClass -> "form-group form-group-day form-label-bold ",
          '_inputClass -> "form-control input--xsmall",
@@ -49,6 +50,7 @@
      )
      @govHelpers.input(
          formItem(s"${fieldName}.month"),
+         '_type -> "number",
          '_label -> Messages("date.fields.month"),
          '_labelClass -> "form-group form-group-month form-label-bold",
          '_inputClass -> "form-control input--xsmall",
@@ -56,6 +58,7 @@
      )
      @govHelpers.input(
          formItem(s"${fieldName}.year"),
+         '_type -> "number",
          '_label -> Messages("date.fields.year"),
          '_labelClass -> "form-group form-group-year form-label-bold",
          '_inputClass -> "form-control input--xsmall",

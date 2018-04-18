@@ -20,9 +20,15 @@ import play.api.data.{Form, FormError}
 import play.api.data.Forms._
 import play.api.data.format.Formatter
 
+import scala.util.Try
+
 object NonNegativeIntForm extends FormErrorHelper {
 
   def nonNegativeIntFormatter(errorKeyBlank: String, errorKeyDecimal: String, errorKeyNonNumeric: String) = new Formatter[Int] {
+
+    def isInt(str: String) = {
+      Try {str.toInt}.isSuccess
+    }
 
     val intRegex = """^(\d+)$""".r
     val decimalRegex = """^(\d*\.\d*)$""".r
@@ -32,7 +38,7 @@ object NonNegativeIntForm extends FormErrorHelper {
         case None => produceError(key, errorKeyBlank)
         case Some("") => produceError(key, errorKeyBlank)
         case Some(s) => s.trim.replace(",", "") match {
-          case intRegex(str) => Right(str.toInt)
+          case intRegex(str) if isInt(str) => Right(str.toInt)
           case decimalRegex(_) => produceError(key, errorKeyDecimal)
           case _ => produceError(key, errorKeyNonNumeric)
         }
