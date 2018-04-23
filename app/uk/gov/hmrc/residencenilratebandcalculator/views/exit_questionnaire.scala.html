@@ -25,10 +25,11 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.models.Email
 @import uk.gov.hmrc.residencenilratebandcalculator.models.PhoneNumber
 @import uk.gov.hmrc.residencenilratebandcalculator.Constants
+@import uk.gov.hmrc.play.views.html.{helpers => govHelpers}
 
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
-@(appConfig: FrontendAppConfig, form: Option[Form[ExitQuestionnaire]] = None)(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
+@(appConfig: FrontendAppConfig, form: Form[ExitQuestionnaire])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("exit_questionnaire.browser_title"),
@@ -43,28 +44,46 @@
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ExitQuestionnaireController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+        @rnrbHelpers.error_summary(form)
 
-        @rnrbHelpers.input_radio(
-            name = "serviceFeel",
-            legend = messages("exit_questionnaire.service_feel.label"),
-            errorKey = FormHelpers.getErrorByKey(form, "serviceFeel"),
-            inputs = ExitQuestionnaire.serviceFeelOptions
-        )
+        <legend class="bold-small ">@messages("exit_questionnaire.service_feel.label")</legend>
+        <div class="form-group">
+            <fieldset class="form-group">
+                @govHelpers.inputRadioGroup(
+                    form("serviceFeel"),
+                    Seq("very_satisfied" -> Messages("service_feel.very_satisfied"),
+                    "satisfied" -> Messages("service_feel.satisfied"),
+                    "neither" -> Messages("service_feel.neither"),
+                    "dissatisfied" -> Messages("service_feel.dissatisfied"),
+                    "very_dissatisfied" -> Messages("service_feel.very_dissatisfied")),
+                    '_legend -> messages("exit_questionnaire.service_feel.label"),
+                    '_legendClass -> Some("visuallyhidden")
+                    )
+            </fieldset>
+        </div>
 
-        @rnrbHelpers.input_radio(
-            name = "serviceDifficulty",
-            legend = messages("exit_questionnaire.service_difficulty.label"),
-            errorKey = FormHelpers.getErrorByKey(form, "serviceDifficulty"),
-            inputs = ExitQuestionnaire.serviceDifficultyOptions
-        )
 
-        @rnrbHelpers.input_textarea(
-            id = "comments",
-            name = "comments",
-            label = messages("exit_questionnaire.comments.label"),
-            inputClass = Some("textarea--fullwidth"),
-            errorKey = FormHelpers.getErrorByKey(form, "comments")
+        <legend class="bold-small ">@messages("exit_questionnaire.service_difficulty.label")</legend>
+        <div class="form-group">
+            <fieldset class="form-group">
+                @govHelpers.inputRadioGroup(
+                    form("serviceDifficulty"),
+                    Seq("very_easy" -> Messages("service_difficulty.very_easy"),
+                    "easy" -> Messages("service_difficulty.easy"),
+                    "neither" -> Messages("service_difficulty.neither"),
+                    "difficult" -> Messages("service_difficulty.difficult"),
+                    "very_difficult" -> Messages("service_difficulty.very_difficult")),
+                    '_legend -> messages("exit_questionnaire.service_difficulty.label"),
+                    '_legendClass -> Some("visuallyhidden")
+                )
+            </fieldset>
+        </div>
+
+        @govHelpers.textArea(
+            form("comments"),
+            '_inputClass -> "form-control-2-3",
+            '_label -> messages("exit_questionnaire.comments.label"),
+            '_labelClass -> "form-label-bold"
         )
 
         <p>@messages("exit_questionnaire.comments.help.2")</p>
@@ -73,29 +92,36 @@
 
         <p>@messages("exit_questionnaire.user_research.guidance")</p>
 
-        @rnrbHelpers.input_text(
-            id = "fullName",
-            name = "fullName",
-            value = Some(ExitQuestionnaireFormHelper.getValueByKey(form, FullName)),
-            label = messages("exit_questionnaire.full_name.label"),
-            errorKey = FormHelpers.getErrorByKey(form, "fullName")
-        )
+        <div class="form-group">
+            @rnrbHelpers.input_value(
+                form("fullName"),
+                '_inputClass -> "form-control",
+                '_type -> "text",
+                '_labelTextClass -> "form-label form-label-bold",
+                '_label -> messages("exit_questionnaire.full_name.label")
+            )
+        </div>
 
-        @rnrbHelpers.input_text(
-            id = "email",
-            name = "email",
-            value = Some(ExitQuestionnaireFormHelper.getValueByKey(form, Email)),
-            label = messages("exit_questionnaire.email.label"),
-            errorKey = FormHelpers.getErrorByKey(form, "email")
-        )
+        <div class="form-group">
+            @rnrbHelpers.input_value(
+                form("email"),
+                '_inputClass -> "form-control",
+                '_type -> "text",
+                '_labelTextClass -> "form-label form-label-bold",
+                '_label -> messages("exit_questionnaire.email.label")
+            )
+        </div>
 
-        @rnrbHelpers.input_text(
-            id = "phoneNumber",
-            name = "phoneNumber",
-            value = Some(ExitQuestionnaireFormHelper.getValueByKey(form, PhoneNumber)),
-            label = messages("exit_questionnaire.phone_number.label"),
-            errorKey = FormHelpers.getErrorByKey(form, "phoneNumber")
-        )
+
+        <div class="form-group">
+            @rnrbHelpers.input_value(
+                form("phoneNumber"),
+                '_inputClass -> "form-control",
+                '_type -> "text",
+                '_labelTextClass -> "form-label form-label-bold",
+                '_label -> messages("exit_questionnaire.phone_number.label")
+            )
+        </div>
 
         @rnrbHelpers.submit_button()
     }

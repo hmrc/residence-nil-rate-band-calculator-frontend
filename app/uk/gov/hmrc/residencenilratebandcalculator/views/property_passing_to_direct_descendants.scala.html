@@ -22,7 +22,9 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.Constants
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
-@(appConfig: FrontendAppConfig, form: Option[Form[String]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
+@import uk.gov.hmrc.play.views.html.{helpers => govHelpers}
+
+@(appConfig: FrontendAppConfig, form: Form[String], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("property_passing_to_direct_descendants.browser_title"),
@@ -31,7 +33,7 @@
 
     @helpers.form(action = PropertyPassingToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+        @rnrbHelpers.error_summary(form)
 
         @rnrbHelpers.heading("property_passing_to_direct_descendants.title")
 
@@ -39,14 +41,18 @@
 
         <p>@messages("property_passing_to_direct_descendants.guidance2")</p>
 
-        @rnrbHelpers.input_radio(
-            name = "value",
-            legend = messages("property_passing_to_direct_descendants.title"),
-            legendClass = Some("visually-hidden"),
-            errorKey = FormHelpers.getErrorByKey(form, "value"),
-            inputs = Constants.propertyPassingToDirectDescendantsOptions,
-            value = Some(FormHelpers.getValue[String](form).toString)
-        )
+        <div class="form-group">
+            <fieldset class="form-group">
+                @govHelpers.inputRadioGroup(
+                    form("value"),
+                    Seq("all" -> Messages("property_passing_to_direct_descendants.all"),
+                    "some" -> Messages("property_passing_to_direct_descendants.some"),
+                    "none" -> Messages("property_passing_to_direct_descendants.none")),
+                    '_legend -> messages("property_passing_to_direct_descendants.title"),
+                    '_legendClass -> Some("visuallyhidden")
+                    )
+            </fieldset>
+        </div>
 
         @rnrbHelpers.submit_button()
     }

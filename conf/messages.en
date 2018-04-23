@@ -47,6 +47,8 @@ claim_downsizing_threshold.error.required = Give an answer for if you are claimi
 date.day = Day
 date.month = Month
 date.year = Year
+sign.pound = £
+sign.percentage = %
 
 date_of_death.browser_title = What was the date of death?
 date_of_death.title = What was the date of death?

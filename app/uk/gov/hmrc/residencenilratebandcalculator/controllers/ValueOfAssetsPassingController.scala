@@ -44,7 +44,7 @@ class ValueOfAssetsPassingController @Inject()(override val appConfig: FrontendA
   override def form = () =>
     NonNegativeIntForm("value_of_assets_passing.error.blank", "error.whole_pounds", "error.non_numeric")
 
-  override def view(form: Option[Form[Int]], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+  override def view(form: Form[Int], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
     val formattedPropertyValue = userAnswers.propertyValue match {
       case Some(value) => Some(CurrencyFormatter.format(value))
       case _ => None
@@ -54,7 +54,6 @@ class ValueOfAssetsPassingController @Inject()(override val appConfig: FrontendA
 
   override def validate(value: Int, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = {
     userAnswers.valueOfEstate match {
-      case None => throw new RuntimeException("Value of estate was not answered")
       case Some(v) if value > v => Some(FormError("value", "value_of_assets_passing.greater_than_estate_value.error", Seq(v)))
       case _ => None
     }

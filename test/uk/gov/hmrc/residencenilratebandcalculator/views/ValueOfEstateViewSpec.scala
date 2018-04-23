@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfEstateController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_estate
@@ -27,7 +28,7 @@ class ValueOfEstateViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "value_of_estate"
 
-  def createView(form: Option[Form[Int]] = None) = value_of_estate(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Form[Int]) = value_of_estate(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
 
   "Value of Estate View" must {
 
@@ -40,13 +41,13 @@ class ValueOfEstateViewSpec extends IntViewSpecBase {
       "guidance1.bullet5",
       "guidance1.bullet6",
       "guidance2"
-    )
+    )(fakeApplication.injector.instanceOf[ValueOfEstateController].form())
 
-    behave like pageWithoutBackLink[Int](createView)
+    behave like pageWithoutBackLink[Int](createView, fakeApplication.injector.instanceOf[ValueOfEstateController].form())
 
-    behave like intPage(createView, messageKeyPrefix, ValueOfEstateController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage))
+    behave like intPage(createView, messageKeyPrefix, ValueOfEstateController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage), fakeApplication.injector.instanceOf[ValueOfEstateController].form())
 
-    behave like pageContainingPreviousAnswers(createView)
+    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[ValueOfEstateController].form())
 
   }
 }

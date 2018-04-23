@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfChangedPropertyController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_changed_property
@@ -27,17 +28,17 @@ class ValueOfChangedPropertyViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "value_of_changed_property"
 
-  def createView(form: Option[Form[Int]] = None) = value_of_changed_property(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Form[Int]) = value_of_changed_property(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
 
   "Value Of Changed Property View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance3")
+    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance3")(fakeApplication.injector.instanceOf[ValueOfChangedPropertyController].form())
 
-    behave like pageWithoutBackLink[Int](createView)
+    behave like pageWithoutBackLink[Int](createView, fakeApplication.injector.instanceOf[ValueOfChangedPropertyController].form())
 
-    behave like intPage(createView, messageKeyPrefix, ValueOfChangedPropertyController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage))
+    behave like intPage(createView, messageKeyPrefix, ValueOfChangedPropertyController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage), fakeApplication.injector.instanceOf[ValueOfChangedPropertyController].form())
 
-    behave like pageContainingPreviousAnswers(createView)
+    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[ValueOfChangedPropertyController].form())
 
   }
 }

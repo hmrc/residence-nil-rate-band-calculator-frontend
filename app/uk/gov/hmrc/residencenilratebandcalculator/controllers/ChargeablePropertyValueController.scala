@@ -46,13 +46,12 @@ class ChargeablePropertyValueController @Inject()(override val appConfig: Fronte
   override def form: () => Form[Int] = () =>
     NonNegativeIntForm("chargeable_property_value.error.blank", "error.whole_pounds", "chargeable_property_value.error.non_numeric")
 
-  override def view(form: Option[Form[Int]], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+  override def view(form: Form[Int], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
     chargeable_property_value(appConfig, form, answerRows)
   }
 
   override def validate(value: Int, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = {
     userAnswers.propertyValue match {
-      case None => throw new RuntimeException("Property value was not answered")
       case Some(v) if value > v => Some(FormError("value", "chargeable_property_value.greater_than_property_value.error", Seq(v)))
       case _ => None
     }

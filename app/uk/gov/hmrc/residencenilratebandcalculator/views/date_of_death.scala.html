@@ -20,6 +20,7 @@
 @import uk.gov.hmrc.play.views.html._
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
+@import uk.gov.hmrc.play.views.html.{helpers => govHelpers}
 
 @(appConfig: FrontendAppConfig, form: Form[Date])(implicit request: Request[_], messages: Messages,
                                                 applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
@@ -33,26 +34,25 @@
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(Some(form)))
+        @rnrbHelpers.error_summary(form)
 
         @rnrbHelpers.heading("date_of_death.title")
 
         <p>@messages("date_of_death.guidance")</p>
 
-        @rnrbHelpers.input_date(
-            form,
-            "dateOfDeath",
-            "",
-            None,
-            '_hintText -> messages("date_of_death.example"),
-            '_groupId -> "responsibleFromDateFieldSet",
-            '_groupClass -> "form-date",
-            '_labelTextClass -> "bold",
-            '_legend -> Messages("date_of_death.label"),
-            '_legendClass -> "visually-hidden",
-            '_fieldsetId -> "dateOfDeath"
-        )
+        <div class="form-group">
+            <fieldset class="form-field-group">
+                @rnrbHelpers.input_date_inline(
+                form,
+                "dateOfDeath",
+                '_inputHint -> messages("date_of_death.example"),
+                '_legend -> messages("date_of_death.title"),
+                '_legendClass -> Some("visuallyhidden")
+                )
+            </fieldset>
+            @rnrbHelpers.submit_button()
+        </div>
 
-        @rnrbHelpers.submit_button()
+
     }
 }

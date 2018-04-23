@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.TransferAvailableWhenPropertyChangedController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_available_when_property_changed
 
@@ -26,17 +27,17 @@ class TransferAvailableWhenPropertyChangedViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "transfer_available_when_property_changed"
 
-  def createView(form: Option[Form[Boolean]] = None) = transfer_available_when_property_changed(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Form[Boolean]) = transfer_available_when_property_changed(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
 
   "Transfer Available When Property Changed View" must {
 
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance")
+    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance")(fakeApplication.injector.instanceOf[TransferAvailableWhenPropertyChangedController].form())
 
-    behave like pageWithoutBackLink[Boolean](createView)
+    behave like pageWithoutBackLink[Boolean](createView, fakeApplication.injector.instanceOf[TransferAvailableWhenPropertyChangedController].form())
 
-    behave like booleanPage(createView, messageKeyPrefix, TransferAvailableWhenPropertyChangedController.onSubmit().url)
+    behave like booleanPage(createView, messageKeyPrefix, TransferAvailableWhenPropertyChangedController.onSubmit().url, fakeApplication.injector.instanceOf[TransferAvailableWhenPropertyChangedController].form(), true)
 
-    behave like pageContainingPreviousAnswers(createView)
+    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[TransferAvailableWhenPropertyChangedController].form())
 
   }
 }

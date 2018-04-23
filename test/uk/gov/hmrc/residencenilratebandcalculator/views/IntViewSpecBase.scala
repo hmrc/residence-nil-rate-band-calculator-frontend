@@ -23,29 +23,29 @@ trait IntViewSpecBase extends ViewSpecBase {
 
   val number = 123
 
-  def intPage(createView: (Option[Form[Int]]) => HtmlFormat.Appendable,
+  def intPage(createView: (Form[Int]) => HtmlFormat.Appendable,
               messageKeyPrefix: String,
               expectedFormAction: String,
-              form: Form[Int]) = {
+              form: Form[Int], emptyForm: Form[Int]) = {
 
-    behave like questionPage[Int](createView, messageKeyPrefix, expectedFormAction)
+    behave like questionPage[Int](createView, messageKeyPrefix, expectedFormAction, emptyForm)
 
     "behave like a page with an integer value field" when {
       "rendered" must {
 
-        "contain a label for the value" in {
-          val doc = asDocument(createView(None))
-          assertContainsLabel(doc, "value", messages(s"$messageKeyPrefix.title"))
+        "contain a h1 with title" in {
+          val doc = asDocument(createView(emptyForm))
+          doc.select("h1").text() shouldBe messages(s"$messageKeyPrefix.title")
         }
         "contain an input for the value" in {
-          val doc = asDocument(createView(None))
+          val doc = asDocument(createView(emptyForm))
           assertRenderedById(doc, "value")
         }
       }
 
       "rendered with a valid form" must {
         "include the form's value in the value input" in {
-          val doc = asDocument(createView(Some(form.fill(number))))
+          val doc = asDocument(createView(form.fill(number)))
           doc.getElementById("value").attr("value") shouldBe number.toString
         }
       }
@@ -53,12 +53,12 @@ trait IntViewSpecBase extends ViewSpecBase {
       "rendered with an error" must {
 
         "show an error summary" in {
-          val doc = asDocument(createView(Some(form.withError(error))))
+          val doc = asDocument(createView(form.withError(error)))
           assertRenderedById(doc, "error-summary-heading")
         }
 
         "show an error in the value field's label" in {
-          val doc = asDocument(createView(Some(form.withError(error))))
+          val doc = asDocument(createView(form.withError(error)))
           val errorSpan = doc.getElementsByClass("error-notification").first
           errorSpan.text shouldBe messages(errorMessage)
         }

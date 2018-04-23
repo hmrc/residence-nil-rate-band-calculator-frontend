@@ -24,13 +24,14 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_available_
 class TransferAvailableWhenPropertyChangedControllerSpec extends SimpleControllerSpecBase {
 
   val messageKey = "transfer_available_when_property_changed.error.required"
+  val messageKeyPrefix = "transfer_available_when_property_changed"
 
   "Transfer Available When Property Changed Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => transfer_available_when_property_changed(frontendAppConfig, answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
-        case Some(v) => transfer_available_when_property_changed(frontendAppConfig, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case None => transfer_available_when_property_changed(frontendAppConfig, BooleanForm.apply(messageKey),answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case Some(v) => transfer_available_when_property_changed(frontendAppConfig, BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
       }
     }
 
@@ -38,7 +39,7 @@ class TransferAvailableWhenPropertyChangedControllerSpec extends SimpleControlle
 
     val testValue = true
 
-    behave like rnrbController(createController, createView, Constants.transferAvailableWhenPropertyChangedId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+    behave like rnrbController(createController, createView, Constants.transferAvailableWhenPropertyChangedId, messageKeyPrefix,testValue)(Reads.BooleanReads, Writes.BooleanWrites)
 
     behave like nonStartingController[Boolean](createController,
       List(Constants.dateOfDeathId,

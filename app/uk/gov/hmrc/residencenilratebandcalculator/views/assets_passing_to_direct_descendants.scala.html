@@ -21,8 +21,9 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
+@import uk.gov.hmrc.play.views.html.{helpers => govHelpers}
 
-@(appConfig: FrontendAppConfig, form: Option[Form[Boolean]] = None, answerRows: Seq[AnswerRow], formattedPropertyValue: Option[String])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
+@(appConfig: FrontendAppConfig, form: Form[Boolean], answerRows: Seq[AnswerRow], formattedPropertyValue: Option[String])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("assets_passing_to_direct_descendants.browser_title"),
@@ -31,7 +32,7 @@
 
     @helpers.form(action = AssetsPassingToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+        @rnrbHelpers.error_summary(form)
 
         @rnrbHelpers.heading("assets_passing_to_direct_descendants.title")
 
@@ -41,15 +42,18 @@
             <p>@messages("assets_passing_to_direct_descendants.guidance_no_property")</p>
         }
 
-        @rnrbHelpers.input_yes_no(
-            id = "value",
-            label = messages("assets_passing_to_direct_descendants.title"),
-            labelClass = Some("visually-hidden"),
-            errorKey = FormHelpers.getErrorByKey(form, "value"),
-            value = Some(FormHelpers.getYesNo(form))
-        )
+        <div class="form-group">
+            <fieldset class="form-group inline">
+                @govHelpers.inputRadioGroup(
+                form("value"),
+                Seq("true" -> messages("site.yes"), "false" -> messages("site.no")),
+                '_legend -> messages("assets_passing_to_direct_descendants.title"),
+                '_legendClass -> Some("visuallyhidden")
+                )
+            </fieldset>
+            @rnrbHelpers.submit_button()
+        </div>
 
-        @rnrbHelpers.submit_button()
     }
 
     @rnrbHelpers.answer_rows(answerRows)

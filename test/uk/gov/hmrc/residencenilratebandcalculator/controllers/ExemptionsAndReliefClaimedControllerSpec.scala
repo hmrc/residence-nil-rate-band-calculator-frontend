@@ -24,13 +24,14 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.exemptions_and_reli
 class ExemptionsAndReliefClaimedControllerSpec extends SimpleControllerSpecBase {
 
   val messageKey = "exemptions_and_relief_claimed.error.required"
+  val messageKeyPrefix = "exemptions_and_relief_claimed"
 
   "Exemptions And Relief Claimed Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => exemptions_and_relief_claimed(frontendAppConfig, answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
-        case Some(v) => exemptions_and_relief_claimed(frontendAppConfig, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case None => exemptions_and_relief_claimed(frontendAppConfig, BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case Some(v) => exemptions_and_relief_claimed(frontendAppConfig, BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
       }
     }
 
@@ -38,7 +39,7 @@ class ExemptionsAndReliefClaimedControllerSpec extends SimpleControllerSpecBase 
 
     val testValue = true
 
-    behave like rnrbController[Boolean](createController, createView, Constants.exemptionsAndReliefClaimedId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+    behave like rnrbController[Boolean](createController, createView, Constants.exemptionsAndReliefClaimedId, messageKeyPrefix, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
 
     behave like nonStartingController[Boolean](createController,
       List(Constants.dateOfDeathId,

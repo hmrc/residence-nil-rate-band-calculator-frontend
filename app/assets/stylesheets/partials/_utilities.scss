@@ -11,23 +11,3 @@ Utility alignments
     text-align: right;
   }
 }
-.u-align--center {
-    text-align: center;
-}
-
-.u-margin-top--2em {
-    margin-top: 2em!important;
-}
-
-/*
-====================================
-Utility bold
-Pulled from GDS elements typography
-====================================
-*/
-.bold {
-  font-weight: 700;
-}
-label > .bold {
-  display: block; /*temp fix until form story can fix label structure*/
-}

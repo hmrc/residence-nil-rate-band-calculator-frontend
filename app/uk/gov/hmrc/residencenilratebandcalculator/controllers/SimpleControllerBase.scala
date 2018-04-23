@@ -47,7 +47,7 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
 
   def form: () => Form[A]
 
-  def view(form: Option[Form[A]], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]): HtmlFormat.Appendable
+  def view(form: Form[A], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]): HtmlFormat.Appendable
 
   val navigator: Navigator
 
@@ -64,7 +64,7 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
       case Some(cacheMap) => {
         val previousAnswers = answerRows(cacheMap, request)
         val userAnswers = new UserAnswers(cacheMap)
-        Ok(view(cacheMap.getEntry(controllerId).map(value => form().fill(value)),
+        Ok(view(cacheMap.getEntry(controllerId).fold(form())(value => form().fill(value)),
           previousAnswers, userAnswers))
       }
     }
@@ -80,11 +80,11 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
         val boundForm = form().bindFromRequest()
         boundForm.fold(
           (formWithErrors: Form[A]) =>
-            Future.successful(BadRequest(view(Some(formWithErrors),
+            Future.successful(BadRequest(view(formWithErrors,
               previousAnswers, userAnswers))),
           (value) => validate(value, userAnswers) match {
             case Some(error) => {
-              Future.successful(BadRequest(view(Some(form().fill(value).withError(error)),
+              Future.successful(BadRequest(view(form().fill(value).withError(error),
                 previousAnswers, userAnswers)))
             }
             case None =>

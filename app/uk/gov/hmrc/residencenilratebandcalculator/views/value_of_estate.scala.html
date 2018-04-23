@@ -22,7 +22,7 @@
 
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 
-@(appConfig: FrontendAppConfig, form: Option[Form[Int]] = None, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
+@(appConfig: FrontendAppConfig, form: Form[Int], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("value_of_estate.browser_title"),
@@ -31,7 +31,7 @@
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfEstateController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(FormHelpers.getAllErrors(form))
+        @rnrbHelpers.error_summary(form)
 
         @rnrbHelpers.heading("value_of_estate.title")
 
@@ -46,17 +46,21 @@
         </ul>
 
         <p>@messages("value_of_estate.guidance2")</p>
-        
-        @rnrbHelpers.input_text(
-            id = "value",
-            errorKey = FormHelpers.getErrorByKey(form, "value"),
-            label = messages("value_of_estate.title"),
-            labelClass = Some("visually-hidden"),
-            secondaryLabel = Some("currency"),
-            value = Some(FormHelpers.getValue[Int](form).toString)
-        )
 
-        @rnrbHelpers.submit_button()
+        <div class="form-group">
+            @rnrbHelpers.input_value(
+                form("value"),
+                '_inputClass -> "form-control",
+                '_type -> "number",
+                '_spanAfter -> false,
+                '_span -> Messages("sign.pound"),
+                '_spanTextClass -> "bold-small",
+                '_label -> Messages("value_of_estate.title"),
+                '_labelTextClass -> "visuallyhidden")
+        </div>
+        <div>
+            @rnrbHelpers.submit_button()
+        </div>
     }
 
     @rnrbHelpers.answer_rows(answerRows)

@@ -66,8 +66,6 @@ POST       /property-passing-to-direct-descendants      uk.gov.hmrc.residencenil
 
 GET        /threshold-calculation-result                uk.gov.hmrc.residencenilratebandcalculator.controllers.ThresholdCalculationResultController.onPageLoad
 
-GET        /style-guide                                 uk.gov.hmrc.residencenilratebandcalculator.controllers.StyleGuide.styleGuide
-
 GET        /transfer-any-unused-threshold               uk.gov.hmrc.residencenilratebandcalculator.controllers.TransferAnyUnusedThresholdController.onPageLoad
 POST       /transfer-any-unused-threshold               uk.gov.hmrc.residencenilratebandcalculator.controllers.TransferAnyUnusedThresholdController.onSubmit
 

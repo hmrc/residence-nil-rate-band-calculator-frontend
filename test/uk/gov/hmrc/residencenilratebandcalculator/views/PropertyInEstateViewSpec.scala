@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyInEstateController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_in_estate
 
@@ -26,17 +27,17 @@ class PropertyInEstateViewSpec  extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "property_in_estate"
 
-  def createView(form: Option[Form[Boolean]] = None) = property_in_estate(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Form[Boolean]) = property_in_estate(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
 
   "Property In Estate View" must {
 
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")
+    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")(fakeApplication.injector.instanceOf[PropertyInEstateController].form())
 
-    behave like pageWithoutBackLink[Boolean](createView)
+    behave like pageWithoutBackLink[Boolean](createView, fakeApplication.injector.instanceOf[PropertyInEstateController].form())
 
-    behave like booleanPage(createView, messageKeyPrefix, PropertyInEstateController.onSubmit().url)
+    behave like booleanPage(createView, messageKeyPrefix, PropertyInEstateController.onSubmit().url, fakeApplication.injector.instanceOf[PropertyInEstateController].form(), true)
 
-    behave like pageContainingPreviousAnswers(createView)
+    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[PropertyInEstateController].form())
 
   }
 }

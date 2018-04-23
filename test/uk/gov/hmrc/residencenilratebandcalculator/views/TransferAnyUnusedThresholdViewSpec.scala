@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.TransferAnyUnusedThresholdController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_any_unused_threshold
 
@@ -26,17 +27,17 @@ class TransferAnyUnusedThresholdViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "transfer_any_unused_threshold"
 
-  def createView(form: Option[Form[Boolean]] = None) = transfer_any_unused_threshold(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Form[Boolean]) = transfer_any_unused_threshold(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
 
   "Transfer Any Unused Allowance View" must {
 
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")
+    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")(fakeApplication.injector.instanceOf[TransferAnyUnusedThresholdController].form())
 
-    behave like pageWithoutBackLink[Boolean](createView)
+    behave like pageWithoutBackLink[Boolean](createView, fakeApplication.injector.instanceOf[TransferAnyUnusedThresholdController].form())
 
-    behave like booleanPage(createView, messageKeyPrefix, TransferAnyUnusedThresholdController.onSubmit().url)
+    behave like booleanPage(createView, messageKeyPrefix, TransferAnyUnusedThresholdController.onSubmit().url, fakeApplication.injector.instanceOf[TransferAnyUnusedThresholdController].form(), true)
 
-    behave like pageContainingPreviousAnswers(createView)
+    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[TransferAnyUnusedThresholdController].form())
 
   }
 }

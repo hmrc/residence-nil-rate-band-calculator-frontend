@@ -26,13 +26,14 @@ class ValueOfChangedPropertyControllerSpec extends SimpleControllerSpecBase {
   val errorKeyBlank = "value_of_changed_property.error.blank"
   val errorKeyDecimal = "error.whole_pounds"
   val errorKeyNonNumeric = "error.non_numeric"
+  val messageKeyPrefix = "value_of_changed_property"
 
   "Value Of Changed Property Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => value_of_changed_property(frontendAppConfig, answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
-        case Some(v) => value_of_changed_property(frontendAppConfig, Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case None => value_of_changed_property(frontendAppConfig, NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric),answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case Some(v) => value_of_changed_property(frontendAppConfig, NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
       }
     }
 
@@ -40,7 +41,7 @@ class ValueOfChangedPropertyControllerSpec extends SimpleControllerSpecBase {
 
     val testValue = 123
 
-    behave like rnrbController(createController, createView, Constants.valueOfChangedPropertyId, testValue)(Reads.IntReads, Writes.IntWrites)
+    behave like rnrbController(createController, createView, Constants.valueOfChangedPropertyId, messageKeyPrefix,testValue)(Reads.IntReads, Writes.IntWrites)
 
     behave like nonStartingController[Int](createController,
       List(Constants.dateOfDeathId,

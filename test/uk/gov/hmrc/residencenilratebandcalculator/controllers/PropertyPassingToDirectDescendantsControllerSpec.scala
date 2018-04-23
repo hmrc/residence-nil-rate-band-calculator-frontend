@@ -23,12 +23,14 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_passing_to
 
 class PropertyPassingToDirectDescendantsControllerSpec extends SimpleControllerSpecBase {
 
+  val messageKeyPrefix = "property_passing_to_direct_descendants"
+
   "Property Passing To Direct Descendants Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => property_passing_to_direct_descendants(frontendAppConfig, answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
-        case Some(v) => property_passing_to_direct_descendants(frontendAppConfig, Some(PropertyPassingToDirectDescendantsForm().bind(v)), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case None => property_passing_to_direct_descendants(frontendAppConfig, PropertyPassingToDirectDescendantsForm.apply(),answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case Some(v) => property_passing_to_direct_descendants(frontendAppConfig, PropertyPassingToDirectDescendantsForm().bind(v), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
       }
     }
 
@@ -36,7 +38,7 @@ class PropertyPassingToDirectDescendantsControllerSpec extends SimpleControllerS
 
     val testValue = Constants.all
 
-    behave like rnrbController[String](createController, createView, Constants.propertyPassingToDirectDescendantsId, testValue)(Reads.StringReads, Writes.StringWrites)
+    behave like rnrbController[String](createController, createView, Constants.propertyPassingToDirectDescendantsId, messageKeyPrefix, testValue)(Reads.StringReads, Writes.StringWrites)
 
     behave like nonStartingController[String](createController,
       List(Constants.dateOfDeathId,

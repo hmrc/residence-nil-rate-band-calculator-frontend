@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import org.jsoup.Jsoup
 import org.mockito.Mockito._
 import org.mockito.ArgumentMatchers._
 import play.api.data.FormError
@@ -36,7 +37,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants, Frontend
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import uk.gov.hmrc.http.{ HeaderCarrier, HttpResponse }
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 
 class ValueBeingTransferredControllerSpec extends BaseSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
 
@@ -65,16 +66,16 @@ class ValueBeingTransferredControllerSpec extends BaseSpec with WithFakeApplicat
   def createView = (value: Option[Map[String, String]]) => {
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
-      case None => value_being_transferred(frontendAppConfig, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
-      case Some(v) => value_being_transferred(frontendAppConfig, "£100,000.00", Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
+      case None => value_being_transferred(frontendAppConfig, "£100,000.00", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric),answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
+      case Some(v) => value_being_transferred(frontendAppConfig, "£100,000.00", NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v), Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
     }
   }
 
   def createViewWithBacklink = (value: Option[Map[String, String]]) => {
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
-      case None => value_being_transferred(frontendAppConfig, "£100,000.00", answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
-      case Some(v) => value_being_transferred(frontendAppConfig,  "£100,000.00", Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
+      case None => value_being_transferred(frontendAppConfig, "£100,000.00", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric),answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
+      case Some(v) => value_being_transferred(frontendAppConfig,  "£100,000.00", NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v), Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
     }
   }
 
@@ -92,7 +93,7 @@ class ValueBeingTransferredControllerSpec extends BaseSpec with WithFakeApplicat
     "if the date of death key is set return the View for a GET" in {
       setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"))))
       val result = createController().onPageLoad(Reads.IntReads)(fakeRequest)
-      contentAsString(result) shouldBe createView(None).toString
+      Jsoup.parse(contentAsString(result)).title() shouldBe messages("value_being_transferred.title")
     }
 
     "if the date of death key is not set throw an exception" in {

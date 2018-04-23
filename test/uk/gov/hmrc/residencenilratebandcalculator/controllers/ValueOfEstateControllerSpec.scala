@@ -26,6 +26,7 @@ class ValueOfEstateControllerSpec extends SimpleControllerSpecBase {
   val errorKeyBlank = "value_of_estate.error.blank"
   val errorKeyDecimal = "error.whole_pounds"
   val errorKeyNonNumeric = "value_of_estate.error.non_numeric"
+  val messageKeyPrefix = "value_of_estate"
 
   "Value Of Estate Controller" must {
 
@@ -33,8 +34,8 @@ class ValueOfEstateControllerSpec extends SimpleControllerSpecBase {
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PartOfEstatePassingToDirectDescendantsController.onPageLoad().url
 
       value match {
-        case None => value_of_estate(frontendAppConfig,  answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
-        case Some(v) => value_of_estate(frontendAppConfig, Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case None => value_of_estate(frontendAppConfig, NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric), answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case Some(v) => value_of_estate(frontendAppConfig, NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
       }
     }
 
@@ -43,7 +44,7 @@ class ValueOfEstateControllerSpec extends SimpleControllerSpecBase {
 
     val testValue = 123
 
-    behave like rnrbController[Int](createController, createView, Constants.valueOfEstateId, testValue)(Reads.IntReads, Writes.IntWrites)
+    behave like rnrbController[Int](createController, createView, Constants.valueOfEstateId, messageKeyPrefix,testValue)(Reads.IntReads, Writes.IntWrites)
 
     behave like nonStartingController[Int](createController, List(Constants.dateOfDeathId, Constants.partOfEstatePassingToDirectDescendantsId))(Reads.IntReads, Writes.IntWrites)
   }

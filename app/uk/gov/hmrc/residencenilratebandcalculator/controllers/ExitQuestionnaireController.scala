@@ -40,14 +40,14 @@ class ExitQuestionnaireController @Inject()(val appConfig: FrontendAppConfig,
 
 
   def onPageLoad = Action.async { implicit request =>
-    Future.successful(Ok(exit_questionnaire(appConfig)))
+    Future.successful(Ok(exit_questionnaire(appConfig, ExitQuestionnaireForm.apply())))
   }
 
   def onSubmit = Action.async { implicit request =>
     val boundForm = ExitQuestionnaireForm().bindFromRequest()
 
     boundForm.fold(
-      formWithErrors => Future.successful(BadRequest(exit_questionnaire(appConfig, Some(formWithErrors)))),
+      formWithErrors => Future.successful(BadRequest(exit_questionnaire(appConfig, formWithErrors))),
       value => {
 
         val questionnaireResult = auditConnector.sendEvent(new ExitQuestionnaireEvent(value.serviceDifficulty.getOrElse(""),

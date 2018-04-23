@@ -17,7 +17,8 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.PartOfEstatePassingToDirectDescendantsController
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.part_of_estate_passing_to_direct_descendants
 
 import scala.language.reflectiveCalls
@@ -26,7 +27,7 @@ class PartOfEstatePassingToDirectDescendantsViewSpec extends BooleanViewSpecBase
 
   val messageKeyPrefix = "part_of_estate_passing_to_direct_descendants"
 
-  def createView(form: Option[Form[Boolean]] = None) = part_of_estate_passing_to_direct_descendants(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Form[Boolean]) = part_of_estate_passing_to_direct_descendants(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
 
   "Part Of Estate Passing To Direct Descendants View" must {
 
@@ -44,13 +45,13 @@ class PartOfEstatePassingToDirectDescendantsViewSpec extends BooleanViewSpecBase
       "guidance3.bullet7",
       "guidance3.bullet8",
       "guidance4"
-    )
+    )(fakeApplication.injector.instanceOf[PartOfEstatePassingToDirectDescendantsController].form())
 
-    behave like pageWithoutBackLink[Boolean](createView)
+    behave like pageWithoutBackLink[Boolean](createView, fakeApplication.injector.instanceOf[PartOfEstatePassingToDirectDescendantsController].form())
 
-    behave like booleanPage(createView, messageKeyPrefix, PartOfEstatePassingToDirectDescendantsController.onSubmit().url)
+    behave like booleanPage(createView, messageKeyPrefix, routes.PartOfEstatePassingToDirectDescendantsController.onSubmit().url, fakeApplication.injector.instanceOf[PartOfEstatePassingToDirectDescendantsController].form(), true)
 
-    behave like pageContainingPreviousAnswers(createView)
+    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[PartOfEstatePassingToDirectDescendantsController].form())
   }
 
 }

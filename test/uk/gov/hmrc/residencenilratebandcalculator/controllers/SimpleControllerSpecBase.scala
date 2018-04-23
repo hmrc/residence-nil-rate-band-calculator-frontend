@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.i18n._
 import play.api.libs.json._
@@ -48,6 +49,7 @@ trait SimpleControllerSpecBase extends BaseSpec with WithFakeApplication with Ht
   def rnrbController[A: ClassTag](createController: () => ControllerBase[A],
                                   createView: (Option[Map[String, String]]) => HtmlFormat.Appendable,
                                   cacheKey: String,
+                                  messageKeyPrefix: String,
                                   testValue: A,
                                   valuesToCacheBeforeSubmission: Map[String, A] = Map[String, A](),
                                   valuesToCacheBeforeLoad: Map[String, Any] = Map[String, Any]())
@@ -62,7 +64,7 @@ trait SimpleControllerSpecBase extends BaseSpec with WithFakeApplication with Ht
     "return the View for a GET" in {
       for (v <- valuesToCacheBeforeLoad) setCacheValue(v._1, v._2)
       val result = createController().onPageLoad(rds)(fakeRequest)
-      contentAsString(result) shouldBe createView(None).toString
+      Jsoup.parse(contentAsString(result)).title() shouldBe messages(s"$messageKeyPrefix.title")
     }
 
     "return a redirect on submit with valid data" in {

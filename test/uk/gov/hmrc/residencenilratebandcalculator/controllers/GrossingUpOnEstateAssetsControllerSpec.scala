@@ -24,13 +24,14 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_esta
 class GrossingUpOnEstateAssetsControllerSpec extends SimpleControllerSpecBase {
 
   val messageKey = "grossing_up_on_estate_assets.error.required"
+  val messageKeyPrefix = "grossing_up_on_estate_assets"
 
   "Grossing Up On Estate Assets Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => grossing_up_on_estate_assets(frontendAppConfig, answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
-        case Some(v) => grossing_up_on_estate_assets(frontendAppConfig, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case None => grossing_up_on_estate_assets(frontendAppConfig, BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case Some(v) => grossing_up_on_estate_assets(frontendAppConfig, BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
       }
     }
 
@@ -39,7 +40,7 @@ class GrossingUpOnEstateAssetsControllerSpec extends SimpleControllerSpecBase {
     val testValue = false
 
     behave like
-      rnrbController[Boolean](createController, createView, Constants.grossingUpOnEstateAssetsId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+      rnrbController[Boolean](createController, createView, Constants.grossingUpOnEstateAssetsId, messageKeyPrefix, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
 
     behave like nonStartingController[Boolean](createController,
       List(Constants.dateOfDeathId,

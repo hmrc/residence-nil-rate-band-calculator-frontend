@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossingUpOnEstateAssetsController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_estate_assets
 
@@ -24,17 +25,17 @@ class GrossingUpOnEstateAssetsViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "grossing_up_on_estate_assets"
 
-  def createView(form: Option[Form[Boolean]] = None) = grossing_up_on_estate_assets(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Form[Boolean]) = grossing_up_on_estate_assets(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
 
   "Grossing Up On Estate AssetsView" must {
 
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")
+    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")(fakeApplication.injector.instanceOf[GrossingUpOnEstateAssetsController].form())
 
-    behave like pageWithoutBackLink[Boolean](createView)
+    behave like pageWithoutBackLink[Boolean](createView, fakeApplication.injector.instanceOf[GrossingUpOnEstateAssetsController].form())
 
-    behave like booleanPage(createView, messageKeyPrefix, GrossingUpOnEstateAssetsController.onSubmit().url)
+    behave like booleanPage(createView, messageKeyPrefix, GrossingUpOnEstateAssetsController.onSubmit().url, fakeApplication.injector.instanceOf[GrossingUpOnEstateAssetsController].form(), true)
 
-    behave like pageContainingPreviousAnswers(createView)
+    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[GrossingUpOnEstateAssetsController].form())
 
   }
 }

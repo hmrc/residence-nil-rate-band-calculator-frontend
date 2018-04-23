@@ -24,13 +24,14 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_any_unused
 class TransferAnyUnusedThresholdControllerSpec extends SimpleControllerSpecBase {
 
   val messageKey = "transfer_any_unused_threshold.error.required"
+  val messageKeyPrefix = "transfer_any_unused_threshold"
 
   "Transfer Any Unused Threshold Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => transfer_any_unused_threshold(frontendAppConfig, answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
-        case Some(v) => transfer_any_unused_threshold(frontendAppConfig, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case None => transfer_any_unused_threshold(frontendAppConfig, BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case Some(v) => transfer_any_unused_threshold(frontendAppConfig, BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
       }
     }
 
@@ -38,7 +39,7 @@ class TransferAnyUnusedThresholdControllerSpec extends SimpleControllerSpecBase 
 
     val testValue = true
 
-    behave like rnrbController(createController, createView, Constants.transferAnyUnusedThresholdId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+    behave like rnrbController(createController, createView, Constants.transferAnyUnusedThresholdId, messageKeyPrefix, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
 
     behave like nonStartingController[Boolean](createController,
       List(Constants.dateOfDeathId,

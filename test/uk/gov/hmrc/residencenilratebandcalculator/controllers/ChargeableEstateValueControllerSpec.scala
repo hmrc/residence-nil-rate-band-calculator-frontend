@@ -27,14 +27,15 @@ class ChargeableEstateValueControllerSpec extends SimpleControllerSpecBase {
   val errorKeyBlank = "chargeable_estate_value.error.blank"
   val errorKeyDecimal = "error.whole_pounds"
   val errorKeyNonNumeric = "chargeable_estate_value.error.non_numeric"
+  val messageKeyPrefix = "chargeable_estate_value"
 
   "Chargeable Estate Value Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => chargeable_estate_value(frontendAppConfig, answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case None => chargeable_estate_value(frontendAppConfig, NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric), answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
         case Some(v) => chargeable_estate_value(frontendAppConfig,
-          Some(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v)), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+          NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
       }
     }
 
@@ -45,7 +46,7 @@ class ChargeableEstateValueControllerSpec extends SimpleControllerSpecBase {
     val valuesToCacheBeforeSubmission = Map(Constants.valueOfEstateId -> testValue)
 
     behave like rnrbController(createController, createView, Constants.chargeableEstateValueId,
-      testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
+      messageKeyPrefix, testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
 
     behave like nonStartingController[Int](createController,
       List(Constants.dateOfDeathId,

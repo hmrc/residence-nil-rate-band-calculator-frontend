@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.PercentagePassedToDirectDescendantsController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PositivePercentForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_passed_to_direct_descendants
@@ -27,16 +28,16 @@ class PercentagePassedToDirectDescendantsViewSpec extends BigDecimalViewSpecBase
 
   val messageKeyPrefix = "percentage_passed_to_direct_descendants"
 
-  def createView(form: Option[Form[BigDecimal]] = None) = percentage_passed_to_direct_descendants(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Form[BigDecimal]) = percentage_passed_to_direct_descendants(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
 
   "Percentage Passed To Direct Descendants View" must {
 
-    behave like rnrbPage[BigDecimal](createView, messageKeyPrefix, "guidance")
+    behave like rnrbPage[BigDecimal](createView, messageKeyPrefix, "guidance")(fakeApplication.injector.instanceOf[PercentagePassedToDirectDescendantsController].form())
 
-    behave like pageWithoutBackLink[BigDecimal](createView)
+    behave like pageWithoutBackLink[BigDecimal](createView, fakeApplication.injector.instanceOf[PercentagePassedToDirectDescendantsController].form())
 
-    behave like bigDecimalPage(createView, messageKeyPrefix, PercentagePassedToDirectDescendantsController.onSubmit().url, PositivePercentForm("", "", ""))
+    behave like bigDecimalPage(createView, messageKeyPrefix, PercentagePassedToDirectDescendantsController.onSubmit().url, PositivePercentForm("", "", ""), fakeApplication.injector.instanceOf[PercentagePassedToDirectDescendantsController].form())
 
-    behave like pageContainingPreviousAnswers(createView)
+    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[PercentagePassedToDirectDescendantsController].form())
   }
 }

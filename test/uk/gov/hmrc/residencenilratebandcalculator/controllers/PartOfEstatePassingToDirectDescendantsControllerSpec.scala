@@ -24,13 +24,14 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.part_of_estate_pass
 class PartOfEstatePassingToDirectDescendantsControllerSpec extends SimpleControllerSpecBase {
 
   val messageKey = "part_of_estate_passing_to_direct_descendants.error.required"
+  val messageKeyPrefix = "part_of_estate_passing_to_direct_descendants"
 
   "Part Of Estate Passing To Direct Descendants Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => part_of_estate_passing_to_direct_descendants(frontendAppConfig, answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
-        case Some(v) => part_of_estate_passing_to_direct_descendants(frontendAppConfig, Some(BooleanForm(messageKey).bind(v)), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case None => part_of_estate_passing_to_direct_descendants(frontendAppConfig, BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case Some(v) => part_of_estate_passing_to_direct_descendants(frontendAppConfig, BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
       }
     }
 
@@ -39,7 +40,7 @@ class PartOfEstatePassingToDirectDescendantsControllerSpec extends SimpleControl
     val testValue = true
 
     behave like
-      rnrbController[Boolean](createController, createView, Constants.partOfEstatePassingToDirectDescendantsId, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+      rnrbController[Boolean](createController, createView, Constants.partOfEstatePassingToDirectDescendantsId, messageKeyPrefix, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
 
     behave like nonStartingController[Boolean](createController, answerRowConstants = List(Constants.dateOfDeathId))(Reads.BooleanReads, Writes.BooleanWrites)
   }

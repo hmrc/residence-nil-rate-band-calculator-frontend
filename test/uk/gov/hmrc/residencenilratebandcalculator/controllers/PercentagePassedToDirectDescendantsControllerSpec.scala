@@ -26,14 +26,15 @@ class PercentagePassedToDirectDescendantsControllerSpec extends SimpleController
   val errorKeyBlank = "percentage_passed_to_direct_descendants.error.required"
   val errorKeyNonNumeric = "percentage_passed_to_direct_descendants.error.non_numeric"
   val errorKeyOutOfRange = "percentage_passed_to_direct_descendants.error.out_of_range"
+  val messageKeyPrefix = "percentage_passed_to_direct_descendants"
 
   "Percentage Passed To Direct Descendants Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => percentage_passed_to_direct_descendants(frontendAppConfig, answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case None => percentage_passed_to_direct_descendants(frontendAppConfig, PositivePercentForm.apply(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange), answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
         case Some(v) => percentage_passed_to_direct_descendants(frontendAppConfig,
-          Some(PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange).bind(v)), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+          PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange).bind(v), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
       }
     }
 
@@ -41,7 +42,7 @@ class PercentagePassedToDirectDescendantsControllerSpec extends SimpleController
 
     val testValue = BigDecimal(50)
 
-    behave like rnrbController[BigDecimal](createController, createView, Constants.percentagePassedToDirectDescendantsId, testValue)(Reads.bigDecReads, Writes.BigDecimalWrites)
+    behave like rnrbController[BigDecimal](createController, createView, Constants.percentagePassedToDirectDescendantsId, messageKeyPrefix, testValue)(Reads.bigDecReads, Writes.BigDecimalWrites)
 
     behave like nonStartingController[BigDecimal](createController,
       List(Constants.dateOfDeathId,
