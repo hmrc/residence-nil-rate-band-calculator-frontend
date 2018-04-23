@@ -40,7 +40,7 @@ implicit request: Request[_], messages: Messages, applicationProvider: Provider[
         <p>@messages("part_of_estate_passing_to_direct_descendants.guidance1")</p>
         <p>@messages("part_of_estate_passing_to_direct_descendants.guidance2")</p>
 
-        <section>
+        <section class="form-group">
             <details>
                 <summary><span class="summary">@messages("part_of_estate_passing_to_direct_descendants.reveal_title")</span></summary>
                 <div class="panel-indent panel-indent--gutter">
@@ -61,7 +61,7 @@ implicit request: Request[_], messages: Messages, applicationProvider: Provider[
         </section>
 
         <div class="form-group">
-            <fieldset class="form-field-group">
+            <fieldset class="form-group inline">
                 @govHelpers.inputRadioGroup(
                 form("value"),
                 Seq("true" -> messages("site.yes"), "false" -> messages("site.no")),

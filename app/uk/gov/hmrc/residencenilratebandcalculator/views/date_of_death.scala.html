@@ -45,7 +45,9 @@
                 @rnrbHelpers.input_date_inline(
                 form,
                 "dateOfDeath",
-                '_inputHint -> messages("date_of_death.example")
+                '_inputHint -> messages("date_of_death.example"),
+                '_legend -> messages("date_of_death.title"),
+                '_legendClass -> Some("visuallyhidden")
                 )
             </fieldset>
             @rnrbHelpers.submit_button()

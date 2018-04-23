@@ -42,9 +42,12 @@
                 form("value"),
                 '_inputClass -> "form-control form-control-1-4",
                 '_type -> "number",
-                '_labelAfter -> true,
-                '_label -> Messages("sign.percentage"),
-                '_labelClass -> "form-label-bold")
+                '_spanAfter -> false,
+                '_span -> Messages("sign.percentage"),
+                '_spanAfter -> true,
+                '_spanTextClass -> "bold-small",
+                '_label -> Messages("percentage_passed_to_direct_descendants.title"),
+                '_labelTextClass -> "visuallyhidden")
         </div>
         <div>
             @rnrbHelpers.submit_button()

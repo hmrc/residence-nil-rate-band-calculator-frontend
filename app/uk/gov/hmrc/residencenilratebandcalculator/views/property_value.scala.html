@@ -52,8 +52,11 @@
                 form("value"),
                 '_inputClass -> "form-control",
                 '_type -> "number",
-                '_label -> Messages("sign.pound"),
-                '_labelClass -> "form-label-bold")
+                '_spanAfter -> false,
+                '_span -> Messages("sign.pound"),
+                '_spanTextClass -> "bold-small",
+                '_label -> Messages("chargeable_property_value.title"),
+                '_labelTextClass -> "visuallyhidden")
         </div>
         <div>
              @rnrbHelpers.submit_button()
