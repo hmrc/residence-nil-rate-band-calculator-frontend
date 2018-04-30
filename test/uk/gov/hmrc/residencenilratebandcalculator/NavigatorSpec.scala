@@ -28,8 +28,8 @@ class NavigatorSpec extends BaseSpec with MockitoSugar with Matchers with WithFa
   val navigator = new Navigator
 
   "Navigator" must {
-    "When the current call is not found, return a function, that when executed against any parameter routes to the page not found controller" in {
-      navigator.nextPage("")(mock[UserAnswers]) shouldBe routes.PageNotFoundController.onPageLoad()
+    "When the current call is not found, return a function, that when executed against any parameter throws an exception to load a technical error page" in {
+      the[Exception] thrownBy navigator.nextPage("")(mock[UserAnswers]) should have message "Page not found for controller id: "
     }
 
     "return a function that goes to the Part of Estate Passing to Direct Descendants controller when given DateOfDeath, and the date of death is after 5 April 2017" in {
