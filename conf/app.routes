@@ -47,8 +47,6 @@ GET        /no-downsizing-threshold-increase            uk.gov.hmrc.residencenil
 
 GET        /no-threshold-increase                       uk.gov.hmrc.residencenilratebandcalculator.controllers.NoThresholdIncreaseController.onPageLoad
 
-GET        /not-found                                   uk.gov.hmrc.residencenilratebandcalculator.controllers.PageNotFoundController.onPageLoad
-
 GET        /part-of-estate-passing-to-direct-descendants    uk.gov.hmrc.residencenilratebandcalculator.controllers.PartOfEstatePassingToDirectDescendantsController.onPageLoad
 POST       /part-of-estate-passing-to-direct-descendants    uk.gov.hmrc.residencenilratebandcalculator.controllers.PartOfEstatePassingToDirectDescendantsController.onSubmit
 

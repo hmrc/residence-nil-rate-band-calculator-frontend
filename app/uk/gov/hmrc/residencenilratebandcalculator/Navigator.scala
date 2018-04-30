@@ -116,9 +116,6 @@ class Navigator @Inject()() {
   }
 
   def nextPage(controllerId: String): UserAnswers => Call = {
-    routeMap.getOrElse(controllerId, _ => PageNotFoundController.onPageLoad())
+    routeMap.getOrElse(controllerId, _ => throw new Exception("Page not found"))
   }
-
-  private def goToPageNotFound: UserAnswers => Call = _ => PageNotFoundController.onPageLoad()
-
 }
