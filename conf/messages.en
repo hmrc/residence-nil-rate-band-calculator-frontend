@@ -1,17 +1,17 @@
 assets_passing_to_direct_descendants.browser_title = Other than the property that you are claiming residence nil rate band allowance on, do any other assets pass to a direct descendant following the death?
 assets_passing_to_direct_descendants.title = Other than the property that you are claiming residence nil rate band allowance on, do any other assets pass to a direct descendant following the death?
 
-assets_passing_to_direct_descendants.guidance = This doesn’t include the property worth {0} that you have already added to this calculator. A direct descendant must have received other assets from the estate for the additional downsizing threshold to be claimed.
+assets_passing_to_direct_descendants.guidance = This doesn''t include the property worth {0} that you have already added to this calculator. A direct descendant must have received other assets from the estate for the additional downsizing threshold to be claimed.
 assets_passing_to_direct_descendants.guidance_no_property = A direct descendant must have received assets from the estate for the additional downsizing threshold to be claimed.
 assets_passing_to_direct_descendants.error.required = Give an answer for if any other assets apart from the property were passing to a direct descendant
 
-calculate_threshold_increase.browser_title = Calculate the additional threshold for the estate of someone who has died
-calculate_threshold_increase.title = Calculate the additional threshold for the estate of someone who has died
-calculate_threshold_increase.guidance1 = Calculate the additional threshold for the estate of someone who has died using details from:
-calculate_threshold_increase.guidance2.bullet1 = an IHT400 account form with the value of what’s in the estate already worked out
-calculate_threshold_increase.guidance2.bullet2 = a paper schedule IHT435 if you have already started filling one in
-calculate_threshold_increase.guidance2.bullet3 = a completed schedule IHT436 if you are transferring any unused home threshold
-calculate_threshold_increase.guidance3 = You will also need details of the property if there is any additional threshold because the person who died downsized or sold that home.
+calculate_threshold_increase.browser_title = Calculate the additional threshold for a home left to direct descendants
+calculate_threshold_increase.title = Calculate the additional threshold for a home left to direct descendants
+calculate_threshold_increase.guidance1 = Calculate the additional threshold, otherwise known as the residence nil-rate band (RNRB), if a home is left to children or other direct descendants. The calculator also works out the additional threshold if a person downsized or sold their home, and any unused additional threshold that can be transferred to the estate.
+calculate_threshold_increase.guidance2 = To use this calculator to help complete an IHT400 account, you''ll need to have:
+calculate_threshold_increase.guidance3.bullet1 = an IHT400 account form with the value of what''s in the estate already worked out
+calculate_threshold_increase.guidance3.bullet2 = a paper schedule IHT435 if you have already started filling one in
+calculate_threshold_increase.guidance3.bullet3 = a completed schedule IHT436 if you are transferring any unused additional threshold from another estate
 
 chargeable_estate_value.browser_title = What is the amount of the total chargeable estate on death?
 chargeable_estate_value.title = What is the amount of the total chargeable estate on death?
@@ -88,7 +88,7 @@ error.invalid_property_passing_to_direct_descendants_option = Give an answer for
 error.non_numeric = Give a value using only numbers
 error.number = Please enter a valid number
 error.required = Please enter a value
-error.summary.title = There’s been a problem
+error.summary.title = There''s been a problem
 error.summary.text = Check the following
 error.whole_pounds = Give a value in whole pounds only without any pence
 
@@ -103,14 +103,14 @@ exemptions_and_relief_claimed.error.required = Give an answer for if any part of
 exit_questionnaire.browser_title = Survey
 exit_questionnaire.title = Survey
 exit_questionnaire.comments.label = How could we improve this service?
-exit_questionnaire.comments.help.2 = Please don’t include any personal or financial details, like your National Insurance or credit card numbers.
+exit_questionnaire.comments.help.2 = Please don''t include any personal or financial details, like your National Insurance or credit card numbers.
 exit_questionnaire.email.label = Email
 exit_questionnaire.full_name.label = Full name
 exit_questionnaire.phone_number.label = Phone number
 exit_questionnaire.service_feel.label = How do you feel about your experience using this service today?
 exit_questionnaire.service_difficulty.label = How easy was it to do what you wanted?
 exit_questionnaire.guidance = Please complete this short survey to help us improve the service. The survey should take no more than 2 minutes.
-exit_questionnaire.user_research.title = We’re looking for people to help us with user research.
+exit_questionnaire.user_research.title = We''re looking for people to help us with user research.
 exit_questionnaire.user_research.guidance = This will help improve the service. If you would like to be contacted with more details about the user research, enter your name and contact details below.
 
 grossing_up_on_estate_assets.browser_title = Does grossing-up or interaction apply?
@@ -128,7 +128,7 @@ grossing_up_on_estate_property.error.required = Give an answer for if grossing u
 no_additional_threshold_available.browser_title = There is no additional home threshold available for the estate
 no_additional_threshold_available.title = There is no additional home threshold available for the estate
 no_additional_threshold_available.guidance = You might still be able to claim additional downsizing threshold or transfer any unused home threshold if the person who has died was married during their lifetime and their spouse or civil partner died first.
-no_additional_threshold_available.no_property_reason = This is because the estate doesn’t include a property that the person who died lived in at any time while they also owned it.
+no_additional_threshold_available.no_property_reason = This is because the estate doesn''t include a property that the person who died lived in at any time while they also owned it.
 no_additional_threshold_available.not_closely_inherited_reason = This is because no part of the property passed to a direct descendant, or the spouse or civil partner of a direct descendant.
 
 no_downsizing_threshold_increase.browser_title = There is no additional downsizing threshold available for the estate
@@ -142,12 +142,12 @@ no_threshold_increase.date_of_death.reason = This is because the date of death o
 no_threshold_increase.direct_descendant.title = There is no additional threshold available for the estate
 no_threshold_increase.direct_descendant.reason = This is because none of the estate is being left to a direct descendant.
 
-part_of_estate_passing_to_direct_descendants.browser_title = Does any of the estate pass to the deceased’s children or other direct descendants?
-part_of_estate_passing_to_direct_descendants.title = Does any of the estate pass to the deceased’s children or other direct descendants?
+part_of_estate_passing_to_direct_descendants.browser_title = Does any of the estate pass to the deceased''s children or other direct descendants?
+part_of_estate_passing_to_direct_descendants.title = Does any of the estate pass to the deceased''s children or other direct descendants?
 part_of_estate_passing_to_direct_descendants.guidance1 = Check the will to find out what the person who has died has left to people.
 part_of_estate_passing_to_direct_descendants.guidance2 = Answer yes if the person who has died left something to a direct descendant or the spouse or civil partner of one.
 part_of_estate_passing_to_direct_descendants.reveal_title = Who is a direct descendant?
-part_of_estate_passing_to_direct_descendants.guidance3 = A person’s direct descendant is:
+part_of_estate_passing_to_direct_descendants.guidance3 = A person''s direct descendant is:
 part_of_estate_passing_to_direct_descendants.guidance3.bullet1 = a child, grandchild or great grandchild, including any of their children
 part_of_estate_passing_to_direct_descendants.guidance3.bullet2 = the spouse or civil partner of a child, grandchild or great grandchild, including any of their children
 part_of_estate_passing_to_direct_descendants.guidance3.bullet3 = a widow, widower or surviving civil partner of a child, grandchild or great grandchild, including any of their children
@@ -159,8 +159,8 @@ part_of_estate_passing_to_direct_descendants.guidance3.bullet8 = an adopted chil
 part_of_estate_passing_to_direct_descendants.guidance4 = Direct descendants do not include nephews, nieces, brothers, sisters or other relatives not included above.
 part_of_estate_passing_to_direct_descendants.error.required = Give an answer for if any of the estate passed to a direct descendant
 
-percentage_passed_to_direct_descendants.browser_title = What percentage of the residence passes to direct descendants following the deceased’s death?
-percentage_passed_to_direct_descendants.title = What percentage of the residence passes to direct descendants following the deceased’s death?
+percentage_passed_to_direct_descendants.browser_title = What percentage of the residence passes to direct descendants following the deceased''s death?
+percentage_passed_to_direct_descendants.title = What percentage of the residence passes to direct descendants following the deceased''s death?
 percentage_passed_to_direct_descendants.guidance = If half of the property has been left to a direct descendant, the percentage to give is 50%.
 percentage_passed_to_direct_descendants.error.required = Give a percentage value for how much of the property was passed to a direct descendant
 percentage_passed_to_direct_descendants.error.non_numeric = Give a percentage value using only numbers
@@ -245,7 +245,7 @@ threshold_calculation_result.action.guidance.form_400 = box 111 on the IHT400 fo
 threshold_calculation_result.action.guidance.continue = Then continue with the IHT400 form.
 threshold_calculation_result.print_prefix = You can
 threshold_calculation_result.link_to_print = view a copy of this page.
-threshold_calculation_result.print_suffix = You’ll then be able to download or print a copy to keep for your records.
+threshold_calculation_result.print_suffix = You''ll then be able to download or print a copy to keep for your records.
 threshold_calculation_result.allowance = Allowance
 threshold_calculation_result.amount = Amount
 threshold_calculation_result.pdf.guidance1 = View a copy of the IHT435 form with the details you have given on it (PDF <500KB)
@@ -255,7 +255,7 @@ threshold_calculation_result.pdf.title = Copy of IHT 435
 transfer_any_unused_threshold.browser_title = Do you wish to transfer any unused residence nil rate band?
 transfer_any_unused_threshold.title = Do you wish to transfer any unused residence nil rate band?
 transfer_any_unused_threshold.guidance1 = This transfer will be from the estate of a spouse or civil partner who died before the person who you are increasing the threshold for.
-transfer_any_unused_threshold.guidance2 = You will need a completed copy of the IHT436 form if you are transferring any unused home threshold from somebody else’s estate.
+transfer_any_unused_threshold.guidance2 = You will need a completed copy of the IHT436 form if you are transferring any unused home threshold from somebody else''s estate.
 transfer_any_unused_threshold.error.required = Give an answer for if you want to transfer any unused residence nil rate band from the estate of a spouse or civil partner of the person who has died
 
 transfer_available_when_property_changed.browser_title = If a valid claim for RNRB had been made at the date of disposal would any transferable residence nil rate band have been available at that time?
@@ -299,8 +299,8 @@ value_of_assets_passing.guidance4 = This does not include the property worth {0}
 value_of_assets_passing.error.blank = Give a value for the assets passing to a direct descendant
 value_of_assets_passing.greater_than_estate_value.error = Give a value that is less than the £{0} value of the estate that you have already given
 
-value_of_changed_property.title = What was the value of the deceased’s interest in the property at the date it was disposed of?
-value_of_changed_property.browser_title = What was the value of the deceased’s interest in the property at the date it was disposed of?
+value_of_changed_property.title = What was the value of the deceased''s interest in the property at the date it was disposed of?
+value_of_changed_property.browser_title = What was the value of the deceased''s interest in the property at the date it was disposed of?
 value_of_changed_property.guidance1 = This is the value of what the person who has died owned. If they owned all of the property when they sold it or gave it away, deduct any mortgage owed from the sale price and give that value.
 value_of_changed_property.guidance2 = If the person who has died owned a share of the property, you should include the value of their share. If the property was sold, include their share of the sale price and deduct their share of any mortgage.
 value_of_changed_property.guidance3 = Do not deduct any solicitor or estate agent fees from the values.
