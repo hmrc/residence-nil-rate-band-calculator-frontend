@@ -13,9 +13,9 @@ calculate_threshold_increase.guidance3.bullet1 = an IHT400 account form with the
 calculate_threshold_increase.guidance3.bullet2 = a paper schedule IHT435 if you have already started filling one in
 calculate_threshold_increase.guidance3.bullet3 = a completed schedule IHT436 if you are transferring any unused additional threshold from another estate
 
-chargeable_estate_value.browser_title = What is the amount of the total chargeable estate on death?
-chargeable_estate_value.title = What is the amount of the total chargeable estate on death?
-chargeable_estate_value.guidance = Enter the value you have given in box 108 on the IHT400 form.
+chargeable_estate_value.browser_title = What is the value after deducting reliefs and exemptions?
+chargeable_estate_value.title = What is the value after deducting reliefs and exemptions?
+chargeable_estate_value.guidance = Enter the value of the taxable estate (or ‘total chargeable estate’) from box 108 on the IHT400 form.
 chargeable_estate_value.error.blank = Give a chargeable value of the estate
 chargeable_estate_value.error.non_numeric = Give a chargeable value using only numbers
 chargeable_estate_value.greater_than_estate_value.error = Give a chargeable value that is less than the estate value of £{0} that you have already given

@@ -12,9 +12,9 @@ calculate_threshold_increase.guidance3.bullet1 = ffurflen gyfrif IHT400 gyda gwe
 calculate_threshold_increase.guidance3.bullet2 = atodlen IHT435 bapur os ydych eisoes wedi dechrau ei llenwi
 calculate_threshold_increase.guidance3.bullet3 = atodlen IHT436 sydd wedi''i llenwi os ydych yn trosglwyddo unrhyw drothwy ychwanegol sydd heb ei ddefnyddio o ystâd arall
 
-chargeable_estate_value.browser_title = Beth yw cyfanswm yr ystâd drethadwy ar ôl y farwolaeth?
-chargeable_estate_value.title = Beth yw cyfanswm yr ystâd drethadwy ar ôl y farwolaeth?
-chargeable_estate_value.guidance = Nodwch y gwerth yr ydych wedi''i roi ym mlwch 108 ar y ffurflen IHT400.
+chargeable_estate_value.browser_title = Beth yw''r gwerth ar ôl didynnu rhyddhad ac eithriadau?
+chargeable_estate_value.title = Beth yw''r gwerth ar ôl didynnu rhyddhad ac eithriadau?
+chargeable_estate_value.guidance = Nodwch werth yr ystâd drethadwy (neu ''cyfanswm yr ystâd drethadwy'') o flwch 108 ar ffurflen IHT400.
 chargeable_estate_value.error.blank = Rhowch werth trethadwy''r ystâd
 chargeable_estate_value.error.non_numeric = Rhowch werth trethadwy gan ddefnyddio rhifau''n unig
 chargeable_estate_value.greater_than_estate_value.error = Rhowch werth trethadwy sy''n llai na gwerth yr ystâd, sef £{0}, yr ydych eisoes wedi''i nodi
