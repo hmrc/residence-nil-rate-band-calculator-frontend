@@ -27,15 +27,16 @@ class ChargeableEstateValueControllerSpec extends SimpleControllerSpecBase {
   val errorKeyBlank = "chargeable_estate_value.error.blank"
   val errorKeyDecimal = "error.whole_pounds"
   val errorKeyNonNumeric = "chargeable_estate_value.error.non_numeric"
+  val errorKeyTooLarge = "error.value_too_large"
   val messageKeyPrefix = "chargeable_estate_value"
 
   "Chargeable Estate Value Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => chargeable_estate_value(frontendAppConfig, NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric), answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case None => chargeable_estate_value(frontendAppConfig, NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
         case Some(v) => chargeable_estate_value(frontendAppConfig,
-          NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+          NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
       }
     }
 

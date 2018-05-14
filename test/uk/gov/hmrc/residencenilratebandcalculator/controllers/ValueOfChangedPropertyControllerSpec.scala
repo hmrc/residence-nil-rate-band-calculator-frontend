@@ -26,14 +26,15 @@ class ValueOfChangedPropertyControllerSpec extends SimpleControllerSpecBase {
   val errorKeyBlank = "value_of_changed_property.error.blank"
   val errorKeyDecimal = "error.whole_pounds"
   val errorKeyNonNumeric = "error.non_numeric"
+  val errorKeyTooLarge = "error.value_too_large"
   val messageKeyPrefix = "value_of_changed_property"
 
   "Value Of Changed Property Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => value_of_changed_property(frontendAppConfig, NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric),answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
-        case Some(v) => value_of_changed_property(frontendAppConfig, NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case None => value_of_changed_property(frontendAppConfig, NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case Some(v) => value_of_changed_property(frontendAppConfig, NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
       }
     }
 

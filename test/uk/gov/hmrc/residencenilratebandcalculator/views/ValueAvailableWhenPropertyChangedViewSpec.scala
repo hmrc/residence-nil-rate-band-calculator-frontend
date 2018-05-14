@@ -36,7 +36,7 @@ class ValueAvailableWhenPropertyChangedViewSpec extends IntViewSpecBase {
 
     behave like pageWithoutBackLink[Int](createView, fakeApplication.injector.instanceOf[ValueAvailableWhenPropertyChangedController].form())
 
-    behave like intPage(createView, messageKeyPrefix, ValueAvailableWhenPropertyChangedController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage), fakeApplication.injector.instanceOf[ValueAvailableWhenPropertyChangedController].form())
+    behave like intPage(createView, messageKeyPrefix, ValueAvailableWhenPropertyChangedController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), fakeApplication.injector.instanceOf[ValueAvailableWhenPropertyChangedController].form())
 
     behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[ValueAvailableWhenPropertyChangedController].form())
 

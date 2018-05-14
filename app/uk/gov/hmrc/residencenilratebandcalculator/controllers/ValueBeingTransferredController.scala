@@ -53,7 +53,7 @@ class ValueBeingTransferredController @Inject()(val appConfig: FrontendAppConfig
   val controllerId = Constants.valueBeingTransferredId
 
   def form = () =>
-    NonNegativeIntForm("value_being_transferred.error.blank", "error.whole_pounds", "error.non_numeric")
+    NonNegativeIntForm("value_being_transferred.error.blank", "error.whole_pounds", "error.non_numeric", "error.value_too_large")
 
   private def getCacheMap(implicit hc: HeaderCarrier): Future[CacheMap] = sessionConnector.fetch().map {
     case Some(cacheMap) => cacheMap

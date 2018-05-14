@@ -48,7 +48,7 @@ class ValueAvailableWhenPropertyChangedController @Inject()(val appConfig: Front
   val controllerId = Constants.valueAvailableWhenPropertyChangedId
 
   def form = () =>
-    NonNegativeIntForm("value_available_when_property_changed.error.blank", "error.whole_pounds", "error.non_numeric")
+    NonNegativeIntForm("value_available_when_property_changed.error.blank", "error.whole_pounds", "error.non_numeric", "error.value_too_large")
 
   private def getCacheMap(implicit hc: HeaderCarrier): Future[CacheMap] = sessionConnector.fetch().map {
     case Some(cacheMap) => cacheMap

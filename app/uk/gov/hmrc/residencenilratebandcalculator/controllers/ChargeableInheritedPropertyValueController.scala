@@ -43,7 +43,7 @@ class ChargeableInheritedPropertyValueController @Inject()(override val appConfi
   override val controllerId: String = Constants.chargeableInheritedPropertyValueId
 
   override def form: () => Form[Int] = () =>
-    NonNegativeIntForm("chargeable_inherited_property_value.error.blank", "error.whole_pounds", "error.non_numeric")
+    NonNegativeIntForm("chargeable_inherited_property_value.error.blank", "error.whole_pounds", "error.non_numeric", "error.value_too_large")
 
   override def view(form: Form[Int], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
     chargeable_inherited_property_value(appConfig, form, answerRows)

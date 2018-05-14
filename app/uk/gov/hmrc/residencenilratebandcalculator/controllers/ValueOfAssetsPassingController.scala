@@ -42,7 +42,7 @@ class ValueOfAssetsPassingController @Inject()(override val appConfig: FrontendA
   override val controllerId = Constants.valueOfAssetsPassingId
 
   override def form = () =>
-    NonNegativeIntForm("value_of_assets_passing.error.blank", "error.whole_pounds", "error.non_numeric")
+    NonNegativeIntForm("value_of_assets_passing.error.blank", "error.whole_pounds", "error.non_numeric", "error.value_too_large")
 
   override def view(form: Form[Int], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
     val formattedPropertyValue = userAnswers.propertyValue match {
