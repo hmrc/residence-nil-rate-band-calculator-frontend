@@ -15,7 +15,7 @@ calculate_threshold_increase.guidance3.bullet3 = a completed schedule IHT436 if 
 
 chargeable_estate_value.browser_title = What is the value after deducting reliefs and exemptions?
 chargeable_estate_value.title = What is the value after deducting reliefs and exemptions?
-chargeable_estate_value.guidance = Enter the value of the taxable estate (or ‘total chargeable estate’) from box 108 on the IHT400 form.
+chargeable_estate_value.guidance = Enter the value of the taxable estate (or ''total chargeable estate'') from box 108 on the IHT400 form.
 chargeable_estate_value.error.blank = Give a chargeable value of the estate
 chargeable_estate_value.error.non_numeric = Give a chargeable value using only numbers
 chargeable_estate_value.greater_than_estate_value.error = Give a chargeable value that is less than the estate value of £{0} that you have already given
@@ -91,7 +91,7 @@ error.required = Please enter a value
 error.summary.title = There''s been a problem
 error.summary.text = Check the following
 error.whole_pounds = Give a value in whole pounds only without any pence
-error.value_too_large = This value is too high
+error.value_too_large = Enter an amount that''s £1000000000 or less
 
 exemptions_and_relief_claimed.browser_title = Is any part of the residence exempt from Inheritance Tax, or does any part of it qualify for any relief on the death?
 exemptions_and_relief_claimed.title = Is any part of the residence exempt from Inheritance Tax, or does any part of it qualify for any relief on the death?

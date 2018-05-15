@@ -91,6 +91,7 @@ error.required = Nodwch werth
 error.summary.title = Mae problem wedi codi.
 error.summary.text = Gwiriwch y canlynol
 error.whole_pounds = Rhowch werth mewn punnoedd llawn yn unig heb unrhyw geiniogau
+error.value_too_large = Nodwch swm sy''n £1000000000 neu lai
 
 exemptions_and_relief_claimed.browser_title = A oes unrhyw ran o''r breswylfa wedi''i heithrio rhag Treth Etifeddiant neu a oes unrhyw ran ohoni sy''n gymwys am ryddhad ar ôl y farwolaeth? 
 exemptions_and_relief_claimed.title = A oes unrhyw ran o''r breswylfa wedi''i heithrio rhag Treth Etifeddiant neu a oes unrhyw ran ohoni sy''n gymwys am ryddhad ar ôl y farwolaeth?
@@ -231,7 +232,7 @@ site.service_name = Cyfrifo''r trothwy ychwanegol
 
 threshold_calculation_result.browser_title = Cyfrifiad terfynol
 threshold_calculation_result.info.zero.header = Nid oes cynnydd i drothwy''r Dreth Etifeddiant
-threshold_calculation_result.info.zero.guidance = Yn seiliedig ar y manylion yr ydych wedi''u rhoi, gellir cynyddu''r trothwy gan
+threshold_calculation_result.info.zero.guidance = Yn seiliedig ar y manylion yr ydych wedi''u rhoi, gellir cynyddu''r trothwy gan {0}.
 threshold_calculation_result.info.zero.threshold_change = Nid oes newid i''r trothwy presennol.
 threshold_calculation_result.info.non_zero.header = Gellir cynyddu trothwy''r Dreth Etifeddiant
 threshold_calculation_result.info.non_zero.guidance = Gellir cynyddu''r trothwy gan {0} ychwanegol.
