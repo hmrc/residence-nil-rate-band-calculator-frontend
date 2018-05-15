@@ -36,7 +36,7 @@ object NonNegativeIntForm extends FormErrorHelper {
     val intRegex = """^(\d+)$""".r
     val decimalRegex = """^(\d*\.\d*)$""".r
     def numberTooLarge(input: String) = {
-      Try {BigDecimal(input) > 2147483647}.getOrElse(true)
+      Try {BigDecimal(input) > 2147483647}.getOrElse(false)
     }
 
     def bind(key: String, data: Map[String, String]) = {
@@ -44,9 +44,9 @@ object NonNegativeIntForm extends FormErrorHelper {
         case None => produceError(key, errorKeyBlank)
         case Some("") => produceError(key, errorKeyBlank)
         case Some(s) => s.trim.replace(",", "") match {
+          case input if numberTooLarge(input) => produceError(key, errorKeyTooLarge)
           case intRegex(str) if isInt(str) => Right(str.toInt)
           case decimalRegex(_) => produceError(key, errorKeyDecimal)
-          case test if numberTooLarge(test) => produceError(key, errorKeyTooLarge)
           case _ => produceError(key, errorKeyNonNumeric)
         }
       }
