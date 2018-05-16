@@ -36,7 +36,7 @@ class ValueBeingTransferredViewSpec extends IntViewSpecBase {
 
     behave like pageWithoutBackLink[Int](createView, fakeApplication.injector.instanceOf[ValueBeingTransferredController].form())
 
-    behave like intPage(createView, messageKeyPrefix, ValueBeingTransferredController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage), fakeApplication.injector.instanceOf[ValueBeingTransferredController].form())
+    behave like intPage(createView, messageKeyPrefix, ValueBeingTransferredController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), fakeApplication.injector.instanceOf[ValueBeingTransferredController].form())
 
     behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[ValueBeingTransferredController].form())
 

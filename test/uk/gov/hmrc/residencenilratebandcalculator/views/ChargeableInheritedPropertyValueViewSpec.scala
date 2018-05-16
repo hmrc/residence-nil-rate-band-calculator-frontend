@@ -36,7 +36,7 @@ class ChargeableInheritedPropertyValueViewSpec extends IntViewSpecBase {
 
     behave like pageWithoutBackLink[Int](createView, fakeApplication.injector.instanceOf[ChargeableInheritedPropertyValueController].form())
 
-    behave like intPage(createView, messageKeyPrefix, ChargeableInheritedPropertyValueController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage), fakeApplication.injector.instanceOf[ChargeableInheritedPropertyValueController].form())
+    behave like intPage(createView, messageKeyPrefix, ChargeableInheritedPropertyValueController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), fakeApplication.injector.instanceOf[ChargeableInheritedPropertyValueController].form())
 
     behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[ChargeableInheritedPropertyValueController].form())
 

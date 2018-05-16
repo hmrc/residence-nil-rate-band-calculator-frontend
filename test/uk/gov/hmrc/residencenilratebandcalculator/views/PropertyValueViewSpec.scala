@@ -37,7 +37,7 @@ class PropertyValueViewSpec extends IntViewSpecBase {
 
     behave like pageWithoutBackLink[Int](createView, fakeApplication.injector.instanceOf[PropertyValueController].form())
 
-    behave like intPage(createView, messageKeyPrefix, PropertyValueController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage), fakeApplication.injector.instanceOf[PropertyValueController].form())
+    behave like intPage(createView, messageKeyPrefix, PropertyValueController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), fakeApplication.injector.instanceOf[PropertyValueController].form())
 
     behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[PropertyValueController].form())
 

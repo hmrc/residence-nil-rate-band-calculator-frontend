@@ -41,7 +41,7 @@ class ValueOfEstateController @Inject()(override val appConfig: FrontendAppConfi
   override val controllerId = Constants.valueOfEstateId
 
   override def form = () =>
-    NonNegativeIntForm("value_of_estate.error.blank", "error.whole_pounds", "value_of_estate.error.non_numeric")
+    NonNegativeIntForm("value_of_estate.error.blank", "error.whole_pounds", "value_of_estate.error.non_numeric", "error.value_too_large")
 
   override def view(form: Form[Int], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
     value_of_estate(appConfig, form, answerRows)

@@ -45,7 +45,7 @@ class ChargeableEstateValueController  @Inject()(override val appConfig: Fronten
   override val controllerId = Constants.chargeableEstateValueId
 
   override def form = () =>
-    NonNegativeIntForm("chargeable_estate_value.error.blank", "error.whole_pounds", "chargeable_estate_value.error.non_numeric")
+    NonNegativeIntForm("chargeable_estate_value.error.blank", "error.whole_pounds", "chargeable_estate_value.error.non_numeric", "error.value_too_large")
 
   override def view(form: Form[Int], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
     chargeable_estate_value(appConfig, form, answerRows)

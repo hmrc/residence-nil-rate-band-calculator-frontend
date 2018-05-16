@@ -45,6 +45,7 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends BaseSpec with With
   val errorKeyBlank = "value_available_when_property_changed.error.blank"
   val errorKeyDecimal = "error.whole_pounds"
   val errorKeyNonNumeric = "error.non_numeric"
+  val errorKeyTooLarge = "error.value_too_large"
 
   val fakeRequest = FakeRequest("", "")
 
@@ -67,9 +68,9 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends BaseSpec with With
   def createView = (value: Option[Map[String, String]]) => {
     val answerRow = new AnswerRow("What was the date the property was disposed of?", "11 May 2018", routes.DatePropertyWasChangedController.onPageLoad().url)
     value match {
-      case None => value_available_when_property_changed(frontendAppConfig, "£100,000", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric), answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
+      case None => value_available_when_property_changed(frontendAppConfig, "£100,000", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
       case Some(v) => value_available_when_property_changed(frontendAppConfig, "£100,000",
-        NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v), Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
     }
   }
 

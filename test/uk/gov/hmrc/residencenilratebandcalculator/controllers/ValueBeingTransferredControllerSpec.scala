@@ -44,6 +44,7 @@ class ValueBeingTransferredControllerSpec extends BaseSpec with WithFakeApplicat
   val errorKeyBlank = "value_being_transferred.error.blank"
   val errorKeyDecimal = "error.whole_pounds"
   val errorKeyNonNumeric = "error.non_numeric"
+  val errorKeyTooLarge = "error.value_too_large"
 
   val fakeRequest = FakeRequest("", "")
 
@@ -66,16 +67,16 @@ class ValueBeingTransferredControllerSpec extends BaseSpec with WithFakeApplicat
   def createView = (value: Option[Map[String, String]]) => {
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
-      case None => value_being_transferred(frontendAppConfig, "£100,000.00", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric),answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
-      case Some(v) => value_being_transferred(frontendAppConfig, "£100,000.00", NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v), Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
+      case None => value_being_transferred(frontendAppConfig, "£100,000.00", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
+      case Some(v) => value_being_transferred(frontendAppConfig, "£100,000.00", NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
     }
   }
 
   def createViewWithBacklink = (value: Option[Map[String, String]]) => {
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
-      case None => value_being_transferred(frontendAppConfig, "£100,000.00", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric),answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
-      case Some(v) => value_being_transferred(frontendAppConfig,  "£100,000.00", NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric).bind(v), Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
+      case None => value_being_transferred(frontendAppConfig, "£100,000.00", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
+      case Some(v) => value_being_transferred(frontendAppConfig,  "£100,000.00", NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
     }
   }
 
