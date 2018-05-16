@@ -91,7 +91,7 @@ error.required = Nodwch werth
 error.summary.title = Mae problem wedi codi.
 error.summary.text = Gwiriwch y canlynol
 error.whole_pounds = Rhowch werth mewn punnoedd llawn yn unig heb unrhyw geiniogau
-error.value_too_large = Nodwch swm sy''n £1000000000 neu lai
+error.value_too_large = Nodwch swm sy''n £1,000,000,000 neu lai
 
 exemptions_and_relief_claimed.browser_title = A oes unrhyw ran o''r breswylfa wedi''i heithrio rhag Treth Etifeddiant neu a oes unrhyw ran ohoni sy''n gymwys am ryddhad ar ôl y farwolaeth? 
 exemptions_and_relief_claimed.title = A oes unrhyw ran o''r breswylfa wedi''i heithrio rhag Treth Etifeddiant neu a oes unrhyw ran ohoni sy''n gymwys am ryddhad ar ôl y farwolaeth?

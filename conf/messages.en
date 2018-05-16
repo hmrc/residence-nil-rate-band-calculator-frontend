@@ -91,7 +91,7 @@ error.required = Please enter a value
 error.summary.title = There''s been a problem
 error.summary.text = Check the following
 error.whole_pounds = Give a value in whole pounds only without any pence
-error.value_too_large = Enter an amount that''s £1000000000 or less
+error.value_too_large = Enter an amount that''s £1,000,000,000 or less
 
 exemptions_and_relief_claimed.browser_title = Is any part of the residence exempt from Inheritance Tax, or does any part of it qualify for any relief on the death?
 exemptions_and_relief_claimed.title = Is any part of the residence exempt from Inheritance Tax, or does any part of it qualify for any relief on the death?
