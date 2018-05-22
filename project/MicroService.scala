@@ -42,7 +42,7 @@ trait MicroService {
     .settings(publishingSettings: _*)
     .settings(defaultSettings(): _*)
     .settings(
-      scalacOptions ++= Seq("-Xfatal-warnings", "-feature"),
+//      scalacOptions ++= Seq("-Xfatal-warnings", "-feature"), TODO readd this once migration is completed
       libraryDependencies ++= appDependencies,
       retrieveManaged := true,
       evictionWarningOptions in update := EvictionWarningOptions.default.withWarnScalaVersionEviction(false)

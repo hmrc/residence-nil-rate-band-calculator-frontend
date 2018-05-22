@@ -27,6 +27,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.hmrc.http.SessionKeys
 
+// TODO can this be done with a default filter <- to investigate
 class SessionId @Inject()()(implicit val mat: Materializer) extends Filter {
 
   private def addSessionId(rh: RequestHeader, sessionId: (String, String)) = {

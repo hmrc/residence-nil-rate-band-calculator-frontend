@@ -17,12 +17,13 @@
 package uk.gov.hmrc.residencenilratebandcalculator
 
 import javax.inject.{Inject, Singleton}
-
+import play.api.{Configuration, Environment}
 import uk.gov.hmrc.play.audit.http.connector.{AuditConnector => Auditing}
 import uk.gov.hmrc.play.config.AppName
 import uk.gov.hmrc.play.frontend.config.LoadAuditingConfig
 
 @Singleton
-class FrontendAuditConnector @Inject()() extends Auditing with AppName {
+class FrontendAuditConnector @Inject()(override val appNameConfiguration : Configuration,
+                                       environment : Environment) extends Auditing with AppName {
   override lazy val auditingConfig = LoadAuditingConfig(s"auditing")
 }

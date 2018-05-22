@@ -31,7 +31,10 @@ private object AppDependencies {
   val compile = Seq(
     "uk.gov.hmrc" %% "play-reactivemongo" % playReactivemongoVersion,
     ws,
-    "uk.gov.hmrc" %% "frontend-bootstrap" % frontendBootstrapVersion,
+//    "uk.gov.hmrc" %% "frontend-bootstrap" % frontendBootstrapVersion,
+    "uk.gov.hmrc" %% "bootstrap-play-25" % "1.5.0",
+    "uk.gov.hmrc" %% "govuk-template" % "5.20.0",
+    "uk.gov.hmrc" %% "play-ui" % "7.14.0",
     "uk.gov.hmrc" %% "play-partials" % playPartialsVersion,
     "uk.gov.hmrc" %% "play-whitelist-filter" % whitelistVersion,
     "uk.gov.hmrc" %% "http-caching-client" % httpCachingClientVersion,

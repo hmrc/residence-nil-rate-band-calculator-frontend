@@ -17,33 +17,17 @@
 package uk.gov.hmrc.residencenilratebandcalculator.filters
 
 import javax.inject.Inject
-
 import play.api.http.DefaultHttpFilters
-import play.filters.csrf.CSRFFilter
+import uk.gov.hmrc.play.bootstrap.filters._
+import uk.gov.hmrc.play.bootstrap.filters.frontend.CSRFExceptionsFilter
 
-class Filters @Inject()(metrics: Metrics,
-                        headers: Headers,
-                        sessionCookieCrypto: SessionCookieCrypto,
-                        deviceId: DeviceId,
-                        logging: Logging,
-                        audit: Audit,
-                        csrf: CSRFFilter,
-                        csrfExceptions: CSRFExceptions,
-                        cacheControl: CacheControl,
-                        recovery: Recovery,
-                        sessionId: SessionId)
-  extends DefaultHttpFilters(metrics, headers, sessionCookieCrypto, deviceId, logging, audit, csrf, csrfExceptions, cacheControl, recovery, sessionId)
+class Filters @Inject()(frontendFilters: FrontendFilters,
+                        csrfExceptions: CSRFExceptionsFilter, // TODO is this being used?
+                        recovery: Recovery) // TODO not available in bootstrap-25 - is this required any more (see what happens on 404 with/without this)?
+  extends DefaultHttpFilters(frontendFilters.filters ++ Seq(csrfExceptions, recovery): _*)
 
-class FiltersWithWhitelist @Inject()(metrics: Metrics,
-                                     headers: Headers,
-                                     sessionCookieCrypto: SessionCookieCrypto,
-                                     deviceId: DeviceId,
-                                     logging: Logging,
-                                     audit: Audit,
-                                     csrf: CSRFFilter,
-                                     csrfExceptions: CSRFExceptions,
-                                     cacheControl: CacheControl,
+class FiltersWithWhitelist @Inject()(frontendFilters: FrontendFilters,
+                                     csrfExceptions: CSRFExceptionsFilter,
                                      recovery: Recovery,
-                                     sessionId: SessionId,
                                      whitelist: Whitelist)
-  extends DefaultHttpFilters(metrics, headers, sessionCookieCrypto, deviceId, logging, audit, csrf, csrfExceptions, cacheControl, recovery, sessionId, whitelist)
+  extends DefaultHttpFilters(frontendFilters.filters ++ Seq(csrfExceptions, recovery, whitelist): _*)

@@ -17,11 +17,29 @@
 package uk.gov.hmrc.residencenilratebandcalculator.filters
 
 import javax.inject.Inject
-
 import akka.stream.Materializer
 import play.api.mvc.{EssentialAction, EssentialFilter}
-import uk.gov.hmrc.play.frontend.filters.RecoveryFilter
+import akka.util.ByteString
+import play.api.http.Status._
+import play.api.libs.concurrent.Execution.Implicits._
+import play.api.libs.streams.Accumulator
+import play.api.mvc._
+import uk.gov.hmrc.http.HttpException
 
 class Recovery @Inject()(implicit val mat: Materializer) extends EssentialFilter {
-  override def apply(next: EssentialAction): EssentialAction = RecoveryFilter(next)
+  override def apply(next: EssentialAction): EssentialAction = RecoveryFilter.apply(next)
+}
+
+object RecoveryFilter extends EssentialFilter with Results {
+
+  override def apply(next: EssentialAction): EssentialAction = new EssentialAction {
+    def apply(rh: RequestHeader): Accumulator[ByteString, Result] = {
+      next(rh).recover(recoverErrors)
+    }
+  }
+
+  def recoverErrors: PartialFunction[Throwable, Result] = {
+    case e: HttpException if e.responseCode == NOT_FOUND => new Status(e.responseCode)(e.getMessage)
+  }
+
 }

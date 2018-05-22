@@ -18,6 +18,8 @@ package uk.gov.hmrc.residencenilratebandcalculator
 
 import javax.inject.{Inject, Singleton}
 import java.util.Base64
+
+import play.api.Mode.Mode
 import play.api.Configuration
 import uk.gov.hmrc.play.config.ServicesConfig
 
@@ -32,11 +34,11 @@ trait AppConfig {
 }
 
 @Singleton
-class FrontendAppConfig @Inject()(configuration: Configuration) extends AppConfig with ServicesConfig {
+class FrontendAppConfig @Inject()(override val runModeConfiguration: Configuration, override val mode: Mode) extends AppConfig with ServicesConfig {
 
-  private def loadConfig(key: String) = configuration.getString(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
+  private def loadConfig(key: String) = runModeConfiguration.getString(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
 
-  private lazy val contactHost = configuration.getString("contact-frontend.host").getOrElse("")
+  private lazy val contactHost = runModeConfiguration.getString("contact-frontend.host").getOrElse("")
   private val contactFormServiceIdentifier = "RNRB"
   private lazy val contactFrontendService = baseUrl("contact-frontend")
 
@@ -49,7 +51,7 @@ class FrontendAppConfig @Inject()(configuration: Configuration) extends AppConfi
   lazy val betaFeedbackUrl = s"$contactHost/contact/beta-feedback"
   lazy val betaFeedbackUnauthenticatedUrl = s"$contactHost/contact/beta-feedback-unauthenticated"
 
-  private def whitelistConfig(key: String):Seq[String] = Some(new String(Base64.getDecoder.decode(configuration.getString(key).getOrElse("")), "UTF-8"))
+  private def whitelistConfig(key: String):Seq[String] = Some(new String(Base64.getDecoder.decode(runModeConfiguration.getString(key).getOrElse("")), "UTF-8"))
     .map(_.split(",")).getOrElse(Array.empty).toSeq
 
   lazy val whitelist = whitelistConfig("whitelist")
