@@ -27,8 +27,6 @@ import play.api.routing.Router
 import play.api._
 import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, FrontendAuditConnector}
-import uk.gov.hmrc.play.frontend.bootstrap.ShowErrorPage
-import uk.gov.hmrc.play.frontend.config.ErrorAuditingSettings
 import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
 import scala.concurrent.Future
@@ -45,22 +43,12 @@ class ErrorHandler @Inject()(env: Environment,
                             implicit val localPartialRetriever: LocalPartialRetriever)
   extends DefaultHttpErrorHandler(env, config, sourceMapper, router) with I18nSupport {
 
-  val impl = new ErrorAuditingSettings with ShowErrorPage {
-    override val auditConnector = frontendAuditConnector
-    lazy val appName = config.getString("appName").getOrElse("APP NAME NOT SET")
-
-    override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(implicit rh: Request[_]): Html = {
+    def standardErrorTemplate(pageTitle: String, heading: String, message: String)(implicit rh: Request[_]): Html = {
       implicit val messages = messagesApi.preferred(rh)
       uk.gov.hmrc.residencenilratebandcalculator.views.html.error_template(pageTitle, heading, message, appConfig)(rh, messages, applicationProvider, localPartialRetriever = localPartialRetriever)
     }
-  }
-
-  override def onProdServerError(request: RequestHeader, exception: UsefulException): Future[Result] = impl.onError(request, exception)
-
-  override def onClientError(request: RequestHeader, statusCode: Int, message: String): Future[Result] =
-    statusCode match {
-      case BAD_REQUEST => impl.onBadRequest(request, message)
-      case NOT_FOUND => impl.onHandlerNotFound(request)
-      case _ => Future.successful(Results.Status(statusCode)("A client error occurred: " + message))
-    }
 }
+
+
+
+

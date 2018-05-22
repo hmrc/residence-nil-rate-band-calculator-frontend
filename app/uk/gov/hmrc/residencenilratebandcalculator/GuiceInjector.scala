@@ -17,11 +17,10 @@
 package uk.gov.hmrc.residencenilratebandcalculator
 
 import com.google.inject.AbstractModule
-import uk.gov.hmrc.residencenilratebandcalculator.components.{Global, Graphite}
+import uk.gov.hmrc.residencenilratebandcalculator.components.{Global}
 
 class GuiceInjector extends AbstractModule {
   def configure() = {
     bind(classOf[Global]).to(classOf[Global]).asEagerSingleton()
-    bind(classOf[Graphite]).to(classOf[Graphite]).asEagerSingleton()
   }
 }

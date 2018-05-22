@@ -22,7 +22,7 @@ import com.google.inject.Provider
 import play.api.{Application, Logger}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.Action
-import uk.gov.hmrc.play.frontend.controller.FrontendController
+import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.forms.ExitQuestionnaireForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.ExitQuestionnaireEvent
 import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
