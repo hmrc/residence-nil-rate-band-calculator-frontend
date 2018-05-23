@@ -55,9 +55,9 @@ class UnableToCalculateThresholdIncreaseViewSpec extends HtmlSpec {
        )
     }
 
-    "not display the HMRC logo" in {
+    "Display the HMRC logo" in {
       val f = fixture()
-      assertNotRenderedByCssSelector(f.doc, ".organisation-logo")
+      assertRenderedByCssSelector(f.doc, ".organisation-logo")
     }
 
   }

@@ -33,9 +33,9 @@ class ThankYouViewSpec extends ViewSpecBase {
       assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.title")
     }
 
-    "not display the HMRC logo" in {
+    "Display the HMRC logo" in {
       val doc = asDocument(thank_you(frontendAppConfig)(request, messages, applicationProvider, localPartialRetriever))
-      assertNotRenderedByCssSelector(doc, ".organisation-logo")
+      assertRenderedByCssSelector(doc, ".organisation-logo")
     }
   }
 }

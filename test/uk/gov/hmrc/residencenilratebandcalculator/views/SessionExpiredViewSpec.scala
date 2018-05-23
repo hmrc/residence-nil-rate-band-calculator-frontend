@@ -47,9 +47,9 @@ class SessionExpiredViewSpec extends ViewSpecBase {
       startLink.text shouldBe messages("site.start_again")
     }
 
-    "not display the HMRC logo" in {
+    "Display the HMRC logo" in {
       val doc = asDocument(session_expired(frontendAppConfig)(request, messages, applicationProvider, localPartialRetriever))
-      assertNotRenderedByCssSelector(doc, ".organisation-logo")
+      assertRenderedByCssSelector(doc, ".organisation-logo")
     }
   }
 }

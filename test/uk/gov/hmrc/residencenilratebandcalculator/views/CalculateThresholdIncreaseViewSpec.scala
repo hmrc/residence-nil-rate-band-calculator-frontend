@@ -54,9 +54,9 @@ class CalculateThresholdIncreaseViewSpec extends ViewSpecBase {
       startLink.text shouldBe messages("site.start_now")
     }
 
-    "not display the HMRC logo" in {
+    "Display the HMRC logo" in {
       val doc = asDocument(calculate_threshold_increase(frontendAppConfig)(request, messages, applicationProvider, localPartialRetriever))
-      assertNotRenderedByCssSelector(doc, ".organisation-logo")
+      assertRenderedByCssSelector(doc, ".organisation-logo")
     }
   }
 }

@@ -52,9 +52,9 @@ class NoDownsizingThresholdIncreaseViewSpec extends HtmlSpec {
     }
 
 
-    "not display the HMRC logo" in {
+    "Display the HMRC logo" in {
       val doc = asDocument(no_downsizing_threshold_increase(frontendAppConfig, "", Call("", ""), Seq()))
-      assertNotRenderedByCssSelector(doc, ".organisation-logo")
+      assertRenderedByCssSelector(doc, ".organisation-logo")
     }
   }
 }

@@ -54,9 +54,9 @@ trait ViewSpecBase extends HtmlSpec {
           for (key <- expectedGuidanceKeys) assertContainsText(doc, messages(s"$messageKeyPrefix.$key"))
         }
 
-        "not display the HMRC logo" in {
+        "Display the HMRC logo" in {
           val doc = asDocument(createView(emptyForm))
-          assertNotRenderedByCssSelector(doc, ".organisation-logo")
+          assertRenderedByCssSelector(doc, ".organisation-logo")
         }
       }
     }
