@@ -57,9 +57,9 @@ class NoAdditionalThresholdAvailableViewSpec extends HtmlSpec {
       assertContainsMessages(doc, "site.show_previous_answers")
     }
 
-    "not display the HMRC logo" in {
+    "Display the HMRC logo" in {
       val doc = asDocument(no_additional_threshold_available(frontendAppConfig, "", Call("", ""), Seq()))
-      assertNotRenderedByCssSelector(doc, ".organisation-logo")
+      assertRenderedByCssSelector(doc, ".organisation-logo")
     }
   }
 }
