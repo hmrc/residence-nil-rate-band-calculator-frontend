@@ -17,7 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, _}
-import play.api.Configuration
+import play.api.{Configuration, Environment}
 import play.api.Mode.Mode
 import play.api.i18n.{I18nSupport, Lang, MessagesApi}
 import play.api.mvc.{Action, AnyContent, Call}
@@ -29,8 +29,8 @@ import play.api.mvc._
 @Singleton
 class CustomLanguageController @Inject()(val appConfig: FrontendAppConfig,
                                          implicit val messagesApi: MessagesApi,
-                                         override val mode : Mode,
-                                         override val runModeConfiguration : Configuration)
+                                         override val runModeConfiguration : Configuration,
+                                         val environment : Environment)
 extends Controller with RunMode with I18nSupport {
 
   val englishLang = Lang("en")
@@ -58,5 +58,7 @@ extends Controller with RunMode with I18nSupport {
   protected def fallbackURL: String = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.CalculateThresholdIncreaseController.onPageLoad().url
 
   def languageMap: Map[String, Lang] = Map("english" -> Lang("en"), "cymraeg" -> Lang("cy"))
+
+  protected def mode: Mode = environment.mode
 
 }

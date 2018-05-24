@@ -27,7 +27,6 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.part_of_estate_passing_to_direct_descendants
 
 @Singleton
@@ -35,8 +34,7 @@ class PartOfEstatePassingToDirectDescendantsController @Inject()(override val ap
                                                                  val messagesApi: MessagesApi,
                                                                  override val sessionConnector: SessionConnector,
                                                                  override val navigator: Navigator,
-                                                                 implicit val applicationProvider: Provider[Application],
-                                                                 implicit val localPartialRetriever: LocalPartialRetriever) extends SimpleControllerBase[Boolean] {
+                                                                 implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[Boolean] {
 
   override val controllerId: String = Constants.partOfEstatePassingToDirectDescendantsId
 

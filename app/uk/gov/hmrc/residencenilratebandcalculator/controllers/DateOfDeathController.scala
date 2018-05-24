@@ -29,7 +29,6 @@ import uk.gov.hmrc.http.logging.SessionId
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 import uk.gov.hmrc.residencenilratebandcalculator.models.{Date, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
@@ -40,8 +39,7 @@ class DateOfDeathController @Inject()(val appConfig: FrontendAppConfig,
                                       val messagesApi: MessagesApi,
                                       val sessionConnector: SessionConnector,
                                       val navigator: Navigator,
-                                      implicit val applicationProvider: Provider[Application],
-                                      implicit val localPartialRetriever: LocalPartialRetriever) extends ControllerBase[Date] {
+                                      implicit val applicationProvider: Provider[Application]) extends ControllerBase[Date] {
 
   val controllerId = Constants.dateOfDeathId
 

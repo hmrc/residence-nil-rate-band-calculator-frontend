@@ -27,15 +27,13 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PositivePercentForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_passed_to_direct_descendants
 
 class PercentagePassedToDirectDescendantsController  @Inject()(override val appConfig: FrontendAppConfig,
                                                                val messagesApi: MessagesApi,
                                                                override val sessionConnector: SessionConnector,
                                                                override val navigator: Navigator,
-                                                               implicit val applicationProvider: Provider[Application],
-                                                               implicit val localPartialRetriever: LocalPartialRetriever) extends SimpleControllerBase[BigDecimal] {
+                                                               implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[BigDecimal] {
 
 
   override val controllerId = Constants.percentagePassedToDirectDescendantsId

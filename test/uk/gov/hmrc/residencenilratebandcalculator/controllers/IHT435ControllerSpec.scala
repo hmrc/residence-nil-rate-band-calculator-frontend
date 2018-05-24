@@ -28,7 +28,7 @@ import play.api.test.Helpers._
 import play.api.{Application, Environment}
 import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, FrontendAppConfig}
-import uk.gov.hmrc.residencenilratebandcalculator.utils.{LocalPartialRetriever, PDFHelper}
+import uk.gov.hmrc.residencenilratebandcalculator.utils.PDFHelper
 
 class IHT435ControllerSpec extends BaseSpec with WithFakeApplication with MockSessionConnector {
   private val fakeRequest = FakeRequest("", "")

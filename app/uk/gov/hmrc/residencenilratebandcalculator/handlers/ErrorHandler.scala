@@ -16,20 +16,15 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.handlers
 
-import javax.inject.{Inject, Singleton}
-
 import com.google.inject.Provider
-import play.api.http.DefaultHttpErrorHandler
-import play.api.http.Status.{BAD_REQUEST, NOT_FOUND}
-import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Request, RequestHeader, Result, Results}
-import play.api.routing.Router
+import javax.inject.{Inject, Singleton}
 import play.api._
+import play.api.http.DefaultHttpErrorHandler
+import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.mvc.Request
+import play.api.routing.Router
 import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, FrontendAuditConnector}
-import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
-
-import scala.concurrent.Future
 
 @Singleton
 class ErrorHandler @Inject()(env: Environment,
@@ -39,13 +34,12 @@ class ErrorHandler @Inject()(env: Environment,
                              appConfig: FrontendAppConfig,
                              val messagesApi: MessagesApi,
                              frontendAuditConnector: FrontendAuditConnector,
-                             implicit val applicationProvider: Provider[Application],
-                            implicit val localPartialRetriever: LocalPartialRetriever)
+                             implicit val applicationProvider: Provider[Application])
   extends DefaultHttpErrorHandler(env, config, sourceMapper, router) with I18nSupport {
 
     def standardErrorTemplate(pageTitle: String, heading: String, message: String)(implicit rh: Request[_]): Html = {
       implicit val messages = messagesApi.preferred(rh)
-      uk.gov.hmrc.residencenilratebandcalculator.views.html.error_template(pageTitle, heading, message, appConfig)(rh, messages, applicationProvider, localPartialRetriever = localPartialRetriever)
+      uk.gov.hmrc.residencenilratebandcalculator.views.html.error_template(pageTitle, heading, message, appConfig)(rh, messages, applicationProvider)
     }
 }
 

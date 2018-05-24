@@ -17,7 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator
 
 import javax.inject.{Inject, Singleton}
-import play.api.Configuration
+import play.api.{Configuration, Mode}
 import play.api.Mode.Mode
 import uk.gov.hmrc.http.{HttpDelete, HttpGet, HttpPost, HttpPut}
 import uk.gov.hmrc.play.audit.http.HttpAuditing
@@ -27,10 +27,14 @@ import uk.gov.hmrc.play.http.ws.{WSDelete, WSGet, WSPost, WSPut}
 @Singleton
 class WSHttp @Inject()(override val auditConnector: FrontendAuditConnector,
                        override val appNameConfiguration : Configuration,
-                       override val runModeConfiguration: Configuration,
-                       override val mode: Mode) extends WSGet with HttpGet
+                       override val runModeConfiguration: Configuration) extends WSGet with HttpGet
   with WSPut with HttpPut
   with WSPost with HttpPost
   with WSDelete with HttpDelete with AppName with RunMode with HttpAuditing {
+  override protected def mode: Mode = env match {
+    case "dev" => Mode.Dev
+    case "test" => Mode.Test
+    case "prod" => Mode.Prod
+  }
   override val hooks = Seq(AuditingHook)
 }

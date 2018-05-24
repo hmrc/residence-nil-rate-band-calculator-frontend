@@ -25,7 +25,6 @@ import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.session_expired
 
 import scala.concurrent.Future
@@ -34,8 +33,7 @@ import scala.concurrent.Future
 class SessionExpiredController @Inject()(val appConfig: FrontendAppConfig,
                                          val messagesApi: MessagesApi,
                                          val sessionConnector: SessionConnector,
-                                         implicit val applicationProvider: Provider[Application],
-                                         implicit val localPartialRetriever: LocalPartialRetriever
+                                         implicit val applicationProvider: Provider[Application]
                                         ) extends FrontendController with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = Action.async { implicit request =>

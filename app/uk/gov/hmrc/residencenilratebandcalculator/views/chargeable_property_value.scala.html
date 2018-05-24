@@ -20,9 +20,8 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 @import play.api.Application; import com.google.inject.Provider
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
-@import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
-@(appConfig: FrontendAppConfig, form: Form[Int], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
+@(appConfig: FrontendAppConfig, form: Form[Int], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application])
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("chargeable_property_value.browser_title"),

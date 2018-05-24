@@ -27,7 +27,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.utils.{CurrencyFormatter, LocalPartialRetriever}
+import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_assets_passing
 import uk.gov.hmrc.http.HeaderCarrier
 
@@ -36,8 +36,7 @@ class ValueOfAssetsPassingController @Inject()(override val appConfig: FrontendA
                                                val messagesApi: MessagesApi,
                                                override val sessionConnector: SessionConnector,
                                                override val navigator: Navigator,
-                                               implicit val applicationProvider: Provider[Application],
-                                               implicit val localPartialRetriever: LocalPartialRetriever) extends SimpleControllerBase[Int] {
+                                               implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[Int] {
 
   override val controllerId = Constants.valueOfAssetsPassingId
 

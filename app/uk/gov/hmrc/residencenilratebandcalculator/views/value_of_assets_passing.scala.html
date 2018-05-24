@@ -18,10 +18,9 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 @import uk.gov.hmrc.play.views.html._
-@import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 
-@(appConfig: FrontendAppConfig, form: Form[Int], answerRows: Seq[AnswerRow], formattedPropertyValue: Option[String])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
+@(appConfig: FrontendAppConfig, form: Form[Int], answerRows: Seq[AnswerRow], formattedPropertyValue: Option[String])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application])
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("value_of_assets_passing.browser_title"),

@@ -20,8 +20,8 @@ import javax.inject.{Inject, Singleton}
 import java.util.Base64
 
 import play.api.Mode.Mode
-import play.api.Configuration
-import uk.gov.hmrc.play.config.ServicesConfig
+import play.api.{Configuration, Mode}
+import uk.gov.hmrc.play.config.{RunMode, ServicesConfig}
 
 trait AppConfig {
   val analyticsToken: String
@@ -34,7 +34,7 @@ trait AppConfig {
 }
 
 @Singleton
-class FrontendAppConfig @Inject()(override val runModeConfiguration: Configuration, override val mode: Mode) extends AppConfig with ServicesConfig {
+class FrontendAppConfig @Inject()(override val runModeConfiguration: Configuration) extends AppConfig with ServicesConfig {
 
   private def loadConfig(key: String) = runModeConfiguration.getString(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
 
@@ -59,4 +59,9 @@ class FrontendAppConfig @Inject()(override val runModeConfiguration: Configurati
 
   override val isWelshEnabled: Boolean = true
 
+  override protected def mode: Mode = env match {
+    case "dev" => Mode.Dev
+    case "test" => Mode.Test
+    case "prod" => Mode.Prod
+  }
 }

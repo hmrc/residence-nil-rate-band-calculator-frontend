@@ -35,8 +35,7 @@ import uk.gov.hmrc.http.{CoreGet, CorePost, HeaderCarrier, HttpResponse}
 @Singleton
 class RnrbConnector @Inject()(http: WSHttp,
                               override val runModeConfiguration : Configuration,
-                              environment : Environment,
-                              override val mode : Mode) extends ServicesConfig {
+                              environment : Environment) extends ServicesConfig {
   implicit val hc: HeaderCarrier = HeaderCarrier()
   lazy val serviceUrl = baseUrl("residence-nil-rate-band-calculator")
   val baseSegment = "/residence-nil-rate-band-calculator/"
@@ -73,4 +72,5 @@ class RnrbConnector @Inject()(http: WSHttp,
 
   def getNilRateBand(dateStr: String): Future[HttpResponse] = http.GET(s"$serviceUrl${baseSegment}nilrateband/$dateStr")
 
+  protected def mode: Mode = environment.mode
 }

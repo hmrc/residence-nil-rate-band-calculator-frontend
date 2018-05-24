@@ -17,7 +17,6 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.mvc.Call
-import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_additional_threshold_available
 
 class NoAdditionalThresholdAvailableViewSpec extends HtmlSpec {

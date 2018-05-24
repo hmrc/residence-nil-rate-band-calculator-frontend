@@ -18,8 +18,7 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
-@import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
-@(appConfig: FrontendAppConfig, residenceNilRateAmount: String, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
+@(appConfig: FrontendAppConfig, residenceNilRateAmount: String, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application])
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("threshold_calculation_result.browser_title"),
