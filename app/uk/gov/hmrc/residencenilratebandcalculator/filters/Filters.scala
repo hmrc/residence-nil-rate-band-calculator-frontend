@@ -23,11 +23,13 @@ import uk.gov.hmrc.play.bootstrap.filters.frontend.CSRFExceptionsFilter
 
 class Filters @Inject()(frontendFilters: FrontendFilters,
                         csrfExceptions: CSRFExceptionsFilter, // TODO is this being used?
+                        sessionId: SessionId,
                         recovery: Recovery) // TODO not available in bootstrap-25 - is this required any more (see what happens on 404 with/without this)?
-  extends DefaultHttpFilters(frontendFilters.filters ++ Seq(csrfExceptions, recovery): _*)
+  extends DefaultHttpFilters(frontendFilters.filters ++ Seq(csrfExceptions, sessionId, recovery): _*)
 
 class FiltersWithWhitelist @Inject()(frontendFilters: FrontendFilters,
                                      csrfExceptions: CSRFExceptionsFilter,
+                                     sessionId: SessionId,
                                      recovery: Recovery,
                                      whitelist: Whitelist)
-  extends DefaultHttpFilters(frontendFilters.filters ++ Seq(csrfExceptions, recovery, whitelist): _*)
+  extends DefaultHttpFilters(frontendFilters.filters ++ Seq(csrfExceptions, sessionId, recovery, whitelist): _*)

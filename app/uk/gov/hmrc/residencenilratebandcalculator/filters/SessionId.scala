@@ -30,7 +30,7 @@ import uk.gov.hmrc.http.SessionKeys
 // TODO can this be done with a default filter <- to investigate
 class SessionId @Inject()()(implicit val mat: Materializer) extends Filter {
 
-  private def addSessionId(rh: RequestHeader, sessionId: (String, String)) = {
+  private def addSessionId(rh: RequestHeader, sessionId: (String, String)): RequestHeader = {
     val session = rh.session + sessionId
     val sessionAsCookie: Cookie = Session.encodeAsCookie(session)
     val cookies = Cookies.mergeCookieHeader(rh.headers.get(COOKIE).getOrElse(""), Seq(sessionAsCookie))
@@ -38,7 +38,7 @@ class SessionId @Inject()()(implicit val mat: Materializer) extends Filter {
     rh copy (headers = updatedHeaders)
   }
 
-  override def apply(f: (RequestHeader) => Future[Result])(rh: RequestHeader): Future[Result] = {
+  override def apply(f: RequestHeader => Future[Result])(rh: RequestHeader): Future[Result] = {
     if (rh.session.get(SessionKeys.sessionId).isEmpty) {
       val sessionId = SessionKeys.sessionId -> s"sessionId-${UUID.randomUUID.toString}"
       f(addSessionId(rh, sessionId)).map {
