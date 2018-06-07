@@ -23,7 +23,7 @@ import scala.language.reflectiveCalls
 
 class ThresholdCalculationResultViewSpec extends HtmlSpec {
   def fixture() = new {
-    val view = threshold_calculation_result(frontendAppConfig, "£10.00", Nil)(request, messages, applicationProvider, localPartialRetriever)
+    val view = threshold_calculation_result(frontendAppConfig, "£10.00", Nil)(request, messages, applicationProvider)
     val doc = asDocument(view)
   }
 
@@ -45,7 +45,7 @@ class ThresholdCalculationResultViewSpec extends HtmlSpec {
 
       "display the correct information when there is no Residence Nil Rate Amount" in {
         val residenceNilRateAmount = "£0.00"
-        val view = threshold_calculation_result(frontendAppConfig, residenceNilRateAmount, Nil)(request, messages, applicationProvider, localPartialRetriever)
+        val view = threshold_calculation_result(frontendAppConfig, residenceNilRateAmount, Nil)(request, messages, applicationProvider)
         val doc = asDocument(view)
 
         assertContainsMessages(doc, "threshold_calculation_result.info.zero.header",
@@ -56,7 +56,7 @@ class ThresholdCalculationResultViewSpec extends HtmlSpec {
 
       "display the correct information when there is a positive Residence Nil Rate Amount" in {
         val residenceNilRateAmount = "£10.00"
-        val view = threshold_calculation_result(frontendAppConfig, residenceNilRateAmount, Nil)(request, messages, applicationProvider, localPartialRetriever)
+        val view = threshold_calculation_result(frontendAppConfig, residenceNilRateAmount, Nil)(request, messages, applicationProvider)
         val doc = asDocument(view)
 
         assertContainsMessages(doc, "threshold_calculation_result.info.non_zero.header",

@@ -28,7 +28,7 @@ class ValueBeingTransferredViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "value_being_transferred"
 
-  def createView(form: Form[Int]) = value_being_transferred(frontendAppConfig, "100000", form, Seq())(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Form[Int]) = value_being_transferred(frontendAppConfig, "100000", form, Seq())(request, messages, applicationProvider)
 
   "Value Being Transferred View" must {
 
