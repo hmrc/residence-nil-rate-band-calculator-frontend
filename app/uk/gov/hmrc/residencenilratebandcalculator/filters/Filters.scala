@@ -22,12 +22,10 @@ import uk.gov.hmrc.play.bootstrap.filters._
 import uk.gov.hmrc.play.bootstrap.filters.frontend.CSRFExceptionsFilter
 
 class Filters @Inject()(frontendFilters: FrontendFilters,
-                        csrfExceptions: CSRFExceptionsFilter, // TODO is this being used?
                         recovery: Recovery) // TODO not available in bootstrap-25 - is this required any more (see what happens on 404 with/without this)?
-  extends DefaultHttpFilters(frontendFilters.filters ++ Seq(csrfExceptions, recovery): _*)
+  extends DefaultHttpFilters(frontendFilters.filters ++ Seq(recovery): _*)
 
 class FiltersWithWhitelist @Inject()(frontendFilters: FrontendFilters,
-                                     csrfExceptions: CSRFExceptionsFilter,
                                      recovery: Recovery,
                                      whitelist: Whitelist)
-  extends DefaultHttpFilters(frontendFilters.filters ++ Seq(csrfExceptions, recovery, whitelist): _*)
+  extends DefaultHttpFilters(frontendFilters.filters ++ Seq(recovery, whitelist): _*)
