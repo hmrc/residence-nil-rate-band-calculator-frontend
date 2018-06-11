@@ -25,7 +25,7 @@ class GrossingUpOnEstatePropertyViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "grossing_up_on_estate_property"
 
-  def createView(form: Form[Boolean]) = grossing_up_on_estate_property(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Form[Boolean]) = grossing_up_on_estate_property(frontendAppConfig, form, Seq())(request, messages, applicationProvider)
 
   "Grossing Up On Estate Property View" must {
 

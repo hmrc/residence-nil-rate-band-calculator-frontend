@@ -28,7 +28,7 @@ class ValueAvailableWhenPropertyChangedViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "value_available_when_property_changed"
 
-  def createView(form: Form[Int]) = value_available_when_property_changed(frontendAppConfig,  "100000", form, Seq())(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Form[Int]) = value_available_when_property_changed(frontendAppConfig,  "100000", form, Seq())(request, messages, applicationProvider)
 
   "Value Available When Property Changed View" must {
 

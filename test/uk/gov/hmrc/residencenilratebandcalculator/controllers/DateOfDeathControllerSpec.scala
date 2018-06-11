@@ -33,7 +33,7 @@ import scala.concurrent.Future
 class DateOfDeathControllerSpec extends DateControllerSpecBase {
 
   val mockConnector = mock[SessionConnector]
-  val controller = new DateOfDeathController(frontendAppConfig, messagesApi, mockConnector, navigator, applicationProvider, localPartialRetriever)
+  val controller = new DateOfDeathController(frontendAppConfig, messagesApi, mockConnector, navigator, applicationProvider)
   implicit val mat = fakeApplication.injector.instanceOf[Materializer]
 
   def setupMock(result: Future[Option[CacheMap]]) = {
@@ -83,11 +83,11 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase {
   "Date of Death Controller" must {
 
     def createView = (value: Option[Date]) => value match {
-      case None => date_of_death(frontendAppConfig, dateOfDeathForm)(fakeRequest, messages, applicationProvider, localPartialRetriever)
-      case Some(v) => date_of_death(frontendAppConfig, dateOfDeathForm.fill(v))(fakeRequest, messages, applicationProvider, localPartialRetriever)
+      case None => date_of_death(frontendAppConfig, dateOfDeathForm)(fakeRequest, messages, applicationProvider)
+      case Some(v) => date_of_death(frontendAppConfig, dateOfDeathForm.fill(v))(fakeRequest, messages, applicationProvider)
     }
 
-    def createController = () => new DateOfDeathController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
+    def createController = () => new DateOfDeathController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider)
 
     behave like rnrbDateController(createController, createView, Constants.dateOfDeathId)(Date.dateReads, Date.dateWrites)
   }

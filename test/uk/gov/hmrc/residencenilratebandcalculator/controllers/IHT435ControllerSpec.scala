@@ -42,7 +42,7 @@ class IHT435ControllerSpec extends BaseSpec with WithFakeApplication with MockSe
 
   private val mockPDFHelper = mock[PDFHelper]
 
-  private def controller = new IHT435Controller(frontendAppConfig, env, messagesApi, mockSessionConnector, mockPDFHelper, applicationProvider, localPartialRetriever)
+  private def controller = new IHT435Controller(frontendAppConfig, env, messagesApi, mockSessionConnector, mockPDFHelper, applicationProvider)
 
   "onPageLoad" must {
     "return 200" in {

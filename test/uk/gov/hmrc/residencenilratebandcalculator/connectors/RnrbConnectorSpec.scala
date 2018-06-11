@@ -22,6 +22,7 @@ import org.mockito.ArgumentCaptor
 import org.mockito.Mockito._
 import org.mockito.ArgumentMatchers._
 import org.scalatest.mockito.MockitoSugar
+import play.api.{Configuration, Environment}
 import play.api.http.Status
 import play.api.libs.json._
 import uk.gov.hmrc.play.test.WithFakeApplication
@@ -31,8 +32,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, Calc
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
-import uk.gov.hmrc.http.{ HeaderCarrier, HttpReads, HttpResponse }
-
+import uk.gov.hmrc.http.{HeaderCarrier, HttpReads, HttpResponse}
 import uk.gov.hmrc.play.http.logging.MdcLoggingExecutionContext._
 
 class RnrbConnectorSpec extends BaseSpec with WithFakeApplication with MockitoSugar {
@@ -53,6 +53,8 @@ class RnrbConnectorSpec extends BaseSpec with WithFakeApplication with MockitoSu
   val calculationInput = CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, 0, 0, 0, None, None)
 
   "RNRB Connector" when {
+    val configuration = fakeApplication.injector.instanceOf[Configuration]
+    val environment = fakeApplication.injector.instanceOf[Environment]
 
     "provided with a Calculation Input" must {
       "call the Microservice with the given JSON" in {
@@ -64,7 +66,8 @@ class RnrbConnectorSpec extends BaseSpec with WithFakeApplication with MockitoSu
         val headersCaptor = ArgumentCaptor.forClass(classOf[Seq[(String, String)]])
         val httpMock = getHttpMock(minimalJson)
 
-        val connector = new RnrbConnector(httpMock)
+
+        val connector = new RnrbConnector(httpMock, configuration, environment)
         await(connector.send(calculationInput))
 
         verify(httpMock).POST(urlCaptor.capture, bodyCaptor.capture, headersCaptor.capture)(jsonWritesNapper.capture,
@@ -83,7 +86,7 @@ class RnrbConnectorSpec extends BaseSpec with WithFakeApplication with MockitoSu
         val calculationResult = CalculationResult(residenceNilRateAmount, applicableNilRateBandAmount, carryForwardAmount,
           defaultAllowanceAmount, adjustedAllowanceAmount)
 
-        val result = await(new RnrbConnector(getHttpMock(Json.toJson(calculationResult))).send(calculationInput))
+        val result = await(new RnrbConnector(getHttpMock(Json.toJson(calculationResult)), configuration, environment).send(calculationInput))
 
         result.get shouldBe calculationResult
       }
@@ -91,7 +94,7 @@ class RnrbConnectorSpec extends BaseSpec with WithFakeApplication with MockitoSu
       "return a string representing the error when send method fails" in {
         val errorResponse = JsString("Something went wrong!")
 
-        val result = await(new RnrbConnector(getHttpMock(errorResponse)).send(calculationInput))
+        val result = await(new RnrbConnector(getHttpMock(errorResponse), configuration, environment).send(calculationInput))
 
         result match {
           case Failure(exception) => {
@@ -114,7 +117,7 @@ class RnrbConnectorSpec extends BaseSpec with WithFakeApplication with MockitoSu
         val headersCaptor = ArgumentCaptor.forClass(classOf[Seq[(String, String)]])
         val httpMock = getHttpMock(minimalJson)
 
-        val connector = new RnrbConnector(httpMock)
+        val connector = new RnrbConnector(httpMock, configuration, environment)
         await(connector.sendJson(minimalJson))
 
         verify(httpMock).POST(urlCaptor.capture, bodyCaptor.capture, headersCaptor.capture)(jsonWritesNapper.capture,
@@ -133,7 +136,7 @@ class RnrbConnectorSpec extends BaseSpec with WithFakeApplication with MockitoSu
         val calculationResult = CalculationResult(residenceNilRateAmount, applicableNilRateBandAmount, carryForwardAmount,
           defaultAllowanceAmount, adjustedAllowanceAmount)
 
-        val result = await(new RnrbConnector(getHttpMock(Json.toJson(calculationResult))).sendJson(minimalJson))
+        val result = await(new RnrbConnector(getHttpMock(Json.toJson(calculationResult)), configuration, environment).sendJson(minimalJson))
 
         result.get shouldBe calculationResult
       }
@@ -141,7 +144,7 @@ class RnrbConnectorSpec extends BaseSpec with WithFakeApplication with MockitoSu
       "return a string representing the error when send method fails" in {
         val errorResponse = JsString("Something went wrong!")
 
-        val result = await(new RnrbConnector(getHttpMock(errorResponse)).sendJson(minimalJson))
+        val result = await(new RnrbConnector(getHttpMock(errorResponse), configuration, environment).sendJson(minimalJson))
 
         result match {
           case Failure(exception) => {
@@ -153,13 +156,13 @@ class RnrbConnectorSpec extends BaseSpec with WithFakeApplication with MockitoSu
       }
 
       "return a schema when JSON representing a schema is received" in {
-        val result = await(new RnrbConnector(getHttpMock(minimalJson)).getSuccessfulResponseSchema)
+        val result = await(new RnrbConnector(getHttpMock(minimalJson), configuration, environment).getSuccessfulResponseSchema)
 
         result shouldBe Success(Json.fromJson[SchemaType](minimalJson).get)
       }
 
       "return an error when JSON not representing a schema is received" in {
-        val result = await(new RnrbConnector(getHttpMock(Json.parse("{\"type\": 0}"))).getSuccessfulResponseSchema)
+        val result = await(new RnrbConnector(getHttpMock(Json.parse("{\"type\": 0}")),configuration, environment).getSuccessfulResponseSchema)
 
         result match {
           case Failure(exception) => {

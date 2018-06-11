@@ -22,7 +22,6 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_downsizing_thres
 class NoDownsizingThresholdIncreaseViewSpec extends HtmlSpec {
   implicit val msg = messages
   val messageKeyPrefix = "no_downsizing_threshold_increase"
-  implicit val partials = localPartialRetriever
 
   "No Downsizing Threshold Increase View" must {
     "display the correct browser title" in {

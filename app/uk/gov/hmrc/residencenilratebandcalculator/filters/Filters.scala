@@ -19,7 +19,6 @@ package uk.gov.hmrc.residencenilratebandcalculator.filters
 import javax.inject.Inject
 import play.api.http.DefaultHttpFilters
 import uk.gov.hmrc.play.bootstrap.filters._
-import uk.gov.hmrc.play.bootstrap.filters.frontend.CSRFExceptionsFilter
 
 class Filters @Inject()(frontendFilters: FrontendFilters,
                         recovery: Recovery) // TODO not available in bootstrap-25 - is this required any more (see what happens on 404 with/without this)?
