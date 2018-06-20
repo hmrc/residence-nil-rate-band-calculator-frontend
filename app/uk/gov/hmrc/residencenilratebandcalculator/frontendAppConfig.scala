@@ -20,7 +20,7 @@ import javax.inject.{Inject, Singleton}
 import java.util.Base64
 
 import play.api.Mode.Mode
-import play.api.{Configuration, Mode}
+import play.api.{Configuration, Mode, Play}
 import uk.gov.hmrc.play.config.{RunMode, ServicesConfig}
 
 trait AppConfig {
@@ -46,7 +46,7 @@ class FrontendAppConfig @Inject()(override val runModeConfiguration: Configurati
   override lazy val analyticsHost = loadConfig(s"google-analytics.host")
   override lazy val timeOutCountdownSeconds = loadConfig("timeOutCountdownSeconds").toInt
   override lazy val timeOutSession = loadConfig("mongodb.timeToLiveInSeconds").toInt
-  lazy val reportAProblemPartialUrl = s"$contactFrontendService/contact/problem_reports"
+  override lazy val reportAProblemPartialUrl = s"$contactFrontendService/contact/problem_reports_ajax?service=$contactFormServiceIdentifier"
   override lazy val reportAProblemNonJSUrl = s"$contactFrontendService/contact/problem_reports_nonjs?service=$contactFormServiceIdentifier"
   lazy val betaFeedbackUrl = s"$contactHost/contact/beta-feedback"
   lazy val betaFeedbackUnauthenticatedUrl = s"$contactHost/contact/beta-feedback-unauthenticated"
@@ -59,9 +59,5 @@ class FrontendAppConfig @Inject()(override val runModeConfiguration: Configurati
 
   override val isWelshEnabled: Boolean = true
 
-  override protected def mode: Mode = env match {
-    case "dev" => Mode.Dev
-    case "test" => Mode.Test
-    case "prod" => Mode.Prod
-  }
+  override lazy val mode = Play.current.mode
 }
