@@ -48,12 +48,12 @@ class ExitQuestionnaireViewSpec extends ViewSpecBase {
 
       "contain a service improvement intro" in {
         val doc = asDocument(createView(ExitQuestionnaireForm.apply()))
-        assertContainsMessages(doc, messages(s"$messageKeyPrefix.service_feel.label"))
+        assertContainsMessages(doc, messages(s"$messageKeyPrefix.improve_service.label"))
       }
 
       "contain a legend for the service feel" in {
         val doc = asDocument(createView(ExitQuestionnaireForm.apply()))
-        assertContainsMessages(doc, messages(s"$messageKeyPrefix.improve_service.label"))
+        assertContainsMessages(doc, messages(s"$messageKeyPrefix.service_feel.label"))
       }
 
       "contain radio buttons for service feel" in {
