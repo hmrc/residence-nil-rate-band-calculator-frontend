@@ -112,7 +112,8 @@ exit_questionnaire.service_feel.label = Sut ydych yn teimlo am eich profiad yn d
 exit_questionnaire.service_difficulty.label = Pa mor hawdd oedd hi i wneud yr hyn yr oeddech eisiau''i wneud?
 exit_questionnaire.guidance = Llenwch yr arolwg byr hwn er mwyn ein helpu i wella''r gwasanaeth. Ni ddylai''r arolwg gymryd fwy na 2 funud ar y mwyaf.
 exit_questionnaire.user_research.title = Rydym yn chwilio am bobl i''n helpu gydag ymchwil defnyddwyr.  
-exit_questionnaire.user_research.guidance = Bydd hyn yn helpu i wella''r gwasanaeth. Os hoffech i ni gysylltu â chi gyda rhagor o fanylion am yr ymchwil defnyddwyr, nodwch eich enw a''ch manylion cyswllt isod. 
+exit_questionnaire.user_research.guidance = Bydd hyn yn helpu i wella''r gwasanaeth. Os hoffech i ni gysylltu â chi gyda rhagor o fanylion am yr ymchwil defnyddwyr, nodwch eich enw a''ch manylion cyswllt isod.
+exit_questionnaire.improve_service.label = Rydym yn defnyddio''ch adborth i wella ein gwasanaethau.
 
 grossing_up_on_estate_assets.browser_title = A oes grosio i fyny neu ryngweithio''n berthnasol?
 grossing_up_on_estate_assets.title = A oes grosio i fyny neu ryngweithio''n berthnasol?

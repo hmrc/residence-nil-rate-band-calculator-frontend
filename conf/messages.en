@@ -113,6 +113,7 @@ exit_questionnaire.service_difficulty.label = How easy was it to do what you wan
 exit_questionnaire.guidance = Please complete this short survey to help us improve the service. The survey should take no more than 2 minutes.
 exit_questionnaire.user_research.title = We''re looking for people to help us with user research.
 exit_questionnaire.user_research.guidance = This will help improve the service. If you would like to be contacted with more details about the user research, enter your name and contact details below.
+exit_questionnaire.improve_service.label = We use your feedback to make our services better.
 
 grossing_up_on_estate_assets.browser_title = Does grossing-up or interaction apply?
 grossing_up_on_estate_assets.title = Does grossing-up or interaction apply?

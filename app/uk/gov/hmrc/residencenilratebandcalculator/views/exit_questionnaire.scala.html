@@ -40,6 +40,8 @@
 
     <p>@messages("exit_questionnaire.guidance")</p>
 
+    <p>@messages("exit_questionnaire.improve_service.label")</p>
+
     @rnrbHelpers.button_link(messageKey = "service.no_thanks", href=Constants.callExitService.url)
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ExitQuestionnaireController.onSubmit(), 'autoComplete -> "off") {
