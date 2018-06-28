@@ -1,4 +1,4 @@
-import play.routes.compiler.{InjectedRoutesGenerator, StaticRoutesGenerator}
+import play.routes.compiler.InjectedRoutesGenerator
 import sbt.Keys._
 import sbt.Tests.{Group, SubProcess}
 import sbt._
