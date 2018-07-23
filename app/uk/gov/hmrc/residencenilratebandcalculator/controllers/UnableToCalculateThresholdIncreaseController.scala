@@ -30,9 +30,8 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.unable_to_calculate
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 
 @Singleton
-class UnableToCalculateThresholdIncreaseController @Inject()(val appConfig: FrontendAppConfig,
-                                        override val messagesApi: MessagesApi,
-                                        override val sessionConnector: SessionConnector,
+class UnableToCalculateThresholdIncreaseController @Inject()(override val messagesApi: MessagesApi,
+                                                             override val sessionConnector: SessionConnector,
                                                              implicit val applicationProvider: Provider[Application],
                                                              implicit val localPartialRetriever: LocalPartialRetriever) extends TransitionController {
 
@@ -45,5 +44,5 @@ class UnableToCalculateThresholdIncreaseController @Inject()(val appConfig: Fron
     }
 
   def createView(reason: Reason, userAnswers: UserAnswers, previousAnswers: scala.Seq[AnswerRow])(implicit request: Request[_]) =
-    unable_to_calculate_threshold_increase(appConfig, "unable_to_calculate_threshold_increase.grossing_up", previousAnswers)
+    unable_to_calculate_threshold_increase("unable_to_calculate_threshold_increase.grossing_up", previousAnswers)
 }

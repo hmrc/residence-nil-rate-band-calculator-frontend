@@ -32,10 +32,9 @@ import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_any_unused_threshold
 
 @Singleton
-class TransferAnyUnusedThresholdController @Inject()(override val appConfig: FrontendAppConfig,
-                                            val messagesApi: MessagesApi,
-                                            override val sessionConnector: SessionConnector,
-                                            override val navigator: Navigator,
+class TransferAnyUnusedThresholdController @Inject()(val messagesApi: MessagesApi,
+                                                     override val sessionConnector: SessionConnector,
+                                                     override val navigator: Navigator,
                                                      implicit val applicationProvider: Provider[Application],
                                                      implicit val localPartialRetriever: LocalPartialRetriever) extends SimpleControllerBase[Boolean] {
 
@@ -44,6 +43,6 @@ class TransferAnyUnusedThresholdController @Inject()(override val appConfig: Fro
   override def form: () => Form[Boolean] = () => BooleanForm("transfer_any_unused_threshold.error.required")
 
   override def view(form: Form[Boolean], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    transfer_any_unused_threshold(appConfig, form, answerRows)
+    transfer_any_unused_threshold(form, answerRows)
   }
 }

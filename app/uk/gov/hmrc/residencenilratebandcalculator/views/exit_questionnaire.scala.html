@@ -29,11 +29,11 @@
 
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
-@(appConfig: FrontendAppConfig, form: Form[ExitQuestionnaire])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
+@(form: Form[ExitQuestionnaire])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("exit_questionnaire.browser_title"),
-    appConfig = appConfig,
+    appConfig = FrontendAppConfig,
     bodyClasses = None) {
 
     @rnrbHelpers.heading("exit_questionnaire.title", "heading-xlarge")

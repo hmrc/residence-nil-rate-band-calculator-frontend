@@ -37,7 +37,7 @@ import scala.util.{Failure, Success, Try}
 import uk.gov.hmrc.http.HeaderCarrier
 
 @Singleton
-class ThresholdCalculationResultController @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi,
+class ThresholdCalculationResultController @Inject()(val messagesApi: MessagesApi,
                                                      rnrbConnector: RnrbConnector, sessionConnector: SessionConnector,
                                                      implicit val applicationProvider: Provider[Application], implicit val localPartialRetriever: LocalPartialRetriever)
   extends FrontendController with I18nSupport {
@@ -76,7 +76,7 @@ class ThresholdCalculationResultController @Inject()(appConfig: FrontendAppConfi
             sessionConnector.cache[Int](Constants.thresholdCalculationResultId, result.residenceNilRateAmount)
             val messages = messagesApi.preferred(request)
             val residenceNilRateAmount = CurrencyFormatter.format(result.residenceNilRateAmount)
-            Ok(threshold_calculation_result(appConfig, residenceNilRateAmount, AnswerRows(answers, messages)))
+            Ok(threshold_calculation_result(residenceNilRateAmount, AnswerRows(answers, messages)))
         }
       }
     }

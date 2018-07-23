@@ -31,8 +31,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.claim_downsizing_threshold
 
 @Singleton
-class ClaimDownsizingThresholdController @Inject()(override val appConfig: FrontendAppConfig,
-                                                 val messagesApi: MessagesApi,
+class ClaimDownsizingThresholdController @Inject()(val messagesApi: MessagesApi,
                                                  override val sessionConnector: SessionConnector,
                                                  override val navigator: Navigator,
                                                    implicit val applicationProvider: Provider[Application],
@@ -43,7 +42,7 @@ class ClaimDownsizingThresholdController @Inject()(override val appConfig: Front
   override def form: () => Form[Boolean] = () => BooleanForm("claim_downsizing_threshold.error.required")
 
   override def view(form: Form[Boolean], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    claim_downsizing_threshold(appConfig, form, answerRows)
+    claim_downsizing_threshold(form, answerRows)
   }
 
 }

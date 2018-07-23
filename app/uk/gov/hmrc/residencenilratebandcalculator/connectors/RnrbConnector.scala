@@ -16,11 +16,11 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.connectors
 
-import javax.inject.{Inject, Singleton}
-
 import com.eclipsesource.schema.SchemaType
 import play.api.libs.json._
+import uk.gov.hmrc.http._
 import uk.gov.hmrc.play.config.ServicesConfig
+import uk.gov.hmrc.play.http.ws.{WSGet, WSPost}
 import uk.gov.hmrc.residencenilratebandcalculator.WSHttp
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.JsonInvalidException
 import uk.gov.hmrc.residencenilratebandcalculator.json.JsonErrorProcessor
@@ -29,12 +29,19 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, Calc
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
-import uk.gov.hmrc.http.{CoreGet, CorePost, HeaderCarrier, HttpResponse}
 
-@Singleton
-class RnrbConnector @Inject()(http: WSHttp) extends ServicesConfig {
+object RnrbConnector extends RnrbConnector with ServicesConfig with WSHttp {
+  override val http = new WSHttp with WSGet with WSPost
+  override val serviceUrl = baseUrl("residence-nil-rate-band-calculator")
+
+}
+
+trait RnrbConnector {
+  val http: HttpGet with HttpPost
+  val serviceUrl: String
+
+
   implicit val hc: HeaderCarrier = HeaderCarrier()
-  lazy val serviceUrl = baseUrl("residence-nil-rate-band-calculator")
   val baseSegment = "/residence-nil-rate-band-calculator/"
   val schemaBaseSegment = s"${baseSegment}api/conf/0.1/schemas/"
   val jsonContentTypeHeader = ("Content-Type", "application/json")

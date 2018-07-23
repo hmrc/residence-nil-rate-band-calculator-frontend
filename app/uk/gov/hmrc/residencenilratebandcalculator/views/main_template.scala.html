@@ -20,7 +20,7 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
 @(title: String,
-  appConfig: FrontendAppConfig,
+  appConfig: uk.gov.hmrc.residencenilratebandcalculator.AppConfig,
   sidebarLinks: Option[Html] = None,
   contentHeader: Option[Html] = None,
   bodyClasses: Option[String] = None,
@@ -36,8 +36,8 @@
 @betaBanner = {
 @rnrbHelpers.beta_banner(
     userLoggedIn = false,		
-    betaFeedbackUrl = appConfig.betaFeedbackUrl,		
-    betaFeedbackUnauthenticatedUrl = appConfig.betaFeedbackUnauthenticatedUrl,		
+    betaFeedbackUrl = appConfig.betaFeedbackUrl,
+    betaFeedbackUnauthenticatedUrl = appConfig.betaFeedbackUnauthenticatedUrl,
     showFeedbackLinkInBetaBanner = true)		
 }
 
@@ -48,7 +48,7 @@
 }
 
     @govuk_wrapper(
-        appConfig = appConfig,
+        appConfig = uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig,
         title = title,
         mainClass = mainClass,
         bodyClasses = bodyClasses,

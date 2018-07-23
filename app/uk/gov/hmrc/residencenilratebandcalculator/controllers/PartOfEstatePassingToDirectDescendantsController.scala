@@ -31,8 +31,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.part_of_estate_passing_to_direct_descendants
 
 @Singleton
-class PartOfEstatePassingToDirectDescendantsController @Inject()(override val appConfig: FrontendAppConfig,
-                                                                 val messagesApi: MessagesApi,
+class PartOfEstatePassingToDirectDescendantsController @Inject()(val messagesApi: MessagesApi,
                                                                  override val sessionConnector: SessionConnector,
                                                                  override val navigator: Navigator,
                                                                  implicit val applicationProvider: Provider[Application],
@@ -43,6 +42,6 @@ class PartOfEstatePassingToDirectDescendantsController @Inject()(override val ap
   override def form: () => Form[Boolean] = () => BooleanForm("part_of_estate_passing_to_direct_descendants.error.required")
 
   override def view(form: Form[Boolean], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    part_of_estate_passing_to_direct_descendants(appConfig, form, answerRows)
+    part_of_estate_passing_to_direct_descendants(form, answerRows)
   }
 }

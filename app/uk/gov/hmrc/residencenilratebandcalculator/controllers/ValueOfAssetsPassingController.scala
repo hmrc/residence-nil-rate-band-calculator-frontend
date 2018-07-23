@@ -32,8 +32,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_assets_pas
 import uk.gov.hmrc.http.HeaderCarrier
 
 @Singleton
-class ValueOfAssetsPassingController @Inject()(override val appConfig: FrontendAppConfig,
-                                               val messagesApi: MessagesApi,
+class ValueOfAssetsPassingController @Inject()(val messagesApi: MessagesApi,
                                                override val sessionConnector: SessionConnector,
                                                override val navigator: Navigator,
                                                implicit val applicationProvider: Provider[Application],
@@ -49,7 +48,7 @@ class ValueOfAssetsPassingController @Inject()(override val appConfig: FrontendA
       case Some(value) => Some(CurrencyFormatter.format(value))
       case _ => None
     }
-    value_of_assets_passing(appConfig, form, answerRows, formattedPropertyValue)
+    value_of_assets_passing(form, answerRows, formattedPropertyValue)
   }
 
   override def validate(value: Int, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = {

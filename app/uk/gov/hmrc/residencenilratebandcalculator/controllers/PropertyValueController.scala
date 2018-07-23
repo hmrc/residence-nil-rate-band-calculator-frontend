@@ -34,8 +34,7 @@ import scala.concurrent.Future
 import uk.gov.hmrc.http.HeaderCarrier
 
 @Singleton
-class PropertyValueController @Inject()(override val appConfig: FrontendAppConfig,
-                                        val messagesApi: MessagesApi,
+class PropertyValueController @Inject()(val messagesApi: MessagesApi,
                                         override val sessionConnector: SessionConnector,
                                         override val navigator: Navigator,
                                         implicit val applicationProvider: Provider[Application],
@@ -48,7 +47,7 @@ class PropertyValueController @Inject()(override val appConfig: FrontendAppConfi
     NonNegativeIntForm("property_value.error.blank", "error.whole_pounds", "property_value.error.non_numeric", "error.value_too_large")
 
   override def view(form: Form[Int], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    property_value(appConfig, form, answerRows)
+    property_value(form, answerRows)
   }
 
   override def validate(value: Int, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = {

@@ -17,7 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
 import javax.inject.{Inject, Singleton}
-
+import uk.gov.hmrc.http.HttpGet
 import uk.gov.hmrc.play.frontend.filters.SessionCookieCryptoFilter
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.WSHttp

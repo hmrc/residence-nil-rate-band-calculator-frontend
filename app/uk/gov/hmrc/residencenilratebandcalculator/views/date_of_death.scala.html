@@ -22,12 +22,12 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 @import uk.gov.hmrc.play.views.html.{helpers => govHelpers}
 
-@(appConfig: FrontendAppConfig, form: Form[Date])(implicit request: Request[_], messages: Messages,
+@(form: Form[Date])(implicit request: Request[_], messages: Messages,
                                                 applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("date_of_death.browser_title"),
-    appConfig = appConfig,
+    appConfig = FrontendAppConfig,
     bodyClasses = None,
     enableTimeout = false) {
 

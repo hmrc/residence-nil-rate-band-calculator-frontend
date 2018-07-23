@@ -31,8 +31,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.session_expired
 import scala.concurrent.Future
 
 @Singleton
-class SessionExpiredController @Inject()(val appConfig: FrontendAppConfig,
-                                         val messagesApi: MessagesApi,
+class SessionExpiredController @Inject()(val messagesApi: MessagesApi,
                                          val sessionConnector: SessionConnector,
                                          implicit val applicationProvider: Provider[Application],
                                          implicit val localPartialRetriever: LocalPartialRetriever
@@ -41,7 +40,7 @@ class SessionExpiredController @Inject()(val appConfig: FrontendAppConfig,
   def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.removeAll.flatMap( isDropped => {
         Logger.debug(s"Drop of session connector cache return status: $isDropped")
-        Future.successful(Ok(session_expired(appConfig)))
+        Future.successful(Ok(session_expired()))
       }
     )
   }

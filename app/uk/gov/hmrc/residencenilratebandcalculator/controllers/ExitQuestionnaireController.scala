@@ -32,22 +32,21 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 import scala.concurrent.Future
 
 @Singleton
-class ExitQuestionnaireController @Inject()(val appConfig: FrontendAppConfig,
-                                            val messagesApi: MessagesApi,
-                                            val auditConnector: FrontendAuditConnector,
+class ExitQuestionnaireController @Inject()(val messagesApi: MessagesApi,
                                             implicit val applicationProvider: Provider[Application],
                                             implicit val localPartialRetriever: LocalPartialRetriever) extends FrontendController with I18nSupport {
 
+  val auditConnector = FrontendAuditConnector
 
   def onPageLoad = Action.async { implicit request =>
-    Future.successful(Ok(exit_questionnaire(appConfig, ExitQuestionnaireForm.apply())))
+    Future.successful(Ok(exit_questionnaire(ExitQuestionnaireForm.apply())))
   }
 
   def onSubmit = Action.async { implicit request =>
     val boundForm = ExitQuestionnaireForm().bindFromRequest()
 
     boundForm.fold(
-      formWithErrors => Future.successful(BadRequest(exit_questionnaire(appConfig, formWithErrors))),
+      formWithErrors => Future.successful(BadRequest(exit_questionnaire(formWithErrors))),
       value => {
 
         val questionnaireResult = auditConnector.sendEvent(new ExitQuestionnaireEvent(value.serviceDifficulty.getOrElse(""),

@@ -35,7 +35,7 @@
   serviceInfoContent: Html = HtmlFormat.empty,
   scriptElem: Option[Html] = None,
   betaBanner: Html = HtmlFormat.empty,
-  enableTimeout: Boolean = true)(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
+  enableTimeout: Boolean = true)(implicit request: Request[_], messages: Messages)
 
 
 @head = {
@@ -102,7 +102,7 @@
       serviceInfoContent = Some(serviceInfoContent))
 }
 
-@lc = @{Application.instanceCache[CustomLanguageController].apply(applicationProvider.get) }
+@lc = @{Application.instanceCache[CustomLanguageController].apply(current) }
     @mainContentHeader = {
         @if(appConfig.isWelshEnabled){
             @{

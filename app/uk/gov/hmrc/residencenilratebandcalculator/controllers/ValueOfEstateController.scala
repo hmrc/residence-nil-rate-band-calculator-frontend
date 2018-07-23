@@ -31,8 +31,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_estate
 
 @Singleton
-class ValueOfEstateController @Inject()(override val appConfig: FrontendAppConfig,
-                                        val messagesApi: MessagesApi,
+class ValueOfEstateController @Inject()(val messagesApi: MessagesApi,
                                         override val sessionConnector: SessionConnector,
                                         override val navigator: Navigator,
                                         implicit val applicationProvider: Provider[Application],
@@ -44,6 +43,6 @@ class ValueOfEstateController @Inject()(override val appConfig: FrontendAppConfi
     NonNegativeIntForm("value_of_estate.error.blank", "error.whole_pounds", "value_of_estate.error.non_numeric", "error.value_too_large")
 
   override def view(form: Form[Int], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    value_of_estate(appConfig, form, answerRows)
+    value_of_estate(form, answerRows)
   }
 }

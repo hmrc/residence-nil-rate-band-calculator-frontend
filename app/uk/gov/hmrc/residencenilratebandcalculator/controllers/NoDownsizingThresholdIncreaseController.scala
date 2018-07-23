@@ -30,8 +30,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_downsizing_thres
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 @Singleton
-class NoDownsizingThresholdIncreaseController @Inject()(val appConfig: FrontendAppConfig,
-                                                override val messagesApi: MessagesApi,
+class NoDownsizingThresholdIncreaseController @Inject()(override val messagesApi: MessagesApi,
                                                 override val sessionConnector: SessionConnector,
                                                 val navigator: Navigator,
                                                 implicit val applicationProvider: Provider[Application],
@@ -50,6 +49,6 @@ class NoDownsizingThresholdIncreaseController @Inject()(val appConfig: FrontendA
       case NoAssetsPassingToDirectDescendants => "no_downsizing_threshold_increase.no_assets_passing_to_direct_descendants_reason"
       case DatePropertyWasChangedTooEarly => "no_downsizing_threshold_increase.date_property_was_changed_too_early_reason"
     }
-    no_downsizing_threshold_increase(appConfig, reasonKey, navigator.nextPage(Constants.noDownsizingThresholdIncrease)(userAnswers), previousAnswers)
+    no_downsizing_threshold_increase(reasonKey, navigator.nextPage(Constants.noDownsizingThresholdIncrease)(userAnswers), previousAnswers)
   }
 }

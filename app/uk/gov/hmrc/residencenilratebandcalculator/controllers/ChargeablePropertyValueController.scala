@@ -34,10 +34,9 @@ import scala.concurrent.Future
 import uk.gov.hmrc.http.HeaderCarrier
 
 @Singleton
-class ChargeablePropertyValueController @Inject()(override val appConfig: FrontendAppConfig,
-                                           val messagesApi: MessagesApi,
-                                           override val sessionConnector: SessionConnector,
-                                           override val navigator: Navigator,
+class ChargeablePropertyValueController @Inject()(val messagesApi: MessagesApi,
+                                                  override val sessionConnector: SessionConnector,
+                                                  override val navigator: Navigator,
                                                   implicit val applicationProvider: Provider[Application],
                                                   implicit val localPartialRetriever: LocalPartialRetriever) extends SimpleControllerBase[Int] {
 
@@ -47,7 +46,7 @@ class ChargeablePropertyValueController @Inject()(override val appConfig: Fronte
     NonNegativeIntForm("chargeable_property_value.error.blank", "error.whole_pounds", "chargeable_property_value.error.non_numeric", "error.value_too_large")
 
   override def view(form: Form[Int], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    chargeable_property_value(appConfig, form, answerRows)
+    chargeable_property_value(form, answerRows)
   }
 
   override def validate(value: Int, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = {

@@ -27,8 +27,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.session_expired
 import scala.concurrent.Future
 
 @Singleton
-class KeepAliveController @Inject()(val appConfig: FrontendAppConfig,
-                                         val messagesApi: MessagesApi) extends FrontendController with I18nSupport {
+class KeepAliveController @Inject()(val messagesApi: MessagesApi) extends FrontendController with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = Action.async {
     implicit request =>

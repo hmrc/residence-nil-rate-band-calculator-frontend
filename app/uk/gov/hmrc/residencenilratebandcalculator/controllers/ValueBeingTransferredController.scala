@@ -43,10 +43,9 @@ import scala.concurrent.Future
 import uk.gov.hmrc.http.{ HeaderCarrier, HttpResponse }
 
 @Singleton
-class ValueBeingTransferredController @Inject()(val appConfig: FrontendAppConfig,
-                                                  val messagesApi: MessagesApi,
-                                                  val sessionConnector: SessionConnector,
-                                                  val navigator: Navigator, val rnrbConnector: RnrbConnector,
+class ValueBeingTransferredController @Inject()(val messagesApi: MessagesApi,
+                                                val sessionConnector: SessionConnector,
+                                                val navigator: Navigator, val rnrbConnector: RnrbConnector,
                                                 implicit val applicationProvider: Provider[Application],
                                                 implicit val localPartialRetriever: LocalPartialRetriever) extends FrontendController {
 
@@ -86,7 +85,7 @@ class ValueBeingTransferredController @Inject()(val appConfig: FrontendAppConfig
           val userAnswers = new UserAnswers(cacheMap)
           val nilRateBand = formatJsonNumber(nilRateValueJson.json.toString())
           implicit val messages = messagesApi.preferred(request)
-          Ok(value_being_transferred(appConfig,
+          Ok(value_being_transferred(
             nilRateBand,
             cacheMap.getEntry(controllerId).fold(form())(value => form().fill(value)),
             previousAnswers))
@@ -112,11 +111,11 @@ class ValueBeingTransferredController @Inject()(val appConfig: FrontendAppConfig
           val userAnswers = new UserAnswers(cacheMap)
           implicit val messages = messagesApi.preferred(request)
           boundForm.fold(
-            formWithErrors => Future.successful(BadRequest(value_being_transferred(appConfig,
+            formWithErrors => Future.successful(BadRequest(value_being_transferred(
               formattedNilRateBand, formWithErrors, previousAnswers))),
             (value) => {
               validate(value, nilRateBand, userAnswers).flatMap {
-                case Some(error) => Future.successful(BadRequest(value_being_transferred(appConfig,
+                case Some(error) => Future.successful(BadRequest(value_being_transferred(
                   formattedNilRateBand,
                   form().fill(value).withError(error),
                   previousAnswers)))

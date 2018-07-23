@@ -31,8 +31,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_property_was_c
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 @Singleton
-class DatePropertyWasChangedController @Inject()(override val appConfig: FrontendAppConfig,
-                                         val messagesApi: MessagesApi,
+class DatePropertyWasChangedController @Inject()(val messagesApi: MessagesApi,
                                          override val sessionConnector: SessionConnector,
                                          override val navigator: Navigator,
                                                  implicit val applicationProvider: Provider[Application],
@@ -43,6 +42,6 @@ class DatePropertyWasChangedController @Inject()(override val appConfig: Fronten
   def form = () => dateOfDownsizingForm
 
   def view(form: Form[Date], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-      date_property_was_changed(appConfig, form, answerRows)
+      date_property_was_changed(form, answerRows)
   }
 }

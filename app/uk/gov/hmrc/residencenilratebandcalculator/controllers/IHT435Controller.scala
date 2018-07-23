@@ -29,8 +29,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.utils.{LocalPartialRetriever, PDFHelper}
 
 @Singleton
-class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
-                                 val env: Environment,
+class IHT435Controller @Inject()(val env: Environment,
                                  val messagesApi: MessagesApi,
                                  val sessionConnector: SessionConnector,
                                  val pdfHelper: PDFHelper,

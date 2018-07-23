@@ -31,10 +31,9 @@ import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_estate_assets
 
 @Singleton
-class GrossingUpOnEstateAssetsController @Inject()(override val appConfig: FrontendAppConfig,
-                                                             val messagesApi: MessagesApi,
-                                                             override val sessionConnector: SessionConnector,
-                                                             override val navigator: Navigator,
+class GrossingUpOnEstateAssetsController @Inject()(val messagesApi: MessagesApi,
+                                                   override val sessionConnector: SessionConnector,
+                                                   override val navigator: Navigator,
                                                    implicit val applicationProvider: Provider[Application],
                                                    implicit val localPartialRetriever: LocalPartialRetriever) extends SimpleControllerBase[Boolean] {
 
@@ -43,6 +42,6 @@ class GrossingUpOnEstateAssetsController @Inject()(override val appConfig: Front
   override def form: () => Form[Boolean] = () => BooleanForm("grossing_up_on_estate_assets.error.required")
 
   override def view(form: Form[Boolean], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    grossing_up_on_estate_assets(appConfig, form, answerRows)
+    grossing_up_on_estate_assets(form, answerRows)
   }
 }

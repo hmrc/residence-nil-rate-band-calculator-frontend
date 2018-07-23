@@ -16,7 +16,7 @@
 
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 @import uk.gov.hmrc.residencenilratebandcalculator.AppConfig
-@(supportLinkEnabled: Boolean = true, includeGridWrapper: Boolean = true, appConfig: AppConfig)(implicit localPartialRetriever: LocalPartialRetriever, messages: play.api.i18n.Messages, requestHeader: RequestHeader)
+@(supportLinkEnabled: Boolean = true, includeGridWrapper: Boolean = true, appConfig: uk.gov.hmrc.residencenilratebandcalculator.AppConfig)(implicit localPartialRetriever: LocalPartialRetriever, messages: play.api.i18n.Messages, requestHeader: RequestHeader)
 
 @localPartialRetriever.getPartialContent(appConfig.reportAProblemPartialUrl)(requestHeader)
 

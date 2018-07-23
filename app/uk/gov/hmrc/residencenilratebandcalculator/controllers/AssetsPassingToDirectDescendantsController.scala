@@ -31,8 +31,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.assets_passing_to_d
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 @Singleton
-class AssetsPassingToDirectDescendantsController @Inject()(override val appConfig: FrontendAppConfig,
-                                                              val messagesApi: MessagesApi,
+class AssetsPassingToDirectDescendantsController @Inject()(val messagesApi: MessagesApi,
                                                               override val sessionConnector: SessionConnector,
                                                               override val navigator: Navigator,
                                                            implicit val applicationProvider: Provider[Application],
@@ -47,6 +46,6 @@ class AssetsPassingToDirectDescendantsController @Inject()(override val appConfi
       case Some(value) => Some(CurrencyFormatter.format(value))
       case _ => None
     }
-    assets_passing_to_direct_descendants(appConfig, form, answerRows, formattedPropertyValue)
+    assets_passing_to_direct_descendants(form, answerRows, formattedPropertyValue)
   }
 }

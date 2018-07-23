@@ -36,8 +36,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 import scala.concurrent.Future
 
 @Singleton
-class DateOfDeathController @Inject()(val appConfig: FrontendAppConfig,
-                                      val messagesApi: MessagesApi,
+class DateOfDeathController @Inject()(val messagesApi: MessagesApi,
                                       val sessionConnector: SessionConnector,
                                       val navigator: Navigator,
                                       implicit val applicationProvider: Provider[Application],
@@ -47,7 +46,7 @@ class DateOfDeathController @Inject()(val appConfig: FrontendAppConfig,
 
   def form: Form[Date] = dateOfDeathForm
 
-  def view(form: Form[Date])(implicit request: Request[_]) = date_of_death(appConfig, form)
+  def view(form: Form[Date])(implicit request: Request[_]) = date_of_death(form)
 
   def onPageLoad(implicit rds: Reads[Date]) = Action.async { implicit request =>
     sessionConnector.fetch().map(

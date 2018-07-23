@@ -32,8 +32,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_available_when_property_changed
 
 @Singleton
-class TransferAvailableWhenPropertyChangedController @Inject()(override val appConfig: FrontendAppConfig,
-                                                               val messagesApi: MessagesApi,
+class TransferAvailableWhenPropertyChangedController @Inject()(val messagesApi: MessagesApi,
                                                                override val sessionConnector: SessionConnector,
                                                                override val navigator: Navigator,
                                                                implicit val applicationProvider: Provider[Application],
@@ -44,6 +43,6 @@ class TransferAvailableWhenPropertyChangedController @Inject()(override val appC
   override def form: () => Form[Boolean] = () => BooleanForm("transfer_available_when_property_changed.error.required")
 
   override def view(form: Form[Boolean], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    transfer_available_when_property_changed(appConfig, form, answerRows)
+    transfer_available_when_property_changed(form, answerRows)
   }
 }

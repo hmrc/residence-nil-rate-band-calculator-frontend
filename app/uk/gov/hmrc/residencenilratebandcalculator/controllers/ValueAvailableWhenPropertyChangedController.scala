@@ -38,8 +38,7 @@ import scala.concurrent.Future
 import uk.gov.hmrc.http.{ HeaderCarrier, HttpResponse }
 
 @Singleton
-class ValueAvailableWhenPropertyChangedController @Inject()(val appConfig: FrontendAppConfig,
-                                                            val messagesApi: MessagesApi,
+class ValueAvailableWhenPropertyChangedController @Inject()(val messagesApi: MessagesApi,
                                                             val sessionConnector: SessionConnector,
                                                             val navigator: Navigator, val rnrbConnector: RnrbConnector,
                                                             implicit val applicationProvider: Provider[Application],
@@ -76,7 +75,7 @@ class ValueAvailableWhenPropertyChangedController @Inject()(val appConfig: Front
           val userAnswers = new UserAnswers(cacheMap)
           val nilRateBand = CurrencyFormatter.format(nilRateValueJson.json.toString())
           implicit val messages = messagesApi.preferred(request)
-          Ok(value_available_when_property_changed(appConfig,
+          Ok(value_available_when_property_changed(
             nilRateBand,
             cacheMap.getEntry(controllerId).fold(form())(value => form().fill(value)),
             previousAnswers))
@@ -102,11 +101,11 @@ class ValueAvailableWhenPropertyChangedController @Inject()(val appConfig: Front
           val userAnswers = new UserAnswers(cacheMap)
           implicit val messages = messagesApi.preferred(request)
           boundForm.fold(
-            formWithErrors => Future.successful(BadRequest(value_available_when_property_changed(appConfig,
+            formWithErrors => Future.successful(BadRequest(value_available_when_property_changed(
               formattedNilRateBand, formWithErrors, previousAnswers))),
             (value) => {
               validate(value, nilRateBand).flatMap {
-                case Some(error) => Future.successful(BadRequest(value_available_when_property_changed(appConfig,
+                case Some(error) => Future.successful(BadRequest(value_available_when_property_changed(
                   formattedNilRateBand,
                   form().fill(value).withError(error),
                   previousAnswers)))

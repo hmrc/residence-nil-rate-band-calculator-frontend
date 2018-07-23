@@ -30,8 +30,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_additional_thres
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 @Singleton
-class NoAdditionalThresholdAvailableController @Inject()(val appConfig: FrontendAppConfig,
-                                          override val messagesApi: MessagesApi,
+class NoAdditionalThresholdAvailableController @Inject()(override val messagesApi: MessagesApi,
                                           override val sessionConnector: SessionConnector,
                                           val navigator: Navigator,
                                           implicit val applicationProvider: Provider[Application],
@@ -50,6 +49,6 @@ class NoAdditionalThresholdAvailableController @Inject()(val appConfig: Frontend
       case NotCloselyInherited => "no_additional_threshold_available.not_closely_inherited_reason"
       case NoProperty => "no_additional_threshold_available.no_property_reason"
     }
-    no_additional_threshold_available(appConfig, reasonKey, navigator.nextPage(Constants.noAdditionalThresholdAvailableId)(userAnswers), previousAnswers)
+    no_additional_threshold_available(reasonKey, navigator.nextPage(Constants.noAdditionalThresholdAvailableId)(userAnswers), previousAnswers)
   }
 }
