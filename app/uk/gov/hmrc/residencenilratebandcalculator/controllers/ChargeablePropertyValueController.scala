@@ -28,7 +28,6 @@ import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_property_value
 import play.api.Application
-import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
 import scala.concurrent.Future
 import uk.gov.hmrc.http.HeaderCarrier
@@ -37,8 +36,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 class ChargeablePropertyValueController @Inject()(val messagesApi: MessagesApi,
                                                   override val sessionConnector: SessionConnector,
                                                   override val navigator: Navigator,
-                                                  implicit val applicationProvider: Provider[Application],
-                                                  implicit val localPartialRetriever: LocalPartialRetriever) extends SimpleControllerBase[Int] {
+                                                  implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[Int] {
 
   override val controllerId: String = Constants.chargeablePropertyValueId
 

@@ -20,10 +20,9 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
-@import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 @import uk.gov.hmrc.play.views.html.{helpers => govHelpers}
 
-@(form: Form[Boolean], answerRows: Seq[AnswerRow], formattedPropertyValue: Option[String])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
+@(form: Form[Boolean], answerRows: Seq[AnswerRow], formattedPropertyValue: Option[String])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application])
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("assets_passing_to_direct_descendants.browser_title"),

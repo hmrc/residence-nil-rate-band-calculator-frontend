@@ -35,7 +35,7 @@ import uk.gov.hmrc.http.{ HeaderCarrier, HttpReads, HttpResponse }
 
 import uk.gov.hmrc.play.http.logging.MdcLoggingExecutionContext._
 
-class RnrbConnectorSpec extends BaseSpec with WithFakeApplication with MockitoSugar {
+class RnrbConnectorSpec extends BaseSpec with MockitoSugar {
 
   def getHttpMock(returnedData: JsValue) = {
     val httpMock = mock[WSHttp]

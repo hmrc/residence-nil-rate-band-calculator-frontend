@@ -26,8 +26,11 @@ import uk.gov.hmrc.play.frontend.auth.connectors.AuthConnector
 import uk.gov.hmrc.play.frontend.config.LoadAuditingConfig
 import uk.gov.hmrc.play.http.ws.{WSDelete, WSGet, WSPost, WSPut}
 
-object FrontendAuditConnector extends Auditing with AppName {
+object FrontendAuditConnector extends FrontendAuditConnector {
   override lazy val auditingConfig = LoadAuditingConfig(s"auditing")
+}
+
+trait FrontendAuditConnector extends Auditing with AppName{
 }
 
 trait Hooks extends HttpHooks with HttpAuditing {

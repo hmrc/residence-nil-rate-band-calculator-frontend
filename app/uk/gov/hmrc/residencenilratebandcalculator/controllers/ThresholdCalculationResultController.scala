@@ -29,7 +29,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CalculationInput, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.utils.{CurrencyFormatter, LocalPartialRetriever}
+import uk.gov.hmrc.residencenilratebandcalculator.utils.{CurrencyFormatter}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.threshold_calculation_result
 
 import scala.concurrent.Future
@@ -39,7 +39,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 @Singleton
 class ThresholdCalculationResultController @Inject()(val messagesApi: MessagesApi,
                                                      rnrbConnector: RnrbConnector, sessionConnector: SessionConnector,
-                                                     implicit val applicationProvider: Provider[Application], implicit val localPartialRetriever: LocalPartialRetriever)
+                                                     implicit val applicationProvider: Provider[Application])
   extends FrontendController with I18nSupport {
 
   private def fail(ex: Throwable) = {

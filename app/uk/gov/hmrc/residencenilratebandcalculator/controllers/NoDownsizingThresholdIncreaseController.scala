@@ -25,7 +25,6 @@ import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThresholdIncreaseReason.{DatePropertyWasChangedTooEarly, NoAssetsPassingToDirectDescendants}
 import uk.gov.hmrc.residencenilratebandcalculator.models._
-import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_downsizing_threshold_increase
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
@@ -33,8 +32,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 class NoDownsizingThresholdIncreaseController @Inject()(override val messagesApi: MessagesApi,
                                                 override val sessionConnector: SessionConnector,
                                                 val navigator: Navigator,
-                                                implicit val applicationProvider: Provider[Application],
-                                                        implicit val localPartialRetriever: LocalPartialRetriever) extends TransitionController {
+                                                implicit val applicationProvider: Provider[Application]) extends TransitionController {
 
   val getReason = GetNoDownsizingThresholdIncreaseReason
 

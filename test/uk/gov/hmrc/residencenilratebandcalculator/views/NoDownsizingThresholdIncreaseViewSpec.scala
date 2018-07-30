@@ -22,38 +22,37 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_downsizing_thres
 class NoDownsizingThresholdIncreaseViewSpec extends HtmlSpec {
   implicit val msg = messages
   val messageKeyPrefix = "no_downsizing_threshold_increase"
-  implicit val partials = localPartialRetriever
 
   "No Downsizing Threshold Increase View" must {
     "display the correct browser title" in {
-      val doc = asDocument(no_downsizing_threshold_increase(frontendAppConfig, "", Call("", ""), Seq()))
+      val doc = asDocument(no_downsizing_threshold_increase("", Call("", ""), Seq()))
       assertEqualsMessage(doc, "title", s"$messageKeyPrefix.browser_title")
     }
 
     "display the correct page title" in {
-      val doc = asDocument(no_downsizing_threshold_increase(frontendAppConfig, "", Call("", ""), Seq()))
+      val doc = asDocument(no_downsizing_threshold_increase("", Call("", ""), Seq()))
       assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.title")
     }
 
     "display the correct reason" in {
-      val doc = asDocument(no_downsizing_threshold_increase(frontendAppConfig, s"$messageKeyPrefix.no_property_reason", Call("", ""), Seq()))
+      val doc = asDocument(no_downsizing_threshold_increase(s"$messageKeyPrefix.no_property_reason", Call("", ""), Seq()))
       assertContainsText(doc, messages(s"$messageKeyPrefix.no_property_reason"))
     }
 
     "contain a link to the given page" in {
       val exampleURL = "http://www.example.com"
-      val doc = asDocument(no_downsizing_threshold_increase(frontendAppConfig, "", Call("GET", exampleURL), Seq()))
+      val doc = asDocument(no_downsizing_threshold_increase("", Call("GET", exampleURL), Seq()))
       assertContainsText(doc, exampleURL)
     }
 
     "contain the Show previous answers link" in {
-      val doc = asDocument(no_downsizing_threshold_increase(frontendAppConfig, "", Call("", ""), Seq()))
+      val doc = asDocument(no_downsizing_threshold_increase("", Call("", ""), Seq()))
       assertContainsMessages(doc, "site.show_previous_answers")
     }
 
 
     "not display the HMRC logo" in {
-      val doc = asDocument(no_downsizing_threshold_increase(frontendAppConfig, "", Call("", ""), Seq()))
+      val doc = asDocument(no_downsizing_threshold_increase("", Call("", ""), Seq()))
       assertNotRenderedByCssSelector(doc, ".organisation-logo")
     }
   }

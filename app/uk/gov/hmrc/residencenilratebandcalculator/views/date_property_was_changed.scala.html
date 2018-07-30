@@ -20,13 +20,11 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
-@import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 @import uk.gov.hmrc.play.views.html.{helpers => govHelpers}
 
 @(form: Form[Date], answerRows: Seq[AnswerRow])(implicit request: Request[_],
                                                                                 messages: Messages,
-                                                                                applicationProvider: Provider[Application],
-                                                                                localPartialRetriever: LocalPartialRetriever)
+                                                                                applicationProvider: Provider[Application])
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("date_property_was_changed.browser_title"),

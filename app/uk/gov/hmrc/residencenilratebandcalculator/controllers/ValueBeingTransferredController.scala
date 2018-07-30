@@ -33,7 +33,6 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, Ses
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_being_transferred
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.time.TaxYearResolver
@@ -45,9 +44,9 @@ import uk.gov.hmrc.http.{ HeaderCarrier, HttpResponse }
 @Singleton
 class ValueBeingTransferredController @Inject()(val messagesApi: MessagesApi,
                                                 val sessionConnector: SessionConnector,
-                                                val navigator: Navigator, val rnrbConnector: RnrbConnector,
-                                                implicit val applicationProvider: Provider[Application],
-                                                implicit val localPartialRetriever: LocalPartialRetriever) extends FrontendController {
+                                                val navigator: Navigator,
+                                                val rnrbConnector: RnrbConnector,
+                                                implicit val applicationProvider: Provider[Application]) extends FrontendController {
 
   val controllerId = Constants.valueBeingTransferredId
 

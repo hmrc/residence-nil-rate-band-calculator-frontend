@@ -23,11 +23,10 @@ import play.api.Application
 import play.api.i18n.MessagesApi
 import play.api.test.FakeRequest
 import play.twirl.api.Html
-import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
-import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
-import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, FrontendAppConfig}
+import uk.gov.hmrc.play.test.UnitSpec
+import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
-trait HtmlSpec extends BaseSpec with WithFakeApplication { self: UnitSpec =>
+trait HtmlSpec extends BaseSpec { self: UnitSpec =>
 
   implicit val appProvider: Provider[Application] = applicationProvider
 
@@ -35,7 +34,6 @@ trait HtmlSpec extends BaseSpec with WithFakeApplication { self: UnitSpec =>
 
   val injector = fakeApplication.injector
 
-  def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
   def messagesApi = injector.instanceOf[MessagesApi]
 
   def messages = messagesApi.preferred(request)

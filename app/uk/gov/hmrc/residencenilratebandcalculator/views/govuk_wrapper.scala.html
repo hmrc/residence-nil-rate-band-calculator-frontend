@@ -21,7 +21,6 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.CustomLanguageController
 @import play.api.Application; import com.google.inject.Provider
 @import play.api.Play.current
-@import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
 @(appConfig: uk.gov.hmrc.residencenilratebandcalculator.AppConfig,
   title: String,
@@ -120,7 +119,7 @@
 }
 
 @getHelpForm = {
-    @rnrbHelpers.get_help_form(appConfig = appConfig)
+    @{uiHelpers.reportAProblemLink(appConfig.reportAProblemPartialUrl, appConfig.reportAProblemNonJSUrl)}
 }
 
 @content = {

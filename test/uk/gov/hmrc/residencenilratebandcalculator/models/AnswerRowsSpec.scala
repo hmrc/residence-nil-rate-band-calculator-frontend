@@ -22,11 +22,10 @@ import play.api.libs.json._
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.MockSessionConnector
 
-class AnswerRowsSpec extends BaseSpec with WithFakeApplication with MockSessionConnector {
+class AnswerRowsSpec extends BaseSpec with MockSessionConnector {
 
   val fakeRequest = FakeRequest("", "")
 

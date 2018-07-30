@@ -17,6 +17,8 @@
 package uk.gov.hmrc.residencenilratebandcalculator
 
 import java.util.Base64
+
+import play.api.Play
 import play.api.Play.{configuration, current}
 import uk.gov.hmrc.play.config.ServicesConfig
 
@@ -56,5 +58,7 @@ object FrontendAppConfig extends AppConfig with ServicesConfig {
   lazy val whitelistExcluded = whitelistConfig("whitelistExcludedCalls")
 
   override val isWelshEnabled: Boolean = true
+
+  override lazy val mode = Play.current.mode
 
 }

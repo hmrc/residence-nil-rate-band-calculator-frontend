@@ -18,9 +18,10 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import akka.stream.Materializer
 import play.api.test.FakeRequest
-import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
+import uk.gov.hmrc.play.test.UnitSpec
+import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
-class KeepAliveControllerSpec extends UnitSpec with WithFakeApplication {
+class KeepAliveControllerSpec extends BaseSpec {
 
   val fakeRequest = FakeRequest("", "")
 

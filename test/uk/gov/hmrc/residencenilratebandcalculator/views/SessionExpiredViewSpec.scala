@@ -25,22 +25,22 @@ class SessionExpiredViewSpec extends ViewSpecBase {
 
   "Session Expired view" must {
     "display the correct browser title" in {
-      val doc = asDocument(session_expired(frontendAppConfig)(request, messages, applicationProvider, localPartialRetriever))
+      val doc = asDocument(session_expired()(request, messages, applicationProvider))
       assertEqualsMessage(doc, "title", s"$messageKeyPrefix.browser_title")
     }
 
     "display the correct title" in {
-      val doc = asDocument(session_expired(frontendAppConfig)(request, messages, applicationProvider, localPartialRetriever))
+      val doc = asDocument(session_expired()(request, messages, applicationProvider))
       assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.title")
     }
 
     "display the correct guidance" in {
-      val doc = asDocument(session_expired(frontendAppConfig)(request, messages, applicationProvider, localPartialRetriever))
+      val doc = asDocument(session_expired()(request, messages, applicationProvider))
       assertContainsMessages(doc, s"$messageKeyPrefix.guidance")
     }
 
     "display a Start Again button linking to the 'Calculate Threshold Increase' page" in {
-      val doc = asDocument(session_expired(frontendAppConfig)(request, messages, applicationProvider, localPartialRetriever))
+      val doc = asDocument(session_expired()(request, messages, applicationProvider))
       val startLink = doc.getElementById("start-again")
       startLink.className shouldBe "button"
       startLink.attr("href") shouldBe routes.DateOfDeathController.onPageLoad().url
@@ -48,7 +48,7 @@ class SessionExpiredViewSpec extends ViewSpecBase {
     }
 
     "not display the HMRC logo" in {
-      val doc = asDocument(session_expired(frontendAppConfig)(request, messages, applicationProvider, localPartialRetriever))
+      val doc = asDocument(session_expired()(request, messages, applicationProvider))
       assertNotRenderedByCssSelector(doc, ".organisation-logo")
     }
   }

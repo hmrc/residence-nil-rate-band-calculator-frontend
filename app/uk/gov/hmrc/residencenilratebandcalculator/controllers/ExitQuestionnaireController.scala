@@ -25,7 +25,6 @@ import play.api.mvc.Action
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.forms.ExitQuestionnaireForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.ExitQuestionnaireEvent
-import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exit_questionnaire
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, FrontendAuditConnector, Navigator}
 
@@ -33,10 +32,9 @@ import scala.concurrent.Future
 
 @Singleton
 class ExitQuestionnaireController @Inject()(val messagesApi: MessagesApi,
-                                            implicit val applicationProvider: Provider[Application],
-                                            implicit val localPartialRetriever: LocalPartialRetriever) extends FrontendController with I18nSupport {
+                                            implicit val applicationProvider: Provider[Application]) extends FrontendController with I18nSupport {
 
-  val auditConnector = FrontendAuditConnector
+  lazy val auditConnector : FrontendAuditConnector = FrontendAuditConnector
 
   def onPageLoad = Action.async { implicit request =>
     Future.successful(Ok(exit_questionnaire(ExitQuestionnaireForm.apply())))

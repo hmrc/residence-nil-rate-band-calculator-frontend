@@ -25,7 +25,6 @@ import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.{NoProperty, NotCloselyInherited}
 import uk.gov.hmrc.residencenilratebandcalculator.models._
-import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_additional_threshold_available
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
@@ -33,8 +32,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 class NoAdditionalThresholdAvailableController @Inject()(override val messagesApi: MessagesApi,
                                           override val sessionConnector: SessionConnector,
                                           val navigator: Navigator,
-                                          implicit val applicationProvider: Provider[Application],
-                                                         implicit val localPartialRetriever: LocalPartialRetriever) extends TransitionController {
+                                          implicit val applicationProvider: Provider[Application]) extends TransitionController {
 
   val getReason = GetNoAdditionalThresholdAvailableReason
 

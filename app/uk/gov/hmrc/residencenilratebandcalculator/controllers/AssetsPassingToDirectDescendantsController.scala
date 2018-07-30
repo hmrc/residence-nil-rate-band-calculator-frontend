@@ -26,7 +26,7 @@ import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.utils.{CurrencyFormatter, LocalPartialRetriever}
+import uk.gov.hmrc.residencenilratebandcalculator.utils.{CurrencyFormatter}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.assets_passing_to_direct_descendants
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
@@ -34,8 +34,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 class AssetsPassingToDirectDescendantsController @Inject()(val messagesApi: MessagesApi,
                                                               override val sessionConnector: SessionConnector,
                                                               override val navigator: Navigator,
-                                                           implicit val applicationProvider: Provider[Application],
-                                                           implicit val localPartialRetriever: LocalPartialRetriever) extends SimpleControllerBase[Boolean] {
+                                                           implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[Boolean] {
 
   override val controllerId: String = Constants.assetsPassingToDirectDescendantsId
 
