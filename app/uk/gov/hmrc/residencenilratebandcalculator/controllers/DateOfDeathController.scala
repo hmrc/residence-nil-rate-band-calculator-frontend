@@ -17,9 +17,8 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
-
 import com.google.inject.Provider
-import play.api.Application
+import play.api.{Application, Logger}
 import play.api.data.Form
 import play.api.i18n.MessagesApi
 import play.api.libs.json.{Reads, Writes}
@@ -40,7 +39,7 @@ class DateOfDeathController @Inject()(val messagesApi: MessagesApi,
                                       val navigator: Navigator,
                                       implicit val applicationProvider: Provider[Application]) extends ControllerBase[Date] {
 
-  val controllerId = Constants.dateOfDeathId
+  lazy val controllerId = Constants.dateOfDeathId
 
   def form: Form[Date] = dateOfDeathForm
 
