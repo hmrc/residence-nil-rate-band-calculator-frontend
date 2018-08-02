@@ -27,7 +27,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.hmrc.http.SessionKeys
 
-class SessionId @Inject()()(implicit val mat: Materializer) extends Filter {
+class SessionIdFilter @Inject()()(implicit val mat: Materializer) extends Filter {
 
   private def addSessionId(rh: RequestHeader, sessionId: (String, String)) = {
     val session = rh.session + sessionId

@@ -30,7 +30,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, Ses
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.utils.{CurrencyFormatter, LocalPartialRetriever}
+import uk.gov.hmrc.residencenilratebandcalculator.utils.{CurrencyFormatter}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_available_when_property_changed
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
@@ -38,12 +38,11 @@ import scala.concurrent.Future
 import uk.gov.hmrc.http.{ HeaderCarrier, HttpResponse }
 
 @Singleton
-class ValueAvailableWhenPropertyChangedController @Inject()(val appConfig: FrontendAppConfig,
-                                                            val messagesApi: MessagesApi,
+class ValueAvailableWhenPropertyChangedController @Inject()(val messagesApi: MessagesApi,
                                                             val sessionConnector: SessionConnector,
-                                                            val navigator: Navigator, val rnrbConnector: RnrbConnector,
-                                                            implicit val applicationProvider: Provider[Application],
-                                                            implicit val localPartialRetriever: LocalPartialRetriever) extends FrontendController {
+                                                            val navigator: Navigator,
+                                                            val rnrbConnector: RnrbConnector,
+                                                            implicit val applicationProvider: Provider[Application]) extends FrontendController {
 
   val controllerId = Constants.valueAvailableWhenPropertyChangedId
 
@@ -76,7 +75,7 @@ class ValueAvailableWhenPropertyChangedController @Inject()(val appConfig: Front
           val userAnswers = new UserAnswers(cacheMap)
           val nilRateBand = CurrencyFormatter.format(nilRateValueJson.json.toString())
           implicit val messages = messagesApi.preferred(request)
-          Ok(value_available_when_property_changed(appConfig,
+          Ok(value_available_when_property_changed(
             nilRateBand,
             cacheMap.getEntry(controllerId).fold(form())(value => form().fill(value)),
             previousAnswers))
@@ -102,11 +101,11 @@ class ValueAvailableWhenPropertyChangedController @Inject()(val appConfig: Front
           val userAnswers = new UserAnswers(cacheMap)
           implicit val messages = messagesApi.preferred(request)
           boundForm.fold(
-            formWithErrors => Future.successful(BadRequest(value_available_when_property_changed(appConfig,
+            formWithErrors => Future.successful(BadRequest(value_available_when_property_changed(
               formattedNilRateBand, formWithErrors, previousAnswers))),
             (value) => {
               validate(value, nilRateBand).flatMap {
-                case Some(error) => Future.successful(BadRequest(value_available_when_property_changed(appConfig,
+                case Some(error) => Future.successful(BadRequest(value_available_when_property_changed(
                   formattedNilRateBand,
                   form().fill(value).withError(error),
                   previousAnswers)))

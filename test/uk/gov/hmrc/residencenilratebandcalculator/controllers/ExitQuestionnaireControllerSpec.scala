@@ -24,7 +24,7 @@ import org.scalatest.BeforeAndAfter
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.play.audit.http.connector.AuditResult
+import uk.gov.hmrc.play.audit.http.connector.{AuditConnector, AuditResult}
 import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAuditConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.forms.ExitQuestionnaireForm
@@ -35,29 +35,36 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.exit_questionnaire
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Random
 import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.play.config.AppName
+import uk.gov.hmrc.play.frontend.config.LoadAuditingConfig
 
-class ExitQuestionnaireControllerSpec extends HtmlSpec with WithFakeApplication with MockitoSugar with BeforeAndAfter {
+class ExitQuestionnaireControllerSpec extends HtmlSpec with MockitoSugar with BeforeAndAfter {
+
+  val mockAuditConnector = mock[FrontendAuditConnector]
 
   val fakeRequest = FakeRequest("", "")
 
-  var mockAuditConnector = mock[FrontendAuditConnector]
+  val testController = new ExitQuestionnaireController(messagesApi, applicationProvider) {
+    override lazy val auditConnector : FrontendAuditConnector = mockAuditConnector
+  }
+
 
   implicit val headnapper = ArgumentCaptor.forClass(classOf[HeaderCarrier])
   implicit val exenapper = ArgumentCaptor.forClass(classOf[ExecutionContext])
 
   before {
-    mockAuditConnector = mock[FrontendAuditConnector]
+    val auditConnector = FrontendAuditConnector
   }
 
   "Exit Questionnaire controller" must {
 
     "return 200 for a GET" in {
-      val result = new ExitQuestionnaireController(frontendAppConfig, messagesApi, mockAuditConnector, applicationProvider, localPartialRetriever).onPageLoad()(fakeRequest)
+      val result = testController.onPageLoad()(fakeRequest)
       status(result) shouldBe 200
     }
 
     "return the View for a GET" in {
-      val result = new ExitQuestionnaireController(frontendAppConfig, messagesApi, mockAuditConnector, applicationProvider, localPartialRetriever).onPageLoad()(fakeRequest)
+      val result = testController.onPageLoad()(fakeRequest)
       Jsoup.parse(contentAsString(result)).title() shouldBe messages("exit_questionnaire.title")
     }
 
@@ -119,6 +126,6 @@ class ExitQuestionnaireControllerSpec extends HtmlSpec with WithFakeApplication 
   private def submit(exitQuestionnaire: ExitQuestionnaire) = {
     val postData = Json.toJson(exitQuestionnaire)
     val request = fakeRequest.withJsonBody(postData)
-    new ExitQuestionnaireController(frontendAppConfig, messagesApi, mockAuditConnector, applicationProvider, localPartialRetriever).onSubmit()(request)
+    testController.onSubmit()(request)
   }
 }

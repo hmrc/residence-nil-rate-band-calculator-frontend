@@ -26,15 +26,12 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoThresholdIncreaseReason.{DateOfDeath, DirectDescendant}
 import uk.gov.hmrc.residencenilratebandcalculator.models._
-import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_threshold_increase
 
 @Singleton
-class NoThresholdIncreaseController  @Inject()(val appConfig: FrontendAppConfig,
-                                               override val messagesApi: MessagesApi,
+class NoThresholdIncreaseController  @Inject()(override val messagesApi: MessagesApi,
                                                override val sessionConnector: SessionConnector,
-                                               implicit val applicationProvider: Provider[Application],
-                                               implicit val localPartialRetriever: LocalPartialRetriever) extends TransitionController {
+                                               implicit val applicationProvider: Provider[Application]) extends TransitionController {
 
   val getReason = GetNoThresholdIncreaseReason
 
@@ -50,6 +47,6 @@ class NoThresholdIncreaseController  @Inject()(val appConfig: FrontendAppConfig,
       case DirectDescendant => "no_threshold_increase.direct_descendant"
     }
 
-    no_threshold_increase(appConfig, prefix, previousAnswers)
+    no_threshold_increase(prefix, previousAnswers)
   }
 }

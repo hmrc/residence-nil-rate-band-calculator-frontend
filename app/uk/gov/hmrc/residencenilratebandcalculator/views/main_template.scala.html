@@ -17,17 +17,16 @@
 @import play.api.Application; import com.google.inject.Provider
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import play.api.Application; import com.google.inject.Provider
-@import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
 @(title: String,
-  appConfig: FrontendAppConfig,
+  appConfig: uk.gov.hmrc.residencenilratebandcalculator.AppConfig,
   sidebarLinks: Option[Html] = None,
   contentHeader: Option[Html] = None,
   bodyClasses: Option[String] = None,
   mainClass: Option[String] = None,
   scriptElem: Option[Html] = None,
   enableTimeout: Boolean = true
-)(mainContent: Html)(implicit request : Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
+)(mainContent: Html)(implicit request : Request[_], messages: Messages, applicationProvider: Provider[Application])
 
 @import uk.gov.hmrc.play.views.html.layouts
 
@@ -36,8 +35,8 @@
 @betaBanner = {
 @rnrbHelpers.beta_banner(
     userLoggedIn = false,		
-    betaFeedbackUrl = appConfig.betaFeedbackUrl,		
-    betaFeedbackUnauthenticatedUrl = appConfig.betaFeedbackUnauthenticatedUrl,		
+    betaFeedbackUrl = appConfig.betaFeedbackUrl,
+    betaFeedbackUnauthenticatedUrl = appConfig.betaFeedbackUnauthenticatedUrl,
     showFeedbackLinkInBetaBanner = true)		
 }
 
@@ -48,7 +47,7 @@
 }
 
     @govuk_wrapper(
-        appConfig = appConfig,
+        appConfig = uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig,
         title = title,
         mainClass = mainClass,
         bodyClasses = bodyClasses,

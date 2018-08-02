@@ -26,23 +26,20 @@ import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, Date, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_property_was_changed
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 @Singleton
-class DatePropertyWasChangedController @Inject()(override val appConfig: FrontendAppConfig,
-                                         val messagesApi: MessagesApi,
+class DatePropertyWasChangedController @Inject()(val messagesApi: MessagesApi,
                                          override val sessionConnector: SessionConnector,
                                          override val navigator: Navigator,
-                                                 implicit val applicationProvider: Provider[Application],
-                                                 implicit val localPartialRetriever: LocalPartialRetriever) extends SimpleControllerBase[Date]{
+                                                 implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[Date]{
 
   val controllerId: String = Constants.datePropertyWasChangedId
 
   def form = () => dateOfDownsizingForm
 
   def view(form: Form[Date], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-      date_property_was_changed(appConfig, form, answerRows)
+      date_property_was_changed(form, answerRows)
   }
 }
