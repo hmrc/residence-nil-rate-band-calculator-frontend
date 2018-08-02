@@ -29,7 +29,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CalculationInput, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.utils.{CurrencyFormatter}
+import uk.gov.hmrc.residencenilratebandcalculator.utils.{CurrencyFormatter, LocalPartialRetriever}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.threshold_calculation_result
 
 import scala.concurrent.Future
@@ -37,9 +37,9 @@ import scala.util.{Failure, Success, Try}
 import uk.gov.hmrc.http.HeaderCarrier
 
 @Singleton
-class ThresholdCalculationResultController @Inject()(val messagesApi: MessagesApi,
+class ThresholdCalculationResultController @Inject()(appConfig: FrontendAppConfig, val messagesApi: MessagesApi,
                                                      rnrbConnector: RnrbConnector, sessionConnector: SessionConnector,
-                                                     implicit val applicationProvider: Provider[Application])
+                                                     implicit val applicationProvider: Provider[Application], implicit val localPartialRetriever: LocalPartialRetriever)
   extends FrontendController with I18nSupport {
 
   private def fail(ex: Throwable) = {
@@ -76,7 +76,7 @@ class ThresholdCalculationResultController @Inject()(val messagesApi: MessagesAp
             sessionConnector.cache[Int](Constants.thresholdCalculationResultId, result.residenceNilRateAmount)
             val messages = messagesApi.preferred(request)
             val residenceNilRateAmount = CurrencyFormatter.format(result.residenceNilRateAmount)
-            Ok(threshold_calculation_result(residenceNilRateAmount, AnswerRows(answers, messages)))
+            Ok(threshold_calculation_result(appConfig, residenceNilRateAmount, AnswerRows(answers, messages)))
         }
       }
     }

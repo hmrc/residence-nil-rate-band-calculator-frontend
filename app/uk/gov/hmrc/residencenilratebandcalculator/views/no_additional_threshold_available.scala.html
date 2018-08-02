@@ -19,12 +19,13 @@
 @import uk.gov.hmrc.play.views.html._
 
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
-@(reasonKey: String, nextPage: Call, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application])
+@(appConfig: FrontendAppConfig, reasonKey: String, nextPage: Call, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("no_additional_threshold_available.browser_title"),
-    appConfig = FrontendAppConfig,
+    appConfig = appConfig,
     bodyClasses = None) {
 
     <h1 class="heading-large">@messages("no_additional_threshold_available.title")</h1>

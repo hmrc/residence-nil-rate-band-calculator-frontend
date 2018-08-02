@@ -28,14 +28,17 @@ import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_inherited_property_value
 import play.api.Application
+import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
 import scala.concurrent.Future
 import uk.gov.hmrc.http.HeaderCarrier
 
-class ChargeableInheritedPropertyValueController @Inject()(val messagesApi: MessagesApi,
-                                                           override val sessionConnector: SessionConnector,
-                                                           override val navigator: Navigator,
-                                                           implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[Int] {
+class ChargeableInheritedPropertyValueController @Inject()(override val appConfig: FrontendAppConfig,
+                                                                     val messagesApi: MessagesApi,
+                                                                     override val sessionConnector: SessionConnector,
+                                                                     override val navigator: Navigator,
+                                                           implicit val applicationProvider: Provider[Application],
+                                                           implicit val localPartialRetriever: LocalPartialRetriever) extends SimpleControllerBase[Int] {
 
   override val controllerId: String = Constants.chargeableInheritedPropertyValueId
 
@@ -43,7 +46,7 @@ class ChargeableInheritedPropertyValueController @Inject()(val messagesApi: Mess
     NonNegativeIntForm("chargeable_inherited_property_value.error.blank", "error.whole_pounds", "error.non_numeric", "error.value_too_large")
 
   override def view(form: Form[Int], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    chargeable_inherited_property_value(form, answerRows)
+    chargeable_inherited_property_value(appConfig, form, answerRows)
   }
 
   override def validate(value: Int, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = {

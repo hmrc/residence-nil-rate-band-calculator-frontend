@@ -20,13 +20,14 @@
 @import uk.gov.hmrc.play.views.html.{helpers => govHelpers}
 @import uk.gov.hmrc.play.views.html._
 @import play.api.Application; import com.google.inject.Provider
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
-@(form: Form[Int], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application])
+@(appConfig: FrontendAppConfig, form: Form[Int], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("chargeable_estate_value.browser_title"),
-    appConfig = FrontendAppConfig,
+    appConfig = appConfig,
     bodyClasses = None) {
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeableEstateValueController.onSubmit(), 'autoComplete -> "off") {
@@ -57,4 +58,4 @@
     }
 
     @rnrbHelpers.answer_rows(answerRows)
-}
+}@import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever

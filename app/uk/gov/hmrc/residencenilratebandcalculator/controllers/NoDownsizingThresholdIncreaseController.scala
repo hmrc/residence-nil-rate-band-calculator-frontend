@@ -25,14 +25,17 @@ import play.api.mvc.Request
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThresholdIncreaseReason.{DatePropertyWasChangedTooEarly, NoAssetsPassingToDirectDescendants}
 import uk.gov.hmrc.residencenilratebandcalculator.models._
+import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_downsizing_threshold_increase
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 @Singleton
-class NoDownsizingThresholdIncreaseController @Inject()(override val messagesApi: MessagesApi,
+class NoDownsizingThresholdIncreaseController @Inject()(val appConfig: FrontendAppConfig,
+                                                override val messagesApi: MessagesApi,
                                                 override val sessionConnector: SessionConnector,
                                                 val navigator: Navigator,
-                                                implicit val applicationProvider: Provider[Application]) extends TransitionController {
+                                                implicit val applicationProvider: Provider[Application],
+                                                        implicit val localPartialRetriever: LocalPartialRetriever) extends TransitionController {
 
   val getReason = GetNoDownsizingThresholdIncreaseReason
 
@@ -47,6 +50,6 @@ class NoDownsizingThresholdIncreaseController @Inject()(override val messagesApi
       case NoAssetsPassingToDirectDescendants => "no_downsizing_threshold_increase.no_assets_passing_to_direct_descendants_reason"
       case DatePropertyWasChangedTooEarly => "no_downsizing_threshold_increase.date_property_was_changed_too_early_reason"
     }
-    no_downsizing_threshold_increase(reasonKey, navigator.nextPage(Constants.noDownsizingThresholdIncrease)(userAnswers), previousAnswers)
+    no_downsizing_threshold_increase(appConfig, reasonKey, navigator.nextPage(Constants.noDownsizingThresholdIncrease)(userAnswers), previousAnswers)
   }
 }

@@ -30,12 +30,12 @@ class GrossingUpOnEstateAssetsControllerSpec extends SimpleControllerSpecBase {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => grossing_up_on_estate_assets(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, applicationProvider)
-        case Some(v) => grossing_up_on_estate_assets(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, applicationProvider)
+        case None => grossing_up_on_estate_assets(frontendAppConfig, BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case Some(v) => grossing_up_on_estate_assets(frontendAppConfig, BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
       }
     }
 
-    def createController = () => new GrossingUpOnEstateAssetsController(messagesApi, mockSessionConnector, navigator, applicationProvider)
+    def createController = () => new GrossingUpOnEstateAssetsController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
 
     val testValue = false
 

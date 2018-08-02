@@ -17,46 +17,48 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.mvc.Call
+import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_additional_threshold_available
 
 class NoAdditionalThresholdAvailableViewSpec extends HtmlSpec {
   implicit val msg = messages
   val messageKeyPrefix = "no_additional_threshold_available"
+  implicit val partials = localPartialRetriever
 
   "No Additional Threshold Available View" must {
     "display the correct browser title" in {
-      val doc = asDocument(no_additional_threshold_available("", Call("", ""), Seq()))
+      val doc = asDocument(no_additional_threshold_available(frontendAppConfig, "", Call("", ""), Seq()))
       assertEqualsMessage(doc, "title", s"$messageKeyPrefix.browser_title")
     }
 
     "display the correct page title" in {
-      val doc = asDocument(no_additional_threshold_available("", Call("", ""), Seq()))
+      val doc = asDocument(no_additional_threshold_available(frontendAppConfig, "", Call("", ""), Seq()))
       assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.title")
     }
 
     "display the correct guidance" in {
-      val doc = asDocument(no_additional_threshold_available(s"$messageKeyPrefix.guidance ", Call("", ""), Seq()))
+      val doc = asDocument(no_additional_threshold_available(frontendAppConfig, s"$messageKeyPrefix.guidance ", Call("", ""), Seq()))
       assertContainsText(doc, messages(s"$messageKeyPrefix.guidance"))
     }
 
     "display the correct reason" in {
-      val doc = asDocument(no_additional_threshold_available(s"$messageKeyPrefix.no_property_reason", Call("", ""), Seq()))
+      val doc = asDocument(no_additional_threshold_available(frontendAppConfig, s"$messageKeyPrefix.no_property_reason", Call("", ""), Seq()))
       assertContainsText(doc, messages(s"$messageKeyPrefix.no_property_reason"))
     }
 
     "contain a link to the given page" in {
       val exampleURL = "http://www.example.com"
-      val doc = asDocument(no_additional_threshold_available("", Call("GET", exampleURL), Seq()))
+      val doc = asDocument(no_additional_threshold_available(frontendAppConfig, "", Call("GET", exampleURL), Seq()))
       assertContainsText(doc, exampleURL)
     }
 
     "contain the Show previous answers link" in {
-      val doc = asDocument(no_additional_threshold_available("", Call("", ""), Seq()))
+      val doc = asDocument(no_additional_threshold_available(frontendAppConfig, "", Call("", ""), Seq()))
       assertContainsMessages(doc, "site.show_previous_answers")
     }
 
     "not display the HMRC logo" in {
-      val doc = asDocument(no_additional_threshold_available("", Call("", ""), Seq()))
+      val doc = asDocument(no_additional_threshold_available(frontendAppConfig, "", Call("", ""), Seq()))
       assertNotRenderedByCssSelector(doc, ".organisation-logo")
     }
   }

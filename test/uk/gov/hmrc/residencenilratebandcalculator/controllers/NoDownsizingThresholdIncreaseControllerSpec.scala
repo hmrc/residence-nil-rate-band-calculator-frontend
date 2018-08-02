@@ -32,13 +32,15 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThreshol
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_downsizing_threshold_increase
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants, FrontendAppConfig, Navigator}
 
-class NoDownsizingThresholdIncreaseControllerSpec extends BaseSpec with HttpResponseMocks with MockSessionConnector with MockitoSugar {
+class NoDownsizingThresholdIncreaseControllerSpec extends BaseSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector with MockitoSugar {
 
   val fakeRequest = FakeRequest("", "")
 
   val injector = fakeApplication.injector
 
   val navigator = injector.instanceOf[Navigator]
+
+  def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
   def messagesApi = injector.instanceOf[MessagesApi]
 
@@ -70,41 +72,41 @@ class NoDownsizingThresholdIncreaseControllerSpec extends BaseSpec with HttpResp
 
   "No Downsizing Threshold Increase Controller" must {
     "return 200 for a GET" in {
-      val controller = new NoDownsizingThresholdIncreaseController(messagesApi, mockSessionConnector, navigator, applicationProvider)
+      val controller = new NoDownsizingThresholdIncreaseController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
 
       val result = controller.onPageLoad(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return the View for a GET" in {
-      val controller = new NoDownsizingThresholdIncreaseController(messagesApi, mockSessionConnector, navigator, applicationProvider)
+      val controller = new NoDownsizingThresholdIncreaseController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
 
       val result = controller.onPageLoad(fakeRequest)
       contentAsString(result) shouldBe
-        no_downsizing_threshold_increase("no_downsizing_threshold_increase.date_property_was_changed_too_early_reason",
-          routes.ThresholdCalculationResultController.onPageLoad, Seq())(fakeRequest, messages, applicationProvider).toString
+        no_downsizing_threshold_increase(frontendAppConfig, "no_downsizing_threshold_increase.date_property_was_changed_too_early_reason",
+          routes.ThresholdCalculationResultController.onPageLoad, Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever).toString
     }
 
     "return the view with the no assets key when that is the reason" in {
-      val controller = new NoDownsizingThresholdIncreaseController(messagesApi, mockSessionConnector, navigator, applicationProvider)
+      val controller = new NoDownsizingThresholdIncreaseController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
       val userAnswers = new UserAnswers(filledOutCacheMap)
 
       val result = controller.createView(NoAssetsPassingToDirectDescendants, userAnswers, Seq())(fakeRequest)
-      val target = no_downsizing_threshold_increase("no_downsizing_threshold_increase.no_assets_passing_to_direct_descendants_reason",
-        navigator.nextPage(Constants.noDownsizingThresholdIncrease)(userAnswers), Seq())(fakeRequest, messages, applicationProvider).toString()
+      val target = no_downsizing_threshold_increase(frontendAppConfig, "no_downsizing_threshold_increase.no_assets_passing_to_direct_descendants_reason",
+        navigator.nextPage(Constants.noDownsizingThresholdIncrease)(userAnswers), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever).toString()
       result.toString() shouldBe target
 
     }
 
     "throw an exception when the cache is unavailable" in {
       val mockSessionConnector = mock[SessionConnector]
-      val controller = new NoDownsizingThresholdIncreaseController(messagesApi, mockSessionConnector, navigator, applicationProvider)
+      val controller = new NoDownsizingThresholdIncreaseController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
 
       an[RuntimeException] should be thrownBy controller.onPageLoad(fakeRequest)
     }
 
     "The answer constants should be the same as the calulated constants for the controller when the reason is NotCloselyInherited" in {
-      val controller = new NoAdditionalThresholdAvailableController(messagesApi, mockSessionConnector, navigator, applicationProvider)
+      val controller = new NoAdditionalThresholdAvailableController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
       val controllerId = controller.getControllerId(NoAssetsPassingToDirectDescendants)
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
@@ -116,7 +118,7 @@ class NoDownsizingThresholdIncreaseControllerSpec extends BaseSpec with HttpResp
     }
 
     "The answer constants should be the same as the calulated constants for the controller when the reason is another reason" in {
-      val controller = new NoAdditionalThresholdAvailableController(messagesApi, mockSessionConnector, navigator, applicationProvider)
+      val controller = new NoAdditionalThresholdAvailableController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
       val controllerId = controller.getControllerId(DatePropertyWasChangedTooEarly)
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)

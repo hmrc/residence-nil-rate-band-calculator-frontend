@@ -25,26 +25,29 @@ import play.api.mvc.Action
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.forms.ExitQuestionnaireForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.ExitQuestionnaireEvent
+import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exit_questionnaire
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, FrontendAuditConnector, Navigator}
 
 import scala.concurrent.Future
 
 @Singleton
-class ExitQuestionnaireController @Inject()(val messagesApi: MessagesApi,
-                                            implicit val applicationProvider: Provider[Application]) extends FrontendController with I18nSupport {
+class ExitQuestionnaireController @Inject()(val appConfig: FrontendAppConfig,
+                                            val messagesApi: MessagesApi,
+                                            val auditConnector: FrontendAuditConnector,
+                                            implicit val applicationProvider: Provider[Application],
+                                            implicit val localPartialRetriever: LocalPartialRetriever) extends FrontendController with I18nSupport {
 
-  lazy val auditConnector : FrontendAuditConnector = FrontendAuditConnector
 
   def onPageLoad = Action.async { implicit request =>
-    Future.successful(Ok(exit_questionnaire(ExitQuestionnaireForm.apply())))
+    Future.successful(Ok(exit_questionnaire(appConfig, ExitQuestionnaireForm.apply())))
   }
 
   def onSubmit = Action.async { implicit request =>
     val boundForm = ExitQuestionnaireForm().bindFromRequest()
 
     boundForm.fold(
-      formWithErrors => Future.successful(BadRequest(exit_questionnaire(formWithErrors))),
+      formWithErrors => Future.successful(BadRequest(exit_questionnaire(appConfig, formWithErrors))),
       value => {
 
         val questionnaireResult = auditConnector.sendEvent(new ExitQuestionnaireEvent(value.serviceDifficulty.getOrElse(""),

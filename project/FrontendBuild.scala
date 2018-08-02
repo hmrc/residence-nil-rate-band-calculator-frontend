@@ -26,7 +26,6 @@ private object AppDependencies {
   private val playReactivemongoVersion = "6.2.0"
   private val pdfBoxVersion = "2.0.4"
   private val playLanguageVersion = "3.4.0"
-  private val scalatestplus = "2.0.1"
 
   val compile = Seq(
     "uk.gov.hmrc" %% "play-reactivemongo" % playReactivemongoVersion,
@@ -37,8 +36,7 @@ private object AppDependencies {
     "uk.gov.hmrc" %% "http-caching-client" % httpCachingClientVersion,
     "com.eclipsesource" %% "play-json-schema-validator" % playJsonValidatorVersion,
     "org.apache.pdfbox" % "pdfbox" % pdfBoxVersion,
-    "uk.gov.hmrc" %% "play-language" % playLanguageVersion,
-    "org.scalatestplus.play" %% "scalatestplus-play" % scalatestplus
+    "uk.gov.hmrc" %% "play-language" % playLanguageVersion
   )
 
   trait TestDependencies {

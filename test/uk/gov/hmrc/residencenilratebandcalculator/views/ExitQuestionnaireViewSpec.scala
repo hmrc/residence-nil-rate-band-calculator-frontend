@@ -28,7 +28,7 @@ class ExitQuestionnaireViewSpec extends ViewSpecBase {
 
   override val errorKey = "fullName"
 
-  def createView(form: Form[ExitQuestionnaire]) = exit_questionnaire(form)(request, messages, applicationProvider)
+  def createView(form: Form[ExitQuestionnaire]) = exit_questionnaire(frontendAppConfig, form)(request, messages, applicationProvider, localPartialRetriever)
 
   "Exit Questionnaire view" must {
     behave like rnrbPage[ExitQuestionnaire](createView, messageKeyPrefix,
