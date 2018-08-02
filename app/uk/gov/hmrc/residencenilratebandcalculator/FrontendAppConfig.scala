@@ -16,9 +16,10 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator
 
-import javax.inject.{Inject, Singleton}
 import java.util.Base64
-import play.api.Configuration
+
+import play.api.Play
+import play.api.Play.{configuration, current}
 import uk.gov.hmrc.play.config.ServicesConfig
 
 trait AppConfig {
@@ -29,10 +30,11 @@ trait AppConfig {
   val timeOutCountdownSeconds: Int
   val timeOutSession: Int
   val isWelshEnabled: Boolean
+  val betaFeedbackUnauthenticatedUrl : String
+  val betaFeedbackUrl : String
 }
 
-@Singleton
-class FrontendAppConfig @Inject()(configuration: Configuration) extends AppConfig with ServicesConfig {
+object FrontendAppConfig extends AppConfig with ServicesConfig {
 
   private def loadConfig(key: String) = configuration.getString(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
 
@@ -44,10 +46,10 @@ class FrontendAppConfig @Inject()(configuration: Configuration) extends AppConfi
   override lazy val analyticsHost = loadConfig(s"google-analytics.host")
   override lazy val timeOutCountdownSeconds = loadConfig("timeOutCountdownSeconds").toInt
   override lazy val timeOutSession = loadConfig("mongodb.timeToLiveInSeconds").toInt
-  lazy val reportAProblemPartialUrl = s"$contactFrontendService/contact/problem_reports"
+  override lazy val reportAProblemPartialUrl = s"$contactFrontendService/contact/problem_reports_ajax?service=$contactFormServiceIdentifier"
   override lazy val reportAProblemNonJSUrl = s"$contactFrontendService/contact/problem_reports_nonjs?service=$contactFormServiceIdentifier"
-  lazy val betaFeedbackUrl = s"$contactHost/contact/beta-feedback"
-  lazy val betaFeedbackUnauthenticatedUrl = s"$contactHost/contact/beta-feedback-unauthenticated"
+  override lazy val betaFeedbackUrl = s"$contactHost/contact/beta-feedback"
+  override lazy val betaFeedbackUnauthenticatedUrl = s"$contactHost/contact/beta-feedback-unauthenticated"
 
   private def whitelistConfig(key: String):Seq[String] = Some(new String(Base64.getDecoder.decode(configuration.getString(key).getOrElse("")), "UTF-8"))
     .map(_.split(",")).getOrElse(Array.empty).toSeq
@@ -56,5 +58,7 @@ class FrontendAppConfig @Inject()(configuration: Configuration) extends AppConfi
   lazy val whitelistExcluded = whitelistConfig("whitelistExcludedCalls")
 
   override val isWelshEnabled: Boolean = true
+
+  override lazy val mode = Play.current.mode
 
 }

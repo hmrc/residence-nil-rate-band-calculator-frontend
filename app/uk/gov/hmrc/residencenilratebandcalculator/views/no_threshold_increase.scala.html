@@ -18,13 +18,12 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ExitQuestionnaireController
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
-@import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
-@(appConfig: FrontendAppConfig, prefix: String, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
+@(prefix: String, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application])
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("no_threshold_increase.browser_title"),
-    appConfig = appConfig,
+    appConfig = FrontendAppConfig,
     bodyClasses = None) {
 
     <h1 class="heading-large">@messages(s"${prefix}.title")</h1>

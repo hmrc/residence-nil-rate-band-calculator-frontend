@@ -29,7 +29,7 @@ class DateOfDeathViewSpec extends DateViewSpecBase {
 
   val messageKeyPrefix = "date_of_death"
 
-  def createView(form: Form[Date]) = date_of_death(frontendAppConfig, form)(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Form[Date]) = date_of_death(form)(request, messages, applicationProvider)
 
   "Date of Death View" must {
 

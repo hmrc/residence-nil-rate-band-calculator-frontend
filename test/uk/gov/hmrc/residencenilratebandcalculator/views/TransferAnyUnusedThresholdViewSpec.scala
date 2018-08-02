@@ -27,7 +27,7 @@ class TransferAnyUnusedThresholdViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "transfer_any_unused_threshold"
 
-  def createView(form: Form[Boolean]) = transfer_any_unused_threshold(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Form[Boolean]) = transfer_any_unused_threshold(form, Seq())(request, messages, applicationProvider)
 
   "Transfer Any Unused Allowance View" must {
 

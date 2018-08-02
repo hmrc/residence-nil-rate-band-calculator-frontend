@@ -33,12 +33,12 @@ class ValueOfChangedPropertyControllerSpec extends SimpleControllerSpecBase {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => value_of_changed_property(frontendAppConfig, NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
-        case Some(v) => value_of_changed_property(frontendAppConfig, NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case None => value_of_changed_property(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq())(fakeRequest, messages, applicationProvider)
+        case Some(v) => value_of_changed_property(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages, applicationProvider)
       }
     }
 
-    def createController = () => new ValueOfChangedPropertyController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
+    def createController = () => new ValueOfChangedPropertyController(messagesApi, mockSessionConnector, navigator, applicationProvider)
 
     val testValue = 123
 

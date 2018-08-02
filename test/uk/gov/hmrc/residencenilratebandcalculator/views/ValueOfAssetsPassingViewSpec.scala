@@ -28,7 +28,7 @@ class ValueOfAssetsPassingViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "value_of_assets_passing"
 
-  def createView(form: Form[Int]) = value_of_assets_passing(frontendAppConfig, form, Seq(), None)(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Form[Int]) = value_of_assets_passing(form, Seq(), None)(request, messages, applicationProvider)
 
   "Value Of Assets Passing View" must {
 

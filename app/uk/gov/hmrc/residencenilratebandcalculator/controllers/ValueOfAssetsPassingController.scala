@@ -27,17 +27,15 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.utils.{CurrencyFormatter, LocalPartialRetriever}
+import uk.gov.hmrc.residencenilratebandcalculator.utils.{CurrencyFormatter}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_assets_passing
 import uk.gov.hmrc.http.HeaderCarrier
 
 @Singleton
-class ValueOfAssetsPassingController @Inject()(override val appConfig: FrontendAppConfig,
-                                               val messagesApi: MessagesApi,
+class ValueOfAssetsPassingController @Inject()(val messagesApi: MessagesApi,
                                                override val sessionConnector: SessionConnector,
                                                override val navigator: Navigator,
-                                               implicit val applicationProvider: Provider[Application],
-                                               implicit val localPartialRetriever: LocalPartialRetriever) extends SimpleControllerBase[Int] {
+                                               implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[Int] {
 
   override val controllerId = Constants.valueOfAssetsPassingId
 
@@ -49,7 +47,7 @@ class ValueOfAssetsPassingController @Inject()(override val appConfig: FrontendA
       case Some(value) => Some(CurrencyFormatter.format(value))
       case _ => None
     }
-    value_of_assets_passing(appConfig, form, answerRows, formattedPropertyValue)
+    value_of_assets_passing(form, answerRows, formattedPropertyValue)
   }
 
   override def validate(value: Int, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = {

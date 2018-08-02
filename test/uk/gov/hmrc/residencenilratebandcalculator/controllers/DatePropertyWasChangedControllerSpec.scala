@@ -30,12 +30,12 @@ class DatePropertyWasChangedControllerSpec extends DateControllerSpecBase {
 
     def createView = (value: Option[Date]) => {
       value match {
-        case None => date_property_was_changed(frontendAppConfig, dateOfDownsizingForm, answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
-        case Some(v) => date_property_was_changed(frontendAppConfig, dateOfDownsizingForm.fill(v) , Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+        case None => date_property_was_changed(dateOfDownsizingForm, answerRows = Seq())(fakeRequest, messages, applicationProvider)
+        case Some(v) => date_property_was_changed(dateOfDownsizingForm.fill(v) , Seq())(fakeRequest, messages, applicationProvider)
       }
     }
 
-    def createController = () => new DatePropertyWasChangedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
+    def createController = () => new DatePropertyWasChangedController(messagesApi, mockSessionConnector, navigator, applicationProvider)
 
     behave like rnrbDateController(createController, createView, Constants.datePropertyWasChangedId, "dateOfDownsizing")(Date.dateReads, Date.dateWrites)
 

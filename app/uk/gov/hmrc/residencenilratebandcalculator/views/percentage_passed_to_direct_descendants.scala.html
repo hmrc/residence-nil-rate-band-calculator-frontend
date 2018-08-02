@@ -18,15 +18,14 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 @import uk.gov.hmrc.play.views.html._
-@import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 @import uk.gov.hmrc.play.views.html.{helpers => govHelpers}
 
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
-@(appConfig: FrontendAppConfig, form: Form[BigDecimal], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
+@(form: Form[BigDecimal], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application])
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("percentage_passed_to_direct_descendants.browser_title"),
-    appConfig = appConfig,
+    appConfig = FrontendAppConfig,
     bodyClasses = None) {
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PercentagePassedToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {

@@ -26,16 +26,14 @@ import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.utils.{LocalPartialRetriever, PDFHelper}
+import uk.gov.hmrc.residencenilratebandcalculator.utils.{PDFHelper}
 
 @Singleton
-class IHT435Controller @Inject()(val appConfig: FrontendAppConfig,
-                                 val env: Environment,
+class IHT435Controller @Inject()(val env: Environment,
                                  val messagesApi: MessagesApi,
                                  val sessionConnector: SessionConnector,
                                  val pdfHelper: PDFHelper,
-                                 implicit val applicationProvider: Provider[Application],
-                                 implicit val localPartialRetriever: LocalPartialRetriever) extends FrontendController with I18nSupport {
+                                 implicit val applicationProvider: Provider[Application]) extends FrontendController with I18nSupport {
   def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.fetch().map {
       case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())

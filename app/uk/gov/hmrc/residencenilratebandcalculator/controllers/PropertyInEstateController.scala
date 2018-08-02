@@ -28,22 +28,19 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_in_estate
 
 @Singleton
-class PropertyInEstateController @Inject()(override val appConfig: FrontendAppConfig,
-                                           val messagesApi: MessagesApi,
+class PropertyInEstateController @Inject()(val messagesApi: MessagesApi,
                                            override val sessionConnector: SessionConnector,
                                            override val navigator: Navigator,
-                                           implicit val applicationProvider: Provider[Application],
-                                           implicit val localPartialRetriever: LocalPartialRetriever) extends SimpleControllerBase[Boolean] {
+                                           implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[Boolean] {
 
   override val controllerId: String = Constants.propertyInEstateId
 
   override def form: () => Form[Boolean] = () => BooleanForm("property_in_estate.error.required")
 
   override def view(form: Form[Boolean], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    property_in_estate(appConfig, form, answerRows)
+    property_in_estate(form, answerRows)
   }
 }
