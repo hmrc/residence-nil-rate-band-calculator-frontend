@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.connectors
 
 import javax.inject.{Inject, Singleton}
+
 import com.eclipsesource.schema.SchemaType
 import play.api.libs.json._
 import uk.gov.hmrc.play.config.ServicesConfig
@@ -29,17 +30,14 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 import uk.gov.hmrc.http.{CoreGet, CorePost, HeaderCarrier, HttpResponse}
-import uk.gov.hmrc.play.http.ws.{WSGet, WSPost}
 
 @Singleton
-class RnrbConnector @Inject()() extends ServicesConfig {
+class RnrbConnector @Inject()(http: WSHttp) extends ServicesConfig {
   implicit val hc: HeaderCarrier = HeaderCarrier()
   lazy val serviceUrl = baseUrl("residence-nil-rate-band-calculator")
   val baseSegment = "/residence-nil-rate-band-calculator/"
   val schemaBaseSegment = s"${baseSegment}api/conf/0.1/schemas/"
   val jsonContentTypeHeader = ("Content-Type", "application/json")
-  lazy val http: WSHttp with WSGet with WSPost = WSHttp
-
 
   def getStyleGuide = http.GET(s"$serviceUrl${baseSegment}style-guide")
 

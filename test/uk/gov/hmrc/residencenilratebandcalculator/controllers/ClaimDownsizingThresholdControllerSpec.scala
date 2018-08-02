@@ -28,12 +28,12 @@ class ClaimDownsizingThresholdControllerSpec extends SimpleControllerSpecBase {
 
   def createView = (value: Option[Map[String, String]]) => {
     value match {
-      case None => claim_downsizing_threshold(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, applicationProvider)
-      case Some(v) => claim_downsizing_threshold(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, applicationProvider)
+      case None => claim_downsizing_threshold(frontendAppConfig, BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+      case Some(v) => claim_downsizing_threshold(frontendAppConfig, BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
     }
   }
 
-  def createController = () => new ClaimDownsizingThresholdController(messagesApi, mockSessionConnector, navigator, applicationProvider)
+  def createController = () => new ClaimDownsizingThresholdController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
 
   val testValue = true
 

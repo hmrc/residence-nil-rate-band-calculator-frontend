@@ -25,17 +25,17 @@ class CalculateThresholdIncreaseViewSpec extends ViewSpecBase {
 
   "Calculate Threshold Increase view" must {
     "display the correct browser title" in {
-      val doc = asDocument(calculate_threshold_increase()(request, messages, applicationProvider))
+      val doc = asDocument(calculate_threshold_increase(frontendAppConfig)(request, messages, applicationProvider, localPartialRetriever))
       assertEqualsMessage(doc, "title", s"$messageKeyPrefix.browser_title")
     }
 
     "display the correct title" in {
-      val doc = asDocument(calculate_threshold_increase()(request, messages, applicationProvider))
+      val doc = asDocument(calculate_threshold_increase(frontendAppConfig)(request, messages, applicationProvider, localPartialRetriever))
       assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.title")
     }
 
     "display the correct guidance" in {
-      val doc = asDocument(calculate_threshold_increase()(request, messages, applicationProvider))
+      val doc = asDocument(calculate_threshold_increase(frontendAppConfig)(request, messages, applicationProvider, localPartialRetriever))
       assertContainsMessages(
         doc,
         s"$messageKeyPrefix.guidance1",
@@ -47,7 +47,7 @@ class CalculateThresholdIncreaseViewSpec extends ViewSpecBase {
     }
 
     "display a Start button linking to the 'Date Of Death' page" in {
-      val doc = asDocument(calculate_threshold_increase()(request, messages, applicationProvider))
+      val doc = asDocument(calculate_threshold_increase(frontendAppConfig)(request, messages, applicationProvider, localPartialRetriever))
       val startLink = doc.getElementById("start")
       startLink.className shouldBe "button button--get-started"
       startLink.attr("href") shouldBe routes.DateOfDeathController.onPageLoad().url
@@ -55,7 +55,7 @@ class CalculateThresholdIncreaseViewSpec extends ViewSpecBase {
     }
 
     "not display the HMRC logo" in {
-      val doc = asDocument(calculate_threshold_increase()(request, messages, applicationProvider))
+      val doc = asDocument(calculate_threshold_increase(frontendAppConfig)(request, messages, applicationProvider, localPartialRetriever))
       assertNotRenderedByCssSelector(doc, ".organisation-logo")
     }
   }

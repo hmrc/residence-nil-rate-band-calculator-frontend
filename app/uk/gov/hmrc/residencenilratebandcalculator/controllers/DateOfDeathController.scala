@@ -17,8 +17,9 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
+
 import com.google.inject.Provider
-import play.api.{Application, Logger}
+import play.api.Application
 import play.api.data.Form
 import play.api.i18n.MessagesApi
 import play.api.libs.json.{Reads, Writes}
@@ -28,22 +29,25 @@ import uk.gov.hmrc.http.logging.SessionId
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 import uk.gov.hmrc.residencenilratebandcalculator.models.{Date, UserAnswers}
+import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 import scala.concurrent.Future
 
 @Singleton
-class DateOfDeathController @Inject()(val messagesApi: MessagesApi,
+class DateOfDeathController @Inject()(val appConfig: FrontendAppConfig,
+                                      val messagesApi: MessagesApi,
                                       val sessionConnector: SessionConnector,
                                       val navigator: Navigator,
-                                      implicit val applicationProvider: Provider[Application]) extends ControllerBase[Date] {
+                                      implicit val applicationProvider: Provider[Application],
+                                      implicit val localPartialRetriever: LocalPartialRetriever) extends ControllerBase[Date] {
 
-  lazy val controllerId = Constants.dateOfDeathId
+  val controllerId = Constants.dateOfDeathId
 
   def form: Form[Date] = dateOfDeathForm
 
-  def view(form: Form[Date])(implicit request: Request[_]) = date_of_death(form)
+  def view(form: Form[Date])(implicit request: Request[_]) = date_of_death(appConfig, form)
 
   def onPageLoad(implicit rds: Reads[Date]) = Action.async { implicit request =>
     sessionConnector.fetch().map(

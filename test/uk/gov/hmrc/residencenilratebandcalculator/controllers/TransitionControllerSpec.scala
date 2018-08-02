@@ -32,11 +32,13 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, GetReason, 
 import scala.concurrent.Future
 import uk.gov.hmrc.http.HeaderCarrier
 
-class TransitionControllerSpec extends BaseSpec with MockSessionConnector {
+class TransitionControllerSpec extends BaseSpec with WithFakeApplication with MockSessionConnector {
 
   val fakeRequest = FakeRequest("", "")
 
   val injector = fakeApplication.injector
+
+  def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
   def mockMessagesApi = injector.instanceOf[MessagesApi]
 

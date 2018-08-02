@@ -26,11 +26,10 @@ import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import play.api.mvc._
 
 @Singleton
-class CustomLanguageController @Inject()(implicit val messagesApi: MessagesApi)
+class CustomLanguageController @Inject()(val appConfig: FrontendAppConfig, implicit val messagesApi: MessagesApi)
 extends Controller with RunMode with I18nSupport {
 
   val englishLang = Lang("en")
-  val appConfig = FrontendAppConfig
 
   def langToCall(lang: String): Call = {
     if(appConfig.isWelshEnabled) {

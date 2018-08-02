@@ -21,7 +21,6 @@ import org.joda.time.LocalDate
 import org.mockito.ArgumentCaptor
 import org.mockito.Mockito._
 import org.mockito.ArgumentMatchers._
-import org.scalatest.BeforeAndAfterEach
 import org.scalatest.mockito.MockitoSugar
 import play.api.http.Status
 import play.api.libs.json._
@@ -32,20 +31,14 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, Calc
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
-import uk.gov.hmrc.http.{HeaderCarrier, HttpReads, HttpResponse}
+import uk.gov.hmrc.http.{ HeaderCarrier, HttpReads, HttpResponse }
+
 import uk.gov.hmrc.play.http.logging.MdcLoggingExecutionContext._
-import uk.gov.hmrc.play.http.ws.{WSGet, WSPost}
 
-class RnrbConnectorSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEach {
-
-  override def beforeEach(): Unit = {
-    reset(httpMock)
-    super.beforeEach()
-  }
-
-  val httpMock = mock[WSHttp]
+class RnrbConnectorSpec extends BaseSpec with WithFakeApplication with MockitoSugar {
 
   def getHttpMock(returnedData: JsValue) = {
+    val httpMock = mock[WSHttp]
     when(httpMock.POST(anyString, any[JsValue], any[Seq[(String, String)]])(any[Writes[Any]], any[HttpReads[Any]],
       any[HeaderCarrier], any())) thenReturn Future.successful(HttpResponse(Status.OK, Some(returnedData)))
     when(httpMock.GET(anyString)(any[HttpReads[Any]], any[HeaderCarrier], any())) thenReturn Future.successful(HttpResponse(Status.OK, Some(returnedData)))
@@ -71,9 +64,7 @@ class RnrbConnectorSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEa
         val headersCaptor = ArgumentCaptor.forClass(classOf[Seq[(String, String)]])
         val httpMock = getHttpMock(minimalJson)
 
-        val connector = new RnrbConnector() {
-          override lazy val http: WSHttp with WSGet with WSPost = httpMock
-        }
+        val connector = new RnrbConnector(httpMock)
         await(connector.send(calculationInput))
 
         verify(httpMock).POST(urlCaptor.capture, bodyCaptor.capture, headersCaptor.capture)(jsonWritesNapper.capture,
@@ -92,10 +83,7 @@ class RnrbConnectorSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEa
         val calculationResult = CalculationResult(residenceNilRateAmount, applicableNilRateBandAmount, carryForwardAmount,
           defaultAllowanceAmount, adjustedAllowanceAmount)
 
-        val result = await(new RnrbConnector {
-          override lazy val http: WSHttp with WSGet with WSPost = httpMock
-          getHttpMock(Json.toJson(calculationResult))
-        }.send(calculationInput))
+        val result = await(new RnrbConnector(getHttpMock(Json.toJson(calculationResult))).send(calculationInput))
 
         result.get shouldBe calculationResult
       }
@@ -103,10 +91,7 @@ class RnrbConnectorSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEa
       "return a string representing the error when send method fails" in {
         val errorResponse = JsString("Something went wrong!")
 
-        val result = await(new RnrbConnector {
-          override lazy val http: WSHttp with WSGet with WSPost = httpMock
-          getHttpMock(errorResponse)
-        }.send(calculationInput))
+        val result = await(new RnrbConnector(getHttpMock(errorResponse)).send(calculationInput))
 
         result match {
           case Failure(exception) => {
@@ -129,9 +114,7 @@ class RnrbConnectorSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEa
         val headersCaptor = ArgumentCaptor.forClass(classOf[Seq[(String, String)]])
         val httpMock = getHttpMock(minimalJson)
 
-        val connector = new RnrbConnector() {
-          override lazy val http: WSHttp with WSGet with WSPost = httpMock
-        }
+        val connector = new RnrbConnector(httpMock)
         await(connector.sendJson(minimalJson))
 
         verify(httpMock).POST(urlCaptor.capture, bodyCaptor.capture, headersCaptor.capture)(jsonWritesNapper.capture,
@@ -150,10 +133,7 @@ class RnrbConnectorSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEa
         val calculationResult = CalculationResult(residenceNilRateAmount, applicableNilRateBandAmount, carryForwardAmount,
           defaultAllowanceAmount, adjustedAllowanceAmount)
 
-        val result = await(new RnrbConnector {
-          override lazy val http: WSHttp with WSGet with WSPost = httpMock
-          getHttpMock(Json.toJson(calculationResult))
-        }.sendJson(minimalJson))
+        val result = await(new RnrbConnector(getHttpMock(Json.toJson(calculationResult))).sendJson(minimalJson))
 
         result.get shouldBe calculationResult
       }
@@ -161,10 +141,7 @@ class RnrbConnectorSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEa
       "return a string representing the error when send method fails" in {
         val errorResponse = JsString("Something went wrong!")
 
-        val result = await(new RnrbConnector {
-          override lazy val http: WSHttp with WSGet with WSPost = httpMock
-          getHttpMock(errorResponse)
-        }.sendJson(minimalJson))
+        val result = await(new RnrbConnector(getHttpMock(errorResponse)).sendJson(minimalJson))
 
         result match {
           case Failure(exception) => {
@@ -176,19 +153,13 @@ class RnrbConnectorSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEa
       }
 
       "return a schema when JSON representing a schema is received" in {
-        val result = await(new RnrbConnector {
-          override lazy val http: WSHttp with WSGet with WSPost = httpMock
-          getHttpMock(minimalJson)
-        }.getSuccessfulResponseSchema)
+        val result = await(new RnrbConnector(getHttpMock(minimalJson)).getSuccessfulResponseSchema)
 
         result shouldBe Success(Json.fromJson[SchemaType](minimalJson).get)
       }
 
       "return an error when JSON not representing a schema is received" in {
-        val result = await(new RnrbConnector {
-          override lazy val http: WSHttp with WSGet with WSPost = httpMock
-          getHttpMock(Json.parse("{\"type\": 0}"))
-        }.getSuccessfulResponseSchema)
+        val result = await(new RnrbConnector(getHttpMock(Json.parse("{\"type\": 0}"))).getSuccessfulResponseSchema)
 
         result match {
           case Failure(exception) => {

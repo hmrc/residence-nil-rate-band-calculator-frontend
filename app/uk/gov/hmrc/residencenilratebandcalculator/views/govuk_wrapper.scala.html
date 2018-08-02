@@ -21,6 +21,7 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.CustomLanguageController
 @import play.api.Application; import com.google.inject.Provider
 @import play.api.Play.current
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 
 @(appConfig: uk.gov.hmrc.residencenilratebandcalculator.AppConfig,
   title: String,
@@ -34,7 +35,7 @@
   serviceInfoContent: Html = HtmlFormat.empty,
   scriptElem: Option[Html] = None,
   betaBanner: Html = HtmlFormat.empty,
-  enableTimeout: Boolean = true)(implicit request: Request[_], messages: Messages)
+  enableTimeout: Boolean = true)(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], localPartialRetriever: LocalPartialRetriever)
 
 
 @head = {
@@ -101,7 +102,7 @@
       serviceInfoContent = Some(serviceInfoContent))
 }
 
-@lc = @{Application.instanceCache[CustomLanguageController].apply(current) }
+@lc = @{Application.instanceCache[CustomLanguageController].apply(applicationProvider.get) }
     @mainContentHeader = {
         @if(appConfig.isWelshEnabled){
             @{
@@ -119,7 +120,7 @@
 }
 
 @getHelpForm = {
-    @{uiHelpers.reportAProblemLink(appConfig.reportAProblemPartialUrl, appConfig.reportAProblemNonJSUrl)}
+    @rnrbHelpers.get_help_form(appConfig = appConfig)
 }
 
 @content = {

@@ -20,10 +20,11 @@ import org.joda.time.LocalDate
 import org.mockito.Mockito._
 import org.scalatest.Matchers
 import org.scalatest.mockito.MockitoSugar
+import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 
-class NavigatorSpec extends BaseSpec with MockitoSugar with Matchers {
+class NavigatorSpec extends BaseSpec with MockitoSugar with Matchers with WithFakeApplication {
   val navigator = new Navigator
 
   "Navigator" must {

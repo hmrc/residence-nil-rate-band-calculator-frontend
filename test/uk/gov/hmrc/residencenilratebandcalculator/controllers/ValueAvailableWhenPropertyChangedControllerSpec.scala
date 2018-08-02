@@ -40,7 +40,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 
-class ValueAvailableWhenPropertyChangedControllerSpec extends BaseSpec with HttpResponseMocks with MockSessionConnector {
+class ValueAvailableWhenPropertyChangedControllerSpec extends BaseSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
 
   val errorKeyBlank = "value_available_when_property_changed.error.blank"
   val errorKeyDecimal = "error.whole_pounds"
@@ -52,6 +52,8 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends BaseSpec with Http
   val injector = fakeApplication.injector
 
   val navigator = injector.instanceOf[Navigator]
+
+  def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
   def messagesApi = injector.instanceOf[MessagesApi]
 
@@ -66,15 +68,15 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends BaseSpec with Http
   def createView = (value: Option[Map[String, String]]) => {
     val answerRow = new AnswerRow("What was the date the property was disposed of?", "11 May 2018", routes.DatePropertyWasChangedController.onPageLoad().url)
     value match {
-      case None => value_available_when_property_changed("£100,000", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider)
-      case Some(v) => value_available_when_property_changed("£100,000",
-        NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(answerRow))(fakeRequest, messages, applicationProvider)
+      case None => value_available_when_property_changed(frontendAppConfig, "£100,000", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
+      case Some(v) => value_available_when_property_changed(frontendAppConfig, "£100,000",
+        NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
     }
   }
 
   def testValue = "100000"
 
-  def createController = () => new ValueAvailableWhenPropertyChangedController(messagesApi, mockSessionConnector, navigator, mockRnrbConnector,applicationProvider)
+  def createController = () => new ValueAvailableWhenPropertyChangedController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, mockRnrbConnector, applicationProvider, localPartialRetriever)
 
   "Value Available When Property Changed Controller" must {
 
