@@ -37,8 +37,7 @@ private object AppDependencies {
     "uk.gov.hmrc" %% "http-caching-client" % httpCachingClientVersion,
     "com.eclipsesource" %% "play-json-schema-validator" % playJsonValidatorVersion,
     "org.apache.pdfbox" % "pdfbox" % pdfBoxVersion,
-    "uk.gov.hmrc" %% "play-language" % playLanguageVersion,
-    "org.scalatestplus.play" %% "scalatestplus-play" % scalatestplus
+    "uk.gov.hmrc" %% "play-language" % playLanguageVersion
   )
 
   trait TestDependencies {

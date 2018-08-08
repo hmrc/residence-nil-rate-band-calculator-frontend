@@ -19,11 +19,10 @@ package uk.gov.hmrc.residencenilratebandcalculator
 import com.google.inject.Provider
 import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.Application
-import uk.gov.hmrc.play.test.UnitSpec
+import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 
-class BaseSpec extends UnitSpec with MockitoSugar with GuiceOneAppPerSuite {
+class BaseSpec extends UnitSpec with MockitoSugar with WithFakeApplication {
   def applicationProvider: Provider[Application] = {
     val mockedProviderApplication: Provider[Application] = mock[Provider[Application]]
     when(mockedProviderApplication.get) thenReturn fakeApplication
