@@ -26,6 +26,7 @@ private object AppDependencies {
   private val playReactivemongoVersion = "6.2.0"
   private val pdfBoxVersion = "2.0.4"
   private val playLanguageVersion = "3.4.0"
+  private val scalatestplus = "2.0.1"
 
   val compile = Seq(
     "uk.gov.hmrc" %% "play-reactivemongo" % playReactivemongoVersion,

@@ -27,7 +27,7 @@ class PartOfEstatePassingToDirectDescendantsViewSpec extends BooleanViewSpecBase
 
   val messageKeyPrefix = "part_of_estate_passing_to_direct_descendants"
 
-  def createView(form: Form[Boolean]) = part_of_estate_passing_to_direct_descendants(frontendAppConfig, form, Seq())(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Form[Boolean]) = part_of_estate_passing_to_direct_descendants(form, Seq())(request, messages, applicationProvider)
 
   "Part Of Estate Passing To Direct Descendants View" must {
 

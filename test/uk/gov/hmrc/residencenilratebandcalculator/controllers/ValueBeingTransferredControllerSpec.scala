@@ -39,7 +39,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 
-class ValueBeingTransferredControllerSpec extends BaseSpec with WithFakeApplication with HttpResponseMocks with MockSessionConnector {
+class ValueBeingTransferredControllerSpec extends BaseSpec with HttpResponseMocks with MockSessionConnector {
 
   val errorKeyBlank = "value_being_transferred.error.blank"
   val errorKeyDecimal = "error.whole_pounds"
@@ -51,8 +51,6 @@ class ValueBeingTransferredControllerSpec extends BaseSpec with WithFakeApplicat
   val injector = fakeApplication.injector
 
   val navigator = injector.instanceOf[Navigator]
-
-  def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
   def messagesApi = injector.instanceOf[MessagesApi]
 
@@ -67,20 +65,20 @@ class ValueBeingTransferredControllerSpec extends BaseSpec with WithFakeApplicat
   def createView = (value: Option[Map[String, String]]) => {
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
-      case None => value_being_transferred(frontendAppConfig, "£100,000.00", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
-      case Some(v) => value_being_transferred(frontendAppConfig, "£100,000.00", NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
+      case None => value_being_transferred("£100,000.00", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider)
+      case Some(v) => value_being_transferred("£100,000.00", NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(answerRow))(fakeRequest, messages, applicationProvider)
     }
   }
 
   def createViewWithBacklink = (value: Option[Map[String, String]]) => {
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
-      case None => value_being_transferred(frontendAppConfig, "£100,000.00", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
-      case Some(v) => value_being_transferred(frontendAppConfig,  "£100,000.00", NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(answerRow))(fakeRequest, messages, applicationProvider, localPartialRetriever)
+      case None => value_being_transferred("£100,000.00", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider)
+      case Some(v) => value_being_transferred( "£100,000.00", NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(answerRow))(fakeRequest, messages, applicationProvider)
     }
   }
 
-  def createController = () => new ValueBeingTransferredController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, mockRnrbConnector, applicationProvider, localPartialRetriever)
+  def createController = () => new ValueBeingTransferredController(messagesApi, mockSessionConnector, navigator, mockRnrbConnector,applicationProvider)
 
   def testValue = "100000"
 

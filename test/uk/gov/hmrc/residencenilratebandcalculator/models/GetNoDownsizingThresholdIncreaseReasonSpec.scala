@@ -18,11 +18,10 @@ package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
-import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThresholdIncreaseReason.{DatePropertyWasChangedTooEarly, NoAssetsPassingToDirectDescendants}
 
-class GetNoDownsizingThresholdIncreaseReasonSpec extends BaseSpec with WithFakeApplication with MockitoSugar {
+class GetNoDownsizingThresholdIncreaseReasonSpec extends BaseSpec with MockitoSugar {
   "Get No Downsizing Threshold Increase Reason" must {
     "get the 'no assets passing to a direct descendant' reason when there are no assets passing to direct descendants" in {
       val userAnswers = mock[UserAnswers]

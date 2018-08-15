@@ -28,22 +28,19 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PropertyPassingToDirectDescendantsForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_passing_to_direct_descendants
 
 @Singleton
-class PropertyPassingToDirectDescendantsController @Inject()(override val appConfig: FrontendAppConfig,
-                                                             val messagesApi: MessagesApi,
+class PropertyPassingToDirectDescendantsController @Inject()(val messagesApi: MessagesApi,
                                                              override val sessionConnector: SessionConnector,
                                                              override val navigator: Navigator,
-                                                             implicit val applicationProvider: Provider[Application],
-                                                             implicit val localPartialRetriever: LocalPartialRetriever) extends SimpleControllerBase[String] {
+                                                             implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[String] {
 
   override val controllerId: String = Constants.propertyPassingToDirectDescendantsId
 
   override def form: () => Form[String] = () => PropertyPassingToDirectDescendantsForm()
 
   override def view(form: Form[String], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    property_passing_to_direct_descendants(appConfig, form, answerRows)
+    property_passing_to_direct_descendants(form, answerRows)
   }
 }

@@ -18,25 +18,23 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.play.test.WithFakeApplication
-import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.session_expired
 
-class SessionExpiredControllerSpec extends HtmlSpec with WithFakeApplication with MockSessionConnector {
+class SessionExpiredControllerSpec extends HtmlSpec with MockSessionConnector {
 
   val fakeRequest = FakeRequest("", "")
 
   "Session Expired controller" must {
 
     "return 200 for a GET" in {
-      val result = new SessionExpiredController(frontendAppConfig, messagesApi, mockSessionConnector, applicationProvider, localPartialRetriever).onPageLoad()(fakeRequest)
+      val result = new SessionExpiredController(messagesApi, mockSessionConnector, applicationProvider).onPageLoad()(fakeRequest)
       status(result) shouldBe 200
     }
 
     "return the View for a GET" in {
-      val result = new SessionExpiredController(frontendAppConfig, messagesApi, mockSessionConnector, applicationProvider, localPartialRetriever).onPageLoad()(fakeRequest)
-      contentAsString(result) shouldBe session_expired(frontendAppConfig)(fakeRequest, messages, applicationProvider, localPartialRetriever).toString
+      val result = new SessionExpiredController(messagesApi, mockSessionConnector, applicationProvider).onPageLoad()(fakeRequest)
+      contentAsString(result) shouldBe session_expired()(fakeRequest, messages, applicationProvider).toString
     }
   }
 }

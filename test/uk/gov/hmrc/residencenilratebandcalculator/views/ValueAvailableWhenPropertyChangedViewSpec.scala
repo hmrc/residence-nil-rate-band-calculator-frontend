@@ -17,8 +17,9 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueAvailableWhenPropertyChangedController
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.Navigator
+import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.{SimpleControllerSpecBase, ValueAvailableWhenPropertyChangedController, routes}
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_available_when_property_changed
 
@@ -27,21 +28,25 @@ import scala.language.reflectiveCalls
 class ValueAvailableWhenPropertyChangedViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "value_available_when_property_changed"
+  val navigator = injector.instanceOf[Navigator]
+  var mockSessionConnector: SessionConnector = _
+  val mockRnrbConnector : RnrbConnector = mock[RnrbConnector]
+  val controller = new ValueAvailableWhenPropertyChangedController(messagesApi, mockSessionConnector, navigator, mockRnrbConnector, applicationProvider).form()
 
-  def createView(form: Form[Int]) = value_available_when_property_changed(frontendAppConfig,  "100000", form, Seq())(request, messages, applicationProvider, localPartialRetriever)
+  def createView(form: Form[Int]) = value_available_when_property_changed("100000", form, Seq())(request, messages, applicationProvider)
 
   "Value Available When Property Changed View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1")(fakeApplication.injector.instanceOf[ValueAvailableWhenPropertyChangedController].form())
+    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1")(controller)
 
-    behave like pageWithoutBackLink[Int](createView, fakeApplication.injector.instanceOf[ValueAvailableWhenPropertyChangedController].form())
+    behave like pageWithoutBackLink[Int](createView, controller)
 
-    behave like intPage(createView, messageKeyPrefix, ValueAvailableWhenPropertyChangedController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), fakeApplication.injector.instanceOf[ValueAvailableWhenPropertyChangedController].form())
+    behave like intPage(createView, messageKeyPrefix, routes.ValueAvailableWhenPropertyChangedController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), controller)
 
-    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[ValueAvailableWhenPropertyChangedController].form())
+    behave like pageContainingPreviousAnswers(createView, controller)
 
     "contain the appropriate maximum value of transferable residence nil rate band" in {
-      val doc = asDocument(createView(fakeApplication.injector.instanceOf[ValueAvailableWhenPropertyChangedController].form()))
+      val doc = asDocument(createView(controller))
       val maxValue = "100000"
       assertContainsText(doc, maxValue)
     }

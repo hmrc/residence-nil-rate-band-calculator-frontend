@@ -32,11 +32,11 @@ class PropertyValueControllerSpec extends SimpleControllerSpecBase {
 
   "Property Value Controller" must {
     def createView = (value: Option[Map[String, String]]) => value match {
-      case None => property_value(frontendAppConfig, NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
-      case Some(v) => property_value(frontendAppConfig, NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever)
+      case None => property_value(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq())(fakeRequest, messages, applicationProvider)
+      case Some(v) => property_value(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages, applicationProvider)
     }
 
-    def createController = () => new PropertyValueController(frontendAppConfig, messagesApi, mockSessionConnector, navigator, applicationProvider, localPartialRetriever)
+    def createController = () => new PropertyValueController(messagesApi, mockSessionConnector, navigator, applicationProvider)
 
     val testValue = 123
 

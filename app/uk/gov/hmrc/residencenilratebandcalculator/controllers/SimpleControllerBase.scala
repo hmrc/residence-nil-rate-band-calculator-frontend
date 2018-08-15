@@ -39,7 +39,7 @@ trait ControllerBase[A] extends FrontendController with I18nSupport {
 
 trait SimpleControllerBase[A] extends ControllerBase[A] {
 
-  val appConfig: FrontendAppConfig
+  val appConfig = FrontendAppConfig
 
   val controllerId: String
 

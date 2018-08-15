@@ -27,17 +27,15 @@ import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRows
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetUnableToCalculateThresholdIncreaseReason.GrossingUpForResidence
-import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.unable_to_calculate_threshold_increase
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants, FrontendAppConfig}
 
-class UnableToCalculateThresholdIncreaseControllerSpec extends BaseSpec with WithFakeApplication with MockSessionConnector {
+class UnableToCalculateThresholdIncreaseControllerSpec extends BaseSpec with MockSessionConnector {
 
   val fakeRequest = FakeRequest("", "")
 
   val injector = fakeApplication.injector
 
-  def frontendAppConfig = injector.instanceOf[FrontendAppConfig]
   def messagesApi = injector.instanceOf[MessagesApi]
   def messages = messagesApi.preferred(fakeRequest)
 
@@ -67,18 +65,18 @@ class UnableToCalculateThresholdIncreaseControllerSpec extends BaseSpec with Wit
 
   "Transition controller" must {
     "return 200 for a GET" in {
-      val result = new UnableToCalculateThresholdIncreaseController(frontendAppConfig, messagesApi, mockSessionConnector, applicationProvider, localPartialRetriever).onPageLoad()(fakeRequest)
+      val result = new UnableToCalculateThresholdIncreaseController(messagesApi, mockSessionConnector, applicationProvider).onPageLoad()(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return the Unable To Calculate Threshold Increase view for a GET" in {
-      val result = new UnableToCalculateThresholdIncreaseController(frontendAppConfig, messagesApi, mockSessionConnector, applicationProvider, localPartialRetriever).onPageLoad()(fakeRequest)
+      val result = new UnableToCalculateThresholdIncreaseController(messagesApi, mockSessionConnector, applicationProvider).onPageLoad()(fakeRequest)
       contentAsString(result) shouldBe
-        unable_to_calculate_threshold_increase(frontendAppConfig, "unable_to_calculate_threshold_increase.grossing_up", Seq())(fakeRequest, messages, applicationProvider, localPartialRetriever).toString
+        unable_to_calculate_threshold_increase("unable_to_calculate_threshold_increase.grossing_up", Seq())(fakeRequest, messages, applicationProvider).toString
     }
 
     "The answer constants should be the same as the calulated constants for the controller when the reason is GrossingUpForResidence" in {
-      val controller = new UnableToCalculateThresholdIncreaseController(frontendAppConfig, messagesApi, mockSessionConnector, applicationProvider, localPartialRetriever)
+      val controller = new UnableToCalculateThresholdIncreaseController(messagesApi, mockSessionConnector, applicationProvider)
       val controllerId = controller.getControllerId(GrossingUpForResidence)
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
@@ -94,7 +92,7 @@ class UnableToCalculateThresholdIncreaseControllerSpec extends BaseSpec with Wit
     }
 
     "The answer constants should be the same as the calulated constants for the controller when the reason is GrossingUpForOtherProperty" in {
-      val controller = new UnableToCalculateThresholdIncreaseController(frontendAppConfig, messagesApi, mockSessionConnector, applicationProvider, localPartialRetriever)
+      val controller = new UnableToCalculateThresholdIncreaseController(messagesApi, mockSessionConnector, applicationProvider)
       val controllerId = controller.getControllerId(GrossingUpForResidence)
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)

@@ -27,16 +27,13 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.utils.LocalPartialRetriever
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_changed_property
 
 @Singleton
-class ValueOfChangedPropertyController @Inject()(override val appConfig: FrontendAppConfig,
-                                                  val messagesApi: MessagesApi,
-                                                  override val sessionConnector: SessionConnector,
-                                                  override val navigator: Navigator,
-                                                 implicit val applicationProvider: Provider[Application],
-                                                 implicit val localPartialRetriever: LocalPartialRetriever) extends SimpleControllerBase[Int] {
+class ValueOfChangedPropertyController @Inject()(val messagesApi: MessagesApi,
+                                                 override val sessionConnector: SessionConnector,
+                                                 override val navigator: Navigator,
+                                                 implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[Int] {
 
   override val controllerId = Constants.valueOfChangedPropertyId
 
@@ -44,6 +41,6 @@ class ValueOfChangedPropertyController @Inject()(override val appConfig: Fronten
     NonNegativeIntForm("value_of_changed_property.error.blank", "error.whole_pounds", "error.non_numeric", "error.value_too_large")
 
   override def view(form: Form[Int], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    value_of_changed_property(appConfig, form, answerRows)
+    value_of_changed_property(form, answerRows)
   }
 }
