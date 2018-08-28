@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.connectors
 
-import com.eclipsesource.schema.SchemaType
 import org.joda.time.LocalDate
 import org.mockito.ArgumentCaptor
 import org.mockito.Mockito._
@@ -172,30 +171,6 @@ class RnrbConnectorSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEa
             exception.getMessage() shouldBe List.fill(5)("JSON error: error.path.missing\n").mkString("")
           }
           case Success(_) => fail
-        }
-      }
-
-      "return a schema when JSON representing a schema is received" in {
-        val result = await(new RnrbConnector {
-          override lazy val http: WSHttp with WSGet with WSPost = httpMock
-          getHttpMock(minimalJson)
-        }.getSuccessfulResponseSchema)
-
-        result shouldBe Success(Json.fromJson[SchemaType](minimalJson).get)
-      }
-
-      "return an error when JSON not representing a schema is received" in {
-        val result = await(new RnrbConnector {
-          override lazy val http: WSHttp with WSGet with WSPost = httpMock
-          getHttpMock(Json.parse("{\"type\": 0}"))
-        }.getSuccessfulResponseSchema)
-
-        result match {
-          case Failure(exception) => {
-            exception shouldBe a[JsonInvalidException]
-            exception.getMessage shouldBe "Invalid JSON schema"
-          }
-          case Success(json) => fail
         }
       }
     }

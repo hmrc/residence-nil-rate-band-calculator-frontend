@@ -16,45 +16,27 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.json
 
-import com.eclipsesource.schema.{SchemaType, SchemaValidator}
 import play.api.data.validation.ValidationError
 import play.api.libs.json._
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
 class JsonErrorProcessorSpec extends BaseSpec {
-  val schema = Json.fromJson[SchemaType](Json.parse("""{
-                                |"$$schema": "http://json-schema.org/draft-04/schema#",
-                                |"title": "Test JsonErrorProcessor",
-                                |"description": "A simple schema to test against",
-                                |"type:": "object",
-                                |"properties": {
-                                |  "aNumber": {"type": "integer", "minimum": 0},
-                                |  "aString": {"type": "string", "pattern": "a+"}
-                                |},
-                                |"required": ["aNumber","aString"]
-                                |}""".stripMargin))
-  val validator = SchemaValidator()
 
   "JsonErrorProcessor" must {
+
     "handle a single error" in {
-      val p = Json.toJson(Map(
-        "aString" -> JsString("aaaaaa")))
-      val result = validator.validate(schema.get, p).asEither
-      result match {
-        case Left(error: Seq[(JsPath, Seq[ValidationError])]) => JsonErrorProcessor(error) shouldBe "JSON error: Property aNumber missing.\n"
-        case Right(success) => fail
-      }
+      val err: ValidationError = ValidationError(List("This thing wasn't there when it shoulda."))
+
+      JsonErrorProcessor(Seq((JsPath(), Seq(err))))
+        .shouldBe("JSON error: This thing wasn't there when it shoulda.\n")
     }
 
     "handle a multiple errors" in {
-      val p = Json.toJson(Map(
-        "aString" -> JsString("bbbbb")))
-      val result = validator.validate(schema.get, p).asEither
-      result match {
-        case Left(error: Seq[(JsPath, Seq[ValidationError])]) => JsonErrorProcessor(error) shouldBe
-          "JSON error: 'bbbbb' does not match pattern a+.\nJSON error: Property aNumber missing.\n"
-        case Right(success) => fail
-      }
+      val err1: ValidationError = ValidationError(List("Value missing."))
+      val err2: ValidationError = ValidationError(List("String provided, Int required."))
+
+      JsonErrorProcessor(Seq((JsPath(), Seq(err1)), (JsPath(), Seq(err2))))
+        .shouldBe("JSON error: Value missing.\nJSON error: String provided, Int required.\n")
     }
   }
 }

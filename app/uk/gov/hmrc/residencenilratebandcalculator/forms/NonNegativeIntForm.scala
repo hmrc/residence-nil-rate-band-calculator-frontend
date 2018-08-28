@@ -19,7 +19,6 @@ package uk.gov.hmrc.residencenilratebandcalculator.forms
 import play.api.data.{Form, FormError}
 import play.api.data.Forms._
 import play.api.data.format.Formatter
-import scalaz.std.math.bigDecimal
 
 import scala.util.Try
 

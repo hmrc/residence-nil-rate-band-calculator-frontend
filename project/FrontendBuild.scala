@@ -22,7 +22,6 @@ private object AppDependencies {
   private val mockitoCoreVersion = "2.13.0"
   private val whitelistVersion = "2.0.0"
   private val httpCachingClientVersion = "7.1.0"
-  private val playJsonValidatorVersion = "0.8.6"
   private val playReactivemongoVersion = "6.2.0"
   private val pdfBoxVersion = "2.0.4"
   private val playLanguageVersion = "3.4.0"
@@ -35,7 +34,6 @@ private object AppDependencies {
     "uk.gov.hmrc" %% "play-partials" % playPartialsVersion,
     "uk.gov.hmrc" %% "play-whitelist-filter" % whitelistVersion,
     "uk.gov.hmrc" %% "http-caching-client" % httpCachingClientVersion,
-    "com.eclipsesource" %% "play-json-schema-validator" % playJsonValidatorVersion,
     "org.apache.pdfbox" % "pdfbox" % pdfBoxVersion,
     "uk.gov.hmrc" %% "play-language" % playLanguageVersion
   )
