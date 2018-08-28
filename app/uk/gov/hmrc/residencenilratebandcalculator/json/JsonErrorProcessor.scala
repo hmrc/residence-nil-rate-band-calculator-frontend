@@ -20,16 +20,16 @@ import play.api.data.validation.ValidationError
 import play.api.libs.json.{JsPath, JsValue}
 
 object JsonErrorProcessor {
-  def validationErrorToString(v: ValidationError): String = {
+  private def validationErrorToString(v: ValidationError): String = {
     v.messages.foldLeft(new StringBuilder())(_ append _).toString()
   }
 
-  def errorTupleToString(t: (JsPath, Seq[ValidationError])): String = {
+  private def errorTupleToString(t: (JsPath, Seq[ValidationError])): String = {
     val validationErrors = t._2.map(validationErrorToString).foldLeft(new StringBuilder())(_ append _).toString()
     "JSON error: " + validationErrors + "\n"
   }
 
-  def apply(err: Seq[(JsPath, Seq[ValidationError])]): String = {
-    err.map(errorTupleToString).foldLeft(new StringBuilder())(_ append _).toString()
+  def apply(errs: Seq[(JsPath, Seq[ValidationError])]): String = {
+    errs.map(errorTupleToString).foldLeft(new StringBuilder())(_ append _).toString()
   }
 }

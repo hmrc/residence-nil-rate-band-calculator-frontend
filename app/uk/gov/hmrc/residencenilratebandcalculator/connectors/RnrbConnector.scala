@@ -17,7 +17,6 @@
 package uk.gov.hmrc.residencenilratebandcalculator.connectors
 
 import javax.inject.{Inject, Singleton}
-import com.eclipsesource.schema.SchemaType
 import play.api.libs.json._
 import uk.gov.hmrc.play.config.ServicesConfig
 import uk.gov.hmrc.residencenilratebandcalculator.WSHttp
@@ -56,18 +55,6 @@ class RnrbConnector @Inject()() extends ServicesConfig {
             }
           }
       }
-
-  def getSuccessfulResponseSchema =
-    http.GET(s"$serviceUrl${schemaBaseSegment}deceaseds-estate.jsonschema").map {
-      response =>
-        Json.fromJson[SchemaType](response.json) match {
-          case JsSuccess(schema, _) => Success(schema)
-          case error: JsError => {
-            val errorLookupResult = (JsError.toJson(error) \ "obj" \ 0 \ "msg" \ 0).as[String]
-            Failure(new JsonInvalidException(errorLookupResult.toString))
-          }
-        }
-    }
 
   def getNilRateBand(dateStr: String): Future[HttpResponse] = http.GET(s"$serviceUrl${baseSegment}nilrateband/$dateStr")
 
