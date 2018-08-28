@@ -25,10 +25,10 @@ class JsonErrorProcessorSpec extends BaseSpec {
   "JsonErrorProcessor" must {
 
     "handle a single error" in {
-      val err: ValidationError = ValidationError(List("This thing wasn't there when it shoulda."))
+      val err: ValidationError = ValidationError(List("This thing wasn't there when it should have been."))
 
       JsonErrorProcessor(Seq((JsPath(), Seq(err))))
-        .shouldBe("JSON error: This thing wasn't there when it shoulda.\n")
+        .shouldBe("JSON error: This thing wasn't there when it should have been.\n")
     }
 
     "handle a multiple errors" in {
