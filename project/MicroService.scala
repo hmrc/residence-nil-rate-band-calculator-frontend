@@ -3,6 +3,8 @@ import sbt._
 import scoverage.ScoverageKeys
 import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin._
 
+import uk.gov.hmrc.versioning.SbtGitVersioning.autoImport.majorVersion
+
 // imports for Asset Pipeline
 import com.typesafe.sbt.digest.Import._
 import com.typesafe.sbt.uglify.Import._
@@ -18,6 +20,7 @@ trait MicroService {
   import uk.gov.hmrc.SbtAutoBuildPlugin
   import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin
   import uk.gov.hmrc.versioning.SbtGitVersioning
+  import uk.gov.hmrc.SbtArtifactory
 
   val appName: String
 
@@ -26,7 +29,7 @@ trait MicroService {
   lazy val playSettings : Seq[Setting[_]] = Seq.empty
 
   lazy val microservice = Project(appName, file("."))
-    .enablePlugins(Seq(play.sbt.PlayScala,SbtAutoBuildPlugin, SbtGitVersioning, SbtDistributablesPlugin) ++ plugins : _*)
+    .enablePlugins(Seq(play.sbt.PlayScala, SbtAutoBuildPlugin, SbtGitVersioning, SbtDistributablesPlugin, SbtArtifactory) ++ plugins : _*)
     .settings(playSettings : _*)
     .settings(
       ScoverageKeys.coverageExcludedFiles := "<empty>;Reverse.*;.*AuthService.*;.*CustomLanguageController.*;models/.data/..*;.*filters.*;.*handlers.*;.*components.*;" +
@@ -51,6 +54,7 @@ trait MicroService {
     .configs(IntegrationTest)
     .settings(inConfig(IntegrationTest)(Defaults.itSettings): _*)
     .settings(integrationTestSettings())
+    .settings(majorVersion := 0)
     .settings(
       // concatenate js
       Concat.groups := Seq(
