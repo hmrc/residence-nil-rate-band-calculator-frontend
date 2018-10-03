@@ -104,14 +104,7 @@
 @lc = @{Application.instanceCache[CustomLanguageController].apply(current) }
     @mainContentHeader = {
         @if(appConfig.isWelshEnabled){
-            @{
-                views.html.language_selection(
-                    lc.languageMap,
-                    lc.langToCall,
-                    Some("translate u-align--right")
-
-            )
-        }
+            <div class="float--right">@language_selection(lc.languageMap, lc.langToCall, None)</div>
     }
     @if(contentHeader.isDefined) {
         @uiLayouts.main_content_header(contentHeader = contentHeader.get)
