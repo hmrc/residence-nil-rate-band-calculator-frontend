@@ -30,9 +30,6 @@ POST       /date-property-was-changed                   @uk.gov.hmrc.residenceni
 GET        /exemptions-and-relief-claimed               @uk.gov.hmrc.residencenilratebandcalculator.controllers.ExemptionsAndReliefClaimedController.onPageLoad
 POST       /exemptions-and-relief-claimed               @uk.gov.hmrc.residencenilratebandcalculator.controllers.ExemptionsAndReliefClaimedController.onSubmit
 
-GET        /exit-questionnaire                          @uk.gov.hmrc.residencenilratebandcalculator.controllers.ExitQuestionnaireController.onPageLoad
-POST       /exit-questionnaire                          @uk.gov.hmrc.residencenilratebandcalculator.controllers.ExitQuestionnaireController.onSubmit
-
 GET        /this-service-has-been-reset                 @uk.gov.hmrc.residencenilratebandcalculator.controllers.SessionExpiredController.onPageLoad
 
 GET        /grossing-up-on-estate-assets                @uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossingUpOnEstateAssetsController.onPageLoad
@@ -89,4 +86,6 @@ POST       /value-of-changed-property                   @uk.gov.hmrc.residenceni
 
 GET        /copy-of-iht-435                             @uk.gov.hmrc.residencenilratebandcalculator.controllers.IHT435Controller.onPageLoad
 
-GET         /language/:lang                             @uk.gov.hmrc.residencenilratebandcalculator.controllers.CustomLanguageController.switchToLanguage(lang: String)
+GET        /language/:lang                              @uk.gov.hmrc.residencenilratebandcalculator.controllers.CustomLanguageController.switchToLanguage(lang: String)
+
+GET        /feedback-survey                             @uk.gov.hmrc.residencenilratebandcalculator.controllers.FeedbackSurveyController.redirectExitSurvey
