@@ -1,0 +1,128 @@
+@*
+ * Copyright 2018 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import play.api.Application; import com.google.inject.Provider
+@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@import uk.gov.hmrc.play.views.html._
+@import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+@import uk.gov.hmrc.residencenilratebandcalculator.utils.{FormHelpers, ExitQuestionnaireFormHelper}
+@import uk.gov.hmrc.residencenilratebandcalculator.models.ExitQuestionnaire
+
+@import uk.gov.hmrc.residencenilratebandcalculator.models.FullName
+@import uk.gov.hmrc.residencenilratebandcalculator.models.Email
+@import uk.gov.hmrc.residencenilratebandcalculator.models.PhoneNumber
+@import uk.gov.hmrc.residencenilratebandcalculator.Constants
+@import uk.gov.hmrc.play.views.html.{helpers => govHelpers}
+
+@(form: Form[ExitQuestionnaire])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application])
+
+@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+    title = messages("exit_questionnaire.browser_title"),
+    appConfig = FrontendAppConfig,
+    bodyClasses = None) {
+
+    @rnrbHelpers.heading("exit_questionnaire.title", "heading-xlarge")
+
+    <p>@messages("exit_questionnaire.guidance")</p>
+
+    <p>@messages("exit_questionnaire.improve_service.label")</p>
+
+    @rnrbHelpers.button_link(messageKey = "service.no_thanks", href=Constants.callExitService.url)
+
+    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ExitQuestionnaireController.onSubmit(), 'autoComplete -> "off") {
+
+        @rnrbHelpers.error_summary(form)
+
+        <legend class="bold-small ">@messages("exit_questionnaire.service_feel.label")</legend>
+        <div class="form-group">
+            <fieldset class="form-group">
+                @govHelpers.inputRadioGroup(
+                    form("serviceFeel"),
+                    Seq("very_satisfied" -> Messages("service_feel.very_satisfied"),
+                    "satisfied" -> Messages("service_feel.satisfied"),
+                    "neither" -> Messages("service_feel.neither"),
+                    "dissatisfied" -> Messages("service_feel.dissatisfied"),
+                    "very_dissatisfied" -> Messages("service_feel.very_dissatisfied")),
+                    '_legend -> messages("exit_questionnaire.service_feel.label"),
+                    '_legendClass -> Some("visuallyhidden")
+                    )
+            </fieldset>
+        </div>
+
+
+        <legend class="bold-small ">@messages("exit_questionnaire.service_difficulty.label")</legend>
+        <div class="form-group">
+            <fieldset class="form-group">
+                @govHelpers.inputRadioGroup(
+                    form("serviceDifficulty"),
+                    Seq("very_easy" -> Messages("service_difficulty.very_easy"),
+                    "easy" -> Messages("service_difficulty.easy"),
+                    "neither" -> Messages("service_difficulty.neither"),
+                    "difficult" -> Messages("service_difficulty.difficult"),
+                    "very_difficult" -> Messages("service_difficulty.very_difficult")),
+                    '_legend -> messages("exit_questionnaire.service_difficulty.label"),
+                    '_legendClass -> Some("visuallyhidden")
+                )
+            </fieldset>
+        </div>
+
+        @govHelpers.textArea(
+            form("comments"),
+            '_inputClass -> "form-control-2-3",
+            '_label -> messages("exit_questionnaire.comments.label"),
+            '_labelClass -> "form-label-bold"
+        )
+
+        <p>@messages("exit_questionnaire.comments.help.2")</p>
+
+        <h2>@messages("exit_questionnaire.user_research.title")</h2>
+
+        <p>@messages("exit_questionnaire.user_research.guidance")</p>
+
+        <div class="form-group">
+            @rnrbHelpers.input_value(
+                form("fullName"),
+                '_inputClass -> "form-control",
+                '_type -> "text",
+                '_labelTextClass -> "form-label form-label-bold",
+                '_label -> messages("exit_questionnaire.full_name.label")
+            )
+        </div>
+
+        <div class="form-group">
+            @rnrbHelpers.input_value(
+                form("email"),
+                '_inputClass -> "form-control",
+                '_type -> "text",
+                '_labelTextClass -> "form-label form-label-bold",
+                '_label -> messages("exit_questionnaire.email.label")
+            )
+        </div>
+
+
+        <div class="form-group">
+            @rnrbHelpers.input_value(
+                form("phoneNumber"),
+                '_inputClass -> "form-control",
+                '_type -> "text",
+                '_labelTextClass -> "form-label form-label-bold",
+                '_label -> messages("exit_questionnaire.phone_number.label")
+            )
+        </div>
+
+        @rnrbHelpers.submit_button()
+    }
+}

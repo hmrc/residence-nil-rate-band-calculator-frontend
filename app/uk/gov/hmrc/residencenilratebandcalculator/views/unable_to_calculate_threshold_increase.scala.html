@@ -17,7 +17,7 @@
 @import play.api.Application; import com.google.inject.Provider
 @import com.google.inject.Provider
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
-@import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.FeedbackSurveyController
+@import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ExitQuestionnaireController
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 @(prefix: String, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application])
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
@@ -43,7 +43,7 @@
     <p>@messages(s"${prefix}.next.guidance5")</p>
 
 
-    <a href="@FeedbackSurveyController.redirectExitSurvey().url" class="button u--no-print">@messages("site.finish")</a>
+    <a href="@ExitQuestionnaireController.onPageLoad().url" class="button u--no-print">@messages("site.finish")</a>
 
     @rnrbHelpers.answer_rows(answerRows)
 }
