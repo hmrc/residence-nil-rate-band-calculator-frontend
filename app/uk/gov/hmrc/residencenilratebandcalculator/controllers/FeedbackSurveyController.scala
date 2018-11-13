@@ -22,12 +22,8 @@ import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 
 import scala.concurrent.Future
 
-object FeedbackSurveyControllerImpl extends FeedbackSurveyController
-
-trait FeedbackSurveyController extends FrontendController {
-
+class FeedbackSurveyController extends FrontendController {
   def redirectExitSurvey: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Redirect(FrontendAppConfig.feedbackSurvey).withNewSession)
   }
-
 }

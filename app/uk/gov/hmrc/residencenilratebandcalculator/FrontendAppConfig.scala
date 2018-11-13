@@ -51,7 +51,7 @@ object FrontendAppConfig extends AppConfig with ServicesConfig {
   override lazy val reportAProblemNonJSUrl = s"$contactHost/contact/problem_reports_nonjs?service=$contactFormServiceIdentifier"
   override lazy val betaFeedbackUrl = s"$contactHost/contact/beta-feedback"
   override lazy val betaFeedbackUnauthenticatedUrl = s"$contactHost/contact/beta-feedback-unauthenticated"
-  override val feedbackSurvey: String = loadConfig(s"feedback-survey-frontend.url")
+  override val feedbackSurvey: String = loadConfig("feedback-survey-frontend.url")
 
   private def whitelistConfig(key: String):Seq[String] = Some(new String(Base64.getDecoder.decode(configuration.getString(key).getOrElse("")), "UTF-8"))
     .map(_.split(",")).getOrElse(Array.empty).toSeq
