@@ -23,7 +23,8 @@ class FeedbackSurveyControllerSpec extends HtmlSpec with MockSessionConnector {
 
   "Feedback Survey controller" must {
     "return 303 for a GET" in {
-      val result =  FeedbackSurveyControllerImpl.redirectExitSurvey(request)
+      val testController = new FeedbackSurveyController
+      val result = testController.redirectExitSurvey(request)
       status(result) shouldBe Status.SEE_OTHER
     }
   }
