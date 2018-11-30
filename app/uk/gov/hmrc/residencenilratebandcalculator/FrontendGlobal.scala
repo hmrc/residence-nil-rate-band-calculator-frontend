@@ -18,16 +18,15 @@ package uk.gov.hmrc.residencenilratebandcalculator
 
 import com.typesafe.config.Config
 import net.ceedubs.ficus.Ficus._
-import play.api.Mode._
 import play.api.mvc.{EssentialFilter, Request}
 import play.api.{Application, Configuration, Play}
 import play.twirl.api.Html
-import uk.gov.hmrc.crypto.ApplicationCrypto
 import uk.gov.hmrc.play.config.{AppName, ControllerConfig, RunMode}
 import uk.gov.hmrc.play.frontend.bootstrap.DefaultFrontendGlobal
 import play.api.i18n.Messages.Implicits._
 import play.api.Play.current
 import uk.gov.hmrc.play.frontend.filters.{FrontendAuditFilter, FrontendLoggingFilter, MicroserviceFilterSupport}
+import uk.gov.hmrc.residencenilratebandcalculator.connectors.FrontendAuditConnector
 import uk.gov.hmrc.residencenilratebandcalculator.filters.SessionIdFilter
 
 object FrontendGlobal
@@ -41,7 +40,7 @@ object FrontendGlobal
 
   override def onStart(app: Application) {
     super.onStart(app)
-    ApplicationCrypto.verifyConfiguration()
+    applicationCrypto.verifyConfiguration()
   }
 
   override def filters: Seq[EssentialFilter] = super.filters ++ Seq(sessionId)

@@ -25,7 +25,7 @@ import org.scalatest.mockito.MockitoSugar
 import play.api.http.Status
 import play.api.libs.json._
 import uk.gov.hmrc.play.test.WithFakeApplication
-import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, WSHttp}
+import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.JsonInvalidException
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, CalculationResult}
 
