@@ -55,7 +55,7 @@
         <p><a href="@routes.IHT435Controller.onPageLoad()">@messages("threshold_calculation_result.pdf.guidance1")</a>. @messages("threshold_calculation_result.pdf.guidance2")</p>
     </div>
 
-    <a class="button u--no-print" href="@routes.ExitQuestionnaireController.onPageLoad().url">@messages("site.finish")</a>
+    <a class="button u--no-print" href="@routes.FeedbackSurveyController.redirectExitSurvey().url">@messages("site.finish")</a>
 
     @rnrbHelpers.answer_rows(answerRows)
 

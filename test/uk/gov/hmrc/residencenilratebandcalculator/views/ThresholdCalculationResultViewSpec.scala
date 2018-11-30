@@ -67,7 +67,7 @@ class ThresholdCalculationResultViewSpec extends HtmlSpec {
 
       "contain a link to the exit questionnaire" in {
         val f = thisFixture()
-        val links = f.doc.getElementsByAttributeValue("href", routes.ExitQuestionnaireController.onPageLoad().url)
+        val links = f.doc.getElementsByAttributeValue("href", routes.FeedbackSurveyController.redirectExitSurvey().url)
         links.size shouldBe 1
         links.first.text shouldBe messages("site.finish")
       }
