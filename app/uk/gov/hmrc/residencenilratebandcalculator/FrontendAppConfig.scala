@@ -33,6 +33,7 @@ trait AppConfig {
   val betaFeedbackUnauthenticatedUrl : String
   val betaFeedbackUrl : String
   val feedbackSurvey : String
+  val googleTagManagerId : String
 }
 
 object FrontendAppConfig extends AppConfig with ServicesConfig {
@@ -42,6 +43,7 @@ object FrontendAppConfig extends AppConfig with ServicesConfig {
   private lazy val contactHost = configuration.getString("microservice.services.contact-frontend.www").getOrElse("")
   private val contactFormServiceIdentifier = "RNRB"
   private lazy val contactFrontendService = baseUrl("contact-frontend")
+  lazy val googleTagManagerId = loadConfig(s"google-tag-manager.id")
 
   override lazy val analyticsToken = loadConfig(s"google-analytics.token")
   override lazy val analyticsHost = loadConfig(s"google-analytics.host")
