@@ -41,7 +41,7 @@ object FrontendGlobal
 
   override def onStart(app: Application) {
     super.onStart(app)
-    ApplicationCrypto.verifyConfiguration()
+    applicationCrypto.verifyConfiguration()
   }
 
   override def filters: Seq[EssentialFilter] = super.filters ++ Seq(sessionId)

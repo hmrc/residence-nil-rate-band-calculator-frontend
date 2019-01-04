@@ -14,14 +14,14 @@ private object AppDependencies {
   import play.sbt.PlayImport._
   import play.core.PlayVersion
 
-  private val frontendBootstrapVersion = "10.1.0"
-  private val playPartialsVersion = "6.1.0"
-  private val hmrcTestVersion = "3.0.0"
+  private val frontendBootstrapVersion = "11.0.0"
+  private val playPartialsVersion = "6.3.0"
+  private val hmrcTestVersion = "3.3.0"
   private val scalaTestVersion = "3.0.0"
   private val pegdownVersion = "1.6.0"
   private val mockitoCoreVersion = "2.13.0"
   private val whitelistVersion = "2.0.0"
-  private val httpCachingClientVersion = "7.1.0"
+  private val httpCachingClientVersion = "8.0.0"
   private val playReactivemongoVersion = "6.2.0"
   private val pdfBoxVersion = "2.0.4"
   private val playLanguageVersion = "3.4.0"
