@@ -17,7 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, _}
-
+import play.api.Play
 import play.api.i18n.{I18nSupport, Lang, MessagesApi}
 import play.api.mvc.{Action, AnyContent, Call}
 import uk.gov.hmrc.play.config.RunMode
@@ -28,6 +28,9 @@ import play.api.mvc._
 @Singleton
 class CustomLanguageController @Inject()(implicit val messagesApi: MessagesApi)
 extends Controller with RunMode with I18nSupport {
+
+  protected def mode: play.api.Mode.Mode = Play.current.mode
+  protected def runModeConfiguration: play.api.Configuration = Play.current.configuration
 
   val englishLang = Lang("en")
   val appConfig = FrontendAppConfig

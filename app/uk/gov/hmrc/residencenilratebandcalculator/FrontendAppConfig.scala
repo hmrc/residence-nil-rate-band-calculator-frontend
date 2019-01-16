@@ -38,6 +38,8 @@ trait AppConfig {
 
 object FrontendAppConfig extends AppConfig with ServicesConfig {
 
+  protected def runModeConfiguration: play.api.Configuration = Play.current.configuration
+
   private def loadConfig(key: String) = configuration.getString(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
 
   private lazy val contactHost = configuration.getString("microservice.services.contact-frontend.www").getOrElse("")

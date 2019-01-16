@@ -25,15 +25,14 @@ import org.scalatest.mockito.MockitoSugar
 import play.api.http.Status
 import play.api.libs.json._
 import uk.gov.hmrc.play.test.WithFakeApplication
-import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, WSHttp}
+import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.JsonInvalidException
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, CalculationResult}
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 import uk.gov.hmrc.http.{HeaderCarrier, HttpReads, HttpResponse}
-import uk.gov.hmrc.play.http.logging.MdcLoggingExecutionContext._
-import uk.gov.hmrc.play.http.ws.{WSGet, WSPost}
+import uk.gov.hmrc.play.http.ws.{WSGet, WSHttp, WSPost}
 
 class RnrbConnectorSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEach {
 

@@ -19,7 +19,6 @@ package uk.gov.hmrc.residencenilratebandcalculator.connectors
 import play.api.libs.json._
 import play.api.Logger
 import javax.inject.{Inject, Singleton}
-
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.models.CascadeUpsert
 import uk.gov.hmrc.residencenilratebandcalculator.repositories.SessionRepository

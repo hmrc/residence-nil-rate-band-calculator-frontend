@@ -25,7 +25,7 @@ import play.api.i18n.MessagesApi
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.{Action, Request}
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.frontend.controller.FrontendController
+import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm

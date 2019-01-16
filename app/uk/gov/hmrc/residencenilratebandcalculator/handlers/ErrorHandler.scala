@@ -14,23 +14,18 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.controllers
+package uk.gov.hmrc.residencenilratebandcalculator.handlers
 
 import javax.inject.{Inject, Singleton}
+import play.api.Configuration
+import play.api.i18n.{Messages, MessagesApi}
+import play.api.mvc.Request
+import play.twirl.api.Html
+import uk.gov.hmrc.play.bootstrap.http.FrontendErrorHandler
 
-import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, AnyContent}
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.session_expired
+class ErrorHandler @Inject()(
+                              val messagesApi: MessagesApi, val configuration: Configuration) extends FrontendErrorHandler {
 
-import scala.concurrent.Future
-
-@Singleton
-class KeepAliveController @Inject()(val messagesApi: MessagesApi) extends FrontendController with I18nSupport {
-
-  def onPageLoad: Action[AnyContent] = Action.async {
-    implicit request =>
-      Future.successful(Ok("OK"))
-  }
+  override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(implicit request: Request[_]) =
+    uk.gov.hmrc.residencenilratebandcalculator.views.html.error_template(pageTitle, heading, message)
 }
