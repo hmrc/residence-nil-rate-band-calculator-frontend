@@ -17,33 +17,70 @@
 package uk.gov.hmrc.residencenilratebandcalculator.filters
 
 import java.util.UUID
-import javax.inject.Inject
 
+import javax.inject.Inject
 import akka.stream.Materializer
-import play.api.http.HeaderNames.COOKIE
+import play.api.http.DefaultHttpFilters
 import play.api.mvc._
+import play.mvc.Http.HeaderNames
+import uk.gov.hmrc.http.{HeaderNames => HMRCHeaderNames}
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import uk.gov.hmrc.http.SessionKeys
+import uk.gov.hmrc.play.bootstrap.filters.FrontendFilters
 
-class SessionIdFilter @Inject()()(implicit val mat: Materializer) extends Filter {
 
-  private def addSessionId(rh: RequestHeader, sessionId: (String, String)) = {
-    val session = rh.session + sessionId
-    val sessionAsCookie: Cookie = Session.encodeAsCookie(session)
-    val cookies = Cookies.mergeCookieHeader(rh.headers.get(COOKIE).getOrElse(""), Seq(sessionAsCookie))
-    val updatedHeaders = rh.headers.replace(COOKIE -> cookies)
-    rh copy (headers = updatedHeaders)
+class Filters @Inject()(
+                         frontendFilters: FrontendFilters,
+                         sessionIdFilters: SessionIdFilter) extends DefaultHttpFilters(frontendFilters.filters :+ sessionIdFilters: _*)
+
+class SessionIdFilter (
+                        override val mat: Materializer,
+                        uuid: => UUID,
+                        implicit val ec: ExecutionContext
+                      ) extends Filter {
+
+  @Inject
+  def this(mat: Materializer, ec: ExecutionContext) {
+    this(mat, UUID.randomUUID(), ec)
   }
 
   override def apply(f: (RequestHeader) => Future[Result])(rh: RequestHeader): Future[Result] = {
+
+    lazy val sessionId: String = s"session-$uuid"
+
     if (rh.session.get(SessionKeys.sessionId).isEmpty) {
-      val sessionId = SessionKeys.sessionId -> s"sessionId-${UUID.randomUUID.toString}"
-      f(addSessionId(rh, sessionId)).map {
-        result => {
-          result.withSession(result.session(rh) + sessionId)
-        }
+
+      val cookies: String = {
+
+        val session: Session =
+          rh.session + (SessionKeys.sessionId -> sessionId)
+
+        val cookies =
+          rh.cookies ++ Seq(Session.encodeAsCookie(session))
+
+        Cookies.encodeCookieHeader(cookies.toSeq)
+      }
+
+      val headers = rh.headers.add(
+        HMRCHeaderNames.xSessionId -> sessionId,
+        HeaderNames.COOKIE -> cookies
+      )
+
+      f(rh.copy(headers = headers)).map {
+        result =>
+
+          val cookies =
+            Cookies.fromSetCookieHeader(result.header.headers.get(HeaderNames.SET_COOKIE))
+
+          val session = Session.decodeFromCookie(cookies.get(Session.COOKIE_NAME)).data
+            .foldLeft(rh.session) {
+              case (m, n) =>
+                m + n
+            }
+
+          result.withSession(session + (SessionKeys.sessionId -> sessionId))
       }
     } else {
       f(rh)
