@@ -14,9 +14,9 @@ private object AppDependencies {
   import play.sbt.PlayImport._
   import play.core.PlayVersion
 
-  private val frontendBootstrapVersion = "11.0.0"
+  private val bootstrapVersion = "4.7.0"
   private val playPartialsVersion = "6.3.0"
-  private val hmrcTestVersion = "3.3.0"
+  private val hmrcTestVersion = "3.4.0-play-25"
   private val scalaTestVersion = "3.0.0"
   private val pegdownVersion = "1.6.0"
   private val mockitoCoreVersion = "2.13.0"
@@ -30,7 +30,9 @@ private object AppDependencies {
   val compile = Seq(
     "uk.gov.hmrc" %% "play-reactivemongo" % playReactivemongoVersion,
     ws,
-    "uk.gov.hmrc" %% "frontend-bootstrap" % frontendBootstrapVersion,
+    "uk.gov.hmrc" %% "govuk-template" % "5.27.0-play-25",
+    "uk.gov.hmrc" %% "play-ui" % "7.27.0-play-25",
+    "uk.gov.hmrc" %% "bootstrap-play-25" % bootstrapVersion,
     "uk.gov.hmrc" %% "play-partials" % playPartialsVersion,
     "uk.gov.hmrc" %% "play-whitelist-filter" % whitelistVersion,
     "uk.gov.hmrc" %% "http-caching-client" % httpCachingClientVersion,

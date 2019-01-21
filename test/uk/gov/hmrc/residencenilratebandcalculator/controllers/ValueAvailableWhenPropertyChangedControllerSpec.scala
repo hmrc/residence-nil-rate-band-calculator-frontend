@@ -51,6 +51,8 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends BaseSpec with Http
 
   val injector = fakeApplication.injector
 
+  val mockConfig = injector.instanceOf[FrontendAppConfig]
+
   val navigator = injector.instanceOf[Navigator]
 
   def messagesApi = injector.instanceOf[MessagesApi]
@@ -66,15 +68,15 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends BaseSpec with Http
   def createView = (value: Option[Map[String, String]]) => {
     val answerRow = new AnswerRow("What was the date the property was disposed of?", "11 May 2018", routes.DatePropertyWasChangedController.onPageLoad().url)
     value match {
-      case None => value_available_when_property_changed("£100,000", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider)
+      case None => value_available_when_property_changed("£100,000", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider, mockConfig)
       case Some(v) => value_available_when_property_changed("£100,000",
-        NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(answerRow))(fakeRequest, messages, applicationProvider)
+        NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(answerRow))(fakeRequest, messages, applicationProvider, mockConfig)
     }
   }
 
   def testValue = "100000"
 
-  def createController = () => new ValueAvailableWhenPropertyChangedController(messagesApi, mockSessionConnector, navigator, mockRnrbConnector,applicationProvider)
+  def createController = () => new ValueAvailableWhenPropertyChangedController(messagesApi, mockSessionConnector, navigator, mockRnrbConnector, mockConfig, applicationProvider)
 
   "Value Available When Property Changed Controller" must {
 

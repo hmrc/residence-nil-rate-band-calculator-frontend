@@ -18,7 +18,6 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.calculate_threshold_increase
 
@@ -29,13 +28,13 @@ class CalculateThresholdIncreaseControllerSpec extends HtmlSpec {
   "Calculate Threshold Increase controller" must {
 
     "return 200 for a GET" in {
-      val result = new CalculateThresholdIncreaseController(messagesApi, applicationProvider).onPageLoad()(fakeRequest)
+      val result = new CalculateThresholdIncreaseController(messagesApi, mockConfig, applicationProvider).onPageLoad()(fakeRequest)
       status(result) shouldBe 200
     }
 
     "return the View for a GET" in {
-      val result = new CalculateThresholdIncreaseController(messagesApi, applicationProvider).onPageLoad()(fakeRequest)
-      contentAsString(result) shouldBe calculate_threshold_increase()(fakeRequest, messages, applicationProvider).toString
+      val result = new CalculateThresholdIncreaseController(messagesApi, mockConfig, applicationProvider).onPageLoad()(fakeRequest)
+      contentAsString(result) shouldBe calculate_threshold_increase()(fakeRequest, messages, applicationProvider, mockConfig).toString
     }
   }
 }

@@ -16,32 +16,32 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import javax.inject.{Inject, Singleton}
-
 import com.google.inject.Provider
-import play.api.{Application, Logger}
+import javax.inject.{Inject, Singleton}
 import play.api.data.FormError
 import play.api.i18n.MessagesApi
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.{Action, Request}
+import play.api.{Application, Logger}
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.frontend.controller.FrontendController
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
+import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.utils.{CurrencyFormatter}
+import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_available_when_property_changed
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 import scala.concurrent.Future
-import uk.gov.hmrc.http.{ HeaderCarrier, HttpResponse }
 
 @Singleton
 class ValueAvailableWhenPropertyChangedController @Inject()(val messagesApi: MessagesApi,
                                                             val sessionConnector: SessionConnector,
                                                             val navigator: Navigator,
                                                             val rnrbConnector: RnrbConnector,
+                                                            implicit val appConfig: FrontendAppConfig,
                                                             implicit val applicationProvider: Provider[Application]) extends FrontendController {
 
   val controllerId = Constants.valueAvailableWhenPropertyChangedId

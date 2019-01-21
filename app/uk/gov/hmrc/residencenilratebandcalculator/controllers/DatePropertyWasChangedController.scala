@@ -16,9 +16,8 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import javax.inject.{Inject, Singleton}
-
 import com.google.inject.Provider
+import javax.inject.{Inject, Singleton}
 import play.api.Application
 import play.api.data.Form
 import play.api.i18n.MessagesApi
@@ -31,8 +30,9 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 
 @Singleton
 class DatePropertyWasChangedController @Inject()(val messagesApi: MessagesApi,
-                                         override val sessionConnector: SessionConnector,
-                                         override val navigator: Navigator,
+                                                 override val sessionConnector: SessionConnector,
+                                                 override val navigator: Navigator,
+                                                 implicit val appConfig: FrontendAppConfig,
                                                  implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[Date]{
 
   val controllerId: String = Constants.datePropertyWasChangedId

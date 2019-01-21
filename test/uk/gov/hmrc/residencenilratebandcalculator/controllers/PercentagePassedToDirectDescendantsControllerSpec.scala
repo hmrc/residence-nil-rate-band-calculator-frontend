@@ -32,12 +32,12 @@ class PercentagePassedToDirectDescendantsControllerSpec extends SimpleController
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => percentage_passed_to_direct_descendants(PositivePercentForm.apply(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange), answerRows = Seq())(fakeRequest, messages, applicationProvider)
-        case Some(v) => percentage_passed_to_direct_descendants(PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange).bind(v), Seq())(fakeRequest, messages, applicationProvider)
+        case None => percentage_passed_to_direct_descendants(PositivePercentForm.apply(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange), answerRows = Seq())(fakeRequest, messages, applicationProvider, mockConfig)
+        case Some(v) => percentage_passed_to_direct_descendants(PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange).bind(v), Seq())(fakeRequest, messages, applicationProvider, mockConfig)
       }
     }
 
-    def createController = () => new PercentagePassedToDirectDescendantsController(messagesApi, mockSessionConnector, navigator, applicationProvider)
+    def createController = () => new PercentagePassedToDirectDescendantsController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
 
     val testValue = BigDecimal(50)
 

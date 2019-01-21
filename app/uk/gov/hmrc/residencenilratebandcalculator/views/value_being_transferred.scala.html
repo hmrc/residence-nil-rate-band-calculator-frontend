@@ -20,11 +20,11 @@
 @import uk.gov.hmrc.play.views.html._
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 
-@(nilRateBand: String, form: Form[Int], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application])
+@(nilRateBand: String, form: Form[Int], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], appConfig: FrontendAppConfig)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("value_being_transferred.browser_title"),
-    appConfig = FrontendAppConfig,
+    frontendAppConfig = appConfig,
     bodyClasses = None) {
 
     @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueBeingTransferredController.onSubmit(), 'autoComplete -> "off") {

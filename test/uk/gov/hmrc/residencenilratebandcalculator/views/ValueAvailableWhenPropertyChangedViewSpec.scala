@@ -31,9 +31,9 @@ class ValueAvailableWhenPropertyChangedViewSpec extends IntViewSpecBase {
   val navigator = injector.instanceOf[Navigator]
   var mockSessionConnector: SessionConnector = _
   val mockRnrbConnector : RnrbConnector = mock[RnrbConnector]
-  val controller = new ValueAvailableWhenPropertyChangedController(messagesApi, mockSessionConnector, navigator, mockRnrbConnector, applicationProvider).form()
+  val controller = new ValueAvailableWhenPropertyChangedController(messagesApi, mockSessionConnector, navigator, mockRnrbConnector, mockConfig, applicationProvider).form()
 
-  def createView(form: Form[Int]) = value_available_when_property_changed("100000", form, Seq())(request, messages, applicationProvider)
+  def createView(form: Form[Int]) = value_available_when_property_changed("100000", form, Seq())(request, messages, applicationProvider, mockConfig)
 
   "Value Available When Property Changed View" must {
 

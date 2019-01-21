@@ -18,7 +18,8 @@ package uk.gov.hmrc.residencenilratebandcalculator
 
 import java.util.Base64
 
-import play.api.Play
+import javax.inject.Inject
+import play.api.{Configuration, Environment}
 import play.api.Play.{configuration, current}
 import uk.gov.hmrc.play.config.ServicesConfig
 
@@ -36,24 +37,27 @@ trait AppConfig {
   val googleTagManagerId : String
 }
 
-object FrontendAppConfig extends AppConfig with ServicesConfig {
+class FrontendAppConfig @Inject()(override val runModeConfiguration: Configuration,
+                                  val environment: Environment) extends AppConfig with ServicesConfig {
 
+  def mode = environment.mode
   private def loadConfig(key: String) = configuration.getString(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
 
   private lazy val contactHost = configuration.getString("microservice.services.contact-frontend.www").getOrElse("")
   private val contactFormServiceIdentifier = "RNRB"
   private lazy val contactFrontendService = baseUrl("contact-frontend")
-  lazy val googleTagManagerId = loadConfig(s"google-tag-manager.id")
+  lazy val googleTagManagerId = loadConfig("google-tag-manager.id")
 
-  override lazy val analyticsToken = loadConfig(s"google-analytics.token")
-  override lazy val analyticsHost = loadConfig(s"google-analytics.host")
+  override lazy val analyticsToken = loadConfig("google-analytics.token")
+  override lazy val analyticsHost = loadConfig("google-analytics.host")
   override lazy val timeOutCountdownSeconds = loadConfig("timeOutCountdownSeconds").toInt
   override lazy val timeOutSession = loadConfig("mongodb.timeToLiveInSeconds").toInt
   override lazy val reportAProblemPartialUrl = s"$contactHost/contact/problem_reports_ajax?service=$contactFormServiceIdentifier"
   override lazy val reportAProblemNonJSUrl = s"$contactHost/contact/problem_reports_nonjs?service=$contactFormServiceIdentifier"
   override lazy val betaFeedbackUrl = s"$contactHost/contact/beta-feedback"
   override lazy val betaFeedbackUnauthenticatedUrl = s"$contactHost/contact/beta-feedback-unauthenticated"
-  override val feedbackSurvey: String = loadConfig("feedback-survey-frontend.url")
+  override lazy val feedbackSurvey: String = loadConfig("feedback-survey-frontend.url")
+  lazy val serviceUrl = baseUrl("residence-nil-rate-band-calculator")
 
   private def whitelistConfig(key: String):Seq[String] = Some(new String(Base64.getDecoder.decode(configuration.getString(key).getOrElse("")), "UTF-8"))
     .map(_.split(",")).getOrElse(Array.empty).toSeq
@@ -63,6 +67,5 @@ object FrontendAppConfig extends AppConfig with ServicesConfig {
 
   override val isWelshEnabled: Boolean = true
 
-  override lazy val mode = Play.current.mode
 
 }

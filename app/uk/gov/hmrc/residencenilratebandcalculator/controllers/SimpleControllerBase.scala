@@ -23,7 +23,7 @@ import play.api.libs.json.{Reads, Writes}
 import play.api.mvc._
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.frontend.controller.FrontendController
+import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, Navigator}
@@ -39,7 +39,7 @@ trait ControllerBase[A] extends FrontendController with I18nSupport {
 
 trait SimpleControllerBase[A] extends ControllerBase[A] {
 
-  val appConfig = FrontendAppConfig
+  val appConfig: FrontendAppConfig
 
   val controllerId: String
 

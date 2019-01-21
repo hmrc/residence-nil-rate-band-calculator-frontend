@@ -25,7 +25,7 @@ class UnableToCalculateThresholdIncreaseViewSpec extends HtmlSpec {
   val prefix = "unable_to_calculate_threshold_increase.grossing_up"
 
   def fixture() = new {
-    val view = unable_to_calculate_threshold_increase(prefix, Seq())(request, messages, applicationProvider)
+    val view = unable_to_calculate_threshold_increase(prefix, Seq())(request, messages, applicationProvider, mockConfig)
     val doc = asDocument(view)
   }
 

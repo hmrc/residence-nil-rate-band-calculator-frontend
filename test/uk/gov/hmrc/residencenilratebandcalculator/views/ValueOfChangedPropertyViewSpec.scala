@@ -28,7 +28,7 @@ class ValueOfChangedPropertyViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "value_of_changed_property"
 
-  def createView(form: Form[Int]) = value_of_changed_property(form, Seq())(request, messages, applicationProvider)
+  def createView(form: Form[Int]) = value_of_changed_property(form, Seq())(request, messages, applicationProvider, mockConfig)
 
   "Value Of Changed Property View" must {
 

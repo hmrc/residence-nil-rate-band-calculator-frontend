@@ -25,16 +25,17 @@ class SessionExpiredControllerSpec extends HtmlSpec with MockSessionConnector {
 
   val fakeRequest = FakeRequest("", "")
 
+
   "Session Expired controller" must {
 
     "return 200 for a GET" in {
-      val result = new SessionExpiredController(messagesApi, mockSessionConnector, applicationProvider).onPageLoad()(fakeRequest)
+      val result = new SessionExpiredController(messagesApi, mockSessionConnector, mockConfig, applicationProvider).onPageLoad()(fakeRequest)
       status(result) shouldBe 200
     }
 
     "return the View for a GET" in {
-      val result = new SessionExpiredController(messagesApi, mockSessionConnector, applicationProvider).onPageLoad()(fakeRequest)
-      contentAsString(result) shouldBe session_expired()(fakeRequest, messages, applicationProvider).toString
+      val result = new SessionExpiredController(messagesApi, mockSessionConnector, mockConfig, applicationProvider).onPageLoad()(fakeRequest)
+      contentAsString(result) shouldBe session_expired()(fakeRequest, messages, applicationProvider, mockConfig).toString
     }
   }
 }

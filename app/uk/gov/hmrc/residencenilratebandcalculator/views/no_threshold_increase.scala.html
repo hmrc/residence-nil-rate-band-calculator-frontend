@@ -19,11 +19,11 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.FeedbackSurveyController
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 
-@(prefix: String, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application])
+@(prefix: String, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], appConfig: FrontendAppConfig)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("no_threshold_increase.browser_title"),
-    appConfig = FrontendAppConfig,
+    frontendAppConfig = appConfig,
     bodyClasses = None) {
 
     <h1 class="heading-large">@messages(s"${prefix}.title")</h1>

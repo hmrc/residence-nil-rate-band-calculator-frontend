@@ -37,12 +37,12 @@ class ValueOfAssetsPassingControllerSpec extends SimpleControllerSpecBase {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => value_of_assets_passing(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq(), formattedPropertyValue = None)(fakeRequest, messages, applicationProvider)
-        case Some(v) => value_of_assets_passing(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(), None)(fakeRequest, messages, applicationProvider)
+        case None => value_of_assets_passing(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq(), formattedPropertyValue = None)(fakeRequest, messages, applicationProvider, mockConfig)
+        case Some(v) => value_of_assets_passing(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(), None)(fakeRequest, messages, applicationProvider, mockConfig)
       }
     }
 
-    def createController = () => new ValueOfAssetsPassingController(messagesApi, mockSessionConnector, navigator, applicationProvider)
+    def createController = () => new ValueOfAssetsPassingController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
 
     val testValue = 123
 
@@ -79,7 +79,7 @@ class ValueOfAssetsPassingControllerSpec extends SimpleControllerSpecBase {
     "return the correct view when provided with answers including a valid property value" in {
       val result = createController().view(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), Seq(), new UserAnswers(CacheMap("id", Map(Constants.propertyValueId -> Json.toJson(1)))))(fakeRequest)
       result shouldBe value_of_assets_passing(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), Seq(), Some(CurrencyFormatter.format(1)))(fakeRequest,
-        messages, applicationProvider)
+        messages, applicationProvider, mockConfig)
     }
   }
 }

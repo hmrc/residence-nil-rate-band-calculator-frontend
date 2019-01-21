@@ -32,6 +32,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 class NoDownsizingThresholdIncreaseController @Inject()(override val messagesApi: MessagesApi,
                                                 override val sessionConnector: SessionConnector,
                                                 val navigator: Navigator,
+                                                implicit val appConfig: FrontendAppConfig,
                                                 implicit val applicationProvider: Provider[Application]) extends TransitionController {
 
   val getReason = GetNoDownsizingThresholdIncreaseReason

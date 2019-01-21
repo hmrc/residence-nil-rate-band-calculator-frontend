@@ -34,6 +34,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_in_estate
 class PropertyInEstateController @Inject()(val messagesApi: MessagesApi,
                                            override val sessionConnector: SessionConnector,
                                            override val navigator: Navigator,
+                                           implicit val appConfig: FrontendAppConfig,
                                            implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[Boolean] {
 
   override val controllerId: String = Constants.propertyInEstateId

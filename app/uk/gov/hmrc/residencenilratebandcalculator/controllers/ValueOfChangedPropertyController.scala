@@ -33,6 +33,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_changed_pr
 class ValueOfChangedPropertyController @Inject()(val messagesApi: MessagesApi,
                                                  override val sessionConnector: SessionConnector,
                                                  override val navigator: Navigator,
+                                                 implicit val appConfig: FrontendAppConfig,
                                                  implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[Int] {
 
   override val controllerId = Constants.valueOfChangedPropertyId

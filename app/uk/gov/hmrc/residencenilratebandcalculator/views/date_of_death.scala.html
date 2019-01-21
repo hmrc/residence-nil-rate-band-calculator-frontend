@@ -22,11 +22,11 @@
 @import uk.gov.hmrc.play.views.html.{helpers => govHelpers}
 
 @(form: Form[Date])(implicit request: Request[_], messages: Messages,
-                                                applicationProvider: Provider[Application])
+                                                applicationProvider: Provider[Application], appConfig: FrontendAppConfig)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("date_of_death.browser_title"),
-    appConfig = FrontendAppConfig,
+    frontendAppConfig = appConfig,
     bodyClasses = None,
     enableTimeout = false) {
 

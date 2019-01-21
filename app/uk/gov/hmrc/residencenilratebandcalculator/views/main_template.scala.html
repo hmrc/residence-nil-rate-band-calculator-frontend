@@ -19,7 +19,7 @@
 @import play.api.Application; import com.google.inject.Provider
 
 @(title: String,
-  appConfig: uk.gov.hmrc.residencenilratebandcalculator.AppConfig,
+  frontendAppConfig: FrontendAppConfig,
   sidebarLinks: Option[Html] = None,
   contentHeader: Option[Html] = None,
   bodyClasses: Option[String] = None,
@@ -35,8 +35,8 @@
 @betaBanner = {
 @rnrbHelpers.beta_banner(
     userLoggedIn = false,		
-    betaFeedbackUrl = appConfig.betaFeedbackUrl,
-    betaFeedbackUnauthenticatedUrl = appConfig.betaFeedbackUnauthenticatedUrl,
+    betaFeedbackUrl = frontendAppConfig.betaFeedbackUrl,
+    betaFeedbackUnauthenticatedUrl = frontendAppConfig.betaFeedbackUnauthenticatedUrl,
     showFeedbackLinkInBetaBanner = true)		
 }
 
@@ -47,7 +47,7 @@
 }
 
     @govuk_wrapper(
-        appConfig = uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig,
+        appConfig = frontendAppConfig,
         title = title,
         mainClass = mainClass,
         bodyClasses = bodyClasses,

@@ -33,6 +33,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.part_of_estate_pass
 class PartOfEstatePassingToDirectDescendantsController @Inject()(val messagesApi: MessagesApi,
                                                                  override val sessionConnector: SessionConnector,
                                                                  override val navigator: Navigator,
+                                                                 implicit val appConfig: FrontendAppConfig,
                                                                  implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[Boolean] {
 
   override val controllerId: String = Constants.partOfEstatePassingToDirectDescendantsId
