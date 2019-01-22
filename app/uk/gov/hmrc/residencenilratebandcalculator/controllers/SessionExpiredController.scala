@@ -16,13 +16,12 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import javax.inject.{Inject, Singleton}
-
 import com.google.inject.Provider
-import play.api.{Application, Logger}
+import javax.inject.{Inject, Singleton}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
-import uk.gov.hmrc.play.frontend.controller.FrontendController
+import play.api.{Application, Logger}
+import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.session_expired
@@ -32,6 +31,7 @@ import scala.concurrent.Future
 @Singleton
 class SessionExpiredController @Inject()(val messagesApi: MessagesApi,
                                          val sessionConnector: SessionConnector,
+                                         implicit val appConfig: FrontendAppConfig,
                                          implicit val applicationProvider: Provider[Application]
                                         ) extends FrontendController with I18nSupport {
 

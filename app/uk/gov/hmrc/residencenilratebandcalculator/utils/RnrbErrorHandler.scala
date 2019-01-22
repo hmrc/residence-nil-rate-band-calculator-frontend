@@ -14,17 +14,21 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.controllers
+package uk.gov.hmrc.residencenilratebandcalculator.utils
 
 import javax.inject.Inject
-import play.api.mvc.{Action, AnyContent}
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import play.api.Configuration
+import play.api.i18n.MessagesApi
+import play.api.mvc.Request
+import uk.gov.hmrc.play.bootstrap.http.FrontendErrorHandler
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 
-import scala.concurrent.Future
+class RnrbErrorHandler @Inject()(val messagesApi: MessagesApi,
+                                 val configuration: Configuration,
+                                 config: FrontendAppConfig) extends FrontendErrorHandler {
 
-class FeedbackSurveyController @Inject()(appConfig: FrontendAppConfig) extends FrontendController {
-  def redirectExitSurvey: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Redirect(appConfig.feedbackSurvey).withNewSession)
-  }
+  implicit lazy val appConfig = config
+
+  override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(implicit request: Request[_]) =
+    uk.gov.hmrc.residencenilratebandcalculator.views.html.error_template(pageTitle, heading, message)
 }

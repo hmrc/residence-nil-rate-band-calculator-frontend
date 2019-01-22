@@ -30,12 +30,12 @@ class PropertyInEstateControllerSpec extends SimpleControllerSpecBase {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => property_in_estate(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, applicationProvider)
-        case Some(v) => property_in_estate(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, applicationProvider)
+        case None => property_in_estate(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, applicationProvider, mockConfig)
+        case Some(v) => property_in_estate(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, applicationProvider, mockConfig)
       }
     }
 
-    def createController = () => new PropertyInEstateController(messagesApi, mockSessionConnector, navigator, applicationProvider)
+    def createController = () => new PropertyInEstateController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
 
     val testValue = true
 

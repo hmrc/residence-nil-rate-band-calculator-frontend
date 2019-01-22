@@ -14,18 +14,11 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.controllers
+package uk.gov.hmrc.residencenilratebandcalculator.filters
 
-import play.api.http.Status
-import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
+import javax.inject.Inject
+import play.api.http.DefaultHttpFilters
+import uk.gov.hmrc.play.bootstrap.filters.MicroserviceFilters
 
-class FeedbackSurveyControllerSpec extends HtmlSpec with MockSessionConnector {
-
-  "Feedback Survey controller" must {
-    "return 303 for a GET" in {
-      val testController = new FeedbackSurveyController(mockConfig)
-      val result = testController.redirectExitSurvey(request)
-      status(result) shouldBe Status.SEE_OTHER
-    }
-  }
-}
+class Filters @Inject()(defaultFilters : MicroserviceFilters, sessionIdFilter: SessionIdFilter)
+  extends DefaultHttpFilters(defaultFilters.filters :+ sessionIdFilter: _*)

@@ -19,11 +19,11 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 @import uk.gov.hmrc.play.views.html._
 
-@()(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application])
+@()(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], appConfig: FrontendAppConfig)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("calculate_threshold_increase.browser_title"),
-    appConfig = FrontendAppConfig,
+    frontendAppConfig = appConfig,
     bodyClasses = None,
     enableTimeout = false) {
 

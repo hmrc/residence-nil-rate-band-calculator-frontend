@@ -16,23 +16,23 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import javax.inject.{Inject, Singleton}
-
 import com.google.inject.Provider
+import javax.inject.{Inject, Singleton}
 import play.api.Application
 import play.api.data.Form
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_estate_property
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 @Singleton
 class GrossingUpOnEstatePropertyController @Inject()(val messagesApi: MessagesApi,
                                                      override val sessionConnector: SessionConnector,
                                                      override val navigator: Navigator,
+                                                     implicit val appConfig: FrontendAppConfig,
                                                      implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[Boolean] {
 
   override val controllerId: String = Constants.grossingUpOnEstatePropertyId

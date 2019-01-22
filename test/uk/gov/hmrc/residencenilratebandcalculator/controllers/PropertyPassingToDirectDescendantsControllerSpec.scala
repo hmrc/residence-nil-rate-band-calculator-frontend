@@ -29,12 +29,12 @@ class PropertyPassingToDirectDescendantsControllerSpec extends SimpleControllerS
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => property_passing_to_direct_descendants(PropertyPassingToDirectDescendantsForm.apply(),answerRows = Seq())(fakeRequest, messages, applicationProvider)
-        case Some(v) => property_passing_to_direct_descendants(PropertyPassingToDirectDescendantsForm().bind(v), Seq())(fakeRequest, messages, applicationProvider)
+        case None => property_passing_to_direct_descendants(PropertyPassingToDirectDescendantsForm.apply(),answerRows = Seq())(fakeRequest, messages, applicationProvider, mockConfig)
+        case Some(v) => property_passing_to_direct_descendants(PropertyPassingToDirectDescendantsForm().bind(v), Seq())(fakeRequest, messages, applicationProvider, mockConfig)
       }
     }
 
-    def createController = () => new PropertyPassingToDirectDescendantsController(messagesApi, mockSessionConnector, navigator, applicationProvider)
+    def createController = () => new PropertyPassingToDirectDescendantsController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
 
     val testValue = Constants.all
 

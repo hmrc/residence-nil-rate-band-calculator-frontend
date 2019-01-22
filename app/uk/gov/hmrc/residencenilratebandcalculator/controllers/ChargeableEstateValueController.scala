@@ -29,13 +29,13 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_estate_value
 import play.api.Application
 
-import scala.concurrent.Future
 import uk.gov.hmrc.http.HeaderCarrier
 
 @Singleton
 class ChargeableEstateValueController @Inject()(val messagesApi: MessagesApi,
                                                 override val sessionConnector: SessionConnector,
                                                 override val navigator: Navigator,
+                                                implicit val appConfig: FrontendAppConfig,
                                                 implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[Int] {
 
 

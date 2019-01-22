@@ -31,6 +31,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 @Singleton
 class UnableToCalculateThresholdIncreaseController @Inject()(override val messagesApi: MessagesApi,
                                                              override val sessionConnector: SessionConnector,
+                                                             implicit val appConfig: FrontendAppConfig,
                                                              implicit val applicationProvider: Provider[Application]) extends TransitionController {
 
   val getReason = GetUnableToCalculateThresholdIncreaseReason

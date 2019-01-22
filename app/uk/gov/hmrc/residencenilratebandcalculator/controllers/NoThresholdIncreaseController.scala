@@ -31,6 +31,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_threshold_increa
 @Singleton
 class NoThresholdIncreaseController  @Inject()(override val messagesApi: MessagesApi,
                                                override val sessionConnector: SessionConnector,
+                                               implicit val appConfig: FrontendAppConfig,
                                                implicit val applicationProvider: Provider[Application]) extends TransitionController {
 
   val getReason = GetNoThresholdIncreaseReason

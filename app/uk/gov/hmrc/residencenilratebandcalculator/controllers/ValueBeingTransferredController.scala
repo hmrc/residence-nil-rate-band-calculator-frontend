@@ -18,34 +18,34 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import java.text.NumberFormat
 import java.util.Locale
-import javax.inject.{Inject, Singleton}
 
+import javax.inject.{Inject, Singleton}
 import com.google.inject.Provider
-import org.joda.time.LocalDate
 import play.api.{Application, Logger}
-import play.api.data.{Form, FormError}
+import play.api.data.FormError
 import play.api.i18n.MessagesApi
 import play.api.libs.json.{Reads, Writes}
-import play.api.mvc.{Action, Request, Result}
+import play.api.mvc.{Action, Request}
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.frontend.controller.FrontendController
+import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_being_transferred
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
-import uk.gov.hmrc.time.TaxYearResolver
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import uk.gov.hmrc.http.{ HeaderCarrier, HttpResponse }
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
+import uk.gov.hmrc.residencenilratebandcalculator.utils.TaxYear
 
 @Singleton
 class ValueBeingTransferredController @Inject()(val messagesApi: MessagesApi,
                                                 val sessionConnector: SessionConnector,
                                                 val navigator: Navigator,
                                                 val rnrbConnector: RnrbConnector,
+                                                implicit val appConfig: FrontendAppConfig,
                                                 implicit val applicationProvider: Provider[Application]) extends FrontendController {
 
   val controllerId = Constants.valueBeingTransferredId
@@ -148,8 +148,8 @@ class ValueBeingTransferredController @Inject()(val messagesApi: MessagesApi,
       Future.successful(None)
     } else {
       val dateOfDeath = userAnswers.dateOfDeath.getOrElse(throw new RuntimeException("Date of death was not answered"))
-      val taxYear = TaxYearResolver.taxYearFor(dateOfDeath)
-      Future.successful(Some(FormError("value", "value_being_transferred.error", Seq(nrb, taxYear.toString, (taxYear + 1).toString))))
+      val taxYear = TaxYear.taxYearFor(dateOfDeath)
+      Future.successful(Some(FormError("value", "value_being_transferred.error", Seq(nrb, taxYear.toString, (taxYear.currentYear + 1).toString))))
     }
   }
 }

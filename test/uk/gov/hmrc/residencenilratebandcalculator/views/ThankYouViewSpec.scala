@@ -24,17 +24,17 @@ class ThankYouViewSpec extends ViewSpecBase {
 
   "Thank You view" must {
     "display the correct browser title" in {
-      val doc = asDocument(thank_you()(request, messages, applicationProvider))
+      val doc = asDocument(thank_you()(request, messages, applicationProvider, mockConfig))
       assertEqualsMessage(doc, "title", s"$messageKeyPrefix.browser_title")
     }
 
     "display the correct title" in {
-      val doc = asDocument(thank_you()(request, messages, applicationProvider))
+      val doc = asDocument(thank_you()(request, messages, applicationProvider, mockConfig))
       assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.title")
     }
 
     "not display the HMRC logo" in {
-      val doc = asDocument(thank_you()(request, messages, applicationProvider))
+      val doc = asDocument(thank_you()(request, messages, applicationProvider, mockConfig))
       assertNotRenderedByCssSelector(doc, ".organisation-logo")
     }
   }

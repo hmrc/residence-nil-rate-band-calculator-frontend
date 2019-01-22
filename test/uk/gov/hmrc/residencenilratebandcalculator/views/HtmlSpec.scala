@@ -24,7 +24,7 @@ import play.api.i18n.MessagesApi
 import play.api.test.FakeRequest
 import play.twirl.api.Html
 import uk.gov.hmrc.play.test.UnitSpec
-import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
+import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, FrontendAppConfig}
 
 trait HtmlSpec extends BaseSpec { self: UnitSpec =>
 
@@ -33,6 +33,8 @@ trait HtmlSpec extends BaseSpec { self: UnitSpec =>
   implicit val request = FakeRequest()
 
   val injector = fakeApplication.injector
+
+  implicit val mockConfig = injector.instanceOf[FrontendAppConfig]
 
   def messagesApi = injector.instanceOf[MessagesApi]
 

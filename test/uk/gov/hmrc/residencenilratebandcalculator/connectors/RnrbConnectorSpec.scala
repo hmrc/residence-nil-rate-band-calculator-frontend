@@ -18,22 +18,20 @@ package uk.gov.hmrc.residencenilratebandcalculator.connectors
 
 import org.joda.time.LocalDate
 import org.mockito.ArgumentCaptor
-import org.mockito.Mockito._
 import org.mockito.ArgumentMatchers._
+import org.mockito.Mockito._
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.mockito.MockitoSugar
 import play.api.http.Status
 import play.api.libs.json._
-import uk.gov.hmrc.play.test.WithFakeApplication
-import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, WSHttp}
+import uk.gov.hmrc.http.{HeaderCarrier, HttpReads, HttpResponse}
+import uk.gov.hmrc.play.bootstrap.http.DefaultHttpClient
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.JsonInvalidException
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, CalculationResult}
+import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, FrontendAppConfig}
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
-import uk.gov.hmrc.http.{HeaderCarrier, HttpReads, HttpResponse}
-import uk.gov.hmrc.play.http.logging.MdcLoggingExecutionContext._
-import uk.gov.hmrc.play.http.ws.{WSGet, WSPost}
 
 class RnrbConnectorSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEach {
 
@@ -42,7 +40,8 @@ class RnrbConnectorSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEa
     super.beforeEach()
   }
 
-  val httpMock = mock[WSHttp]
+  val httpMock = mock[DefaultHttpClient]
+  val configMock = mock[FrontendAppConfig]
 
   def getHttpMock(returnedData: JsValue) = {
     when(httpMock.POST(anyString, any[JsValue], any[Seq[(String, String)]])(any[Writes[Any]], any[HttpReads[Any]],
@@ -70,9 +69,7 @@ class RnrbConnectorSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEa
         val headersCaptor = ArgumentCaptor.forClass(classOf[Seq[(String, String)]])
         val httpMock = getHttpMock(minimalJson)
 
-        val connector = new RnrbConnector() {
-          override lazy val http: WSHttp with WSGet with WSPost = httpMock
-        }
+        val connector = new RnrbConnector(httpMock, configMock)
         await(connector.send(calculationInput))
 
         verify(httpMock).POST(urlCaptor.capture, bodyCaptor.capture, headersCaptor.capture)(jsonWritesNapper.capture,
@@ -91,8 +88,7 @@ class RnrbConnectorSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEa
         val calculationResult = CalculationResult(residenceNilRateAmount, applicableNilRateBandAmount, carryForwardAmount,
           defaultAllowanceAmount, adjustedAllowanceAmount)
 
-        val result = await(new RnrbConnector {
-          override lazy val http: WSHttp with WSGet with WSPost = httpMock
+        val result = await(new RnrbConnector(httpMock, configMock) {
           getHttpMock(Json.toJson(calculationResult))
         }.send(calculationInput))
 
@@ -102,8 +98,7 @@ class RnrbConnectorSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEa
       "return a string representing the error when send method fails" in {
         val errorResponse = JsString("Something went wrong!")
 
-        val result = await(new RnrbConnector {
-          override lazy val http: WSHttp with WSGet with WSPost = httpMock
+        val result = await(new RnrbConnector(httpMock, configMock) {
           getHttpMock(errorResponse)
         }.send(calculationInput))
 
@@ -128,9 +123,7 @@ class RnrbConnectorSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEa
         val headersCaptor = ArgumentCaptor.forClass(classOf[Seq[(String, String)]])
         val httpMock = getHttpMock(minimalJson)
 
-        val connector = new RnrbConnector() {
-          override lazy val http: WSHttp with WSGet with WSPost = httpMock
-        }
+        val connector = new RnrbConnector(httpMock, configMock)
         await(connector.sendJson(minimalJson))
 
         verify(httpMock).POST(urlCaptor.capture, bodyCaptor.capture, headersCaptor.capture)(jsonWritesNapper.capture,
@@ -149,8 +142,7 @@ class RnrbConnectorSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEa
         val calculationResult = CalculationResult(residenceNilRateAmount, applicableNilRateBandAmount, carryForwardAmount,
           defaultAllowanceAmount, adjustedAllowanceAmount)
 
-        val result = await(new RnrbConnector {
-          override lazy val http: WSHttp with WSGet with WSPost = httpMock
+        val result = await(new RnrbConnector(httpMock, configMock) {
           getHttpMock(Json.toJson(calculationResult))
         }.sendJson(minimalJson))
 
@@ -160,8 +152,7 @@ class RnrbConnectorSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEa
       "return a string representing the error when send method fails" in {
         val errorResponse = JsString("Something went wrong!")
 
-        val result = await(new RnrbConnector {
-          override lazy val http: WSHttp with WSGet with WSPost = httpMock
+        val result = await(new RnrbConnector(httpMock, configMock){
           getHttpMock(errorResponse)
         }.sendJson(minimalJson))
 

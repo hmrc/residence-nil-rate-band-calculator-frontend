@@ -42,6 +42,8 @@ trait SimpleControllerSpecBase extends BaseSpec with HttpResponseMocks with Mock
 
   def messages = messagesApi.preferred(fakeRequest)
 
+  val mockConfig = injector.instanceOf[FrontendAppConfig]
+
   def rnrbController[A: ClassTag](createController: () => ControllerBase[A],
                                   createView: (Option[Map[String, String]]) => HtmlFormat.Appendable,
                                   cacheKey: String,

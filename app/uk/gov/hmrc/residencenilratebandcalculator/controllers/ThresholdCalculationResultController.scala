@@ -24,7 +24,7 @@ import play.api.Application
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.frontend.controller.FrontendController
+import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
@@ -39,6 +39,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 @Singleton
 class ThresholdCalculationResultController @Inject()(val messagesApi: MessagesApi,
                                                      rnrbConnector: RnrbConnector, sessionConnector: SessionConnector,
+                                                     implicit val appConfig: FrontendAppConfig,
                                                      implicit val applicationProvider: Provider[Application])
   extends FrontendController with I18nSupport {
 

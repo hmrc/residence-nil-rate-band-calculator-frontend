@@ -35,6 +35,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 class ChargeableInheritedPropertyValueController @Inject()(val messagesApi: MessagesApi,
                                                            override val sessionConnector: SessionConnector,
                                                            override val navigator: Navigator,
+                                                           implicit val appConfig: FrontendAppConfig,
                                                            implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[Int] {
 
   override val controllerId: String = Constants.chargeableInheritedPropertyValueId

@@ -70,7 +70,7 @@ class ThresholdCalculationResultControllerSpec extends SimpleControllerSpecBase 
   }
 
   def thresholdCalculationResultController(rnrbConnector: RnrbConnector = mockRnrbConnector) =
-    new ThresholdCalculationResultController(messagesApi, rnrbConnector, mockSessionConnector, applicationProvider)
+    new ThresholdCalculationResultController(messagesApi, rnrbConnector, mockSessionConnector, mockConfig, applicationProvider)
 
   "Threshold Calculation Result Controller" must {
 

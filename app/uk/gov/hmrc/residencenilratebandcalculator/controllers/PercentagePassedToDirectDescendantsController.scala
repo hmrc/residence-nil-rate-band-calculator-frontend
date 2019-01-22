@@ -32,6 +32,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_passed_t
 class PercentagePassedToDirectDescendantsController  @Inject()(val messagesApi: MessagesApi,
                                                                override val sessionConnector: SessionConnector,
                                                                override val navigator: Navigator,
+                                                               implicit val appConfig: FrontendAppConfig,
                                                                implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[BigDecimal] {
 
 

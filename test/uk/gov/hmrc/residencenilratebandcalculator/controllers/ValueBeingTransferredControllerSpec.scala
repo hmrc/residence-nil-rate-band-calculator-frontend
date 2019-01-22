@@ -50,6 +50,8 @@ class ValueBeingTransferredControllerSpec extends BaseSpec with HttpResponseMock
 
   val injector = fakeApplication.injector
 
+  val mockConfig = injector.instanceOf[FrontendAppConfig]
+
   val navigator = injector.instanceOf[Navigator]
 
   def messagesApi = injector.instanceOf[MessagesApi]
@@ -65,20 +67,20 @@ class ValueBeingTransferredControllerSpec extends BaseSpec with HttpResponseMock
   def createView = (value: Option[Map[String, String]]) => {
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
-      case None => value_being_transferred("£100,000.00", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider)
-      case Some(v) => value_being_transferred("£100,000.00", NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(answerRow))(fakeRequest, messages, applicationProvider)
+      case None => value_being_transferred("£100,000.00", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider, mockConfig)
+      case Some(v) => value_being_transferred("£100,000.00", NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(answerRow))(fakeRequest, messages, applicationProvider, mockConfig)
     }
   }
 
   def createViewWithBacklink = (value: Option[Map[String, String]]) => {
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
-      case None => value_being_transferred("£100,000.00", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider)
-      case Some(v) => value_being_transferred( "£100,000.00", NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(answerRow))(fakeRequest, messages, applicationProvider)
+      case None => value_being_transferred("£100,000.00", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider, mockConfig)
+      case Some(v) => value_being_transferred( "£100,000.00", NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(answerRow))(fakeRequest, messages, applicationProvider, mockConfig)
     }
   }
 
-  def createController = () => new ValueBeingTransferredController(messagesApi, mockSessionConnector, navigator, mockRnrbConnector,applicationProvider)
+  def createController = () => new ValueBeingTransferredController(messagesApi, mockSessionConnector, navigator, mockRnrbConnector, mockConfig, applicationProvider)
 
   def testValue = "100000"
 

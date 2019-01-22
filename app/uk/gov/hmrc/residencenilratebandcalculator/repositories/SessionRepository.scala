@@ -17,32 +17,24 @@
 package uk.gov.hmrc.residencenilratebandcalculator.repositories
 
 import javax.inject.{Inject, Singleton}
-
 import org.joda.time.{DateTime, DateTimeZone}
-import play.api.{Configuration, Logger}
-import play.api.libs.json.{JsValue, Json}
-import play.modules.reactivemongo.MongoDbConnection
-import reactivemongo.api.{Cursor, DefaultDB}
-import reactivemongo.bson._
-import uk.gov.hmrc.http.cache.client.CacheMap
-
-import scala.concurrent.ExecutionContext.Implicits.global
-import play.api.libs.functional.syntax._
-import play.api.libs.json.Reads.StringReads
 import play.api.libs.json.Writes.StringWrites
-import play.api.libs.json._
+import play.api.libs.json.{JsValue, Json}
+import play.api.{Configuration, Logger}
+import play.modules.reactivemongo.MongoDbConnection
 import reactivemongo.api.indexes.{Index, IndexType}
-import reactivemongo.bson.BSONDocument
+import reactivemongo.api.{Cursor, DefaultDB}
+import reactivemongo.bson.{BSONDocument, _}
 import reactivemongo.play.json.ImplicitBSONHandlers._
-import uk.gov.hmrc.mongo.json.ReactiveMongoFormats.dateTimeFormats
+import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.mongo.ReactiveRepository
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 case class DatedCacheMap(id: String,
                          data: Map[String, JsValue],
-                         lastUpdated: DateTime = DateTime.now(DateTimeZone.UTC)
-                        )
+                         lastUpdated: DateTime = DateTime.now(DateTimeZone.UTC))
 
 object DatedCacheMap {
 

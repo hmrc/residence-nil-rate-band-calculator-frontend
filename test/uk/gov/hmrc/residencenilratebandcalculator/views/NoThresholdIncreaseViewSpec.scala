@@ -25,7 +25,7 @@ class NoThresholdIncreaseViewSpec extends HtmlSpec {
   val prefix = "no_threshold_increase.direct_descendants"
 
   def fixture() = new {
-    val view = no_threshold_increase(prefix, Seq())(request, messages, applicationProvider)
+    val view = no_threshold_increase(prefix, Seq())(request, messages, applicationProvider, mockConfig)
     val doc = asDocument(view)
   }
 
