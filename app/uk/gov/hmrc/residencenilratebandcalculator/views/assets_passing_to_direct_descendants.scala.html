@@ -20,6 +20,7 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+@import uk.gov.hmrc.play.views.html.helpers.input_radio_group
 
 @(form: Form[Boolean], answerRows: Seq[AnswerRow], formattedPropertyValue: Option[String])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], frontendAppConfig: FrontendAppConfig)
 
@@ -42,7 +43,7 @@
 
         <div class="form-group">
             <fieldset class="form-group inline">
-                @rnrbHelpers.inputRadioGroup(
+                @input_radio_group(
                 form("value"),
                 Seq("true" -> messages("site.yes"), "false" -> messages("site.no")),
                 '_legend -> messages("assets_passing_to_direct_descendants.title"),
