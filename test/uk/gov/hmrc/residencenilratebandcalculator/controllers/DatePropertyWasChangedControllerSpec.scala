@@ -16,27 +16,29 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import com.google.inject.Provider
+import javax.inject.Provider
 import play.api.Application
+import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_property_was_changed
 
 class DatePropertyWasChangedControllerSpec extends DateControllerSpecBase {
-  implicit val appProvider: Provider[Application] = applicationProvider
   val mockConfig = injector.instanceOf[FrontendAppConfig]
-  
+
+  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
   "Date Property Was Changed Controller" must {
 
     def createView = (value: Option[Date]) => {
       value match {
-        case None => date_property_was_changed(dateOfDownsizingForm, answerRows = Seq())(fakeRequest, messages, applicationProvider, mockConfig)
-        case Some(v) => date_property_was_changed(dateOfDownsizingForm.fill(v) , Seq())(fakeRequest, messages, applicationProvider, mockConfig)
+        case None => date_property_was_changed(dateOfDownsizingForm, answerRows = Seq())(fakeRequest, messages, mockConfig)
+        case Some(v) => date_property_was_changed(dateOfDownsizingForm.fill(v) , Seq())(fakeRequest, messages, mockConfig)
       }
     }
 
-    def createController = () => new DatePropertyWasChangedController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
+    def createController = () => new DatePropertyWasChangedController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
 
     behave like rnrbDateController(createController, createView, Constants.datePropertyWasChangedId, "dateOfDownsizing")(Date.dateReads, Date.dateWrites)
 

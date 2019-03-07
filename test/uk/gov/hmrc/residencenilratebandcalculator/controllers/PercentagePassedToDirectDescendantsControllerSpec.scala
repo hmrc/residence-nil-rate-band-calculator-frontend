@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
+import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PositivePercentForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_passed_to_direct_descendants
@@ -28,16 +29,18 @@ class PercentagePassedToDirectDescendantsControllerSpec extends SimpleController
   val errorKeyOutOfRange = "percentage_passed_to_direct_descendants.error.out_of_range"
   val messageKeyPrefix = "percentage_passed_to_direct_descendants"
 
+  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
   "Percentage Passed To Direct Descendants Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => percentage_passed_to_direct_descendants(PositivePercentForm.apply(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange), answerRows = Seq())(fakeRequest, messages, applicationProvider, mockConfig)
-        case Some(v) => percentage_passed_to_direct_descendants(PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange).bind(v), Seq())(fakeRequest, messages, applicationProvider, mockConfig)
+        case None => percentage_passed_to_direct_descendants(PositivePercentForm.apply(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange), answerRows = Seq())(fakeRequest, messages, mockConfig)
+        case Some(v) => percentage_passed_to_direct_descendants(PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange).bind(v), Seq())(fakeRequest, messages, mockConfig)
       }
     }
 
-    def createController = () => new PercentagePassedToDirectDescendantsController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
+    def createController = () => new PercentagePassedToDirectDescendantsController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
 
     val testValue = BigDecimal(50)
 

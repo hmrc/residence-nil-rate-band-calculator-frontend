@@ -16,20 +16,19 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.json
 
-import play.api.data.validation.ValidationError
-import play.api.libs.json.{JsPath, JsValue}
+import play.api.libs.json.{JsPath, JsonValidationError}
 
 object JsonErrorProcessor {
-  private def validationErrorToString(v: ValidationError): String = {
+  private def validationErrorToString(v: JsonValidationError): String = {
     v.messages.foldLeft(new StringBuilder())(_ append _).toString()
   }
 
-  private def errorTupleToString(t: (JsPath, Seq[ValidationError])): String = {
+  private def errorTupleToString(t: (JsPath, Seq[JsonValidationError])): String = {
     val validationErrors = t._2.map(validationErrorToString).foldLeft(new StringBuilder())(_ append _).toString()
     "JSON error: " + validationErrors + "\n"
   }
 
-  def apply(errs: Seq[(JsPath, Seq[ValidationError])]): String = {
+  def apply(errs: Seq[(JsPath, Seq[JsonValidationError])]): String = {
     errs.map(errorTupleToString).foldLeft(new StringBuilder())(_ append _).toString()
   }
 }

@@ -16,10 +16,9 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import com.google.inject.Provider
-import javax.inject.{Inject, Singleton}
-import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, AnyContent}
+import javax.inject.{Inject, Provider, Singleton}
+import play.api.i18n.I18nSupport
+import play.api.mvc.{Action, AnyContent, DefaultMessagesControllerComponents}
 import play.api.{Application, Logger}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
@@ -27,13 +26,12 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.session_expired
 
 import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 
 @Singleton
-class SessionExpiredController @Inject()(val messagesApi: MessagesApi,
+class SessionExpiredController @Inject()(cc: DefaultMessagesControllerComponents,
                                          val sessionConnector: SessionConnector,
-                                         implicit val appConfig: FrontendAppConfig,
-                                         implicit val applicationProvider: Provider[Application]
-                                        ) extends FrontendController with I18nSupport {
+                                         implicit val appConfig: FrontendAppConfig) extends FrontendController(cc) with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.removeAll.flatMap( isDropped => {

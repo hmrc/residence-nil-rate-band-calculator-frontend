@@ -16,20 +16,29 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import java.math.RoundingMode
-import java.text.NumberFormat
-import java.util.Locale
-
+import com.ibm.icu.text.SimpleDateFormat
+import com.ibm.icu.util.{TimeZone, ULocale}
 import org.joda.time.LocalDate
 import play.api.i18n.Messages
 import play.api.mvc.Call
-import uk.gov.hmrc.play.language.LanguageUtils
 import uk.gov.hmrc.residencenilratebandcalculator.utils.{CurrencyFormatter, PercentageFormatter}
 
 
 case class AnswerRow(title: String, data: String, url: String)
 
 object AnswerRow {
+  private def formattedDate(localDate: LocalDate, msgs: Messages) = {
+    val defaultTimeZone = TimeZone.getTimeZone("Europe/London")
+
+    val langCode: String = msgs.lang.code
+    val validLang: Boolean = ULocale.getAvailableLocales.contains(new ULocale(langCode))
+    val locale: ULocale = if (validLang) new ULocale(langCode) else ULocale.getDefault
+    val sdf = new SimpleDateFormat("d MMMM y", locale)
+
+    sdf.setTimeZone(defaultTimeZone)
+    sdf.format(localDate.toDate)
+  }
+
   def apply(titleKey: String, amount: Int, url: Call)(messages: Messages): AnswerRow = {
     AnswerRow(messages(titleKey), CurrencyFormatter.format(amount), url.url)
   }
@@ -38,7 +47,7 @@ object AnswerRow {
     AnswerRow(messages(titleKey), if (yesNo) messages("site.yes") else messages("site.no"), url.url)
 
   def apply(titleKey: String, date: LocalDate, url: Call)(messages: Messages): AnswerRow =
-    AnswerRow(messages(titleKey), LanguageUtils.Dates.formatDate(date)(messages), url.url)
+    AnswerRow(messages(titleKey), formattedDate(date, messages), url.url)
 
   def apply(titleKey: String, percent: Double, url: Call)(messages: Messages): AnswerRow = {
     AnswerRow(messages(titleKey), PercentageFormatter.format(percent), url.url)

@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
+import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_any_unused_threshold
@@ -26,16 +27,18 @@ class TransferAnyUnusedThresholdControllerSpec extends SimpleControllerSpecBase 
   val messageKey = "transfer_any_unused_threshold.error.required"
   val messageKeyPrefix = "transfer_any_unused_threshold"
 
+  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
   "Transfer Any Unused Threshold Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => transfer_any_unused_threshold(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, applicationProvider, mockConfig)
-        case Some(v) => transfer_any_unused_threshold(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, applicationProvider, mockConfig)
+        case None => transfer_any_unused_threshold(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, mockConfig)
+        case Some(v) => transfer_any_unused_threshold(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, mockConfig)
       }
     }
 
-    def createController = () => new TransferAnyUnusedThresholdController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
+    def createController = () => new TransferAnyUnusedThresholdController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
 
     val testValue = true
 

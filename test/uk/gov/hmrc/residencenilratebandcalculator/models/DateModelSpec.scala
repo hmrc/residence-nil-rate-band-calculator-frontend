@@ -17,10 +17,10 @@
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import org.joda.time.LocalDate
-import play.api.libs.json.{JsError, JsString, Json}
+import play.api.libs.json._
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
-class DateModelSpec extends BaseSpec {
+class DateModelSpec extends BaseSpec with JodaWrites with JodaReads {
   "Date Model" must {
     "write itself as JSON exactly as if it were a Joda LocalDate" in {
       val dateToJson = Json.toJson(Date(new LocalDate(2000, 1, 1)))

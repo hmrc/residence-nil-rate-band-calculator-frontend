@@ -14,22 +14,19 @@
  * limitations under the License.
  *@
 
-@import play.api.Application; import com.google.inject.Provider
-@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.play.views.html._
-@import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.GrossingUpOnEstateAssetsController
-@import uk.gov.hmrc.residencenilratebandcalculator.utils.FormHelpers
 @import uk.gov.hmrc.play.views.html.helpers.input_radio_group
+@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 
-@(form: Form[Boolean], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, applicationProvider: Provider[Application], appConfig: FrontendAppConfig)
+@(form: Form[Boolean], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, appConfig: FrontendAppConfig)
 
 @uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
     title = messages("grossing_up_on_estate_assets.browser_title"),
     frontendAppConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = GrossingUpOnEstateAssetsController.onSubmit(), 'autoComplete -> "off") {
+    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.GrossingUpOnEstateAssetsController.onSubmit(), 'autoComplete -> "off") {
 
         @rnrbHelpers.error_summary(form)
 

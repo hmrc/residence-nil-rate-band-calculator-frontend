@@ -16,20 +16,20 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-
 import play.api.data.{Form, FormError}
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.I18nSupport
 import play.api.libs.json.{Reads, Writes}
-import play.api.mvc._
+import play.api.mvc.{Action, AnyContent, Request}
 import play.twirl.api.HtmlFormat
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.residencenilratebandcalculator.Navigator
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, Navigator}
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import uk.gov.hmrc.http.HeaderCarrier
 
 trait ControllerBase[A] extends FrontendController with I18nSupport {
   def onPageLoad(implicit rds: Reads[A]): Action[AnyContent]
@@ -38,8 +38,6 @@ trait ControllerBase[A] extends FrontendController with I18nSupport {
 }
 
 trait SimpleControllerBase[A] extends ControllerBase[A] {
-
-  val appConfig: FrontendAppConfig
 
   val controllerId: String
 
@@ -61,20 +59,18 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
   override def onPageLoad(implicit rds: Reads[A]): Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.fetch().map {
       case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
-      case Some(cacheMap) => {
+      case Some(cacheMap) =>
         val previousAnswers = answerRows(cacheMap, request)
         val userAnswers = new UserAnswers(cacheMap)
         Ok(view(cacheMap.getEntry(controllerId).fold(form())(value => form().fill(value)),
           previousAnswers, userAnswers))
-      }
     }
   }
 
-  def onSubmit(implicit wts: Writes[A]) = Action.async { implicit request =>
-
+  def onSubmit(implicit wts: Writes[A]): Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.fetch().flatMap {
       case None => Future.successful(Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad()))
-      case Some(cacheMap) => {
+      case Some(cacheMap) =>
         val previousAnswers = answerRows(cacheMap, request)
         val userAnswers = new UserAnswers(cacheMap)
         val boundForm = form().bindFromRequest()
@@ -82,17 +78,15 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
           (formWithErrors: Form[A]) =>
             Future.successful(BadRequest(view(formWithErrors,
               previousAnswers, userAnswers))),
-          (value) => validate(value, userAnswers) match {
-            case Some(error) => {
+          value => validate(value, userAnswers) match {
+            case Some(error) =>
               Future.successful(BadRequest(view(form().fill(value).withError(error),
                 previousAnswers, userAnswers)))
-            }
             case None =>
               sessionConnector.cache[A](controllerId, value).map(cacheMap =>
                 Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
           }
         )
-      }
     }
   }
 

@@ -17,23 +17,20 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
-
-import com.google.inject.Provider
-import play.api.Application
-import play.api.i18n.MessagesApi
-import play.api.mvc.Request
+import play.api.mvc.{DefaultMessagesControllerComponents, Request}
+import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThresholdIncreaseReason.{DatePropertyWasChangedTooEarly, NoAssetsPassingToDirectDescendants}
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThresholdIncreaseReason._
 import uk.gov.hmrc.residencenilratebandcalculator.models._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_downsizing_threshold_increase
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 @Singleton
-class NoDownsizingThresholdIncreaseController @Inject()(override val messagesApi: MessagesApi,
-                                                override val sessionConnector: SessionConnector,
-                                                val navigator: Navigator,
-                                                implicit val appConfig: FrontendAppConfig,
-                                                implicit val applicationProvider: Provider[Application]) extends TransitionController {
+class NoDownsizingThresholdIncreaseController @Inject()(cc: DefaultMessagesControllerComponents,
+                                                        override val sessionConnector: SessionConnector,
+                                                        val navigator: Navigator,
+                                                        implicit val appConfig: FrontendAppConfig)
+  extends FrontendController(cc) with TransitionController {
 
   val getReason = GetNoDownsizingThresholdIncreaseReason
 

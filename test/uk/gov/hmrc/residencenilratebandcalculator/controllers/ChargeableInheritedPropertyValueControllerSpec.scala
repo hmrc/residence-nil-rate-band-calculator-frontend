@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.http.Status
 import play.api.libs.json.{Reads, Writes}
+import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_inherited_property_value
@@ -30,14 +31,16 @@ class ChargeableInheritedPropertyValueControllerSpec extends SimpleControllerSpe
   val errorKeyTooLarge = "error.value_too_large"
   val messageKeyPrefix = "chargeable_inherited_property_value"
 
+  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
   "Chargeable Inherited Property Value Controller"  must {
 
     def createView = (value: Option[Map[String, String]]) => value match {
-      case None => chargeable_inherited_property_value(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq())(fakeRequest, messages, applicationProvider, mockConfig)
-      case Some(v) => chargeable_inherited_property_value(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages, applicationProvider, mockConfig)
+      case None => chargeable_inherited_property_value(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq())(fakeRequest, messages, mockConfig)
+      case Some(v) => chargeable_inherited_property_value(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages, mockConfig)
     }
 
-    def createController = () => new ChargeableInheritedPropertyValueController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
+    def createController = () => new ChargeableInheritedPropertyValueController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
 
     val testValue = 123
 

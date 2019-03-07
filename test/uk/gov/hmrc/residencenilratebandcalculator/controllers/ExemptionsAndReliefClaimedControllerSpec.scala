@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
+import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exemptions_and_relief_claimed
@@ -26,16 +27,18 @@ class ExemptionsAndReliefClaimedControllerSpec extends SimpleControllerSpecBase 
   val messageKey = "exemptions_and_relief_claimed.error.required"
   val messageKeyPrefix = "exemptions_and_relief_claimed"
 
+  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
   "Exemptions And Relief Claimed Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => exemptions_and_relief_claimed(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, applicationProvider, mockConfig)
-        case Some(v) => exemptions_and_relief_claimed(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, applicationProvider, mockConfig)
+        case None => exemptions_and_relief_claimed(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, mockConfig)
+        case Some(v) => exemptions_and_relief_claimed(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, mockConfig)
       }
     }
 
-    def createController = () => new ExemptionsAndReliefClaimedController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
+    def createController = () => new ExemptionsAndReliefClaimedController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
 
     val testValue = true
 

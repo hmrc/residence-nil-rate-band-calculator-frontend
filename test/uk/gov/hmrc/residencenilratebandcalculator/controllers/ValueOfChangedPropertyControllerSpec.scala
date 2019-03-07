@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
+import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_changed_property
@@ -31,14 +32,16 @@ class ValueOfChangedPropertyControllerSpec extends SimpleControllerSpecBase {
 
   "Value Of Changed Property Controller" must {
 
+    val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => value_of_changed_property(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq())(fakeRequest, messages, applicationProvider, mockConfig)
-        case Some(v) => value_of_changed_property(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages, applicationProvider, mockConfig)
+        case None => value_of_changed_property(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq())(fakeRequest, messages, mockConfig)
+        case Some(v) => value_of_changed_property(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages, mockConfig)
       }
     }
 
-    def createController = () => new ValueOfChangedPropertyController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
+    def createController = () => new ValueOfChangedPropertyController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
 
     val testValue = 123
 

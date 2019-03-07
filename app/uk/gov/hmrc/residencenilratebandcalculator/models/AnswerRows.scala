@@ -18,13 +18,13 @@ package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import org.joda.time.LocalDate
 import play.api.i18n.Messages
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{JodaReads, JsValue, Json}
 import play.api.mvc.Call
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 
-object AnswerRows {
+object AnswerRows extends JodaReads {
 
   val rowOrderList = List[String](
     Constants.dateOfDeathId,

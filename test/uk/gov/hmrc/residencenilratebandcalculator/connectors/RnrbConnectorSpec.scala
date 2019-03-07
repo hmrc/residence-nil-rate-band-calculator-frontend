@@ -103,10 +103,8 @@ class RnrbConnectorSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEa
         }.send(calculationInput))
 
         result match {
-          case Failure(exception) => {
+          case Failure(exception) =>
             exception shouldBe a[JsonInvalidException]
-            exception.getMessage() shouldBe List.fill(5)("JSON error: error.path.missing\n").mkString("")
-          }
           case Success(_) => fail
         }
       }
@@ -157,10 +155,8 @@ class RnrbConnectorSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEa
         }.sendJson(minimalJson))
 
         result match {
-          case Failure(exception) => {
+          case Failure(exception) =>
             exception shouldBe a[JsonInvalidException]
-            exception.getMessage() shouldBe List.fill(5)("JSON error: error.path.missing\n").mkString("")
-          }
           case Success(_) => fail
         }
       }

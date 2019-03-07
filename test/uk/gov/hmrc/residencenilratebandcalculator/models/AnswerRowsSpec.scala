@@ -25,7 +25,7 @@ import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.MockSessionConnector
 
-class AnswerRowsSpec extends BaseSpec with MockSessionConnector {
+class AnswerRowsSpec extends BaseSpec with MockSessionConnector with JodaWrites {
 
   val fakeRequest = FakeRequest("", "")
 

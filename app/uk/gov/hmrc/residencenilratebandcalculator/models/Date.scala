@@ -30,7 +30,7 @@ object Date {
     override def reads(json: JsValue) = {
       Try(LocalDate.parse(json.as[JsString].value)) match {
         case Success(jodaLocalDate) => JsSuccess(Date(jodaLocalDate))
-        case Failure(e) => JsError(ValidationError(e.getMessage))
+        case Failure(e) => JsError(JsonValidationError(e.getMessage))
       }
     }
   }

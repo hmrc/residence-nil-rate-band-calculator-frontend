@@ -41,6 +41,38 @@ class RnrbConnector @Inject()(val http: DefaultHttpClient,
 
   def getStyleGuide = http.GET(s"$serviceUrl${baseSegment}style-guide")
 
+  implicit val calculationResultWrites: Writes[CalculationInput] = new Writes[CalculationInput] {
+    def writes(o : CalculationInput): JsValue = {
+      import play.api.libs.json.JodaWrites.DefaultJodaLocalDateWrites
+
+      val propertyValueAfter = o.propertyValueAfterExemption match {
+        case Some(pvae) => Json.obj("propertyValueAfterExemption" -> pvae)
+        case _          => Json.obj()
+      }
+
+      val downsizingDetails = o.downsizingDetails match {
+        case Some(down) => Json.obj("downsizingDetails" ->
+          Json.obj(
+            "datePropertyWasChanged" -> Json.toJson(down.datePropertyWasChanged),
+            "valueOfChangedProperty" -> Json.toJson(down.valueOfChangedProperty),
+            "valueOfAssetsPassing" -> Json.toJson(down.valueOfAssetsPassing),
+            "valueAvailableWhenPropertyChanged" -> Json.toJson(down.valueAvailableWhenPropertyChanged)
+          )
+        )
+        case _          => Json.obj()
+      }
+
+      Json.obj(
+        "dateOfDeath" -> Json.toJson(o.dateOfDeath),
+        "valueOfEstate" -> Json.toJson(o.valueOfEstate),
+        "chargeableEstateValue" -> Json.toJson(o.chargeableEstateValue),
+        "propertyValue" -> Json.toJson(o.propertyValue),
+        "percentagePassedToDirectDescendants" -> Json.toJson(o.percentagePassedToDirectDescendants),
+        "valueBeingTransferred" -> Json.toJson(o.valueBeingTransferred)
+      ) ++ propertyValueAfter ++ downsizingDetails
+    }
+  }
+
   def send(input: CalculationInput) = sendJson(Json.toJson(input))
 
   def sendJson(json: JsValue) =
@@ -49,9 +81,8 @@ class RnrbConnector @Inject()(val http: DefaultHttpClient,
         response =>
           Json.fromJson[CalculationResult](response.json) match {
             case JsSuccess(result, _) => Success(result)
-            case JsError(error) => {
+            case JsError(error) =>
               Failure(new JsonInvalidException(JsonErrorProcessor(error)))
-            }
           }
       }
 

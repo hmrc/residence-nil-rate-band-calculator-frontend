@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
+import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.assets_passing_to_direct_descendants
@@ -26,6 +27,8 @@ class AssetsPassingToDirectDescendantsControllerSpec extends SimpleControllerSpe
   val messageKey = "assets_passing_to_direct_descendants.error.required"
   val messageKeyPrefix = "assets_passing_to_direct_descendants"
 
+  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
   "Assets Passing To Direct Descendants Controller" must {
 
     val propertyValue = 123456
@@ -34,13 +37,13 @@ class AssetsPassingToDirectDescendantsControllerSpec extends SimpleControllerSpe
     def createView = (value: Option[Map[String, String]]) => {
       value match {
         case None =>
-          assets_passing_to_direct_descendants(BooleanForm(messageKey), Seq(), formattedPropertyValue)(fakeRequest, messages, applicationProvider, mockConfig)
+          assets_passing_to_direct_descendants(BooleanForm(messageKey), Seq(), formattedPropertyValue)(fakeRequest, messages, mockConfig)
         case Some(v) =>
-          assets_passing_to_direct_descendants(BooleanForm(messageKey).bind(v), Seq(), formattedPropertyValue)(fakeRequest, messages, applicationProvider, mockConfig)
+          assets_passing_to_direct_descendants(BooleanForm(messageKey).bind(v), Seq(), formattedPropertyValue)(fakeRequest, messages, mockConfig)
       }
     }
 
-    def createController = () => new AssetsPassingToDirectDescendantsController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
+    def createController = () => new AssetsPassingToDirectDescendantsController(mockSessionConnector, navigator, messagesControllerComponents, mockConfig)
 
     val testValue = true
 

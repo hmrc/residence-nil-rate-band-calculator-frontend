@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
+import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_estate_assets
@@ -26,16 +27,18 @@ class GrossingUpOnEstateAssetsControllerSpec extends SimpleControllerSpecBase {
   val messageKey = "grossing_up_on_estate_assets.error.required"
   val messageKeyPrefix = "grossing_up_on_estate_assets"
 
+  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
   "Grossing Up On Estate Assets Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => grossing_up_on_estate_assets(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, applicationProvider, mockConfig)
-        case Some(v) => grossing_up_on_estate_assets(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, applicationProvider, mockConfig)
+        case None => grossing_up_on_estate_assets(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, mockConfig)
+        case Some(v) => grossing_up_on_estate_assets(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, mockConfig)
       }
     }
 
-    def createController = () => new GrossingUpOnEstateAssetsController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
+    def createController = () => new GrossingUpOnEstateAssetsController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
 
     val testValue = false
 

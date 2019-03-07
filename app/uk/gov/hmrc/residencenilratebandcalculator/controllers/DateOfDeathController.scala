@@ -16,29 +16,27 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import com.google.inject.Provider
 import javax.inject.{Inject, Singleton}
-import play.api.Application
 import play.api.data.Form
-import play.api.i18n.MessagesApi
 import play.api.libs.json.{Reads, Writes}
-import play.api.mvc.{Action, Request}
+import play.api.mvc.{DefaultMessagesControllerComponents, Request}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.http.logging.SessionId
+import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 import uk.gov.hmrc.residencenilratebandcalculator.models.{Date, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 @Singleton
-class DateOfDeathController @Inject()(val messagesApi: MessagesApi,
+class DateOfDeathController @Inject()(cc: DefaultMessagesControllerComponents,
                                       val sessionConnector: SessionConnector,
                                       val navigator: Navigator,
-                                      implicit val appConfig: FrontendAppConfig,
-                                      implicit val applicationProvider: Provider[Application]) extends ControllerBase[Date] {
+                                      implicit val appConfig: FrontendAppConfig) extends FrontendController(cc) with ControllerBase[Date] {
 
   lazy val controllerId = Constants.dateOfDeathId
 

@@ -16,6 +16,8 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
+import java.util.Locale
+
 import org.joda.time.LocalDate
 import play.api.i18n.{Lang, Messages, MessagesApi}
 import play.api.mvc.Call
@@ -31,7 +33,7 @@ class AnswerRowSpec extends BaseSpec {
 
   def messages = messagesApi.preferred(fakeRequest)
 
-  val messagesWelsh = new Messages(new Lang("cy"), messagesApi)
+  val welshMessages = messagesApi.preferred(Seq(Lang("cy"))).messages
 
   val mockCall = Call("", "")
 
@@ -43,7 +45,7 @@ class AnswerRowSpec extends BaseSpec {
 
     "correctly format a date" in {
       AnswerRow("", new LocalDate(2017, 6, 1), mockCall)(messages).data shouldBe "1 June 2017"
-      AnswerRow("", new LocalDate(2017, 6, 1), mockCall)(messagesWelsh).data shouldBe "1 Mehefin 2017"
+      AnswerRow("", new LocalDate(2017, 6, 1), mockCall)(welshMessages).data shouldBe "1 Mehefin 2017"
     }
 
     "correctly format a true Boolean as Yes" in {

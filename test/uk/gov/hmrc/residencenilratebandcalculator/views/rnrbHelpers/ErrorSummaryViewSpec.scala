@@ -50,7 +50,7 @@ class ErrorSummaryViewSpec extends HtmlSpec {
     "given no errors" must {
 
       "not render anything" in {
-        error_summary(createForm(Seq()))(messages).toString shouldBe "\n"
+        error_summary(createForm(Seq()))(messages).toString shouldBe ""
       }
     }
 

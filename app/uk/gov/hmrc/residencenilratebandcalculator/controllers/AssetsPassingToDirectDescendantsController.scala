@@ -16,12 +16,10 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import com.google.inject.Provider
 import javax.inject.{Inject, Singleton}
-import play.api.Application
 import play.api.data.Form
-import play.api.i18n.MessagesApi
-import play.api.mvc.Request
+import play.api.mvc.{DefaultMessagesControllerComponents, Request}
+import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
@@ -30,11 +28,11 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.assets_passing_to_d
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 @Singleton
-class AssetsPassingToDirectDescendantsController @Inject()(val messagesApi: MessagesApi,
-                                                           override val sessionConnector: SessionConnector,
+class AssetsPassingToDirectDescendantsController @Inject()(override val sessionConnector: SessionConnector,
                                                            override val navigator: Navigator,
-                                                           implicit val appConfig: FrontendAppConfig,
-                                                           implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[Boolean] {
+                                                           cc: DefaultMessagesControllerComponents,
+                                                           implicit val appConfig: FrontendAppConfig)
+  extends FrontendController(cc) with SimpleControllerBase[Boolean] {
 
   override val controllerId: String = Constants.assetsPassingToDirectDescendantsId
 

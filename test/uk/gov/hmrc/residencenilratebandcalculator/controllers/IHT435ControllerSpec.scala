@@ -18,17 +18,16 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import java.io.ByteArrayOutputStream
 
-import com.google.inject.Provider
-import org.mockito.Mockito._
 import org.mockito.ArgumentMatchers._
+import org.mockito.Mockito._
+import play.api.Environment
 import play.api.http.Status
 import play.api.i18n.MessagesApi
+import play.api.mvc.DefaultMessagesControllerComponents
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import play.api.{Application, Environment}
-import uk.gov.hmrc.play.test.WithFakeApplication
-import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, FrontendAppConfig}
-import uk.gov.hmrc.residencenilratebandcalculator.utils.{PDFHelper}
+import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
+import uk.gov.hmrc.residencenilratebandcalculator.utils.{PDFHelper, PDFHelperImpl}
 
 class IHT435ControllerSpec extends BaseSpec with MockSessionConnector {
   private val fakeRequest = FakeRequest("", "")
@@ -38,19 +37,21 @@ class IHT435ControllerSpec extends BaseSpec with MockSessionConnector {
 
   private val env = injector.instanceOf[Environment]
 
-  private val mockPDFHelper = mock[PDFHelper]
+  private val mockPDFHelper = mock[PDFHelperImpl]
 
-  private def controller = new IHT435Controller(env, messagesApi, mockSessionConnector, mockPDFHelper, applicationProvider)
+  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
+  private def controller = new IHT435Controller(env, messagesControllerComponents, mockSessionConnector, mockPDFHelper)
 
   "onPageLoad" must {
     "return 200" in {
-      when(mockPDFHelper.generatePDF(any(), any())) thenReturn Some(new ByteArrayOutputStream())
+      when(mockPDFHelper.generatePDF(any(), any())(any())) thenReturn Some(new ByteArrayOutputStream())
       val result = controller.onPageLoad()(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return exception when no resource" in {
-      when(mockPDFHelper.generatePDF(any(), any())) thenReturn None
+      when(mockPDFHelper.generatePDF(any(), any())(any())) thenReturn None
       a[RuntimeException] shouldBe thrownBy {
         status(controller.onPageLoad()(fakeRequest))
       }

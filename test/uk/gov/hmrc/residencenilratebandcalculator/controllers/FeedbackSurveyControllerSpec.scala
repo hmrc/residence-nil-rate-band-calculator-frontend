@@ -17,13 +17,16 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.http.Status
+import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
 
 class FeedbackSurveyControllerSpec extends HtmlSpec with MockSessionConnector {
 
+  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
   "Feedback Survey controller" must {
     "return 303 for a GET" in {
-      val testController = new FeedbackSurveyController(mockConfig)
+      val testController = new FeedbackSurveyController(messagesControllerComponents, mockConfig)
       val result = testController.redirectExitSurvey(request)
       status(result) shouldBe Status.SEE_OTHER
     }

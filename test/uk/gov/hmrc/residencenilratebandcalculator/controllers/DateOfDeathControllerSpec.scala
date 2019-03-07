@@ -26,6 +26,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 import org.mockito.Mockito._
+import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.concurrent.Future
@@ -34,7 +35,8 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase {
 
   val mockConnector = mock[SessionConnector]
   val mockConfig = injector.instanceOf[FrontendAppConfig]
-  val controller = new DateOfDeathController(messagesApi, mockConnector, navigator, mockConfig, applicationProvider)
+  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val controller = new DateOfDeathController(messagesControllerComponents, mockConnector, navigator, mockConfig)
   implicit val mat = fakeApplication.injector.instanceOf[Materializer]
 
   def setupMock(result: Future[Option[CacheMap]]) = {
@@ -84,11 +86,11 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase {
   "Date of Death Controller" must {
 
     def createView = (value: Option[Date]) => value match {
-      case None => date_of_death(dateOfDeathForm)(fakeRequest, messages, applicationProvider, mockConfig)
-      case Some(v) => date_of_death(dateOfDeathForm.fill(v))(fakeRequest, messages, applicationProvider, mockConfig)
+      case None => date_of_death(dateOfDeathForm)(fakeRequest, messages, mockConfig)
+      case Some(v) => date_of_death(dateOfDeathForm.fill(v))(fakeRequest, messages, mockConfig)
     }
 
-    def createController = () => new DateOfDeathController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
+    def createController = () => new DateOfDeathController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
 
     behave like rnrbDateController(createController, createView, Constants.dateOfDeathId)(Date.dateReads, Date.dateWrites)
   }

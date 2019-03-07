@@ -17,17 +17,15 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, _}
-import play.api.i18n.{I18nSupport, Lang, MessagesApi}
+import play.api.i18n.{I18nSupport, Lang, Messages}
 import play.api.mvc.{Action, AnyContent, Call, _}
+import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.language.LanguageUtils
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 
 @Singleton
-class CustomLanguageController @Inject()(implicit val messagesApi: MessagesApi,
-                                         val appConfig: FrontendAppConfig) extends Controller with I18nSupport {
-
-  val englishLang = Lang("en")
-  val runModeConfiguration = appConfig.runModeConfiguration
+class CustomLanguageController @Inject()(val cc: MessagesControllerComponents,
+                                         val appConfig: FrontendAppConfig) extends FrontendController(cc) with I18nSupport {
 
   def langToCall(lang: String): Call = {
     if(appConfig.isWelshEnabled) {
@@ -37,20 +35,27 @@ class CustomLanguageController @Inject()(implicit val messagesApi: MessagesApi,
     }
   }
 
-  def switchToLanguage(language: String): Action[AnyContent] =  Action { implicit request =>
+  def loadedLanguageMessages(implicit request: Request[_]): Messages = {
+    cc.messagesApi.preferred(request)
+  }
+
+  def switchToLanguage(language: String): Action[AnyContent] = Action { implicit request =>
     val lang =
       if(appConfig.isWelshEnabled) {
-        languageMap.getOrElse(language, LanguageUtils.getCurrentLang)
+        CustomLanguageController.languageMap.getOrElse(language, LanguageUtils.getCurrentLang)
       } else {
-        englishLang
+        CustomLanguageController.englishLang
       }
-    val redirectURL = request.headers.get(REFERER).getOrElse(fallbackURL)
+    val redirectURL = request.headers.get(REFERER).getOrElse(CustomLanguageController.fallbackURL)
 
     Redirect(redirectURL).withLang(Lang.apply(lang.code)).flashing(LanguageUtils.FlashWithSwitchIndicator)
   }
+}
 
-  protected def fallbackURL: String = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.CalculateThresholdIncreaseController.onPageLoad().url
-
+object CustomLanguageController {
   def languageMap: Map[String, Lang] = Map("english" -> Lang("en"), "cymraeg" -> Lang("cy"))
 
+  lazy val englishLang = Lang("en")
+
+  protected def fallbackURL: String = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.CalculateThresholdIncreaseController.onPageLoad().url
 }

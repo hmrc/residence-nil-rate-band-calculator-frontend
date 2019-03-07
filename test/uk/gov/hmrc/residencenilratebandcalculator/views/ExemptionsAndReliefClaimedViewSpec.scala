@@ -17,26 +17,27 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.ExemptionsAndReliefClaimedController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exemptions_and_relief_claimed
 
-import scala.language.reflectiveCalls
-
-class ExemptionsAndReliefClaimedViewSpec  extends BooleanViewSpecBase {
+class ExemptionsAndReliefClaimedViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "exemptions_and_relief_claimed"
 
-  def createView(form: Form[Boolean]) = exemptions_and_relief_claimed(form, Seq())(request, messages, applicationProvider, mockConfig)
+  lazy val injectedController: ExemptionsAndReliefClaimedController = injector.instanceOf[ExemptionsAndReliefClaimedController]
+
+  def createView(form: Form[Boolean]): HtmlFormat.Appendable = exemptions_and_relief_claimed(form, Seq())(request, messages, mockConfig)
 
   "Exemptions And Relief Claimed View" must {
 
     behave like rnrbPage[Boolean](createView, messageKeyPrefix,
-      "guidance2", "guidance2.bullet1", "guidance2.bullet2", "guidance2.bullet3")(fakeApplication.injector.instanceOf[ExemptionsAndReliefClaimedController].form())
+      "guidance2", "guidance2.bullet1", "guidance2.bullet2", "guidance2.bullet3")(injectedController.form())
 
-    behave like pageWithoutBackLink[Boolean](createView, fakeApplication.injector.instanceOf[ExemptionsAndReliefClaimedController].form())
+    behave like pageWithoutBackLink[Boolean](createView, injectedController.form())
 
-    behave like booleanPage(createView, messageKeyPrefix, ExemptionsAndReliefClaimedController.onSubmit().url, fakeApplication.injector.instanceOf[ExemptionsAndReliefClaimedController].form(), true)
+    behave like booleanPage(createView, messageKeyPrefix, ExemptionsAndReliefClaimedController.onSubmit().url, injectedController.form(), useNewValues = true)
 
     behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[ExemptionsAndReliefClaimedController].form())
 

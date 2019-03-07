@@ -17,22 +17,19 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
-
-import com.google.inject.Provider
-import play.api.Application
-import play.api.i18n.MessagesApi
-import play.api.mvc.Request
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import play.api.mvc.{DefaultMessagesControllerComponents, Request}
+import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoThresholdIncreaseReason.{DateOfDeath, DirectDescendant}
 import uk.gov.hmrc.residencenilratebandcalculator.models._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_threshold_increase
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 
 @Singleton
-class NoThresholdIncreaseController  @Inject()(override val messagesApi: MessagesApi,
+class NoThresholdIncreaseController  @Inject()(cc: DefaultMessagesControllerComponents,
                                                override val sessionConnector: SessionConnector,
-                                               implicit val appConfig: FrontendAppConfig,
-                                               implicit val applicationProvider: Provider[Application]) extends TransitionController {
+                                               implicit val appConfig: FrontendAppConfig)
+  extends FrontendController(cc) with TransitionController {
 
   val getReason = GetNoThresholdIncreaseReason
 

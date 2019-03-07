@@ -16,13 +16,12 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import com.google.inject.Provider
 import javax.inject.{Inject, Singleton}
+import play.api.Logger
 import play.api.data.FormError
-import play.api.i18n.MessagesApi
+import play.api.i18n.Messages
 import play.api.libs.json.{Reads, Writes}
-import play.api.mvc.{Action, Request}
-import play.api.{Application, Logger}
+import play.api.mvc.{DefaultMessagesControllerComponents, Request}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
@@ -34,17 +33,17 @@ import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_available_when_property_changed
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 @Singleton
-class ValueAvailableWhenPropertyChangedController @Inject()(val messagesApi: MessagesApi,
+class ValueAvailableWhenPropertyChangedController @Inject()(cc: DefaultMessagesControllerComponents,
                                                             val sessionConnector: SessionConnector,
                                                             val navigator: Navigator,
                                                             val rnrbConnector: RnrbConnector,
-                                                            implicit val appConfig: FrontendAppConfig,
-                                                            implicit val applicationProvider: Provider[Application]) extends FrontendController {
+                                                            implicit val appConfig: FrontendAppConfig) extends FrontendController(cc) {
 
-  val controllerId = Constants.valueAvailableWhenPropertyChangedId
+  val controllerId: String = Constants.valueAvailableWhenPropertyChangedId
 
   def form = () =>
     NonNegativeIntForm("value_available_when_property_changed.error.blank", "error.whole_pounds", "error.non_numeric", "error.value_too_large")
@@ -72,20 +71,18 @@ class ValueAvailableWhenPropertyChangedController @Inject()(val messagesApi: Mes
       microserviceValues.map {
         case (nilRateValueJson, cacheMap) => {
           val previousAnswers = answerRows(cacheMap, request)
-          val userAnswers = new UserAnswers(cacheMap)
           val nilRateBand = CurrencyFormatter.format(nilRateValueJson.json.toString())
-          implicit val messages = messagesApi.preferred(request)
+
           Ok(value_available_when_property_changed(
             nilRateBand,
             cacheMap.getEntry(controllerId).fold(form())(value => form().fill(value)),
             previousAnswers))
         }
       } recover {
-        case n: NoCacheMapException => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
-        case r: RuntimeException => {
+        case _: NoCacheMapException => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
+        case r: RuntimeException =>
           Logger.error(r.getMessage, r)
           throw r
-        }
       }
     }
   }
@@ -99,11 +96,11 @@ class ValueAvailableWhenPropertyChangedController @Inject()(val messagesApi: Mes
           val formattedNilRateBand = CurrencyFormatter.format(nilRateBand)
           val previousAnswers = answerRows(cacheMap, request)
           val userAnswers = new UserAnswers(cacheMap)
-          implicit val messages = messagesApi.preferred(request)
+
           boundForm.fold(
             formWithErrors => Future.successful(BadRequest(value_available_when_property_changed(
               formattedNilRateBand, formWithErrors, previousAnswers))),
-            (value) => {
+            value => {
               validate(value, nilRateBand).flatMap {
                 case Some(error) => Future.successful(BadRequest(value_available_when_property_changed(
                   formattedNilRateBand,
@@ -115,11 +112,10 @@ class ValueAvailableWhenPropertyChangedController @Inject()(val messagesApi: Mes
           )
         }
       } recover {
-        case n: NoCacheMapException => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
-        case r: RuntimeException => {
+        case _: NoCacheMapException => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
+        case r: RuntimeException =>
           Logger.error(r.getMessage, r)
           throw r
-        }
       }
     }
   }

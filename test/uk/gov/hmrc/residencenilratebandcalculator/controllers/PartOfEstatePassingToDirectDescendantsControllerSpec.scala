@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
+import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.part_of_estate_passing_to_direct_descendants
@@ -26,16 +27,18 @@ class PartOfEstatePassingToDirectDescendantsControllerSpec extends SimpleControl
   val messageKey = "part_of_estate_passing_to_direct_descendants.error.required"
   val messageKeyPrefix = "part_of_estate_passing_to_direct_descendants"
 
+  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
   "Part Of Estate Passing To Direct Descendants Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => part_of_estate_passing_to_direct_descendants(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, applicationProvider, mockConfig)
-        case Some(v) => part_of_estate_passing_to_direct_descendants(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, applicationProvider, mockConfig)
+        case None => part_of_estate_passing_to_direct_descendants(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, mockConfig)
+        case Some(v) => part_of_estate_passing_to_direct_descendants(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, mockConfig)
       }
     }
 
-    def createController = () => new PartOfEstatePassingToDirectDescendantsController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
+    def createController = () => new PartOfEstatePassingToDirectDescendantsController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
 
     val testValue = true
 
