@@ -23,7 +23,7 @@ import play.api.data.FormError
 import play.api.http.Status
 import play.api.i18n.MessagesApi
 import play.api.libs.json._
-import play.api.mvc.Result
+import play.api.mvc.{DefaultMessagesControllerComponents, Result}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
@@ -58,6 +58,8 @@ class ValueBeingTransferredControllerSpec extends BaseSpec with HttpResponseMock
 
   def messages = messagesApi.preferred(fakeRequest)
 
+  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
   def mockRnrbConnector = {
     val mockConnector = mock[RnrbConnector]
     when(mockConnector.getNilRateBand(any[String])) thenReturn Future.successful(HttpResponse(200, Some(JsNumber(100000))))
@@ -67,20 +69,20 @@ class ValueBeingTransferredControllerSpec extends BaseSpec with HttpResponseMock
   def createView = (value: Option[Map[String, String]]) => {
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
-      case None => value_being_transferred("£100,000.00", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider, mockConfig)
-      case Some(v) => value_being_transferred("£100,000.00", NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(answerRow))(fakeRequest, messages, applicationProvider, mockConfig)
+      case None => value_being_transferred("£100,000.00", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq(answerRow))(fakeRequest, messages, mockConfig)
+      case Some(v) => value_being_transferred("£100,000.00", NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(answerRow))(fakeRequest, messages, mockConfig)
     }
   }
 
   def createViewWithBacklink = (value: Option[Map[String, String]]) => {
     val answerRow = new AnswerRow("What was the date of death?", "11 May 2017", routes.DateOfDeathController.onPageLoad().url)
     value match {
-      case None => value_being_transferred("£100,000.00", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider, mockConfig)
-      case Some(v) => value_being_transferred( "£100,000.00", NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(answerRow))(fakeRequest, messages, applicationProvider, mockConfig)
+      case None => value_being_transferred("£100,000.00", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq(answerRow))(fakeRequest, messages, mockConfig)
+      case Some(v) => value_being_transferred( "£100,000.00", NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(answerRow))(fakeRequest, messages, mockConfig)
     }
   }
 
-  def createController = () => new ValueBeingTransferredController(messagesApi, mockSessionConnector, navigator, mockRnrbConnector, mockConfig, applicationProvider)
+  def createController = () => new ValueBeingTransferredController(messagesControllerComponents, mockSessionConnector, navigator, mockRnrbConnector, mockConfig)
 
   def testValue = "100000"
 

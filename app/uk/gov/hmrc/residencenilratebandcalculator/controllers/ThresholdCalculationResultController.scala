@@ -17,31 +17,28 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
-
-import com.google.inject.Provider
 import play.Logger
-import play.api.Application
-import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc._
+import play.api.i18n.I18nSupport
+import play.api.mvc.DefaultMessagesControllerComponents
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CalculationInput, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.utils.{CurrencyFormatter}
+import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.threshold_calculation_result
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
-import uk.gov.hmrc.http.HeaderCarrier
 
 @Singleton
-class ThresholdCalculationResultController @Inject()(val messagesApi: MessagesApi,
+class ThresholdCalculationResultController @Inject()(cc: DefaultMessagesControllerComponents,
                                                      rnrbConnector: RnrbConnector, sessionConnector: SessionConnector,
-                                                     implicit val appConfig: FrontendAppConfig,
-                                                     implicit val applicationProvider: Provider[Application])
-  extends FrontendController with I18nSupport {
+                                                     implicit val appConfig: FrontendAppConfig)
+  extends FrontendController(cc) with I18nSupport {
 
   private def fail(ex: Throwable) = {
     Logger.error(ex.getMessage, ex)
@@ -75,7 +72,7 @@ class ThresholdCalculationResultController @Inject()(val messagesApi: MessagesAp
           case (Failure(ex), _) => fail(ex)
           case (Success(result), Success(answers)) =>
             sessionConnector.cache[Int](Constants.thresholdCalculationResultId, result.residenceNilRateAmount)
-            val messages = messagesApi.preferred(request)
+            val messages = cc.messagesApi.preferred(request)
             val residenceNilRateAmount = CurrencyFormatter.format(result.residenceNilRateAmount)
             Ok(threshold_calculation_result(residenceNilRateAmount, AnswerRows(answers, messages)))
         }

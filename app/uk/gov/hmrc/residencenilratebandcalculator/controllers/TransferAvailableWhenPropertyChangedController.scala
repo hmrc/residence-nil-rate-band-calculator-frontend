@@ -17,25 +17,20 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
-
-import com.google.inject.Provider
-import play.api.Application
 import play.api.data.Form
-import play.api.i18n.MessagesApi
-import play.api.mvc.Request
-import play.twirl.api.HtmlFormat._
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import play.api.mvc.{DefaultMessagesControllerComponents, Request}
+import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_available_when_property_changed
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 @Singleton
-class TransferAvailableWhenPropertyChangedController @Inject()(val messagesApi: MessagesApi,
+class TransferAvailableWhenPropertyChangedController @Inject()(cc: DefaultMessagesControllerComponents,
                                                                override val sessionConnector: SessionConnector,
                                                                override val navigator: Navigator,
-                                                               implicit val appConfig: FrontendAppConfig,
-                                                               implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[Boolean] {
+                                                               implicit val appConfig: FrontendAppConfig) extends FrontendController(cc) with SimpleControllerBase[Boolean] {
 
   override val controllerId: String = Constants.transferAvailableWhenPropertyChangedId
 

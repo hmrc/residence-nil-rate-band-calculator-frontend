@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Navigator
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueBeingTransferredController
@@ -32,9 +33,12 @@ class ValueBeingTransferredViewSpec extends IntViewSpecBase {
   val navigator = injector.instanceOf[Navigator]
   var mockSessionConnector: SessionConnector = _
   val mockRnrbConnector : RnrbConnector = mock[RnrbConnector]
-  val controller = new ValueBeingTransferredController(messagesApi, mockSessionConnector, navigator, mockRnrbConnector, mockConfig, applicationProvider).form()
 
-  def createView(form: Form[Int]) = value_being_transferred("100000", form, Seq())(request, messages, applicationProvider, mockConfig)
+  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
+  val controller = new ValueBeingTransferredController(messagesControllerComponents, mockSessionConnector, navigator, mockRnrbConnector, mockConfig).form()
+
+  def createView(form: Form[Int]) = value_being_transferred("100000", form, Seq())(request, messages, mockConfig)
 
   "Value Being Transferred View" must {
 

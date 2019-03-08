@@ -14,13 +14,13 @@
  * limitations under the License.
  *@
 
-@import play.api.Application; import com.google.inject.Provider
+@import play.api.Application
 @import layouts.{govuk_template => hmrcGovUkTemplate}
 @import uk.gov.hmrc.play.views.html.{layouts => uiLayouts}
 @import uk.gov.hmrc.play.views.html.{helpers => uiHelpers}
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.CustomLanguageController
-@import play.api.Application; import com.google.inject.Provider
 @import play.api.Play.current
+@import play.twirl.api.HtmlFormat
 
 @(appConfig: uk.gov.hmrc.residencenilratebandcalculator.AppConfig,
   title: String,
@@ -118,7 +118,7 @@
 @lc = @{Application.instanceCache[CustomLanguageController].apply(current) }
     @mainContentHeader = {
         @if(appConfig.isWelshEnabled){
-            <div class="float--right">@language_selection(lc.languageMap, lc.langToCall, None)</div>
+            <div class="float--right">@rnrbHelpers.language_selection(CustomLanguageController.languageMap, lc.langToCall _, None)(lc.loadedLanguageMessages)</div>
     }
     @if(contentHeader.isDefined) {
         @uiLayouts.main_content_header(contentHeader = contentHeader.get)

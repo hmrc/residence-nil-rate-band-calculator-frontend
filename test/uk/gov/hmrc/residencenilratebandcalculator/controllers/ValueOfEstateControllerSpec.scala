@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
+import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_estate
@@ -29,19 +30,20 @@ class ValueOfEstateControllerSpec extends SimpleControllerSpecBase {
   val errorKeyTooLarge = "error.value_too_large"
   val messageKeyPrefix = "value_of_estate"
 
+  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
   "Value Of Estate Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PartOfEstatePassingToDirectDescendantsController.onPageLoad().url
 
       value match {
-        case None => value_of_estate(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq())(fakeRequest, messages, applicationProvider, mockConfig)
-        case Some(v) => value_of_estate(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages, applicationProvider, mockConfig)
+        case None => value_of_estate(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq())(fakeRequest, messages, mockConfig)
+        case Some(v) => value_of_estate(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages, mockConfig)
       }
     }
-
     
-    def createController = () => new ValueOfEstateController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
+    def createController = () => new ValueOfEstateController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
 
     val testValue = 123
 

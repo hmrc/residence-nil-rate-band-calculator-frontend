@@ -17,13 +17,14 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.Inject
-import play.api.mvc.{Action, AnyContent}
+import play.api.mvc.{Action, AnyContent, DefaultMessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 
 import scala.concurrent.Future
 
-class FeedbackSurveyController @Inject()(appConfig: FrontendAppConfig) extends FrontendController {
+class FeedbackSurveyController @Inject()(cc: DefaultMessagesControllerComponents,
+                                         appConfig: FrontendAppConfig) extends FrontendController(cc) {
   def redirectExitSurvey: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Redirect(appConfig.feedbackSurvey).withNewSession)
   }

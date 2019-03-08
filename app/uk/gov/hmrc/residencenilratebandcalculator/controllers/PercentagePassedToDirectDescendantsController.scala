@@ -17,23 +17,19 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.Inject
-
-import com.google.inject.Provider
-import play.api.Application
 import play.api.data.Form
-import play.api.i18n.MessagesApi
-import play.api.mvc.Request
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import play.api.mvc.{DefaultMessagesControllerComponents, Request}
+import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PositivePercentForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_passed_to_direct_descendants
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
-class PercentagePassedToDirectDescendantsController  @Inject()(val messagesApi: MessagesApi,
+class PercentagePassedToDirectDescendantsController  @Inject()(cc: DefaultMessagesControllerComponents,
                                                                override val sessionConnector: SessionConnector,
                                                                override val navigator: Navigator,
-                                                               implicit val appConfig: FrontendAppConfig,
-                                                               implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[BigDecimal] {
+                                                               implicit val appConfig: FrontendAppConfig) extends FrontendController(cc) with SimpleControllerBase[BigDecimal] {
 
 
   override val controllerId = Constants.percentagePassedToDirectDescendantsId

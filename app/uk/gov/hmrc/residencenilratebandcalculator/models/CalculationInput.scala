@@ -17,8 +17,10 @@
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import org.joda.time.LocalDate
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.{JodaReads, Json, OFormat}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import play.api.libs.json.JodaWrites._
+import play.api.libs.json.JodaReads._
 
 case class CalculationInput(dateOfDeath: LocalDate,
                             valueOfEstate: Int,
@@ -29,7 +31,7 @@ case class CalculationInput(dateOfDeath: LocalDate,
                             propertyValueAfterExemption: Option[PropertyValueAfterExemption],
                             downsizingDetails: Option[DownsizingDetails])
 
-object CalculationInput {
+object CalculationInput extends JodaReads {
   implicit val formats: OFormat[CalculationInput] = Json.format[CalculationInput]
 
   def apply(userAnswers: UserAnswers): CalculationInput = {
@@ -55,33 +57,36 @@ object CalculationInput {
   }
 
   def getChargeablePropertyValue(userAnswers: UserAnswers): Option[PropertyValueAfterExemption] =
-    userAnswers.chargeablePropertyValue.isDefined match {
-    case true => Some(PropertyValueAfterExemption(
-      userAnswers.chargeablePropertyValue.get,
-      userAnswers.chargeableInheritedPropertyValue.get
-    ))
-    case _ => None
+    if (userAnswers.chargeablePropertyValue.isDefined) {
+      Some(PropertyValueAfterExemption(
+        userAnswers.chargeablePropertyValue.get,
+        userAnswers.chargeableInheritedPropertyValue.get
+      ))
+    } else {
+      None
+    }
+
+  private def getPropertyValue(userAnswers: UserAnswers) = if (userAnswers.propertyInEstate.get) {
+    userAnswers.propertyValue.get
+  } else {
+    0
   }
 
-  private def getPropertyValue(userAnswers: UserAnswers) = userAnswers.propertyInEstate.get match {
-    case true => userAnswers.propertyValue.get
-    case _ => 0
+  private def getValueBeingTransferred(userAnswers: UserAnswers) = if (userAnswers.transferAnyUnusedThreshold.get) {
+    userAnswers.valueBeingTransferred.get
+  } else {
+    0
   }
 
-  private def getValueBeingTransferred(userAnswers: UserAnswers) = userAnswers.transferAnyUnusedThreshold.get match {
-    case true => userAnswers.valueBeingTransferred.get
-    case _ => 0
-  }
+  private def getDownsizingDetails(userAnswers: UserAnswers) = if (userAnswers.claimDownsizingThreshold.get) {
+    require(userAnswers.datePropertyWasChanged.isDefined, "Date Property Was Changed was not answered")
 
-  private def getDownsizingDetails(userAnswers: UserAnswers) = userAnswers.claimDownsizingThreshold.get match {
-    case true =>
-      require(userAnswers.datePropertyWasChanged.isDefined, "Date Property Was Changed was not answered")
-
-      userAnswers.datePropertyWasChanged match {
-        case Some(d) if d isBefore Constants.downsizingEligibilityDate => None
-        case Some(_) => Some(DownsizingDetails(userAnswers))
-      }
-    case _ => None
+    userAnswers.datePropertyWasChanged match {
+      case Some(d) if d isBefore Constants.downsizingEligibilityDate => None
+      case Some(_) => Some(DownsizingDetails(userAnswers))
+    }
+  } else {
+    None
   }
 
   private def requirePropertyInEstateDependencies(userAnswers: UserAnswers) = {

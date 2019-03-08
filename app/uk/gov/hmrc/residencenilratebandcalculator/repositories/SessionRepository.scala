@@ -18,8 +18,9 @@ package uk.gov.hmrc.residencenilratebandcalculator.repositories
 
 import javax.inject.{Inject, Singleton}
 import org.joda.time.{DateTime, DateTimeZone}
+import play.api.libs.functional.FunctionalBuilder
 import play.api.libs.json.Writes.StringWrites
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{JodaReads, JodaWrites, JsValue, Json}
 import play.api.{Configuration, Logger}
 import play.modules.reactivemongo.MongoDbConnection
 import reactivemongo.api.indexes.{Index, IndexType}
@@ -36,9 +37,29 @@ case class DatedCacheMap(id: String,
                          data: Map[String, JsValue],
                          lastUpdated: DateTime = DateTime.now(DateTimeZone.UTC))
 
-object DatedCacheMap {
+object DatedCacheMap extends JodaReads with JodaWrites {
+  import play.api.libs.functional.syntax._
+  import play.api.libs.json.Reads._
+  import play.api.libs.json.OWrites._
+  import play.api.libs.json._
 
-  implicit val formats = Json.format[DatedCacheMap]
+  val datedCacheMapReads: Reads[DatedCacheMap] =
+    ((JsPath \ "id").read[String] and
+    (JsPath \ "data").read[Map[String, JsValue]] and
+    (JsPath \ "lastUpdated").read[DateTime]) { (id, data, lastUpdated) =>
+      new DatedCacheMap(id, data, lastUpdated)
+    }
+  val writeBuilder: FunctionalBuilder[OWrites]#CanBuild3[String, Map[String, JsValue], DateTime] =
+    (JsPath \ "id").write[String] and
+    (JsPath \ "data").write[Map[String, JsValue]] and
+    (JsPath \ "lastUpdated").write[DateTime]
+
+  val datedCacheMapWrites: OWrites[DatedCacheMap] =
+    writeBuilder.apply { datedCacheMap: DatedCacheMap =>
+      (datedCacheMap.id, datedCacheMap.data, datedCacheMap.lastUpdated)
+    }
+
+  implicit val formats: OFormat[DatedCacheMap] = OFormat(datedCacheMapReads, datedCacheMapWrites)
 
   def apply(cacheMap: CacheMap): DatedCacheMap = DatedCacheMap(cacheMap.id, cacheMap.data)
 }

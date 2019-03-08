@@ -19,15 +19,18 @@ package uk.gov.hmrc.residencenilratebandcalculator.utils
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm
 import play.api.Environment
-import play.api.i18n.MessagesApi
+import play.api.i18n.{Lang, MessagesApi}
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
+import play.api.mvc.{DefaultMessagesControllerComponents, MessagesControllerComponents}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
 
 class PDFHelperSpec extends BaseSpec {
   private val injector = fakeApplication.injector
-  private val env = injector.instanceOf[Environment]
+  private val injectedEnv = injector.instanceOf[Environment]
   private def messagesApi = injector.instanceOf[MessagesApi]
+  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
   private val cacheMapKey = "aa"
   private val noDigitsInDate = 8
   private val noDigitsInDecimal = 7
@@ -55,8 +58,13 @@ class PDFHelperSpec extends BaseSpec {
     Constants.thresholdCalculationResultId -> JsNumber(229988)
   ))
 
+  implicit val lang: Lang = Lang("en")
+
   private def acroForm(filledCacheMap: CacheMap = cacheMapAllNonDecimalFields, generateWelshPDF: Boolean = false): PDAcroForm = {
-    val pdfHelper = new PDFHelper(messagesApi, env)
+    val pdfHelper = new PDFHelper {
+      override val env: Environment = injectedEnv
+      override val cc: MessagesControllerComponents = messagesControllerComponents
+    }
     val optionPDAcroForm: Option[PDAcroForm] = pdfHelper.generatePDF(filledCacheMap, generateWelshPDF=generateWelshPDF).map { baos =>
       val pdfDoc = PDDocument.load(baos.toByteArray)
       baos.close()

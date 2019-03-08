@@ -16,21 +16,21 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import org.mockito.Mockito._
 import org.mockito.ArgumentMatchers._
+import org.mockito.Mockito._
 import play.api.http.Status
 import play.api.i18n.MessagesApi
-import play.api.mvc.Request
+import play.api.mvc.{DefaultMessagesControllerComponents, MessagesControllerComponents, Request}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.play.test.WithFakeApplication
-import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, FrontendAppConfig}
+import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, GetReason, Reason, UserAnswers}
 
 import scala.concurrent.Future
-import uk.gov.hmrc.http.HeaderCarrier
 
 class TransitionControllerSpec extends BaseSpec with MockSessionConnector {
 
@@ -40,10 +40,11 @@ class TransitionControllerSpec extends BaseSpec with MockSessionConnector {
 
   def mockMessagesApi = injector.instanceOf[MessagesApi]
 
+  val injectedMessagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
   def messages = mockMessagesApi.preferred(fakeRequest)
 
-  def createController = new TransitionController {
-    val messagesApi: MessagesApi = mockMessagesApi
+  private[controllers] class TestTransitionController extends FrontendController(injectedMessagesControllerComponents) with TransitionController {
     val sessionConnector: SessionConnector = mockSessionConnector
     val getReason: GetReason = new GetReason { def apply(userAnswers: UserAnswers) = new Reason{} }
 
@@ -52,6 +53,8 @@ class TransitionControllerSpec extends BaseSpec with MockSessionConnector {
     def createView(reason: Reason, userAnswers: UserAnswers, previousAnswers: Seq[AnswerRow])(implicit request: Request[_]): HtmlFormat.Appendable =
       HtmlFormat.empty
   }
+
+  def createController = new TestTransitionController()
 
   "Transition controller" must {
     "return 200 for a GET" in {

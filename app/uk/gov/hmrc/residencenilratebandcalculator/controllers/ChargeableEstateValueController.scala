@@ -17,26 +17,21 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
-
-import com.google.inject.Provider
 import play.api.data.{Form, FormError}
-import play.api.i18n.MessagesApi
-import play.api.mvc.Request
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import play.api.mvc.{DefaultMessagesControllerComponents, Request}
+import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_estate_value
-import play.api.Application
-
-import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 @Singleton
-class ChargeableEstateValueController @Inject()(val messagesApi: MessagesApi,
+class ChargeableEstateValueController @Inject()(val cc: DefaultMessagesControllerComponents,
                                                 override val sessionConnector: SessionConnector,
                                                 override val navigator: Navigator,
-                                                implicit val appConfig: FrontendAppConfig,
-                                                implicit val applicationProvider: Provider[Application]) extends SimpleControllerBase[Int] {
+                                                implicit val appConfig: FrontendAppConfig) extends FrontendController(cc) with SimpleControllerBase[Int] {
 
 
   override val controllerId = Constants.chargeableEstateValueId

@@ -18,17 +18,17 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import org.scalatest.mockito.MockitoSugar
 import play.api.http.Status
-import play.api.i18n.{Messages, MessagesApi}
+import play.api.i18n.MessagesApi
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
+import play.api.mvc.DefaultMessagesControllerComponents
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.NotCloselyInherited
-import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, GetNoAdditionalThresholdAvailableReason, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThresholdIncreaseReason.{DatePropertyWasChangedTooEarly, NoAssetsPassingToDirectDescendants}
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_downsizing_threshold_increase
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants, FrontendAppConfig, Navigator}
 
@@ -41,6 +41,8 @@ class NoDownsizingThresholdIncreaseControllerSpec extends BaseSpec with HttpResp
   val mockConfig = injector.instanceOf[FrontendAppConfig]
 
   val navigator = injector.instanceOf[Navigator]
+
+  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
 
   def messagesApi = injector.instanceOf[MessagesApi]
 
@@ -72,41 +74,41 @@ class NoDownsizingThresholdIncreaseControllerSpec extends BaseSpec with HttpResp
 
   "No Downsizing Threshold Increase Controller" must {
     "return 200 for a GET" in {
-      val controller = new NoDownsizingThresholdIncreaseController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
+      val controller = new NoDownsizingThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
 
       val result = controller.onPageLoad(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return the View for a GET" in {
-      val controller = new NoDownsizingThresholdIncreaseController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
+      val controller = new NoDownsizingThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
 
       val result = controller.onPageLoad(fakeRequest)
       contentAsString(result) shouldBe
         no_downsizing_threshold_increase("no_downsizing_threshold_increase.date_property_was_changed_too_early_reason",
-          routes.ThresholdCalculationResultController.onPageLoad, Seq())(fakeRequest, messages, applicationProvider, mockConfig).toString
+          routes.ThresholdCalculationResultController.onPageLoad, Seq())(fakeRequest, messages, mockConfig).toString
     }
 
     "return the view with the no assets key when that is the reason" in {
-      val controller = new NoDownsizingThresholdIncreaseController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
+      val controller = new NoDownsizingThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
       val userAnswers = new UserAnswers(filledOutCacheMap)
 
       val result = controller.createView(NoAssetsPassingToDirectDescendants, userAnswers, Seq())(fakeRequest)
       val target = no_downsizing_threshold_increase("no_downsizing_threshold_increase.no_assets_passing_to_direct_descendants_reason",
-        navigator.nextPage(Constants.noDownsizingThresholdIncrease)(userAnswers), Seq())(fakeRequest, messages, applicationProvider, mockConfig).toString()
+        navigator.nextPage(Constants.noDownsizingThresholdIncrease)(userAnswers), Seq())(fakeRequest, messages, mockConfig).toString()
       result.toString() shouldBe target
 
     }
 
     "throw an exception when the cache is unavailable" in {
       val mockSessionConnector = mock[SessionConnector]
-      val controller = new NoDownsizingThresholdIncreaseController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
+      val controller = new NoDownsizingThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
 
       an[RuntimeException] should be thrownBy controller.onPageLoad(fakeRequest)
     }
 
     "The answer constants should be the same as the calulated constants for the controller when the reason is NotCloselyInherited" in {
-      val controller = new NoAdditionalThresholdAvailableController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
+      val controller = new NoAdditionalThresholdAvailableController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
       val controllerId = controller.getControllerId(NoAssetsPassingToDirectDescendants)
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
@@ -118,7 +120,7 @@ class NoDownsizingThresholdIncreaseControllerSpec extends BaseSpec with HttpResp
     }
 
     "The answer constants should be the same as the calulated constants for the controller when the reason is another reason" in {
-      val controller = new NoAdditionalThresholdAvailableController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
+      val controller = new NoAdditionalThresholdAvailableController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
       val controllerId = controller.getControllerId(DatePropertyWasChangedTooEarly)
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)

@@ -17,19 +17,26 @@
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
 import java.io.ByteArrayOutputStream
-import javax.inject.{Inject, Singleton}
 
+import javax.inject.{Inject, Singleton}
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm
 import org.apache.pdfbox.pdmodel.{PDDocument, PDDocumentInformation}
 import play.api.Environment
-import play.api.i18n.MessagesApi
+import play.api.i18n.Lang
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
+import play.api.mvc.{DefaultMessagesControllerComponents, MessagesControllerComponents}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 
 @Singleton
-class PDFHelper @Inject()(val messagesApi: MessagesApi, val env: Environment){
+class PDFHelperImpl @Inject()(val env: Environment,
+                              val cc: DefaultMessagesControllerComponents) extends PDFHelper
+
+trait PDFHelper {
+  val env: Environment
+  val cc: MessagesControllerComponents
+
   private val retrieveValueToStoreFor1Field: (String, Int) => String = (v, _) => v
   private val retrieveValueToStoreForMoreThan1Field: (String, Int) => String = (v, i) => v.charAt(i).toString
   private val cacheMapIdToEnglishYesNo:String => (String, String) = _ => ("Yes", "No")
@@ -98,9 +105,9 @@ class PDFHelper @Inject()(val messagesApi: MessagesApi, val env: Environment){
     Constants.thresholdCalculationResultId -> Seq("IHT435_28")
   )
 
-  private def setupPDFDocument(pdf: PDDocument) = {
+  private def setupPDFDocument(pdf: PDDocument)(implicit lang: Lang): Unit = {
     val pdDocumentInformation: PDDocumentInformation = pdf.getDocumentInformation
-    pdDocumentInformation.setTitle(messagesApi("threshold_calculation_result.pdf.title"))
+    pdDocumentInformation.setTitle(cc.messagesApi("threshold_calculation_result.pdf.title"))
     pdf.setDocumentInformation(pdDocumentInformation)
   }
 
@@ -164,7 +171,7 @@ class PDFHelper @Inject()(val messagesApi: MessagesApi, val env: Environment){
     }
   }
 
-  def generatePDF(cacheMap: CacheMap, generateWelshPDF:Boolean): Option[ByteArrayOutputStream] = {
+  def generatePDF(cacheMap: CacheMap, generateWelshPDF: Boolean)(implicit lang: Lang): Option[ByteArrayOutputStream] = {
     val resourceName = if (generateWelshPDF) {
       "IHT435Cymraeg.pdf"
     } else {

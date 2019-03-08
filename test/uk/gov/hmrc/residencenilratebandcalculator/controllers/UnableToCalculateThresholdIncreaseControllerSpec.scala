@@ -19,6 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import play.api.http.Status
 import play.api.i18n.MessagesApi
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
+import play.api.mvc.DefaultMessagesControllerComponents
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
@@ -34,6 +35,8 @@ class UnableToCalculateThresholdIncreaseControllerSpec extends BaseSpec with Moc
   val injector = fakeApplication.injector
 
   val mockConfig = injector.instanceOf[FrontendAppConfig]
+
+  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
 
   def messagesApi = injector.instanceOf[MessagesApi]
   def messages = messagesApi.preferred(fakeRequest)
@@ -64,18 +67,18 @@ class UnableToCalculateThresholdIncreaseControllerSpec extends BaseSpec with Moc
 
   "Transition controller" must {
     "return 200 for a GET" in {
-      val result = new UnableToCalculateThresholdIncreaseController(messagesApi, mockSessionConnector, mockConfig, applicationProvider).onPageLoad()(fakeRequest)
+      val result = new UnableToCalculateThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, mockConfig).onPageLoad()(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return the Unable To Calculate Threshold Increase view for a GET" in {
-      val result = new UnableToCalculateThresholdIncreaseController(messagesApi, mockSessionConnector, mockConfig, applicationProvider).onPageLoad()(fakeRequest)
+      val result = new UnableToCalculateThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, mockConfig).onPageLoad()(fakeRequest)
       contentAsString(result) shouldBe
-        unable_to_calculate_threshold_increase("unable_to_calculate_threshold_increase.grossing_up", Seq())(fakeRequest, messages, applicationProvider, mockConfig).toString
+        unable_to_calculate_threshold_increase("unable_to_calculate_threshold_increase.grossing_up", Seq())(fakeRequest, messages, mockConfig).toString
     }
 
     "The answer constants should be the same as the calulated constants for the controller when the reason is GrossingUpForResidence" in {
-      val controller = new UnableToCalculateThresholdIncreaseController(messagesApi, mockSessionConnector, mockConfig, applicationProvider)
+      val controller = new UnableToCalculateThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, mockConfig)
       val controllerId = controller.getControllerId(GrossingUpForResidence)
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
@@ -91,7 +94,7 @@ class UnableToCalculateThresholdIncreaseControllerSpec extends BaseSpec with Moc
     }
 
     "The answer constants should be the same as the calulated constants for the controller when the reason is GrossingUpForOtherProperty" in {
-      val controller = new UnableToCalculateThresholdIncreaseController(messagesApi, mockSessionConnector, mockConfig, applicationProvider)
+      val controller = new UnableToCalculateThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, mockConfig)
       val controllerId = controller.getControllerId(GrossingUpForResidence)
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)

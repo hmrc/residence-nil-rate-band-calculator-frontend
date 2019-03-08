@@ -16,11 +16,11 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import play.api.libs.json.{JsBoolean, JsNumber, JsString}
+import play.api.libs.json.{JodaWrites, JsBoolean, JsNumber, JsString}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
 
-class CascadeUpsertSpec extends BaseSpec {
+class CascadeUpsertSpec extends BaseSpec with JodaWrites {
 
   val cacheMapKey = "a"
   val testNumber = 123

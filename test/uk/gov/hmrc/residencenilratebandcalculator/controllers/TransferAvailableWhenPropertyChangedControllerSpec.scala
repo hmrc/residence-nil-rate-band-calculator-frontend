@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
+import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_available_when_property_changed
@@ -26,16 +27,18 @@ class TransferAvailableWhenPropertyChangedControllerSpec extends SimpleControlle
   val messageKey = "transfer_available_when_property_changed.error.required"
   val messageKeyPrefix = "transfer_available_when_property_changed"
 
+  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
   "Transfer Available When Property Changed Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => transfer_available_when_property_changed(BooleanForm.apply(messageKey),answerRows = Seq())(fakeRequest, messages, applicationProvider, mockConfig)
-        case Some(v) => transfer_available_when_property_changed(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, applicationProvider, mockConfig)
+        case None => transfer_available_when_property_changed(BooleanForm.apply(messageKey),answerRows = Seq())(fakeRequest, messages, mockConfig)
+        case Some(v) => transfer_available_when_property_changed(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, mockConfig)
       }
     }
 
-    def createController = () => new TransferAvailableWhenPropertyChangedController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
+    def createController = () => new TransferAvailableWhenPropertyChangedController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
 
     val testValue = true
 

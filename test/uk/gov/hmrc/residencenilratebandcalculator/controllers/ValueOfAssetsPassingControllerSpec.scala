@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.http.Status
 import play.api.libs.json.{Json, Reads, Writes}
+import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
@@ -33,16 +34,18 @@ class ValueOfAssetsPassingControllerSpec extends SimpleControllerSpecBase {
   val errorKeyTooLarge = "error.value_too_large"
   val messageKeyPrefix = "value_of_assets_passing"
 
+  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
   "Value Of Assets Passing Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => value_of_assets_passing(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq(), formattedPropertyValue = None)(fakeRequest, messages, applicationProvider, mockConfig)
-        case Some(v) => value_of_assets_passing(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(), None)(fakeRequest, messages, applicationProvider, mockConfig)
+        case None => value_of_assets_passing(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq(), formattedPropertyValue = None)(fakeRequest, messages, mockConfig)
+        case Some(v) => value_of_assets_passing(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(), None)(fakeRequest, messages, mockConfig)
       }
     }
 
-    def createController = () => new ValueOfAssetsPassingController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
+    def createController = () => new ValueOfAssetsPassingController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
 
     val testValue = 123
 
@@ -79,7 +82,7 @@ class ValueOfAssetsPassingControllerSpec extends SimpleControllerSpecBase {
     "return the correct view when provided with answers including a valid property value" in {
       val result = createController().view(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), Seq(), new UserAnswers(CacheMap("id", Map(Constants.propertyValueId -> Json.toJson(1)))))(fakeRequest)
       result shouldBe value_of_assets_passing(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), Seq(), Some(CurrencyFormatter.format(1)))(fakeRequest,
-        messages, applicationProvider, mockConfig)
+        messages, mockConfig)
     }
   }
 }

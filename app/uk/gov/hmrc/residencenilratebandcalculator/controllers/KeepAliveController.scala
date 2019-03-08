@@ -17,14 +17,14 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
-import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, AnyContent}
+import play.api.i18n.I18nSupport
+import play.api.mvc.{Action, AnyContent, DefaultMessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 
 import scala.concurrent.Future
 
 @Singleton
-class KeepAliveController @Inject()(val messagesApi: MessagesApi) extends FrontendController with I18nSupport {
+class KeepAliveController @Inject()(val cc: DefaultMessagesControllerComponents) extends FrontendController(cc) with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = Action.async {
     implicit request =>

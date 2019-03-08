@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, Request}
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.http.cache.client.CacheMap
@@ -24,8 +24,9 @@ import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models._
 
+import scala.concurrent.ExecutionContext.Implicits.global
+
 trait TransitionController extends FrontendController with I18nSupport {
-  val messagesApi: MessagesApi
   val sessionConnector: SessionConnector
 
   val getReason: GetReason

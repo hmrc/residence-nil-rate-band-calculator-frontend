@@ -24,7 +24,7 @@ import play.api.http.Status
 import play.api.i18n.Messages.Message
 import play.api.i18n.MessagesApi
 import play.api.libs.json.{Reads, Writes, _}
-import play.api.mvc.Result
+import play.api.mvc.{DefaultMessagesControllerComponents, Result}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
@@ -57,6 +57,8 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends BaseSpec with Http
 
   def messagesApi = injector.instanceOf[MessagesApi]
 
+  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
   def messages = messagesApi.preferred(fakeRequest)
 
   def mockRnrbConnector = {
@@ -68,15 +70,15 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends BaseSpec with Http
   def createView = (value: Option[Map[String, String]]) => {
     val answerRow = new AnswerRow("What was the date the property was disposed of?", "11 May 2018", routes.DatePropertyWasChangedController.onPageLoad().url)
     value match {
-      case None => value_available_when_property_changed("£100,000", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq(answerRow))(fakeRequest, messages, applicationProvider, mockConfig)
+      case None => value_available_when_property_changed("£100,000", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq(answerRow))(fakeRequest, messages, mockConfig)
       case Some(v) => value_available_when_property_changed("£100,000",
-        NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(answerRow))(fakeRequest, messages, applicationProvider, mockConfig)
+        NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(answerRow))(fakeRequest, messages, mockConfig)
     }
   }
 
   def testValue = "100000"
 
-  def createController = () => new ValueAvailableWhenPropertyChangedController(messagesApi, mockSessionConnector, navigator, mockRnrbConnector, mockConfig, applicationProvider)
+  def createController = () => new ValueAvailableWhenPropertyChangedController(messagesControllerComponents, mockSessionConnector, navigator, mockRnrbConnector, mockConfig)
 
   "Value Available When Property Changed Controller" must {
 

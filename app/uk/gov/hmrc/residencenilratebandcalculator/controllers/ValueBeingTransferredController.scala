@@ -20,33 +20,30 @@ import java.text.NumberFormat
 import java.util.Locale
 
 import javax.inject.{Inject, Singleton}
-import com.google.inject.Provider
-import play.api.{Application, Logger}
+import play.api.Logger
 import play.api.data.FormError
-import play.api.i18n.MessagesApi
 import play.api.libs.json.{Reads, Writes}
-import play.api.mvc.{Action, Request}
+import play.api.mvc.{DefaultMessagesControllerComponents, Request}
 import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, UserAnswers}
+import uk.gov.hmrc.residencenilratebandcalculator.utils.TaxYear
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_being_transferred
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
-import uk.gov.hmrc.residencenilratebandcalculator.utils.TaxYear
 
 @Singleton
-class ValueBeingTransferredController @Inject()(val messagesApi: MessagesApi,
+class ValueBeingTransferredController @Inject()(cc: DefaultMessagesControllerComponents,
                                                 val sessionConnector: SessionConnector,
                                                 val navigator: Navigator,
                                                 val rnrbConnector: RnrbConnector,
-                                                implicit val appConfig: FrontendAppConfig,
-                                                implicit val applicationProvider: Provider[Application]) extends FrontendController {
+                                                implicit val appConfig: FrontendAppConfig) extends FrontendController(cc) {
 
   val controllerId = Constants.valueBeingTransferredId
 

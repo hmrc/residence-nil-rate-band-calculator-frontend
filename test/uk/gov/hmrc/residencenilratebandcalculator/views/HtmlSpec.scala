@@ -16,11 +16,11 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import com.google.inject.Provider
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import play.api.Application
-import play.api.i18n.MessagesApi
+import play.api.i18n.{Messages, MessagesApi}
+import play.api.inject.Injector
+import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import play.twirl.api.Html
 import uk.gov.hmrc.play.test.UnitSpec
@@ -28,17 +28,13 @@ import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, FrontendAppConfig}
 
 trait HtmlSpec extends BaseSpec { self: UnitSpec =>
 
-  implicit val appProvider: Provider[Application] = applicationProvider
+  implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
 
-  implicit val request = FakeRequest()
+  lazy val injector: Injector = fakeApplication.injector
+  implicit lazy val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
-  val injector = fakeApplication.injector
-
-  implicit val mockConfig = injector.instanceOf[FrontendAppConfig]
-
-  def messagesApi = injector.instanceOf[MessagesApi]
-
-  def messages = messagesApi.preferred(request)
+  def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
+  def messages: Messages = messagesApi.preferred(request)
 
   def asDocument(html: Html): Document = Jsoup.parse(html.toString())
 

@@ -24,6 +24,7 @@ import org.scalatest.mockito.MockitoSugar
 import org.scalatest.Matchers
 import play.api.http.Status
 import play.api.libs.json._
+import play.api.mvc.DefaultMessagesControllerComponents
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
@@ -52,6 +53,8 @@ class ThresholdCalculationResultControllerSpec extends SimpleControllerSpecBase 
   val calculationResult = CalculationResult(expectedResidenceNilRateAmount, expectedApplicableNilRateBandAmount,
     expectedCarriedForwardAmount, expectedDefaultAllowance, adjustedAllowance)
 
+  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
   val expectedCalculationInput = CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, 0, 0, 0, None, None)
 
   val cacheMap = CacheMap("id", Map(
@@ -70,7 +73,7 @@ class ThresholdCalculationResultControllerSpec extends SimpleControllerSpecBase 
   }
 
   def thresholdCalculationResultController(rnrbConnector: RnrbConnector = mockRnrbConnector) =
-    new ThresholdCalculationResultController(messagesApi, rnrbConnector, mockSessionConnector, mockConfig, applicationProvider)
+    new ThresholdCalculationResultController(messagesControllerComponents, rnrbConnector, mockSessionConnector, mockConfig)
 
   "Threshold Calculation Result Controller" must {
 

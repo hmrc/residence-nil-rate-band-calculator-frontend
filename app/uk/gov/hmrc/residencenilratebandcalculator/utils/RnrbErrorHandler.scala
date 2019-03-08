@@ -23,9 +23,9 @@ import play.api.mvc.Request
 import uk.gov.hmrc.play.bootstrap.http.FrontendErrorHandler
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 
-class RnrbErrorHandler @Inject()(val messagesApi: MessagesApi,
-                                 val configuration: Configuration,
-                                 config: FrontendAppConfig) extends FrontendErrorHandler {
+class RnrbErrorHandler @Inject()(val configuration: Configuration,
+                                 config: FrontendAppConfig,
+                                 val messagesApi: MessagesApi) extends FrontendErrorHandler {
 
   implicit lazy val appConfig = config
 

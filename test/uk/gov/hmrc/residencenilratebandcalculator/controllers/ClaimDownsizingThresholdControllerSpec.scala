@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
+import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.claim_downsizing_threshold
@@ -26,14 +27,16 @@ class ClaimDownsizingThresholdControllerSpec extends SimpleControllerSpecBase {
   val messageKey = "claim_downsizing_threshold.error.required"
   val messageKeyPrefix = "claim_downsizing_threshold"
 
+  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
   def createView = (value: Option[Map[String, String]]) => {
     value match {
-      case None => claim_downsizing_threshold(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, applicationProvider, mockConfig)
-      case Some(v) => claim_downsizing_threshold(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, applicationProvider, mockConfig)
+      case None => claim_downsizing_threshold(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, mockConfig)
+      case Some(v) => claim_downsizing_threshold(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, mockConfig)
     }
   }
 
-  def createController = () => new ClaimDownsizingThresholdController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
+  def createController = () => new ClaimDownsizingThresholdController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
 
   val testValue = true
 

@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.http.Status
 import play.api.libs.json.{Reads, Writes}
+import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_estate_value
@@ -30,16 +31,18 @@ class ChargeableEstateValueControllerSpec extends SimpleControllerSpecBase {
   val errorKeyTooLarge = "error.value_too_large"
   val messageKeyPrefix = "chargeable_estate_value"
 
+  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
   "Chargeable Estate Value Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => chargeable_estate_value(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq())(fakeRequest, messages, applicationProvider, mockConfig)
-        case Some(v) => chargeable_estate_value(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages, applicationProvider, mockConfig)
+        case None => chargeable_estate_value(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq())(fakeRequest, messages, mockConfig)
+        case Some(v) => chargeable_estate_value(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages, mockConfig)
       }
     }
 
-    def createController = () => new ChargeableEstateValueController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
+    def createController = () => new ChargeableEstateValueController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
 
     val testValue = 123
 

@@ -19,9 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator
 import java.util.Base64
 
 import javax.inject.Inject
-import play.api.{Configuration, Environment}
-import play.api.Play.{configuration, current}
-import uk.gov.hmrc.play.config.ServicesConfig
+import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
 trait AppConfig {
   val analyticsToken: String
@@ -37,33 +35,23 @@ trait AppConfig {
   val googleTagManagerId : String
 }
 
-class FrontendAppConfig @Inject()(override val runModeConfiguration: Configuration,
-                                  val environment: Environment) extends AppConfig with ServicesConfig {
+class FrontendAppConfig @Inject()(val servicesConfig: ServicesConfig) extends AppConfig {
+  private def loadConfig(key: String) = servicesConfig.getString(key)
 
-  def mode = environment.mode
-  private def loadConfig(key: String) = configuration.getString(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
-
-  private lazy val contactHost = configuration.getString("microservice.services.contact-frontend.www").getOrElse("")
+  private lazy val contactHost = servicesConfig.getConfString("contact-frontend.www", "")
   private val contactFormServiceIdentifier = "RNRB"
-  private lazy val contactFrontendService = baseUrl("contact-frontend")
-  lazy val googleTagManagerId = loadConfig("google-tag-manager.id")
+  lazy val googleTagManagerId: String = loadConfig("google-tag-manager.id")
 
-  override lazy val analyticsToken = loadConfig("google-analytics.token")
-  override lazy val analyticsHost = loadConfig("google-analytics.host")
-  override lazy val timeOutCountdownSeconds = loadConfig("timeOutCountdownSeconds").toInt
-  override lazy val timeOutSession = loadConfig("mongodb.timeToLiveInSeconds").toInt
+  override lazy val analyticsToken: String = loadConfig("google-analytics.token")
+  override lazy val analyticsHost: String = loadConfig("google-analytics.host")
+  override lazy val timeOutCountdownSeconds: Int = loadConfig("timeOutCountdownSeconds").toInt
+  override lazy val timeOutSession: Int = loadConfig("mongodb.timeToLiveInSeconds").toInt
   override lazy val reportAProblemPartialUrl = s"$contactHost/contact/problem_reports_ajax?service=$contactFormServiceIdentifier"
   override lazy val reportAProblemNonJSUrl = s"$contactHost/contact/problem_reports_nonjs?service=$contactFormServiceIdentifier"
   override lazy val betaFeedbackUrl = s"$contactHost/contact/beta-feedback"
   override lazy val betaFeedbackUnauthenticatedUrl = s"$contactHost/contact/beta-feedback-unauthenticated"
   override lazy val feedbackSurvey: String = loadConfig("feedback-survey-frontend.url")
-  lazy val serviceUrl = baseUrl("residence-nil-rate-band-calculator")
-
-  private def whitelistConfig(key: String):Seq[String] = Some(new String(Base64.getDecoder.decode(configuration.getString(key).getOrElse("")), "UTF-8"))
-    .map(_.split(",")).getOrElse(Array.empty).toSeq
-
-  lazy val whitelist = whitelistConfig("whitelist")
-  lazy val whitelistExcluded = whitelistConfig("whitelistExcludedCalls")
+  lazy val serviceUrl: String = servicesConfig.baseUrl("residence-nil-rate-band-calculator")
 
   override val isWelshEnabled: Boolean = true
 

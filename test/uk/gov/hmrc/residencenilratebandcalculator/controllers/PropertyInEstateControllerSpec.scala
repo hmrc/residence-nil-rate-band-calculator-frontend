@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
+import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_in_estate
@@ -26,16 +27,18 @@ class PropertyInEstateControllerSpec extends SimpleControllerSpecBase {
   val messageKey = "property_in_estate.error.required"
   val messageKeyPrefix = "property_in_estate"
 
+  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
   "Property In Estate Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => property_in_estate(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, applicationProvider, mockConfig)
-        case Some(v) => property_in_estate(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, applicationProvider, mockConfig)
+        case None => property_in_estate(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, mockConfig)
+        case Some(v) => property_in_estate(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, mockConfig)
       }
     }
 
-    def createController = () => new PropertyInEstateController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
+    def createController = () => new PropertyInEstateController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
 
     val testValue = true
 

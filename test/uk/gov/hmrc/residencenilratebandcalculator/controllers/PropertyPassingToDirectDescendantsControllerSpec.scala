@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
+import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PropertyPassingToDirectDescendantsForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_passing_to_direct_descendants
@@ -25,16 +26,18 @@ class PropertyPassingToDirectDescendantsControllerSpec extends SimpleControllerS
 
   val messageKeyPrefix = "property_passing_to_direct_descendants"
 
+  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
   "Property Passing To Direct Descendants Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => property_passing_to_direct_descendants(PropertyPassingToDirectDescendantsForm.apply(),answerRows = Seq())(fakeRequest, messages, applicationProvider, mockConfig)
-        case Some(v) => property_passing_to_direct_descendants(PropertyPassingToDirectDescendantsForm().bind(v), Seq())(fakeRequest, messages, applicationProvider, mockConfig)
+        case None => property_passing_to_direct_descendants(PropertyPassingToDirectDescendantsForm.apply(),answerRows = Seq())(fakeRequest, messages, mockConfig)
+        case Some(v) => property_passing_to_direct_descendants(PropertyPassingToDirectDescendantsForm().bind(v), Seq())(fakeRequest, messages, mockConfig)
       }
     }
 
-    def createController = () => new PropertyPassingToDirectDescendantsController(messagesApi, mockSessionConnector, navigator, mockConfig, applicationProvider)
+    def createController = () => new PropertyPassingToDirectDescendantsController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
 
     val testValue = Constants.all
 
