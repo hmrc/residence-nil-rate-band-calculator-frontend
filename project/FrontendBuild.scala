@@ -10,15 +10,13 @@ object FrontendBuild extends Build with MicroService {
 private object AppDependencies {
   import play.sbt.PlayImport._
 
-  private val bootstrapVersion = "0.36.0"
-  private val playPartialsVersion = "6.5.0"
-  private val hmrcTestVersion = "3.5.0-play-26"
+  private val bootstrapVersion = "0.39.0"
+  private val hmrcTestVersion = "3.8.0-play-26"
   private val jsonJodaVersion = "2.6.10"
   private val scalaTestVersion = "3.0.5"
   private val pegdownVersion = "1.6.0"
-  private val mockitoCoreVersion = "2.24.5"
-  private val whitelistVersion = "2.0.0"
-  private val httpCachingClientVersion = "8.1.0"
+  private val mockitoCoreVersion = "2.27.0"
+  private val httpCachingClientVersion = "8.3.0"
   private val playReactivemongoVersion = "7.14.0-play-26"
   private val pdfBoxVersion = "2.0.13"
   private val playLanguageVersion = "3.4.0"
@@ -27,14 +25,14 @@ private object AppDependencies {
   val compile = Seq(
     "uk.gov.hmrc" %% "simple-reactivemongo" % playReactivemongoVersion,
     ws,
-    "uk.gov.hmrc" %% "govuk-template" % "5.27.0-play-26",
-    "uk.gov.hmrc" %% "play-ui" % "7.33.0-play-26",
+    "uk.gov.hmrc" %% "govuk-template" % "5.34.0-play-26",
+    "uk.gov.hmrc" %% "play-ui" % "7.39.0-play-26",
     "com.typesafe.play" %% "play-json-joda" % jsonJodaVersion,
     "uk.gov.hmrc" %% "bootstrap-play-26" % bootstrapVersion,
     "uk.gov.hmrc" %% "http-caching-client" % httpCachingClientVersion,
     "org.apache.pdfbox" % "pdfbox" % pdfBoxVersion,
     "uk.gov.hmrc" %% "play-language" % playLanguageVersion,
-    "uk.gov.hmrc" %% "http-verbs" % "9.2.0-play-26",
+    "uk.gov.hmrc" %% "http-verbs" % "9.7.0-play-26",
     nettyServer
   )
 
