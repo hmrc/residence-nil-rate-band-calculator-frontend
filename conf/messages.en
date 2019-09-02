@@ -1,13 +1,13 @@
-assets_passing_to_direct_descendants.browser_title = Other than the property that you are claiming residence nil rate band allowance on, do any other assets pass to a direct descendant following the death?
-assets_passing_to_direct_descendants.title = Other than the property that you are claiming residence nil rate band allowance on, do any other assets pass to a direct descendant following the death?
-
-assets_passing_to_direct_descendants.guidance = This doesn''t include the property worth {0} that you have already added to this calculator. A direct descendant must have received other assets from the estate for the additional downsizing threshold to be claimed.
-assets_passing_to_direct_descendants.guidance_no_property = A direct descendant must have received assets from the estate for the additional downsizing threshold to be claimed.
+assets_passing_to_direct_descendants.browser_title = Do any other assets pass to a direct descendant?
+assets_passing_to_direct_descendants.title = Do any other assets pass to a direct descendant?
+assets_passing_to_direct_descendants.guidance = This doesn''t include the property worth {0} that you have already added to this calculator. A direct descendant or their spouse or civil partner must have received other assets from the estate for the downsizing allowance to be claimed.
+assets_passing_to_direct_descendants.guidance_no_property = Other than any property that you are claiming RNRB for, do any other assets pass to a direct descendant following the death?
+assets_passing_to_direct_descendants.guidance_no_property.p2 = A direct descendant or their spouse or civil partner must have received assets from the estate for the downsizing allowance to be claimed.
 assets_passing_to_direct_descendants.error.required = Give an answer for if any other assets apart from the property were passing to a direct descendant
 
-calculate_threshold_increase.browser_title = Calculate the additional threshold for a home left to direct descendants
-calculate_threshold_increase.title = Calculate the additional threshold for a home left to direct descendants
-calculate_threshold_increase.guidance1 = Calculate the additional threshold, otherwise known as the residence nil-rate band (RNRB), if a home is left to children or other direct descendants. The calculator also works out the additional threshold if a person downsized or sold their home, and any unused additional threshold that can be transferred to the estate.
+calculate_threshold_increase.browser_title = Calculate RNRB
+calculate_threshold_increase.title = Calculate the available residence nil rate band (RNRB) for a home left to direct descendants
+calculate_threshold_increase.guidance1 = Calculate the RNRB to claim against Inheritance Tax if a home is left to children or other direct descendants. The calculator also works out the RNRB if a person downsized or sold their home, and any unused RNRB that can be transferred to the estate.
 calculate_threshold_increase.guidance2 = To use this calculator to help complete an IHT400 account, you''ll need to have:
 calculate_threshold_increase.guidance3.bullet1 = an IHT400 account form with the value of what''s in the estate already worked out
 calculate_threshold_increase.guidance3.bullet2 = a paper schedule IHT435 if you have already started filling one in
@@ -37,10 +37,10 @@ chargeable_inherited_property_value.greater_than_chargeable_property_value.error
 
 claim_downsizing_threshold.browser_title = Are you claiming any downsizing allowance?
 claim_downsizing_threshold.title = Are you claiming any downsizing allowance?
-claim_downsizing_threshold.guidance1 = There might be additional threshold to claim if any of the following applied to the estate of the person who has died:
+claim_downsizing_threshold.guidance1 = There might be downsizing allowance to claim if any of the following applied to the estate of the person who has died:
 claim_downsizing_threshold.guidance1.bullet1 = they downsized their home on or after 8 July 2015 by either selling it and buying a cheaper home or selling it and not buying another home
 claim_downsizing_threshold.guidance1.bullet2 = they gave any part of their home away
-claim_downsizing_threshold.guidance1.bullet3 = they had a home that would have qualified for the home threshold if they had not sold it and had kept it until they died
+claim_downsizing_threshold.guidance1.bullet3 = they had a home that would have qualified for RNRB if they had not sold it and had kept it until they died
 claim_downsizing_threshold.guidance1.bullet4 = they left anything in their estate to a direct descendant
 claim_downsizing_threshold.error.required = Give an answer for if you are claiming any downsizing allowance for this estate
 
@@ -127,21 +127,21 @@ grossing_up_on_estate_property.guidance1 = This is against the property you have
 grossing_up_on_estate_property.guidance2 = When filling in the IHT400 form, grossing up or interaction might have been applied if the person who has died left any tax free gifts and some part of the estate is exempt from Inheritance Tax.
 grossing_up_on_estate_property.error.required = Give an answer for if grossing up or interaction applies to the property
 
-no_additional_threshold_available.browser_title = There is no additional home threshold available for the estate
-no_additional_threshold_available.title = There is no additional home threshold available for the estate
-no_additional_threshold_available.guidance = You might still be able to claim additional downsizing threshold or transfer any unused home threshold if the person who has died was married during their lifetime and their spouse or civil partner died first.
-no_additional_threshold_available.no_property_reason = This is because the estate doesn''t include a property that the person who died lived in at any time while they also owned it.
+no_additional_threshold_available.browser_title = RNRB for passing on the home does not apply
+no_additional_threshold_available.title = RNRB for passing on the home does not apply
+no_additional_threshold_available.guidance = You might still be able to claim downsizing allowance or transfer unused RNRB if the person who has died was married during their lifetime and their spouse or civil partner died first.
+no_additional_threshold_available.no_property_reason = This is because no part of the property passed to a direct descendant, or the spouse or civil partner of a direct descendant.
 no_additional_threshold_available.not_closely_inherited_reason = This is because no part of the property passed to a direct descendant, or the spouse or civil partner of a direct descendant.
 
-no_downsizing_threshold_increase.browser_title = There is no additional downsizing threshold available for the estate
-no_downsizing_threshold_increase.title = There is no additional downsizing threshold available for the estate
+no_downsizing_threshold_increase.browser_title = There is no downsizing allowance available for the estate
+no_downsizing_threshold_increase.title = There is no downsizing allowance available for the estate
 no_downsizing_threshold_increase.date_property_was_changed_too_early_reason = This is because the person who died downsized their home before 8 July 2015.
 no_downsizing_threshold_increase.no_assets_passing_to_direct_descendants_reason = This is because no other assets are being left to a direct descendant.
 
-no_threshold_increase.browser_title = There is no additional threshold available for the estate
-no_threshold_increase.date_of_death.title = There is no additional threshold available for the estate
+no_threshold_increase.browser_title = There is no residence nil rate band available for the estate
+no_threshold_increase.date_of_death.title = There is no residence nil rate band available for the estate
 no_threshold_increase.date_of_death.reason = This is because the date of death of the person who has died was before 6 April 2017.
-no_threshold_increase.direct_descendant.title = There is no additional threshold available for the estate
+no_threshold_increase.direct_descendant.title = There is no residence nil rate band available for the estate
 no_threshold_increase.direct_descendant.reason = This is because none of the estate is being left to a direct descendant.
 
 part_of_estate_passing_to_direct_descendants.browser_title = Does any of the estate pass to the deceased''s children or other direct descendants?
@@ -177,10 +177,10 @@ property_in_estate.error.required = Give an answer for if the estate included an
 property_passing_to_direct_descendants.all = Yes, all of it passed
 property_passing_to_direct_descendants.some = Yes, some of it passed
 property_passing_to_direct_descendants.none = No
-property_passing_to_direct_descendants.browser_title = Did any part of this residence pass to a direct descendant or their spouse or civil partner?
-property_passing_to_direct_descendants.title = Did any part of this residence pass to a direct descendant or their spouse or civil partner?
+property_passing_to_direct_descendants.browser_title = Did this residence pass to a direct descendant?
+property_passing_to_direct_descendants.title = Did this residence pass to a direct descendant?
 property_passing_to_direct_descendants.guidance1 = This will usually be listed in the will of the person who has died.
-property_passing_to_direct_descendants.guidance2 = Answer yes if any part of the property was left to a direct descendant or a spouse or civil partner of one.
+property_passing_to_direct_descendants.guidance2 = Answer yes if this property or any part of it was left to a child, grandchild or other direct descendant, or to the spouse or civil partner of a direct descendant.
 
 property_value.browser_title = What is the value of the residence at the date of death?
 property_value.title = What is the value of the residence at the date of death?
@@ -193,20 +193,18 @@ property_value.guidance4 = If there is more than 1 property in the estate that t
 property_value.error.blank = Give a value for the property at the date of death
 property_value.error.non_numeric = Give a value for the property using only numbers
 property_value.greater_than_value_of_estate.error = Give a property value that is less than the estate value of £{0} that you have already given
-service.no_thanks = No thanks
 
+service.no_thanks = No thanks
 service_difficulty.very_easy = Very easy
 service_difficulty.easy = Easy
 service_difficulty.neither = Neither easy or difficult
 service_difficulty.difficult = Difficult
 service_difficulty.very_difficult = Very difficult
-
 service_feel.very_satisfied = Very satisfied
 service_feel.satisfied = Satisfied
 service_feel.neither = Neither satisfied or dissatisfied
 service_feel.dissatisfied = Dissatisfied
 service_feel.very_dissatisfied = Very dissatisfied
-
 session_expired.browser_title = For your security, this service has been reset
 session_expired.title = For your security, this service has been reset
 session_expired.guidance = The details you have given have been deleted because you did not continue the service for 1 hour.
@@ -231,15 +229,15 @@ site.start_again = Start again
 site.start_now = Start now
 site.textarea.char_limit = (Limit is 1200 characters)
 site.finish = Finish
-site.service_name = Calculate the additional threshold
+site.service_name = Calculate the available RNRB
 
 threshold_calculation_result.browser_title = Final calculation
 threshold_calculation_result.info.zero.header = There is no increase to the Inheritance Tax threshold
 threshold_calculation_result.info.zero.guidance = Based on the details you have given, the threshold can be increased by {0}.
 threshold_calculation_result.info.zero.threshold_change = There is no change to the current threshold.
-threshold_calculation_result.info.non_zero.header = The Inheritance Tax threshold can be increased
-threshold_calculation_result.info.non_zero.guidance = The threshold can be increased by an extra {0}.
-threshold_calculation_result.info.non_zero.threshold_change = This is on top of what the current threshold is.
+threshold_calculation_result.info.non_zero.header = You can claim residence nil rate band
+threshold_calculation_result.info.non_zero.guidance = You can claim {0} RNRB.
+threshold_calculation_result.info.non_zero.threshold_change = You can add this to the Inheritance Tax threshold for the estate.
 threshold_calculation_result.action.header = What to do next
 threshold_calculation_result.action.guidance = Write {0} in:
 threshold_calculation_result.action.guidance.form_435 = box 25 on the IHT435 form
@@ -256,8 +254,8 @@ threshold_calculation_result.pdf.title = Copy of IHT 435
 
 transfer_any_unused_threshold.browser_title = Do you wish to transfer any unused residence nil rate band?
 transfer_any_unused_threshold.title = Do you wish to transfer any unused residence nil rate band?
-transfer_any_unused_threshold.guidance1 = This transfer will be from the estate of a spouse or civil partner who died before the person who you are increasing the threshold for.
-transfer_any_unused_threshold.guidance2 = You will need a completed copy of the IHT436 form if you are transferring any unused home threshold from somebody else''s estate.
+transfer_any_unused_threshold.guidance1 = This transfer will be from the estate of a spouse or civil partner who died before the person whose estate you are dealing with.
+transfer_any_unused_threshold.guidance2 = You will need a completed copy of the IHT436 form if you are transferring any unused RNRB from somebody else''s estate.
 transfer_any_unused_threshold.error.required = Give an answer for if you want to transfer any unused residence nil rate band from the estate of a spouse or civil partner of the person who has died
 
 transfer_available_when_property_changed.browser_title = If a valid claim for RNRB had been made at the date of disposal would any transferable residence nil rate band have been available at that time?
@@ -268,7 +266,7 @@ transfer_available_when_property_changed.error.required = Give an answer for if 
 unable_to_calculate_threshold_increase.browser_title = You cannot get a calculation using this service
 unable_to_calculate_threshold_increase.grossing_up.title = You cannot get a calculation using this service
 unable_to_calculate_threshold_increase.grossing_up.reason = This is because the estate includes grossing up.
-unable_to_calculate_threshold_increase.grossing_up.guidance = HMRC will calculate the additional threshold for you.
+unable_to_calculate_threshold_increase.grossing_up.guidance = HMRC will calculate the available residence nil rate band for you.
 unable_to_calculate_threshold_increase.grossing_up.next.title = What to do next
 unable_to_calculate_threshold_increase.grossing_up.next.guidance1 = You should finish filling in the IHT435 form but leave box 25 empty. Fill in as much of the IHT400 form as you can.
 unable_to_calculate_threshold_increase.grossing_up.next.guidance2 = You should then post both forms, along with any other Inheritance Tax schedules you have had to complete, to:
@@ -308,9 +306,9 @@ value_of_changed_property.guidance2 = If the person who has died owned a share o
 value_of_changed_property.guidance3 = Do not deduct any solicitor or estate agent fees from the values.
 value_of_changed_property.error.blank = Give a value for how much the person who died owned of the property
 
-value_of_estate.browser_title = What is the total value of the estate before deducting any reliefs or exemptions?
-value_of_estate.title = What is the total value of the estate before deducting any reliefs or exemptions?
-value_of_estate.guidance1 = Add together the values that you have given in:
+value_of_estate.browser_title = What is the total net value of the estate before deducting reliefs or exemptions?
+value_of_estate.title = What is the total net value of the estate before deducting reliefs or exemptions?
+value_of_estate.guidance1 = If you are completing an Inheritance Tax return, add together the values that you have given in:
 value_of_estate.guidance1.bullet1 = box 91 on the IHT400 form
 value_of_estate.guidance1.bullet2 = box 12 on the IHT403 schedule
 value_of_estate.guidance1.bullet3 = box 3 on the IHT417 schedule
@@ -318,6 +316,10 @@ value_of_estate.guidance1.bullet4 = box 8 on the IHT417 schedule
 value_of_estate.guidance1.bullet5 = box 10 on the IHT418 schedule
 value_of_estate.guidance1.bullet6 = box 15 on the IHT418 schedule
 value_of_estate.guidance2 = The IHT403 and IHT418 schedules are only completed if the estate included values for gifts given away and for assets held in trust. The IHT417 schedule is completed when there are foreign assets in the estate.
+value_of_estate.guidance3 = This is the value of the whole estate after you have deducted debts such as mortgages, loans and funeral costs, but before you deduct any reliefs or exemptions.
+value_of_estate.guidance4 = There is guidance on GOV.UK to help with
+value_of_estate.link = estimating the estate value.
+
 value_of_estate.error.blank = Give an estate value
 value_of_estate.error.non_numeric = Give an estate value using only numbers
 report.a.problem.link = Is there anything wrong with this page?

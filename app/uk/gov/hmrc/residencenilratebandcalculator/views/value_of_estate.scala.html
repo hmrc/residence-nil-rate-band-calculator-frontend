@@ -29,7 +29,11 @@
 
         @rnrbHelpers.error_summary(form)
 
-        @rnrbHelpers.heading("value_of_estate.title")
+        @rnrbHelpers.heading("value_of_estate.title", "heading-xlarge")
+
+        <p>@messages("value_of_estate.guidance3")</p>
+
+        <p>@messages("value_of_estate.guidance4") <a href="https://www.gov.uk/valuing-estate-of-someone-who-died/estimate-estate-value">@messages("value_of_estate.link")</a></p>
 
         <p>@messages("value_of_estate.guidance1")</p>
         <ul class="list list-bullet">

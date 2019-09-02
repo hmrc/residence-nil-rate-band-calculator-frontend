@@ -31,12 +31,13 @@
 
         @rnrbHelpers.error_summary(form)
 
-        @rnrbHelpers.heading("assets_passing_to_direct_descendants.title")
+        @rnrbHelpers.heading("assets_passing_to_direct_descendants.title", "heading-xlarge")
 
         @if(formattedPropertyValue.isDefined) {
             <p>@messages("assets_passing_to_direct_descendants.guidance", formattedPropertyValue.get)</p>
         } else {
             <p>@messages("assets_passing_to_direct_descendants.guidance_no_property")</p>
+            <p>@messages("assets_passing_to_direct_descendants.guidance_no_property.p2")</p>
         }
 
         <div class="form-group">
