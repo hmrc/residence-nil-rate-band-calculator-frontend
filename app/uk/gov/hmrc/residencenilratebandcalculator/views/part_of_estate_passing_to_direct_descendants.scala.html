@@ -31,7 +31,7 @@ implicit request: Request[_], messages: Messages, appConfig: FrontendAppConfig)
 
         @rnrbHelpers.error_summary(form)
 
-        @rnrbHelpers.heading("part_of_estate_passing_to_direct_descendants.title")
+        @rnrbHelpers.heading("part_of_estate_passing_to_direct_descendants.title", "heading-xlarge")
 
         <p>@messages("part_of_estate_passing_to_direct_descendants.guidance1")</p>
         <p>@messages("part_of_estate_passing_to_direct_descendants.guidance2")</p>
