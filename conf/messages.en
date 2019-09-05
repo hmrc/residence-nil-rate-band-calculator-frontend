@@ -305,6 +305,7 @@ value_of_changed_property.guidance1 = This is the value of what the person who h
 value_of_changed_property.guidance2 = If the person who has died owned a share of the property, you should include the value of their share. If the property was sold, include their share of the sale price and deduct their share of any mortgage.
 value_of_changed_property.guidance3 = Do not deduct any solicitor or estate agent fees from the values.
 value_of_changed_property.error.blank = Give a value for how much the person who died owned of the property
+value_of_assets_passing.guidance_no_property = A direct descendant must have received assets from the estate for the downsizing allowance to be claimed.
 
 value_of_estate.browser_title = What is the total net value of the estate before deducting reliefs or exemptions?
 value_of_estate.title = What is the total net value of the estate before deducting reliefs or exemptions?

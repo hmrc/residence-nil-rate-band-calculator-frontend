@@ -298,6 +298,7 @@ value_of_assets_passing.guidance3 = Bydd gwerthoedd pob ased wedi cael eu defnyd
 value_of_assets_passing.guidance4 = Nid yw hyn yn cynnwys yr eiddo, sydd werth {0}, yr ydych eisoes wedi''i ychwanegu i''r gyfrifiannell hon.
 value_of_assets_passing.error.blank = Rhowch werth am yr asedion yr ydych eisoes yn eu trosglwyddo i ddisgynnydd uniongyrchol.
 value_of_assets_passing.greater_than_estate_value.error = Rhowch werth sy''n llai na gwerth yr ystâd o £{0} yr ydych eisoes wedi''i nodi.  
+value_of_assets_passing.guidance_no_property = Rhaid bod disgynnydd uniongyrchol wedi cael asedion eraill o''r ystâd er mwyn i''r lwfans ar gyfer symud i gartref llai o faint gael ei hawlio.
 
 value_of_changed_property.title = Beth oedd gwerth buddiant yr ymadawedig yn yr eiddo ar y dyddiad y cafodd ei waredu?
 value_of_changed_property.browser_title = Beth oedd gwerth buddiant yr ymadawedig yn yr eiddo ar y dyddiad y cafodd ei waredu?
