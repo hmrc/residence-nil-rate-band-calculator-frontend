@@ -20,7 +20,6 @@ import javax.inject.{Inject, _}
 import play.api.i18n.{I18nSupport, Lang, Messages}
 import play.api.mvc.{Action, AnyContent, Call, _}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import uk.gov.hmrc.play.language.LanguageUtils
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 
 @Singleton
@@ -42,13 +41,13 @@ class CustomLanguageController @Inject()(val cc: MessagesControllerComponents,
   def switchToLanguage(language: String): Action[AnyContent] = Action { implicit request =>
     val lang =
       if(appConfig.isWelshEnabled) {
-        CustomLanguageController.languageMap.getOrElse(language, LanguageUtils.getCurrentLang)
+        CustomLanguageController.languageMap.getOrElse(language, Lang.defaultLang)
       } else {
         CustomLanguageController.englishLang
       }
     val redirectURL = request.headers.get(REFERER).getOrElse(CustomLanguageController.fallbackURL)
 
-    Redirect(redirectURL).withLang(Lang.apply(lang.code)).flashing(LanguageUtils.FlashWithSwitchIndicator)
+    Redirect(redirectURL).withLang(Lang.apply(lang.code)).flashing(Flash(Map("switching-language" -> "true")))
   }
 }
 

@@ -36,9 +36,6 @@ trait MockSessionConnector extends BaseSpec with MockitoSugar with Matchers with
 
   var mockSessionConnector: SessionConnector = _
   var mockCacheMap: CacheMap = _
-  implicit val headnapper = ArgumentCaptor.forClass(classOf[HeaderCarrier])
-  implicit val writesnapper = ArgumentCaptor.forClass(classOf[Writes[Any]])
-  implicit val dateWritesNapper = ArgumentCaptor.forClass(classOf[Writes[LocalDate]])
 
   before {
     mockCacheMap = mock[CacheMap]
@@ -63,8 +60,10 @@ trait MockSessionConnector extends BaseSpec with MockitoSugar with Matchers with
 
   def verifyValueIsCached[A: ClassTag](key: String, value: A) = {
     implicit val hc = new HeaderCarrier()
-    val valueCaptor = ArgumentCaptor.forClass(classTag[A].runtimeClass)
-    verify(mockSessionConnector).cache(matches(key), valueCaptor.capture)(writesnapper.capture, headnapper.capture)
+    implicit val headnapper = ArgumentCaptor.forClass(classOf[HeaderCarrier])
+    implicit val writesnapper = ArgumentCaptor.forClass(classOf[Writes[A]])
+    val valueCaptor = ArgumentCaptor.forClass(value.getClass)
+    verify(mockSessionConnector).cache[A](matches(key), valueCaptor.capture)(writesnapper.capture, headnapper.capture)
     valueCaptor.getValue shouldBe value
   }
 
