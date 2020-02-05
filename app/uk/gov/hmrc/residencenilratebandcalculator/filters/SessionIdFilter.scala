@@ -34,7 +34,7 @@ class SessionIdFilter @Inject()()(implicit val mat: Materializer) extends Filter
     val sessionAsCookie: Cookie = Session.encodeAsCookie(session)
     val cookies = Cookies.mergeCookieHeader(rh.headers.get(COOKIE).getOrElse(""), Seq(sessionAsCookie))
     val updatedHeaders = rh.headers.replace(COOKIE -> cookies)
-    rh copy (headers = updatedHeaders)
+    rh withHeaders (newHeaders = updatedHeaders)
   }
 
   override def apply(f: (RequestHeader) => Future[Result])(rh: RequestHeader): Future[Result] = {
