@@ -8,7 +8,7 @@ lazy val appName = "residence-nil-rate-band-calculator-frontend"
 lazy val appDependencies: Seq[ModuleID] = AppDependencies()
 lazy val plugins : Seq[Plugins] = Seq.empty
 lazy val playSettings : Seq[Setting[_]] = Seq.empty
-lazy val scalaversion = "2.12.10"
+lazy val scalaversion = "2.12.11"
 
 lazy val microservice = Project(appName, file("."))
   .enablePlugins(Seq(play.sbt.PlayScala,SbtAutoBuildPlugin, SbtGitVersioning, SbtDistributablesPlugin, SbtArtifactory) ++ plugins : _*)
