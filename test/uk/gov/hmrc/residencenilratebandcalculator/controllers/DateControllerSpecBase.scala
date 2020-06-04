@@ -24,10 +24,9 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, Date}
-import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants, Navigator}
 
 trait DateControllerSpecBase extends BaseSpec with HttpResponseMocks with MockSessionConnector {
   val fakeRequest = FakeRequest("", "")
@@ -80,7 +79,6 @@ trait DateControllerSpecBase extends BaseSpec with HttpResponseMocks with MockSe
       val value = "not a number"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody((s"$date${".day"}", value), (s"$date${".month"}", value), (s"$date${".year"}", value))
       val result = createController().onSubmit(wts)(fakePostRequest)
-      val valueMap = Map("day" -> value, "month" -> value, "year" -> value)
       contentAsString(result) should include("Give a correct date")
     }
 
@@ -99,7 +97,6 @@ trait DateControllerSpecBase extends BaseSpec with HttpResponseMocks with MockSe
       setCacheValue(cacheKey, value)
       val result = createController().onPageLoad(rds)(fakeRequest)
 
-      val valueMap = Map("day" -> day.toString, "month" -> month.toString, "year" -> year.toString)
       contentAsString(result) shouldBe createView(Some(value)).toString
     }
   }

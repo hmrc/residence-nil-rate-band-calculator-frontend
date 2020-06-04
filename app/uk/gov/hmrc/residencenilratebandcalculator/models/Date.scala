@@ -17,7 +17,6 @@
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import org.joda.time.LocalDate
-import play.api.data.validation.ValidationError
 import play.api.libs.json._
 
 import scala.util.{Failure, Success, Try}

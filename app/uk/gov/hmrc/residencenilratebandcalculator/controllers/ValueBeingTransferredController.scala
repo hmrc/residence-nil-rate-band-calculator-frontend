@@ -77,8 +77,9 @@ class ValueBeingTransferredController @Inject()(cc: DefaultMessagesControllerCom
     implicit request => {
       microserviceValues.map {
         case (nilRateValueJson, cacheMap) => {
+
           val previousAnswers = answerRows(cacheMap, request)
-          val userAnswers = new UserAnswers(cacheMap)
+
           val nilRateBand = formatJsonNumber(nilRateValueJson.json.toString())
           implicit val messages = messagesApi.preferred(request)
           Ok(value_being_transferred(
@@ -131,7 +132,7 @@ class ValueBeingTransferredController @Inject()(cc: DefaultMessagesControllerCom
   }
 
 
-  def validate(value: Int, nilRateBandStr: String, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Future[Option[FormError]] = {
+  def validate(value: Int, nilRateBandStr: String, userAnswers: UserAnswers): Future[Option[FormError]] = {
     val nrb = try {
       Integer.parseInt(nilRateBandStr)
     } catch {

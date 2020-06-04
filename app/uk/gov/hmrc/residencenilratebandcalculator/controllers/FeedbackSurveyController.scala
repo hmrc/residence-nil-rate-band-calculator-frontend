@@ -25,7 +25,7 @@ import scala.concurrent.Future
 
 class FeedbackSurveyController @Inject()(cc: DefaultMessagesControllerComponents,
                                          appConfig: FrontendAppConfig) extends FrontendController(cc) {
-  def redirectExitSurvey: Action[AnyContent] = Action.async { implicit request =>
+  def redirectExitSurvey: Action[AnyContent] = Action.async {
     Future.successful(Redirect(appConfig.feedbackSurvey).withNewSession)
   }
 }

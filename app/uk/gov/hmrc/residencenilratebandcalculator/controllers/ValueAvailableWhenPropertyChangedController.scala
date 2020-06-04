@@ -19,7 +19,6 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import javax.inject.{Inject, Singleton}
 import play.api.Logger
 import play.api.data.FormError
-import play.api.i18n.Messages
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.{DefaultMessagesControllerComponents, Request}
 import uk.gov.hmrc.http.cache.client.CacheMap
@@ -95,7 +94,6 @@ class ValueAvailableWhenPropertyChangedController @Inject()(cc: DefaultMessagesC
           val nilRateBand = nilRateValueJson.json.toString()
           val formattedNilRateBand = CurrencyFormatter.format(nilRateBand)
           val previousAnswers = answerRows(cacheMap, request)
-          val userAnswers = new UserAnswers(cacheMap)
 
           boundForm.fold(
             formWithErrors => Future.successful(BadRequest(value_available_when_property_changed(
@@ -121,7 +119,7 @@ class ValueAvailableWhenPropertyChangedController @Inject()(cc: DefaultMessagesC
   }
 
 
-  def validate(value: Int, nilRateBandStr: String)(implicit hc: HeaderCarrier): Future[Option[FormError]] = {
+  def validate(value: Int, nilRateBandStr: String): Future[Option[FormError]] = {
     val nrb = try {
       Integer.parseInt(nilRateBandStr)
     } catch {

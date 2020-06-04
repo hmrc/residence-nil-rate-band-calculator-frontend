@@ -19,7 +19,6 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import javax.inject.{Inject, Singleton}
 import play.api.data.{Form, FormError}
 import play.api.mvc.{DefaultMessagesControllerComponents, Request}
-import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
@@ -39,11 +38,12 @@ class PropertyValueController @Inject()(cc: DefaultMessagesControllerComponents,
   override def form = () =>
     NonNegativeIntForm("property_value.error.blank", "error.whole_pounds", "property_value.error.non_numeric", "error.value_too_large")
 
-  override def view(form: Form[Int], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+  override def view(form: Form[Int], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)
+                   (implicit request: Request[_]) = {
     property_value(form, answerRows)
   }
 
-  override def validate(value: Int, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = {
+  override def validate(value: Int, userAnswers: UserAnswers): Option[FormError] = {
     userAnswers.valueOfEstate match {
       case Some(v) if value > v => Some(FormError("value", "property_value.greater_than_value_of_estate.error", Seq(v)))
       case _ => None

@@ -16,13 +16,11 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import javax.inject.Provider
-import play.api.Application
 import play.api.mvc.DefaultMessagesControllerComponents
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_property_was_changed
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 
 class DatePropertyWasChangedControllerSpec extends DateControllerSpecBase {
   val mockConfig = injector.instanceOf[FrontendAppConfig]

@@ -16,8 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator
 
-import java.util.Base64
-
 import javax.inject.Inject
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 

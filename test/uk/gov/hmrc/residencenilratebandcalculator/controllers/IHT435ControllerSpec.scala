@@ -22,18 +22,16 @@ import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito._
 import play.api.Environment
 import play.api.http.Status
-import play.api.i18n.MessagesApi
 import play.api.mvc.DefaultMessagesControllerComponents
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
-import uk.gov.hmrc.residencenilratebandcalculator.utils.{PDFHelper, PDFHelperImpl}
+import uk.gov.hmrc.residencenilratebandcalculator.utils.PDFHelperImpl
 
 class IHT435ControllerSpec extends BaseSpec with MockSessionConnector {
   private val fakeRequest = FakeRequest("", "")
-  private val injector = fakeApplication.injector
 
-  private def messagesApi = injector.instanceOf[MessagesApi]
+  private val injector = fakeApplication.injector
 
   private val env = injector.instanceOf[Environment]
 

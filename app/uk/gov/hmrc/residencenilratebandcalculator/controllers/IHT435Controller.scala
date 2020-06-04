@@ -16,11 +16,11 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import javax.inject.{Inject, Provider, Singleton}
+import javax.inject.{Inject, Singleton}
 import play.Logger
+import play.api.Environment
 import play.api.i18n.{I18nSupport, Lang}
 import play.api.mvc.{Action, AnyContent, DefaultMessagesControllerComponents}
-import play.api.{Application, Environment}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.utils.PDFHelperImpl

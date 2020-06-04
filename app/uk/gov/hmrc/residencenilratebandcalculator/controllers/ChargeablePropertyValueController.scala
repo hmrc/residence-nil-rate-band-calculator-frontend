@@ -19,7 +19,6 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import javax.inject.{Inject, Singleton}
 import play.api.data.{Form, FormError}
 import play.api.mvc.{DefaultMessagesControllerComponents, Request}
-import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
@@ -38,11 +37,12 @@ class ChargeablePropertyValueController @Inject()(cc: DefaultMessagesControllerC
   override def form: () => Form[Int] = () =>
     NonNegativeIntForm("chargeable_property_value.error.blank", "error.whole_pounds", "chargeable_property_value.error.non_numeric", "error.value_too_large")
 
-  override def view(form: Form[Int], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+  override def view(form: Form[Int], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)
+                   (implicit request: Request[_]) = {
     chargeable_property_value(form, answerRows)
   }
 
-  override def validate(value: Int, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = {
+  override def validate(value: Int, userAnswers: UserAnswers): Option[FormError] = {
     userAnswers.propertyValue match {
       case Some(v) if value > v => Some(FormError("value", "chargeable_property_value.greater_than_property_value.error", Seq(v)))
       case _ => None
