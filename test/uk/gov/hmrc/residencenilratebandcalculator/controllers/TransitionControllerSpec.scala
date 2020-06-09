@@ -20,7 +20,7 @@ import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito._
 import play.api.http.Status
 import play.api.i18n.MessagesApi
-import play.api.mvc.{DefaultMessagesControllerComponents, MessagesControllerComponents, Request}
+import play.api.mvc.{DefaultMessagesControllerComponents, Request}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
