@@ -16,10 +16,9 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import java.util.Locale
 
 import org.joda.time.LocalDate
-import play.api.i18n.{Lang, Messages, MessagesApi}
+import play.api.i18n.{Lang, MessagesApi}
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec

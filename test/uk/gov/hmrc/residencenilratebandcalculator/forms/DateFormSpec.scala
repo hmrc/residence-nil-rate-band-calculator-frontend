@@ -21,7 +21,6 @@ import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 
-import scala.language.reflectiveCalls
 
 class DateFormSpec extends FormSpec {
 
