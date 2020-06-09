@@ -21,7 +21,6 @@ import play.api.i18n.I18nSupport
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.{Action, AnyContent, Request}
 import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.Navigator
@@ -90,5 +89,5 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
     }
   }
 
-  def validate(value: A, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = None
+  def validate(value: A, userAnswers: UserAnswers): Option[FormError] = None
 }

@@ -16,9 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
-import play.api.data.{Form, FormError}
-import uk.gov.hmrc.residencenilratebandcalculator.models._
-
 import scala.util.Try
 
 object FormHelpers {

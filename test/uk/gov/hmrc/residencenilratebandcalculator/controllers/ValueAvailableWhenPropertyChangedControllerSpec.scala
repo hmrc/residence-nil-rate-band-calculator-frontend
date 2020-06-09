@@ -213,14 +213,14 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends BaseSpec with Http
       "return a FormError when given a value greater than the nil rate band for the year of disposal" in {
         val testValue = 123000
         val controller = createController()
-        val result = controller.validate(testValue, "100000")(new HeaderCarrier())
+        val result = controller.validate(testValue, "100000")
         result.map(x => x should be(Some(FormError("value", "value_available_when_property_changed.error"))))
       }
 
       "return a None when given a value less than or equal to the nil rate band for the year of disposal" in {
         val testValue = 90000
         val controller = createController()
-        val result = controller.validate(testValue, "100000")(new HeaderCarrier())
+        val result = controller.validate(testValue, "100000")
         result.map(x => x should be(None))
       }
 
@@ -228,7 +228,7 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends BaseSpec with Http
         val exception = intercept[NumberFormatException] {
           val testValue = 90000
           val controller = createController()
-          val result = controller.validate(testValue, "not a number")(new HeaderCarrier())
+          controller.validate(testValue, "not a number")
         }
         exception.getMessage shouldBe "Bad value in nil rate band"
       }

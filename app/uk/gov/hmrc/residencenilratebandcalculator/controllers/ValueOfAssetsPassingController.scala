@@ -19,7 +19,6 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import javax.inject.{Inject, Singleton}
 import play.api.data.{Form, FormError}
 import play.api.mvc.{DefaultMessagesControllerComponents, Request}
-import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
@@ -47,7 +46,7 @@ class ValueOfAssetsPassingController @Inject()(cc: DefaultMessagesControllerComp
     value_of_assets_passing(form, answerRows, formattedPropertyValue)
   }
 
-  override def validate(value: Int, userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Option[FormError] = {
+  override def validate(value: Int, userAnswers: UserAnswers): Option[FormError] = {
     userAnswers.valueOfEstate match {
       case Some(v) if value > v => Some(FormError("value", "value_of_assets_passing.greater_than_estate_value.error", Seq(v)))
       case _ => None

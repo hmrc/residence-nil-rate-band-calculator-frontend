@@ -9,6 +9,7 @@ lazy val appDependencies: Seq[ModuleID] = AppDependencies()
 lazy val plugins : Seq[Plugins] = Seq.empty
 lazy val playSettings : Seq[Setting[_]] = Seq.empty
 lazy val scalaversion = "2.12.11"
+val silencerVersion = "1.7.0"
 
 lazy val microservice = Project(appName, file("."))
   .enablePlugins(Seq(play.sbt.PlayScala,SbtAutoBuildPlugin, SbtGitVersioning, SbtDistributablesPlugin, SbtArtifactory) ++ plugins : _*)
@@ -39,6 +40,13 @@ lazy val microservice = Project(appName, file("."))
     resolvers ++= Seq(
       Resolver.bintrayRepo("hmrc", "releases"),
       Resolver.jcenterRepo
+    ),
+    // ***************
+    // Use the silencer plugin to suppress warnings from unused imports in compiled twirl templates
+    scalacOptions += "-P:silencer:pathFilters=views;routes",
+    libraryDependencies ++= Seq(
+      compilerPlugin("com.github.ghik" % "silencer-plugin" % silencerVersion cross CrossVersion.full),
+      "com.github.ghik" % "silencer-lib" % silencerVersion % Provided cross CrossVersion.full
     )
   )
   .settings(

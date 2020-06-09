@@ -26,8 +26,6 @@ import scala.concurrent.Future
 @Singleton
 class KeepAliveController @Inject()(val cc: DefaultMessagesControllerComponents) extends FrontendController(cc) with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = Action.async {
-    implicit request =>
-      Future.successful(Ok("OK"))
-  }
+  def onPageLoad: Action[AnyContent] = Action.async(Future.successful(Ok("OK")))
+
 }

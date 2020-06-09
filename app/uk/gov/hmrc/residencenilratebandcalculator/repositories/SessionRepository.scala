@@ -22,7 +22,7 @@ import play.api.libs.functional.FunctionalBuilder
 import play.api.libs.json.Writes.StringWrites
 import play.api.libs.json.{JodaReads, JodaWrites, JsValue, Json}
 import play.api.{Configuration, Logger}
-import play.modules.reactivemongo.MongoDbConnection
+import play.modules.reactivemongo.ReactiveMongoComponent
 import reactivemongo.api.indexes.{Index, IndexType}
 import reactivemongo.api.{Cursor, DefaultDB}
 import reactivemongo.bson.{BSONDocument, _}
@@ -39,8 +39,8 @@ case class DatedCacheMap(id: String,
 
 object DatedCacheMap extends JodaReads with JodaWrites {
   import play.api.libs.functional.syntax._
-  import play.api.libs.json.Reads._
   import play.api.libs.json.OWrites._
+  import play.api.libs.json.Reads._
   import play.api.libs.json._
 
   val datedCacheMapReads: Reads[DatedCacheMap] =
@@ -65,12 +65,12 @@ object DatedCacheMap extends JodaReads with JodaWrites {
 }
 
 class ReactiveMongoRepository(config: Configuration, mongo: () => DefaultDB)
-  extends ReactiveRepository[DatedCacheMap, BSONObjectID](config.getString("appName").get, mongo, DatedCacheMap.formats) {
+  extends ReactiveRepository[DatedCacheMap, BSONObjectID](config.get[String]("appName"), mongo, DatedCacheMap.formats) {
 
   val fieldName = "lastUpdated"
   val createdIndexName = "userAnswersExpiry"
   val expireAfterSeconds = "expireAfterSeconds"
-  val timeToLiveInSeconds: Int = config.getInt("mongodb.timeToLiveInSeconds").get
+  val timeToLiveInSeconds: Int = config.get[Int]("mongodb.timeToLiveInSeconds")
 
   createIndex(fieldName, createdIndexName, timeToLiveInSeconds)
 
@@ -115,11 +115,10 @@ class ReactiveMongoRepository(config: Configuration, mongo: () => DefaultDB)
 }
 
 @Singleton
-class SessionRepository @Inject()(config: Configuration) {
+class SessionRepository @Inject()(config: Configuration, mongoComponent: ReactiveMongoComponent) {
 
-  class DbConnection extends MongoDbConnection
-
-  private lazy val sessionRepository = new ReactiveMongoRepository(config, new DbConnection().db)
+  private lazy val sessionRepository = new ReactiveMongoRepository(
+    config, mongoComponent.mongoConnector.db)
 
   def apply(): ReactiveMongoRepository = sessionRepository
 }

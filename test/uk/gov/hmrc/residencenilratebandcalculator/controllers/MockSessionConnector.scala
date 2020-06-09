@@ -18,19 +18,19 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import org.joda.time.LocalDate
 import org.mockito.ArgumentCaptor
-import org.mockito.Mockito._
 import org.mockito.ArgumentMatchers._
-import org.scalatestplus.mockito.MockitoSugar
+import org.mockito.Mockito._
 import org.scalatest.{BeforeAndAfter, Matchers}
+import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.json.{JsValue, Reads, Writes}
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 
 import scala.concurrent.Future
-import scala.reflect.{ClassTag, classTag}
-import uk.gov.hmrc.http.HeaderCarrier
+import scala.reflect.ClassTag
 
 trait MockSessionConnector extends BaseSpec with MockitoSugar with Matchers with BeforeAndAfter {
 
@@ -59,7 +59,6 @@ trait MockSessionConnector extends BaseSpec with MockitoSugar with Matchers with
   }
 
   def verifyValueIsCached[A: ClassTag](key: String, value: A) = {
-    implicit val hc = new HeaderCarrier()
     implicit val headnapper = ArgumentCaptor.forClass(classOf[HeaderCarrier])
     implicit val writesnapper = ArgumentCaptor.forClass(classOf[Writes[A]])
     val valueCaptor = ArgumentCaptor.forClass(value.getClass)

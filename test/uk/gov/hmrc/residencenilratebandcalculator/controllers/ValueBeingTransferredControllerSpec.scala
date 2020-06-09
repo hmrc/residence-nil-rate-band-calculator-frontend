@@ -201,7 +201,7 @@ class ValueBeingTransferredControllerSpec extends BaseSpec with HttpResponseMock
         val userAnswers = new UserAnswers(cacheMap)
         val testValue = 123000
         val controller = createController()
-        val result = controller.validate(testValue, "100000", userAnswers)(new HeaderCarrier())
+        val result = controller.validate(testValue, "100000", userAnswers)
         result.map(x => x should be(Some(FormError("value", "value_being_transferred.error", Seq(100000, "2019", "2020")))))
       }
 
@@ -210,7 +210,7 @@ class ValueBeingTransferredControllerSpec extends BaseSpec with HttpResponseMock
         val userAnswers = new UserAnswers(cacheMap)
         val testValue = 90000
         val controller = createController()
-        val result = controller.validate(testValue, "100000", userAnswers)(new HeaderCarrier())
+        val result = controller.validate(testValue, "100000", userAnswers)
         result.map(x => x should be(None))
       }
 
@@ -220,7 +220,7 @@ class ValueBeingTransferredControllerSpec extends BaseSpec with HttpResponseMock
           val userAnswers = new UserAnswers(cacheMap)
           val testValue = 90000
           val controller = createController()
-          val result = controller.validate(testValue, "not a number", userAnswers)(new HeaderCarrier())
+          controller.validate(testValue, "not a number", userAnswers)
         }
         exception.getMessage shouldBe "Bad value in nil rate band"
       }
