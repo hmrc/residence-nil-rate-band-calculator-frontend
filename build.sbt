@@ -62,3 +62,7 @@ lazy val microservice = Project(appName, file("."))
     includeFilter in uglify := GlobFilter("rnrb-*.js")
   )
   .settings(majorVersion := 0)
+
+  .disablePlugins(JUnitXmlReportPlugin)
+
+
