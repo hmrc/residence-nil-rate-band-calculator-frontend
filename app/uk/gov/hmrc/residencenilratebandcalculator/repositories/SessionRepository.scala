@@ -92,10 +92,12 @@ class ReactiveMongoRepository(config: Configuration, mongo: () => DefaultDB)
     val cmDocument = Json.toJson(DatedCacheMap(cm))
     val modifier = BSONDocument("$set" -> cmDocument.as[BSONValue])
 
+
     collection.update(selector, modifier, upsert = true).map { lastError =>
       lastError.ok
     }
   }
+
 
   def removeAll(id: String): Future[Boolean] = {
     collection.remove(Json.obj("id" -> id)).map { lastError =>
