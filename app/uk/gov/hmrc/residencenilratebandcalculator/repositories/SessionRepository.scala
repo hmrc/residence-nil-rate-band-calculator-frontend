@@ -100,7 +100,7 @@ class ReactiveMongoRepository(config: Configuration, mongo: () => DefaultDB)
 
 
   def removeAll(id: String): Future[Boolean] = {
-    collection.remove(Json.obj("id" -> id)).map { lastError =>
+    collection.delete.one(Json.obj("id" -> id)).map { lastError =>
       lastError.ok
     }
   }
