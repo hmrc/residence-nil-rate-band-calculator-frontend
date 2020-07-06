@@ -333,6 +333,6 @@ label.beta.feedback = adborth
 label.beta.yours = - bydd eich
 
 # Generic error
-error.InternalServerError500.title = Mae''n ddrwg gennym, mae problem gyda''r gwasanaeth
+error.InternalServerError500.title = Mae''n ddrwg gennym, mae problem gyda''r gwasanaeth - Cyfrifwch yr RNRB sydd ar gael - GOV.UK
 error.InternalServerError500.heading = Mae''n ddrwg gennym, mae problem gyda''r gwasanaeth
 error.InternalServerError500.message = Rhowch gynnig arall arni yn nes ymlaen.
