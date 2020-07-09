@@ -18,8 +18,9 @@ package uk.gov.hmrc.residencenilratebandcalculator.utils
 
 import javax.inject.Inject
 import play.api.Configuration
-import play.api.i18n.MessagesApi
+import play.api.i18n.{Messages, MessagesApi}
 import play.api.mvc.Request
+import play.twirl.api.Html
 import uk.gov.hmrc.play.bootstrap.http.FrontendErrorHandler
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 
@@ -31,4 +32,11 @@ class RnrbErrorHandler @Inject()(val configuration: Configuration,
 
   override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(implicit request: Request[_]) =
     uk.gov.hmrc.residencenilratebandcalculator.views.html.error_template(pageTitle, heading, message)
+
+  override def internalServerErrorTemplate(implicit request: Request[_]): Html = {
+    uk.gov.hmrc.residencenilratebandcalculator.views.html.error_template(
+      Messages("error.InternalServerError500.title"),
+      Messages("error.InternalServerError500.heading"),
+      Messages("error.InternalServerError500.message"))
+  }
 }

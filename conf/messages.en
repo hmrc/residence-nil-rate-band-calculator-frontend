@@ -331,3 +331,8 @@ label.beta.newservice =  This is a new service
 label.beta.improve =  will help us to improve it.
 label.beta.feedback = feedback
 label.beta.yours = - your
+
+# Generic error
+error.InternalServerError500.title=Sorry, there is a problem with the service - Calculate the available RNRB - GOV.UK
+error.InternalServerError500.heading=Sorry, there is a problem with the service
+error.InternalServerError500.message=Try again later.
