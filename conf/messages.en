@@ -333,6 +333,14 @@ label.beta.feedback = feedback
 label.beta.yours = - your
 
 # Generic error
+global.error.badRequest400.title=Bad request - 400
+global.error.badRequest400.heading=Bad request
+global.error.badRequest400.message=Please check that you have entered the correct web address.
+
+global.error.pageNotFound404.title=Page not found - 404
+global.error.pageNotFound404.heading=This page can''t be found
+global.error.pageNotFound404.message=Please check that you have entered the correct web address.
+
 error.InternalServerError500.title=Sorry, there is a problem with the service - Calculate the available RNRB - GOV.UK
 error.InternalServerError500.heading=Sorry, there is a problem with the service
 error.InternalServerError500.message=Try again later.
