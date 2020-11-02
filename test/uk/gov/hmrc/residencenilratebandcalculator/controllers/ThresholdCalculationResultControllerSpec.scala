@@ -18,14 +18,15 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import org.joda.time.LocalDate
 import org.mockito.ArgumentCaptor
-import org.mockito.Mockito._
 import org.mockito.ArgumentMatchers._
-import org.scalatestplus.mockito.MockitoSugar
+import org.mockito.Mockito._
 import org.scalatest.Matchers
+import org.scalatestplus.mockito.MockitoSugar
 import play.api.http.Status
 import play.api.libs.json._
 import play.api.mvc.DefaultMessagesControllerComponents
 import play.api.test.Helpers._
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
@@ -34,9 +35,10 @@ import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
 
 import scala.concurrent.Future
 import scala.util.Success
-import uk.gov.hmrc.http.HeaderCarrier
 
 class ThresholdCalculationResultControllerSpec extends SimpleControllerSpecBase with MockitoSugar with Matchers {
+
+  private implicit val hc: HeaderCarrier = HeaderCarrier()
 
   val testJsNumber = JsNumber(10)
 
@@ -68,7 +70,7 @@ class ThresholdCalculationResultControllerSpec extends SimpleControllerSpecBase 
 
   def mockRnrbConnector = {
     val mockConnector = mock[RnrbConnector]
-    when(mockConnector.send(any[CalculationInput])) thenReturn Future.successful(Success(calculationResult))
+    when(mockConnector.send(any[CalculationInput])(any[HeaderCarrier])) thenReturn Future.successful(Success(calculationResult))
     mockConnector
   }
 
@@ -100,7 +102,7 @@ class ThresholdCalculationResultControllerSpec extends SimpleControllerSpecBase 
       val connector = mockRnrbConnector
       val jsonNapper = ArgumentCaptor.forClass(classOf[CalculationInput])
       await(thresholdCalculationResultController(connector).onPageLoad()(fakeRequest))
-      verify(connector).send(jsonNapper.capture)
+      verify(connector).send(jsonNapper.capture)(any[HeaderCarrier])
       jsonNapper.getValue shouldBe expectedCalculationInput
     }
 

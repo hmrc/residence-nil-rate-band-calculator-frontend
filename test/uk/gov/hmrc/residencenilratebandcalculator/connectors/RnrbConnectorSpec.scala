@@ -35,6 +35,8 @@ import scala.util.{Failure, Success}
 
 class RnrbConnectorSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEach {
 
+  private implicit val hc: HeaderCarrier = HeaderCarrier()
+
   override def beforeEach(): Unit = {
     reset(httpMock)
     super.beforeEach()

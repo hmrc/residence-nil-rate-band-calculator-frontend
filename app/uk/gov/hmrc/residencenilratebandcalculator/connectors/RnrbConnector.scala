@@ -32,14 +32,13 @@ import scala.util.{Failure, Success}
 @Singleton
 class RnrbConnector @Inject()(val http: DefaultHttpClient,
                               val config: FrontendAppConfig) {
-  implicit val hc: HeaderCarrier = HeaderCarrier()
 
   lazy val serviceUrl = config.serviceUrl
   val baseSegment = "/residence-nil-rate-band-calculator/"
   val schemaBaseSegment = s"${baseSegment}api/conf/0.1/schemas/"
   val jsonContentTypeHeader = ("Content-Type", "application/json")
 
-  def getStyleGuide = http.GET(s"$serviceUrl${baseSegment}style-guide")
+  def getStyleGuide()(implicit hc: HeaderCarrier) = http.GET(s"$serviceUrl${baseSegment}style-guide")
 
   implicit val calculationResultWrites: Writes[CalculationInput] = new Writes[CalculationInput] {
     def writes(o : CalculationInput): JsValue = {
@@ -73,9 +72,9 @@ class RnrbConnector @Inject()(val http: DefaultHttpClient,
     }
   }
 
-  def send(input: CalculationInput) = sendJson(Json.toJson(input))
+  def send(input: CalculationInput) (implicit hc: HeaderCarrier) = sendJson(Json.toJson(input))
 
-  def sendJson(json: JsValue) =
+  def sendJson(json: JsValue) (implicit hc: HeaderCarrier) =
     http.POST(s"$serviceUrl${baseSegment}calculate", json, Seq(jsonContentTypeHeader))
       .map {
         response =>
@@ -86,6 +85,6 @@ class RnrbConnector @Inject()(val http: DefaultHttpClient,
           }
       }
 
-  def getNilRateBand(dateStr: String): Future[HttpResponse] = http.GET(s"$serviceUrl${baseSegment}nilrateband/$dateStr")
+  def getNilRateBand(dateStr: String)(implicit hc: HeaderCarrier): Future[HttpResponse] = http.GET(s"$serviceUrl${baseSegment}nilrateband/$dateStr")
 
 }

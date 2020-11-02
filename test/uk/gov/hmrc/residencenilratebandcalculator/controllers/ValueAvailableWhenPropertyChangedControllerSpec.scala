@@ -36,9 +36,11 @@ import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants, Frontend
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import uk.gov.hmrc.http.{HttpResponse}
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 
 class ValueAvailableWhenPropertyChangedControllerSpec extends BaseSpec with HttpResponseMocks with MockSessionConnector {
+
+  private implicit val hc: HeaderCarrier = HeaderCarrier()
 
   val errorKeyBlank = "value_available_when_property_changed.error.blank"
   val errorKeyDecimal = "error.whole_pounds"
@@ -61,7 +63,7 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends BaseSpec with Http
 
   def mockRnrbConnector = {
     val mockConnector = mock[RnrbConnector]
-    when(mockConnector.getNilRateBand(any[String])) thenReturn Future.successful(HttpResponse(200, Some(JsNumber(100000))))
+    when(mockConnector.getNilRateBand(any[String])(any[HeaderCarrier])) thenReturn Future.successful(HttpResponse(200, Some(JsNumber(100000))))
     mockConnector
   }
 
