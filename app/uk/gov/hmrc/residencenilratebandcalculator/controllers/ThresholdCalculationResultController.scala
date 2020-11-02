@@ -22,6 +22,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.play.HeaderCarrierConverter
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
@@ -55,13 +56,16 @@ class ThresholdCalculationResultController @Inject()(cc: DefaultMessagesControll
     case Failure(ex) => Future.successful(Failure(ex))
   }
 
-  private def getResult(tryInput: Try[CalculationInput]) = tryInput match {
+  private def getResult(tryInput: Try[CalculationInput]) (implicit hc: HeaderCarrier) = tryInput match {
     case Success(input) => rnrbConnector.send(input)
     case Failure(ex) => Future.successful(Failure(ex))
   }
 
   def onPageLoad = Action.async {
     implicit request => {
+
+      implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromHeadersAndSessionAndRequest(request.headers, Some(request.session), Some(request))
+
       for {
         tryAnswers <- getAnswers
         tryInput <- getInput(tryAnswers)
