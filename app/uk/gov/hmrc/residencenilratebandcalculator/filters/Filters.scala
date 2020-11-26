@@ -18,7 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.filters
 
 import javax.inject.Inject
 import play.api.http.DefaultHttpFilters
-import uk.gov.hmrc.play.bootstrap.filters.MicroserviceFilters
+import uk.gov.hmrc.play.bootstrap.filters.FrontendFilters
 
-class Filters @Inject()(defaultFilters : MicroserviceFilters, sessionIdFilter: SessionIdFilter)
-  extends DefaultHttpFilters(defaultFilters.filters :+ sessionIdFilter: _*)
+class Filters @Inject()(frontendFilters : FrontendFilters, sessionIdFilter: SessionIdFilter)
+  extends DefaultHttpFilters(frontendFilters.filters :+ sessionIdFilter: _*)
