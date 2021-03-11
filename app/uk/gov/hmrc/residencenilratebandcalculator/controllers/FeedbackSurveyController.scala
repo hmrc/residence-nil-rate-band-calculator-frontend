@@ -18,7 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.Inject
 import play.api.mvc.{Action, AnyContent, DefaultMessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 
 import scala.concurrent.Future

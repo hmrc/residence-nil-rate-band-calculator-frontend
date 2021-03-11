@@ -19,6 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 import play.api.data.{Form, FormError}
 import play.api.i18n.Lang
 import play.twirl.api.HtmlFormat
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 
 import scala.reflect.ClassTag
 

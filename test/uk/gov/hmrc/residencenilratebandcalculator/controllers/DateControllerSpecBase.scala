@@ -24,11 +24,11 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
+import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, Date}
-import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
 
-trait DateControllerSpecBase extends BaseSpec with HttpResponseMocks with MockSessionConnector {
+trait DateControllerSpecBase extends CommonPlaySpec with MockSessionConnector with WithCommonFakeApplication {
   val fakeRequest = FakeRequest("", "")
 
   val injector = fakeApplication.injector

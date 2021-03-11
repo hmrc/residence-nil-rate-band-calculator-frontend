@@ -20,10 +20,11 @@ import play.api.http.Status
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_property_value
 
-class ChargeablePropertyValueControllerSpec extends SimpleControllerSpecBase {
+class ChargeablePropertyValueControllerSpec extends SimpleControllerSpecBase with CommonPlaySpec {
 
   val errorKeyBlank = "chargeable_property_value.error.blank"
   val errorKeyDecimal = "error.whole_pounds"

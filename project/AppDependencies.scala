@@ -5,15 +5,15 @@ private object AppDependencies {
 
   val compile = Seq(
     ws,
-    "uk.gov.hmrc"       %% "simple-reactivemongo" % "7.30.0-play-26",
-    "uk.gov.hmrc"       %% "govuk-template"       % "5.57.0-play-26",
-    "uk.gov.hmrc"       %% "play-ui"              % "8.13.0-play-26",
-    "com.typesafe.play" %% "play-json-joda"       % "2.8.1",
-    "uk.gov.hmrc"       %% "bootstrap-play-26"    % "1.14.0" ,
-    "uk.gov.hmrc"       %% "http-caching-client"  % "9.1.0-play-26",
-    "org.apache.pdfbox" % "pdfbox"                % "2.0.20",
-    "uk.gov.hmrc"       %% "play-language"        % "4.3.0-play-26",
-    "uk.gov.hmrc"       %% "http-verbs"           % "10.7.0-play-26",
+    "uk.gov.hmrc"       %% "simple-reactivemongo"       % "7.31.0-play-27",
+    "uk.gov.hmrc"       %% "govuk-template"             % "5.63.0-play-27",
+    "uk.gov.hmrc"       %% "play-ui"                    % "8.21.0-play-27",
+    "com.typesafe.play" %% "play-json-joda"             % "2.8.1",
+    "uk.gov.hmrc"       %% "bootstrap-frontend-play-27" % "3.0.0" ,
+    "uk.gov.hmrc"       %% "http-caching-client"        % "9.2.0-play-27",
+    "org.apache.pdfbox" % "pdfbox"                      % "2.0.20",
+    "uk.gov.hmrc"       %% "play-language"              % "4.10.0-play-27",
+    "uk.gov.hmrc"       %% "http-verbs"                 % "10.7.0-play-27",
     nettyServer
   )
 
@@ -25,12 +25,11 @@ private object AppDependencies {
   object Test {
     def apply(): Seq[ModuleID] = new TestDependencies {
       override lazy val test = Seq(
-        "uk.gov.hmrc"             %% "hmrctest"           % "3.9.0-play-26"       % scope,
-        "org.scalatest"           %% "scalatest"          % "3.0.8"               % scope,
+        "org.scalatest"           %% "scalatest"          % "3.0.9"               % scope,
         "org.pegdown"             % "pegdown"             % "1.6.0"               % scope,
         "org.jsoup"               % "jsoup"               % "1.13.1"              % scope,
-        "org.mockito"             % "mockito-core"        % "3.3.3"               % scope,
-        "org.scalatestplus.play"  %% "scalatestplus-play" % "3.1.3"               % scope
+        "org.mockito"             % "mockito-core"        % "3.7.7"               % scope,
+        "org.scalatestplus.play"  %% "scalatestplus-play" % "4.0.3"               % scope
       )
     }.test
   }

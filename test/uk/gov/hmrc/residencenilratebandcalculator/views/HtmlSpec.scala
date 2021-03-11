@@ -18,15 +18,16 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.scalatestplus.play.PlaySpec
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.Injector
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import play.twirl.api.Html
-import uk.gov.hmrc.play.test.UnitSpec
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, FrontendAppConfig}
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 
-trait HtmlSpec extends BaseSpec { self: UnitSpec =>
+trait HtmlSpec extends BaseSpec { self: PlaySpec =>
 
   implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
 

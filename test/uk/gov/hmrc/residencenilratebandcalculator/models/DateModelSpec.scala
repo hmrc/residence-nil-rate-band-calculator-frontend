@@ -19,6 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.models
 import org.joda.time.LocalDate
 import play.api.libs.json._
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 
 class DateModelSpec extends BaseSpec with JodaWrites with JodaReads {
   "Date Model" must {

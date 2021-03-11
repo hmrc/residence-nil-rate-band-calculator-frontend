@@ -20,6 +20,7 @@ import org.mockito.Mockito._
 import org.scalatestplus.mockito.MockitoSugar
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetUnableToCalculateThresholdIncreaseReason.{GrossingUpForOtherProperty, GrossingUpForResidence}
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 
 class GetUnableToCalculateThresholdIncreaseReasonSpec extends BaseSpec with MockitoSugar {
   "GetUnableToCalculateThresholdIncreaseReason" must {

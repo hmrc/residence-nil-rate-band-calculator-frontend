@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.json
 
 import play.api.libs.json._
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 
 class JsonErrorProcessorSpec extends BaseSpec {
 

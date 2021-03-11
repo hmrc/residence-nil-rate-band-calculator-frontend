@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 
 class RadioOptionSpec extends BaseSpec {
 

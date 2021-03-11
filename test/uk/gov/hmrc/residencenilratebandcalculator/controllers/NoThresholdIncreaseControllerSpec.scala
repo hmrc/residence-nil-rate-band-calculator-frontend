@@ -23,12 +23,13 @@ import play.api.mvc.DefaultMessagesControllerComponents
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRows
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoThresholdIncreaseReason.{DateOfDeath, DirectDescendant}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_threshold_increase
-import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants, FrontendAppConfig}
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 
-class NoThresholdIncreaseControllerSpec extends BaseSpec with MockSessionConnector {
+class NoThresholdIncreaseControllerSpec extends CommonPlaySpec with MockSessionConnector with WithCommonFakeApplication{
 
   val fakeRequest = FakeRequest("", "")
 

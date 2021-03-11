@@ -16,6 +16,8 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
+import org.scalatest.Matchers.convertToAnyShouldWrapper
+
 class BooleanFormSpec extends FormSpec {
 
   val errorKey = "error.key"

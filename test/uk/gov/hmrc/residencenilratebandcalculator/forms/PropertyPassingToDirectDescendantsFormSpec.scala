@@ -16,6 +16,8 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
+import org.scalatest.Matchers.convertToAnyShouldWrapper
+
 class PropertyPassingToDirectDescendantsFormSpec extends FormSpec {
 
   "Property Passing To Direct Descendants form" must {

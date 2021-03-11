@@ -20,6 +20,7 @@ import org.joda.time.LocalDate
 import play.api.data.Form
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 
 
 class DateFormSpec extends FormSpec {

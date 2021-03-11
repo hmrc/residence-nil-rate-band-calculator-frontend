@@ -25,14 +25,14 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, GetReason, Reason, UserAnswers}
 
 import scala.concurrent.Future
 
-class TransitionControllerSpec extends BaseSpec with MockSessionConnector {
+class TransitionControllerSpec extends CommonPlaySpec with MockSessionConnector with WithCommonFakeApplication{
 
   val fakeRequest = FakeRequest("", "")
 

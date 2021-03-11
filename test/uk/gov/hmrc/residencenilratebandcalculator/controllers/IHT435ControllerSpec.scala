@@ -25,10 +25,10 @@ import play.api.http.Status
 import play.api.mvc.DefaultMessagesControllerComponents
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
+import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.utils.PDFHelperImpl
 
-class IHT435ControllerSpec extends BaseSpec with MockSessionConnector {
+class IHT435ControllerSpec extends CommonPlaySpec with MockSessionConnector with WithCommonFakeApplication {
   private val fakeRequest = FakeRequest("", "")
 
   private val injector = fakeApplication.injector

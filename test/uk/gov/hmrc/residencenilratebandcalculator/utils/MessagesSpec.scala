@@ -16,13 +16,14 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
+import org.scalatestplus.play.PlaySpec
 import play.api.i18n.Messages
 import play.api.i18n.Messages.MessageSource
-import uk.gov.hmrc.play.test.UnitSpec
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 
 import scala.io.Source
 
-class MessagesSpec extends UnitSpec  {
+class MessagesSpec extends PlaySpec  {
 
   private val MatchSingleQuoteOnly = """\w+'{1}\w+""".r
   private val MatchBacktickQuoteOnly = """`+""".r
@@ -31,7 +32,7 @@ class MessagesSpec extends UnitSpec  {
   private val englishMessages = parseMessages("conf/messages.en")
   private val welshMessages = parseMessages("conf/messages.cy")
 
-  "All message files" should {
+  "All message files" must {
     "have the same set of keys" in {
       withClue(describeMismatch(englishMessages.keySet, welshMessages.keySet)) {
         welshMessages.keySet shouldBe englishMessages.keySet

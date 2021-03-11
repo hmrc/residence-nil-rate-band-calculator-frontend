@@ -24,15 +24,16 @@ import play.api.mvc.DefaultMessagesControllerComponents
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.NotCloselyInherited
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThresholdIncreaseReason.{DatePropertyWasChangedTooEarly, NoAssetsPassingToDirectDescendants}
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_downsizing_threshold_increase
-import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
-class NoDownsizingThresholdIncreaseControllerSpec extends BaseSpec with HttpResponseMocks with MockSessionConnector with MockitoSugar {
+class NoDownsizingThresholdIncreaseControllerSpec extends CommonPlaySpec with HttpResponseMocks with MockSessionConnector with MockitoSugar with WithCommonFakeApplication {
 
   val fakeRequest = FakeRequest("", "")
 

@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import org.scalatestplus.mockito.MockitoSugar
 import play.api.http.Status
 import play.api.i18n.MessagesApi
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
@@ -24,14 +23,15 @@ import play.api.mvc.DefaultMessagesControllerComponents
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRows
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.{NoProperty, NotCloselyInherited}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_additional_threshold_available
-import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
-class NoAdditionalThresholdAvailableControllerSpec extends BaseSpec with HttpResponseMocks with MockSessionConnector with MockitoSugar {
+class NoAdditionalThresholdAvailableControllerSpec extends CommonPlaySpec with HttpResponseMocks with MockSessionConnector with WithCommonFakeApplication {
 
   val fakeRequest = FakeRequest("", "")
 

@@ -17,13 +17,13 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
-import play.Logger
+import play.api.Logger.logger
 import play.api.i18n.I18nSupport
 import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.HeaderCarrierConverter
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CalculationInput, UserAnswers}
@@ -42,7 +42,7 @@ class ThresholdCalculationResultController @Inject()(cc: DefaultMessagesControll
   extends FrontendController(cc) with I18nSupport {
 
   private def fail(ex: Throwable) = {
-    Logger.error(ex.getMessage, ex)
+    logger.error(ex.getMessage, ex)
     InternalServerError(ex.getMessage)
   }
 

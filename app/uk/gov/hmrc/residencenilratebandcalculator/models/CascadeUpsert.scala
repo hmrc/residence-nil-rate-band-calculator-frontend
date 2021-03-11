@@ -19,7 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.models
 import javax.inject.Singleton
 
 import org.joda.time.LocalDate
-import play.api.Logger
+import play.api.Logger.logger
 import play.api.libs.json._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
@@ -148,7 +148,7 @@ class CascadeUpsert {
             cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemoveWhenDateBeforeEligibilityDate.contains(s)))
           case Failure(e) =>
             val msg = s"Unable to parse value $value as the Date Property Was Changed"
-            Logger.error(msg, e)
+            logger.error(msg, e)
             throw new RuntimeException(msg)
           case _ => cacheMap
         }

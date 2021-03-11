@@ -17,11 +17,11 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
-import play.Logger
+import play.api.Logger.logger
 import play.api.Environment
 import play.api.i18n.{I18nSupport, Lang}
 import play.api.mvc.{Action, AnyContent, DefaultMessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.utils.PDFHelperImpl
 
@@ -37,7 +37,7 @@ class IHT435Controller @Inject()(val env: Environment,
       case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
       case Some(cacheMap) =>
         def fail(msg: String) = {
-          Logger.error(msg)
+          logger.error(msg)
           throw new RuntimeException(msg)
         }
 

@@ -38,8 +38,6 @@ import scala.util.Success
 
 class ThresholdCalculationResultControllerSpec extends SimpleControllerSpecBase with MockitoSugar with Matchers {
 
-  private implicit val hc: HeaderCarrier = HeaderCarrier()
-
   val testJsNumber = JsNumber(10)
 
   val dateOfDeath = new LocalDate(2020, 1, 1)

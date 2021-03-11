@@ -21,6 +21,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.calculate_threshold_increase
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 
 class CalculateThresholdIncreaseControllerSpec extends HtmlSpec {
 

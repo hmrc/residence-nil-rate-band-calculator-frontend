@@ -16,11 +16,12 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
-import uk.gov.hmrc.play.test.UnitSpec
+import org.scalatestplus.play.PlaySpec
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 
-class FormValidatorsSpec extends UnitSpec {
+class FormValidatorsSpec extends PlaySpec {
 
-  "The isValidDate method" should {
+  "The isValidDate method" must {
 
     "return a response of true" when{
 

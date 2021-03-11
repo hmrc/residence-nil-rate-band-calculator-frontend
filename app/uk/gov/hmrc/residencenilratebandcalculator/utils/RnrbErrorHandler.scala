@@ -21,7 +21,7 @@ import play.api.Configuration
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.mvc.Request
 import play.twirl.api.Html
-import uk.gov.hmrc.play.bootstrap.http.FrontendErrorHandler
+import uk.gov.hmrc.play.bootstrap.frontend.http.FrontendErrorHandler
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 
 class RnrbErrorHandler @Inject()(val configuration: Configuration,

@@ -35,7 +35,6 @@ class ValueOfEstateControllerSpec extends SimpleControllerSpecBase {
   "Value Of Estate Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
-      val url = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PartOfEstatePassingToDirectDescendantsController.onPageLoad().url
 
       value match {
         case None => value_of_estate(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq())(fakeRequest, messages, mockConfig)

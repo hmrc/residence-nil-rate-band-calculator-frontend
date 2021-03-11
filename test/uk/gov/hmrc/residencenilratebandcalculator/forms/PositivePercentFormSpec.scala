@@ -16,6 +16,8 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
+import org.scalatest.Matchers.convertToAnyShouldWrapper
+
 class PositivePercentFormSpec extends FormSpec {
 
   val errorKeyBlank = "blank"

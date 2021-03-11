@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.session_expired
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 
 class SessionExpiredViewSpec extends ViewSpecBase {
 

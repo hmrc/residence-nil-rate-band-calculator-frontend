@@ -28,10 +28,11 @@ import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 import org.mockito.Mockito._
 import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 
 import scala.concurrent.Future
 
-class DateOfDeathControllerSpec extends DateControllerSpecBase {
+class DateOfDeathControllerSpec extends DateControllerSpecBase with CommonPlaySpec {
 
   val mockConnector = mock[SessionConnector]
   val mockConfig = injector.instanceOf[FrontendAppConfig]

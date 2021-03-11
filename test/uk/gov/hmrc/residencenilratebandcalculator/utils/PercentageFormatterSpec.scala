@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 
 class PercentageFormatterSpec extends BaseSpec {
   "PercentageFormatter" must {
