@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import org.scalatestplus.mockito.MockitoSugar
 import play.api.Configuration
 import reactivemongo.api.DefaultDB
 import reactivemongo.api.indexes.{CollectionIndexesManager, Index}
-import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 import org.mockito.Mockito._
 import org.mockito.stubbing.OngoingStubbing
 import play.api.libs.json.{JsObject, Json}
@@ -29,10 +28,11 @@ import reactivemongo.api.commands.{DefaultWriteResult, UpdateWriteResult, WriteC
 import reactivemongo.bson.BSONDocument
 import reactivemongo.play.json.collection.JSONCollection
 import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class SessionRepositorySpec extends UnitSpec with MockitoSugar with WithFakeApplication {
+class SessionRepositorySpec extends CommonPlaySpec with MockitoSugar with WithCommonFakeApplication {
 
   lazy val configuration: Configuration = fakeApplication.injector.instanceOf[Configuration]
   val mockCollection: JSONCollection = mock[JSONCollection]

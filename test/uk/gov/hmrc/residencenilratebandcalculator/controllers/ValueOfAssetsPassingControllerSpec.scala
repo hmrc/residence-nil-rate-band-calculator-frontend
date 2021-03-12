@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,12 +21,13 @@ import play.api.libs.json.{Json, Reads, Writes}
 import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_assets_passing
 
-class ValueOfAssetsPassingControllerSpec extends SimpleControllerSpecBase {
+class ValueOfAssetsPassingControllerSpec extends SimpleControllerSpecBase with CommonPlaySpec{
 
   val errorKeyBlank = "value_of_assets_passing.error.blank"
   val errorKeyDecimal = "error.whole_pounds"

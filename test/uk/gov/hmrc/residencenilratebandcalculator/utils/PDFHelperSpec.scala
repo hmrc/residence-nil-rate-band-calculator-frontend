@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,16 +19,16 @@ package uk.gov.hmrc.residencenilratebandcalculator.utils
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm
 import play.api.Environment
-import play.api.i18n.{Lang, MessagesApi}
+import play.api.i18n.Lang
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import play.api.mvc.{DefaultMessagesControllerComponents, MessagesControllerComponents}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 
 class PDFHelperSpec extends BaseSpec {
   private val injector = fakeApplication.injector
   private val injectedEnv = injector.instanceOf[Environment]
-  private def messagesApi = injector.instanceOf[MessagesApi]
   val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
 
   private val cacheMapKey = "aa"

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,9 +21,10 @@ import org.mockito.Mockito._
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatest.{BeforeAndAfter, Matchers}
 import play.api.libs.json.Json
-import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
+import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
-class CalculationInputSpec extends BaseSpec with MockitoSugar with Matchers with BeforeAndAfter {
+class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matchers with BeforeAndAfter {
 
   val cacheMapKey = "a"
   val dateOfDeath = new LocalDate(2020, 1, 1)

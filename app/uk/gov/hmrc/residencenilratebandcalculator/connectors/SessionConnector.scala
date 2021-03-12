@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.connectors
 
 import play.api.libs.json._
-import play.api.Logger
+import play.api.Logger.logger
 import javax.inject.{Inject, Singleton}
 
 import uk.gov.hmrc.http.cache.client.CacheMap
@@ -35,7 +35,7 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository, val c
     hc.sessionId match {
       case None =>
        val msg = "Unable to find session with id " + hc.sessionId + "while caching " + key + " = " + value
-       Logger.error(msg)
+       logger.error(msg)
        throw new RuntimeException(msg)
       case Some(id) =>
         sessionRepository().get(id.toString).flatMap { optionalCacheMap =>

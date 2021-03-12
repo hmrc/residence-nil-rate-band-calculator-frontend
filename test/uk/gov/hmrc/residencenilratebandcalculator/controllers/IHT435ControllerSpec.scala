@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,10 +25,10 @@ import play.api.http.Status
 import play.api.mvc.DefaultMessagesControllerComponents
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
+import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.utils.PDFHelperImpl
 
-class IHT435ControllerSpec extends BaseSpec with MockSessionConnector {
+class IHT435ControllerSpec extends CommonPlaySpec with MockSessionConnector with WithCommonFakeApplication {
   private val fakeRequest = FakeRequest("", "")
 
   private val injector = fakeApplication.injector

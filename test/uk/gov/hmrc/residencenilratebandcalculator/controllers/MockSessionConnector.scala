@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,14 +25,14 @@ import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.json.{JsValue, Reads, Writes}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
+import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 
 import scala.concurrent.Future
 import scala.reflect.ClassTag
 
-trait MockSessionConnector extends BaseSpec with MockitoSugar with Matchers with BeforeAndAfter {
+trait MockSessionConnector extends CommonPlaySpec with MockitoSugar with Matchers with BeforeAndAfter {
 
   var mockSessionConnector: SessionConnector = _
   var mockCacheMap: CacheMap = _

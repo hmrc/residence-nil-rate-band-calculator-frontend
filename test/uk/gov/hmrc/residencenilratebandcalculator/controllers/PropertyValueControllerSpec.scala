@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,10 +20,11 @@ import play.api.http.Status
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_value
 
-class PropertyValueControllerSpec extends SimpleControllerSpecBase {
+class PropertyValueControllerSpec extends SimpleControllerSpecBase with CommonPlaySpec {
 
   val errorKeyBlank = "property_value.error.blank"
   val errorKeyDecimal = "error.whole_pounds"

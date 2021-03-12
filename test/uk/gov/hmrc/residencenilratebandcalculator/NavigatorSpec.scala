@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,10 +20,11 @@ import org.joda.time.LocalDate
 import org.mockito.Mockito._
 import org.scalatest.Matchers
 import org.scalatestplus.mockito.MockitoSugar
+import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 
-class NavigatorSpec extends BaseSpec with MockitoSugar with Matchers {
+class NavigatorSpec extends CommonPlaySpec with Matchers with MockitoSugar {
   val navigator = new Navigator
 
   "Navigator" must {

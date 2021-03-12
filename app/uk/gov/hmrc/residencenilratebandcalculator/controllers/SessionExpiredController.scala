@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +17,10 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
-import play.api.Logger
+import play.api.Logger.logger
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, DefaultMessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.session_expired
@@ -35,7 +35,7 @@ class SessionExpiredController @Inject()(cc: DefaultMessagesControllerComponents
 
   def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.removeAll.flatMap(isDropped => {
-      Logger.debug(s"Drop of session connector cache return status: $isDropped")
+      logger.debug(s"Drop of session connector cache return status: $isDropped")
       Future.successful(Ok(session_expired()))
     }
     )

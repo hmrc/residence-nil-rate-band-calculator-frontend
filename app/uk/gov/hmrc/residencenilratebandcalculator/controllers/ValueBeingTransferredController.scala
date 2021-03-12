@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,13 +20,13 @@ import java.text.NumberFormat
 import java.util.Locale
 
 import javax.inject.{Inject, Singleton}
-import play.api.Logger
+import play.api.Logger.logger
 import play.api.data.FormError
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.{DefaultMessagesControllerComponents, Request}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
@@ -90,7 +90,7 @@ class ValueBeingTransferredController @Inject()(cc: DefaultMessagesControllerCom
       } recover {
         case n: NoCacheMapException => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
         case r: RuntimeException => {
-          Logger.error(r.getMessage, r)
+          logger.error(r.getMessage, r)
           throw r
         }
       }
@@ -124,7 +124,7 @@ class ValueBeingTransferredController @Inject()(cc: DefaultMessagesControllerCom
       } recover {
         case n: NoCacheMapException => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
         case r: RuntimeException => {
-          Logger.error(r.getMessage, r)
+          logger.error(r.getMessage, r)
           throw r
         }
       }
@@ -137,7 +137,7 @@ class ValueBeingTransferredController @Inject()(cc: DefaultMessagesControllerCom
       Integer.parseInt(nilRateBandStr)
     } catch {
       case e: NumberFormatException => {
-        Logger.error(e.getMessage, e)
+        logger.error(e.getMessage, e)
         throw new NumberFormatException("Bad value in nil rate band")
       }
     }

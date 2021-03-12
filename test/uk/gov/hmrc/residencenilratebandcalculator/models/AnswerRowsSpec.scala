@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,10 +22,11 @@ import play.api.libs.json._
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
+import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.MockSessionConnector
 
-class AnswerRowsSpec extends BaseSpec with MockSessionConnector with JodaWrites {
+class AnswerRowsSpec extends CommonPlaySpec with MockSessionConnector with JodaWrites with WithCommonFakeApplication {
 
   val fakeRequest = FakeRequest("", "")
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,24 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import play.api.mvc.DefaultMessagesControllerComponents
+import play.api.i18n.{Messages, MessagesApi}
+import play.api.inject.Injector
+import play.api.mvc.{AnyContentAsEmpty, DefaultMessagesControllerComponents}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
+import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.session_expired
 
-class SessionExpiredControllerSpec extends HtmlSpec with MockSessionConnector {
+class SessionExpiredControllerSpec extends CommonPlaySpec with MockSessionConnector with WithCommonFakeApplication {
 
+  implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
+
+  lazy val injector: Injector = fakeApplication.injector
+  implicit lazy val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
+
+  def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
+  def messages: Messages = messagesApi.preferred(request)
   val fakeRequest = FakeRequest("", "")
 
   val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]

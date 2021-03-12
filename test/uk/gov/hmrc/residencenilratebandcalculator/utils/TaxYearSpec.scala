@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +18,15 @@ package uk.gov.hmrc.residencenilratebandcalculator.utils
 
 import org.joda.time.{DateTime, LocalDate}
 import org.joda.time.format.DateTimeFormat
-import uk.gov.hmrc.play.test.UnitSpec
+import org.scalatestplus.play.PlaySpec
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 
-class TaxYearSpec extends UnitSpec {
+class TaxYearSpec extends PlaySpec {
 
   val DateFormatter = DateTimeFormat.forPattern("yyyy/MM/dd")
 
   val DefaultToFromDateString = "2000 to 2001"
-  "Tax year utils" should {
+  "Tax year utils" must {
     "have tax year navigation" in {
       val startYear = 2000
       TaxYear(startYear).back(1).currentYear shouldBe 1999
