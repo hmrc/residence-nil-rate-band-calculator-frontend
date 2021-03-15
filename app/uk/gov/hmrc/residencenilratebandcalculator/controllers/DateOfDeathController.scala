@@ -24,6 +24,7 @@ import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.http.logging.SessionId
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 import uk.gov.hmrc.residencenilratebandcalculator.models.{Date, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
@@ -36,7 +37,8 @@ import scala.concurrent.Future
 class DateOfDeathController @Inject()(cc: DefaultMessagesControllerComponents,
                                       val sessionConnector: SessionConnector,
                                       val navigator: Navigator,
-                                      implicit val appConfig: FrontendAppConfig) extends FrontendController(cc) with ControllerBase[Date] {
+                                      implicit val appConfig: FrontendAppConfig,
+                                      validatedSession: ValidatedSession) extends FrontendController(cc) with ControllerBase[Date] {
 
   lazy val controllerId = Constants.dateOfDeathId
 
@@ -54,7 +56,7 @@ class DateOfDeathController @Inject()(cc: DefaultMessagesControllerComponents,
       })
   }
 
-  def onSubmit(implicit wts: Writes[Date]) = Action.async { implicit request =>
+  def onSubmit(implicit wts: Writes[Date]) = validatedSession.async { implicit request =>
     val boundForm = form.bindFromRequest()
     boundForm.fold(
       (formWithErrors: Form[Date]) => {

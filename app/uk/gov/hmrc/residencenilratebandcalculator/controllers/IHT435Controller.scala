@@ -32,6 +32,7 @@ class IHT435Controller @Inject()(val env: Environment,
                                  val cc: DefaultMessagesControllerComponents,
                                  val sessionConnector: SessionConnector,
                                  val pdfHelper: PDFHelperImpl) extends FrontendController(cc) with I18nSupport {
+
   def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.fetch().map {
       case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())

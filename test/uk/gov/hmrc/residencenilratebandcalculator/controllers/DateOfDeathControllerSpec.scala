@@ -29,6 +29,7 @@ import org.mockito.Mockito._
 import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 
 import scala.concurrent.Future
 
@@ -37,7 +38,9 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase with CommonPlaySp
   val mockConnector = mock[SessionConnector]
   val mockConfig = injector.instanceOf[FrontendAppConfig]
   val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-  val controller = new DateOfDeathController(messagesControllerComponents, mockConnector, navigator, mockConfig)
+  val mockValidatedSession: ValidatedSession = injector.instanceOf[ValidatedSession]
+  val controller = new DateOfDeathController(messagesControllerComponents, mockConnector, navigator, mockConfig, mockValidatedSession)
+
   implicit val mat = fakeApplication.injector.instanceOf[Materializer]
 
   def setupMock(result: Future[Option[CacheMap]]) = {
@@ -91,7 +94,7 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase with CommonPlaySp
       case Some(v) => date_of_death(dateOfDeathForm.fill(v))(fakeRequest, messages, mockConfig)
     }
 
-    def createController = () => new DateOfDeathController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
+    def createController = () => new DateOfDeathController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig, mockValidatedSession)
 
     behave like rnrbDateController(createController, createView, Constants.dateOfDeathId)(Date.dateReads, Date.dateWrites)
   }

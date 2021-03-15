@@ -36,8 +36,9 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, SessionKeys}
 import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 
 class ValueAvailableWhenPropertyChangedControllerSpec extends CommonPlaySpec with HttpResponseMocks with MockSessionConnector with WithCommonFakeApplication{
 
@@ -46,7 +47,7 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends CommonPlaySpec wit
   val errorKeyNonNumeric = "error.non_numeric"
   val errorKeyTooLarge = "error.value_too_large"
 
-  val fakeRequest = FakeRequest("", "")
+  val fakeRequest = FakeRequest("", "").withSession(SessionKeys.sessionId -> "id")
 
   val injector = fakeApplication.injector
 
@@ -57,6 +58,9 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends CommonPlaySpec wit
   def messagesApi = injector.instanceOf[MessagesApi]
 
   val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
+  val mockValidatedSession: ValidatedSession = injector.instanceOf[ValidatedSession]
+
 
   def messages = messagesApi.preferred(fakeRequest)
 
@@ -77,7 +81,7 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends CommonPlaySpec wit
 
   def testValue = "100000"
 
-  def createController = () => new ValueAvailableWhenPropertyChangedController(messagesControllerComponents, mockSessionConnector, navigator, mockRnrbConnector, mockConfig)
+  def createController = () => new ValueAvailableWhenPropertyChangedController(messagesControllerComponents, mockSessionConnector, navigator, mockRnrbConnector, mockConfig, mockValidatedSession)
 
   "Value Available When Property Changed Controller" must {
 

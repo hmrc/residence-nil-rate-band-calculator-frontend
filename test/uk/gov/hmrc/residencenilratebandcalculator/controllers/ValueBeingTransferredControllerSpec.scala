@@ -36,8 +36,9 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, SessionKeys}
 import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 
 class ValueBeingTransferredControllerSpec extends CommonPlaySpec with HttpResponseMocks with MockSessionConnector with WithCommonFakeApplication {
 
@@ -46,7 +47,7 @@ class ValueBeingTransferredControllerSpec extends CommonPlaySpec with HttpRespon
   val errorKeyNonNumeric = "error.non_numeric"
   val errorKeyTooLarge = "error.value_too_large"
 
-  val fakeRequest = FakeRequest("", "")
+  val fakeRequest = FakeRequest("", "").withSession(SessionKeys.sessionId -> "id")
 
   val injector = fakeApplication.injector
 
@@ -59,6 +60,9 @@ class ValueBeingTransferredControllerSpec extends CommonPlaySpec with HttpRespon
   def messages = messagesApi.preferred(fakeRequest)
 
   val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+
+  val mockValidatedSession: ValidatedSession = injector.instanceOf[ValidatedSession]
+
 
   def mockRnrbConnector = {
     val mockConnector = mock[RnrbConnector]
@@ -82,7 +86,7 @@ class ValueBeingTransferredControllerSpec extends CommonPlaySpec with HttpRespon
     }
   }
 
-  def createController = () => new ValueBeingTransferredController(messagesControllerComponents, mockSessionConnector, navigator, mockRnrbConnector, mockConfig)
+  def createController = () => new ValueBeingTransferredController(messagesControllerComponents, mockSessionConnector, navigator, mockRnrbConnector, mockConfig, mockValidatedSession)
 
   def testValue = "100000"
 

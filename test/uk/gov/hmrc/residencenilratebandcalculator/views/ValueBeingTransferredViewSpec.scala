@@ -21,6 +21,7 @@ import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Navigator
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueBeingTransferredController
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_being_transferred
@@ -33,10 +34,11 @@ class ValueBeingTransferredViewSpec extends IntViewSpecBase {
   val navigator = injector.instanceOf[Navigator]
   var mockSessionConnector: SessionConnector = _
   val mockRnrbConnector : RnrbConnector = mock[RnrbConnector]
+  val mockValidatedSession: ValidatedSession = mock[ValidatedSession]
 
   val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
 
-  val controller = new ValueBeingTransferredController(messagesControllerComponents, mockSessionConnector, navigator, mockRnrbConnector, mockConfig).form()
+  val controller = new ValueBeingTransferredController(messagesControllerComponents, mockSessionConnector, navigator, mockRnrbConnector, mockConfig, mockValidatedSession).form()
 
   def createView(form: Form[Int]) = value_being_transferred("100000", form, Seq())(request, messages, mockConfig)
 
