@@ -207,7 +207,6 @@ service_feel.dissatisfied = Anfodlon
 service_feel.very_dissatisfied = Anfodlon iawn
 session_expired.browser_title = Er eich diogelwch, mae''r gwasanaeth hwn wedi''i ailosod.
 session_expired.title = Er eich diogelwch, mae''r gwasanaeth hwn wedi''i ailosod.
-session_expired.guidance = Mae''r manylion yr ydych wedi''u nodi wedi cael eu dileu am nad ydych wedi mynd yn eich blaen gyda''r gwasanaeth am 1 awr. 
 
 timeout_dialog.title = Mae''ch sesiwn ar fin dod i ben
 timeout_dialog.message = Er eich diogelwch, bydd eich sesiwn yn dod i ben a bydd yn rhaid i chi ailddechrau''ch cyfrifiad mewn:

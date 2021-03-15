@@ -35,11 +35,6 @@ class SessionExpiredViewSpec extends ViewSpecBase {
       assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.title")
     }
 
-    "display the correct guidance" in {
-      val doc = asDocument(session_expired()(request, messages, mockConfig))
-      assertContainsMessages(doc, s"$messageKeyPrefix.guidance")
-    }
-
     "display a Start Again button linking to the 'Calculate Threshold Increase' page" in {
       val doc = asDocument(session_expired()(request, messages, mockConfig))
       val startLink = doc.getElementById("start-again")

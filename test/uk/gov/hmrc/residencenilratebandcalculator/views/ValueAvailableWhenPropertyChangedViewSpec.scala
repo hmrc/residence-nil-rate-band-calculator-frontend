@@ -20,6 +20,7 @@ import play.api.data.Form
 import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Navigator
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.{ValueAvailableWhenPropertyChangedController, routes}
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_available_when_property_changed
@@ -32,10 +33,12 @@ class ValueAvailableWhenPropertyChangedViewSpec extends IntViewSpecBase {
   val navigator = injector.instanceOf[Navigator]
   var mockSessionConnector: SessionConnector = _
   val mockRnrbConnector : RnrbConnector = mock[RnrbConnector]
+  val mockValidatedSession: ValidatedSession = mock[ValidatedSession]
+
 
   val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
 
-  val controller = new ValueAvailableWhenPropertyChangedController(messagesControllerComponents, mockSessionConnector, navigator, mockRnrbConnector, mockConfig).form()
+  val controller = new ValueAvailableWhenPropertyChangedController(messagesControllerComponents, mockSessionConnector, navigator, mockRnrbConnector, mockConfig, mockValidatedSession).form()
 
   def createView(form: Form[Int]) = value_available_when_property_changed("100000", form, Seq())(request, messages, mockConfig)
 

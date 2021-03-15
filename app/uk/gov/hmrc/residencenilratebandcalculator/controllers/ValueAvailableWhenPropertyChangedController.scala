@@ -19,12 +19,14 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import javax.inject.{Inject, Singleton}
 import play.api.Logger.logger
 import play.api.data.FormError
+import play.api.i18n.{I18nSupport, Messages}
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.{DefaultMessagesControllerComponents, Request}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, UserAnswers}
@@ -40,7 +42,8 @@ class ValueAvailableWhenPropertyChangedController @Inject()(cc: DefaultMessagesC
                                                             val sessionConnector: SessionConnector,
                                                             val navigator: Navigator,
                                                             val rnrbConnector: RnrbConnector,
-                                                            implicit val appConfig: FrontendAppConfig) extends FrontendController(cc) {
+                                                            implicit val appConfig: FrontendAppConfig,
+                                                            validatedSession: ValidatedSession) extends FrontendController(cc) with I18nSupport {
 
   val controllerId: String = Constants.valueAvailableWhenPropertyChangedId
 
@@ -86,7 +89,7 @@ class ValueAvailableWhenPropertyChangedController @Inject()(cc: DefaultMessagesC
     }
   }
 
-  def onSubmit(implicit wts: Writes[Int]) = Action.async {
+  def onSubmit(implicit wts: Writes[Int]) = validatedSession.async {
     implicit request => {
       microserviceValues.flatMap {
         case (nilRateValueJson, cacheMap) => {

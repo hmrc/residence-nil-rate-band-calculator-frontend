@@ -207,7 +207,6 @@ service_feel.dissatisfied = Dissatisfied
 service_feel.very_dissatisfied = Very dissatisfied
 session_expired.browser_title = For your security, this service has been reset
 session_expired.title = For your security, this service has been reset
-session_expired.guidance = The details you have given have been deleted because you did not continue the service for 1 hour.
 
 timeout_dialog.title = Your session is about to end
 timeout_dialog.message = For your security, your session will end and you will have to start your calculation again in:

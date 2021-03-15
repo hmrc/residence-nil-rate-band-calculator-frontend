@@ -25,6 +25,7 @@ import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.HeaderCarrierConverter
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CalculationInput, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
@@ -38,7 +39,8 @@ import scala.util.{Failure, Success, Try}
 @Singleton
 class ThresholdCalculationResultController @Inject()(cc: DefaultMessagesControllerComponents,
                                                      rnrbConnector: RnrbConnector, sessionConnector: SessionConnector,
-                                                     implicit val appConfig: FrontendAppConfig)
+                                                     implicit val appConfig: FrontendAppConfig,
+                                                     validatedSession: ValidatedSession)
   extends FrontendController(cc) with I18nSupport {
 
   private def fail(ex: Throwable) = {
@@ -61,7 +63,7 @@ class ThresholdCalculationResultController @Inject()(cc: DefaultMessagesControll
     case Failure(ex) => Future.successful(Failure(ex))
   }
 
-  def onPageLoad = Action.async {
+  def onPageLoad = validatedSession.async {
     implicit request => {
 
       implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromHeadersAndSessionAndRequest(request.headers, Some(request.session), Some(request))

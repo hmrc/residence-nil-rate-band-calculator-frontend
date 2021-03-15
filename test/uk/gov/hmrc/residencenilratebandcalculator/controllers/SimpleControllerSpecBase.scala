@@ -23,6 +23,7 @@ import play.api.libs.json._
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
+import uk.gov.hmrc.http.SessionKeys
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
@@ -33,7 +34,7 @@ import scala.reflect.ClassTag
 
 trait SimpleControllerSpecBase extends CommonPlaySpec with HttpResponseMocks with MockSessionConnector with WithCommonFakeApplication {
 
-  val fakeRequest = FakeRequest("", "")
+  val fakeRequest = FakeRequest("", "").withSession(SessionKeys.sessionId -> "id")
 
   val injector = fakeApplication.injector
 
