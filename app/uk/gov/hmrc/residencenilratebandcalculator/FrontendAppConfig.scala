@@ -20,8 +20,6 @@ import javax.inject.Inject
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
 trait AppConfig {
-  val analyticsToken: String
-  val analyticsHost: String
   val reportAProblemPartialUrl: String
   val reportAProblemNonJSUrl: String
   val timeOutCountdownSeconds: Int
@@ -30,7 +28,6 @@ trait AppConfig {
   val betaFeedbackUnauthenticatedUrl : String
   val betaFeedbackUrl : String
   val feedbackSurvey : String
-  val googleTagManagerId : String
 }
 
 class FrontendAppConfig @Inject()(val servicesConfig: ServicesConfig) extends AppConfig {
@@ -38,10 +35,7 @@ class FrontendAppConfig @Inject()(val servicesConfig: ServicesConfig) extends Ap
 
   private lazy val contactHost = servicesConfig.getConfString("contact-frontend.www", "")
   private val contactFormServiceIdentifier = "RNRB"
-  lazy val googleTagManagerId: String = loadConfig("google-tag-manager.id")
 
-  override lazy val analyticsToken: String = loadConfig("google-analytics.token")
-  override lazy val analyticsHost: String = loadConfig("google-analytics.host")
   override lazy val timeOutCountdownSeconds: Int = loadConfig("timeOutCountdownSeconds").toInt
   override lazy val timeOutSession: Int = loadConfig("mongodb.timeToLiveInSeconds").toInt
   override lazy val reportAProblemPartialUrl = s"$contactHost/contact/problem_reports_ajax?service=$contactFormServiceIdentifier"
