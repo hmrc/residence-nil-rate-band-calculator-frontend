@@ -27,7 +27,6 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 
 class ValidatedSession @Inject()(mcc: MessagesControllerComponents) extends FrontendController(mcc) with I18nSupport{
 
-  private type PlayRequest = Request[AnyContent] => Result
   private type AsyncRequest = Request[AnyContent] => Future[Result]
 
   def async(action: AsyncRequest): Action[AnyContent] = {
