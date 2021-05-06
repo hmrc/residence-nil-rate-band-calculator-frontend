@@ -30,11 +30,11 @@ import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.JsonInvalidException
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, CalculationResult}
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
-
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
-class RnrbConnectorSpec extends CommonPlaySpec with MockitoSugar with BeforeAndAfterEach {
+class RnrbConnectorSpec extends CommonPlaySpec
+  with MockitoSugar with BeforeAndAfterEach {
 
   private implicit val hc: HeaderCarrier = HeaderCarrier()
 
@@ -49,7 +49,7 @@ class RnrbConnectorSpec extends CommonPlaySpec with MockitoSugar with BeforeAndA
   def getHttpMock(returnedData: JsValue) = {
     when(httpMock.POST(anyString, any[JsValue], any[Seq[(String, String)]])(any[Writes[JsValue]], any[HttpReads[Any]],
       any[HeaderCarrier], any())) thenReturn Future.successful(HttpResponse.apply(Status.OK, Some(returnedData)))
-    when(httpMock.GET(anyString)(any[HttpReads[Any]], any[HeaderCarrier], any())) thenReturn Future.successful(HttpResponse.apply(Status.OK, Some(returnedData)))
+    when(httpMock.GET(any())(any[HttpReads[Any]], any[HeaderCarrier], any())) thenReturn Future.successful(HttpResponse.apply(Status.OK, Some(returnedData)))
     httpMock
   }
 

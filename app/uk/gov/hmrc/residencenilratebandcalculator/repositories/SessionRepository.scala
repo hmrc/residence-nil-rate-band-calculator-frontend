@@ -104,6 +104,7 @@ class ReactiveMongoRepository(config: Configuration, mongo: () => DefaultDB)
   }
 
   def get(id: String): Future[Option[CacheMap]] = {
+
     collection.find(Json.obj("id" -> id)).cursor[CacheMap]().collect[Seq](Int.MaxValue, Cursor.FailOnError[Seq[CacheMap]]()).map { (cmSeq: Seq[CacheMap]) =>
       if (cmSeq.length != 1) {
         None
@@ -111,6 +112,8 @@ class ReactiveMongoRepository(config: Configuration, mongo: () => DefaultDB)
         Some(cmSeq.head)
       }
     }
+
+
   }
 }
 

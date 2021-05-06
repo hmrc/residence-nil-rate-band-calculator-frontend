@@ -74,7 +74,7 @@ class RnrbConnector @Inject()(val http: DefaultHttpClient,
 
   def send(input: CalculationInput) (implicit hc: HeaderCarrier) = sendJson(Json.toJson(input))
 
-  def sendJson(json: JsValue) (implicit hc: HeaderCarrier) =
+  def sendJson(json: JsValue) (implicit hc: HeaderCarrier) = {
     http.POST(s"$serviceUrl${baseSegment}calculate", json, Seq(jsonContentTypeHeader))
       .map {
         response =>
@@ -84,6 +84,7 @@ class RnrbConnector @Inject()(val http: DefaultHttpClient,
               Failure(new JsonInvalidException(JsonErrorProcessor(error)))
           }
       }
+  }
 
   def getNilRateBand(dateStr: String)(implicit hc: HeaderCarrier): Future[HttpResponse] = http.GET(s"$serviceUrl${baseSegment}nilrateband/$dateStr")
 

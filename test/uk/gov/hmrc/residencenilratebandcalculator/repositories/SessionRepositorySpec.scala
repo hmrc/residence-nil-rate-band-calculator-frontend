@@ -24,7 +24,7 @@ import reactivemongo.api.indexes.{CollectionIndexesManager, Index}
 import org.mockito.Mockito._
 import org.mockito.stubbing.OngoingStubbing
 import play.api.libs.json.{JsObject, Json}
-import reactivemongo.api.commands.{DefaultWriteResult, UpdateWriteResult, WriteConcern, WriteResult}
+import reactivemongo.api.commands.{DefaultWriteResult, UpdateWriteResult, WriteConcern, WriteConcernError, WriteError, WriteResult}
 import reactivemongo.bson.BSONDocument
 import reactivemongo.play.json.collection.JSONCollection
 import uk.gov.hmrc.http.cache.client.CacheMap
