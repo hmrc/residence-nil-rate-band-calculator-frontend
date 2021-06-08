@@ -28,17 +28,18 @@ class GrossingUpOnEstatePropertyControllerSpec extends SimpleControllerSpecBase 
   val messageKeyPrefix = "grossing_up_on_estate_property"
 
   val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val grossing_up_on_estate_property = injector.instanceOf[grossing_up_on_estate_property]
 
   "Grossing Up On Estate Property Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => grossing_up_on_estate_property(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, mockConfig)
-        case Some(v) => grossing_up_on_estate_property(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, mockConfig)
+        case None => grossing_up_on_estate_property(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => grossing_up_on_estate_property(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages)
       }
     }
 
-    def createController = () => new GrossingUpOnEstatePropertyController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
+    def createController = () => new GrossingUpOnEstatePropertyController(messagesControllerComponents, mockSessionConnector, navigator, grossing_up_on_estate_property)
 
     val testValue = false
 

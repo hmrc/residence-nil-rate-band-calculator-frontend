@@ -23,13 +23,16 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThresholdIncreaseReason._
 import uk.gov.hmrc.residencenilratebandcalculator.models._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_downsizing_threshold_increase
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
+
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class NoDownsizingThresholdIncreaseController @Inject()(cc: DefaultMessagesControllerComponents,
                                                         override val sessionConnector: SessionConnector,
                                                         val navigator: Navigator,
-                                                        implicit val appConfig: FrontendAppConfig)
+                                                        noDownsizingThresholdIncreaseView: no_downsizing_threshold_increase)
+                                                       (override implicit val ec: ExecutionContext)
   extends FrontendController(cc) with TransitionController {
 
   val getReason = GetNoDownsizingThresholdIncreaseReason
@@ -45,6 +48,6 @@ class NoDownsizingThresholdIncreaseController @Inject()(cc: DefaultMessagesContr
       case NoAssetsPassingToDirectDescendants => "no_downsizing_threshold_increase.no_assets_passing_to_direct_descendants_reason"
       case DatePropertyWasChangedTooEarly => "no_downsizing_threshold_increase.date_property_was_changed_too_early_reason"
     }
-    no_downsizing_threshold_increase(reasonKey, navigator.nextPage(Constants.noDownsizingThresholdIncrease)(userAnswers), previousAnswers)
+    noDownsizingThresholdIncreaseView(reasonKey, navigator.nextPage(Constants.noDownsizingThresholdIncrease)(userAnswers), previousAnswers)
   }
 }

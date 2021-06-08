@@ -24,13 +24,15 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models._
 
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.ExecutionContext
 
 trait TransitionController extends FrontendController with I18nSupport {
   val sessionConnector: SessionConnector
 
   val getReason: GetReason
   def getControllerId(reason: Reason): String
+
+  implicit val ec: ExecutionContext
 
   def answerRows(cacheMap: CacheMap, request: Request[_]): Seq[AnswerRow] = {
     val controllerId = getControllerId(getReason(new UserAnswers(cacheMap)))

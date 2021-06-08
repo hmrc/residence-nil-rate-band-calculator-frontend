@@ -21,6 +21,9 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.rnrbHelpers.answer_rows
 
 class AnswerRowsViewSpec extends HtmlSpec {
+
+  val answer_rows = injector.instanceOf[answer_rows]
+
   "Answer Rows View Spec" when {
     "rendered" must {
 

@@ -27,8 +27,8 @@ import scala.language.reflectiveCalls
 class ChargeablePropertyValueViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "chargeable_property_value"
-
-  def createView(form: Form[Int]) = chargeable_property_value(form, Seq())(request, messages, mockConfig)
+  val chargeable_property_value = injector.instanceOf[chargeable_property_value]
+  def createView(form: Form[Int]) = chargeable_property_value(form, Seq())(request, messages)
 
   "Chargeable Property Value View" must {
 

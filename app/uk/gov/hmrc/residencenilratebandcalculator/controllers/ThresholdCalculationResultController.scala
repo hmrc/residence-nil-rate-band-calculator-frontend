@@ -30,17 +30,17 @@ import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CalculationInput, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.threshold_calculation_result
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
 
 @Singleton
 class ThresholdCalculationResultController @Inject()(cc: DefaultMessagesControllerComponents,
                                                      rnrbConnector: RnrbConnector, sessionConnector: SessionConnector,
-                                                     implicit val appConfig: FrontendAppConfig,
-                                                     validatedSession: ValidatedSession)
+                                                     validatedSession: ValidatedSession,
+                                                     thresholdCalculationResultView: threshold_calculation_result)
+                                                    (implicit ec: ExecutionContext)
   extends FrontendController(cc) with I18nSupport {
 
   private def fail(ex: Throwable) = {
@@ -80,7 +80,7 @@ class ThresholdCalculationResultController @Inject()(cc: DefaultMessagesControll
             sessionConnector.cache[Int](Constants.thresholdCalculationResultId, result.residenceNilRateAmount)
             val messages = cc.messagesApi.preferred(request)
             val residenceNilRateAmount = CurrencyFormatter.format(result.residenceNilRateAmount)
-            Ok(threshold_calculation_result(residenceNilRateAmount, AnswerRows(answers, messages)))
+            Ok(thresholdCalculationResultView(residenceNilRateAmount, AnswerRows(answers, messages)))
         }
       }
     }

@@ -27,8 +27,8 @@ import scala.language.reflectiveCalls
 class PropertyValueViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "property_value"
-
-  def createView(form: Form[Int]) = property_value(form, Seq())(request, messages, mockConfig)
+  val property_value = injector.instanceOf[property_value]
+  def createView(form: Form[Int]) = property_value(form, Seq())(request, messages)
 
   "Property Value View" must {
 

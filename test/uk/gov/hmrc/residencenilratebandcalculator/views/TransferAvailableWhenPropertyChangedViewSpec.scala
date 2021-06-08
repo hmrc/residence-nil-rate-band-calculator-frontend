@@ -26,8 +26,8 @@ import scala.language.reflectiveCalls
 class TransferAvailableWhenPropertyChangedViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "transfer_available_when_property_changed"
-
-  def createView(form: Form[Boolean]) = transfer_available_when_property_changed(form, Seq())(request, messages, mockConfig)
+  val transfer_available_when_property_changed = injector.instanceOf[transfer_available_when_property_changed]
+  def createView(form: Form[Boolean]) = transfer_available_when_property_changed(form, Seq())(request, messages)
 
   "Transfer Available When Property Changed View" must {
 

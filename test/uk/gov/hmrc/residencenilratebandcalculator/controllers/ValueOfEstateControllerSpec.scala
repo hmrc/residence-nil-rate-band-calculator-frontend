@@ -31,18 +31,18 @@ class ValueOfEstateControllerSpec extends SimpleControllerSpecBase {
   val messageKeyPrefix = "value_of_estate"
 
   val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-
+  val value_of_estate = injector.instanceOf[value_of_estate]
   "Value Of Estate Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
 
       value match {
-        case None => value_of_estate(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq())(fakeRequest, messages, mockConfig)
-        case Some(v) => value_of_estate(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages, mockConfig)
+        case None => value_of_estate(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => value_of_estate(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages)
       }
     }
     
-    def createController = () => new ValueOfEstateController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
+    def createController = () => new ValueOfEstateController(messagesControllerComponents, mockSessionConnector, navigator, value_of_estate)
 
     val testValue = 123
 

@@ -21,20 +21,20 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.thank_you
 class ThankYouViewSpec extends ViewSpecBase {
 
   val messageKeyPrefix = "thank_you"
-
+  val thank_you = injector.instanceOf[thank_you]
   "Thank You view" must {
     "display the correct browser title" in {
-      val doc = asDocument(thank_you()(request, messages, mockConfig))
+      val doc = asDocument(thank_you()(request, messages))
       assertEqualsMessage(doc, "title", s"$messageKeyPrefix.browser_title")
     }
 
     "display the correct title" in {
-      val doc = asDocument(thank_you()(request, messages, mockConfig))
+      val doc = asDocument(thank_you()(request, messages))
       assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.title")
     }
 
     "not display the HMRC logo" in {
-      val doc = asDocument(thank_you()(request, messages, mockConfig))
+      val doc = asDocument(thank_you()(request, messages))
       assertNotRenderedByCssSelector(doc, ".organisation-logo")
     }
   }

@@ -29,8 +29,9 @@ class AssetsPassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
 
   val formattedPropertyValue = "£123,456.78"
 
+  val assets_passing_to_direct_descendants = injector.instanceOf[assets_passing_to_direct_descendants]
   def createView(form: Form[Boolean]) =
-    assets_passing_to_direct_descendants(form, Seq(), None)(request, messages, mockConfig)
+    assets_passing_to_direct_descendants(form, Seq(), None)(request, messages)
 
   "Assets Passing To Direct Descendants View" must {
 
@@ -47,7 +48,7 @@ class AssetsPassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
 
     "there is a property in the estate" must {
       "contain guidance that includes the property value" in {
-        val doc = asDocument(assets_passing_to_direct_descendants(fakeApplication.injector.instanceOf[AssetsPassingToDirectDescendantsController].form(), Seq(), Some(formattedPropertyValue))(request, messages, mockConfig))
+        val doc = asDocument(assets_passing_to_direct_descendants(fakeApplication.injector.instanceOf[AssetsPassingToDirectDescendantsController].form(), Seq(), Some(formattedPropertyValue))(request, messages))
         assertContainsText(doc, messages("assets_passing_to_direct_descendants.guidance", formattedPropertyValue))
       }
     }

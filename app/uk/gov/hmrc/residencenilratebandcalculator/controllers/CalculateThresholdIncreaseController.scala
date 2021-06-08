@@ -20,16 +20,16 @@ import javax.inject.{Inject, Singleton}
 import play.api.i18n.I18nSupport
 import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.calculate_threshold_increase
 
 import scala.concurrent.Future
 
 @Singleton
 class CalculateThresholdIncreaseController @Inject()(val cc: DefaultMessagesControllerComponents,
-                                                     implicit val appConfig: FrontendAppConfig) extends FrontendController(cc) with I18nSupport {
+                                                     calculateThresholdIncreaseView: calculate_threshold_increase
+                                                     ) extends FrontendController(cc) with I18nSupport {
 
   def onPageLoad = Action.async { implicit request =>
-    Future.successful(Ok(calculate_threshold_increase()))
+    Future.successful(Ok(calculateThresholdIncreaseView()))
   }
 }

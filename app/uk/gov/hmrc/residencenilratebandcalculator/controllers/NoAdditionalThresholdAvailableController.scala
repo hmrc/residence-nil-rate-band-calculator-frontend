@@ -23,13 +23,16 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.{NoProperty, NotCloselyInherited}
 import uk.gov.hmrc.residencenilratebandcalculator.models._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_additional_threshold_available
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
+
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class NoAdditionalThresholdAvailableController @Inject()(cc: DefaultMessagesControllerComponents,
                                                          override val sessionConnector: SessionConnector,
                                                          val navigator: Navigator,
-                                                         implicit val appConfig: FrontendAppConfig)
+                                                         noAdditionalThresholdAvailableView: no_additional_threshold_available)
+                                                        (override implicit val ec: ExecutionContext)
   extends FrontendController(cc) with TransitionController {
 
   val getReason = GetNoAdditionalThresholdAvailableReason
@@ -45,6 +48,6 @@ class NoAdditionalThresholdAvailableController @Inject()(cc: DefaultMessagesCont
       case NotCloselyInherited => "no_additional_threshold_available.not_closely_inherited_reason"
       case NoProperty => "no_additional_threshold_available.no_property_reason"
     }
-    no_additional_threshold_available(reasonKey, navigator.nextPage(Constants.noAdditionalThresholdAvailableId)(userAnswers), previousAnswers)
+    noAdditionalThresholdAvailableView(reasonKey, navigator.nextPage(Constants.noAdditionalThresholdAvailableId)(userAnswers), previousAnswers)
   }
 }

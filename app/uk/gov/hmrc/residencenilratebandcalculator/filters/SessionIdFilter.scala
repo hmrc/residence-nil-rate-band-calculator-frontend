@@ -17,16 +17,17 @@
 package uk.gov.hmrc.residencenilratebandcalculator.filters
 
 import java.util.UUID
+
 import javax.inject.Inject
 import akka.stream.Materializer
 import play.api.http.HeaderNames.COOKIE
 import play.api.mvc._
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+
+import scala.concurrent.{ExecutionContext, Future}
 import uk.gov.hmrc.http.SessionKeys
 import play.api.mvc.SessionCookieBaker
 
-class SessionIdFilter @Inject()()(implicit val mat: Materializer, sessionCookieBaker: SessionCookieBaker) extends Filter {
+class SessionIdFilter @Inject()()(implicit val mat: Materializer, sessionCookieBaker: SessionCookieBaker, ec: ExecutionContext) extends Filter {
 
   private def addSessionId(rh: RequestHeader, sessionId: (String, String)) = {
     val session = rh.session + sessionId

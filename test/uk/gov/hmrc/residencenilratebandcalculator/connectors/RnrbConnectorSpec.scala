@@ -26,15 +26,16 @@ import play.api.http.Status
 import play.api.libs.json._
 import uk.gov.hmrc.http.{HeaderCarrier, HttpReads, HttpResponse}
 import uk.gov.hmrc.play.bootstrap.http.DefaultHttpClient
-import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
+import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.JsonInvalidException
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, CalculationResult}
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
 class RnrbConnectorSpec extends CommonPlaySpec
-  with MockitoSugar with BeforeAndAfterEach {
+  with MockitoSugar with BeforeAndAfterEach with WithCommonFakeApplication  {
 
   private implicit val hc: HeaderCarrier = HeaderCarrier()
 

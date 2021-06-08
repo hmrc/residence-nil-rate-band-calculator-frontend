@@ -27,13 +27,13 @@ import uk.gov.hmrc.residencenilratebandcalculator.Navigator
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, UserAnswers}
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 trait ControllerBase[A] extends FrontendController with I18nSupport {
   def onPageLoad(implicit rds: Reads[A]): Action[AnyContent]
 
   def onSubmit(implicit wts: Writes[A]): Action[AnyContent]
+
 }
 
 trait SimpleControllerBase[A] extends ControllerBase[A] {
@@ -41,6 +41,8 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
   val controllerId: String
 
   def sessionConnector: SessionConnector
+
+  implicit val ec: ExecutionContext
 
   def form: () => Form[A]
 

@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator
 
-import javax.inject.Inject
+import javax.inject.{Inject, Singleton}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
 trait AppConfig {
@@ -30,6 +30,7 @@ trait AppConfig {
   val feedbackSurvey : String
 }
 
+@Singleton
 class FrontendAppConfig @Inject()(val servicesConfig: ServicesConfig) extends AppConfig {
   private def loadConfig(key: String) = servicesConfig.getString(key)
 

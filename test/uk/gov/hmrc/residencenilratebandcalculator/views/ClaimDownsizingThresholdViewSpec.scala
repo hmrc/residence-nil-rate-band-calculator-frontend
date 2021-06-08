@@ -26,8 +26,8 @@ import scala.language.reflectiveCalls
 class ClaimDownsizingThresholdViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "claim_downsizing_threshold"
-
-  def createView(form: Form[Boolean]) = claim_downsizing_threshold(form, Seq())(request, messages, mockConfig)
+  val claim_downsizing_threshold = injector.instanceOf[claim_downsizing_threshold]
+  def createView(form: Form[Boolean]) = claim_downsizing_threshold(form, Seq())(request, messages)
 
   "Claim Downsizing Threshold View" must {
 

@@ -24,19 +24,22 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_estate_property
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
+
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class GrossingUpOnEstatePropertyController @Inject()(cc: DefaultMessagesControllerComponents,
                                                      override val sessionConnector: SessionConnector,
                                                      override val navigator: Navigator,
-                                                     implicit val appConfig: FrontendAppConfig) extends FrontendController(cc) with SimpleControllerBase[Boolean] {
+                                                     grossingUpOnEstatePropertyView: grossing_up_on_estate_property)
+                                                    (override implicit val ec: ExecutionContext) extends FrontendController(cc) with SimpleControllerBase[Boolean] {
 
   override val controllerId: String = Constants.grossingUpOnEstatePropertyId
 
   override def form: () => Form[Boolean] = () => BooleanForm("grossing_up_on_estate_property.error.required")
 
   override def view(form: Form[Boolean], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    grossing_up_on_estate_property(form, answerRows)
+    grossingUpOnEstatePropertyView(form, answerRows)
   }
 }

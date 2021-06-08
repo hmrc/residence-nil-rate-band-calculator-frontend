@@ -24,13 +24,16 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_property_value
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
+
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class ChargeablePropertyValueController @Inject()(cc: DefaultMessagesControllerComponents,
                                                   override val sessionConnector: SessionConnector,
                                                   override val navigator: Navigator,
-                                                  implicit val appConfig: FrontendAppConfig) extends FrontendController(cc) with SimpleControllerBase[Int] {
+                                                  chargeablePropertyValueView: chargeable_property_value)
+                                                 (override implicit val ec: ExecutionContext) extends FrontendController(cc) with SimpleControllerBase[Int] {
 
   override val controllerId: String = Constants.chargeablePropertyValueId
 
@@ -39,7 +42,7 @@ class ChargeablePropertyValueController @Inject()(cc: DefaultMessagesControllerC
 
   override def view(form: Form[Int], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)
                    (implicit request: Request[_]) = {
-    chargeable_property_value(form, answerRows)
+    chargeablePropertyValueView(form, answerRows)
   }
 
   override def validate(value: Int, userAnswers: UserAnswers): Option[FormError] = {

@@ -14,14 +14,18 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
-@(residenceNilRateAmount: String, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, appConfig: FrontendAppConfig)
 
-@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+@this(
+    mainTemplate: main_template,
+    answerRowsHelper: rnrbHelpers.answer_rows
+)
+
+@(residenceNilRateAmount: String, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
+
+@mainTemplate(
     title = messages("threshold_calculation_result.browser_title"),
-    frontendAppConfig = appConfig,
     bodyClasses = None) {
 
     @if(residenceNilRateAmount == "£0.00") {
@@ -56,6 +60,6 @@
 
     <a class="button u--no-print" href="@routes.FeedbackSurveyController.redirectExitSurvey().url">@messages("site.finish")</a>
 
-    @rnrbHelpers.answer_rows(answerRows)
+    @answerRowsHelper(answerRows)
 
 }

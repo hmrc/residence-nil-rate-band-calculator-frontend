@@ -22,8 +22,9 @@ import scala.language.reflectiveCalls
 
 class ErrorTemplateViewSpec extends HtmlSpec {
 
+  val error_template = injector.instanceOf[error_template]
   def fixture() = new {
-    val view = error_template("title", "heading", "message")(request, messages, mockConfig)
+    val view = error_template("title", "heading", "message")(request, messages)
     val doc = asDocument(view)
   }
 

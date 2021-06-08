@@ -28,23 +28,22 @@ import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.Validat
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 import uk.gov.hmrc.residencenilratebandcalculator.models.{Date, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class DateOfDeathController @Inject()(cc: DefaultMessagesControllerComponents,
                                       val sessionConnector: SessionConnector,
                                       val navigator: Navigator,
-                                      implicit val appConfig: FrontendAppConfig,
-                                      validatedSession: ValidatedSession) extends FrontendController(cc) with ControllerBase[Date] {
+                                      validatedSession: ValidatedSession,
+                                      dateOfDeathView: date_of_death)(implicit ex: ExecutionContext) extends FrontendController(cc) with ControllerBase[Date] {
 
   lazy val controllerId = Constants.dateOfDeathId
 
   def form: Form[Date] = dateOfDeathForm
 
-  def view(form: Form[Date])(implicit request: Request[_]) = date_of_death(form)
+  def view(form: Form[Date])(implicit request: Request[_]) = dateOfDeathView(form)
 
   def onPageLoad(implicit rds: Reads[Date]) = Action.async { implicit request =>
     sessionConnector.fetch().map(

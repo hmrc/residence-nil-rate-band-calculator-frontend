@@ -39,7 +39,8 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase with CommonPlaySp
   val mockConfig = injector.instanceOf[FrontendAppConfig]
   val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
   val mockValidatedSession: ValidatedSession = injector.instanceOf[ValidatedSession]
-  val controller = new DateOfDeathController(messagesControllerComponents, mockConnector, navigator, mockConfig, mockValidatedSession)
+  val date_of_death = injector.instanceOf[date_of_death]
+  val controller = new DateOfDeathController(messagesControllerComponents, mockConnector, navigator, mockValidatedSession, date_of_death)
 
   implicit val mat = fakeApplication.injector.instanceOf[Materializer]
 
@@ -90,11 +91,11 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase with CommonPlaySp
   "Date of Death Controller" must {
 
     def createView = (value: Option[Date]) => value match {
-      case None => date_of_death(dateOfDeathForm)(fakeRequest, messages, mockConfig)
-      case Some(v) => date_of_death(dateOfDeathForm.fill(v))(fakeRequest, messages, mockConfig)
+      case None => date_of_death(dateOfDeathForm)(fakeRequest, messages)
+      case Some(v) => date_of_death(dateOfDeathForm.fill(v))(fakeRequest, messages)
     }
 
-    def createController = () => new DateOfDeathController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig, mockValidatedSession)
+    def createController = () => new DateOfDeathController(messagesControllerComponents, mockSessionConnector, navigator, mockValidatedSession, date_of_death)
 
     behave like rnrbDateController(createController, createView, Constants.dateOfDeathId)(Date.dateReads, Date.dateWrites)
   }

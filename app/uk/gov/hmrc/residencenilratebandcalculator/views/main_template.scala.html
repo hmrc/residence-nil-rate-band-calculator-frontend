@@ -14,11 +14,17 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@import uk.gov.hmrc.residencenilratebandcalculator.AppConfig
 
+@this(
+    govukWrapper: govuk_wrapper,
+    appConfig: AppConfig,
+    uiSideBar: Sidebar,
+    article: Article,
+    betaBannerHelper: rnrbHelpers.beta_banner
+)
 
 @(title: String,
-  frontendAppConfig: FrontendAppConfig,
   sidebarLinks: Option[Html] = None,
   contentHeader: Option[Html] = None,
   bodyClasses: Option[String] = None,
@@ -27,34 +33,31 @@
   enableTimeout: Boolean = true
 )(mainContent: Html)(implicit request : Request[_], messages: Messages)
 
-@import uk.gov.hmrc.play.views.html.layouts
-
 @serviceInfoContent = {}
 
 @betaBanner = {
-@rnrbHelpers.beta_banner(
-    userLoggedIn = false,		
-    betaFeedbackUrl = frontendAppConfig.betaFeedbackUrl,
-    betaFeedbackUnauthenticatedUrl = frontendAppConfig.betaFeedbackUnauthenticatedUrl,
-    showFeedbackLinkInBetaBanner = true)		
+@betaBannerHelper(
+    userLoggedIn = false,
+    betaFeedbackUrl = appConfig.betaFeedbackUrl,
+    betaFeedbackUnauthenticatedUrl = appConfig.betaFeedbackUnauthenticatedUrl,
+    showFeedbackLinkInBetaBanner = true)
 }
 
 @sidebar = {
     @if(sidebarLinks.isDefined) {
-        @layouts.sidebar(sidebarLinks.get, Some("sidebar"))
+        @uiSideBar(sidebarLinks.get, Some("sidebar"))
     }
 }
 
-    @govuk_wrapper(
-        appConfig = frontendAppConfig,
-        title = title,
-        mainClass = mainClass,
-        bodyClasses = bodyClasses,
-        sidebar = sidebar,
-        contentHeader = contentHeader,
-        mainContent = layouts.article(mainContent),
-        serviceInfoContent = serviceInfoContent,
-        scriptElem = scriptElem,
-        betaBanner = betaBanner,
-        enableTimeout = enableTimeout)
+@govukWrapper(
+    title = title,
+    mainClass = mainClass,
+    bodyClasses = bodyClasses,
+    sidebar = sidebar,
+    contentHeader = contentHeader,
+    mainContent = article(mainContent),
+    serviceInfoContent = serviceInfoContent,
+    scriptElem = scriptElem,
+    betaBanner = betaBanner,
+    enableTimeout = enableTimeout)
 

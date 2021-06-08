@@ -25,13 +25,16 @@ import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.assets_passing_to_direct_descendants
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
+
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class AssetsPassingToDirectDescendantsController @Inject()(override val sessionConnector: SessionConnector,
                                                            override val navigator: Navigator,
                                                            cc: DefaultMessagesControllerComponents,
-                                                           implicit val appConfig: FrontendAppConfig)
+                                                           assetsPassingToDirectDescendantsView: assets_passing_to_direct_descendants)
+                                                          (override implicit val ec: ExecutionContext)
   extends FrontendController(cc) with SimpleControllerBase[Boolean] {
 
   override val controllerId: String = Constants.assetsPassingToDirectDescendantsId
@@ -43,6 +46,7 @@ class AssetsPassingToDirectDescendantsController @Inject()(override val sessionC
       case Some(value) => Some(CurrencyFormatter.format(value))
       case _ => None
     }
-    assets_passing_to_direct_descendants(form, answerRows, formattedPropertyValue)
+    assetsPassingToDirectDescendantsView(form, answerRows, formattedPropertyValue)
   }
+
 }

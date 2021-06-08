@@ -28,17 +28,17 @@ class TransferAnyUnusedThresholdControllerSpec extends SimpleControllerSpecBase 
   val messageKeyPrefix = "transfer_any_unused_threshold"
 
   val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-
+  val transfer_any_unused_threshold = injector.instanceOf[transfer_any_unused_threshold]
   "Transfer Any Unused Threshold Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => transfer_any_unused_threshold(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, mockConfig)
-        case Some(v) => transfer_any_unused_threshold(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, mockConfig)
+        case None => transfer_any_unused_threshold(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => transfer_any_unused_threshold(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages)
       }
     }
 
-    def createController = () => new TransferAnyUnusedThresholdController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
+    def createController = () => new TransferAnyUnusedThresholdController(messagesControllerComponents, mockSessionConnector, navigator, transfer_any_unused_threshold)
 
     val testValue = true
 

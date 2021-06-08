@@ -35,12 +35,12 @@ class ValueBeingTransferredViewSpec extends IntViewSpecBase {
   var mockSessionConnector: SessionConnector = _
   val mockRnrbConnector : RnrbConnector = mock[RnrbConnector]
   val mockValidatedSession: ValidatedSession = mock[ValidatedSession]
-
+  val value_being_transferred = injector.instanceOf[value_being_transferred]
   val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
 
-  val controller = new ValueBeingTransferredController(messagesControllerComponents, mockSessionConnector, navigator, mockRnrbConnector, mockConfig, mockValidatedSession).form()
+  val controller = new ValueBeingTransferredController(messagesControllerComponents, mockSessionConnector, navigator, mockRnrbConnector, mockValidatedSession, value_being_transferred).form()
 
-  def createView(form: Form[Int]) = value_being_transferred("100000", form, Seq())(request, messages, mockConfig)
+  def createView(form: Form[Int]) = value_being_transferred("100000", form, Seq())(request, messages)
 
   "Value Being Transferred View" must {
 

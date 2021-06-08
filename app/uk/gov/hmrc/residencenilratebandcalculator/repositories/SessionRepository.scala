@@ -30,8 +30,7 @@ import reactivemongo.play.json.ImplicitBSONHandlers._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.mongo.ReactiveRepository
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 case class DatedCacheMap(id: String,
                          data: Map[String, JsValue],
@@ -64,7 +63,7 @@ object DatedCacheMap extends JodaReads with JodaWrites {
   def apply(cacheMap: CacheMap): DatedCacheMap = DatedCacheMap(cacheMap.id, cacheMap.data)
 }
 
-class ReactiveMongoRepository(config: Configuration, mongo: () => DefaultDB)
+class ReactiveMongoRepository(config: Configuration, mongo: () => DefaultDB)(implicit executionContext: ExecutionContext)
   extends ReactiveRepository[DatedCacheMap, BSONObjectID](config.get[String]("appName"), mongo, DatedCacheMap.formats) {
 
   val fieldName = "lastUpdated"
@@ -118,7 +117,7 @@ class ReactiveMongoRepository(config: Configuration, mongo: () => DefaultDB)
 }
 
 @Singleton
-class SessionRepository @Inject()(config: Configuration, mongoComponent: ReactiveMongoComponent) {
+class SessionRepository @Inject()(config: Configuration, mongoComponent: ReactiveMongoComponent)(implicit ex: ExecutionContext) {
 
   private lazy val sessionRepository = new ReactiveMongoRepository(
     config, mongoComponent.mongoConnector.db)

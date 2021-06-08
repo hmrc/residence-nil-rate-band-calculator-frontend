@@ -14,15 +14,26 @@
  * limitations under the License.
  *@
 
-@import play.api.Application
-@import layouts.{govuk_template => hmrcGovUkTemplate}
-@import uk.gov.hmrc.play.views.html.{layouts => uiLayouts}
-@import uk.gov.hmrc.play.views.html.{helpers => uiHelpers}
-@import uk.gov.hmrc.residencenilratebandcalculator.controllers.CustomLanguageController
-@import play.api.Play.current
 @import play.twirl.api.HtmlFormat
+@import uk.gov.hmrc.residencenilratebandcalculator.controllers.CustomLanguageController
+@import javax.inject.Provider
 
-@(appConfig: uk.gov.hmrc.residencenilratebandcalculator.AppConfig,
+@this(
+    appConfig: uk.gov.hmrc.residencenilratebandcalculator.AppConfig,
+    hmrcGovUkTemplate: layouts.GovUkTemplate,
+    headWithTrackingConsent: HeadWithTrackingConsent,
+    headerNav: HeaderNav,
+    footer: Footer,
+    uiServiceInfo: ServiceInfo,
+    uiMainContent: MainContent,
+    uiMainContentHeader: MainContentHeader,
+    reportAProblemLink: ReportAProblemLink,
+    uiFooterLinks: FooterLinks,
+    languageSelection: rnrbHelpers.language_selection,
+    languageControllerProvider: Provider[CustomLanguageController]
+)
+
+@(
   title: String,
   contentHead: Option[Html] = None,
   mainClass: Option[String] = None,
@@ -38,7 +49,7 @@
 
 
 @head = {
-    @uiLayouts.headWithTrackingConsent(
+    @headWithTrackingConsent(
       linkElem = None,
       headScripts = None)
     <meta name="format-detection" content="telephone=no" />
@@ -53,7 +64,7 @@
 
 @insideHeader = {
 
-    @uiLayouts.header_nav(
+    @headerNav(
       navTitle = Some(messages("site.service_name")),
       navTitleLink = None,
       showBetaLink = false,
@@ -63,7 +74,7 @@
 @afterHeader = {}
 
 @bodyEnd = {
-    @uiLayouts.footer(
+    @footer(
       analyticsToken = None,
       analyticsHost = "",
       ssoUrl = None,
@@ -95,29 +106,30 @@
 @footerLinks = {}
 
 @serviceInfo = {
-    @uiLayouts.serviceInfo(
+    @uiServiceInfo(
       betaBanner = betaBanner,
       includeHMRCBranding = false,
       includeGridWrapper = false,
       serviceInfoContent = Some(serviceInfoContent))
 }
 
-@lc = @{Application.instanceCache[CustomLanguageController].apply(current) }
-    @mainContentHeader = {
-        @if(appConfig.isWelshEnabled){
-            <div class="float--right">@rnrbHelpers.language_selection(CustomLanguageController.languageMap, lc.langToCall _, None)(lc.loadedLanguageMessages)</div>
+@lc = @{languageControllerProvider.get}
+
+@mainContentHeader = {
+    @if(appConfig.isWelshEnabled){
+        <div class="float--right">@languageSelection(CustomLanguageController.languageMap, lc.langToCall _, None)(lc.loadedLanguageMessages)</div>
     }
     @if(contentHeader.isDefined) {
-        @uiLayouts.main_content_header(contentHeader = contentHeader.get)
+        @uiMainContentHeader(contentHeader = contentHeader.get)
     }
 }
 
 @getHelpForm = {
-    @{uiHelpers.reportAProblemLink(appConfig.reportAProblemPartialUrl, appConfig.reportAProblemNonJSUrl)}
+    @{reportAProblemLink(appConfig.reportAProblemPartialUrl, appConfig.reportAProblemNonJSUrl)}
 }
 
 @content = {
-    @uiLayouts.main_content(
+    @uiMainContent(
       article = mainContent,
       mainClass = mainClass,
       mainDataAttributes = mainDataAttributes,
@@ -127,4 +139,4 @@
       sidebar = sidebar)
 }
 
-@hmrcGovUkTemplate(Some(title), bodyClasses)(head, bodyEnd, insideHeader, afterHeader, footerTop, Some(uiLayouts.footer_links()), true)(content)
+@hmrcGovUkTemplate(Some(title), bodyClasses)(head, bodyEnd, insideHeader, afterHeader, footerTop, Some(uiFooterLinks()), true)(content)

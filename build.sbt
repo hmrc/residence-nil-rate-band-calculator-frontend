@@ -12,7 +12,7 @@ lazy val scalaversion = "2.12.12"
 val silencerVersion = "1.7.1"
 
 lazy val microservice = Project(appName, file("."))
-  .enablePlugins(Seq(play.sbt.PlayScala,SbtAutoBuildPlugin, SbtGitVersioning, SbtDistributablesPlugin, SbtArtifactory) ++ plugins : _*)
+  .enablePlugins(Seq(play.sbt.PlayScala, SbtDistributablesPlugin) ++ plugins : _*)
   .disablePlugins(JUnitXmlReportPlugin) // this is an experimental plugin that is (currently) enabled by default and prevents deployment to QA environment
   .settings(playSettings : _*)
   .settings(
@@ -37,10 +37,7 @@ lazy val microservice = Project(appName, file("."))
     dependencyOverrides += "commons-codec" % "commons-codec" % "1.12",
     retrieveManaged := true,
     evictionWarningOptions in update := EvictionWarningOptions.default.withWarnScalaVersionEviction(false),
-    resolvers ++= Seq(
-      Resolver.bintrayRepo("hmrc", "releases"),
-      Resolver.jcenterRepo
-    ),
+    resolvers += Resolver.jcenterRepo,
     // ***************
     // Use the silencer plugin to suppress warnings from unused imports in compiled twirl templates
     scalacOptions += "-P:silencer:pathFilters=views;routes",
@@ -62,7 +59,12 @@ lazy val microservice = Project(appName, file("."))
     includeFilter in uglify := GlobFilter("rnrb-*.js")
   )
   .settings(majorVersion := 0)
-
+  .settings(
+    TwirlKeys.templateImports ++= Seq(
+      "uk.gov.hmrc.play.views.html.helpers._",
+      "uk.gov.hmrc.play.views.html.layouts._"
+    )
+  )
   .disablePlugins(JUnitXmlReportPlugin)
 
 

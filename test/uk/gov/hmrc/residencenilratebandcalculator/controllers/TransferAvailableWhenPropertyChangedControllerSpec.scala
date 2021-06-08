@@ -28,17 +28,17 @@ class TransferAvailableWhenPropertyChangedControllerSpec extends SimpleControlle
   val messageKeyPrefix = "transfer_available_when_property_changed"
 
   val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-
+  val transfer_available_when_property_changed = injector.instanceOf[transfer_available_when_property_changed]
   "Transfer Available When Property Changed Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => transfer_available_when_property_changed(BooleanForm.apply(messageKey),answerRows = Seq())(fakeRequest, messages, mockConfig)
-        case Some(v) => transfer_available_when_property_changed(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, mockConfig)
+        case None => transfer_available_when_property_changed(BooleanForm.apply(messageKey),answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => transfer_available_when_property_changed(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages)
       }
     }
 
-    def createController = () => new TransferAvailableWhenPropertyChangedController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
+    def createController = () => new TransferAvailableWhenPropertyChangedController(messagesControllerComponents, mockSessionConnector, navigator, transfer_available_when_property_changed)
 
     val testValue = true
 

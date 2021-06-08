@@ -26,8 +26,8 @@ import scala.language.reflectiveCalls
 class PropertyInEstateViewSpec  extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "property_in_estate"
-
-  def createView(form: Form[Boolean]) = property_in_estate(form, Seq())(request, messages, mockConfig)
+  val property_in_estate = injector.instanceOf[property_in_estate]
+  def createView(form: Form[Boolean]) = property_in_estate(form, Seq())(request, messages)
 
   "Property In Estate View" must {
 
