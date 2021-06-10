@@ -27,8 +27,8 @@ import scala.language.reflectiveCalls
 class ChargeableEstateValueViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "chargeable_estate_value"
-
-  def createView(form: Form[Int]) = chargeable_estate_value(form, Seq())(request, messages, mockConfig)
+  val chargeable_estate_value = injector.instanceOf[chargeable_estate_value]
+  def createView(form: Form[Int]) = chargeable_estate_value(form, Seq())(request, messages)
 
   "Chargeable Estate Value View" must {
 

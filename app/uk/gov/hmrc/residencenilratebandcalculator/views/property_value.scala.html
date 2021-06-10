@@ -14,22 +14,29 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.play.views.html._
-@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 
-@(form: Form[Int], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, appConfig: FrontendAppConfig)
+@this(
+    mainTemplate: main_template,
+    uiForm: FormWithCSRF,
+    errorSummary: rnrbHelpers.error_summary,
+    heading: rnrbHelpers.heading,
+    submitButton: rnrbHelpers.submit_button,
+    inputValue: rnrbHelpers.input_value,
+    answerRowsHelper: rnrbHelpers.answer_rows
+)
 
-@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+@(form: Form[Int], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
+
+@mainTemplate(
     title = messages("property_value.browser_title"),
-    frontendAppConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyValueController.onSubmit(), 'autoComplete -> "off") {
+    @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyValueController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(form)
+        @errorSummary(form)
 
-        @rnrbHelpers.heading("property_value.title", "heading-xlarge")
+        @heading("property_value.title", "heading-xlarge")
 
         <p>@messages("property_value.guidance1")</p>
 
@@ -45,7 +52,7 @@
         <p>@messages("property_value.guidance4")</p>
 
         <div class="form-group">
-            @rnrbHelpers.input_value(
+            @inputValue(
                 form("value"),
                 '_inputClass -> "form-control",
                 '_type -> "number",
@@ -56,9 +63,9 @@
                 '_labelTextClass -> "visuallyhidden")
         </div>
         <div>
-             @rnrbHelpers.submit_button()
+             @submitButton()
         </div>
 
     }
-    @rnrbHelpers.answer_rows(answerRows)
+    @answerRowsHelper(answerRows)
 }

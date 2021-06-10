@@ -36,17 +36,17 @@ class ValueOfAssetsPassingControllerSpec extends SimpleControllerSpecBase with C
   val messageKeyPrefix = "value_of_assets_passing"
 
   val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-
+  val value_of_assets_passing = injector.instanceOf[value_of_assets_passing]
   "Value Of Assets Passing Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => value_of_assets_passing(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq(), formattedPropertyValue = None)(fakeRequest, messages, mockConfig)
-        case Some(v) => value_of_assets_passing(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(), None)(fakeRequest, messages, mockConfig)
+        case None => value_of_assets_passing(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq(), formattedPropertyValue = None)(fakeRequest, messages)
+        case Some(v) => value_of_assets_passing(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(), None)(fakeRequest, messages)
       }
     }
 
-    def createController = () => new ValueOfAssetsPassingController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
+    def createController = () => new ValueOfAssetsPassingController(messagesControllerComponents, mockSessionConnector, navigator, value_of_assets_passing)
 
     val testValue = 123
 
@@ -83,7 +83,7 @@ class ValueOfAssetsPassingControllerSpec extends SimpleControllerSpecBase with C
     "return the correct view when provided with answers including a valid property value" in {
       val result = createController().view(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), Seq(), new UserAnswers(CacheMap("id", Map(Constants.propertyValueId -> Json.toJson(1)))))(fakeRequest)
       result shouldBe value_of_assets_passing(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), Seq(), Some(CurrencyFormatter.format(1)))(fakeRequest,
-        messages, mockConfig)
+        messages)
     }
   }
 }

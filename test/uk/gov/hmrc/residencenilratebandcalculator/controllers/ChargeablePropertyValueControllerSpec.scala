@@ -33,14 +33,15 @@ class ChargeablePropertyValueControllerSpec extends SimpleControllerSpecBase wit
   val messageKeyPrefix = "chargeable_property_value"
 
   val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val chargeable_property_value = fakeApplication.injector.instanceOf[chargeable_property_value]
 
   "Chargeable Property Value Controller" must {
     def createView = (value: Option[Map[String, String]]) => value match {
-      case None => chargeable_property_value(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq())(fakeRequest, messages, mockConfig)
-      case Some(v) => chargeable_property_value(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages, mockConfig)
+      case None => chargeable_property_value(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq())(fakeRequest, messages)
+      case Some(v) => chargeable_property_value(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages)
     }
 
-    def createController = () => new ChargeablePropertyValueController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
+    def createController = () => new ChargeablePropertyValueController(messagesControllerComponents, mockSessionConnector, navigator, chargeable_property_value)
 
     val testValue = 123
 

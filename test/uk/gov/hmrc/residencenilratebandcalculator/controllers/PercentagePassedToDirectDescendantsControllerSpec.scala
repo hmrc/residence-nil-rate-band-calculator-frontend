@@ -30,17 +30,17 @@ class PercentagePassedToDirectDescendantsControllerSpec extends SimpleController
   val messageKeyPrefix = "percentage_passed_to_direct_descendants"
 
   val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-
+  val percentage_passed_to_direct_descendants = injector.instanceOf[percentage_passed_to_direct_descendants]
   "Percentage Passed To Direct Descendants Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => percentage_passed_to_direct_descendants(PositivePercentForm.apply(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange), answerRows = Seq())(fakeRequest, messages, mockConfig)
-        case Some(v) => percentage_passed_to_direct_descendants(PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange).bind(v), Seq())(fakeRequest, messages, mockConfig)
+        case None => percentage_passed_to_direct_descendants(PositivePercentForm.apply(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange), answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => percentage_passed_to_direct_descendants(PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange).bind(v), Seq())(fakeRequest, messages)
       }
     }
 
-    def createController = () => new PercentagePassedToDirectDescendantsController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
+    def createController = () => new PercentagePassedToDirectDescendantsController(messagesControllerComponents, mockSessionConnector, navigator, percentage_passed_to_direct_descendants)
 
     val testValue = BigDecimal(50)
 

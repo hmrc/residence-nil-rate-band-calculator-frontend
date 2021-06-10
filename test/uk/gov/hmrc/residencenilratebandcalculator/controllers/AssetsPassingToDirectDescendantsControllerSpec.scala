@@ -28,22 +28,23 @@ class AssetsPassingToDirectDescendantsControllerSpec extends SimpleControllerSpe
   val messageKeyPrefix = "assets_passing_to_direct_descendants"
 
   val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-
+  val assetsPassingToDirectDescendantsView = fakeApplication.injector.instanceOf[assets_passing_to_direct_descendants]
   "Assets Passing To Direct Descendants Controller" must {
 
     val propertyValue = 123456
     val formattedPropertyValue = Some("£123,456")
 
     def createView = (value: Option[Map[String, String]]) => {
+
       value match {
         case None =>
-          assets_passing_to_direct_descendants(BooleanForm(messageKey), Seq(), formattedPropertyValue)(fakeRequest, messages, mockConfig)
+          assetsPassingToDirectDescendantsView(BooleanForm(messageKey), Seq(), formattedPropertyValue)(fakeRequest, messages)
         case Some(v) =>
-          assets_passing_to_direct_descendants(BooleanForm(messageKey).bind(v), Seq(), formattedPropertyValue)(fakeRequest, messages, mockConfig)
+          assetsPassingToDirectDescendantsView(BooleanForm(messageKey).bind(v), Seq(), formattedPropertyValue)(fakeRequest, messages)
       }
     }
 
-    def createController = () => new AssetsPassingToDirectDescendantsController(mockSessionConnector, navigator, messagesControllerComponents, mockConfig)
+    def createController = () => new AssetsPassingToDirectDescendantsController(mockSessionConnector, navigator, messagesControllerComponents, assetsPassingToDirectDescendantsView)
 
     val testValue = true
 

@@ -21,22 +21,20 @@ import play.api.Logger.logger
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, DefaultMessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.session_expired
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class SessionExpiredController @Inject()(cc: DefaultMessagesControllerComponents,
                                          val sessionConnector: SessionConnector,
-                                         implicit val appConfig: FrontendAppConfig) extends FrontendController(cc) with I18nSupport {
+                                         sessionExpiredView: session_expired)(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.removeAll.flatMap(isDropped => {
       logger.debug(s"Drop of session connector cache return status: $isDropped")
-      Future.successful(Ok(session_expired()))
+      Future.successful(Ok(sessionExpiredView()))
     }
     )
   }

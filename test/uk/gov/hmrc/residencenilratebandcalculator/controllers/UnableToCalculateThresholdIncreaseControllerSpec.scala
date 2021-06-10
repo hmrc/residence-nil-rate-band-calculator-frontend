@@ -39,6 +39,8 @@ class UnableToCalculateThresholdIncreaseControllerSpec extends CommonPlaySpec wi
 
   val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
 
+  val unable_to_calculate_threshold_increase = injector.instanceOf[unable_to_calculate_threshold_increase]
+
   def messagesApi = injector.instanceOf[MessagesApi]
   def messages = messagesApi.preferred(fakeRequest)
 
@@ -68,18 +70,18 @@ class UnableToCalculateThresholdIncreaseControllerSpec extends CommonPlaySpec wi
 
   "Transition controller" must {
     "return 200 for a GET" in {
-      val result = new UnableToCalculateThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, mockConfig).onPageLoad()(fakeRequest)
+      val result = new UnableToCalculateThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, unable_to_calculate_threshold_increase).onPageLoad()(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return the Unable To Calculate Threshold Increase view for a GET" in {
-      val result = new UnableToCalculateThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, mockConfig).onPageLoad()(fakeRequest)
+      val result = new UnableToCalculateThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, unable_to_calculate_threshold_increase).onPageLoad()(fakeRequest)
       contentAsString(result) shouldBe
-        unable_to_calculate_threshold_increase("unable_to_calculate_threshold_increase.grossing_up", Seq())(fakeRequest, messages, mockConfig).toString
+        unable_to_calculate_threshold_increase("unable_to_calculate_threshold_increase.grossing_up", Seq())(fakeRequest, messages).toString
     }
 
     "The answer constants should be the same as the calulated constants for the controller when the reason is GrossingUpForResidence" in {
-      val controller = new UnableToCalculateThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, mockConfig)
+      val controller = new UnableToCalculateThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, unable_to_calculate_threshold_increase)
       val controllerId = controller.getControllerId(GrossingUpForResidence)
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
@@ -95,7 +97,7 @@ class UnableToCalculateThresholdIncreaseControllerSpec extends CommonPlaySpec wi
     }
 
     "The answer constants should be the same as the calulated constants for the controller when the reason is GrossingUpForOtherProperty" in {
-      val controller = new UnableToCalculateThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, mockConfig)
+      val controller = new UnableToCalculateThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, unable_to_calculate_threshold_increase)
       val controllerId = controller.getControllerId(GrossingUpForResidence)
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)

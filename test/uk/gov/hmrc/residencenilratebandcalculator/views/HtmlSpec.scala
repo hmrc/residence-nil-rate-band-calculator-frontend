@@ -27,11 +27,14 @@ import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, FrontendAppConfig}
 import org.scalatest.Matchers.convertToAnyShouldWrapper
 
+import scala.concurrent.ExecutionContext
+
 trait HtmlSpec extends BaseSpec { self: PlaySpec =>
 
   implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
 
   lazy val injector: Injector = fakeApplication.injector
+  implicit val ec = injector.instanceOf[ExecutionContext]
   implicit lazy val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
   def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]

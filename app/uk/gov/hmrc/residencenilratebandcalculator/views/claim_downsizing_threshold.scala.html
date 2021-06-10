@@ -14,23 +14,30 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.play.views.html._
-@import uk.gov.hmrc.play.views.html.helpers.input_radio_group
-@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 
-@(form: Form[Boolean], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, appConfig: FrontendAppConfig)
+@this(
+    errorSummary: rnrbHelpers.error_summary,
+    submitButton: rnrbHelpers.submit_button,
+    heading: rnrbHelpers.heading,
+    inputValue: rnrbHelpers.input_value,
+    answerRowsHelper: rnrbHelpers.answer_rows,
+    mainTemplate: main_template,
+    inputRadioGroup: InputRadioGroup,
+    uiForm: FormWithCSRF
+)
 
-@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+@(form: Form[Boolean], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
+
+@mainTemplate(
     title = messages("claim_downsizing_threshold.browser_title"),
-    frontendAppConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ClaimDownsizingThresholdController.onSubmit(), 'autoComplete -> "off") {
+    @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ClaimDownsizingThresholdController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(form)
+        @errorSummary(form)
 
-        @rnrbHelpers.heading("claim_downsizing_threshold.title", "heading-xlarge")
+        @heading("claim_downsizing_threshold.title", "heading-xlarge")
 
         <p>@messages("claim_downsizing_threshold.guidance1")</p>
         <ul class="list list-bullet">
@@ -42,16 +49,16 @@
 
         <div class="form-group">
             <fieldset class="form-group inline">
-                @input_radio_group(
+                @inputRadioGroup(
                     form("value"),
                     Seq("true" -> messages("site.yes"), "false" -> messages("site.no")),
                     '_legend -> messages("claim_downsizing_threshold.title"),
                     '_legendClass -> Some("visuallyhidden")
                 )
             </fieldset>
-            @rnrbHelpers.submit_button()
+            @submitButton()
         </div>
 
     }
-    @rnrbHelpers.answer_rows(answerRows)
+    @answerRowsHelper(answerRows)
 }

@@ -14,14 +14,17 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 
-@(prefix: String, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, appConfig: FrontendAppConfig)
+@this(
+    mainTemplate: main_template,
+    answerRowsHelper: rnrbHelpers.answer_rows
+)
 
-@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+@(prefix: String, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
+
+@mainTemplate(
     title = messages("no_threshold_increase.browser_title"),
-    frontendAppConfig = appConfig,
     bodyClasses = None) {
 
     <h1 class="heading-xlarge">@messages(s"${prefix}.title")</h1>
@@ -32,5 +35,5 @@
 
     <a href="@uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.FeedbackSurveyController.redirectExitSurvey().url" class="button u--no-print">@messages("site.finish")</a>
 
-    @rnrbHelpers.answer_rows(answerRows)
+    @answerRowsHelper(answerRows)
 }

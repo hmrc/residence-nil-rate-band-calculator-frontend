@@ -30,9 +30,9 @@ import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCo
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, GetReason, Reason, UserAnswers}
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-class TransitionControllerSpec extends CommonPlaySpec with MockSessionConnector with WithCommonFakeApplication{
+class TransitionControllerSpec extends CommonPlaySpec with MockSessionConnector with WithCommonFakeApplication {
 
   val fakeRequest = FakeRequest("", "")
 
@@ -47,7 +47,7 @@ class TransitionControllerSpec extends CommonPlaySpec with MockSessionConnector 
   private[controllers] class TestTransitionController extends FrontendController(injectedMessagesControllerComponents) with TransitionController {
     val sessionConnector: SessionConnector = mockSessionConnector
     val getReason: GetReason = new GetReason { def apply(userAnswers: UserAnswers) = new Reason{} }
-
+    override implicit val ec: ExecutionContext = injector.instanceOf[ExecutionContext]
     def getControllerId(reason: Reason) = ""
 
     def createView(reason: Reason, userAnswers: UserAnswers, previousAnswers: Seq[AnswerRow])(implicit request: Request[_]): HtmlFormat.Appendable =

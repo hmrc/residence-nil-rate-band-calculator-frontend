@@ -28,17 +28,17 @@ class ExemptionsAndReliefClaimedControllerSpec extends SimpleControllerSpecBase 
   val messageKeyPrefix = "exemptions_and_relief_claimed"
 
   val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-
+  val exemptions_and_relief_claimed = injector.instanceOf[exemptions_and_relief_claimed]
   "Exemptions And Relief Claimed Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => exemptions_and_relief_claimed(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, mockConfig)
-        case Some(v) => exemptions_and_relief_claimed(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, mockConfig)
+        case None => exemptions_and_relief_claimed(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => exemptions_and_relief_claimed(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages)
       }
     }
 
-    def createController = () => new ExemptionsAndReliefClaimedController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
+    def createController = () => new ExemptionsAndReliefClaimedController(messagesControllerComponents, mockSessionConnector, navigator, exemptions_and_relief_claimed)
 
     val testValue = true
 

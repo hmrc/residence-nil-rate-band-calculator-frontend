@@ -24,19 +24,22 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_available_when_property_changed
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
+
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class TransferAvailableWhenPropertyChangedController @Inject()(cc: DefaultMessagesControllerComponents,
                                                                override val sessionConnector: SessionConnector,
                                                                override val navigator: Navigator,
-                                                               implicit val appConfig: FrontendAppConfig) extends FrontendController(cc) with SimpleControllerBase[Boolean] {
+                                                               transferAvailableWhenPropertyChangedView: transfer_available_when_property_changed)
+                                                              (override implicit val ec: ExecutionContext) extends FrontendController(cc) with SimpleControllerBase[Boolean] {
 
   override val controllerId: String = Constants.transferAvailableWhenPropertyChangedId
 
   override def form: () => Form[Boolean] = () => BooleanForm("transfer_available_when_property_changed.error.required")
 
   override def view(form: Form[Boolean], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    transfer_available_when_property_changed(form, answerRows)
+    transferAvailableWhenPropertyChangedView(form, answerRows)
   }
 }

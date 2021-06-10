@@ -23,9 +23,9 @@ import scala.language.reflectiveCalls
 class UnableToCalculateThresholdIncreaseViewSpec extends HtmlSpec {
 
   val prefix = "unable_to_calculate_threshold_increase.grossing_up"
-
+  val unable_to_calculate_threshold_increase = injector.instanceOf[unable_to_calculate_threshold_increase]
   def fixture() = new {
-    val view = unable_to_calculate_threshold_increase(prefix, Seq())(request, messages, mockConfig)
+    val view = unable_to_calculate_threshold_increase(prefix, Seq())(request, messages)
     val doc = asDocument(view)
   }
 

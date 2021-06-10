@@ -24,19 +24,22 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exemptions_and_relief_claimed
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
+
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class ExemptionsAndReliefClaimedController @Inject()(cc: DefaultMessagesControllerComponents,
                                                      override val sessionConnector: SessionConnector,
                                                      override val navigator: Navigator,
-                                                     implicit val appConfig: FrontendAppConfig) extends FrontendController(cc) with SimpleControllerBase[Boolean] {
+                                                     exemptionsAndReliefClaimedView: exemptions_and_relief_claimed)
+                                                    (override implicit val ec: ExecutionContext) extends FrontendController(cc) with SimpleControllerBase[Boolean] {
 
   override val controllerId: String = Constants.exemptionsAndReliefClaimedId
 
   override def form: () => Form[Boolean] = () => BooleanForm("exemptions_and_relief_claimed.error.required")
 
   override def view(form: Form[Boolean], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    exemptions_and_relief_claimed(form, answerRows)
+    exemptionsAndReliefClaimedView(form, answerRows)
   }
 }

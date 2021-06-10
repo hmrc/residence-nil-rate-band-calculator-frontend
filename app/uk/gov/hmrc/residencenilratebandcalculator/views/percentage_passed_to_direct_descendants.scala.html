@@ -14,26 +14,34 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.play.views.html._
-@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
-@(form: Form[BigDecimal], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, appConfig: FrontendAppConfig)
 
-@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+@this(
+    mainTemplate: main_template,
+    uiForm: FormWithCSRF,
+    errorSummary: rnrbHelpers.error_summary,
+    submitButton: rnrbHelpers.submit_button,
+    heading: rnrbHelpers.heading,
+    inputValue: rnrbHelpers.input_value,
+    answerRowsHelper: rnrbHelpers.answer_rows
+)
+
+@(form: Form[BigDecimal], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
+
+@mainTemplate(
     title = messages("percentage_passed_to_direct_descendants.browser_title"),
-    frontendAppConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PercentagePassedToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
+    @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PercentagePassedToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(form)
+        @errorSummary(form)
 
-        @rnrbHelpers.heading("percentage_passed_to_direct_descendants.title", "heading-xlarge")
+        @heading("percentage_passed_to_direct_descendants.title", "heading-xlarge")
 
         <p>@messages("percentage_passed_to_direct_descendants.guidance")</p>
 
         <div class="form-group">
-            @rnrbHelpers.input_value(
+            @inputValue(
                 form("value"),
                 '_inputClass -> "form-control form-control-1-4",
                 '_type -> "number",
@@ -45,11 +53,11 @@
                 '_labelTextClass -> "visuallyhidden")
         </div>
         <div>
-            @rnrbHelpers.submit_button()
+            @submitButton()
         </div>
 
 
     }
-    @rnrbHelpers.answer_rows(answerRows)
+    @answerRowsHelper(answerRows)
 
 }

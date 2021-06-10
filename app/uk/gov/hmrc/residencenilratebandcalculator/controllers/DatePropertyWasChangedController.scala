@@ -24,19 +24,22 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, Date, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_property_was_changed
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
+
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class DatePropertyWasChangedController @Inject()(cc: DefaultMessagesControllerComponents,
                                                  override val sessionConnector: SessionConnector,
                                                  override val navigator: Navigator,
-                                                 implicit val appConfig: FrontendAppConfig) extends FrontendController(cc) with SimpleControllerBase[Date]{
+                                                 datePropertyWasChangedView: date_property_was_changed)
+                                                (override implicit val ec: ExecutionContext) extends FrontendController(cc) with SimpleControllerBase[Date]{
 
   val controllerId: String = Constants.datePropertyWasChangedId
 
   def form = () => dateOfDownsizingForm
 
   def view(form: Form[Date], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-      date_property_was_changed(form, answerRows)
+    datePropertyWasChangedView(form, answerRows)
   }
 }

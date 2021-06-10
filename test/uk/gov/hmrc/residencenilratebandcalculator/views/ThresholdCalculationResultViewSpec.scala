@@ -23,8 +23,11 @@ import org.scalatest.Matchers.convertToAnyShouldWrapper
 import scala.language.reflectiveCalls
 
 class ThresholdCalculationResultViewSpec extends HtmlSpec {
+
+  val threshold_calculation_result = injector.instanceOf[threshold_calculation_result]
+
   def fixture() = new {
-    val view = threshold_calculation_result("£10.00", Nil)(request, messages, mockConfig)
+    val view = threshold_calculation_result("£10.00", Nil)(request, messages)
     val doc = asDocument(view)
   }
 
@@ -46,7 +49,7 @@ class ThresholdCalculationResultViewSpec extends HtmlSpec {
 
       "display the correct information when there is no Residence Nil Rate Amount" in {
         val residenceNilRateAmount = "£0.00"
-        val view = threshold_calculation_result(residenceNilRateAmount, Nil)(request, messages, mockConfig)
+        val view = threshold_calculation_result(residenceNilRateAmount, Nil)(request, messages)
         val doc = asDocument(view)
 
         assertContainsMessages(doc, "threshold_calculation_result.info.zero.header",
@@ -57,7 +60,7 @@ class ThresholdCalculationResultViewSpec extends HtmlSpec {
 
       "display the correct information when there is a positive Residence Nil Rate Amount" in {
         val residenceNilRateAmount = "£10.00"
-        val view = threshold_calculation_result(residenceNilRateAmount, Nil)(request, messages, mockConfig)
+        val view = threshold_calculation_result(residenceNilRateAmount, Nil)(request, messages)
         val doc = asDocument(view)
 
         assertContainsMessages(doc, "threshold_calculation_result.info.non_zero.header",

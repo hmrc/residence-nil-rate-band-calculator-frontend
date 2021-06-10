@@ -20,6 +20,9 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.rnrbHelpers.heading
 
 class Heading extends HtmlSpec {
+
+  val heading = injector.instanceOf[heading]
+
   "Heading" when {
     "rendered" must {
 

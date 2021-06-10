@@ -33,6 +33,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, CalculationResult}
 import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.threshold_calculation_result
 
 import scala.concurrent.Future
 import scala.util.Success
@@ -60,6 +61,8 @@ class ThresholdCalculationResultControllerSpec extends SimpleControllerSpecBase 
 
   val expectedCalculationInput = CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, 0, 0, 0, None, None)
 
+  val threshold_calculation_result = injector.instanceOf[threshold_calculation_result]
+
   val cacheMap = CacheMap("id", Map(
     Constants.dateOfDeathId -> JsString(dateOfDeathString),
     Constants.valueOfEstateId -> JsNumber(valueOfEstate),
@@ -76,7 +79,7 @@ class ThresholdCalculationResultControllerSpec extends SimpleControllerSpecBase 
   }
 
   def thresholdCalculationResultController(rnrbConnector: RnrbConnector = mockRnrbConnector) =
-    new ThresholdCalculationResultController(messagesControllerComponents, rnrbConnector, mockSessionConnector, mockConfig, mockValidatedSession)
+    new ThresholdCalculationResultController(messagesControllerComponents, rnrbConnector, mockSessionConnector, mockValidatedSession, threshold_calculation_result)
 
   "Threshold Calculation Result Controller" must {
 

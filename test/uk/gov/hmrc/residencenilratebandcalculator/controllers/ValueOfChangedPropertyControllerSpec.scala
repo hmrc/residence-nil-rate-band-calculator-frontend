@@ -30,18 +30,19 @@ class ValueOfChangedPropertyControllerSpec extends SimpleControllerSpecBase {
   val errorKeyTooLarge = "error.value_too_large"
   val messageKeyPrefix = "value_of_changed_property"
 
+  val value_of_changed_property = injector.instanceOf[value_of_changed_property]
   "Value Of Changed Property Controller" must {
 
     val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => value_of_changed_property(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq())(fakeRequest, messages, mockConfig)
-        case Some(v) => value_of_changed_property(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages, mockConfig)
+        case None => value_of_changed_property(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => value_of_changed_property(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages)
       }
     }
 
-    def createController = () => new ValueOfChangedPropertyController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
+    def createController = () => new ValueOfChangedPropertyController(messagesControllerComponents, mockSessionConnector, navigator, value_of_changed_property)
 
     val testValue = 123
 

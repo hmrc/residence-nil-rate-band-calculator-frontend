@@ -28,17 +28,17 @@ class PropertyInEstateControllerSpec extends SimpleControllerSpecBase {
   val messageKeyPrefix = "property_in_estate"
 
   val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-
+  val property_in_estate = injector.instanceOf[property_in_estate]
   "Property In Estate Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => property_in_estate(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages, mockConfig)
-        case Some(v) => property_in_estate(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages, mockConfig)
+        case None => property_in_estate(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => property_in_estate(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages)
       }
     }
 
-    def createController = () => new PropertyInEstateController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
+    def createController = () => new PropertyInEstateController(messagesControllerComponents, mockSessionConnector, navigator, property_in_estate)
 
     val testValue = true
 

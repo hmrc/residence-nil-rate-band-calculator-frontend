@@ -6,11 +6,11 @@ private object AppDependencies {
   val compile = Seq(
     ws,
     "uk.gov.hmrc"       %% "simple-reactivemongo"       % "7.31.0-play-27",
-    "uk.gov.hmrc"       %% "govuk-template"             % "5.63.0-play-27",
+    "uk.gov.hmrc"       %% "govuk-template"             % "5.66.0-play-27",
     "uk.gov.hmrc"       %% "play-ui"                    % "8.21.0-play-27",
     "com.typesafe.play" %% "play-json-joda"             % "2.9.2",
-    "uk.gov.hmrc"       %% "bootstrap-frontend-play-27" % "4.2.0" ,
-    "uk.gov.hmrc"       %% "http-caching-client"        % "9.2.0-play-27",
+    "uk.gov.hmrc"       %% "bootstrap-frontend-play-27" % "5.3.0" ,
+    "uk.gov.hmrc"       %% "http-caching-client"        % "9.4.0-play-27",
     "org.apache.pdfbox" % "pdfbox"                      % "2.0.20",
     "uk.gov.hmrc"       %% "play-language"              % "4.10.0-play-27",
     nettyServer

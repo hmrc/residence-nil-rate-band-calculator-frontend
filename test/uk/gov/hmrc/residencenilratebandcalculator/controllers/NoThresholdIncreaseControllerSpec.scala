@@ -42,6 +42,8 @@ class NoThresholdIncreaseControllerSpec extends CommonPlaySpec with MockSessionC
   def messagesApi = injector.instanceOf[MessagesApi]
   def messages = messagesApi.preferred(fakeRequest)
 
+  val no_threshold_increase = fakeApplication.injector.instanceOf[no_threshold_increase]
+
   val filledOutCacheMap = new CacheMap("",
     Map[String, JsValue](
       Constants.dateOfDeathId -> JsString("2019-03-04"),
@@ -68,18 +70,18 @@ class NoThresholdIncreaseControllerSpec extends CommonPlaySpec with MockSessionC
 
   "No Threshold Increase controller" must {
     "return 200 for a GET" in {
-      val result = new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, mockConfig).onPageLoad()(fakeRequest)
+      val result = new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase).onPageLoad()(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return the No Threshold Increase view for a GET" in {
-      val result = new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, mockConfig).onPageLoad()(fakeRequest)
+      val result = new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase).onPageLoad()(fakeRequest)
       contentAsString(result) shouldBe
-        no_threshold_increase("no_threshold_increase.direct_descendant", Seq())(fakeRequest, messages, mockConfig).toString
+        no_threshold_increase("no_threshold_increase.direct_descendant", Seq())(fakeRequest, messages).toString
     }
 
     "The answer constants should be the same as the calulated constants for the controller when the reason is DateOfDeath" in {
-      val controller = new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, mockConfig)
+      val controller = new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase)
       val controllerId = controller.getControllerId(DateOfDeath)
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
@@ -88,7 +90,7 @@ class NoThresholdIncreaseControllerSpec extends CommonPlaySpec with MockSessionC
     }
 
     "The answer constants should be the same as the calulated constants for the controller when the reason is DirectDescendant" in {
-      val controller = new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, mockConfig)
+      val controller = new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase)
       val controllerId = controller.getControllerId(DirectDescendant)
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)

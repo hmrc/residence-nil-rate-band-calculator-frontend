@@ -25,13 +25,15 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.utils.PDFHelperImpl
 
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.ExecutionContext
+
+
 
 @Singleton
 class IHT435Controller @Inject()(val env: Environment,
                                  val cc: DefaultMessagesControllerComponents,
                                  val sessionConnector: SessionConnector,
-                                 val pdfHelper: PDFHelperImpl) extends FrontendController(cc) with I18nSupport {
+                                 val pdfHelper: PDFHelperImpl)(implicit ex: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.fetch().map {

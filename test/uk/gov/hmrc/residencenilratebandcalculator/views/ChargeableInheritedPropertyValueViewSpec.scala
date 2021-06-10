@@ -27,8 +27,8 @@ import scala.language.reflectiveCalls
 class ChargeableInheritedPropertyValueViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "chargeable_inherited_property_value"
-
-  def createView(form: Form[Int]) = chargeable_inherited_property_value(form, Seq())(request, messages, mockConfig)
+  val chargeable_inherited_property_value = injector.instanceOf[chargeable_inherited_property_value]
+  def createView(form: Form[Int]) = chargeable_inherited_property_value(form, Seq())(request, messages)
 
   "Chargeable Inherited Property Value View" must {
 

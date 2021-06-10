@@ -14,24 +14,30 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.play.views.html._
-@import uk.gov.hmrc.play.views.html.helpers.input_radio_group
-@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 
-@(form: Form[String], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages, appConfig: FrontendAppConfig)
+@this(
+    uiForm: FormWithCSRF,
+    errorSummary: rnrbHelpers.error_summary,
+    submitButton: rnrbHelpers.submit_button,
+    heading: rnrbHelpers.heading,
+    answerRowsHelper: rnrbHelpers.answer_rows,
+    mainTemplate: main_template,
+    inputRadioGroup: InputRadioGroup
+)
 
-@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+@(form: Form[String], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
+
+@mainTemplate(
     title = messages("property_passing_to_direct_descendants.browser_title"),
-    frontendAppConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = PropertyPassingToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
+    @uiForm(action = PropertyPassingToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(form)
+        @errorSummary(form)
 
-        @rnrbHelpers.heading("property_passing_to_direct_descendants.title", "heading-xlarge")
+        @heading("property_passing_to_direct_descendants.title", "heading-xlarge")
 
         <p>@messages("property_passing_to_direct_descendants.guidance2")</p>
 
@@ -39,7 +45,7 @@
 
         <div class="form-group">
             <fieldset class="form-group">
-                @input_radio_group(
+                @inputRadioGroup(
                     form("value"),
                     Seq("all" -> Messages("property_passing_to_direct_descendants.all"),
                     "some" -> Messages("property_passing_to_direct_descendants.some"),
@@ -50,7 +56,7 @@
             </fieldset>
         </div>
 
-        @rnrbHelpers.submit_button()
+        @submitButton()
     }
-    @rnrbHelpers.answer_rows(answerRows)
+    @answerRowsHelper(answerRows)
 }

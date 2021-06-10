@@ -26,8 +26,8 @@ import scala.language.reflectiveCalls
 class TransferAnyUnusedThresholdViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "transfer_any_unused_threshold"
-
-  def createView(form: Form[Boolean]) = transfer_any_unused_threshold(form, Seq())(request, messages, mockConfig)
+  val transfer_any_unused_threshold = injector.instanceOf[transfer_any_unused_threshold]
+  def createView(form: Form[Boolean]) = transfer_any_unused_threshold(form, Seq())(request, messages)
 
   "Transfer Any Unused Allowance View" must {
 

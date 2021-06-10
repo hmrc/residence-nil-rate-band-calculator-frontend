@@ -23,9 +23,9 @@ import scala.language.reflectiveCalls
 class NoThresholdIncreaseViewSpec extends HtmlSpec {
 
   val prefix = "no_threshold_increase.direct_descendants"
-
+  val no_threshold_increase = injector.instanceOf[no_threshold_increase]
   def fixture() = new {
-    val view = no_threshold_increase(prefix, Seq())(request, messages, mockConfig)
+    val view = no_threshold_increase(prefix, Seq())(request, messages)
     val doc = asDocument(view)
   }
 

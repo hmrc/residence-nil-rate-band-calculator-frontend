@@ -27,8 +27,8 @@ import scala.language.reflectiveCalls
 class PercentagePassedToDirectDescendantsViewSpec extends BigDecimalViewSpecBase {
 
   val messageKeyPrefix = "percentage_passed_to_direct_descendants"
-
-  def createView(form: Form[BigDecimal]) = percentage_passed_to_direct_descendants(form, Seq())(request, messages, mockConfig)
+  val percentage_passed_to_direct_descendants = injector.instanceOf[percentage_passed_to_direct_descendants]
+  def createView(form: Form[BigDecimal]) = percentage_passed_to_direct_descendants(form, Seq())(request, messages)
 
   "Percentage Passed To Direct Descendants View" must {
 

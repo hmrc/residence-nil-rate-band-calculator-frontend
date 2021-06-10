@@ -14,30 +14,36 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.play.views.html._
-@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 
-@(form: Form[Date])(implicit request: Request[_], messages: Messages, appConfig: FrontendAppConfig)
+@this(
+    errorSummary: rnrbHelpers.error_summary,
+    mainTemplate: main_template,
+    uiForm: FormWithCSRF,
+    inputDateInline: rnrbHelpers.input_date_inline,
+    heading: rnrbHelpers.heading,
+    submitButton: rnrbHelpers.submit_button
+)
 
-@uk.gov.hmrc.residencenilratebandcalculator.views.html.main_template(
+@(form: Form[Date])(implicit request: Request[_], messages: Messages)
+
+@mainTemplate(
     title = messages("date_of_death.browser_title"),
-    frontendAppConfig = appConfig,
     bodyClasses = None,
     enableTimeout = false) {
 
 
-    @helpers.form(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onSubmit(), 'autoComplete -> "off") {
+    @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onSubmit(), 'autoComplete -> "off") {
 
-        @rnrbHelpers.error_summary(form)
+        @errorSummary(form)
 
-        @rnrbHelpers.heading("date_of_death.title", "heading-xlarge")
+        @heading("date_of_death.title", "heading-xlarge")
 
         <p>@messages("date_of_death.guidance")</p>
 
         <div class="form-group">
             <fieldset class="form-field-group">
-                @rnrbHelpers.input_date_inline(
+                @inputDateInline(
                 form,
                 "dateOfDeath",
                 '_inputHint -> messages("date_of_death.example"),
@@ -45,7 +51,7 @@
                 '_legendClass -> Some("visuallyhidden")
                 )
             </fieldset>
-            @rnrbHelpers.submit_button()
+            @submitButton()
         </div>
 
 

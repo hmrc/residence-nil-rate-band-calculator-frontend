@@ -34,18 +34,18 @@ import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.utils.TaxYear
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_being_transferred
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class ValueBeingTransferredController @Inject()(cc: DefaultMessagesControllerComponents,
                                                 val sessionConnector: SessionConnector,
                                                 val navigator: Navigator,
                                                 val rnrbConnector: RnrbConnector,
-                                                implicit val appConfig: FrontendAppConfig,
-                                                validatedSession: ValidatedSession) extends FrontendController(cc) {
+                                                validatedSession: ValidatedSession,
+                                                valueBeingTransferredView: value_being_transferred)
+                                               (implicit ec: ExecutionContext) extends FrontendController(cc) {
 
   val controllerId = Constants.valueBeingTransferredId
 
@@ -84,7 +84,7 @@ class ValueBeingTransferredController @Inject()(cc: DefaultMessagesControllerCom
 
           val nilRateBand = formatJsonNumber(nilRateValueJson.json.toString())
           implicit val messages = messagesApi.preferred(request)
-          Ok(value_being_transferred(
+          Ok(valueBeingTransferredView(
             nilRateBand,
             cacheMap.getEntry(controllerId).fold(form())(value => form().fill(value)),
             previousAnswers))
@@ -110,11 +110,11 @@ class ValueBeingTransferredController @Inject()(cc: DefaultMessagesControllerCom
           val userAnswers = new UserAnswers(cacheMap)
           implicit val messages = messagesApi.preferred(request)
           boundForm.fold(
-            formWithErrors => Future.successful(BadRequest(value_being_transferred(
+            formWithErrors => Future.successful(BadRequest(valueBeingTransferredView(
               formattedNilRateBand, formWithErrors, previousAnswers))),
             (value) => {
               validate(value, nilRateBand, userAnswers).flatMap {
-                case Some(error) => Future.successful(BadRequest(value_being_transferred(
+                case Some(error) => Future.successful(BadRequest(valueBeingTransferredView(
                   formattedNilRateBand,
                   form().fill(value).withError(error),
                   previousAnswers)))

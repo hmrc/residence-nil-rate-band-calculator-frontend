@@ -33,14 +33,14 @@ class PropertyValueControllerSpec extends SimpleControllerSpecBase with CommonPl
   val messageKeyPrefix = "property_value"
 
   val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-
+  val property_value = injector.instanceOf[property_value]
   "Property Value Controller" must {
     def createView = (value: Option[Map[String, String]]) => value match {
-      case None => property_value(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq())(fakeRequest, messages, mockConfig)
-      case Some(v) => property_value(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages, mockConfig)
+      case None => property_value(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq())(fakeRequest, messages)
+      case Some(v) => property_value(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages)
     }
 
-    def createController = () => new PropertyValueController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
+    def createController = () => new PropertyValueController(messagesControllerComponents, mockSessionConnector, navigator, property_value)
 
     val testValue = 123
 

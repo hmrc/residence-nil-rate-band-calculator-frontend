@@ -19,17 +19,15 @@ package uk.gov.hmrc.residencenilratebandcalculator.connectors
 import play.api.libs.json._
 import play.api.Logger.logger
 import javax.inject.{Inject, Singleton}
-
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.models.CascadeUpsert
 import uk.gov.hmrc.residencenilratebandcalculator.repositories.SessionRepository
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import uk.gov.hmrc.http.HeaderCarrier
 
 @Singleton
-class SessionConnector @Inject()(val sessionRepository: SessionRepository, val cascadeUpsert: CascadeUpsert) {
+class SessionConnector @Inject()(val sessionRepository: SessionRepository, val cascadeUpsert: CascadeUpsert)(implicit ec: ExecutionContext) {
 
   def cache[A](key: String, value: A)(implicit wts: Writes[A], hc: HeaderCarrier) = {
     hc.sessionId match {

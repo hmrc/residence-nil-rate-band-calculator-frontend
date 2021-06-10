@@ -23,20 +23,20 @@ import org.scalatest.Matchers.convertToAnyShouldWrapper
 class CalculateThresholdIncreaseViewSpec extends ViewSpecBase {
 
   val messageKeyPrefix = "calculate_threshold_increase"
-
+  val calculate_threshold_increase = injector.instanceOf[calculate_threshold_increase]
   "Calculate Threshold Increase view" must {
     "display the correct browser title" in {
-      val doc = asDocument(calculate_threshold_increase()(request, messages, mockConfig))
+      val doc = asDocument(calculate_threshold_increase()(request, messages))
       assertEqualsMessage(doc, "title", s"$messageKeyPrefix.browser_title")
     }
 
     "display the correct title" in {
-      val doc = asDocument(calculate_threshold_increase()(request, messages, mockConfig))
+      val doc = asDocument(calculate_threshold_increase()(request, messages))
       assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.title")
     }
 
     "display the correct guidance" in {
-      val doc = asDocument(calculate_threshold_increase()(request, messages, mockConfig))
+      val doc = asDocument(calculate_threshold_increase()(request, messages))
       assertContainsMessages(
         doc,
         s"$messageKeyPrefix.guidance1",
@@ -48,7 +48,7 @@ class CalculateThresholdIncreaseViewSpec extends ViewSpecBase {
     }
 
     "display a Start button linking to the 'Date Of Death' page" in {
-      val doc = asDocument(calculate_threshold_increase()(request, messages, mockConfig))
+      val doc = asDocument(calculate_threshold_increase()(request, messages))
       val startLink = doc.getElementById("start")
       startLink.className shouldBe "button button--get-started"
       startLink.attr("href") shouldBe routes.DateOfDeathController.onPageLoad().url
@@ -56,7 +56,7 @@ class CalculateThresholdIncreaseViewSpec extends ViewSpecBase {
     }
 
     "not display the HMRC logo" in {
-      val doc = asDocument(calculate_threshold_increase()(request, messages, mockConfig))
+      val doc = asDocument(calculate_threshold_increase()(request, messages))
       assertNotRenderedByCssSelector(doc, ".organisation-logo")
     }
   }

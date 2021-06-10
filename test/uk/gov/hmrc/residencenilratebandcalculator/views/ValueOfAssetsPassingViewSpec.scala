@@ -27,8 +27,8 @@ import scala.language.reflectiveCalls
 class ValueOfAssetsPassingViewSpec extends IntViewSpecBase {
 
   val messageKeyPrefix = "value_of_assets_passing"
-
-  def createView(form: Form[Int]) = value_of_assets_passing(form, Seq(), None)(request, messages, mockConfig)
+  val value_of_assets_passing = injector.instanceOf[value_of_assets_passing]
+  def createView(form: Form[Int]) = value_of_assets_passing(form, Seq(), None)(request, messages)
 
   "Value Of Assets Passing View" must {
 

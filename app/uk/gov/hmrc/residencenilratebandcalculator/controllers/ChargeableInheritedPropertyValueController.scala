@@ -24,12 +24,16 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_inherited_property_value
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
+
+import scala.concurrent.ExecutionContext
 
 class ChargeableInheritedPropertyValueController @Inject()(cc: DefaultMessagesControllerComponents,
                                                            override val sessionConnector: SessionConnector,
                                                            override val navigator: Navigator,
-                                                           implicit val appConfig: FrontendAppConfig) extends FrontendController(cc) with SimpleControllerBase[Int] {
+                                                           chargeableInheritedPropertyValueView: chargeable_inherited_property_value)
+                                                          (override implicit val ec: ExecutionContext)
+                                                          extends FrontendController(cc) with SimpleControllerBase[Int] {
 
   override val controllerId: String = Constants.chargeableInheritedPropertyValueId
 
@@ -37,7 +41,7 @@ class ChargeableInheritedPropertyValueController @Inject()(cc: DefaultMessagesCo
     NonNegativeIntForm("chargeable_inherited_property_value.error.blank", "error.whole_pounds", "error.non_numeric", "error.value_too_large")
 
   override def view(form: Form[Int], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    chargeable_inherited_property_value(form, answerRows)
+    chargeableInheritedPropertyValueView(form, answerRows)
   }
 
   override def validate(value: Int, userAnswers: UserAnswers): Option[FormError] = {

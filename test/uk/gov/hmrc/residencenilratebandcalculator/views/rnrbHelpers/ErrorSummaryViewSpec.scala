@@ -32,6 +32,8 @@ class ErrorSummaryViewSpec extends HtmlSpec {
   val error = FormError(errorKey1, message1)
   val error2 = FormError(errorKey2, message2)
 
+  val error_summary = injector.instanceOf[error_summary]
+
   def createForm(errors: Seq[FormError]): Form[Int] = {
     val form = mock[Form[Int]]
     when(form.errors).thenReturn(errors)

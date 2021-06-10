@@ -34,7 +34,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_available_when_property_changed
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
-import scala.concurrent.ExecutionContext.Implicits.global
+
 import scala.concurrent.Future
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, SessionKeys}
 import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
@@ -61,6 +61,7 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends CommonPlaySpec wit
 
   val mockValidatedSession: ValidatedSession = injector.instanceOf[ValidatedSession]
 
+  val value_available_when_property_changed = injector.instanceOf[value_available_when_property_changed]
 
   def messages = messagesApi.preferred(fakeRequest)
 
@@ -73,15 +74,15 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends CommonPlaySpec wit
   def createView = (value: Option[Map[String, String]]) => {
     val answerRow = new AnswerRow("What was the date the property was disposed of?", "11 May 2018", routes.DatePropertyWasChangedController.onPageLoad().url)
     value match {
-      case None => value_available_when_property_changed("£100,000", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq(answerRow))(fakeRequest, messages, mockConfig)
+      case None => value_available_when_property_changed("£100,000", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq(answerRow))(fakeRequest, messages)
       case Some(v) => value_available_when_property_changed("£100,000",
-        NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(answerRow))(fakeRequest, messages, mockConfig)
+        NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(answerRow))(fakeRequest, messages)
     }
   }
 
   def testValue = "100000"
 
-  def createController = () => new ValueAvailableWhenPropertyChangedController(messagesControllerComponents, mockSessionConnector, navigator, mockRnrbConnector, mockConfig, mockValidatedSession)
+  def createController = () => new ValueAvailableWhenPropertyChangedController(messagesControllerComponents, mockSessionConnector, navigator, mockRnrbConnector, mockValidatedSession, value_available_when_property_changed)
 
   "Value Available When Property Changed Controller" must {
 

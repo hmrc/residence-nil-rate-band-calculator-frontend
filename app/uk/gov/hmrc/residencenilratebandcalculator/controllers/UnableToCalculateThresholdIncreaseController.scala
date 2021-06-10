@@ -23,12 +23,15 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetUnableToCalculateThresholdIncreaseReason.{GrossingUpForOtherProperty, GrossingUpForResidence}
 import uk.gov.hmrc.residencenilratebandcalculator.models._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.unable_to_calculate_threshold_increase
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
+
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class UnableToCalculateThresholdIncreaseController @Inject()(val cc: DefaultMessagesControllerComponents,
                                                              override val sessionConnector: SessionConnector,
-                                                             implicit val appConfig: FrontendAppConfig)
+                                                             unableToCalculateThresholdIncreaseView: unable_to_calculate_threshold_increase)
+                                                            (override implicit val ec: ExecutionContext)
   extends FrontendController(cc) with TransitionController {
 
   val getReason = GetUnableToCalculateThresholdIncreaseReason
@@ -40,5 +43,5 @@ class UnableToCalculateThresholdIncreaseController @Inject()(val cc: DefaultMess
     }
 
   def createView(reason: Reason, userAnswers: UserAnswers, previousAnswers: scala.Seq[AnswerRow])(implicit request: Request[_]) =
-    unable_to_calculate_threshold_increase("unable_to_calculate_threshold_increase.grossing_up", previousAnswers)
+    unableToCalculateThresholdIncreaseView("unable_to_calculate_threshold_increase.grossing_up", previousAnswers)
 }

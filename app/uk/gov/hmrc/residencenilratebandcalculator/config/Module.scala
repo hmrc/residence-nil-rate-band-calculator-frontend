@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,10 +12,15 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@this()
+package uk.gov.hmrc.residencenilratebandcalculator.config
 
-@()(implicit messages: Messages)
+import com.google.inject.AbstractModule
+import uk.gov.hmrc.residencenilratebandcalculator.{AppConfig, FrontendAppConfig}
 
-<button id="submit" class="button">@messages("site.continue")</button>
+class Module extends AbstractModule {
+  override def configure(): Unit = {
+    bind(classOf[AppConfig]).to(classOf[FrontendAppConfig]).asEagerSingleton()
+  }
+}

@@ -32,17 +32,18 @@ class ChargeableEstateValueControllerSpec extends SimpleControllerSpecBase {
   val messageKeyPrefix = "chargeable_estate_value"
 
   val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val chargeable_estate_value = fakeApplication.injector.instanceOf[chargeable_estate_value]
 
   "Chargeable Estate Value Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => chargeable_estate_value(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq())(fakeRequest, messages, mockConfig)
-        case Some(v) => chargeable_estate_value(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages, mockConfig)
+        case None => chargeable_estate_value(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => chargeable_estate_value(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages)
       }
     }
 
-    def createController = () => new ChargeableEstateValueController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
+    def createController = () => new ChargeableEstateValueController(messagesControllerComponents, mockSessionConnector, navigator, chargeable_estate_value)
 
     val testValue = 123
 

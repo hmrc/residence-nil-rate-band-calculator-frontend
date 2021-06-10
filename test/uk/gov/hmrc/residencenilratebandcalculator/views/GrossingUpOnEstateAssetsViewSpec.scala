@@ -24,8 +24,8 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_esta
 class GrossingUpOnEstateAssetsViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "grossing_up_on_estate_assets"
-
-  def createView(form: Form[Boolean]) = grossing_up_on_estate_assets(form, Seq())(request, messages, mockConfig)
+  val grossing_up_on_estate_assets = injector.instanceOf[grossing_up_on_estate_assets]
+  def createView(form: Form[Boolean]) = grossing_up_on_estate_assets(form, Seq())(request, messages)
 
   "Grossing Up On Estate AssetsView" must {
 

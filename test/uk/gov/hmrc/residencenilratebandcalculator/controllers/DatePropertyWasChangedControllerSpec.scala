@@ -26,17 +26,18 @@ class DatePropertyWasChangedControllerSpec extends DateControllerSpecBase {
   val mockConfig = injector.instanceOf[FrontendAppConfig]
 
   val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val date_property_was_changed = injector.instanceOf[date_property_was_changed]
 
   "Date Property Was Changed Controller" must {
 
     def createView = (value: Option[Date]) => {
       value match {
-        case None => date_property_was_changed(dateOfDownsizingForm, answerRows = Seq())(fakeRequest, messages, mockConfig)
-        case Some(v) => date_property_was_changed(dateOfDownsizingForm.fill(v) , Seq())(fakeRequest, messages, mockConfig)
+        case None => date_property_was_changed(dateOfDownsizingForm, answerRows = Seq())(fakeRequest, messages)
+        case Some(v) => date_property_was_changed(dateOfDownsizingForm.fill(v) , Seq())(fakeRequest, messages)
       }
     }
 
-    def createController = () => new DatePropertyWasChangedController(messagesControllerComponents, mockSessionConnector, navigator, mockConfig)
+    def createController = () => new DatePropertyWasChangedController(messagesControllerComponents, mockSessionConnector, navigator, date_property_was_changed)
 
     behave like rnrbDateController(createController, createView, Constants.datePropertyWasChangedId, "dateOfDownsizing")(Date.dateReads, Date.dateWrites)
 

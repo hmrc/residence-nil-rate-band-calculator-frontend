@@ -25,13 +25,12 @@ import uk.gov.hmrc.residencenilratebandcalculator.exceptions.JsonInvalidExceptio
 import uk.gov.hmrc.residencenilratebandcalculator.json.JsonErrorProcessor
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, CalculationResult}
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
 @Singleton
 class RnrbConnector @Inject()(val http: DefaultHttpClient,
-                              val config: FrontendAppConfig) {
+                              val config: FrontendAppConfig)(implicit ec: ExecutionContext) {
 
   lazy val serviceUrl = config.serviceUrl
   val baseSegment = "/residence-nil-rate-band-calculator/"

@@ -14,10 +14,9 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+@this(govukWrapper: govuk_wrapper)
 
-
-@(pageTitle: String, heading: String, message: String)(implicit request: Request[_], messages: Messages, frontendAppConfig: FrontendAppConfig)
+@(pageTitle: String, heading: String, message: String)(implicit request: Request[_], messages: Messages)
 
 @contentHeader = {
   <h1 class="heading-xlarge">@heading</h1>
@@ -27,4 +26,4 @@
   <p>@message</p>
 }
 
-@govuk_wrapper(appConfig = frontendAppConfig, title = pageTitle, contentHeader = Some(contentHeader), mainContent = mainContent)
+@govukWrapper(title = pageTitle, contentHeader = Some(contentHeader), mainContent = mainContent)
