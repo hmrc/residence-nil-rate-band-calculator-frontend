@@ -17,9 +17,8 @@
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import javax.inject.Singleton
-
 import org.joda.time.LocalDate
-import play.api.Logger.logger
+import play.api.Logging
 import play.api.libs.json._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
@@ -27,7 +26,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import scala.util.{Failure, Success, Try}
 
 @Singleton
-class CascadeUpsert {
+class CascadeUpsert extends Logging {
 
   def apply[A](key: String, value: A, originalCacheMap: CacheMap)(implicit wts: Writes[A]): CacheMap =
     funcMap.get(key).fold(store(key, value, originalCacheMap)) { fn => fn(Json.toJson(value), originalCacheMap)}

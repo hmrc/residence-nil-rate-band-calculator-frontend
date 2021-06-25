@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.Inject
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.mvc.Request
 import play.twirl.api.Html

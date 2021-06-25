@@ -17,7 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
-import play.api.Logger.logger
+import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, DefaultMessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
@@ -29,7 +29,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class SessionExpiredController @Inject()(cc: DefaultMessagesControllerComponents,
                                          val sessionConnector: SessionConnector,
-                                         sessionExpiredView: session_expired)(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
+                                         sessionExpiredView: session_expired)(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport with Logging {
 
   def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.removeAll.flatMap(isDropped => {

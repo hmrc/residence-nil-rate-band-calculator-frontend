@@ -17,8 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
-import play.api.Logger.logger
-import play.api.Environment
+import play.api.{Environment, Logging}
 import play.api.i18n.{I18nSupport, Lang}
 import play.api.mvc.{Action, AnyContent, DefaultMessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
@@ -27,13 +26,11 @@ import uk.gov.hmrc.residencenilratebandcalculator.utils.PDFHelperImpl
 
 import scala.concurrent.ExecutionContext
 
-
-
 @Singleton
 class IHT435Controller @Inject()(val env: Environment,
                                  val cc: DefaultMessagesControllerComponents,
                                  val sessionConnector: SessionConnector,
-                                 val pdfHelper: PDFHelperImpl)(implicit ex: ExecutionContext) extends FrontendController(cc) with I18nSupport {
+                                 val pdfHelper: PDFHelperImpl)(implicit ex: ExecutionContext) extends FrontendController(cc) with I18nSupport with Logging {
 
   def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.fetch().map {

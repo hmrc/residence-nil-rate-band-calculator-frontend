@@ -17,7 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates
 
 import javax.inject.Inject
-import play.api.Logger.logger
+import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc._
 
@@ -25,7 +25,7 @@ import scala.concurrent.Future
 import uk.gov.hmrc.http.SessionKeys
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 
-class ValidatedSession @Inject()(mcc: MessagesControllerComponents) extends FrontendController(mcc) with I18nSupport{
+class ValidatedSession @Inject()(mcc: MessagesControllerComponents) extends FrontendController(mcc) with I18nSupport with Logging {
 
   private type AsyncRequest = Request[AnyContent] => Future[Result]
 
