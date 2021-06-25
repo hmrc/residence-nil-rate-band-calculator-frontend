@@ -16,8 +16,9 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import play.api.Logging
+
 import javax.inject.{Inject, Singleton}
-import play.api.Logger.logger
 import play.api.data.FormError
 import play.api.i18n.I18nSupport
 import play.api.libs.json.{Reads, Writes}
@@ -43,7 +44,7 @@ class ValueAvailableWhenPropertyChangedController @Inject()(cc: DefaultMessagesC
                                                             val rnrbConnector: RnrbConnector,
                                                             validatedSession: ValidatedSession,
                                                             valueAvailableWhenPropertyChangedView: value_available_when_property_changed)
-                                                           (implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
+                                                           (implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport with Logging {
 
   val controllerId: String = Constants.valueAvailableWhenPropertyChangedId
 

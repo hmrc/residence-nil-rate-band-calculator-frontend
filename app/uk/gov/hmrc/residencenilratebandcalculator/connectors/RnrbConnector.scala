@@ -26,18 +26,18 @@ import uk.gov.hmrc.residencenilratebandcalculator.json.JsonErrorProcessor
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, CalculationResult}
 
 import scala.concurrent.{ExecutionContext, Future}
-import scala.util.{Failure, Success}
+import scala.util.{Failure, Success, Try}
 
 @Singleton
 class RnrbConnector @Inject()(val http: DefaultHttpClient,
                               val config: FrontendAppConfig)(implicit ec: ExecutionContext) {
 
-  lazy val serviceUrl = config.serviceUrl
+  lazy val serviceUrl: String = config.serviceUrl
   val baseSegment = "/residence-nil-rate-band-calculator/"
   val schemaBaseSegment = s"${baseSegment}api/conf/0.1/schemas/"
-  val jsonContentTypeHeader = ("Content-Type", "application/json")
+  val jsonContentTypeHeader: (String, String) = ("Content-Type", "application/json")
 
-  def getStyleGuide()(implicit hc: HeaderCarrier) = http.GET(s"$serviceUrl${baseSegment}style-guide")
+  def getStyleGuide()(implicit hc: HeaderCarrier): Future[HttpResponse] = http.GET(s"$serviceUrl${baseSegment}style-guide")
 
   implicit val calculationResultWrites: Writes[CalculationInput] = new Writes[CalculationInput] {
     def writes(o : CalculationInput): JsValue = {
@@ -71,10 +71,10 @@ class RnrbConnector @Inject()(val http: DefaultHttpClient,
     }
   }
 
-  def send(input: CalculationInput) (implicit hc: HeaderCarrier) = sendJson(Json.toJson(input))
+  def send(input: CalculationInput) (implicit hc: HeaderCarrier): Future[Try[CalculationResult]] = sendJson(Json.toJson(input))
 
-  def sendJson(json: JsValue) (implicit hc: HeaderCarrier) = {
-    http.POST(s"$serviceUrl${baseSegment}calculate", json, Seq(jsonContentTypeHeader))
+  def sendJson(json: JsValue) (implicit hc: HeaderCarrier): Future[Try[CalculationResult]] = {
+    http.POST[JsValue,HttpResponse](s"$serviceUrl${baseSegment}calculate", json, Seq(jsonContentTypeHeader))
       .map {
         response =>
           Json.fromJson[CalculationResult](response.json) match {

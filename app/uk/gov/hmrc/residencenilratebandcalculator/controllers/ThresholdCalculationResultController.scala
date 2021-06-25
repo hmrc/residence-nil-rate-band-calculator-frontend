@@ -16,8 +16,9 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import play.api.Logging
+
 import javax.inject.{Inject, Singleton}
-import play.api.Logger.logger
 import play.api.i18n.I18nSupport
 import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.http.HeaderCarrier
@@ -41,7 +42,7 @@ class ThresholdCalculationResultController @Inject()(cc: DefaultMessagesControll
                                                      validatedSession: ValidatedSession,
                                                      thresholdCalculationResultView: threshold_calculation_result)
                                                     (implicit ec: ExecutionContext)
-  extends FrontendController(cc) with I18nSupport {
+  extends FrontendController(cc) with I18nSupport with Logging {
 
   private def fail(ex: Throwable) = {
     logger.error(ex.getMessage, ex)

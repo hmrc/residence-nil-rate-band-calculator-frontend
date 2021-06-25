@@ -18,9 +18,8 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import java.text.NumberFormat
 import java.util.Locale
-
 import javax.inject.{Inject, Singleton}
-import play.api.Logger.logger
+import play.api.Logging
 import play.api.data.FormError
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.{DefaultMessagesControllerComponents, Request}
@@ -45,7 +44,7 @@ class ValueBeingTransferredController @Inject()(cc: DefaultMessagesControllerCom
                                                 val rnrbConnector: RnrbConnector,
                                                 validatedSession: ValidatedSession,
                                                 valueBeingTransferredView: value_being_transferred)
-                                               (implicit ec: ExecutionContext) extends FrontendController(cc) {
+                                               (implicit ec: ExecutionContext) extends FrontendController(cc) with Logging {
 
   val controllerId = Constants.valueBeingTransferredId
 
