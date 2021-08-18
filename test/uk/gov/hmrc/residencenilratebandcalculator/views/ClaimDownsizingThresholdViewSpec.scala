@@ -35,8 +35,8 @@ class ClaimDownsizingThresholdViewSpec extends BooleanViewSpecBase {
       "guidance1",
       "guidance1.bullet1",
       "guidance1.bullet2",
-      "guidance1.bullet3",
-      "guidance1.bullet4")(fakeApplication.injector.instanceOf[ClaimDownsizingThresholdController].form())
+      "guidance1.bullet3"
+    )(fakeApplication.injector.instanceOf[ClaimDownsizingThresholdController].form())
 
     behave like pageWithoutBackLink[Boolean](createView, fakeApplication.injector.instanceOf[ClaimDownsizingThresholdController].form())
 
