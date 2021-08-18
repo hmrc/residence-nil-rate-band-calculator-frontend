@@ -37,11 +37,11 @@ chargeable_inherited_property_value.greater_than_chargeable_property_value.error
 
 claim_downsizing_threshold.browser_title = A ydych yn hawlio unrhyw lwfans ar gyfer symud i gartref llai o faint?
 claim_downsizing_threshold.title = A ydych yn hawlio unrhyw lwfans ar gyfer symud i gartref llai o faint?
-claim_downsizing_threshold.guidance1 = Efallai y bydd lwfans ar gyfer symud i gartref llai o faint i''w hawlio os oedd unrhyw un o''r canlynol yn berthnasol i ystâd y person a fu farw:
+claim_downsizing_threshold.guidance1 = Mae’n bosibl y byddwch yn gallu hawlio lwfans symud i gartref llai o faint os gadawodd y person a fu farw unrhyw beth yn ei ystâd i ddisgynnydd uniongyrchol.
+claim_downsizing_threshold.guidance2 = Mae’n rhaid i unrhyw un o’r canlynol hefyd fod yn berthnasol i ystâd y person a fu farw:
 claim_downsizing_threshold.guidance1.bullet1 = symudodd i gartref llai o faint ar neu ar ôl 8 Gorffennaf 2015 gan naill ai gwerthu''r eiddo a phrynu cartref rhatach neu''i werthu a pheidio â phrynu cartref arall
 claim_downsizing_threshold.guidance1.bullet2 = rhoddodd unrhyw ran o''r cartref i ffwrdd
 claim_downsizing_threshold.guidance1.bullet3 = roedd gan y person gartref a fyddai wedi bod yn gymwys am yr haen cyfradd sero ar gyfer cartrefi (RNRB) pe nai bai wedi''i werthu, ac wedi''i gadw tan y bu farw
-claim_downsizing_threshold.guidance1.bullet4 = gadawodd unrhyw beth yn ei ystâd i ddisgynnydd uniongyrchol
 claim_downsizing_threshold.error.required = Rhowch ateb ar gyfer a ydych yn hawlio lwfans ar gyfer symud i gartref llai o faint ar gyfer yr ystâd hon.
 
 date.day = Diwrnod

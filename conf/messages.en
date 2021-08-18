@@ -37,11 +37,11 @@ chargeable_inherited_property_value.greater_than_chargeable_property_value.error
 
 claim_downsizing_threshold.browser_title = Are you claiming any downsizing allowance?
 claim_downsizing_threshold.title = Are you claiming any downsizing allowance?
-claim_downsizing_threshold.guidance1 = There might be downsizing allowance to claim if any of the following applied to the estate of the person who has died:
+claim_downsizing_threshold.guidance1 = You might be able to claim downsizing allowance if the person who has died left anything in their estate to a direct descendant.
+claim_downsizing_threshold.guidance2 = Any of the following must also apply to the estate of the person who has died:
 claim_downsizing_threshold.guidance1.bullet1 = they downsized their home on or after 8 July 2015 by either selling it and buying a cheaper home or selling it and not buying another home
 claim_downsizing_threshold.guidance1.bullet2 = they gave any part of their home away
 claim_downsizing_threshold.guidance1.bullet3 = they had a home that would have qualified for RNRB if they had not sold it and had kept it until they died
-claim_downsizing_threshold.guidance1.bullet4 = they left anything in their estate to a direct descendant
 claim_downsizing_threshold.error.required = Give an answer for if you are claiming any downsizing allowance for this estate
 
 date.day = Day
