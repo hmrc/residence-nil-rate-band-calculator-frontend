@@ -41,8 +41,8 @@ class FrontendAppConfig @Inject()(val servicesConfig: ServicesConfig) extends Ap
   override lazy val timeOutSession: Int = loadConfig("mongodb.timeToLiveInSeconds").toInt
   override lazy val reportAProblemPartialUrl = s"$contactHost/contact/problem_reports_ajax?service=$contactFormServiceIdentifier"
   override lazy val reportAProblemNonJSUrl = s"$contactHost/contact/problem_reports_nonjs?service=$contactFormServiceIdentifier"
-  override lazy val betaFeedbackUrl = s"$contactHost/contact/beta-feedback"
-  override lazy val betaFeedbackUnauthenticatedUrl = s"$contactHost/contact/beta-feedback-unauthenticated"
+  override lazy val betaFeedbackUrl = s"$contactHost/contact/beta-feedback?service=$contactFormServiceIdentifier"
+  override lazy val betaFeedbackUnauthenticatedUrl = s"$contactHost/contact/beta-feedback-unauthenticated?service=$contactFormServiceIdentifier"
   override lazy val feedbackSurvey: String = loadConfig("feedback-survey-frontend.url")
   lazy val serviceUrl: String = servicesConfig.baseUrl("residence-nil-rate-band-calculator")
 
