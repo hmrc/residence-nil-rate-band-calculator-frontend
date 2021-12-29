@@ -14,14 +14,22 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.play.views.html.helpers.ErrorSummary
+@import uk.gov.hmrc.urls.Link
 
-@this(errorSummary: ErrorSummary)
+@this()
 
-@(form: Form[_])(implicit messages: Messages)
-@if(form.hasErrors) {
+@(langMap: Map[String, Lang], langToCall: String => Call, customClass: Option[String] = None, appName: Option[String] = None)(implicit messages: Messages)
 
-        @errorSummary(messages("error.summary.title"), form)
+<p class="@if(customClass.isDefined) {@customClass.get}">
 
-
+@langMap.map { case (key: String, value: Lang) =>
+    @if(messages.lang.code != value.code) {
+        @Html(s"""<a id="$key-switch" href="${langToCall(key)}" target="_self" data-sso="false">${key.capitalize}</a>""")
+    } else {
+        @key.capitalize
+    }
+    @if(key != langMap.last._1) {
+        @Html(" | ")
+    }
 }
+</p>

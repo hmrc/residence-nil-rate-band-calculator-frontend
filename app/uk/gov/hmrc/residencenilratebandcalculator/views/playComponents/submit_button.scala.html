@@ -14,14 +14,8 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.play.views.html.helpers.ErrorSummary
+@this()
 
-@this(errorSummary: ErrorSummary)
+@()(implicit messages: Messages)
 
-@(form: Form[_])(implicit messages: Messages)
-@if(form.hasErrors) {
-
-        @errorSummary(messages("error.summary.title"), form)
-
-
-}
+<button id="submit" class="button">@messages("site.continue")</button>

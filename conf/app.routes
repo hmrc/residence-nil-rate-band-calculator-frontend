@@ -1,3 +1,7 @@
+
+->         /govuk-frontend                     govuk.Routes
+->         /hmrc-frontend                      hmrcfrontend.Routes
+
 # microservice specific routes
 
 GET        /                                            @uk.gov.hmrc.residencenilratebandcalculator.controllers.CalculateThresholdIncreaseController.onPageLoad

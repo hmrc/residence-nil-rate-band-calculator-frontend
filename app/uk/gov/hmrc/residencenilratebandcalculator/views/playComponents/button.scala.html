@@ -14,14 +14,13 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.play.views.html.helpers.ErrorSummary
+@this()
 
-@this(errorSummary: ErrorSummary)
+@(
+messageKey: String = "",
+inputType: String = "button"
+)(implicit messages: Messages)
 
-@(form: Form[_])(implicit messages: Messages)
-@if(form.hasErrors) {
-
-        @errorSummary(messages("error.summary.title"), form)
-
-
-}
+<div class="section">
+    <input type="@inputType" class="button" value="@messages(messageKey)" />
+</div>

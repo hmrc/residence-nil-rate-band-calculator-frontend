@@ -15,6 +15,7 @@
  *@
 
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
 @this(
     errorSummary: rnrbHelpers.error_summary,
@@ -23,7 +24,7 @@
     inputRadioGroup: InputRadioGroup,
     answerRowsHelper: rnrbHelpers.answer_rows,
     mainTemplate: main_template,
-    uiForm: FormWithCSRF,
+    uiForm: FormWithCSRF
 )
 
 @(form: Form[Boolean], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
