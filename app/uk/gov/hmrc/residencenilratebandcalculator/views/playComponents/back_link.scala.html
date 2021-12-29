@@ -14,14 +14,16 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.play.views.html.helpers.ErrorSummary
+@import uk.gov.hmrc.govukfrontend.views.html.components._
 
-@this(errorSummary: ErrorSummary)
+@this(govukBackLink : GovukBackLink)
 
-@(form: Form[_])(implicit messages: Messages)
-@if(form.hasErrors) {
+@()(implicit messages: Messages)
 
-        @errorSummary(messages("error.summary.title"), form)
-
-
-}
+@govukBackLink(BackLink(
+ href = "javascript:history.back()",
+ content = Text(messages("site.back")),
+ attributes = Map(
+  "id" -> "back-link"
+ )
+))

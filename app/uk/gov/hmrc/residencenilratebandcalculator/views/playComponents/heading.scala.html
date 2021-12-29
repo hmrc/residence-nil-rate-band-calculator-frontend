@@ -14,14 +14,9 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.play.views.html.helpers.ErrorSummary
+@this()
 
-@this(errorSummary: ErrorSummary)
+@(
+headingKey: String, headingSize: String = "heading-medium")(implicit messages: Messages)
 
-@(form: Form[_])(implicit messages: Messages)
-@if(form.hasErrors) {
-
-        @errorSummary(messages("error.summary.title"), form)
-
-
-}
+<h1 class="@headingSize">@messages(headingKey)</h1>
