@@ -18,6 +18,7 @@
 @import uk.gov.hmrc.hmrcfrontend.views.config.StandardBetaBanner
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcReportTechnicalIssue
 
+
 @this(
     govukLayout: GovukLayout,
     hmrcAccountMenu: HmrcAccountMenu,
@@ -36,7 +37,6 @@
 @(
     pageTitle: String,
     timeoutEnabled: Boolean = true,
-    backLinkEnabled: Boolean = true,
     accountMenuEnabled: Boolean = true,
     urBanner: Boolean = false
 )(
@@ -47,7 +47,7 @@
 )
 
 @accountMenu = {
-    @if(backLinkEnabled) { @backLink() }
+    @Some(hmrcLanguageSelectHelper())
 }
 
 @head = {
@@ -69,8 +69,10 @@
     headBlock = Some(hmrcHead(headBlock = Some(head))),
     headerBlock = Some(hmrcStandardHeader(
         serviceUrl = Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.CalculateThresholdIncreaseController.onPageLoad().url),
+        phaseBanner = Some(hmrcStandardBetaBanner(url = appConfig.betaFeedbackUnauthenticatedUrl)),
         userResearchBanner = None
     )),
+    beforeContentBlock = Some(accountMenu),
     scriptsBlock = Some(hmrcScripts()),
     footerBlock = Some(hmrcStandardFooter())
 )(mainContent)

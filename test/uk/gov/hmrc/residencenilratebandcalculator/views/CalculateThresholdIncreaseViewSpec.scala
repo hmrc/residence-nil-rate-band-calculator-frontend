@@ -27,7 +27,7 @@ class CalculateThresholdIncreaseViewSpec extends ViewSpecBase {
   "Calculate Threshold Increase view" must {
     "display the correct browser title" in {
       val doc = asDocument(calculate_threshold_increase()(request, messages))
-      assertEqualsMessage(doc, "title", s"$messageKeyPrefix.browser_title")
+      assertEqualsMessage(doc, "title", s"${messages(s"$messageKeyPrefix.browser_title")} - ${messages("service.name")} - GOV.UK")
     }
 
     "display the correct title" in {
@@ -49,8 +49,7 @@ class CalculateThresholdIncreaseViewSpec extends ViewSpecBase {
 
     "display a Start button linking to the 'Date Of Death' page" in {
       val doc = asDocument(calculate_threshold_increase()(request, messages))
-      val startLink = doc.getElementById("start")
-      startLink.className shouldBe "button button--get-started"
+      val startLink = doc.getElementsByClass("govuk-button govuk-button--start")
       startLink.attr("href") shouldBe routes.DateOfDeathController.onPageLoad().url
       startLink.text shouldBe messages("site.start_now")
     }
