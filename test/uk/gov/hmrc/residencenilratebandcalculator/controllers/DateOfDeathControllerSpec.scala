@@ -70,7 +70,7 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase with CommonPlaySp
       }
 
       "load the correct page" in {
-        Jsoup.parse(await(bodyOf(result))).title shouldBe "What was the date of death?"
+        Jsoup.parse(await(bodyOf(result))).title shouldBe "What was the date of death? - Calculate the available RNRB - GOV.UK"
       }
     }
 
@@ -83,7 +83,7 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase with CommonPlaySp
       }
 
       "load the correct page" in {
-        Jsoup.parse(await(bodyOf(result))).title shouldBe "What was the date of death?"
+        Jsoup.parse(await(bodyOf(result))).title shouldBe "What was the date of death? - Calculate the available RNRB - GOV.UK"
       }
     }
   }

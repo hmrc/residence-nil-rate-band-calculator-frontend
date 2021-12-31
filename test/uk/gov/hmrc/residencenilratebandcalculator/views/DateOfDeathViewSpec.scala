@@ -25,7 +25,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm.dateOfDeathForm
 
 import scala.language.reflectiveCalls
 
-class DateOfDeathViewSpec extends DateViewSpecBase {
+class DateOfDeathViewSpec extends NewDateViewSpecBase {
 
   val messageKeyPrefix = "date_of_death"
   val date_of_death = injector.instanceOf[date_of_death]
