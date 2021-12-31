@@ -38,9 +38,8 @@ trait ViewSpecBase extends HtmlSpec {
           implicit val lang: Lang = Lang("en")
 
           val doc = asDocument(createView(emptyForm))
-          val nav = doc.getElementById("proposition-menu")
-          val span = nav.children.first
-          span.text shouldBe messagesApi("site.service_name")
+          val serviceName = doc.getElementsByClass("govuk-header__content")
+          serviceName shouldBe messagesApi("site.service_name")
         }
 
         "display the correct browser title" in {
