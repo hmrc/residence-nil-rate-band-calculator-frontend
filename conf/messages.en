@@ -230,6 +230,7 @@ site.textarea.char_limit = (Limit is 1200 characters)
 site.finish = Finish
 site.service_name = Calculate the available RNRB
 service.name = Calculate the available RNRB
+site.title.error = Error: {0}
 
 threshold_calculation_result.browser_title = Final calculation
 threshold_calculation_result.info.zero.header = There is no increase to the Inheritance Tax threshold

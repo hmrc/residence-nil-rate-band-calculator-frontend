@@ -19,41 +19,37 @@
 
 @this(
     errorSummary: rnrbHelpers.error_summary,
-    mainTemplate: main_template,
+    layout: Layout,
     uiForm: FormWithCSRF,
-    inputDateInline: rnrbHelpers.input_date_inline,
-    heading: rnrbHelpers.heading,
+    inputDateInline: playComponents.input_date_inline,
+    heading: playComponents.heading,
     submitButton: rnrbHelpers.submit_button
 )
 
 @(form: Form[Date])(implicit request: Request[_], messages: Messages)
 
-@mainTemplate(
-    title = messages("date_of_death.browser_title"),
-    bodyClasses = None,
-    enableTimeout = false) {
+@title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("date_of_death.browser_title")) else messages("date_of_death.browser_title")}
 
-
+@layout(
+    pageTitle = title,
+    timeoutEnabled = false
+) {
     @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onSubmit(), 'autoComplete -> "off") {
 
         @errorSummary(form)
 
-        @heading("date_of_death.title", "heading-xlarge")
+        @heading(messages("date_of_death.title"))
 
-        <p>@messages("date_of_death.guidance")</p>
+        <p class="govuk-body">@messages("date_of_death.guidance")</p>
 
-        <div class="form-group">
-            <fieldset class="form-field-group">
-                @inputDateInline(
-                form,
-                "dateOfDeath",
-                '_inputHint -> messages("date_of_death.example"),
-                '_legend -> messages("date_of_death.title"),
-                '_legendClass -> Some("visuallyhidden")
-                )
-            </fieldset>
-            @submitButton()
-        </div>
+        @inputDateInline(
+            content = messages("date_of_death.title"),
+            labelClass = Some("govuk-visually-hidden"),
+            hintContent = Some(messages("date_of_death.example")),
+            field = form("date")
+        )
+
+        @submitButton()
 
 
     }
