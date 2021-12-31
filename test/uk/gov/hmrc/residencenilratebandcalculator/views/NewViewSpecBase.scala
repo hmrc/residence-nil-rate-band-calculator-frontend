@@ -16,14 +16,14 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 import play.api.data.{Form, FormError}
 import play.api.i18n.Lang
 import play.twirl.api.HtmlFormat
-import org.scalatest.Matchers.convertToAnyShouldWrapper
 
 import scala.reflect.ClassTag
 
-trait ViewSpecBase extends HtmlSpec {
+trait NewViewSpecBase extends HtmlSpec {
 
   val errorKey = "value"
   val errorMessage = "error.number"
@@ -38,14 +38,15 @@ trait ViewSpecBase extends HtmlSpec {
           implicit val lang: Lang = Lang("en")
 
           val doc = asDocument(createView(emptyForm))
-          val nav = doc.getElementById("proposition-menu")
-          val span = nav.children.first
-          span.text shouldBe messagesApi("site.service_name")
+          val serviceName = doc.getElementsByClass("govuk-header__content").text
+          serviceName shouldBe messagesApi("site.service_name")
         }
 
         "display the correct browser title" in {
+          implicit val lang: Lang = Lang("en")
           val doc = asDocument(createView(emptyForm))
-          assertEqualsMessage(doc, "title", s"$messageKeyPrefix.browser_title")
+          doc.select("title").text shouldBe (messagesApi(s"$messageKeyPrefix.browser_title") + " - Calculate the available RNRB - GOV.UK")
+          //assertEqualsMessage(doc, "title", s"$messageKeyPrefix.browser_title")
         }
 
         "display the correct page title" in {
