@@ -27,18 +27,17 @@
     hintContent: Option[String] = None,
     smallText: Boolean = false,
     largeText: Boolean = true,
-    labelClass: Option[String] = None
+    labelClass: Option[String] = None,
+    pageHeading: Boolean = true
 )(implicit messages: Messages)
 
 @govukDateInput(DateInput(
-    hint = Some(
-        Hint(content = Text(hintContent.getOrElse("")))
-    ),
+    hint = hintContent.map(text => Hint(content = Text(text))),
     fieldset = Some(Fieldset(
         legend = Some(Legend(
             content = Text(content),
             classes = if(smallText) "govuk-body" else s"""${if(largeText) "govuk-label--xl" else "govuk-label--m"} ${labelClass.getOrElse("")}""",
-            isPageHeading = true
+            isPageHeading = pageHeading
         ))
     ))
 ).withFormField(field))

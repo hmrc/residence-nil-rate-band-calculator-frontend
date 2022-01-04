@@ -23,7 +23,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import org.scalatest.Matchers.convertToAnyShouldWrapper
 
-trait DateViewSpecBase extends ViewSpecBase {
+trait NewDateViewSpecBase extends NewViewSpecBase {
 
   val day = 1
   val month = 2
@@ -96,7 +96,7 @@ trait DateViewSpecBase extends ViewSpecBase {
       "rendered with an error" must {
         "show an error summary" in {
           val doc = asDocument(createView(form.withError(error)))
-          assertRenderedById(doc, "error-summary-heading")
+          assertRenderedById(doc, "error-summary-title")
         }
       }
     }
