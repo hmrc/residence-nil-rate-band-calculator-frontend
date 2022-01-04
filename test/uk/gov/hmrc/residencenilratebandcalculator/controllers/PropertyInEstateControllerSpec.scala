@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_in_estate
 
-class PropertyInEstateControllerSpec extends SimpleControllerSpecBase {
+class PropertyInEstateControllerSpec extends NewSimpleControllerSpecBase {
 
   val messageKey = "property_in_estate.error.required"
   val messageKeyPrefix = "property_in_estate"
