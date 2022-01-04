@@ -15,30 +15,28 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import uk.gov.hmrc.hmrcfrontend.views.Implicits.RichDateInput
 
-@this(
-    govukDateInput: GovukDateInput
-)
+@this(govukRadios : GovukRadios)
 
 @(
-    content: String,
-    field: Field,
-    hintContent: Option[String] = None,
-    smallText: Boolean = false,
-    largeText: Boolean = true,
-    labelClass: Option[String] = None
+        label: Content,
+        hint: Option[String] = None,
+        labelClass: Option[String] = None,
+        isPageHeading: Boolean = false,
+        field: Field,
 )(implicit messages: Messages)
 
-@govukDateInput(DateInput(
-    hint = Some(
-        Hint(content = Text(hintContent.getOrElse("")))
-    ),
+@govukRadios(Radios(
     fieldset = Some(Fieldset(
-        legend = Some(Legend(
-            content = Text(content),
-            classes = if(smallText) "govuk-body" else s"""${if(largeText) "govuk-label--xl" else "govuk-label--m"} ${labelClass.getOrElse("")}""",
-            isPageHeading = true
+        legend = Some(Legend(content = label,
+            classes = labelClass.getOrElse(""),
+            isPageHeading = isPageHeading
         ))
-    ))
+    )),
+    hint = hint.map(hintString => Hint(content = Text(hintString))),
+    items = Seq("yes", "no").map(answer =>
+        RadioItem(value = Some((answer == "yes").toString),
+            content = Text(messages(s"site.$answer"))
+        )),
+    classes = "govuk-radios--inline"
 ).withFormField(field))

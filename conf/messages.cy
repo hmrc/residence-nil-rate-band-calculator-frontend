@@ -230,6 +230,7 @@ site.textarea.char_limit = (Y terfyn yw 1,200 o gymeriadau)
 site.finish = Gorffen
 site.service_name = Cyfrifwch yr RNRB sydd ar gael
 service.name = Cyfrifwch yr RNRB sydd ar gael
+site.title.error=Gwall: {0}
 
 threshold_calculation_result.browser_title = Cyfrifiad terfynol
 threshold_calculation_result.info.zero.header = Nid oes cynnydd i drothwy''r Dreth Etifeddiant

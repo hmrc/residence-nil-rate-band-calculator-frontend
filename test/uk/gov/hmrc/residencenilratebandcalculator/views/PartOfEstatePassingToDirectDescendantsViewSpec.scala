@@ -23,7 +23,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.part_of_estate_pass
 
 import scala.language.reflectiveCalls
 
-class PartOfEstatePassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
+class PartOfEstatePassingToDirectDescendantsViewSpec extends NewBooleanViewSpecBase {
 
   val messageKeyPrefix = "part_of_estate_passing_to_direct_descendants"
   val part_of_estate_passing_to_direct_descendants = injector.instanceOf[part_of_estate_passing_to_direct_descendants]
