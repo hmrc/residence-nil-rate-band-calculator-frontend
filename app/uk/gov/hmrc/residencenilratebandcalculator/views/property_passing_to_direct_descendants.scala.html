@@ -19,33 +19,30 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
 @this(
-    answerRowsHelper: playComponents.answer_rows,
-    layout: Layout,
-    inputRadioGroup: InputRadioGroup,
-    errorSummary: playComponents.error_summary,
     uiForm: FormWithCSRF,
-    heading: playComponents.heading,
-    submitButton: playComponents.submit_button
+    errorSummary: rnrbHelpers.error_summary,
+    submitButton: rnrbHelpers.submit_button,
+    heading: rnrbHelpers.heading,
+    answerRowsHelper: rnrbHelpers.answer_rows,
+    mainTemplate: main_template,
+    inputRadioGroup: InputRadioGroup
 )
 
 @(form: Form[String], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
-@title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("property_passing_to_direct_descendants.browser_title")) else messages("property_passing_to_direct_descendants.browser_title")}
-
-    @layout(
-        pageTitle = title,
-        timeoutEnabled = false
-    ) {
+@mainTemplate(
+    title = messages("property_passing_to_direct_descendants.browser_title"),
+    bodyClasses = None) {
 
     @uiForm(action = PropertyPassingToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
 
-        @errorSummary(form.errors)
+        @errorSummary(form)
 
-        @heading(messages("property_passing_to_direct_descendants.title"))
+        @heading("property_passing_to_direct_descendants.title", "heading-xlarge")
 
-        <p class="govuk-body">@messages("property_passing_to_direct_descendants.guidance2")</p>
+        <p>@messages("property_passing_to_direct_descendants.guidance2")</p>
 
-        <p class="govuk-body">@messages("property_passing_to_direct_descendants.guidance1")</p>
+        <p>@messages("property_passing_to_direct_descendants.guidance1")</p>
 
         <div class="form-group">
             <fieldset class="form-group">
@@ -62,6 +59,5 @@
 
         @submitButton()
     }
-
     @answerRowsHelper(answerRows)
 }

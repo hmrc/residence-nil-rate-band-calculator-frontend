@@ -46,6 +46,7 @@ trait NewViewSpecBase extends HtmlSpec {
           implicit val lang: Lang = Lang("en")
           val doc = asDocument(createView(emptyForm))
           doc.select("title").text shouldBe (messagesApi(s"$messageKeyPrefix.browser_title") + " - Calculate the available RNRB - GOV.UK")
+          //assertEqualsMessage(doc, "title", s"$messageKeyPrefix.browser_title")
         }
 
         "display the correct page title" in {
