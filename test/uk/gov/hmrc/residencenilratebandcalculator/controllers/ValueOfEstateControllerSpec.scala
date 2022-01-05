@@ -22,7 +22,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_estate
 
-class ValueOfEstateControllerSpec extends SimpleControllerSpecBase {
+class ValueOfEstateControllerSpec extends NewSimpleControllerSpecBase {
 
   val errorKeyBlank = "value_of_estate.error.blank"
   val errorKeyDecimal = "error.whole_pounds"

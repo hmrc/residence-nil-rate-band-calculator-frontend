@@ -1,50 +1,51 @@
 @*
- * Copyright 2021 HM Revenue & Customs
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *@
+* Copyright 2021 HM Revenue & Customs
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*@
 
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
 @this(
-    mainTemplate: main_template,
+    layout: Layout,
     uiForm: FormWithCSRF,
-    errorSummary: rnrbHelpers.error_summary,
-    heading: rnrbHelpers.heading,
-    inputValue: rnrbHelpers.input_value,
-    submitButton: rnrbHelpers.submit_button,
-    answerRowsHelper: rnrbHelpers.answer_rows
+    errorSummary: playComponents.error_summary,
+    heading: playComponents.heading,
+    inputValue: playComponents.input_value,
+    submitButton: playComponents.submit_button,
+    answerRowsHelper: playComponents.answer_rows
 )
 
 @(form: Form[Int], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
-@mainTemplate(
-    title = messages("value_of_estate.browser_title"),
-    bodyClasses = None) {
+@layout(
+    pageTitle = messages("value_of_estate.browser_title")
+) {
 
     @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfEstateController.onSubmit(), 'autoComplete -> "off") {
 
-        @errorSummary(form)
+        @errorSummary(form.errors)
 
-        @heading("value_of_estate.title", "heading-xlarge")
+        @heading(messages("value_of_estate.title"))
 
-        <p>@messages("value_of_estate.guidance3")</p>
+        <p class="govuk-body">@messages("value_of_estate.guidance3")</p>
 
-        <p>@messages("value_of_estate.guidance4") <a href="https://www.gov.uk/valuing-estate-of-someone-who-died/estimate-estate-value">@messages("value_of_estate.link")</a></p>
+        <p class="govuk-body">@messages("value_of_estate.guidance4") <a href="https://www.gov.uk/valuing-estate-of-someone-who-died/estimate-estate-value">@messages("value_of_estate.link")</a></p>
 
-        <p>@messages("value_of_estate.guidance1")</p>
-        <ul class="list list-bullet">
+        <p class="govuk-body">@messages("value_of_estate.guidance1")</p>
+
+        <ul class="govuk-list govuk-list--bullet">
             <li>@messages("value_of_estate.guidance1.bullet1")</li>
             <li>@messages("value_of_estate.guidance1.bullet2")</li>
             <li>@messages("value_of_estate.guidance1.bullet3")</li>
@@ -53,22 +54,16 @@
             <li>@messages("value_of_estate.guidance1.bullet6")</li>
         </ul>
 
-        <p>@messages("value_of_estate.guidance2")</p>
+        <p class="govuk-body">@messages("value_of_estate.guidance2")</p>
 
-        <div class="form-group">
-            @inputValue(
-                form("value"),
-                '_inputClass -> "form-control",
-                '_type -> "number",
-                '_spanAfter -> false,
-                '_span -> Messages("sign.pound"),
-                '_spanTextClass -> "bold-small",
-                '_label -> Messages("value_of_estate.title"),
-                '_labelTextClass -> "visuallyhidden")
-        </div>
-        <div>
-            @submitButton()
-        </div>
+        @inputValue(
+            label = messages("value_of_estate.title"),
+            labelClass = Some("govuk-visually-hidden"),
+            currency = true,
+            field = form("value")
+        )
+
+        @submitButton()
     }
 
     @answerRowsHelper(answerRows)
