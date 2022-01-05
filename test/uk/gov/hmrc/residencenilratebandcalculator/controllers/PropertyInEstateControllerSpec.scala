@@ -22,7 +22,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_in_estate
 
-class PropertyInEstateControllerSpec extends SimpleControllerSpecBase {
+class PropertyInEstateControllerSpec extends NewSimpleControllerSpecBase {
 
   val messageKey = "property_in_estate.error.required"
   val messageKeyPrefix = "property_in_estate"

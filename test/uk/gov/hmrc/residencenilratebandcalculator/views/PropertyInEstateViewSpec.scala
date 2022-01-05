@@ -23,7 +23,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_in_estate
 
 import scala.language.reflectiveCalls
 
-class PropertyInEstateViewSpec  extends BooleanViewSpecBase {
+class PropertyInEstateViewSpec  extends NewBooleanViewSpecBase {
 
   val messageKeyPrefix = "property_in_estate"
   val property_in_estate = injector.instanceOf[property_in_estate]
