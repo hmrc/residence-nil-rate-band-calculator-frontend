@@ -22,7 +22,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PropertyPassingToDirectDescendantsForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_passing_to_direct_descendants
 
-class PropertyPassingToDirectDescendantsControllerSpec extends NewSimpleControllerSpecBase {
+class PropertyPassingToDirectDescendantsControllerSpec extends SimpleControllerSpecBase {
 
   val messageKeyPrefix = "property_passing_to_direct_descendants"
 

@@ -24,7 +24,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_passing_to
 
 import scala.language.reflectiveCalls
 
-class PropertyPassingToDirectDescendantsViewSpec extends NewBooleanViewSpecBase {
+class PropertyPassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
 
   val messageKeyPrefix = "property_passing_to_direct_descendants"
   val property_passing_to_direct_descendants = injector.instanceOf[property_passing_to_direct_descendants]
