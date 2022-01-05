@@ -22,7 +22,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exemptions_and_relief_claimed
 
-class ExemptionsAndReliefClaimedControllerSpec extends SimpleControllerSpecBase {
+class ExemptionsAndReliefClaimedControllerSpec extends NewSimpleControllerSpecBase {
 
   val messageKey = "exemptions_and_relief_claimed.error.required"
   val messageKeyPrefix = "exemptions_and_relief_claimed"
