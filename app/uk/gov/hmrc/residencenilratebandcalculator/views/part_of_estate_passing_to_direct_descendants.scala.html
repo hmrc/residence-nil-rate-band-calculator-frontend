@@ -33,8 +33,7 @@ implicit request: Request[_], messages: Messages)
 @title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("part_of_estate_passing_to_direct_descendants.browser_title")) else messages("part_of_estate_passing_to_direct_descendants.browser_title")}
 
 @layout(
-    pageTitle = title,
-    timeoutEnabled = false
+    pageTitle = title
 ) {
 
     @formWithCSRF(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PartOfEstatePassingToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {

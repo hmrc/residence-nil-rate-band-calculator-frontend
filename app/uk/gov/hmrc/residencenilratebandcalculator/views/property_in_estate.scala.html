@@ -32,8 +32,7 @@
 @title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("property_in_estate.browser_title")) else messages("property_in_estate.browser_title")}
 
 @layout(
-    pageTitle = title,
-    timeoutEnabled = false
+    pageTitle = title
 ) {
     @formWithCSRF(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyInEstateController.onSubmit(), 'autoComplete -> "off") {
 
