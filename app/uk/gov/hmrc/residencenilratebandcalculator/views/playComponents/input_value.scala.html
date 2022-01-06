@@ -28,7 +28,8 @@
     smallText: Boolean = false,
     largeText: Boolean = true,
     shortAnswer: Boolean = false,
-    field: Field
+    field: Field,
+    suffix: Option[String] = None
 )(implicit messages: Messages)
 
 @hint = @{
@@ -49,6 +50,7 @@
     spellcheck = Some(!currency),
     autocomplete = autoComplete,
     inputType = inputType,
-    prefix = if(currency) Some(PrefixOrSuffix(content = Text("£"))) else None
+    prefix = if(currency) Some(PrefixOrSuffix(content = Text("£"))) else None,
+    suffix = if (suffix isDefined) Some(PrefixOrSuffix(content = Text(suffix.get))) else None
 ).withFormField(field)
 )
