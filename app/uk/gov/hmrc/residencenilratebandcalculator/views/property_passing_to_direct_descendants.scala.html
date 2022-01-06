@@ -19,45 +19,49 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
 @this(
+    answerRowsHelper: playComponents.answer_rows,
+    layout: Layout,
+    inputRadioGroup: InputRadioGroup,
+    errorSummary: playComponents.error_summary,
     uiForm: FormWithCSRF,
-    errorSummary: rnrbHelpers.error_summary,
-    submitButton: rnrbHelpers.submit_button,
-    heading: rnrbHelpers.heading,
-    answerRowsHelper: rnrbHelpers.answer_rows,
-    mainTemplate: main_template,
-    inputRadioGroup: InputRadioGroup
+    heading: playComponents.heading,
+    submitButton: playComponents.submit_button,
+    inputRadio: playComponents.input_radio,
 )
 
 @(form: Form[String], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
-@mainTemplate(
-    title = messages("property_passing_to_direct_descendants.browser_title"),
-    bodyClasses = None) {
+@title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("property_passing_to_direct_descendants.browser_title")) else messages("property_passing_to_direct_descendants.browser_title")}
+
+    @layout(
+        pageTitle = title,
+        timeoutEnabled = false
+    ) {
 
     @uiForm(action = PropertyPassingToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
 
-        @errorSummary(form)
+        @errorSummary(form.errors)
 
-        @heading("property_passing_to_direct_descendants.title", "heading-xlarge")
+        @heading(messages("property_passing_to_direct_descendants.title"))
 
-        <p>@messages("property_passing_to_direct_descendants.guidance2")</p>
+        <p class="govuk-body">@messages("property_passing_to_direct_descendants.guidance2")</p>
 
-        <p>@messages("property_passing_to_direct_descendants.guidance1")</p>
+        <p class="govuk-body">@messages("property_passing_to_direct_descendants.guidance1")</p>
 
-        <div class="form-group">
-            <fieldset class="form-group">
-                @inputRadioGroup(
-                    form("value"),
-                    Seq("all" -> Messages("property_passing_to_direct_descendants.all"),
-                    "some" -> Messages("property_passing_to_direct_descendants.some"),
-                    "none" -> Messages("property_passing_to_direct_descendants.none")),
-                    '_legend -> messages("property_passing_to_direct_descendants.title"),
-                    '_legendClass -> Some("visuallyhidden")
-                    )
-            </fieldset>
-        </div>
+        @inputRadio(
+            legend = heading(""),
+            hint = None,
+            classes = "govuk-fieldset__legend--l",
+            inputs = Seq(
+            RadioItem(content = Text(messages("property_passing_to_direct_descendants.all")),value = Some("all")),
+            RadioItem(content = Text(messages("property_passing_to_direct_descendants.some")),value = Some("some")),
+            RadioItem(content = Text(messages("property_passing_to_direct_descendants.none")),value = Some("none"))
+            ),
+            field = form("value")
+        )
 
         @submitButton()
     }
+
     @answerRowsHelper(answerRows)
 }
