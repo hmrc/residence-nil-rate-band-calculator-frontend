@@ -24,7 +24,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_inherite
 
 import scala.language.reflectiveCalls
 
-class ChargeableInheritedPropertyValueViewSpec extends IntViewSpecBase {
+class ChargeableInheritedPropertyValueViewSpec extends NewIntViewSpecBase {
 
   val messageKeyPrefix = "chargeable_inherited_property_value"
   val chargeable_inherited_property_value = injector.instanceOf[chargeable_inherited_property_value]

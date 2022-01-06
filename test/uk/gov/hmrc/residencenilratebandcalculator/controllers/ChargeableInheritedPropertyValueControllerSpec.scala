@@ -23,7 +23,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_inherited_property_value
 
-class ChargeableInheritedPropertyValueControllerSpec extends SimpleControllerSpecBase {
+class ChargeableInheritedPropertyValueControllerSpec extends NewSimpleControllerSpecBase {
 
   val errorKeyBlank = "chargeable_inherited_property_value.error.blank"
   val errorKeyDecimal = "error.whole_pounds"
