@@ -22,7 +22,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.controllers.ExemptionsAndRelie
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exemptions_and_relief_claimed
 
-class ExemptionsAndReliefClaimedViewSpec extends BooleanViewSpecBase {
+class ExemptionsAndReliefClaimedViewSpec extends NewBooleanViewSpecBase {
 
   val messageKeyPrefix = "exemptions_and_relief_claimed"
 
