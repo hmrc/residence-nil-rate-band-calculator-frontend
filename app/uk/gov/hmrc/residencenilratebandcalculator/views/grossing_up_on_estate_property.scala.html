@@ -32,8 +32,7 @@
 @title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("grossing_up_on_estate_property.browser_title")) else messages("grossing_up_on_estate_property.browser_title")}
 
 @layout(
-    pageTitle = title,
-    timeoutEnabled = false
+    pageTitle = title
 ) {
     @formWithCSRF(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.GrossingUpOnEstatePropertyController.onSubmit(), 'autoComplete -> "off") {
 
