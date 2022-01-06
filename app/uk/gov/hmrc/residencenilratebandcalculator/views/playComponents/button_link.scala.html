@@ -21,6 +21,4 @@ messageKey: String = "",
 href: String
 )(implicit messages: Messages)
 
-<div class="section">
-    <a href="@href" class="button">@messages(messageKey)</a>
-</div>
+<a href="@href" class="govuk-button">@messages(messageKey)</a>
