@@ -22,7 +22,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_any_unused_threshold
 
-class TransferAnyUnusedThresholdControllerSpec extends SimpleControllerSpecBase {
+class TransferAnyUnusedThresholdControllerSpec extends NewSimpleControllerSpecBase {
 
   val messageKey = "transfer_any_unused_threshold.error.required"
   val messageKeyPrefix = "transfer_any_unused_threshold"
