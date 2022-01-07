@@ -18,46 +18,41 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
 @this(
-    mainTemplate: main_template,
+    layout: Layout,
     uiForm: FormWithCSRF,
-    errorSummary: rnrbHelpers.error_summary,
-    heading: rnrbHelpers.heading,
-    inputValue: rnrbHelpers.input_value,
-    submitButton: rnrbHelpers.submit_button,
-    answerRowsHelper: rnrbHelpers.answer_rows
+    errorSummary: playComponents.error_summary,
+    heading: playComponents.heading,
+    inputValue: playComponents.input_value,
+    submitButton: playComponents.submit_button,
+    answerRowsHelper: playComponents.answer_rows
 )
 
 @(nilRateBand: String, form: Form[Int], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
-@mainTemplate(
-    title = messages("value_being_transferred.browser_title"),
-    bodyClasses = None) {
+@title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("value_being_transferred.browser_title")) else messages("value_being_transferred.browser_title")}
+
+@layout(
+    pageTitle = title,
+) {
 
     @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueBeingTransferredController.onSubmit(), 'autoComplete -> "off") {
 
-        @errorSummary(form)
+        @errorSummary(form.errors)
 
-        @heading("value_being_transferred.title", "heading-xlarge")
+        @heading(messages("value_being_transferred.title"))
 
-        <p>@messages("value_being_transferred.guidance1")</p>
+        <p class="govuk-body">@messages("value_being_transferred.guidance1")</p>
 
-        <p>@messages("value_being_transferred.guidance2")</p>
+        <p class="govuk-body">@messages("value_being_transferred.guidance2")</p>
 
-        <div class="form-group">
-            @inputValue(
-                form("value"),
-                '_inputClass -> "form-control",
-                '_type -> "number",
-                '_spanAfter -> false,
-                '_span -> Messages("sign.pound"),
-                '_spanTextClass -> "bold-small",
-                '_label -> Messages("value_being_transferred.title"),
-                '_labelTextClass -> "visuallyhidden")
+        @inputValue(
+            label = messages("value_being_transferred.title"),
+            labelClass = Some("govuk-visually-hidden"),
+            currency = true,
+            field = form("value")
+        )
 
-        </div>
-        <div>
-            @submitButton()
-        </div>
+        @submitButton()
 
     }
     @answerRowsHelper(answerRows)
