@@ -33,7 +33,7 @@ class UnableToCalculateThresholdIncreaseViewSpec extends HtmlSpec {
 
     "display the correct browser title" in {
       val f = fixture()
-      assertEqualsMessage(f.doc, "title", "unable_to_calculate_threshold_increase.browser_title")
+      assertEqualsMessage(f.doc, "title", messages("unable_to_calculate_threshold_increase.browser_title") + " - Calculate the available RNRB - GOV.UK")
     }
 
     "display the correct page title" in {

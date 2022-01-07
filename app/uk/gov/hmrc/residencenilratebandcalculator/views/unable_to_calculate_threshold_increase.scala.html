@@ -17,34 +17,37 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 
 @this(
-    mainTemplate: main_template,
-    answerRowsHelper: rnrbHelpers.answer_rows
+    layout: Layout,
+    answerRowsHelper: playComponents.answer_rows,
+    heading: playComponents.heading,
 )
 
 @(prefix: String, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
-@mainTemplate(
-    title = messages("unable_to_calculate_threshold_increase.browser_title"),
-    bodyClasses = None) {
 
-    <h1 class="heading-xlarge">@messages(s"${prefix}.title")</h1>
+@layout(
+    pageTitle = messages("unable_to_calculate_threshold_increase.browser_title")
+) {
 
-    <div class="panel-indent panel-indent--wide">
+    @heading(messages("unable_to_calculate_threshold_increase.grossing_up.title"))
+
+    <div class="govuk-inset-text">
         <p>@messages(s"${prefix}.reason")</p>
     </div>
 
-    <p>@messages(s"${prefix}.guidance")</p>
+    <p class="govuk-body">@messages(s"${prefix}.guidance")</p>
 
-    <h2 class="heading-medium">@messages(s"${prefix}.next.title")</h2>
-    <p>@messages(s"${prefix}.next.guidance1")</p>
-    <p>@messages(s"${prefix}.next.guidance2")</p>
-    <span>@messages(s"${prefix}.next.guidance3.addr1")</span><br/>
-    <span>@messages(s"${prefix}.next.guidance3.addr2")</span><br/>
-    <span>@messages(s"${prefix}.next.guidance3.addr3")</span>
-    <p>@messages(s"${prefix}.next.guidance4")</p>
-    <p>@messages(s"${prefix}.next.guidance5")</p>
+    <h2 class="govuk-heading-m">@messages(s"${prefix}.next.title")</h2>
+    <p class="govuk-body">@messages(s"${prefix}.next.guidance1")</p>
+    <p class="govuk-body">@messages(s"${prefix}.next.guidance2")</p>
+    <span class="govuk-body">@messages(s"${prefix}.next.guidance3.addr1")</span><br/>
+    <span class="govuk-body">@messages(s"${prefix}.next.guidance3.addr2")</span><br/>
+    <span class="govuk-body">@messages(s"${prefix}.next.guidance3.addr3")</span>
+    <p class="govuk-body">@messages(s"${prefix}.next.guidance4")</p>
+    <p class="govuk-body">@messages(s"${prefix}.next.guidance5")</p>
 
 
     <a href="@uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.FeedbackSurveyController.redirectExitSurvey().url" class="button u--no-print">@messages("site.finish")</a>
 
-    @answerRowsHelper(answerRows)
+
+    <p>@answerRowsHelper(answerRows)</p>
 }
