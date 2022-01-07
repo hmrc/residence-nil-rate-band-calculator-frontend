@@ -28,7 +28,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_being_transfe
 
 import scala.language.reflectiveCalls
 
-class ValueBeingTransferredViewSpec extends IntViewSpecBase {
+class ValueBeingTransferredViewSpec extends NewIntViewSpecBase {
 
   val messageKeyPrefix = "value_being_transferred"
   val navigator = injector.instanceOf[Navigator]
