@@ -18,47 +18,52 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 
 @this(
-    mainTemplate: main_template,
-    answerRowsHelper: rnrbHelpers.answer_rows
+    layout: Layout,
+    heading: playComponents.heading,
+    buttonLink: playComponents.button_link,
+    answerRowsHelper: playComponents.answer_rows
 )
 
 @(residenceNilRateAmount: String, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
-@mainTemplate(
-    title = messages("threshold_calculation_result.browser_title"),
-    bodyClasses = None) {
+@layout(
+    pageTitle = messages("threshold_calculation_result.browser_title")
+) {
 
     @if(residenceNilRateAmount == "£0.00") {
-        <h1 class="heading-xlarge">@messages("threshold_calculation_result.info.zero.header")</h1>
-        <p class="heading-medium bold data-item">
+        @heading(messages("threshold_calculation_result.info.zero.header"))
+        <p class="govuk-heading-m govuk-!-margin-top-0 govuk-!-margin-bottom-5">
             @messages("threshold_calculation_result.info.zero.guidance", residenceNilRateAmount)
         </p>
-        <p>@messages("threshold_calculation_result.info.zero.threshold_change")</p>
+        <p class="govuk-heading-m govuk-!-margin-top-0 govuk-!-margin-bottom-5">@messages("threshold_calculation_result.info.zero.threshold_change")</p>
     } else {
-        <h1 class="heading-xlarge">@messages("threshold_calculation_result.info.non_zero.header")</h1>
-        <p class="heading-medium bold data-item">
+        @heading(messages("threshold_calculation_result.info.non_zero.header"))
+        <p class="govuk-heading-m govuk-!-margin-top-0 govuk-!-margin-bottom-5">
             @messages("threshold_calculation_result.info.non_zero.guidance", residenceNilRateAmount)
         </p>
-        <p>@messages("threshold_calculation_result.info.non_zero.threshold_change")</p>
+        <p class="govuk-body">@messages("threshold_calculation_result.info.non_zero.threshold_change")</p>
     }
 
     <h2 class="heading-medium u-margin-top--2em">@messages("threshold_calculation_result.action.header")</h2>
-    <p>@messages("threshold_calculation_result.action.guidance", residenceNilRateAmount)</p>
-    <ul class="list list-bullet">
+    <p class="govuk-body">@messages("threshold_calculation_result.action.guidance", residenceNilRateAmount)</p>
+    <ul class="govuk-list govuk-list--bullet">
         <li>@messages("threshold_calculation_result.action.guidance.form_435")</li>
         <li>@messages("threshold_calculation_result.action.guidance.form_400")</li>
     </ul>
-    <p>@messages("threshold_calculation_result.action.guidance.continue")</p>
-    <p class="u--no-print js-visible">@messages("threshold_calculation_result.print_prefix")
+    <p class="govuk-body">@messages("threshold_calculation_result.action.guidance.continue")</p>
+    <p class="govuk-body">@messages("threshold_calculation_result.print_prefix")
         <a href="javascript:window.print()">@messages("threshold_calculation_result.link_to_print")</a>
         @messages("threshold_calculation_result.print_suffix")
     </p>
 
-    <div class="panel-indent panel-indent--gutter u--no-print">
-        <p><a href="@routes.IHT435Controller.onPageLoad()">@messages("threshold_calculation_result.pdf.guidance1")</a>. @messages("threshold_calculation_result.pdf.guidance2")</p>
+    <div class="govuk-inset-text">
+        <a href="@routes.IHT435Controller.onPageLoad()">@messages("threshold_calculation_result.pdf.guidance1")</a>. @messages("threshold_calculation_result.pdf.guidance2")
     </div>
 
-    <a class="button u--no-print" href="@routes.FeedbackSurveyController.redirectExitSurvey().url">@messages("site.finish")</a>
+    @buttonLink(
+        messageKey = messages("site.finish"),
+        href = routes.FeedbackSurveyController.redirectExitSurvey().url
+    )
 
     @answerRowsHelper(answerRows)
 
