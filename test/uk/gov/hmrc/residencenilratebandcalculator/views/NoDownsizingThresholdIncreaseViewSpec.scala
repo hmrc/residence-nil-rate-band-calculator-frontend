@@ -26,7 +26,7 @@ class NoDownsizingThresholdIncreaseViewSpec extends HtmlSpec {
   "No Downsizing Threshold Increase View" must {
     "display the correct browser title" in {
       val doc = asDocument(no_downsizing_threshold_increase("", Call("", ""), Seq()))
-      assertEqualsMessage(doc, "title", s"$messageKeyPrefix.browser_title")
+      assertEqualsMessage(doc, "title", s"${messages(s"$messageKeyPrefix.browser_title")} - ${messages("service.name")} - GOV.UK")
     }
 
     "display the correct page title" in {
