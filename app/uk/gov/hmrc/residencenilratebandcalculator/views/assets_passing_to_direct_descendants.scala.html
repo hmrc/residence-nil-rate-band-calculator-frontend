@@ -19,45 +19,43 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
 @this(
-    inputRadioGroup: InputRadioGroup,
-    mainTemplate: main_template,
+    inputYesNo: playComponents.input_yes_no,
+    layout: Layout,
     uiForm: FormWithCSRF,
-    errorSummary: rnrbHelpers.error_summary,
-    heading: rnrbHelpers.heading,
-    submitButton: rnrbHelpers.submit_button,
-    answerRowsHelper: rnrbHelpers.answer_rows
+    errorSummary: playComponents.error_summary,
+    heading: playComponents.heading,
+    submitButton: playComponents.submit_button,
+    answerRowsHelper: playComponents.answer_rows
 )
 
 @(form: Form[Boolean], answerRows: Seq[AnswerRow], formattedPropertyValue: Option[String])(implicit request: Request[_], messages: Messages)
 
-@mainTemplate(
-    title = messages("assets_passing_to_direct_descendants.browser_title"),
-    bodyClasses = None) {
+@title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("assets_passing_to_direct_descendants.browser_title")) else messages("assets_passing_to_direct_descendants.browser_title")}
+
+@layout(
+    pageTitle = title,
+) {
 
     @uiForm(action = AssetsPassingToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
 
-        @errorSummary(form)
+        @errorSummary(form.errors)
 
-        @heading("assets_passing_to_direct_descendants.title", "heading-xlarge")
+        @heading(messages("assets_passing_to_direct_descendants.title"))
 
         @if(formattedPropertyValue.isDefined) {
-            <p>@messages("assets_passing_to_direct_descendants.guidance", formattedPropertyValue.get)</p>
+            <p class="govuk-body">@messages("assets_passing_to_direct_descendants.guidance", formattedPropertyValue.get)</p>
         } else {
-            <p>@messages("assets_passing_to_direct_descendants.guidance_no_property")</p>
-            <p>@messages("assets_passing_to_direct_descendants.guidance_no_property.p2")</p>
+            <p class="govuk-body">@messages("assets_passing_to_direct_descendants.guidance_no_property")</p>
+            <p class="govuk-body">@messages("assets_passing_to_direct_descendants.guidance_no_property.p2")</p>
         }
 
-        <div class="form-group">
-            <fieldset class="form-group inline">
-                @inputRadioGroup(
-                form("value"),
-                Seq("true" -> messages("site.yes"), "false" -> messages("site.no")),
-                '_legend -> messages("assets_passing_to_direct_descendants.title"),
-                '_legendClass -> Some("visuallyhidden")
-                )
-            </fieldset>
-            @submitButton()
-        </div>
+        @inputYesNo(
+            label = HtmlContent(heading(messages("assets_passing_to_direct_descendants.title"))),
+            labelClass = Some("visually-hidden"),
+            field = form("value")
+        )
+
+        @submitButton()
 
     }
 

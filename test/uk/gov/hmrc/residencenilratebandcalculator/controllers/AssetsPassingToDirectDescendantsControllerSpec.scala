@@ -22,7 +22,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.assets_passing_to_direct_descendants
 
-class AssetsPassingToDirectDescendantsControllerSpec extends SimpleControllerSpecBase {
+class AssetsPassingToDirectDescendantsControllerSpec extends NewSimpleControllerSpecBase {
 
   val messageKey = "assets_passing_to_direct_descendants.error.required"
   val messageKeyPrefix = "assets_passing_to_direct_descendants"
