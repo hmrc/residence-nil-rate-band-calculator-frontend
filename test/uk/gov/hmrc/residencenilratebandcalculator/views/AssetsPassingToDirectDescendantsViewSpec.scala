@@ -23,7 +23,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.assets_passing_to_d
 
 import scala.language.reflectiveCalls
 
-class AssetsPassingToDirectDescendantsViewSpec extends BooleanViewSpecBase {
+class AssetsPassingToDirectDescendantsViewSpec extends NewBooleanViewSpecBase {
 
   val messageKeyPrefix = "assets_passing_to_direct_descendants"
 
