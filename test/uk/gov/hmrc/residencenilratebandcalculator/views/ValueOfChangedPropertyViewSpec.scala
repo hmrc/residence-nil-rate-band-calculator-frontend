@@ -24,7 +24,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_changed_pr
 
 import scala.language.reflectiveCalls
 
-class ValueOfChangedPropertyViewSpec extends IntViewSpecBase {
+class ValueOfChangedPropertyViewSpec extends NewIntViewSpecBase {
 
   val messageKeyPrefix = "value_of_changed_property"
   val value_of_changed_property = injector.instanceOf[value_of_changed_property]
