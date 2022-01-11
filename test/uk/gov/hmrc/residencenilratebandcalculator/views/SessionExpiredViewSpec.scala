@@ -27,7 +27,7 @@ class SessionExpiredViewSpec extends ViewSpecBase {
   "Session Expired view" must {
     "display the correct browser title" in {
       val doc = asDocument(session_expired()(request, messages))
-      assertEqualsMessage(doc, "title", s"$messageKeyPrefix.browser_title")
+      assertEqualsMessage(doc, "title", s"${messages(s"$messageKeyPrefix.browser_title")} - ${messages("service.name")} - GOV.UK")
     }
 
     "display the correct title" in {
