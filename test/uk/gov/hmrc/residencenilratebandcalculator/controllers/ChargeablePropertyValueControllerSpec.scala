@@ -24,7 +24,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_property_value
 
-class ChargeablePropertyValueControllerSpec extends SimpleControllerSpecBase with CommonPlaySpec {
+class ChargeablePropertyValueControllerSpec extends NewSimpleControllerSpecBase with CommonPlaySpec {
 
   val errorKeyBlank = "chargeable_property_value.error.blank"
   val errorKeyDecimal = "error.whole_pounds"
