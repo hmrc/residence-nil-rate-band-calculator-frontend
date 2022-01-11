@@ -24,7 +24,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_assets_pas
 
 import scala.language.reflectiveCalls
 
-class ValueOfAssetsPassingViewSpec extends IntViewSpecBase {
+class ValueOfAssetsPassingViewSpec extends NewIntViewSpecBase {
 
   val messageKeyPrefix = "value_of_assets_passing"
   val value_of_assets_passing = injector.instanceOf[value_of_assets_passing]

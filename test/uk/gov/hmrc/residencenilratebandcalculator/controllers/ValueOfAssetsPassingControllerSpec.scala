@@ -27,7 +27,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_assets_passing
 
-class ValueOfAssetsPassingControllerSpec extends SimpleControllerSpecBase with CommonPlaySpec{
+class ValueOfAssetsPassingControllerSpec extends NewSimpleControllerSpecBase with CommonPlaySpec{
 
   val errorKeyBlank = "value_of_assets_passing.error.blank"
   val errorKeyDecimal = "error.whole_pounds"
