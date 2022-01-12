@@ -21,7 +21,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossingUpOnEstate
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_estate_assets
 
-class GrossingUpOnEstateAssetsViewSpec extends BooleanViewSpecBase {
+class GrossingUpOnEstateAssetsViewSpec extends NewBooleanViewSpecBase {
 
   val messageKeyPrefix = "grossing_up_on_estate_assets"
   val grossing_up_on_estate_assets = injector.instanceOf[grossing_up_on_estate_assets]

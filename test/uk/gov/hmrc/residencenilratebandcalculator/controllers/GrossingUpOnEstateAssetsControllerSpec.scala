@@ -22,7 +22,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_estate_assets
 
-class GrossingUpOnEstateAssetsControllerSpec extends SimpleControllerSpecBase {
+class GrossingUpOnEstateAssetsControllerSpec extends NewSimpleControllerSpecBase {
 
   val messageKey = "grossing_up_on_estate_assets.error.required"
   val messageKeyPrefix = "grossing_up_on_estate_assets"
