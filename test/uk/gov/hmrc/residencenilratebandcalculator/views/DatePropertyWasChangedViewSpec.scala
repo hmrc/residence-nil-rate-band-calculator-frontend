@@ -25,7 +25,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 
 import scala.language.reflectiveCalls
 
-class DatePropertyWasChangedViewSpec  extends DateViewSpecBase {
+class DatePropertyWasChangedViewSpec  extends NewDateViewSpecBase {
 
   val messageKeyPrefix = "date_property_was_changed"
   val date_property_was_changed = injector.instanceOf[date_property_was_changed]
