@@ -19,7 +19,8 @@
 @this(
     layout: Layout,
     heading: playComponents.heading,
-    answerRowsHelper: rnrbHelpers.answer_rows
+    answerRowsHelper: rnrbHelpers.answer_rows,
+    buttonLink: playComponents.button_link
 )
 
 @(prefix: String, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
@@ -32,8 +33,7 @@
         @messages(s"${prefix}.reason")
     </div>
 
-    <a href="@uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.FeedbackSurveyController.redirectExitSurvey().url" class="button u--no-print">@messages("site.finish")</a>
-
+    @buttonLink(messages("site.finish"), uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.FeedbackSurveyController.redirectExitSurvey().url)
     @answerRowsHelper(answerRows)
 
 }
