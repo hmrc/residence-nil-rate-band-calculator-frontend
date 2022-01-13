@@ -23,7 +23,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_available_
 
 import scala.language.reflectiveCalls
 
-class TransferAvailableWhenPropertyChangedViewSpec extends BooleanViewSpecBase {
+class TransferAvailableWhenPropertyChangedViewSpec extends NewBooleanViewSpecBase {
 
   val messageKeyPrefix = "transfer_available_when_property_changed"
   val transfer_available_when_property_changed = injector.instanceOf[transfer_available_when_property_changed]

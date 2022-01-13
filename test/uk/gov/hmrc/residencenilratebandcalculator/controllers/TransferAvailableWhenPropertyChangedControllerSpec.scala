@@ -22,7 +22,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_available_when_property_changed
 
-class TransferAvailableWhenPropertyChangedControllerSpec extends SimpleControllerSpecBase {
+class TransferAvailableWhenPropertyChangedControllerSpec extends NewSimpleControllerSpecBase {
 
   val messageKey = "transfer_available_when_property_changed.error.required"
   val messageKeyPrefix = "transfer_available_when_property_changed"
