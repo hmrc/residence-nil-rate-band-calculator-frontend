@@ -18,42 +18,40 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
 @this(
-    inputRadioGroup: InputRadioGroup,
+    inputYesNo: playComponents.input_yes_no,
     uiForm: FormWithCSRF,
-    errorSummary: rnrbHelpers.error_summary,
-    heading: rnrbHelpers.heading,
-    submitButton: rnrbHelpers.submit_button,
-    mainTemplate: main_template,
-    answerRowsHelper: rnrbHelpers.answer_rows
+    errorSummary: playComponents.error_summary,
+    heading: playComponents.heading,
+    submitButton: playComponents.submit_button,
+    layout: Layout,
+    answerRowsHelper: playComponents.answer_rows
 )
 
 @(form: Form[Boolean], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
-@mainTemplate(
-    title = messages("grossing_up_on_estate_assets.browser_title"),
-    bodyClasses = None) {
+
+@title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("grossing_up_on_estate_assets.browser_title")) else messages("grossing_up_on_estate_assets.browser_title")}
+
+@layout(
+    pageTitle = title
+) {
 
     @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.GrossingUpOnEstateAssetsController.onSubmit(), 'autoComplete -> "off") {
 
-        @errorSummary(form)
+        @errorSummary(form.errors)
 
-        @heading("grossing_up_on_estate_assets.title", "heading-xlarge")
+        @heading(messages("grossing_up_on_estate_assets.title"))
 
-        <p>@messages("grossing_up_on_estate_assets.guidance1")</p>
+        <p class="govuk-body">@messages("grossing_up_on_estate_assets.guidance1")</p>
 
-        <p>@messages("grossing_up_on_estate_assets.guidance2")</p>
+        <p class="govuk-body">@messages("grossing_up_on_estate_assets.guidance2")</p>
 
-        <div class="form-group">
-            <fieldset class="form-group inline">
-                @inputRadioGroup(
-                    form("value"),
-                    Seq("true" -> messages("site.yes"), "false" -> messages("site.no")),
-                    '_legend -> messages("grossing_up_on_estate_assets.title"),
-                    '_legendClass -> Some("visuallyhidden")
-                    )
-            </fieldset>
-               @submitButton()
-        </div>
+        @inputYesNo(
+            label = HtmlContent(heading(messages("grossing_up_on_estate_assets.browser_title"))),
+            labelClass = Some("visuallyhidden"),
+            field = form("value")
+        )
+        @submitButton()
 
     }
     @answerRowsHelper(answerRows)
