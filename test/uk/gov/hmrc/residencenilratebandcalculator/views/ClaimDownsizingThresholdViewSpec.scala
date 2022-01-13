@@ -23,7 +23,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.claim_downsizing_th
 
 import scala.language.reflectiveCalls
 
-class ClaimDownsizingThresholdViewSpec extends BooleanViewSpecBase {
+class ClaimDownsizingThresholdViewSpec extends NewBooleanViewSpecBase {
 
   val messageKeyPrefix = "claim_downsizing_threshold"
   val claim_downsizing_threshold = injector.instanceOf[claim_downsizing_threshold]

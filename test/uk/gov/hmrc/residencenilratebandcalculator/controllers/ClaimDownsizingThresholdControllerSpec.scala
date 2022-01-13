@@ -22,7 +22,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.claim_downsizing_threshold
 
-class ClaimDownsizingThresholdControllerSpec extends SimpleControllerSpecBase {
+class ClaimDownsizingThresholdControllerSpec extends NewSimpleControllerSpecBase {
 
   val messageKey = "claim_downsizing_threshold.error.required"
   val messageKeyPrefix = "claim_downsizing_threshold"
