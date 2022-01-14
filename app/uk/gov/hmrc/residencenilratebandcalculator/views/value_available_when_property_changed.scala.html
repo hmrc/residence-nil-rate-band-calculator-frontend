@@ -18,45 +18,41 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
 @this(
-    mainTemplate: main_template,
+    layout: Layout,
     uiForm: FormWithCSRF,
-    errorSummary: rnrbHelpers.error_summary,
-    heading: rnrbHelpers.heading,
-    inputValue: rnrbHelpers.input_value,
-    submitButton: rnrbHelpers.submit_button,
-    answerRowsHelper: rnrbHelpers.answer_rows
+    errorSummary: playComponents.error_summary,
+    heading: playComponents.heading,
+    inputValue: playComponents.input_value,
+    submitButton: playComponents.submit_button,
+    answerRowsHelper: playComponents.answer_rows
 )
 
 @(nilRateBand: String, form: Form[Int], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
-@mainTemplate(
-    title = messages("value_available_when_property_changed.browser_title"),
-    bodyClasses = None) {
+@title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("value_available_when_property_changed.browser_title")) else messages("value_available_when_property_changed.browser_title")}
+
+@layout(
+    pageTitle = title,
+) {
 
     @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueAvailableWhenPropertyChangedController.onSubmit(), 'autoComplete -> "off") {
 
-        @errorSummary(form)
+        @errorSummary(form.errors)
 
-        @heading("value_available_when_property_changed.title", "heading-xlarge")
+        @heading(messages("value_available_when_property_changed.title"))
 
-        <p>@messages("value_available_when_property_changed.guidance1")</p>
-        <p>@messages("value_available_when_property_changed.guidance2", nilRateBand)</p>
-        <p>@messages("value_available_when_property_changed.guidance3", nilRateBand)</p>
+        <p class="govuk-body">@messages("value_available_when_property_changed.guidance1")</p>
+        <p class="govuk-body">@messages("value_available_when_property_changed.guidance2", nilRateBand)</p>
+        <p class="govuk-body">@messages("value_available_when_property_changed.guidance3", nilRateBand)</p>
 
-        <div class="form-group">
-            @inputValue(
-                form("value"),
-                '_inputClass -> "form-control",
-                '_type -> "number",
-                '_spanAfter -> false,
-                '_span -> Messages("sign.pound"),
-                '_spanTextClass -> "bold-small",
-                '_label -> Messages("chargeable_property_value.title"),
-                '_labelTextClass -> "visuallyhidden")
-        </div>
-        <div>
-            @submitButton()
-        </div>
+        @inputValue(
+            label = messages("chargeable_property_value.title"),
+            labelClass = Some("govuk-visually-hidden"),
+            currency = true,
+            field = form("value")
+        )
+
+        @submitButton()
 
     }
     @answerRowsHelper(answerRows)
