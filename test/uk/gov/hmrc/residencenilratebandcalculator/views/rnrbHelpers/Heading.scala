@@ -17,7 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views.rnrbHelpers
 
 import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.rnrbHelpers.heading
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.playComponents.heading
 
 class Heading extends HtmlSpec {
 

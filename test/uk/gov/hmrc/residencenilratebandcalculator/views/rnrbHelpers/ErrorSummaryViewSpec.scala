@@ -18,7 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.views.rnrbHelpers
 
 import play.api.data.{Form, FormError}
 import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.rnrbHelpers.error_summary
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.playComponents.error_summary
 import org.mockito.Mockito._
 import org.scalatest.Matchers.convertToAnyShouldWrapper
 
@@ -53,25 +53,25 @@ class ErrorSummaryViewSpec extends HtmlSpec {
     "given no errors" must {
 
       "not render anything" in {
-        error_summary(createForm(Seq()))(messages).toString shouldBe ""
+        error_summary(Seq())(messages).toString shouldBe ""
       }
     }
 
     "given an error" must {
 
       "render a title" in {
-        val doc = asDocument(error_summary(createForm(Seq(error)))(messages))
+        val doc = asDocument(error_summary(Seq(error))(messages))
         val heading = doc.getElementById("error-summary-heading")
         heading.text shouldBe messages("error.summary.title")
       }
 
       "render some help text" in {
-        val doc = asDocument(error_summary(createForm(Seq(error)))(messages))
+        val doc = asDocument(error_summary(Seq(error))(messages))
         assertContainsMessages(doc, "key1-error-summary")
       }
 
       "render a link to the error key" in {
-        val doc = asDocument(error_summary(createForm(Seq(error)))(messages))
+        val doc = asDocument(error_summary(Seq(error))(messages))
         val ul = doc.getElementsByClass("js-error-summary-messages").first
         val link = ul.getElementsByTag("li").first.getElementsByTag("a").first
         link.attr("href") shouldBe s"#$errorKey1"
@@ -82,18 +82,18 @@ class ErrorSummaryViewSpec extends HtmlSpec {
     "given two errors" must {
 
       "render a title" in {
-        val doc = asDocument(error_summary(createForm(Seq(error, error2)))(messages))
+        val doc = asDocument(error_summary(Seq(error, error2))(messages))
         val heading = doc.getElementById("error-summary-heading")
         heading.text shouldBe messages("error.summary.title")
       }
 
       "render some help text" in {
-        val doc = asDocument(error_summary(createForm(Seq(error, error2)))(messages))
+        val doc = asDocument(error_summary(Seq(error, error2))(messages))
         assertContainsMessages(doc, "key2-error-summary")
       }
 
       "render a link to the first error key" in {
-        val doc = asDocument(error_summary(createForm(Seq(error, error2)))(messages))
+        val doc = asDocument(error_summary(Seq(error, error2))(messages))
         val ul = doc.getElementsByClass("js-error-summary-messages").first
         val link = ul.getElementsByTag("li").first.getElementsByTag("a").first
         link.attr("href") shouldBe s"#$errorKey1"
@@ -101,7 +101,7 @@ class ErrorSummaryViewSpec extends HtmlSpec {
       }
 
       "render a link to the second error key" in {
-        val doc = asDocument(error_summary(createForm(Seq(error, error2)))(messages))
+        val doc = asDocument(error_summary(Seq(error, error2))(messages))
         val ul = doc.getElementsByClass("js-error-summary-messages").first
         val link = ul.getElementsByTag("li").get(1).getElementsByTag("a").first
         link.attr("href") shouldBe s"#$errorKey2"

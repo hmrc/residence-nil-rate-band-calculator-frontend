@@ -18,7 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.views.rnrbHelpers
 
 import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.rnrbHelpers.answer_rows
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.playComponents.answer_rows
 
 class AnswerRowsViewSpec extends HtmlSpec {
 

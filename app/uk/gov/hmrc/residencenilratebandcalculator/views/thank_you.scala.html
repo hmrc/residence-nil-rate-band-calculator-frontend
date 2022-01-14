@@ -14,15 +14,12 @@
  * limitations under the License.
  *@
 
-@this(
-    mainTemplate: main_template
-)
+@this(layout: Layout)
 
 @()(implicit request: Request[_], messages: Messages)
 
-@mainTemplate(
-    title = messages("thank_you.browser_title"),
-    bodyClasses = None) {
-
-    <h1 class="heading-xlarge">@messages("thank_you.title")</h1>
+@layout(
+pageTitle =  messages("thank_you.browser_title"),
+) {
+    <h1 class="govuk-heading-xl">@messages("thank_you.title")</h1>
 }

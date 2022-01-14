@@ -36,7 +36,7 @@ class ErrorTemplateViewSpec extends HtmlSpec {
 
     "display the correct browser title" in {
       val f = fixture()
-      assertEqualsMessage(f.doc, "title", "title")
+      assertEqualsMessage(f.doc, "title",s"${messages("title")} - ${messages("service.name")} - GOV.UK")
     }
 
     "display the correct message" in {
