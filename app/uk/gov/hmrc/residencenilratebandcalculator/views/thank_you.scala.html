@@ -14,12 +14,15 @@
  * limitations under the License.
  *@
 
-@this(layout: Layout)
+@this(
+  layout: Layout,
+  heading: playComponents.heading
+)
 
 @()(implicit request: Request[_], messages: Messages)
 
 @layout(
-pageTitle =  messages("thank_you.browser_title"),
+    pageTitle =  messages("thank_you.browser_title"),
 ) {
-    <h1 class="govuk-heading-xl">@messages("thank_you.title")</h1>
+     @heading(messages("thank_you.title"))
 }

@@ -27,24 +27,23 @@ class AnswerRowsViewSpec extends HtmlSpec {
   "Answer Rows View Spec" when {
     "rendered" must {
 
-      "contain two rows when passed a seq containing a single row" in {
+      "contain four description details when passed a seq containing a single row" in {
         val row = AnswerRow("Title", "Data", "http://www.example.com")
         val partial = answer_rows(Seq[AnswerRow](row))(messages)
         val doc = asDocument(partial)
-
-        assert(doc.select("li").size() == 2)
+        assert(doc.select("dd").size() == 4)
         assertContainsText(doc, row.title)
         assertContainsText(doc, row.data)
         assertContainsText(doc, row.url)
       }
 
-      "contains three rows when passed a seq containing 2 rows" in {
+      "contains six description details when passed a seq containing 2 rows" in {
         val row1 = AnswerRow("Title1", "Data1", "http://www.example.com/1")
         val row2 = AnswerRow("Title2", "Data2", "http://www.example.com/2")
         val partial = answer_rows(Seq[AnswerRow](row1, row2))(messages)
         val doc = asDocument(partial)
 
-        assert(doc.select("li").size() == 3)
+        assert(doc.select("dd").size() == 6)
 
         assertContainsText(doc, row1.title)
         assertContainsText(doc, row1.data)
@@ -60,9 +59,9 @@ class AnswerRowsViewSpec extends HtmlSpec {
         val row2 = AnswerRow("Title2", "Data2", "http://www.example.com/2")
         val partial = answer_rows(Seq[AnswerRow](row1, row2))(messages)
         val doc = asDocument(partial)
-        assertEqualsValue(doc, "details ul li:first-child div", messages("site.previous_answers"))
-        assertEqualsValue(doc, "details ul li:nth-child(2) div", row2.title)
-        assertEqualsValue(doc, "details ul li:nth-child(3) div", row1.title)
+        assertEqualsValue(doc, "details div dl div:first-child dt", messages("site.previous_answers"))
+        assertEqualsValue(doc, "details div dl div:nth-child(2) dt", row2.title)
+        assertEqualsValue(doc, "details div dl div:nth-child(3) dt", row1.title)
       }
     }
   }

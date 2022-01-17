@@ -53,7 +53,7 @@ class ErrorSummaryViewSpec extends HtmlSpec {
     "given no errors" must {
 
       "not render anything" in {
-        error_summary(Seq())(messages).toString shouldBe ""
+        error_summary(Seq())(messages).toString.trim shouldBe ""
       }
     }
 
@@ -61,18 +61,18 @@ class ErrorSummaryViewSpec extends HtmlSpec {
 
       "render a title" in {
         val doc = asDocument(error_summary(Seq(error))(messages))
-        val heading = doc.getElementById("error-summary-heading")
+        val heading = doc.getElementById("error-summary-title")
         heading.text shouldBe messages("error.summary.title")
       }
 
       "render some help text" in {
         val doc = asDocument(error_summary(Seq(error))(messages))
-        assertContainsMessages(doc, "key1-error-summary")
+        assertContainsMessages(doc, "#key1")
       }
 
       "render a link to the error key" in {
         val doc = asDocument(error_summary(Seq(error))(messages))
-        val ul = doc.getElementsByClass("js-error-summary-messages").first
+        val ul = doc.getElementsByClass("govuk-error-summary__list").first
         val link = ul.getElementsByTag("li").first.getElementsByTag("a").first
         link.attr("href") shouldBe s"#$errorKey1"
         link.text shouldBe message1
@@ -83,18 +83,18 @@ class ErrorSummaryViewSpec extends HtmlSpec {
 
       "render a title" in {
         val doc = asDocument(error_summary(Seq(error, error2))(messages))
-        val heading = doc.getElementById("error-summary-heading")
+        val heading = doc.getElementById("error-summary-title")
         heading.text shouldBe messages("error.summary.title")
       }
 
       "render some help text" in {
         val doc = asDocument(error_summary(Seq(error, error2))(messages))
-        assertContainsMessages(doc, "key2-error-summary")
+        assertContainsMessages(doc, "#key2")
       }
 
       "render a link to the first error key" in {
         val doc = asDocument(error_summary(Seq(error, error2))(messages))
-        val ul = doc.getElementsByClass("js-error-summary-messages").first
+        val ul = doc.getElementsByClass("govuk-error-summary__list").first
         val link = ul.getElementsByTag("li").first.getElementsByTag("a").first
         link.attr("href") shouldBe s"#$errorKey1"
         link.text shouldBe message1
@@ -102,7 +102,7 @@ class ErrorSummaryViewSpec extends HtmlSpec {
 
       "render a link to the second error key" in {
         val doc = asDocument(error_summary(Seq(error, error2))(messages))
-        val ul = doc.getElementsByClass("js-error-summary-messages").first
+        val ul = doc.getElementsByClass("govuk-error-summary__list").first
         val link = ul.getElementsByTag("li").get(1).getElementsByTag("a").first
         link.attr("href") shouldBe s"#$errorKey2"
         link.text shouldBe message2
