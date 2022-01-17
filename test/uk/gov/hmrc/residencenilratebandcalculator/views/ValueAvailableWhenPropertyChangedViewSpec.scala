@@ -27,7 +27,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_available_whe
 
 import scala.language.reflectiveCalls
 
-class ValueAvailableWhenPropertyChangedViewSpec extends IntViewSpecBase {
+class ValueAvailableWhenPropertyChangedViewSpec extends NewIntViewSpecBase {
 
   val messageKeyPrefix = "value_available_when_property_changed"
   val navigator = injector.instanceOf[Navigator]
