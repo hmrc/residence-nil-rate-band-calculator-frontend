@@ -22,7 +22,6 @@
 @this(
     govukLayout: GovukLayout,
     hmrcAccountMenu: HmrcAccountMenu,
-    headWithTrackingConsent: HeadWithTrackingConsent,
     hmrcHead: HmrcHead,
     hmrcStandardHeader: HmrcStandardHeader,
     hmrcStandardFooter: HmrcStandardFooter,
@@ -52,9 +51,6 @@
 }
 
 @head = {
-    @headWithTrackingConsent(
-      linkElem = None,
-      headScripts = None)
     <meta name="format-detection" content="telephone=no" />
     <link rel="stylesheet" href='@routes.Assets.versioned("stylesheets/rnrb-app.css")' />
     <!--[if lte IE 8 ]>

@@ -68,12 +68,6 @@ lazy val microservice = Project(appName, file("."))
       "uk.gov.hmrc.govukfrontend.views.html.components.implicits._"
     )
   )
-  .settings(
-    TwirlKeys.templateImports ++= Seq(
-      "uk.gov.hmrc.play.views.html.helpers._",
-      "uk.gov.hmrc.play.views.html.layouts._"
-    )
-  )
   .disablePlugins(JUnitXmlReportPlugin)
 
 
