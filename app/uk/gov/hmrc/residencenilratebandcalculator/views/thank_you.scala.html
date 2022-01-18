@@ -15,14 +15,14 @@
  *@
 
 @this(
-    mainTemplate: main_template
+  layout: Layout,
+  heading: playComponents.heading
 )
 
 @()(implicit request: Request[_], messages: Messages)
 
-@mainTemplate(
-    title = messages("thank_you.browser_title"),
-    bodyClasses = None) {
-
-    <h1 class="heading-xlarge">@messages("thank_you.title")</h1>
+@layout(
+    pageTitle =  messages("thank_you.browser_title"),
+) {
+     @heading(messages("thank_you.title"))
 }

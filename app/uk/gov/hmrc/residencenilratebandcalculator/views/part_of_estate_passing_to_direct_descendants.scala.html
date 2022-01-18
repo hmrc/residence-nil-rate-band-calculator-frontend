@@ -46,11 +46,11 @@ implicit request: Request[_], messages: Messages)
         <p class="govuk-body">@messages("part_of_estate_passing_to_direct_descendants.guidance2")</p>
 
         <section class="form-group">
-            <details>
+            <details class="govuk-details">
                 <summary class="govuk-details__summary"><span class="govuk-details__summary-text">@messages("part_of_estate_passing_to_direct_descendants.reveal_title")</span></summary>
                 <div class="govuk-details__text panel-indent panel-indent--gutter">
                     <p class="govuk-body">@messages("part_of_estate_passing_to_direct_descendants.guidance3")</p>
-                    <ul class="list list-bullet">
+                    <ul class="govuk-list govuk-list--bullet">
                         <li>@messages("part_of_estate_passing_to_direct_descendants.guidance3.bullet1")</li>
                         <li>@messages("part_of_estate_passing_to_direct_descendants.guidance3.bullet2")</li>
                         <li>@messages("part_of_estate_passing_to_direct_descendants.guidance3.bullet3")</li>
@@ -67,7 +67,7 @@ implicit request: Request[_], messages: Messages)
 
         @inputYesNo(
             label = HtmlContent(heading(messages("part_of_estate_passing_to_direct_descendants.browser_title"))),
-            labelClass = Some("visually-hidden"),
+            labelClass = Some("govuk-visually-hidden"),
             field = form("value")
         )
 
