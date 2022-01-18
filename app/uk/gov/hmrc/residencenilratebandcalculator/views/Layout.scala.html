@@ -21,7 +21,6 @@
 
 @this(
     govukLayout: GovukLayout,
-    hmrcAccountMenu: HmrcAccountMenu,
     hmrcHead: HmrcHead,
     hmrcStandardHeader: HmrcStandardHeader,
     hmrcStandardFooter: HmrcStandardFooter,
@@ -29,16 +28,14 @@
     hmrcStandardBetaBanner: StandardBetaBanner,
     hmrcTimeoutDialogHelper: HmrcTimeoutDialogHelper,
     hmrcLanguageSelectHelper: HmrcLanguageSelectHelper,
-    hmrcReportTechnicalIssue: HmrcReportTechnicalIssue,
+    hmrcReportTechnicalIssueHelper: HmrcReportTechnicalIssueHelper,
     backLink: playComponents.back_link,
     appConfig: FrontendAppConfig
 )
 
 @(
     pageTitle: String,
-    timeoutEnabled: Boolean = true,
-    accountMenuEnabled: Boolean = true,
-    urBanner: Boolean = false
+    timeoutEnabled: Boolean = true
 )(
     contentBlock: Html
 )(
@@ -57,16 +54,20 @@
     <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/rnrb-ie.css")" />
     <![endif]-->
     <link rel="stylesheet" media="print" href='@routes.Assets.versioned("stylesheets/rnrb-print.css")' />
+
+    @if(timeoutEnabled) {
+        @hmrcTimeoutDialogHelper(
+            signOutUrl = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url,
+            message = Some(Messages("timeout_dialog.message")),
+            keepAliveButtonText = Some(Messages("timeout_dialog.button"))
+        )
+    }
+
 }
 
 @mainContent = {
     @contentBlock
-    @hmrcReportTechnicalIssue(
-        ReportTechnicalIssue(
-            serviceId = appConfig.contactFormServiceIdentifier,
-            baseUrl = Some(appConfig.contactHost)
-        )
-    )
+    @hmrcReportTechnicalIssueHelper()
 }
 
 @govukLayout(

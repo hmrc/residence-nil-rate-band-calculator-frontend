@@ -19,6 +19,7 @@
 @this(
     layout: Layout,
     heading: playComponents.heading,
+    buttonLink: playComponents.button_link
 )
 
 @()(implicit request: Request[_], messages: Messages)
@@ -29,8 +30,12 @@
 ) {
 
     @heading(messages("session_expired.title"))
-    <p class="govuk-body">
-        <a href="@routes.DateOfDeathController.onPageLoad().url" class="button" role="button" id="start-again">@messages("site.start_again")</a>
+    <p>
+        @buttonLink(
+            messageKey = messages("site.start_again"),
+            href = routes.DateOfDeathController.onPageLoad().url,
+            attributes = Map("id" -> "start-again")
+        )
     </p>
 }
 

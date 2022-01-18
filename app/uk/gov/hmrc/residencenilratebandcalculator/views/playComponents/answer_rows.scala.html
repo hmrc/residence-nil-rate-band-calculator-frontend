@@ -60,6 +60,7 @@
 
 @govukDetails(Details(
     summary = Text(messages("site.show_previous_answers")),
+    classes = "u--no-print",
     content = HtmlContent(govukSummaryList(SummaryList(
         rows = tableRows,
         classes = "govuk-!-font-size-16"

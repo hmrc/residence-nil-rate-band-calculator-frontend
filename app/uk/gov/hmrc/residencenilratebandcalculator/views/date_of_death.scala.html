@@ -31,11 +31,12 @@
 @title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("date_of_death.browser_title")) else messages("date_of_death.browser_title")}
 
 @layout(
-    pageTitle = title
+    pageTitle = title,
+    timeoutEnabled = false
 ) {
     @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onSubmit(), 'autoComplete -> "off") {
 
-        @errorSummary(form.errors)
+        @errorSummary(form.errors, key => s"$key.day")
 
         @heading(messages("date_of_death.title"))
 

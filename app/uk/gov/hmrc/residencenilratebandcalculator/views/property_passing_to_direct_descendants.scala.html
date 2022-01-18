@@ -33,8 +33,7 @@
 @title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("property_passing_to_direct_descendants.browser_title")) else messages("property_passing_to_direct_descendants.browser_title")}
 
     @layout(
-        pageTitle = title,
-        timeoutEnabled = false
+        pageTitle = title
     ) {
 
     @uiForm(action = PropertyPassingToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
@@ -48,9 +47,9 @@
         <p class="govuk-body">@messages("property_passing_to_direct_descendants.guidance1")</p>
 
         @inputRadio(
-            legend = heading(""),
+            legend = heading(messages("property_passing_to_direct_descendants.title")),
+            legendClass = Some("govuk-visually-hidden"),
             hint = None,
-            classes = "govuk-fieldset__legend--l",
             inputs = Seq(
             RadioItem(content = Text(messages("property_passing_to_direct_descendants.all")),value = Some("all")),
             RadioItem(content = Text(messages("property_passing_to_direct_descendants.some")),value = Some("some")),

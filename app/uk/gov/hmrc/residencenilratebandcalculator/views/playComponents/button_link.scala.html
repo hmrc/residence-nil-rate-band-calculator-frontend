@@ -14,11 +14,18 @@
  * limitations under the License.
  *@
 
-@this()
+@this(govukButton: GovukButton)
 
 @(
-messageKey: String = "",
-href: String
+    messageKey: String = "",
+    href: String,
+    classes: String = "",
+    attributes: Map[String, String] = Map.empty
 )(implicit messages: Messages)
 
-<a href="@href" class="govuk-button">@messages(messageKey)</a>
+@govukButton(Button(
+    content = Text(messages(messageKey)),
+    href = Some(href),
+    classes = classes,
+    attributes = attributes
+))

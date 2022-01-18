@@ -44,24 +44,25 @@
         <p class="govuk-body">@messages("threshold_calculation_result.info.non_zero.threshold_change")</p>
     }
 
-    <h2 class="heading-medium u-margin-top--2em">@messages("threshold_calculation_result.action.header")</h2>
+    <h2 class="govuk-heading-m govuk-!-margin-top-0 govuk-!-margin-bottom-5">@messages("threshold_calculation_result.action.header")</h2>
     <p class="govuk-body">@messages("threshold_calculation_result.action.guidance", residenceNilRateAmount)</p>
     <ul class="govuk-list govuk-list--bullet">
         <li>@messages("threshold_calculation_result.action.guidance.form_435")</li>
         <li>@messages("threshold_calculation_result.action.guidance.form_400")</li>
     </ul>
     <p class="govuk-body">@messages("threshold_calculation_result.action.guidance.continue")</p>
-    <p class="govuk-body">@messages("threshold_calculation_result.print_prefix")
+    <p class="govuk-body u--no-print">@messages("threshold_calculation_result.print_prefix")
         <a href="javascript:window.print()">@messages("threshold_calculation_result.link_to_print")</a>
         @messages("threshold_calculation_result.print_suffix")
     </p>
 
-    <div class="govuk-inset-text">
+    <div class="govuk-inset-text u--no-print">
         <a href="@routes.IHT435Controller.onPageLoad()">@messages("threshold_calculation_result.pdf.guidance1")</a>. @messages("threshold_calculation_result.pdf.guidance2")
     </div>
 
     @buttonLink(
         messageKey = messages("site.finish"),
+        classes = "u--no-print",
         href = routes.FeedbackSurveyController.redirectExitSurvey().url
     )
 
