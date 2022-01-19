@@ -37,7 +37,7 @@
 
     @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DatePropertyWasChangedController.onSubmit(), 'autoComplete -> "off") {
 
-        @errorSummary(form.errors)
+        @errorSummary(form.errors, key => s"$key.day")
 
         @heading(messages("date_property_was_changed.title"))
 

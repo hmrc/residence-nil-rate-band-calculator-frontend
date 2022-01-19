@@ -26,7 +26,8 @@
 @()(implicit request: Request[_], messages: Messages)
 
 @layout(
-    pageTitle = messages("calculate_threshold_increase.browser_title")
+    pageTitle = messages("calculate_threshold_increase.browser_title"),
+    timeoutEnabled = false
 ) {
 
     @heading(messages("calculate_threshold_increase.title"))

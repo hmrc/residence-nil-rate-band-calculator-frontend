@@ -38,7 +38,7 @@ class SessionExpiredViewSpec extends ViewSpecBase {
     "display a Start Again button linking to the 'Calculate Threshold Increase' page" in {
       val doc = asDocument(session_expired()(request, messages))
       val startLink = doc.getElementById("start-again")
-      startLink.className shouldBe "button"
+      startLink.className shouldBe "govuk-button"
       startLink.attr("href") shouldBe routes.DateOfDeathController.onPageLoad().url
       startLink.text shouldBe messages("site.start_again")
     }

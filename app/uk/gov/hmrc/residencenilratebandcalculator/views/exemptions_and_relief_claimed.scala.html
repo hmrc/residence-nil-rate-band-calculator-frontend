@@ -35,8 +35,7 @@
 @title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("exemptions_and_relief_claimed.browser_title")) else messages("exemptions_and_relief_claimed.browser_title")}
 
 @layout(
-    pageTitle = title,
-    timeoutEnabled = false
+    pageTitle = title
 ) {
     @formWithCSRF(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ExemptionsAndReliefClaimedController.onSubmit(), 'autoComplete -> "off") {
 
@@ -45,7 +44,7 @@
         @heading(messages("exemptions_and_relief_claimed.title"))
 
         <p class="govuk-body">@messages("exemptions_and_relief_claimed.guidance2")</p>
-        <ul class="list list-bullet">
+        <ul class="govuk-list govuk-list--bullet">
             <li>@messages("exemptions_and_relief_claimed.guidance2.bullet1")</li>
             <li>@messages("exemptions_and_relief_claimed.guidance2.bullet2")</li>
             <li>@messages("exemptions_and_relief_claimed.guidance2.bullet3")</li>
