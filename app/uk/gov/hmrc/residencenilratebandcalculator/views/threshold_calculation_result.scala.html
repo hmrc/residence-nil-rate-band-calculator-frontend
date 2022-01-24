@@ -31,20 +31,28 @@
 ) {
 
     @if(residenceNilRateAmount == "£0.00") {
-        @heading(messages("threshold_calculation_result.info.zero.header"))
-        <p class="govuk-heading-m govuk-!-margin-top-0 govuk-!-margin-bottom-5">
-            @messages("threshold_calculation_result.info.zero.guidance", residenceNilRateAmount)
-        </p>
-        <p class="govuk-heading-m govuk-!-margin-top-0 govuk-!-margin-bottom-5">@messages("threshold_calculation_result.info.zero.threshold_change")</p>
+        <div class="govuk-panel govuk-panel--confirmation">
+            <h1 class="govuk-panel__title">
+                @messages("threshold_calculation_result.info.zero.header")
+            </h1>
+            <div class="govuk-panel__body">
+                @messages("threshold_calculation_result.info.zero.guidance", residenceNilRateAmount)
+            </div>
+        </div>
+        <p class="govuk-body">@messages("threshold_calculation_result.info.zero.threshold_change")</p>
     } else {
-        @heading(messages("threshold_calculation_result.info.non_zero.header"))
-        <p class="govuk-heading-m govuk-!-margin-top-0 govuk-!-margin-bottom-5">
-            @messages("threshold_calculation_result.info.non_zero.guidance", residenceNilRateAmount)
-        </p>
+        <div class="govuk-panel govuk-panel--confirmation">
+            <h1 class="govuk-panel__title">
+                @messages("threshold_calculation_result.info.non_zero.header")
+            </h1>
+            <div class="govuk-panel__body">
+                @messages("threshold_calculation_result.info.non_zero.guidance", residenceNilRateAmount)
+            </div>
+        </div>
         <p class="govuk-body">@messages("threshold_calculation_result.info.non_zero.threshold_change")</p>
     }
 
-    <h2 class="govuk-heading-m govuk-!-margin-top-0 govuk-!-margin-bottom-5">@messages("threshold_calculation_result.action.header")</h2>
+    <h2 class="govuk-heading-m">@messages("threshold_calculation_result.action.header")</h2>
     <p class="govuk-body">@messages("threshold_calculation_result.action.guidance", residenceNilRateAmount)</p>
     <ul class="govuk-list govuk-list--bullet">
         <li>@messages("threshold_calculation_result.action.guidance.form_435")</li>
