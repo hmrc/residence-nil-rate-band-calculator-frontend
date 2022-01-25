@@ -33,6 +33,8 @@ lazy val microservice = Project(appName, file("."))
   .settings(inConfig(IntegrationTest)(Defaults.itSettings): _*)
   .settings(integrationTestSettings())
   .settings(
+    Keys.fork in Test := true,
+    javaOptions in Test += "-Dconfig.file=conf/test.application.conf",
     scalacOptions ++= Seq("-feature"),
     dependencyOverrides += "commons-codec" % "commons-codec" % "1.12",
     retrieveManaged := true,
