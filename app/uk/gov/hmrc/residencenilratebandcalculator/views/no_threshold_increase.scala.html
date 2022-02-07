@@ -29,9 +29,7 @@
 
     @heading(messages(s"${prefix}.title"))
 
-    <div class="govuk-inset-text">
-        @messages(s"${prefix}.reason")
-    </div>
+    <p class="govuk-body">@messages(s"${prefix}.reason")</p>
 
     @buttonLink(messages("site.finish"), uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.FeedbackSurveyController.redirectExitSurvey().url)
     @answerRowsHelper(answerRows)
