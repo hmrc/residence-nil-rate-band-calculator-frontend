@@ -48,7 +48,7 @@ class UnableToCalculateThresholdIncreaseViewSpec extends HtmlSpec {
         s"$prefix.next.guidance1",
         s"$prefix.next.guidance2",
         s"$prefix.next.guidance3.addr1",
-        "HM Revenue &amp; Customs,",
+        "HM Revenue &amp; Customs",
         s"$prefix.next.guidance3.addr3",
         s"$prefix.next.guidance4",
         s"$prefix.next.guidance5"
