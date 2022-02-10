@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_any_unused
 
 import scala.language.reflectiveCalls
 
-class TransferAnyUnusedThresholdViewSpec extends BooleanViewSpecBase {
+class TransferAnyUnusedThresholdViewSpec extends NewBooleanViewSpecBase {
 
   val messageKeyPrefix = "transfer_any_unused_threshold"
   val transfer_any_unused_threshold = injector.instanceOf[transfer_any_unused_threshold]

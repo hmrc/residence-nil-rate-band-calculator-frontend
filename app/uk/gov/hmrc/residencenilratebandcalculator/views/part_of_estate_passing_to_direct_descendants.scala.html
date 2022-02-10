@@ -15,39 +15,42 @@
  *@
 
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
 @this(
-    uiForm: FormWithCSRF,
-    answerRowsHelper: rnrbHelpers.answer_rows,
-    mainTemplate: main_template,
-    errorSummary: rnrbHelpers.error_summary,
-    heading: rnrbHelpers.heading,
-    inputRadioGroup: InputRadioGroup,
-    submitButton: rnrbHelpers.submit_button
+    formWithCSRF: FormWithCSRF,
+    answerRowsHelper: playComponents.answer_rows,
+    layout: Layout,
+    errorSummary: playComponents.error_summary,
+    heading: playComponents.heading,
+    inputYesNo: playComponents.input_yes_no,
+    submitButton: playComponents.submit_button
 )
 
 @(form: Form[Boolean], answerRows: Seq[AnswerRow])(
 implicit request: Request[_], messages: Messages)
 
-@mainTemplate(
-    title = messages("part_of_estate_passing_to_direct_descendants.browser_title"),
-    bodyClasses = None) {
+@title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("part_of_estate_passing_to_direct_descendants.browser_title")) else messages("part_of_estate_passing_to_direct_descendants.browser_title")}
 
-    @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PartOfEstatePassingToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
+@layout(
+    pageTitle = title
+) {
 
-        @errorSummary(form)
+    @formWithCSRF(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PartOfEstatePassingToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
+    
+        @errorSummary(form.errors)
 
-        @heading("part_of_estate_passing_to_direct_descendants.title", "heading-xlarge")
+        @heading(messages("part_of_estate_passing_to_direct_descendants.title"))
 
-        <p>@messages("part_of_estate_passing_to_direct_descendants.guidance1")</p>
-        <p>@messages("part_of_estate_passing_to_direct_descendants.guidance2")</p>
+        <p class="govuk-body">@messages("part_of_estate_passing_to_direct_descendants.guidance1")</p>
+        <p class="govuk-body">@messages("part_of_estate_passing_to_direct_descendants.guidance2")</p>
 
         <section class="form-group">
-            <details>
-                <summary><span class="summary">@messages("part_of_estate_passing_to_direct_descendants.reveal_title")</span></summary>
-                <div class="panel-indent panel-indent--gutter">
-                    <p>@messages("part_of_estate_passing_to_direct_descendants.guidance3")</p>
-                    <ul class="list list-bullet">
+            <details class="govuk-details">
+                <summary class="govuk-details__summary"><span class="govuk-details__summary-text">@messages("part_of_estate_passing_to_direct_descendants.reveal_title")</span></summary>
+                <div class="govuk-details__text panel-indent panel-indent--gutter">
+                    <p class="govuk-body">@messages("part_of_estate_passing_to_direct_descendants.guidance3")</p>
+                    <ul class="govuk-list govuk-list--bullet">
                         <li>@messages("part_of_estate_passing_to_direct_descendants.guidance3.bullet1")</li>
                         <li>@messages("part_of_estate_passing_to_direct_descendants.guidance3.bullet2")</li>
                         <li>@messages("part_of_estate_passing_to_direct_descendants.guidance3.bullet3")</li>
@@ -57,24 +60,21 @@ implicit request: Request[_], messages: Messages)
                         <li>@messages("part_of_estate_passing_to_direct_descendants.guidance3.bullet7")</li>
                         <li>@messages("part_of_estate_passing_to_direct_descendants.guidance3.bullet8")</li>
                     </ul>
-                    <p>@messages("part_of_estate_passing_to_direct_descendants.guidance4")</p>
+                    <p class="govuk-body">@messages("part_of_estate_passing_to_direct_descendants.guidance4")</p>
                 </div>
             </details>
         </section>
 
-        <div class="form-group">
-            <fieldset class="form-group inline">
-                @inputRadioGroup(
-                    form("value"),
-                    Seq("true" -> messages("site.yes"), "false" -> messages("site.no")),
-                    '_legend -> messages("part_of_estate_passing_to_direct_descendants.browser_title"),
-                    '_legendClass -> Some("visuallyhidden")
-                )
-            </fieldset>
-            @submitButton()
-        </div>
+        @inputYesNo(
+            label = HtmlContent(heading(messages("part_of_estate_passing_to_direct_descendants.browser_title"))),
+            labelClass = Some("visually-hidden"),
+            field = form("value")
+        )
+
+        @submitButton()
 
     }
-
+    
     @answerRowsHelper(answerRows)
+
 }

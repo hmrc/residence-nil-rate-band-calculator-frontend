@@ -1,0 +1,68 @@
+@*
+ * Copyright 2021 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+
+@this(
+    govukSummaryList : GovukSummaryList,
+    govukDetails: GovukDetails
+)
+
+@(rows: Seq[AnswerRow], includeChangeLink: Boolean = true, showHeading: Boolean = true)(implicit messages: Messages)
+
+@rowUrl(row: AnswerRow) = @{
+    Some(Actions(
+        items = Seq(ActionItem(
+                href = row.url,
+                content = Text(messages("site.change")),
+                visuallyHiddenText = Some(row.title)
+    ))))
+}
+
+@startAgain = @{
+    Some(Actions(
+        items = Seq(ActionItem(
+                href = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.CalculateThresholdIncreaseController.onPageLoad().url,
+                content = Text(messages("site.start_again"))
+    ))))
+}
+
+@tableRows = @{
+    val summaryBody = for(row <- rows.reverse) yield {
+        SummaryListRow(
+            key = Key(content = Text(row.title), classes = "govuk-!-font-weight-regular"),
+            value = Value(content = Text(row.data)),
+            actions = if(includeChangeLink) rowUrl(row) else None
+        )
+    }
+    if(showHeading){
+        SummaryListRow(
+            key = Key(content = Text(messages("site.previous_answers"))),
+            actions = if(includeChangeLink) startAgain else None
+        ) +: summaryBody
+    } else {
+        summaryBody
+    }
+}
+
+@govukDetails(Details(
+    summary = Text(messages("site.show_previous_answers")),
+    classes = "u--no-print",
+    content = HtmlContent(govukSummaryList(SummaryList(
+        rows = tableRows,
+        classes = "govuk-!-font-size-16"
+    )))
+))

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 
 import scala.language.reflectiveCalls
 
-class DatePropertyWasChangedViewSpec  extends DateViewSpecBase {
+class DatePropertyWasChangedViewSpec  extends NewDateViewSpecBase {
 
   val messageKeyPrefix = "date_property_was_changed"
   val date_property_was_changed = injector.instanceOf[date_property_was_changed]

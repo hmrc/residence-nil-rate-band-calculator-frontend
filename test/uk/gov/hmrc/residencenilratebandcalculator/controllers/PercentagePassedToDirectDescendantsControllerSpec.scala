@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PositivePercentForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_passed_to_direct_descendants
 
-class PercentagePassedToDirectDescendantsControllerSpec extends SimpleControllerSpecBase {
+class PercentagePassedToDirectDescendantsControllerSpec extends NewSimpleControllerSpecBase {
 
   val errorKeyBlank = "percentage_passed_to_direct_descendants.error.required"
   val errorKeyNonNumeric = "percentage_passed_to_direct_descendants.error.non_numeric"

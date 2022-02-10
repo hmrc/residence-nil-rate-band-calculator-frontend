@@ -15,33 +15,39 @@
  *@
 
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
+@import uk.gov.hmrc.govukfrontend.views.html.components._
 
 @this(
-    mainTemplate: main_template,
-    heading: rnrbHelpers.heading
+    layout: Layout,
+    heading: playComponents.heading,
+    govukButton : GovukButton
 )
 
 @()(implicit request: Request[_], messages: Messages)
 
-@mainTemplate(
-    title = messages("calculate_threshold_increase.browser_title"),
-    bodyClasses = None,
-    enableTimeout = false) {
+@layout(
+    pageTitle = messages("calculate_threshold_increase.browser_title"),
+    timeoutEnabled = false
+) {
 
-    @heading("calculate_threshold_increase.title", "heading-xlarge")
+    @heading(messages("calculate_threshold_increase.title"))
 
-    <p>@messages("calculate_threshold_increase.guidance1")</p>
+    <p class="govuk-body">@messages("calculate_threshold_increase.guidance1")</p>
 
-    <p>@messages("calculate_threshold_increase.guidance2")</p>
+    <p class="govuk-body">@messages("calculate_threshold_increase.guidance2")</p>
 
-    <ul class="list list-bullet">
+    <ul class="govuk-list govuk-list--bullet">
         <li>@messages("calculate_threshold_increase.guidance3.bullet1")</li>
         <li>@messages("calculate_threshold_increase.guidance3.bullet2")</li>
         <li>@messages("calculate_threshold_increase.guidance3.bullet3")</li>
     </ul>
 
     <p>
-        <a href="@routes.DateOfDeathController.onPageLoad().url" class="button button--get-started" role="button" id="start">@messages("site.start_now")</a>
+        @govukButton(Button(
+            href = Some(routes.DateOfDeathController.onPageLoad().url),
+            isStartButton = true,
+            content = Text(messages("site.start_now"))
+        ))
     </p>
 
 }

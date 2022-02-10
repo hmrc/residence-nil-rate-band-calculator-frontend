@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views.rnrbHelpers
 
 import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.rnrbHelpers.heading
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.playComponents.heading
 
 class Heading extends HtmlSpec {
 
@@ -29,17 +29,15 @@ class Heading extends HtmlSpec {
       "show heading in medium size when it is of default size" in {
         val headingRow = heading("title")(messages)
         val doc = asDocument(headingRow)
-
         assertContainsText(doc, "title")
-        assert(doc.select("h1").hasClass("heading-medium"))
+        assert(doc.select("h1").hasClass("govuk-heading-xl"))
       }
 
       "show heading in the given size when it is explicitly provided" in {
         val headingRow = heading("title", "heading-xlarge")(messages)
         val doc = asDocument(headingRow)
-
         assertContainsText(doc, "title")
-        assert(doc.select("h1").hasClass("heading-xlarge"))
+        assert(doc.select("h1").hasClass("govuk-heading-xlarge"))
       }
 
     }

@@ -15,51 +15,40 @@
  *@
 
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
 @this(
-    mainTemplate: main_template,
+    layout: Layout,
     uiForm: FormWithCSRF,
-    errorSummary: rnrbHelpers.error_summary,
-    submitButton: rnrbHelpers.submit_button,
-    heading: rnrbHelpers.heading,
-    inputValue: rnrbHelpers.input_value,
-    answerRowsHelper: rnrbHelpers.answer_rows
+    errorSummary: playComponents.error_summary,
+    heading: playComponents.heading,
+    submitButton: playComponents.submit_button,
+    inputValue: playComponents.input_value,
+    answerRowsHelper: playComponents.answer_rows
 )
 
 @(form: Form[Int], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
-@mainTemplate(
-    title = messages("chargeable_property_value.browser_title"),
-    bodyClasses = None) {
+@title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("chargeable_property_value.browser_title")) else messages("chargeable_property_value.browser_title")}
 
-    @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeablePropertyValueController.onSubmit(),
-        'autoComplete -> "off") {
+@layout(pageTitle = title) {
 
-        @errorSummary(form)
+    @errorSummary(form.errors)
+    @heading(messages("chargeable_property_value.title"))
 
-        @heading("chargeable_property_value.title", "heading-xlarge")
+    <p class="govuk-body">@messages("chargeable_property_value.guidance1")</p>
 
-        <p>@messages("chargeable_property_value.guidance1")</p>
+    <p class="govuk-body">@messages("chargeable_property_value.guidance2")</p>
 
-        <p>@messages("chargeable_property_value.guidance2")</p>
+    @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeablePropertyValueController.onSubmit(), 'autoComplete -> "off") {
 
-        <div class="form-group">
-            @inputValue(
-            form("value"),
-            '_inputClass -> "form-control",
-            '_type -> "number",
-            '_spanAfter -> false,
-            '_span -> Messages("sign.pound"),
-            '_spanTextClass -> "bold-small",
-            '_label -> Messages("chargeable_property_value.title"),
-            '_labelTextClass -> "visuallyhidden")
-        </div>
-
-        <div>
-            @submitButton()
-        </div>
-
+        @inputValue(
+            label = messages("chargeable_property_value.title"),
+            labelClass = Some("visually-hidden"),
+            currency = true,
+            field = form("value")
+        )
+        @submitButton()
     }
     @answerRowsHelper(answerRows)
-
 }

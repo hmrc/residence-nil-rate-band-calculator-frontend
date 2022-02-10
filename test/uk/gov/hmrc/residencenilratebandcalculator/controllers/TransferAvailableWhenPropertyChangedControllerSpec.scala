@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_available_when_property_changed
 
-class TransferAvailableWhenPropertyChangedControllerSpec extends SimpleControllerSpecBase {
+class TransferAvailableWhenPropertyChangedControllerSpec extends NewSimpleControllerSpecBase {
 
   val messageKey = "transfer_available_when_property_changed.error.required"
   val messageKeyPrefix = "transfer_available_when_property_changed"

@@ -14,9 +14,18 @@
  * limitations under the License.
  *@
 
-@this()
+@this(govukButton: GovukButton)
 
 @(
-headingKey: String, headingSize: String = "heading-medium")(implicit messages: Messages)
+    messageKey: String = "",
+    href: String,
+    classes: String = "",
+    attributes: Map[String, String] = Map.empty
+)(implicit messages: Messages)
 
-<h1 class="@headingSize">@messages(headingKey)</h1>
+@govukButton(Button(
+    content = Text(messages(messageKey)),
+    href = Some(href),
+    classes = classes,
+    attributes = attributes
+))

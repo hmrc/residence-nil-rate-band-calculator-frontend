@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ class SessionExpiredViewSpec extends ViewSpecBase {
   "Session Expired view" must {
     "display the correct browser title" in {
       val doc = asDocument(session_expired()(request, messages))
-      assertEqualsMessage(doc, "title", s"$messageKeyPrefix.browser_title")
+      assertEqualsMessage(doc, "title", s"${messages(s"$messageKeyPrefix.browser_title")} - ${messages("service.name")} - GOV.UK")
     }
 
     "display the correct title" in {
@@ -38,7 +38,7 @@ class SessionExpiredViewSpec extends ViewSpecBase {
     "display a Start Again button linking to the 'Calculate Threshold Increase' page" in {
       val doc = asDocument(session_expired()(request, messages))
       val startLink = doc.getElementById("start-again")
-      startLink.className shouldBe "button"
+      startLink.className shouldBe "govuk-button"
       startLink.attr("href") shouldBe routes.DateOfDeathController.onPageLoad().url
       startLink.text shouldBe messages("site.start_again")
     }

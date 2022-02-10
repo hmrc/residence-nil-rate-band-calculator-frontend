@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_assets_pas
 
 import scala.language.reflectiveCalls
 
-class ValueOfAssetsPassingViewSpec extends IntViewSpecBase {
+class ValueOfAssetsPassingViewSpec extends NewIntViewSpecBase {
 
   val messageKeyPrefix = "value_of_assets_passing"
   val value_of_assets_passing = injector.instanceOf[value_of_assets_passing]

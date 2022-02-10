@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.claim_downsizing_threshold
 
-class ClaimDownsizingThresholdControllerSpec extends SimpleControllerSpecBase {
+class ClaimDownsizingThresholdControllerSpec extends NewSimpleControllerSpecBase {
 
   val messageKey = "claim_downsizing_threshold.error.required"
   val messageKeyPrefix = "claim_downsizing_threshold"

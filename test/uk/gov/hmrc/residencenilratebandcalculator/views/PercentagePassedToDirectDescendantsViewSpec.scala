@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_passed_t
 
 import scala.language.reflectiveCalls
 
-class PercentagePassedToDirectDescendantsViewSpec extends BigDecimalViewSpecBase {
+class PercentagePassedToDirectDescendantsViewSpec extends NewBigDecimalViewSpecBase {
 
   val messageKeyPrefix = "percentage_passed_to_direct_descendants"
   val percentage_passed_to_direct_descendants = injector.instanceOf[percentage_passed_to_direct_descendants]

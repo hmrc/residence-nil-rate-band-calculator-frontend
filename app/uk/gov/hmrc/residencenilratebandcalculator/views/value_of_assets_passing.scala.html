@@ -15,53 +15,50 @@
  *@
 
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
 @this(
-    mainTemplate: main_template,
+    layout: Layout,
     uiForm: FormWithCSRF,
-    errorSummary: rnrbHelpers.error_summary,
-    heading: rnrbHelpers.heading,
-    inputValue: rnrbHelpers.input_value,
-    submitButton: rnrbHelpers.submit_button,
-    answerRowsHelper: rnrbHelpers.answer_rows
+    errorSummary: playComponents.error_summary,
+    heading: playComponents.heading,
+    inputValue: playComponents.input_value,
+    submitButton: playComponents.submit_button,
+    answerRowsHelper: playComponents.answer_rows
 )
 
 @(form: Form[Int], answerRows: Seq[AnswerRow], formattedPropertyValue: Option[String])(implicit request: Request[_], messages: Messages)
 
-@mainTemplate(
-    title = messages("value_of_assets_passing.browser_title"),
-    bodyClasses = None) {
+@title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("value_of_assets_passing.browser_title")) else messages("value_of_assets_passing.browser_title")}
+
+@layout(
+    pageTitle = title
+) {
 
     @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfAssetsPassingController.onSubmit(), 'autoComplete -> "off") {
 
-        @errorSummary(form)
+        @errorSummary(form.errors)
 
-        @heading("value_of_assets_passing.title", "heading-xlarge")
+        @heading(messages("value_of_assets_passing.title"))
 
-        <p>@messages("value_of_assets_passing.guidance1")</p>
+        <p class="govuk-body">@messages("value_of_assets_passing.guidance1")</p>
 
-        <p>@messages("value_of_assets_passing.guidance3")</p>
+        <p class="govuk-body">@messages("value_of_assets_passing.guidance3")</p>
 
         @if(formattedPropertyValue.isDefined) {
-            <p>@messages("value_of_assets_passing.guidance4", formattedPropertyValue.get)</p>
+            <p class="govuk-body">@messages("value_of_assets_passing.guidance4", formattedPropertyValue.get)</p>
         } else {
-        <p>@messages("value_of_assets_passing.guidance_no_property")</p>
+        <p class="govuk-body">@messages("value_of_assets_passing.guidance_no_property")</p>
         }
 
-        <div class="form-group">
-            @inputValue(
-                form("value"),
-                '_inputClass -> "form-control",
-                '_type -> "number",
-                '_spanAfter -> false,
-                '_span -> Messages("sign.pound"),
-                '_spanTextClass -> "bold-small",
-                '_label -> Messages("value_of_assets_passing.title"),
-                '_labelTextClass -> "visuallyhidden")
-        </div>
-        <div>
-            @submitButton()
-        </div>
+        @inputValue(
+            label = messages("value_of_assets_passing.title"),
+            labelClass = Some("visually-hidden"),
+            currency = true,
+            field = form("value")
+        )
+
+        @submitButton()
 
     }
     @answerRowsHelper(answerRows)

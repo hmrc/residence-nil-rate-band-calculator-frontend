@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_available_
 
 import scala.language.reflectiveCalls
 
-class TransferAvailableWhenPropertyChangedViewSpec extends BooleanViewSpecBase {
+class TransferAvailableWhenPropertyChangedViewSpec extends NewBooleanViewSpecBase {
 
   val messageKeyPrefix = "transfer_available_when_property_changed"
   val transfer_available_when_property_changed = injector.instanceOf[transfer_available_when_property_changed]

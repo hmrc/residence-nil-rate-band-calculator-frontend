@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.part_of_estate_passing_to_direct_descendants
 
-class PartOfEstatePassingToDirectDescendantsControllerSpec extends SimpleControllerSpecBase {
+class PartOfEstatePassingToDirectDescendantsControllerSpec extends NewSimpleControllerSpecBase {
 
   val messageKey = "part_of_estate_passing_to_direct_descendants.error.required"
   val messageKeyPrefix = "part_of_estate_passing_to_direct_descendants"

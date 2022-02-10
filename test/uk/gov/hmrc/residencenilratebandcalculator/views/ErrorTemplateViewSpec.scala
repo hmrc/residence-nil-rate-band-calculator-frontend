@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ class ErrorTemplateViewSpec extends HtmlSpec {
 
     "display the correct browser title" in {
       val f = fixture()
-      assertEqualsMessage(f.doc, "title", "title")
+      assertEqualsMessage(f.doc, "title",s"${messages("title")} - ${messages("service.name")} - GOV.UK")
     }
 
     "display the correct message" in {

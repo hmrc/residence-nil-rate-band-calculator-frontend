@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ class ThresholdCalculationResultViewSpec extends HtmlSpec {
     "rendered" must {
       "display the correct browser title" in {
         val f = thisFixture()
-        assertEqualsMessage(f.doc, "title", "threshold_calculation_result.browser_title")
+        assertEqualsMessage(f.doc, "title", s"${messages("threshold_calculation_result.browser_title")} - ${messages("service.name")} - GOV.UK")
       }
 
       "display the correct guidance" in {
