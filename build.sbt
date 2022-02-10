@@ -33,6 +33,8 @@ lazy val microservice = Project(appName, file("."))
   .settings(inConfig(IntegrationTest)(Defaults.itSettings): _*)
   .settings(integrationTestSettings())
   .settings(
+    Keys.fork in Test := true,
+    javaOptions in Test += "-Dconfig.file=conf/test.application.conf",
     scalacOptions ++= Seq("-feature"),
     dependencyOverrides += "commons-codec" % "commons-codec" % "1.12",
     retrieveManaged := true,
@@ -61,8 +63,11 @@ lazy val microservice = Project(appName, file("."))
   .settings(majorVersion := 0)
   .settings(
     TwirlKeys.templateImports ++= Seq(
-      "uk.gov.hmrc.play.views.html.helpers._",
-      "uk.gov.hmrc.play.views.html.layouts._"
+      "uk.gov.hmrc.govukfrontend.views.html.components._",
+      "uk.gov.hmrc.govukfrontend.views.html.helpers._",
+      "uk.gov.hmrc.hmrcfrontend.views.html.components._",
+      "uk.gov.hmrc.hmrcfrontend.views.html.helpers._",
+      "uk.gov.hmrc.govukfrontend.views.html.components.implicits._"
     )
   )
   .disablePlugins(JUnitXmlReportPlugin)

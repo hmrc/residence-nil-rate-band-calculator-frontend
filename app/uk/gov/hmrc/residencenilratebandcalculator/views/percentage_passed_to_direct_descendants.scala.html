@@ -15,46 +15,42 @@
  *@
 
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
 @this(
-    mainTemplate: main_template,
+    layout: Layout,
     uiForm: FormWithCSRF,
-    errorSummary: rnrbHelpers.error_summary,
-    submitButton: rnrbHelpers.submit_button,
-    heading: rnrbHelpers.heading,
-    inputValue: rnrbHelpers.input_value,
-    answerRowsHelper: rnrbHelpers.answer_rows
+    errorSummary: playComponents.error_summary,
+    submitButton: playComponents.submit_button,
+    heading: playComponents.heading,
+    inputValue: playComponents.input_value,
+    answerRowsHelper: playComponents.answer_rows
 )
 
 @(form: Form[BigDecimal], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
-@mainTemplate(
-    title = messages("percentage_passed_to_direct_descendants.browser_title"),
-    bodyClasses = None) {
+@title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("percentage_passed_to_direct_descendants.browser_title")) else messages("percentage_passed_to_direct_descendants.browser_title")}
+@layout(
+    pageTitle = title,
+) {
 
     @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PercentagePassedToDirectDescendantsController.onSubmit(), 'autoComplete -> "off") {
 
-        @errorSummary(form)
+        @errorSummary(form.errors)
 
-        @heading("percentage_passed_to_direct_descendants.title", "heading-xlarge")
+        @heading(messages("percentage_passed_to_direct_descendants.title"))
 
-        <p>@messages("percentage_passed_to_direct_descendants.guidance")</p>
+        <p class="govuk-body">@messages("percentage_passed_to_direct_descendants.guidance")</p>
 
-        <div class="form-group">
-            @inputValue(
-                form("value"),
-                '_inputClass -> "form-control form-control-1-4",
-                '_type -> "number",
-                '_spanAfter -> false,
-                '_span -> Messages("sign.percentage"),
-                '_spanAfter -> true,
-                '_spanTextClass -> "bold-small",
-                '_label -> Messages("percentage_passed_to_direct_descendants.title"),
-                '_labelTextClass -> "visuallyhidden")
-        </div>
-        <div>
-            @submitButton()
-        </div>
+        @inputValue(
+            label = messages("percentage_passed_to_direct_descendants.title"),
+            labelClass = Some("visually-hidden"),
+            shortAnswer = true,
+            field = form("value"),
+            suffix = Some(messages("sign.percentage"))
+        )
+
+        @submitButton()
 
 
     }

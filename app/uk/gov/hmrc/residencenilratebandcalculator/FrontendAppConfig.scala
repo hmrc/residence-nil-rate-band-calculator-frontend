@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,8 +34,8 @@ trait AppConfig {
 class FrontendAppConfig @Inject()(val servicesConfig: ServicesConfig) extends AppConfig {
   private def loadConfig(key: String) = servicesConfig.getString(key)
 
-  private lazy val contactHost = servicesConfig.getConfString("contact-frontend.www", "")
-  private val contactFormServiceIdentifier = "RNRB"
+  lazy val contactHost: String = servicesConfig.getConfString("contact-frontend.www", "")
+  lazy val contactFormServiceIdentifier = "RNRB"
 
   override lazy val timeOutCountdownSeconds: Int = loadConfig("timeOutCountdownSeconds").toInt
   override lazy val timeOutSession: Int = loadConfig("mongodb.timeToLiveInSeconds").toInt

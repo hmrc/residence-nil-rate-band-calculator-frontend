@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ class NoDownsizingThresholdIncreaseViewSpec extends HtmlSpec {
   "No Downsizing Threshold Increase View" must {
     "display the correct browser title" in {
       val doc = asDocument(no_downsizing_threshold_increase("", Call("", ""), Seq()))
-      assertEqualsMessage(doc, "title", s"$messageKeyPrefix.browser_title")
+      assertEqualsMessage(doc, "title", s"${messages(s"$messageKeyPrefix.browser_title")} - ${messages("service.name")} - GOV.UK")
     }
 
     "display the correct page title" in {

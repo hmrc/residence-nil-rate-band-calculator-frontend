@@ -16,43 +16,40 @@
 
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
 @this(
-    mainTemplate: main_template,
+    layout: Layout,
     uiForm: FormWithCSRF,
-    errorSummary: rnrbHelpers.error_summary,
-    heading: rnrbHelpers.heading,
-    inputRadioGroup: InputRadioGroup,
-    submitButton: rnrbHelpers.submit_button,
-    answerRowsHelper: rnrbHelpers.answer_rows
+    errorSummary: playComponents.error_summary,
+    heading: playComponents.heading,
+    inputYesNo: playComponents.input_yes_no,
+    submitButton: playComponents.submit_button,
+    answerRowsHelper: playComponents.answer_rows
 )
 
 @(form: Form[Boolean], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
-@mainTemplate(
-    title = messages("transfer_available_when_property_changed.browser_title"),
-    bodyClasses = None) {
+@title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("transfer_available_when_property_changed.browser_title")) else messages("transfer_available_when_property_changed.browser_title")}
+
+@layout(
+    pageTitle = title
+) {
 
     @uiForm(action = TransferAvailableWhenPropertyChangedController.onSubmit(), 'autoComplete -> "off") {
 
-        @errorSummary(form)
+        @errorSummary(form.errors)
 
-        @heading("transfer_available_when_property_changed.title", "heading-xlarge")
+        @heading(messages("transfer_available_when_property_changed.title"))
 
-        <p>@messages("transfer_available_when_property_changed.guidance")</p>
+        <p class="govuk-body">@messages("transfer_available_when_property_changed.guidance")</p>
 
-        <div class="form-group">
-            <fieldset class="form-group inline">
-                @inputRadioGroup(
-                    form("value"),
-                    Seq("true" -> messages("site.yes"), "false" -> messages("site.no")),
-                    '_legend -> messages("transfer_available_when_property_changed.title"),
-                    '_legendClass -> Some("visuallyhidden")
-                )
-            </fieldset>
-               @submitButton()
-        </div>
-
+        @inputYesNo(
+            label = HtmlContent(heading(messages("transfer_available_when_property_changed.title"))),
+            labelClass = Some("visually-hidden"),
+            field = form("value")
+        )
+        @submitButton()
     }
     @answerRowsHelper(answerRows)
 }

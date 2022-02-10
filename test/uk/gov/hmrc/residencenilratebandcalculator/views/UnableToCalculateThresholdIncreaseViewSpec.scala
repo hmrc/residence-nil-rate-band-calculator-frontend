@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ class UnableToCalculateThresholdIncreaseViewSpec extends HtmlSpec {
 
     "display the correct browser title" in {
       val f = fixture()
-      assertEqualsMessage(f.doc, "title", "unable_to_calculate_threshold_increase.browser_title")
+      assertEqualsMessage(f.doc, "title", messages("unable_to_calculate_threshold_increase.browser_title") + " - Calculate the available RNRB - GOV.UK")
     }
 
     "display the correct page title" in {
@@ -48,7 +48,7 @@ class UnableToCalculateThresholdIncreaseViewSpec extends HtmlSpec {
         s"$prefix.next.guidance1",
         s"$prefix.next.guidance2",
         s"$prefix.next.guidance3.addr1",
-        "HM Revenue &amp; Customs,",
+        "HM Revenue &amp; Customs",
         s"$prefix.next.guidance3.addr3",
         s"$prefix.next.guidance4",
         s"$prefix.next.guidance5"

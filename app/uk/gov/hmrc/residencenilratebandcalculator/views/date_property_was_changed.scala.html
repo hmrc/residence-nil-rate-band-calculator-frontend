@@ -15,47 +15,47 @@
  *@
 
 @import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, Date}
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
 @this(
-    errorSummary: rnrbHelpers.error_summary,
-    submitButton: rnrbHelpers.submit_button,
-    heading: rnrbHelpers.heading,
-    inputDateInline: rnrbHelpers.input_date_inline,
-    mainTemplate: main_template,
+    errorSummary: playComponents.error_summary,
+    submitButton: playComponents.submit_button,
+    heading: playComponents.heading,
+    inputDateInline: playComponents.input_date_inline,
+    layout: Layout,
     uiForm: FormWithCSRF,
-    answerRowsHelper: rnrbHelpers.answer_rows
+    answerRowsHelper: playComponents.answer_rows
 )
 
 @(form: Form[Date], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
-@mainTemplate(
-    title = messages("date_property_was_changed.browser_title"),
-    bodyClasses = None) {
+@title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("date_property_was_changed.browser_title")) else messages("date_property_was_changed.browser_title")}
+
+@layout(
+    pageTitle = title
+) {
 
     @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DatePropertyWasChangedController.onSubmit(), 'autoComplete -> "off") {
 
-        @errorSummary(form)
+        @errorSummary(form.errors, key => s"$key.day")
 
-        @heading("date_property_was_changed.title", "heading-xlarge")
+        @heading(messages("date_property_was_changed.title"))
 
-        <p>@messages("date_property_was_changed.guidance1")</p>
+        <p class="govuk-body">@messages("date_property_was_changed.guidance1")</p>
 
-        <p>@messages("date_property_was_changed.guidance2")</p>
+        <p class="govuk-body">@messages("date_property_was_changed.guidance2")</p>
 
-        <div class="form-group">
-            <fieldset class="form-field-group">
-                @inputDateInline(
-                form,
-                "dateOfDownsizing",
-                '_inputHint -> messages("date_property_was_changed.hint"),
-                '_legend -> messages("date_property_was_changed.browser_title"),
-                '_legendClass -> "visuallyhidden"
-                )
-            </fieldset>
-            @submitButton()
-        </div>
+        @inputDateInline(
+            content = messages("date_property_was_changed.title"),
+            labelClass = Some("visually-hidden"),
+            hintContent = Some(messages("date_property_was_changed.hint")),
+            field = form("dateOfDownsizing"),
+            pageHeading = false
+        )
 
+        @submitButton()
     }
+
     @answerRowsHelper(answerRows)
 
 }

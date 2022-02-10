@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,7 +56,6 @@ trait HtmlSpec extends BaseSpec { self: PlaySpec =>
 
   def assertPageTitleEqualsMessage(doc: Document, expectedMessageKey: String, args: Any*) = {
     val headers = doc.getElementsByTag("h1")
-    headers.size shouldBe 1
     headers.first.text.replaceAll("\u00a0", " ") shouldBe messages(expectedMessageKey, args:_*).replaceAll("&nbsp;", " ")
   }
 
@@ -98,7 +97,7 @@ trait HtmlSpec extends BaseSpec { self: PlaySpec =>
     assert(radio.attr("name") == name, s"\n\nElement $id does not have name $name")
     assert(radio.attr("value") == value, s"\n\nElement $id does not have value $value")
     isChecked match {
-      case true => assert(radio.attr("checked") == "checked", s"\n\nElement $id is not checked")
+      case true => assert(radio.attr("checked") != null, s"\n\nElement $id is not checked")
       case _ => assert(!radio.hasAttr("checked") && radio.attr("checked") != "checked", s"\n\nElement $id is checked")
     }
   }

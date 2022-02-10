@@ -17,21 +17,25 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 
 @this(
-    mainTemplate: main_template
+    layout: Layout,
+    heading: playComponents.heading,
+    buttonLink: playComponents.button_link
 )
 
 @()(implicit request: Request[_], messages: Messages)
 
-@mainTemplate(
-    title = messages("session_expired.browser_title"),
-    bodyClasses = None,
-    enableTimeout = false
+@layout(
+    pageTitle = messages("session_expired.browser_title"),
+    timeoutEnabled = false,
 ) {
 
-    <h1 class="heading-xlarge">@messages("session_expired.title")</h1>
-
+    @heading(messages("session_expired.title"))
     <p>
-        <a href="@routes.DateOfDeathController.onPageLoad().url" class="button" role="button" id="start-again">@messages("site.start_again")</a>
+        @buttonLink(
+            messageKey = messages("site.start_again"),
+            href = routes.DateOfDeathController.onPageLoad().url,
+            attributes = Map("id" -> "start-again")
+        )
     </p>
-
 }
+

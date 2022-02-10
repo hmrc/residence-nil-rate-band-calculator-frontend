@@ -15,57 +15,48 @@
  *@
 
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
 @this(
-    mainTemplate: main_template,
+    layout: Layout,
     uiForm: FormWithCSRF,
-    errorSummary: rnrbHelpers.error_summary,
-    heading: rnrbHelpers.heading,
-    submitButton: rnrbHelpers.submit_button,
-    inputValue: rnrbHelpers.input_value,
-    answerRowsHelper: rnrbHelpers.answer_rows
+    errorSummary: playComponents.error_summary,
+    heading: playComponents.heading,
+    submitButton: playComponents.submit_button,
+    inputValue: playComponents.input_value,
+    answerRowsHelper: playComponents.answer_rows
 )
 
 @(form: Form[Int], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
-@mainTemplate(
-    title = messages("property_value.browser_title"),
-    bodyClasses = None) {
+@title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("property_value.browser_title")) else messages("property_value.browser_title")}
 
+@layout(pageTitle = title) {
+
+    @errorSummary(form.errors)
+    @heading(messages("property_value.title"))
+
+    <p class="govuk-body">@messages("property_value.guidance1")</p>
+
+    <p class="govuk-body">@messages("property_value.guidance2")</p>
+
+    <p class="govuk-body">@messages("property_value.guidance3")</p>
+
+    <ul class="list list-bullet">
+        <li class="govuk-body">@messages("property_value.guidance3.bullet1")</li>
+        <li class="govuk-body">@messages("property_value.guidance3.bullet2")</li>
+    </ul>
+
+    <p class="govuk-body">@messages("property_value.guidance4")</p>
     @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyValueController.onSubmit(), 'autoComplete -> "off") {
 
-        @errorSummary(form)
-
-        @heading("property_value.title", "heading-xlarge")
-
-        <p>@messages("property_value.guidance1")</p>
-
-        <p>@messages("property_value.guidance2")</p>
-
-        <p>@messages("property_value.guidance3")</p>
-
-        <ul class="list list-bullet">
-            <li>@messages("property_value.guidance3.bullet1")</li>
-            <li>@messages("property_value.guidance3.bullet2")</li>
-        </ul>
-
-        <p>@messages("property_value.guidance4")</p>
-
-        <div class="form-group">
-            @inputValue(
-                form("value"),
-                '_inputClass -> "form-control",
-                '_type -> "number",
-                '_spanAfter -> false,
-                '_span -> Messages("sign.pound"),
-                '_spanTextClass -> "bold-small",
-                '_label -> Messages("chargeable_property_value.title"),
-                '_labelTextClass -> "visuallyhidden")
-        </div>
-        <div>
-             @submitButton()
-        </div>
-
+        @inputValue(
+            label = messages("property_value.title"),
+            labelClass = Some("visually-hidden"),
+            currency = true,
+            field = form("value")
+        )
+        @submitButton()
     }
     @answerRowsHelper(answerRows)
 }

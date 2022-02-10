@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -70,7 +70,7 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase with CommonPlaySp
       }
 
       "load the correct page" in {
-        Jsoup.parse(await(bodyOf(result))).title shouldBe "What was the date of death?"
+        Jsoup.parse(await(bodyOf(result))).title shouldBe "What was the date of death? - Calculate the available RNRB - GOV.UK"
       }
     }
 
@@ -83,7 +83,7 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase with CommonPlaySp
       }
 
       "load the correct page" in {
-        Jsoup.parse(await(bodyOf(result))).title shouldBe "What was the date of death?"
+        Jsoup.parse(await(bodyOf(result))).title shouldBe "What was the date of death? - Calculate the available RNRB - GOV.UK"
       }
     }
   }

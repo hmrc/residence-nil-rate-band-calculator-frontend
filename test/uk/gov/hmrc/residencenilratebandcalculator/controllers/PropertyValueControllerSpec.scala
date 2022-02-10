@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_value
 
-class PropertyValueControllerSpec extends SimpleControllerSpecBase with CommonPlaySpec {
+class PropertyValueControllerSpec extends NewSimpleControllerSpecBase with CommonPlaySpec {
 
   val errorKeyBlank = "property_value.error.blank"
   val errorKeyDecimal = "error.whole_pounds"

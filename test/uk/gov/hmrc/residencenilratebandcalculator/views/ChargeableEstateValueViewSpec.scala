@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_estate_v
 
 import scala.language.reflectiveCalls
 
-class ChargeableEstateValueViewSpec extends IntViewSpecBase {
+class ChargeableEstateValueViewSpec extends NewIntViewSpecBase {
 
   val messageKeyPrefix = "chargeable_estate_value"
   val chargeable_estate_value = injector.instanceOf[chargeable_estate_value]

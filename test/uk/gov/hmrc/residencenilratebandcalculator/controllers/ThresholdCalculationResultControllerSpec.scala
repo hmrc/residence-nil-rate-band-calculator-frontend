@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.threshold_calculati
 import scala.concurrent.Future
 import scala.util.Success
 
-class ThresholdCalculationResultControllerSpec extends SimpleControllerSpecBase with MockitoSugar with Matchers {
+class ThresholdCalculationResultControllerSpec extends NewSimpleControllerSpecBase with MockitoSugar with Matchers {
 
   val testJsNumber = JsNumber(10)
 
@@ -92,7 +92,7 @@ class ThresholdCalculationResultControllerSpec extends SimpleControllerSpecBase 
     "return the View for a GET" in {
       setCacheMap(cacheMap)
       val result = thresholdCalculationResultController().onPageLoad()(fakeRequest)
-      contentAsString(result) should include("<title>Final calculation</title>")
+      contentAsString(result) should include("<title>Final calculation - Calculate the available RNRB - GOV.UK</title>")
     }
 
     "returns an Internal Server Error when the cache is in an unusable state" in {

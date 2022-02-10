@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.controllers.ExemptionsAndRelie
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exemptions_and_relief_claimed
 
-class ExemptionsAndReliefClaimedViewSpec extends BooleanViewSpecBase {
+class ExemptionsAndReliefClaimedViewSpec extends NewBooleanViewSpecBase {
 
   val messageKeyPrefix = "exemptions_and_relief_claimed"
 

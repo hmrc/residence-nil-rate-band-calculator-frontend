@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -95,7 +95,7 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends CommonPlaySpec wit
     "return the View for a GET" in {
       setCacheMap(new CacheMap("", Map(Constants.datePropertyWasChangedId -> JsString("2018-5-11"))))
       val result = createController().onPageLoad(Reads.IntReads)(fakeRequest)
-      Jsoup.parse(contentAsString(result)).title() shouldBe messages("value_available_when_property_changed.title")
+      Jsoup.parse(contentAsString(result)).title() shouldBe messages("value_available_when_property_changed.title")  + " - Calculate the available RNRB - GOV.UK"
 
     }
 

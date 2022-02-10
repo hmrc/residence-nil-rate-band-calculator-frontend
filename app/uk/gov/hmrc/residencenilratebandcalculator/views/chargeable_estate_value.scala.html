@@ -14,52 +14,41 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.play.views.html._
-@import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
 @this(
-    mainTemplate: main_template,
+    layout: Layout,
     uiForm: FormWithCSRF,
-    errorSummary: rnrbHelpers.error_summary,
-    heading: rnrbHelpers.heading,
-    inputValue: rnrbHelpers.input_value,
-    submitButton: rnrbHelpers.submit_button,
-    answerRowsHelper: rnrbHelpers.answer_rows
+    errorSummary: playComponents.error_summary,
+    heading: playComponents.heading,
+    inputValue: playComponents.input_value,
+    submitButton: playComponents.submit_button,
+    answerRowsHelper: playComponents.answer_rows
 )
 
 @(form: Form[Int], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
-@mainTemplate(
-    title = messages("chargeable_estate_value.browser_title"),
-    bodyClasses = None) {
+@layout(
+    pageTitle = messages("chargeable_estate_value.browser_title")
+) {
 
     @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeableEstateValueController.onSubmit(), 'autoComplete -> "off") {
 
-        @errorSummary(form)
+        @errorSummary(form.errors)
 
-        @heading("chargeable_estate_value.title", "heading-xlarge")
+        @heading(messages("chargeable_estate_value.title"))
 
-        <p>@messages("chargeable_estate_value.guidance")</p>
+        <p class="govuk-body">@messages("chargeable_estate_value.guidance")</p>
 
-        <div class="form-group">
-            @inputValue(
-            form("value"),
-            '_inputClass -> "form-control",
-            '_type -> "number",
-            '_spanAfter -> false,
-            '_span -> Messages("sign.pound"),
-            '_spanTextClass -> "bold-small",
-            '_label -> Messages("chargeable_estate_value.title"),
-            '_labelTextClass -> "visuallyhidden")
-        </div>
+        @inputValue(
+            label = messages("chargeable_estate_value.title"),
+            labelClass = Some("visually-hidden"),
+            currency = true,
+            field = form("value")
+        )
+        @submitButton()
 
-        <div>
-            @submitButton()
-        </div>
-
-
+        @answerRowsHelper(answerRows)
     }
-
-    @answerRowsHelper(answerRows)
 }

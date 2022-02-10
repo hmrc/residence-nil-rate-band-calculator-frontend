@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -101,7 +101,7 @@ class ValueBeingTransferredControllerSpec extends CommonPlaySpec with HttpRespon
     "if the date of death key is set return the View for a GET" in {
       setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"))))
       val result = createController().onPageLoad(Reads.IntReads)(fakeRequest)
-      Jsoup.parse(contentAsString(result)).title() shouldBe messages("value_being_transferred.title")
+      Jsoup.parse(contentAsString(result)).title() shouldBe messages("value_being_transferred.title") + " - Calculate the available RNRB - GOV.UK"
     }
 
     "if the date of death key is not set throw an exception" in {

@@ -17,23 +17,21 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 
 @this(
-    mainTemplate: main_template,
-    answerRowsHelper: rnrbHelpers.answer_rows
+    layout: Layout,
+    heading: playComponents.heading,
+    answerRowsHelper: playComponents.answer_rows,
+    buttonLink: playComponents.button_link
 )
 
 @(prefix: String, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
 
-@mainTemplate(
-    title = messages("no_threshold_increase.browser_title"),
-    bodyClasses = None) {
+@layout(pageTitle = messages("no_threshold_increase.browser_title")) {
 
-    <h1 class="heading-xlarge">@messages(s"${prefix}.title")</h1>
+    @heading(messages(s"${prefix}.title"))
 
-    <div class="panel-indent panel-indent--gutter">
-        <p>@messages(s"${prefix}.reason")</p>
-    </div>
+    <p class="govuk-body">@messages(s"${prefix}.reason")</p>
 
-    <a href="@uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.FeedbackSurveyController.redirectExitSurvey().url" class="button u--no-print">@messages("site.finish")</a>
-
+    @buttonLink(messages("site.finish"), uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.FeedbackSurveyController.redirectExitSurvey().url)
     @answerRowsHelper(answerRows)
+
 }
