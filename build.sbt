@@ -70,6 +70,4 @@ lazy val microservice = Project(appName, file("."))
       "uk.gov.hmrc.govukfrontend.views.html.components.implicits._"
     )
   )
-  .disablePlugins(JUnitXmlReportPlugin)
-
 

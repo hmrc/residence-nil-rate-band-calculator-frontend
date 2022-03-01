@@ -28,9 +28,10 @@
 )
 
 @(form: Form[Int], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
+@title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("value_of_estate.browser_title")) else messages("value_of_estate.browser_title")}
 
 @layout(
-    pageTitle = messages("value_of_estate.browser_title")
+    pageTitle = title
 ) {
 
     @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfEstateController.onSubmit(), 'autoComplete -> "off") {
