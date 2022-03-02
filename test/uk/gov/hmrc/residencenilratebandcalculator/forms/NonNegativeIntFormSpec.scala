@@ -16,7 +16,8 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
-import org.scalatest.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers
+import matchers.should.Matchers.convertToAnyShouldWrapper
 
 class NonNegativeIntFormSpec extends FormSpec {
 

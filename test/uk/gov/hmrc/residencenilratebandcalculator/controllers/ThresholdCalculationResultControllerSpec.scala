@@ -20,7 +20,6 @@ import org.joda.time.LocalDate
 import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito._
-import org.scalatest.Matchers
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.http.Status
 import play.api.libs.json._
@@ -37,6 +36,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.threshold_calculati
 
 import scala.concurrent.Future
 import scala.util.Success
+import org.scalatest.matchers.should.Matchers
 
 class ThresholdCalculationResultControllerSpec extends NewSimpleControllerSpecBase with MockitoSugar with Matchers {
 

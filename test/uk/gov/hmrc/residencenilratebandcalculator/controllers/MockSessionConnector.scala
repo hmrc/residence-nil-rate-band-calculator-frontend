@@ -20,7 +20,7 @@ import org.joda.time.LocalDate
 import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito._
-import org.scalatest.{BeforeAndAfter, Matchers}
+import org.scalatest.BeforeAndAfter
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.json.{JsValue, Reads, Writes}
 import uk.gov.hmrc.http.HeaderCarrier
@@ -31,6 +31,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 
 import scala.concurrent.Future
 import scala.reflect.ClassTag
+import org.scalatest.matchers.should.Matchers
 
 trait MockSessionConnector extends CommonPlaySpec with MockitoSugar with Matchers with BeforeAndAfter {
 

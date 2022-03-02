@@ -17,7 +17,8 @@
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
-import org.scalatest.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers
+import matchers.should.Matchers.convertToAnyShouldWrapper
 
 class CurrencyFormatterSpec extends BaseSpec {
   "CurrencyFormatter" must {

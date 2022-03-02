@@ -18,7 +18,8 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.threshold_calculation_result
-import org.scalatest.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers
+import matchers.should.Matchers.convertToAnyShouldWrapper
 
 import scala.language.reflectiveCalls
 

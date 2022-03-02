@@ -22,7 +22,8 @@ import play.api.i18n.{Lang, MessagesApi}
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
-import org.scalatest.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers
+import matchers.should.Matchers.convertToAnyShouldWrapper
 
 class AnswerRowSpec extends BaseSpec {
   val injector = fakeApplication.injector

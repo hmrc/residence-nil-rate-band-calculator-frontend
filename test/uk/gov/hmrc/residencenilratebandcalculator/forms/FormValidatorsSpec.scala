@@ -17,7 +17,8 @@
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
 import org.scalatestplus.play.PlaySpec
-import org.scalatest.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers
+import matchers.should.Matchers.convertToAnyShouldWrapper
 
 class FormValidatorsSpec extends PlaySpec {
 

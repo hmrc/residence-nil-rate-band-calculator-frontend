@@ -18,7 +18,8 @@ package uk.gov.hmrc.residencenilratebandcalculator.forms
 
 import play.api.data.{Form, FormError}
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
-import org.scalatest.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers
+import matchers.should.Matchers.convertToAnyShouldWrapper
 
 trait FormSpec extends BaseSpec {
   def checkForError(form: Form[_], data: Map[String, String], expectedErrors: Seq[FormError]) = {

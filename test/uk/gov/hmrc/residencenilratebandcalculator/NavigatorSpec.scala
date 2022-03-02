@@ -18,11 +18,11 @@ package uk.gov.hmrc.residencenilratebandcalculator
 
 import org.joda.time.LocalDate
 import org.mockito.Mockito._
-import org.scalatest.Matchers
 import org.scalatestplus.mockito.MockitoSugar
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
+import org.scalatest.matchers.should.Matchers
 
 class NavigatorSpec extends CommonPlaySpec with Matchers with MockitoSugar {
   val navigator = new Navigator

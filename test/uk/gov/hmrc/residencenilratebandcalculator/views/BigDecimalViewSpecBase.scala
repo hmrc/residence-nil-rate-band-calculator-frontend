@@ -18,7 +18,8 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
-import org.scalatest.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers
+import matchers.should.Matchers.convertToAnyShouldWrapper
 
 trait BigDecimalViewSpecBase extends ViewSpecBase {
 
