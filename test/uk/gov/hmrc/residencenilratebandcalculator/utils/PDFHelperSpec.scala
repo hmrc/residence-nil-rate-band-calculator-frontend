@@ -24,7 +24,8 @@ import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import play.api.mvc.{DefaultMessagesControllerComponents, MessagesControllerComponents}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
-import org.scalatest.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers
+import matchers.should.Matchers.convertToAnyShouldWrapper
 
 class PDFHelperSpec extends BaseSpec {
   private val injector = fakeApplication.injector

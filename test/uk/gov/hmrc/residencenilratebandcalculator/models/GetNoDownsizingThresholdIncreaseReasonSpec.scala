@@ -20,7 +20,8 @@ import org.mockito.Mockito._
 import org.scalatestplus.mockito.MockitoSugar
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThresholdIncreaseReason.{DatePropertyWasChangedTooEarly, NoAssetsPassingToDirectDescendants}
-import org.scalatest.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers
+import matchers.should.Matchers.convertToAnyShouldWrapper
 
 class GetNoDownsizingThresholdIncreaseReasonSpec extends BaseSpec with MockitoSugar {
   "Get No Downsizing Threshold Increase Reason" must {

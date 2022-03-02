@@ -25,7 +25,8 @@ import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, FrontendAppConfig}
-import org.scalatest.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers
+import matchers.should.Matchers.convertToAnyShouldWrapper
 
 import scala.concurrent.ExecutionContext
 

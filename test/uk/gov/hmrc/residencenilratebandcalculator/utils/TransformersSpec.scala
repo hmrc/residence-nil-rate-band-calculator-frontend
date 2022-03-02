@@ -19,7 +19,8 @@ package uk.gov.hmrc.residencenilratebandcalculator.utils
 import org.joda.time.LocalDate
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 import uk.gov.hmrc.residencenilratebandcalculator.utils.Transformers._
-import org.scalatest.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers
+import matchers.should.Matchers.convertToAnyShouldWrapper
 
 class TransformersSpec extends BaseSpec {
 

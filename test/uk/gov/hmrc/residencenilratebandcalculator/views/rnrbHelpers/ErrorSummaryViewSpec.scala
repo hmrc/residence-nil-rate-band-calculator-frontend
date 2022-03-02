@@ -20,7 +20,8 @@ import play.api.data.{Form, FormError}
 import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.playComponents.error_summary
 import org.mockito.Mockito._
-import org.scalatest.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers
+import matchers.should.Matchers.convertToAnyShouldWrapper
 
 class ErrorSummaryViewSpec extends HtmlSpec {
 

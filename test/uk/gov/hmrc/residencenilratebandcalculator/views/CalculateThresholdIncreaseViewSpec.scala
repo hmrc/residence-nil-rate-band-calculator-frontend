@@ -18,7 +18,8 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.calculate_threshold_increase
-import org.scalatest.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers
+import matchers.should.Matchers.convertToAnyShouldWrapper
 
 class CalculateThresholdIncreaseViewSpec extends ViewSpecBase {
 

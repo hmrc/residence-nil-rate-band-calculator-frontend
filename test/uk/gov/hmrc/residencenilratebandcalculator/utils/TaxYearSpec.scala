@@ -19,7 +19,8 @@ package uk.gov.hmrc.residencenilratebandcalculator.utils
 import org.joda.time.{DateTime, LocalDate}
 import org.joda.time.format.DateTimeFormat
 import org.scalatestplus.play.PlaySpec
-import org.scalatest.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers
+import matchers.should.Matchers.convertToAnyShouldWrapper
 
 class TaxYearSpec extends PlaySpec {
 

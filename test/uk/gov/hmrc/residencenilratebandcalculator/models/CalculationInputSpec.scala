@@ -19,10 +19,11 @@ package uk.gov.hmrc.residencenilratebandcalculator.models
 import org.joda.time.LocalDate
 import org.mockito.Mockito._
 import org.scalatestplus.mockito.MockitoSugar
-import org.scalatest.{BeforeAndAfter, Matchers}
+import org.scalatest.BeforeAndAfter
 import play.api.libs.json.Json
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import org.scalatest.matchers.should.Matchers
 
 class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matchers with BeforeAndAfter {
 

@@ -16,7 +16,8 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import org.scalatest.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers
+import matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm

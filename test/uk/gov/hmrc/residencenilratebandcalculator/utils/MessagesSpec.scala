@@ -19,7 +19,8 @@ package uk.gov.hmrc.residencenilratebandcalculator.utils
 import org.scalatestplus.play.PlaySpec
 import play.api.i18n.Messages
 import play.api.i18n.Messages.MessageSource
-import org.scalatest.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers
+import matchers.should.Matchers.convertToAnyShouldWrapper
 
 import scala.io.Source
 
