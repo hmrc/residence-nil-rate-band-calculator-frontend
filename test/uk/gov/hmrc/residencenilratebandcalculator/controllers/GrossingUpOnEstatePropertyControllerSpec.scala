@@ -34,8 +34,8 @@ class GrossingUpOnEstatePropertyControllerSpec extends NewSimpleControllerSpecBa
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => grossing_up_on_estate_property(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => grossing_up_on_estate_property(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages)
+        case None => grossing_up_on_estate_property(BooleanForm.apply(messageKey))(fakeRequest, messages)
+        case Some(v) => grossing_up_on_estate_property(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
       }
     }
 

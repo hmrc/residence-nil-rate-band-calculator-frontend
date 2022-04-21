@@ -38,8 +38,8 @@ class ChargeableEstateValueControllerSpec extends NewSimpleControllerSpecBase {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => chargeable_estate_value(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => chargeable_estate_value(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages)
+        case None => chargeable_estate_value(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge))(fakeRequest, messages)
+        case Some(v) => chargeable_estate_value(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v))(fakeRequest, messages)
       }
     }
 

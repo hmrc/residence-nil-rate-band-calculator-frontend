@@ -46,7 +46,7 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
 
   def form: () => Form[A]
 
-  def view(form: Form[A], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]): HtmlFormat.Appendable
+  def view(form: Form[A], userAnswers: UserAnswers)(implicit request: Request[_]): HtmlFormat.Appendable
 
   val navigator: Navigator
 
@@ -61,10 +61,8 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
     sessionConnector.fetch().map {
       case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
       case Some(cacheMap) =>
-        val previousAnswers = answerRows(cacheMap, request)
         val userAnswers = new UserAnswers(cacheMap)
-        Ok(view(cacheMap.getEntry(controllerId).fold(form())(value => form().fill(value)),
-          previousAnswers, userAnswers))
+        Ok(view(cacheMap.getEntry(controllerId).fold(form())(value => form().fill(value)), userAnswers))
     }
   }
 
@@ -72,17 +70,16 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
     sessionConnector.fetch().flatMap {
       case None => Future.successful(Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad()))
       case Some(cacheMap) =>
-        val previousAnswers = answerRows(cacheMap, request)
         val userAnswers = new UserAnswers(cacheMap)
         val boundForm = form().bindFromRequest()
         boundForm.fold(
           (formWithErrors: Form[A]) =>
             Future.successful(BadRequest(view(formWithErrors,
-              previousAnswers, userAnswers))),
+              userAnswers))),
           value => validate(value, userAnswers) match {
             case Some(error) =>
               Future.successful(BadRequest(view(form().fill(value).withError(error),
-                previousAnswers, userAnswers)))
+                userAnswers)))
             case None =>
               sessionConnector.cache[A](controllerId, value).map(cacheMap =>
                 Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))

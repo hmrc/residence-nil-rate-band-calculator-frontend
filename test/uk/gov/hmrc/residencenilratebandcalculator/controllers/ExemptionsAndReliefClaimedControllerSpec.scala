@@ -33,8 +33,8 @@ class ExemptionsAndReliefClaimedControllerSpec extends NewSimpleControllerSpecBa
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => exemptions_and_relief_claimed(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => exemptions_and_relief_claimed(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages)
+        case None => exemptions_and_relief_claimed(BooleanForm.apply(messageKey))(fakeRequest, messages)
+        case Some(v) => exemptions_and_relief_claimed(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
       }
     }
 

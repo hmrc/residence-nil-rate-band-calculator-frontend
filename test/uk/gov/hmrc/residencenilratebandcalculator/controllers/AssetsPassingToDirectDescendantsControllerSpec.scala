@@ -38,9 +38,9 @@ class AssetsPassingToDirectDescendantsControllerSpec extends NewSimpleController
 
       value match {
         case None =>
-          assetsPassingToDirectDescendantsView(BooleanForm(messageKey), Seq(), formattedPropertyValue)(fakeRequest, messages)
+          assetsPassingToDirectDescendantsView(BooleanForm(messageKey), formattedPropertyValue)(fakeRequest, messages)
         case Some(v) =>
-          assetsPassingToDirectDescendantsView(BooleanForm(messageKey).bind(v), Seq(), formattedPropertyValue)(fakeRequest, messages)
+          assetsPassingToDirectDescendantsView(BooleanForm(messageKey).bind(v), formattedPropertyValue)(fakeRequest, messages)
       }
     }
 

@@ -22,6 +22,8 @@ POST       /chargeable-inherited-property-value         @uk.gov.hmrc.residenceni
 GET        /chargeable-property-value                   @uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeablePropertyValueController.onPageLoad
 POST       /chargeable-property-value                   @uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeablePropertyValueController.onSubmit
 
+GET        /check-your-answers                          @uk.gov.hmrc.residencenilratebandcalculator.controllers.CheckYourAnswersController.onPageLoad
+
 GET        /claim-downsizing-threshold                  @uk.gov.hmrc.residencenilratebandcalculator.controllers.ClaimDownsizingThresholdController.onPageLoad
 POST       /claim-downsizing-threshold                  @uk.gov.hmrc.residencenilratebandcalculator.controllers.ClaimDownsizingThresholdController.onSubmit
 

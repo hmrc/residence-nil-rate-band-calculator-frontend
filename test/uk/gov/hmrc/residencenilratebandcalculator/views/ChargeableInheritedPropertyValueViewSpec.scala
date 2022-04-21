@@ -28,7 +28,7 @@ class ChargeableInheritedPropertyValueViewSpec extends NewIntViewSpecBase {
 
   val messageKeyPrefix = "chargeable_inherited_property_value"
   val chargeable_inherited_property_value = injector.instanceOf[chargeable_inherited_property_value]
-  def createView(form: Form[Int]) = chargeable_inherited_property_value(form, Seq())(request, messages)
+  def createView(form: Form[Int]) = chargeable_inherited_property_value(form)(request, messages)
 
   "Chargeable Inherited Property Value View" must {
 
@@ -37,9 +37,6 @@ class ChargeableInheritedPropertyValueViewSpec extends NewIntViewSpecBase {
     behave like pageWithoutBackLink[Int](createView, fakeApplication.injector.instanceOf[ChargeableInheritedPropertyValueController].form())
 
     behave like intPage(createView, messageKeyPrefix, ChargeableInheritedPropertyValueController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), fakeApplication.injector.instanceOf[ChargeableInheritedPropertyValueController].form())
-
-    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[ChargeableInheritedPropertyValueController].form())
-
   }
 
 }

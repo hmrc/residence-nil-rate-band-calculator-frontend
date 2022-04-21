@@ -39,7 +39,7 @@ class PropertyInEstateController @Inject()(cc: DefaultMessagesControllerComponen
 
   override def form: () => Form[Boolean] = () => BooleanForm("property_in_estate.error.required")
 
-  override def view(form: Form[Boolean], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    propertyInEstateView(form, answerRows)
+  override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+    propertyInEstateView(form)
   }
 }

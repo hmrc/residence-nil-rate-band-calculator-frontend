@@ -23,11 +23,10 @@
     errorSummary: playComponents.error_summary,
     submitButton: playComponents.submit_button,
     heading: playComponents.heading,
-    inputValue: playComponents.input_value,
-    answerRowsHelper: playComponents.answer_rows
+    inputValue: playComponents.input_value
 )
 
-@(form: Form[BigDecimal], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
+@(form: Form[BigDecimal])(implicit request: Request[_], messages: Messages)
 
 @title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("percentage_passed_to_direct_descendants.browser_title")) else messages("percentage_passed_to_direct_descendants.browser_title")}
 @layout(
@@ -54,6 +53,5 @@
 
 
     }
-    @answerRowsHelper(answerRows)
 
 }

@@ -27,7 +27,7 @@ class PartOfEstatePassingToDirectDescendantsViewSpec extends NewBooleanViewSpecB
 
   val messageKeyPrefix = "part_of_estate_passing_to_direct_descendants"
   val part_of_estate_passing_to_direct_descendants = injector.instanceOf[part_of_estate_passing_to_direct_descendants]
-  def createView(form: Form[Boolean]) = part_of_estate_passing_to_direct_descendants(form, Seq())(request, messages)
+  def createView(form: Form[Boolean]) = part_of_estate_passing_to_direct_descendants(form)(request, messages)
 
   "Part Of Estate Passing To Direct Descendants View" must {
 
@@ -50,8 +50,6 @@ class PartOfEstatePassingToDirectDescendantsViewSpec extends NewBooleanViewSpecB
     behave like pageWithoutBackLink[Boolean](createView, fakeApplication.injector.instanceOf[PartOfEstatePassingToDirectDescendantsController].form())
 
     behave like booleanPage(createView, messageKeyPrefix, routes.PartOfEstatePassingToDirectDescendantsController.onSubmit().url, fakeApplication.injector.instanceOf[PartOfEstatePassingToDirectDescendantsController].form(), true)
-
-    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[PartOfEstatePassingToDirectDescendantsController].form())
   }
 
 }

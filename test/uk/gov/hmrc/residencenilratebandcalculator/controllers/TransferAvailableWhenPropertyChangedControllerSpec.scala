@@ -33,8 +33,8 @@ class TransferAvailableWhenPropertyChangedControllerSpec extends NewSimpleContro
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => transfer_available_when_property_changed(BooleanForm.apply(messageKey),answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => transfer_available_when_property_changed(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages)
+        case None => transfer_available_when_property_changed(BooleanForm.apply(messageKey))(fakeRequest, messages)
+        case Some(v) => transfer_available_when_property_changed(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
       }
     }
 

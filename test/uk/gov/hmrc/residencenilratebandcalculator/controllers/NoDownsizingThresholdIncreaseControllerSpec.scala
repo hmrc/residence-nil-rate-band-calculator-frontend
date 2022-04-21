@@ -90,16 +90,16 @@ class NoDownsizingThresholdIncreaseControllerSpec extends CommonPlaySpec with Ht
       val result = controller.onPageLoad(fakeRequest)
       contentAsString(result) shouldBe
         no_downsizing_threshold_increase("no_downsizing_threshold_increase.date_property_was_changed_too_early_reason",
-          routes.ThresholdCalculationResultController.onPageLoad, Seq())(fakeRequest, messages).toString
+          routes.CheckYourAnswersController.onPageLoad)(fakeRequest, messages).toString
     }
 
     "return the view with the no assets key when that is the reason" in {
       val controller = new NoDownsizingThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, navigator, no_downsizing_threshold_increase)
       val userAnswers = new UserAnswers(filledOutCacheMap)
 
-      val result = controller.createView(NoAssetsPassingToDirectDescendants, userAnswers, Seq())(fakeRequest)
+      val result = controller.createView(NoAssetsPassingToDirectDescendants, userAnswers)(fakeRequest)
       val target = no_downsizing_threshold_increase("no_downsizing_threshold_increase.no_assets_passing_to_direct_descendants_reason",
-        navigator.nextPage(Constants.noDownsizingThresholdIncrease)(userAnswers), Seq())(fakeRequest, messages).toString()
+        navigator.nextPage(Constants.noDownsizingThresholdIncrease)(userAnswers))(fakeRequest, messages).toString()
       result.toString() shouldBe target
 
     }

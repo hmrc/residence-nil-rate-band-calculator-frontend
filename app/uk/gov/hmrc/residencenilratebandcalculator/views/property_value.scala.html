@@ -23,11 +23,10 @@
     errorSummary: playComponents.error_summary,
     heading: playComponents.heading,
     submitButton: playComponents.submit_button,
-    inputValue: playComponents.input_value,
-    answerRowsHelper: playComponents.answer_rows
+    inputValue: playComponents.input_value
 )
 
-@(form: Form[Int], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
+@(form: Form[Int])(implicit request: Request[_], messages: Messages)
 
 @title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("property_value.browser_title")) else messages("property_value.browser_title")}
 
@@ -58,5 +57,4 @@
         )
         @submitButton()
     }
-    @answerRowsHelper(answerRows)
 }

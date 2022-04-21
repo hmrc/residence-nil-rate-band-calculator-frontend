@@ -39,7 +39,7 @@ class DatePropertyWasChangedController @Inject()(cc: DefaultMessagesControllerCo
 
   def form = () => dateOfDownsizingForm
 
-  def view(form: Form[Date], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    datePropertyWasChangedView(form, answerRows)
+  def view(form: Form[Date], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+    datePropertyWasChangedView(form)
   }
 }

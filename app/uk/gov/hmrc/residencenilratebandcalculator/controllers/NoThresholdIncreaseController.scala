@@ -42,12 +42,12 @@ class NoThresholdIncreaseController  @Inject()(cc: DefaultMessagesControllerComp
       case DirectDescendant => Constants.partOfEstatePassingToDirectDescendantsId
     }
 
-  def createView(reason: Reason, userAnswers: UserAnswers, previousAnswers: scala.Seq[AnswerRow])(implicit request: Request[_]) = {
+  def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[_]) = {
     val prefix = reason match {
       case DateOfDeath => "no_threshold_increase.date_of_death"
       case DirectDescendant => "no_threshold_increase.direct_descendant"
     }
 
-    noThresholdIncreaseView(prefix, previousAnswers)
+    noThresholdIncreaseView(prefix)
   }
 }

@@ -22,38 +22,37 @@ import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import play.api.mvc.DefaultMessagesControllerComponents
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import uk.gov.hmrc.http.SessionKeys
 import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRows
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoThresholdIncreaseReason.{DateOfDeath, DirectDescendant}
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_threshold_increase
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.check_your_answers
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 
-class NoThresholdIncreaseControllerSpec extends CommonPlaySpec with MockSessionConnector with WithCommonFakeApplication{
+class CheckYourAnswersControllerSpec extends CommonPlaySpec with MockSessionConnector with WithCommonFakeApplication {
 
-  val fakeRequest = FakeRequest("", "")
-
+  val fakeRequest = FakeRequest("", "").withSession(SessionKeys.sessionId -> "id")
   val injector = fakeApplication.injector
 
   val mockConfig = injector.instanceOf[FrontendAppConfig]
 
   val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-
+  val validatedSession = injector.instanceOf[ValidatedSession]
   def messagesApi = injector.instanceOf[MessagesApi]
   def messages = messagesApi.preferred(fakeRequest)
+  val check_your_answers = fakeApplication.injector.instanceOf[check_your_answers]
 
-  val no_threshold_increase = fakeApplication.injector.instanceOf[no_threshold_increase]
-
-  val filledOutCacheMap = new CacheMap("",
+  val filledOutCacheMap = new CacheMap("id",
     Map[String, JsValue](
       Constants.dateOfDeathId -> JsString("2019-03-04"),
       Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
-      Constants.valueOfEstateId -> JsNumber(500000),
-      Constants.chargeableEstateValueId -> JsNumber(450000),
+      Constants.valueOfEstateId -> JsNumber(1234),
+      Constants.chargeableEstateValueId -> JsNumber(1234),
       Constants.propertyInEstateId -> JsBoolean(true),
-      Constants.propertyValueId -> JsNumber(400000),
-      Constants.grossingUpOnEstateAssetsId -> JsBoolean(true),
-      Constants.propertyPassingToDirectDescendantsId -> JsBoolean(true),
+      Constants.propertyValueId -> JsNumber(1234),
+      Constants.propertyPassingToDirectDescendantsId -> JsString(Constants.some),
       Constants.percentagePassedToDirectDescendantsId -> JsNumber(100),
       Constants.transferAnyUnusedThresholdId -> JsBoolean(true),
       Constants.valueBeingTransferredId -> JsNumber(50000),
@@ -68,34 +67,35 @@ class NoThresholdIncreaseControllerSpec extends CommonPlaySpec with MockSessionC
       Constants.valueAvailableWhenPropertyChangedId -> JsNumber(1000)
     ))
 
-  "No Threshold Increase controller" must {
+
+  val incompleteCacheMap = new CacheMap("id", filledOutCacheMap.data -- Seq(
+    Constants.noDownsizingThresholdIncrease,
+    Constants.valueAvailableWhenPropertyChangedId,
+    Constants.transferAvailableWhenPropertyChangedId,
+    Constants.claimDownsizingThresholdId,
+    Constants.valueOfAssetsPassingId
+  ))
+
+  def controller() = new CheckYourAnswersController(messagesControllerComponents, mockSessionConnector, validatedSession, check_your_answers)
+
+  "Check Your Answers Controller" must {
     "return 200 for a GET" in {
-      val result = new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase).onPageLoad()(fakeRequest)
+      setCacheMap(filledOutCacheMap)
+      val result = controller().onPageLoad()(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
-    "return the No Threshold Increase view for a GET" in {
-      val result = new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase).onPageLoad()(fakeRequest)
-      contentAsString(result) shouldBe
-        no_threshold_increase("no_threshold_increase.direct_descendant")(fakeRequest, messages).toString
+    "return the Check Your Answers view for a GET" in {
+      setCacheMap(filledOutCacheMap)
+      val result = controller().onPageLoad()(fakeRequest)
+      contentAsString(result) shouldBe check_your_answers(AnswerRows(filledOutCacheMap, messages))(fakeRequest, messages).toString()
     }
 
-    "The answer constants should be the same as the calulated constants for the controller when the reason is DateOfDeath" in {
-      val controller = new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase)
-      val controllerId = controller.getControllerId(DateOfDeath)
-      val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
-      val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
-      val answerList = List()
-      answerList shouldBe calculatedList
-    }
-
-    "The answer constants should be the same as the calulated constants for the controller when the reason is DirectDescendant" in {
-      val controller = new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase)
-      val controllerId = controller.getControllerId(DirectDescendant)
-      val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
-      val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
-      val answerList = List(Constants.dateOfDeathId)
-      answerList shouldBe calculatedList
+    "redirect when required answers are not present" in {
+      setCacheMap(incompleteCacheMap)
+      val result = controller().onPageLoad()(fakeRequest)
+      status(result) shouldBe Status.SEE_OTHER
     }
   }
+
 }

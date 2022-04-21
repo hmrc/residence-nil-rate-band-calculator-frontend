@@ -27,7 +27,7 @@ class TransferAnyUnusedThresholdViewSpec extends NewBooleanViewSpecBase {
 
   val messageKeyPrefix = "transfer_any_unused_threshold"
   val transfer_any_unused_threshold = injector.instanceOf[transfer_any_unused_threshold]
-  def createView(form: Form[Boolean]) = transfer_any_unused_threshold(form, Seq())(request, messages)
+  def createView(form: Form[Boolean]) = transfer_any_unused_threshold(form)(request, messages)
 
   "Transfer Any Unused Allowance View" must {
 
@@ -36,8 +36,5 @@ class TransferAnyUnusedThresholdViewSpec extends NewBooleanViewSpecBase {
     behave like pageWithoutBackLink[Boolean](createView, fakeApplication.injector.instanceOf[TransferAnyUnusedThresholdController].form())
 
     behave like booleanPage(createView, messageKeyPrefix, TransferAnyUnusedThresholdController.onSubmit().url, fakeApplication.injector.instanceOf[TransferAnyUnusedThresholdController].form(), true)
-
-    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[TransferAnyUnusedThresholdController].form())
-
   }
 }

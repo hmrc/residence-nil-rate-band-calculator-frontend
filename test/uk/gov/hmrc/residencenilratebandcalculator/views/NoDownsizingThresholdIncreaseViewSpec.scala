@@ -25,34 +25,28 @@ class NoDownsizingThresholdIncreaseViewSpec extends HtmlSpec {
   val no_downsizing_threshold_increase = injector.instanceOf[no_downsizing_threshold_increase]
   "No Downsizing Threshold Increase View" must {
     "display the correct browser title" in {
-      val doc = asDocument(no_downsizing_threshold_increase("", Call("", ""), Seq()))
+      val doc = asDocument(no_downsizing_threshold_increase("", Call("", "")))
       assertEqualsMessage(doc, "title", s"${messages(s"$messageKeyPrefix.browser_title")} - ${messages("service.name")} - GOV.UK")
     }
 
     "display the correct page title" in {
-      val doc = asDocument(no_downsizing_threshold_increase("", Call("", ""), Seq()))
+      val doc = asDocument(no_downsizing_threshold_increase("", Call("", "")))
       assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.title")
     }
 
     "display the correct reason" in {
-      val doc = asDocument(no_downsizing_threshold_increase(s"$messageKeyPrefix.no_property_reason", Call("", ""), Seq()))
+      val doc = asDocument(no_downsizing_threshold_increase(s"$messageKeyPrefix.no_property_reason", Call("", "")))
       assertContainsText(doc, messages(s"$messageKeyPrefix.no_property_reason"))
     }
 
     "contain a link to the given page" in {
       val exampleURL = "http://www.example.com"
-      val doc = asDocument(no_downsizing_threshold_increase("", Call("GET", exampleURL), Seq()))
+      val doc = asDocument(no_downsizing_threshold_increase("", Call("GET", exampleURL)))
       assertContainsText(doc, exampleURL)
     }
 
-    "contain the Show previous answers link" in {
-      val doc = asDocument(no_downsizing_threshold_increase("", Call("", ""), Seq()))
-      assertContainsMessages(doc, "site.show_previous_answers")
-    }
-
-
     "not display the HMRC logo" in {
-      val doc = asDocument(no_downsizing_threshold_increase("", Call("", ""), Seq()))
+      val doc = asDocument(no_downsizing_threshold_increase("", Call("", "")))
       assertNotRenderedByCssSelector(doc, ".organisation-logo")
     }
   }

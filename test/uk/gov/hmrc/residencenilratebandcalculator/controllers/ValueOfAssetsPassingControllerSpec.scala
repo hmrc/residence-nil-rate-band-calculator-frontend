@@ -41,8 +41,8 @@ class ValueOfAssetsPassingControllerSpec extends NewSimpleControllerSpecBase wit
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => value_of_assets_passing(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),answerRows = Seq(), formattedPropertyValue = None)(fakeRequest, messages)
-        case Some(v) => value_of_assets_passing(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq(), None)(fakeRequest, messages)
+        case None => value_of_assets_passing(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), formattedPropertyValue = None)(fakeRequest, messages)
+        case Some(v) => value_of_assets_passing(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), None)(fakeRequest, messages)
       }
     }
 
@@ -81,8 +81,8 @@ class ValueOfAssetsPassingControllerSpec extends NewSimpleControllerSpecBase wit
     }
 
     "return the correct view when provided with answers including a valid property value" in {
-      val result = createController().view(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), Seq(), new UserAnswers(CacheMap("id", Map(Constants.propertyValueId -> Json.toJson(1)))))(fakeRequest)
-      result shouldBe value_of_assets_passing(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), Seq(), Some(CurrencyFormatter.format(1)))(fakeRequest,
+      val result = createController().view(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), new UserAnswers(CacheMap("id", Map(Constants.propertyValueId -> Json.toJson(1)))))(fakeRequest)
+      result shouldBe value_of_assets_passing(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), Some(CurrencyFormatter.format(1)))(fakeRequest,
         messages)
     }
   }

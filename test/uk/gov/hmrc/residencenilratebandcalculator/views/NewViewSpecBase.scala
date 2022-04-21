@@ -102,17 +102,4 @@ trait NewViewSpecBase extends HtmlSpec {
       }
     }
   }
-
-  def pageContainingPreviousAnswers[A: ClassTag](createView: Form[A] => HtmlFormat.Appendable, emptyForm: Form[A]): Unit = {
-    "behave like a page containing previous answers" when {
-      "rendered" must {
-        "contain the Show previous answers link" in {
-          val doc = asDocument(createView(emptyForm))
-          assertContainsMessages(doc, "site.show_previous_answers")
-        }
-      }
-    }
-
-  }
-
 }

@@ -28,7 +28,7 @@ class ChargeableEstateValueViewSpec extends NewIntViewSpecBase {
 
   val messageKeyPrefix = "chargeable_estate_value"
   val chargeable_estate_value = injector.instanceOf[chargeable_estate_value]
-  def createView(form: Form[Int]) = chargeable_estate_value(form, Seq())(request, messages)
+  def createView(form: Form[Int]) = chargeable_estate_value(form)(request, messages)
 
   "Chargeable Estate Value View" must {
 
@@ -37,8 +37,5 @@ class ChargeableEstateValueViewSpec extends NewIntViewSpecBase {
     behave like pageWithoutBackLink[Int](createView, fakeApplication.injector.instanceOf[ChargeableEstateValueController].form())
 
     behave like intPage(createView, messageKeyPrefix, ChargeableEstateValueController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), fakeApplication.injector.instanceOf[ChargeableEstateValueController].form())
-
-    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[ChargeableEstateValueController].form())
-
   }
 }

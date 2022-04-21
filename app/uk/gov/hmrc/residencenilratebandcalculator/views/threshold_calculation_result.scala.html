@@ -20,11 +20,10 @@
 @this(
     layout: Layout,
     heading: playComponents.heading,
-    buttonLink: playComponents.button_link,
-    answerRowsHelper: playComponents.answer_rows
+    buttonLink: playComponents.button_link
 )
 
-@(residenceNilRateAmount: String, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
+@(residenceNilRateAmount: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
     pageTitle = messages("threshold_calculation_result.browser_title")
@@ -68,12 +67,12 @@
         <a href="@routes.IHT435Controller.onPageLoad()">@messages("threshold_calculation_result.pdf.guidance1")</a>. @messages("threshold_calculation_result.pdf.guidance2")
     </p>
 
-    @buttonLink(
-        messageKey = messages("site.finish"),
-        classes = "u--no-print",
-        href = routes.FeedbackSurveyController.redirectExitSurvey().url
-    )
-
-    @answerRowsHelper(answerRows)
+    <p>
+        @buttonLink(
+            messageKey = messages("site.finish"),
+            classes = "u--no-print",
+            href = routes.FeedbackSurveyController.redirectExitSurvey().url
+        )
+    </p>
 
 }

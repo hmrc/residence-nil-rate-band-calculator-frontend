@@ -82,67 +82,73 @@ object AnswerRows extends JodaReads {
 
   val answerRowFns = Map[String, JsValue => Messages => AnswerRow](
     Constants.dateOfDeathId ->
-      dateAnswerRowFn("date_of_death.title", "Date of death", routes.DateOfDeathController.onPageLoad),
+      dateAnswerRowFn("check_your_answers.date_of_death.title", "Date of death", routes.DateOfDeathController.onPageLoad),
     Constants.partOfEstatePassingToDirectDescendantsId ->
-      boolAnswerRowFn("part_of_estate_passing_to_direct_descendants.title",
+      boolAnswerRowFn("check_your_answers.part_of_estate_passing_to_direct_descendants.title",
         Constants.partOfEstatePassingToDirectDescendantsId,
         routes.PartOfEstatePassingToDirectDescendantsController.onPageLoad),
     Constants.valueOfEstateId ->
-      intAnswerRowFn("value_of_estate.title", Constants.valueOfEstateId, routes.ValueOfEstateController.onPageLoad),
+      intAnswerRowFn("check_your_answers.value_of_estate.title", Constants.valueOfEstateId, routes.ValueOfEstateController.onPageLoad),
     Constants.chargeableEstateValueId ->
-      intAnswerRowFn("chargeable_estate_value.title", "Chargeable transfer amount", routes.ChargeableEstateValueController.onPageLoad),
+      intAnswerRowFn("check_your_answers.chargeable_estate_value.title", "Chargeable transfer amount", routes.ChargeableEstateValueController.onPageLoad),
     Constants.propertyInEstateId ->
-      boolAnswerRowFn("property_in_estate.title", Constants.propertyInEstateId, routes.PropertyInEstateController.onPageLoad),
+      boolAnswerRowFn("check_your_answers.property_in_estate.title", Constants.propertyInEstateId, routes.PropertyInEstateController.onPageLoad),
     Constants.claimDownsizingThresholdId ->
-      boolAnswerRowFn("claim_downsizing_threshold.title", Constants.claimDownsizingThresholdId, routes.ClaimDownsizingThresholdController.onPageLoad),
+      boolAnswerRowFn("check_your_answers.claim_downsizing_threshold.title", Constants.claimDownsizingThresholdId,
+        routes.ClaimDownsizingThresholdController.onPageLoad),
     Constants.datePropertyWasChangedId ->
-      dateAnswerRowFn("date_property_was_changed.title", Constants.datePropertyWasChangedId, routes.DatePropertyWasChangedController.onPageLoad),
+      dateAnswerRowFn("check_your_answers.date_property_was_changed.title", Constants.datePropertyWasChangedId,
+        routes.DatePropertyWasChangedController.onPageLoad),
     Constants.valueOfChangedPropertyId ->
-      intAnswerRowFn("value_of_changed_property.title", Constants.valueOfChangedPropertyId, routes.ValueOfChangedPropertyController.onPageLoad),
+      intAnswerRowFn("check_your_answers.value_of_changed_property.title", Constants.valueOfChangedPropertyId,
+        routes.ValueOfChangedPropertyController.onPageLoad),
     Constants.assetsPassingToDirectDescendantsId ->
-      boolAnswerRowFn("assets_passing_to_direct_descendants.title",
+      boolAnswerRowFn("check_your_answers.assets_passing_to_direct_descendants.title",
         Constants.assetsPassingToDirectDescendantsId,
         routes.AssetsPassingToDirectDescendantsController.onPageLoad),
     Constants.transferAnyUnusedThresholdId ->
-      boolAnswerRowFn("transfer_any_unused_threshold.title", Constants.transferAnyUnusedThresholdId, routes.TransferAnyUnusedThresholdController.onPageLoad),
+      boolAnswerRowFn("check_your_answers.transfer_any_unused_threshold.title", Constants.transferAnyUnusedThresholdId,
+        routes.TransferAnyUnusedThresholdController.onPageLoad),
     Constants.transferAvailableWhenPropertyChangedId ->
-      boolAnswerRowFn("transfer_available_when_property_changed.title",
+      boolAnswerRowFn("check_your_answers.transfer_available_when_property_changed.title",
         Constants.transferAvailableWhenPropertyChangedId,
         routes.TransferAvailableWhenPropertyChangedController.onPageLoad),
     Constants.exemptionsAndReliefClaimedId ->
-      boolAnswerRowFn("exemptions_and_relief_claimed.title", Constants.exemptionsAndReliefClaimedId, routes.ExemptionsAndReliefClaimedController.onPageLoad),
+      boolAnswerRowFn("check_your_answers.exemptions_and_relief_claimed.title", Constants.exemptionsAndReliefClaimedId,
+        routes.ExemptionsAndReliefClaimedController.onPageLoad),
     Constants.valueOfAssetsPassingId ->
-      intAnswerRowFn("value_of_assets_passing.title",
+      intAnswerRowFn("check_your_answers.value_of_assets_passing.title",
         Constants.valueOfAssetsPassingId,
         routes.ValueOfAssetsPassingController.onPageLoad),
     Constants.valueBeingTransferredId ->
-      intAnswerRowFn("value_being_transferred.title", Constants.valueBeingTransferredId, routes.ValueBeingTransferredController.onPageLoad),
+      intAnswerRowFn("check_your_answers.value_being_transferred.title", Constants.valueBeingTransferredId,
+        routes.ValueBeingTransferredController.onPageLoad),
     Constants.valueAvailableWhenPropertyChangedId ->
-      intAnswerRowFn("value_available_when_property_changed.title",
+      intAnswerRowFn("check_your_answers.value_available_when_property_changed.title",
         Constants.valueAvailableWhenPropertyChangedId,
         routes.ValueAvailableWhenPropertyChangedController.onPageLoad),
     Constants.propertyPassingToDirectDescendantsId ->
-      propertyPassingToDirectDescendantsAnswerRowFn("property_passing_to_direct_descendants.title",
+      propertyPassingToDirectDescendantsAnswerRowFn("check_your_answers.property_passing_to_direct_descendants.title",
         Constants.propertyPassingToDirectDescendantsId, routes.PropertyPassingToDirectDescendantsController.onPageLoad),
     Constants.grossingUpOnEstateAssetsId ->
-      boolAnswerRowFn("grossing_up_on_estate_assets.title",
+      boolAnswerRowFn("check_your_answers.grossing_up_on_estate_assets.title",
         Constants.grossingUpOnEstateAssetsId,
         routes.GrossingUpOnEstateAssetsController.onPageLoad),
     Constants.grossingUpOnEstatePropertyId ->
-      boolAnswerRowFn("grossing_up_on_estate_property.title",
+      boolAnswerRowFn("check_your_answers.grossing_up_on_estate_property.title",
         Constants.grossingUpOnEstatePropertyId,
         routes.GrossingUpOnEstatePropertyController.onPageLoad),
     Constants.percentagePassedToDirectDescendantsId ->
-      percentAnswerRowFn("percentage_passed_to_direct_descendants.title", Constants.percentagePassedToDirectDescendantsId,
+      percentAnswerRowFn("check_your_answers.percentage_passed_to_direct_descendants.title", Constants.percentagePassedToDirectDescendantsId,
         routes.PercentagePassedToDirectDescendantsController.onPageLoad),
     Constants.propertyValueId ->
-      intAnswerRowFn("property_value.title", "Property value", routes.PropertyValueController.onPageLoad),
+      intAnswerRowFn("check_your_answers.property_value.title", "Property value", routes.PropertyValueController.onPageLoad),
     Constants.chargeablePropertyValueId ->
-      intAnswerRowFn("chargeable_property_value.title",
+      intAnswerRowFn("check_your_answers.chargeable_property_value.title",
         Constants.chargeablePropertyValueId,
         routes.ChargeablePropertyValueController.onPageLoad),
     Constants.chargeableInheritedPropertyValueId ->
-      intAnswerRowFn("chargeable_inherited_property_value.title",
+      intAnswerRowFn("check_your_answers.chargeable_inherited_property_value.title",
         Constants.chargeableInheritedPropertyValueId,
       routes.ChargeableInheritedPropertyValueController.onPageLoad)
   )

@@ -33,8 +33,8 @@ class PropertyInEstateControllerSpec extends NewSimpleControllerSpecBase {
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => property_in_estate(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => property_in_estate(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages)
+        case None => property_in_estate(BooleanForm.apply(messageKey))(fakeRequest, messages)
+        case Some(v) => property_in_estate(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
       }
     }
 

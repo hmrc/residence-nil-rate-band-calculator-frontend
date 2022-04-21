@@ -16,22 +16,21 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import play.api.Logging
-
 import javax.inject.{Inject, Singleton}
+import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
-import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CalculationInput, UserAnswers}
+import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.threshold_calculation_result
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
@@ -46,7 +45,7 @@ class ThresholdCalculationResultController @Inject()(cc: DefaultMessagesControll
 
   private def fail(ex: Throwable) = {
     logger.error(ex.getMessage, ex)
-    InternalServerError(ex.getMessage)
+    throw ex
   }
 
   private def getAnswers(implicit hc: HeaderCarrier) = sessionConnector.fetch().map {
@@ -75,13 +74,12 @@ class ThresholdCalculationResultController @Inject()(cc: DefaultMessagesControll
         tryResult <- getResult(tryInput)
       } yield {
         (tryResult, tryAnswers) match {
-          case (_, Failure(ex)) => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
+          case (_, Failure(_)) => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
           case (Failure(ex), _) => fail(ex)
-          case (Success(result), Success(answers)) =>
+          case (Success(result), Success(_)) =>
             sessionConnector.cache[Int](Constants.thresholdCalculationResultId, result.residenceNilRateAmount)
-            val messages = cc.messagesApi.preferred(request)
             val residenceNilRateAmount = CurrencyFormatter.format(result.residenceNilRateAmount)
-            Ok(thresholdCalculationResultView(residenceNilRateAmount, AnswerRows(answers, messages)))
+            Ok(thresholdCalculationResultView(residenceNilRateAmount))
         }
       }
     }

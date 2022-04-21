@@ -25,38 +25,33 @@ class NoAdditionalThresholdAvailableViewSpec extends HtmlSpec {
   val no_additional_threshold_available = injector.instanceOf[no_additional_threshold_available]
   "No Additional Threshold Available View" must {
     "display the correct browser title" in {
-      val doc = asDocument(no_additional_threshold_available("", Call("", ""), Seq()))
+      val doc = asDocument(no_additional_threshold_available("", Call("", "")))
       assertEqualsMessage(doc, "title", s"${messages(s"$messageKeyPrefix.browser_title")} - ${messages("service.name")} - GOV.UK")
     }
 
     "display the correct page title" in {
-      val doc = asDocument(no_additional_threshold_available("", Call("", ""), Seq()))
+      val doc = asDocument(no_additional_threshold_available("", Call("", "")))
       assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.title")
     }
 
     "display the correct guidance" in {
-      val doc = asDocument(no_additional_threshold_available(s"$messageKeyPrefix.guidance ", Call("", ""), Seq()))
+      val doc = asDocument(no_additional_threshold_available(s"$messageKeyPrefix.guidance ", Call("", "")))
       assertContainsText(doc, messages(s"$messageKeyPrefix.guidance"))
     }
 
     "display the correct reason" in {
-      val doc = asDocument(no_additional_threshold_available(s"$messageKeyPrefix.no_property_reason", Call("", ""), Seq()))
+      val doc = asDocument(no_additional_threshold_available(s"$messageKeyPrefix.no_property_reason", Call("", "")))
       assertContainsText(doc, messages(s"$messageKeyPrefix.no_property_reason"))
     }
 
     "contain a link to the given page" in {
       val exampleURL = "http://www.example.com"
-      val doc = asDocument(no_additional_threshold_available("", Call("GET", exampleURL), Seq()))
+      val doc = asDocument(no_additional_threshold_available("", Call("GET", exampleURL)))
       assertContainsText(doc, exampleURL)
     }
 
-    "contain the Show previous answers link" in {
-      val doc = asDocument(no_additional_threshold_available("", Call("", ""), Seq()))
-      assertContainsMessages(doc, "site.show_previous_answers")
-    }
-
     "not display the HMRC logo" in {
-      val doc = asDocument(no_additional_threshold_available("", Call("", ""), Seq()))
+      val doc = asDocument(no_additional_threshold_available("", Call("", "")))
       assertNotRenderedByCssSelector(doc, ".organisation-logo")
     }
   }

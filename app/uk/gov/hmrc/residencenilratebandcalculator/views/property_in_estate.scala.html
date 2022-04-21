@@ -19,7 +19,6 @@
 
 @this(
     formWithCSRF: FormWithCSRF,
-    answerRowsHelper: playComponents.answer_rows,
     layout: Layout,
     errorSummary: playComponents.error_summary,
     heading: playComponents.heading,
@@ -27,7 +26,7 @@
     submitButton: playComponents.submit_button
 )
 
-@(form: Form[Boolean], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
+@(form: Form[Boolean])(implicit request: Request[_], messages: Messages)
 
 @title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("property_in_estate.browser_title")) else messages("property_in_estate.browser_title")}
 
@@ -52,5 +51,4 @@
 
         @submitButton()
     }
-    @answerRowsHelper(answerRows)
 }

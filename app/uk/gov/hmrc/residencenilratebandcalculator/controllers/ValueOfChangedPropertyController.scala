@@ -40,7 +40,7 @@ class ValueOfChangedPropertyController @Inject()(cc: DefaultMessagesControllerCo
   override def form = () =>
     NonNegativeIntForm("value_of_changed_property.error.blank", "error.whole_pounds", "error.non_numeric", "error.value_too_large")
 
-  override def view(form: Form[Int], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    valueOfChangedPropertyView(form, answerRows)
+  override def view(form: Form[Int], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+    valueOfChangedPropertyView(form)
   }
 }

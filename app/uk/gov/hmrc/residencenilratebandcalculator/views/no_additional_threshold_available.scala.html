@@ -17,13 +17,12 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 
 @this(
-    answerRowsHelper: playComponents.answer_rows,
     layout: Layout,
     heading: playComponents.heading,
     buttonLink: playComponents.button_link
 )
 
-@(reasonKey: String, nextPage: Call, answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
+@(reasonKey: String, nextPage: Call)(implicit request: Request[_], messages: Messages)
 
 @layout(
     pageTitle = messages("no_additional_threshold_available.browser_title"),
@@ -35,8 +34,6 @@
 
     <p class="govuk-body">@messages("no_additional_threshold_available.guidance")</p>
 
-    @buttonLink(messages("site.continue"), nextPage.url)
-
-    @answerRowsHelper(answerRows)
+    <p>@buttonLink(messages("site.continue"), nextPage.url)</p>
 
 }
