@@ -28,7 +28,7 @@ class PercentagePassedToDirectDescendantsViewSpec extends NewBigDecimalViewSpecB
 
   val messageKeyPrefix = "percentage_passed_to_direct_descendants"
   val percentage_passed_to_direct_descendants = injector.instanceOf[percentage_passed_to_direct_descendants]
-  def createView(form: Form[BigDecimal]) = percentage_passed_to_direct_descendants(form, Seq())(request, messages)
+  def createView(form: Form[BigDecimal]) = percentage_passed_to_direct_descendants(form)(request, messages)
 
   "Percentage Passed To Direct Descendants View" must {
 
@@ -37,7 +37,5 @@ class PercentagePassedToDirectDescendantsViewSpec extends NewBigDecimalViewSpecB
     behave like pageWithoutBackLink[BigDecimal](createView, fakeApplication.injector.instanceOf[PercentagePassedToDirectDescendantsController].form())
 
     behave like bigDecimalPage(createView, messageKeyPrefix, PercentagePassedToDirectDescendantsController.onSubmit().url, PositivePercentForm("", "", ""), fakeApplication.injector.instanceOf[PercentagePassedToDirectDescendantsController].form())
-
-    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[PercentagePassedToDirectDescendantsController].form())
   }
 }

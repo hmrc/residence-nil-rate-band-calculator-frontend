@@ -40,7 +40,7 @@ class PercentagePassedToDirectDescendantsController  @Inject()(cc: DefaultMessag
   override def form = () => PositivePercentForm("percentage_passed_to_direct_descendants.error.required",
     "percentage_passed_to_direct_descendants.error.non_numeric", "percentage_passed_to_direct_descendants.error.out_of_range")
 
-  override def view(form: Form[BigDecimal], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)(implicit request: Request[_]) = {
-    percentagePassedToDirectDescendantsView(form, answerRows)
+  override def view(form: Form[BigDecimal], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+    percentagePassedToDirectDescendantsView(form)
   }
 }

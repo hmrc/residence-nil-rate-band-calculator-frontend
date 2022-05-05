@@ -28,7 +28,7 @@ class ExemptionsAndReliefClaimedViewSpec extends NewBooleanViewSpecBase {
 
   lazy val injectedController: ExemptionsAndReliefClaimedController = injector.instanceOf[ExemptionsAndReliefClaimedController]
   val exemptions_and_relief_claimed = injector.instanceOf[exemptions_and_relief_claimed]
-  def createView(form: Form[Boolean]): HtmlFormat.Appendable = exemptions_and_relief_claimed(form, Seq())(request, messages)
+  def createView(form: Form[Boolean]): HtmlFormat.Appendable = exemptions_and_relief_claimed(form)(request, messages)
 
   "Exemptions And Relief Claimed View" must {
 
@@ -38,8 +38,5 @@ class ExemptionsAndReliefClaimedViewSpec extends NewBooleanViewSpecBase {
     behave like pageWithoutBackLink[Boolean](createView, injectedController.form())
 
     behave like booleanPage(createView, messageKeyPrefix, ExemptionsAndReliefClaimedController.onSubmit().url, injectedController.form(), useNewValues = true)
-
-    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[ExemptionsAndReliefClaimedController].form())
-
   }
 }

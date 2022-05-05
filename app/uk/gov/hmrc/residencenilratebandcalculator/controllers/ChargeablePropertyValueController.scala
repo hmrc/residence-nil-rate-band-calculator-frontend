@@ -40,9 +40,9 @@ class ChargeablePropertyValueController @Inject()(cc: DefaultMessagesControllerC
   override def form: () => Form[Int] = () =>
     NonNegativeIntForm("chargeable_property_value.error.blank", "error.whole_pounds", "chargeable_property_value.error.non_numeric", "error.value_too_large")
 
-  override def view(form: Form[Int], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)
+  override def view(form: Form[Int], userAnswers: UserAnswers)
                    (implicit request: Request[_]) = {
-    chargeablePropertyValueView(form, answerRows)
+    chargeablePropertyValueView(form)
   }
 
   override def validate(value: Int, userAnswers: UserAnswers): Option[FormError] = {

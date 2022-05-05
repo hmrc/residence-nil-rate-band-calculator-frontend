@@ -79,14 +79,11 @@ class ValueBeingTransferredController @Inject()(cc: DefaultMessagesControllerCom
       microserviceValues.map {
         case (nilRateValueJson, cacheMap) => {
 
-          val previousAnswers = answerRows(cacheMap, request)
-
           val nilRateBand = formatJsonNumber(nilRateValueJson.json.toString())
           implicit val messages = messagesApi.preferred(request)
           Ok(valueBeingTransferredView(
             nilRateBand,
-            cacheMap.getEntry(controllerId).fold(form())(value => form().fill(value)),
-            previousAnswers))
+            cacheMap.getEntry(controllerId).fold(form())(value => form().fill(value))))
         }
       } recover {
         case n: NoCacheMapException => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
@@ -105,18 +102,16 @@ class ValueBeingTransferredController @Inject()(cc: DefaultMessagesControllerCom
           val boundForm = form().bindFromRequest()
           val nilRateBand = nilRateValueJson.json.toString()
           val formattedNilRateBand = formatJsonNumber(nilRateBand)
-          val previousAnswers = answerRows(cacheMap, request)
           val userAnswers = new UserAnswers(cacheMap)
           implicit val messages = messagesApi.preferred(request)
           boundForm.fold(
             formWithErrors => Future.successful(BadRequest(valueBeingTransferredView(
-              formattedNilRateBand, formWithErrors, previousAnswers))),
+              formattedNilRateBand, formWithErrors))),
             (value) => {
               validate(value, nilRateBand, userAnswers).flatMap {
                 case Some(error) => Future.successful(BadRequest(valueBeingTransferredView(
                   formattedNilRateBand,
-                  form().fill(value).withError(error),
-                  previousAnswers)))
+                  form().fill(value).withError(error))))
                 case None => sessionConnector.cache[Int](controllerId, value).map(cacheMap => Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
               }
             }

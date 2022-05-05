@@ -35,6 +35,33 @@ chargeable_inherited_property_value.error.blank = Rhowch werth trethadwy''r eidd
 chargeable_property_value.greater_than_property_value.error = Rhowch werth trethadwy''r eiddo sy''n llai na gwerth yr eiddo, sef £{0}, yr ydych eisoes wedi''i nodi
 chargeable_inherited_property_value.greater_than_chargeable_property_value.error = Rhowch werth trethadwy''r eiddo sy''n llai na chyfanswm gwerth trethadwy''r eiddo, sef £{0}, yr ydych eisoes wedi''i nodi
 
+check_your_answers.browser_title = Gwiriwch eich atebion cyn i chi gyfrifo''r RNRB sydd ar gael
+check_your_answers.title = Gwiriwch eich atebion cyn i chi gyfrifo''r RNRB sydd ar gael
+check_your_answers.guidance.heading = Nawr ewch ati i gyfrifo''r RNRB sydd ar gael
+check_your_answers.guidance = Drwy gyflwyno''r cais hwn, rydych yn cadarnhau, hyd eithaf eich gwybodaeth, fod y manylion a roddir gennych yn gywir.
+check_your_answers.date_of_death.title = Dyddiad y farwolaeth
+check_your_answers.part_of_estate_passing_to_direct_descendants.title = A oes unrhyw ran o''r ystâd yn cael ei throsglwyddo i blant yr ymadawedig neu ddisgynyddion uniongyrchol eraill?
+check_your_answers.value_of_estate.title = Gwerth net yr ystâd cyn didynnu unrhyw ryddhadau neu eithriadau
+check_your_answers.chargeable_estate_value.title = Gwerth ar ôl didynnu rhyddhadau ac eithriadau
+check_your_answers.property_in_estate.title = A yw''r ystâd yn cynnwys unrhyw eiddo preswyl y bu''r ymadawedig yn berchen arno ac yn byw ynddo?
+check_your_answers.claim_downsizing_threshold.title = A ydych yn hawlio unrhyw lwfans ar gyfer symud i gartref llai o faint?
+check_your_answers.date_property_was_changed.title = Dyddiad gwaredu''r eiddo
+check_your_answers.value_of_changed_property.title = Gwerth buddiant yr ymadawedig yn yr eiddo ar y dyddiad gwaredu
+check_your_answers.assets_passing_to_direct_descendants.title = A oes unrhyw asedion eraill yn cael eu trosglwyddo i ddisgynnydd uniongyrchol?
+check_your_answers.transfer_any_unused_threshold.title = A ydych am drosglwyddo unrhyw haen cyfradd sero preswyl sydd heb ei defnyddio?
+check_your_answers.transfer_available_when_property_changed.title = Os gwnaed cais dilys am haen cyfradd sero preswyl (RNRB) ar y dyddiad gwaredu, a fyddai unrhyw haen cyfradd sero preswyl trosglwyddadwy wedi bod ar gael ar yr adeg honno?
+check_your_answers.exemptions_and_relief_claimed.title = A oes unrhyw ran o''r man preswylio wedi''i heithrio rhag Treth Etifeddiant neu a oes unrhyw ran ohoni sy''n gymwys am ryddhad ar ôl y farwolaeth?
+check_your_answers.value_of_assets_passing.title = Cyfanswm gwerth asedion eraill sy''n cael ei drosglwyddo i ddisgynyddion uniongyrchol
+check_your_answers.value_being_transferred.title = Haen cyfradd sero preswyl trosglwyddadwy sy''n cael ei hawlio
+check_your_answers.value_available_when_property_changed.title = Swm yr haen cyfradd sero preswyl trosglwyddadwy ar y dyddiad gwaredu
+check_your_answers.property_passing_to_direct_descendants.title = A drosglwyddwyd y man preswylio hwn i ddisgynnydd uniongyrchol?
+check_your_answers.grossing_up_on_estate_assets.title = A oes grosio i fyny neu ryngweithio''n berthnasol?
+check_your_answers.grossing_up_on_estate_property.title = A oes grosio i fyny neu ryngweithio''n berthnasol?
+check_your_answers.percentage_passed_to_direct_descendants.title = Canran o''r man preswylio sy''n cael ei throsglwyddo i ddisgynyddion uniongyrchol yn dilyn marwolaeth yr ymadawedig
+check_your_answers.property_value.title = Gwerth y man preswylio ar ddyddiad y farwolaeth
+check_your_answers.chargeable_property_value.title = Gwerth trethadwy''r man preswylio at ddibenion Treth Etifeddiant
+check_your_answers.chargeable_inherited_property_value.title = Gwerth trethadwy''r man preswylio sy''n cael ei drosglwyddo i ddisgynyddion uniongyrchol
+
 claim_downsizing_threshold.browser_title = A ydych yn hawlio unrhyw lwfans ar gyfer symud i gartref llai o faint?
 claim_downsizing_threshold.title = A ydych yn hawlio unrhyw lwfans ar gyfer symud i gartref llai o faint?
 claim_downsizing_threshold.guidance1 = Mae''n bosibl y byddwch yn gallu hawlio lwfans symud i gartref llai o faint os gadawodd y person a fu farw unrhyw beth yn ei ystâd i ddisgynnydd uniongyrchol.
@@ -93,8 +120,8 @@ error.summary.text = Gwiriwch y canlynol
 error.whole_pounds = Rhowch werth mewn punnoedd llawn yn unig heb unrhyw geiniogau
 error.value_too_large = Nodwch swm sy''n £1,000,000,000 neu lai
 
-exemptions_and_relief_claimed.browser_title = A oes unrhyw ran o''r breswylfa wedi''i heithrio rhag Treth Etifeddiant neu a oes unrhyw ran ohoni sy''n gymwys am ryddhad ar ôl y farwolaeth? 
-exemptions_and_relief_claimed.title = A oes unrhyw ran o''r breswylfa wedi''i heithrio rhag Treth Etifeddiant neu a oes unrhyw ran ohoni sy''n gymwys am ryddhad ar ôl y farwolaeth?
+exemptions_and_relief_claimed.browser_title = A oes unrhyw ran o''r man preswylio wedi''i heithrio rhag Treth Etifeddiant neu a oes unrhyw ran ohoni sy''n gymwys am ryddhad ar ôl y farwolaeth?
+exemptions_and_relief_claimed.title = A oes unrhyw ran o''r man preswylio wedi''i heithrio rhag Treth Etifeddiant neu a oes unrhyw ran ohoni sy''n gymwys am ryddhad ar ôl y farwolaeth?
 exemptions_and_relief_claimed.guidance2 = Atebwch yn gadarnhaol os oes unrhyw ran o''r eiddo wedi''i heithrio rhag y Dreth Etifeddiant oherwydd:
 exemptions_and_relief_claimed.guidance2.bullet1 = cafodd ei throsglwyddo i''r priod neu''r partner sifil
 exemptions_and_relief_claimed.guidance2.bullet2 = cafodd ei throsglwyddo i elusen
@@ -177,8 +204,8 @@ property_in_estate.error.required = Rhowch ateb ar gyfer a oedd yr ystâd yn cyn
 property_passing_to_direct_descendants.all = Iawn, cafodd y cyfan ohono''i droslwyddo
 property_passing_to_direct_descendants.some = Iawn, cafodd rhan ohono''i droslwyddo
 property_passing_to_direct_descendants.none = Na
-property_passing_to_direct_descendants.browser_title = A drosglwyddwyd y breswylfa hon i ddisgynnydd uniongyrchol?
-property_passing_to_direct_descendants.title = A drosglwyddwyd y breswylfa hon i ddisgynnydd uniongyrchol?
+property_passing_to_direct_descendants.browser_title = A drosglwyddwyd y man preswylio hwn i ddisgynnydd uniongyrchol?
+property_passing_to_direct_descendants.title = A drosglwyddwyd y man preswylio hwn i ddisgynnydd uniongyrchol?
 property_passing_to_direct_descendants.guidance1 = Bydd hyn fel arfer wedi''i restru yn ewyllys y person a fu farw.
 property_passing_to_direct_descendants.guidance2 = Atebwch ‘Iawn'' os gadawyd yr eiddo hwn, neu unrhyw ran ohono, i fab/ferch, ŵyr/wyres neu ddisgynnydd uniongyrchol arall, neu i briod neu bartner sifil disgynnydd uniongyrchol.
 
@@ -253,14 +280,14 @@ threshold_calculation_result.pdf.guidance1 = Bwrw golwg ar y ffurflen IHT435 gyd
 threshold_calculation_result.pdf.guidance2 = Bydd angen i chi roi rhagor o fanylion ar y ffurflen.
 threshold_calculation_result.pdf.title = Copi o ffurflen IHT435
 
-transfer_any_unused_threshold.browser_title = A ydych am drosglwyddo unrhyw haen gyfradd sero preswyl sydd heb ei defnyddio?
-transfer_any_unused_threshold.title = A ydych am drosglwyddo unrhyw haen gyfradd sero preswyl sydd heb ei defnyddio?
+transfer_any_unused_threshold.browser_title = A ydych am drosglwyddo unrhyw haen cyfradd sero preswyl sydd heb ei defnyddio?
+transfer_any_unused_threshold.title = A ydych am drosglwyddo unrhyw haen cyfradd sero preswyl sydd heb ei defnyddio?
 transfer_any_unused_threshold.guidance1 = Bydd y trosglwyddiad hwn o ystâd priod neu bartner sifil a fu farw cyn y person yr ydych yn delio a''i ystâd.
 transfer_any_unused_threshold.guidance2 = Bydd angen copi o ffurflen IHT436 wedi''i llenwi arnoch os ydych yn trosglwyddo unrhyw RNRB sydd heb ei defnyddio o ystâd rhywun arall.
 transfer_any_unused_threshold.error.required = Rhowch ateb os ydych am drosglwyddo unrhyw haen gyfradd sero preswyl sydd heb ei defnyddio o ystâd priod neu bartner sifil yr ymadawedig
 
-transfer_available_when_property_changed.browser_title = Os gwnaed cais dilys am haen gyfradd sero preswyl (RNRB) ar y dyddiad gwaredu, a fyddai unrhyw haen gyfradd sero preswyl drosglwyddadwy wedi bod ar gael ar yr adeg honno?
-transfer_available_when_property_changed.title = Os gwnaed cais dilys am haen gyfradd sero preswyl (RNRB) ar y dyddiad gwaredu, a fyddai unrhyw haen gyfradd sero preswyl drosglwyddadwy wedi bod ar gael ar yr adeg honno?
+transfer_available_when_property_changed.browser_title = Os gwnaed cais dilys am haen cyfradd sero preswyl (RNRB) ar y dyddiad gwaredu, a fyddai unrhyw haen cyfradd sero preswyl trosglwyddadwy wedi bod ar gael ar yr adeg honno?
+transfer_available_when_property_changed.title = Os gwnaed cais dilys am haen cyfradd sero preswyl (RNRB) ar y dyddiad gwaredu, a fyddai unrhyw haen cyfradd sero preswyl trosglwyddadwy wedi bod ar gael ar yr adeg honno?
 transfer_available_when_property_changed.guidance = Atebwch iawn os oedd y dyddiad y symudodd yr ymadawedig i gartref llai o faint ar ôl y dyddiad y bu i''w briod/phriod neu''i bartner/phartner sifil farw.
 transfer_available_when_property_changed.error.required = Rhowch ateb ar gyfer a fyddai cais am unrhyw lwfans ar ddyddiad gwerthu''r eiddo neu''i roi i ffwrdd wedi gadael unrhyw ran o''r lwfans hwnnw ar gael i''w drosglwyddo
 

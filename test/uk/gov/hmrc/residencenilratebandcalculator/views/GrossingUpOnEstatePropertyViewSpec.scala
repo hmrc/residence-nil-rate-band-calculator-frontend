@@ -25,7 +25,7 @@ class GrossingUpOnEstatePropertyViewSpec extends NewBooleanViewSpecBase {
 
   val messageKeyPrefix = "grossing_up_on_estate_property"
   val grossing_up_on_estate_property = injector.instanceOf[grossing_up_on_estate_property]
-  def createView(form: Form[Boolean]) = grossing_up_on_estate_property(form, Seq())(request, messages)
+  def createView(form: Form[Boolean]) = grossing_up_on_estate_property(form)(request, messages)
 
   "Grossing Up On Estate Property View" must {
 
@@ -34,8 +34,5 @@ class GrossingUpOnEstatePropertyViewSpec extends NewBooleanViewSpecBase {
     behave like pageWithoutBackLink[Boolean](createView, fakeApplication.injector.instanceOf[GrossingUpOnEstatePropertyController].form())
 
     behave like booleanPage(createView, messageKeyPrefix, GrossingUpOnEstatePropertyController.onSubmit().url, fakeApplication.injector.instanceOf[GrossingUpOnEstatePropertyController].form(), true)
-
-    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[GrossingUpOnEstatePropertyController].form())
-
   }
 }

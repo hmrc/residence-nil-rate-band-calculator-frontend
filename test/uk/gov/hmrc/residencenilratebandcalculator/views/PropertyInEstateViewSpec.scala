@@ -27,7 +27,7 @@ class PropertyInEstateViewSpec  extends NewBooleanViewSpecBase {
 
   val messageKeyPrefix = "property_in_estate"
   val property_in_estate = injector.instanceOf[property_in_estate]
-  def createView(form: Form[Boolean]) = property_in_estate(form, Seq())(request, messages)
+  def createView(form: Form[Boolean]) = property_in_estate(form)(request, messages)
 
   "Property In Estate View" must {
 
@@ -36,8 +36,5 @@ class PropertyInEstateViewSpec  extends NewBooleanViewSpecBase {
     behave like pageWithoutBackLink[Boolean](createView, fakeApplication.injector.instanceOf[PropertyInEstateController].form())
 
     behave like booleanPage(createView, messageKeyPrefix, PropertyInEstateController.onSubmit().url, fakeApplication.injector.instanceOf[PropertyInEstateController].form(), true)
-
-    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[PropertyInEstateController].form())
-
   }
 }

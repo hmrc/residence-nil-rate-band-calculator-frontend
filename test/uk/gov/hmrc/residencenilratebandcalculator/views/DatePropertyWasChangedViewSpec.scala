@@ -30,7 +30,7 @@ class DatePropertyWasChangedViewSpec  extends NewDateViewSpecBase {
   val messageKeyPrefix = "date_property_was_changed"
   val date_property_was_changed = injector.instanceOf[date_property_was_changed]
   def createView(form: Form[Date]) =
-    date_property_was_changed(form, Seq())(request, messages)
+    date_property_was_changed(form)(request, messages)
 
   "Date Property Was Changed View" must {
 
@@ -40,8 +40,5 @@ class DatePropertyWasChangedViewSpec  extends NewDateViewSpecBase {
 
     behave like datePage(createView, messageKeyPrefix,
       DatePropertyWasChangedController.onSubmit().url, "dateOfDownsizing", dateOfDownsizingForm, fakeApplication.injector.instanceOf[DatePropertyWasChangedController].form())
-
-    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[DatePropertyWasChangedController].form())
-
   }
 }

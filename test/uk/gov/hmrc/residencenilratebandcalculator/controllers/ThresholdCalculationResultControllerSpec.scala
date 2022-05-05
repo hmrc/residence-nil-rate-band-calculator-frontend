@@ -20,6 +20,7 @@ import org.joda.time.LocalDate
 import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito._
+import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.http.Status
 import play.api.libs.json._
@@ -36,7 +37,6 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.threshold_calculati
 
 import scala.concurrent.Future
 import scala.util.Success
-import org.scalatest.matchers.should.Matchers
 
 class ThresholdCalculationResultControllerSpec extends NewSimpleControllerSpecBase with MockitoSugar with Matchers {
 
@@ -97,8 +97,9 @@ class ThresholdCalculationResultControllerSpec extends NewSimpleControllerSpecBa
 
     "returns an Internal Server Error when the cache is in an unusable state" in {
       setCacheMap(CacheMap("id", Map()))
-      val result = thresholdCalculationResultController().onPageLoad()(fakeRequest)
-      status(result) shouldBe INTERNAL_SERVER_ERROR
+      assertThrows[IllegalArgumentException]{
+        await(thresholdCalculationResultController().onPageLoad()(fakeRequest))
+      }
     }
 
     "send the input to the Microservice if the cache is in a valid state" in {

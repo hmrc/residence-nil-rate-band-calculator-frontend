@@ -32,8 +32,8 @@ class ClaimDownsizingThresholdControllerSpec extends NewSimpleControllerSpecBase
 
   def createView = (value: Option[Map[String, String]]) => {
     value match {
-      case None => claim_downsizing_threshold(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages)
-      case Some(v) => claim_downsizing_threshold(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages)
+      case None => claim_downsizing_threshold(BooleanForm.apply(messageKey))(fakeRequest, messages)
+      case Some(v) => claim_downsizing_threshold(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
     }
   }
 

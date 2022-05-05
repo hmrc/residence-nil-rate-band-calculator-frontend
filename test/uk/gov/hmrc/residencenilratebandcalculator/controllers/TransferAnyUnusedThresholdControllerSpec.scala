@@ -33,8 +33,8 @@ class TransferAnyUnusedThresholdControllerSpec extends NewSimpleControllerSpecBa
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => transfer_any_unused_threshold(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => transfer_any_unused_threshold(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages)
+        case None => transfer_any_unused_threshold(BooleanForm.apply(messageKey))(fakeRequest, messages)
+        case Some(v) => transfer_any_unused_threshold(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
       }
     }
 

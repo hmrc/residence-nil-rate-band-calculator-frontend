@@ -41,9 +41,9 @@ class PropertyValueController @Inject()(cc: DefaultMessagesControllerComponents,
   override def form = () =>
     NonNegativeIntForm("property_value.error.blank", "error.whole_pounds", "property_value.error.non_numeric", "error.value_too_large")
 
-  override def view(form: Form[Int], answerRows: Seq[AnswerRow], userAnswers: UserAnswers)
+  override def view(form: Form[Int], userAnswers: UserAnswers)
                    (implicit request: Request[_]) = {
-    propertyValueView(form, answerRows)
+    propertyValueView(form)
   }
 
   override def validate(value: Int, userAnswers: UserAnswers): Option[FormError] = {

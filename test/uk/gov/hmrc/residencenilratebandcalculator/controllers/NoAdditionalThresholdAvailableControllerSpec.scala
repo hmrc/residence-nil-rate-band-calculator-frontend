@@ -86,7 +86,7 @@ class NoAdditionalThresholdAvailableControllerSpec extends CommonPlaySpec with H
 
       val result = controller.onPageLoad(fakeRequest)
       contentAsString(result) shouldBe
-        no_additional_threshold_available("no_additional_threshold_available.no_property_reason", routes.TransferAnyUnusedThresholdController.onPageLoad, Seq())(fakeRequest, messages).toString
+        no_additional_threshold_available("no_additional_threshold_available.no_property_reason", routes.TransferAnyUnusedThresholdController.onPageLoad)(fakeRequest, messages).toString
     }
 
     "throw an exception when the cache is unavailable" in {

@@ -40,7 +40,7 @@ class ValueAvailableWhenPropertyChangedViewSpec extends NewIntViewSpecBase {
 
   val controller = new ValueAvailableWhenPropertyChangedController(messagesControllerComponents, mockSessionConnector, navigator, mockRnrbConnector, mockValidatedSession, value_available_when_property_changed).form()
 
-  def createView(form: Form[Int]) = value_available_when_property_changed("100000", form, Seq())(request, messages)
+  def createView(form: Form[Int]) = value_available_when_property_changed("100000", form)(request, messages)
 
   "Value Available When Property Changed View" must {
 
@@ -49,8 +49,6 @@ class ValueAvailableWhenPropertyChangedViewSpec extends NewIntViewSpecBase {
     behave like pageWithoutBackLink[Int](createView, controller)
 
     behave like intPage(createView, messageKeyPrefix, routes.ValueAvailableWhenPropertyChangedController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), controller)
-
-    behave like pageContainingPreviousAnswers(createView, controller)
 
     "contain the appropriate maximum value of transferable residence nil rate band" in {
       val doc = asDocument(createView(controller))

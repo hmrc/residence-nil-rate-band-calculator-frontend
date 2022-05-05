@@ -32,8 +32,8 @@ class PropertyPassingToDirectDescendantsControllerSpec extends NewSimpleControll
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => property_passing_to_direct_descendants(PropertyPassingToDirectDescendantsForm.apply(),answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => property_passing_to_direct_descendants(PropertyPassingToDirectDescendantsForm().bind(v), Seq())(fakeRequest, messages)
+        case None => property_passing_to_direct_descendants(PropertyPassingToDirectDescendantsForm.apply())(fakeRequest, messages)
+        case Some(v) => property_passing_to_direct_descendants(PropertyPassingToDirectDescendantsForm().bind(v))(fakeRequest, messages)
       }
     }
 

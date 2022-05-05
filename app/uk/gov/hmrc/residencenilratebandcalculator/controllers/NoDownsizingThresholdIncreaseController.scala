@@ -43,11 +43,11 @@ class NoDownsizingThresholdIncreaseController @Inject()(cc: DefaultMessagesContr
       case _ => Constants.datePropertyWasChangedId
     }
 
-  def createView(reason: Reason, userAnswers: UserAnswers, previousAnswers: Seq[AnswerRow])(implicit request: Request[_]) = {
+  def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[_]) = {
     val reasonKey = reason match {
       case NoAssetsPassingToDirectDescendants => "no_downsizing_threshold_increase.no_assets_passing_to_direct_descendants_reason"
       case DatePropertyWasChangedTooEarly => "no_downsizing_threshold_increase.date_property_was_changed_too_early_reason"
     }
-    noDownsizingThresholdIncreaseView(reasonKey, navigator.nextPage(Constants.noDownsizingThresholdIncrease)(userAnswers), previousAnswers)
+    noDownsizingThresholdIncreaseView(reasonKey, navigator.nextPage(Constants.noDownsizingThresholdIncrease)(userAnswers))
   }
 }

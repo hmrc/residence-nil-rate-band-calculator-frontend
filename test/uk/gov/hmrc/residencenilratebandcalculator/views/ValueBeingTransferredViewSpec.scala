@@ -40,7 +40,7 @@ class ValueBeingTransferredViewSpec extends NewIntViewSpecBase {
 
   val controller = new ValueBeingTransferredController(messagesControllerComponents, mockSessionConnector, navigator, mockRnrbConnector, mockValidatedSession, value_being_transferred).form()
 
-  def createView(form: Form[Int]) = value_being_transferred("100000", form, Seq())(request, messages)
+  def createView(form: Form[Int]) = value_being_transferred("100000", form)(request, messages)
 
   "Value Being Transferred View" must {
 
@@ -49,8 +49,5 @@ class ValueBeingTransferredViewSpec extends NewIntViewSpecBase {
     behave like pageWithoutBackLink[Int](createView, controller)
 
     behave like intPage(createView, messageKeyPrefix, ValueBeingTransferredController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), controller)
-
-    behave like pageContainingPreviousAnswers(createView, controller)
-
   }
 }

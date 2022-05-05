@@ -42,6 +42,6 @@ class UnableToCalculateThresholdIncreaseController @Inject()(val cc: DefaultMess
       case GrossingUpForOtherProperty => Constants.grossingUpOnEstateAssetsId
     }
 
-  def createView(reason: Reason, userAnswers: UserAnswers, previousAnswers: scala.Seq[AnswerRow])(implicit request: Request[_]) =
-    unableToCalculateThresholdIncreaseView("unable_to_calculate_threshold_increase.grossing_up", previousAnswers)
+  def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[_]) =
+    unableToCalculateThresholdIncreaseView("unable_to_calculate_threshold_increase.grossing_up")
 }

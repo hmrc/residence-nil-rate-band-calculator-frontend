@@ -33,8 +33,8 @@ class PartOfEstatePassingToDirectDescendantsControllerSpec extends NewSimpleCont
 
     def createView = (value: Option[Map[String, String]]) => {
       value match {
-        case None => part_of_estate_passing_to_direct_descendants(BooleanForm.apply(messageKey), answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => part_of_estate_passing_to_direct_descendants(BooleanForm(messageKey).bind(v), Seq())(fakeRequest, messages)
+        case None => part_of_estate_passing_to_direct_descendants(BooleanForm.apply(messageKey))(fakeRequest, messages)
+        case Some(v) => part_of_estate_passing_to_direct_descendants(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
       }
     }
 

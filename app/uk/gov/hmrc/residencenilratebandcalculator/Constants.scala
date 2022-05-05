@@ -49,6 +49,7 @@ object Constants {
   val propertyValueId = "PropertyValue"
   val valueOfChangedPropertyId = "ValueOfChangedProperty"
   val thresholdCalculationResultId = "ThresholdCalculationResult"
+  val checkYourAnswersId = "CheckYourAnswers"
 
   val all = "all"
   val some = "some"

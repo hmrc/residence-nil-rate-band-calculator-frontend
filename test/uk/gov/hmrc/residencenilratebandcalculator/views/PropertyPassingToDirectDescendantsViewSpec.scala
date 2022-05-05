@@ -28,7 +28,7 @@ class PropertyPassingToDirectDescendantsViewSpec extends NewBooleanViewSpecBase 
 
   val messageKeyPrefix = "property_passing_to_direct_descendants"
   val property_passing_to_direct_descendants = injector.instanceOf[property_passing_to_direct_descendants]
-  def createView(form: Form[String]) = property_passing_to_direct_descendants(form, Seq())(request, messages)
+  def createView(form: Form[String]) = property_passing_to_direct_descendants(form)(request, messages)
 
   "Property Passing To Direct Descendants View" must {
 
@@ -37,9 +37,6 @@ class PropertyPassingToDirectDescendantsViewSpec extends NewBooleanViewSpecBase 
     behave like pageWithoutBackLink[String](createView, fakeApplication.injector.instanceOf[PropertyPassingToDirectDescendantsController].form())
 
     behave like questionPage[String](createView, messageKeyPrefix, PropertyPassingToDirectDescendantsController.onSubmit().url, fakeApplication.injector.instanceOf[PropertyPassingToDirectDescendantsController].form())
-
-    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[PropertyPassingToDirectDescendantsController].form())
-
   }
 
   "Property Passing To Direct Descendants View" when {

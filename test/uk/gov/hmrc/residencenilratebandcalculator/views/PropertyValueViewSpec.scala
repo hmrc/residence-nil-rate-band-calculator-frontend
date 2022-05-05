@@ -28,7 +28,7 @@ class PropertyValueViewSpec extends NewIntViewSpecBase {
 
   val messageKeyPrefix = "property_value"
   val property_value = injector.instanceOf[property_value]
-  def createView(form: Form[Int]) = property_value(form, Seq())(request, messages)
+  def createView(form: Form[Int]) = property_value(form)(request, messages)
 
   "Property Value View" must {
 
@@ -38,8 +38,5 @@ class PropertyValueViewSpec extends NewIntViewSpecBase {
     behave like pageWithoutBackLink[Int](createView, fakeApplication.injector.instanceOf[PropertyValueController].form())
 
     behave like intPage(createView, messageKeyPrefix, "/calculate-additional-inheritance-tax-threshold/property-value", NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), fakeApplication.injector.instanceOf[PropertyValueController].form())
-
-    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[PropertyValueController].form())
-
   }
 }

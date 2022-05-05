@@ -27,7 +27,7 @@ class TransferAvailableWhenPropertyChangedViewSpec extends NewBooleanViewSpecBas
 
   val messageKeyPrefix = "transfer_available_when_property_changed"
   val transfer_available_when_property_changed = injector.instanceOf[transfer_available_when_property_changed]
-  def createView(form: Form[Boolean]) = transfer_available_when_property_changed(form, Seq())(request, messages)
+  def createView(form: Form[Boolean]) = transfer_available_when_property_changed(form)(request, messages)
 
   "Transfer Available When Property Changed View" must {
 
@@ -36,8 +36,5 @@ class TransferAvailableWhenPropertyChangedViewSpec extends NewBooleanViewSpecBas
     behave like pageWithoutBackLink[Boolean](createView, fakeApplication.injector.instanceOf[TransferAvailableWhenPropertyChangedController].form())
 
     behave like booleanPage(createView, messageKeyPrefix, TransferAvailableWhenPropertyChangedController.onSubmit().url, fakeApplication.injector.instanceOf[TransferAvailableWhenPropertyChangedController].form(), true)
-
-    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[TransferAvailableWhenPropertyChangedController].form())
-
   }
 }

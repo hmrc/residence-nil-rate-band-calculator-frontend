@@ -23,11 +23,10 @@
     errorSummary: playComponents.error_summary,
     heading: playComponents.heading,
     inputValue: playComponents.input_value,
-    submitButton: playComponents.submit_button,
-    answerRowsHelper: playComponents.answer_rows
+    submitButton: playComponents.submit_button
 )
 
-@(form: Form[Int], answerRows: Seq[AnswerRow], formattedPropertyValue: Option[String])(implicit request: Request[_], messages: Messages)
+@(form: Form[Int], formattedPropertyValue: Option[String])(implicit request: Request[_], messages: Messages)
 
 @title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("value_of_assets_passing.browser_title")) else messages("value_of_assets_passing.browser_title")}
 
@@ -61,5 +60,4 @@
         @submitButton()
 
     }
-    @answerRowsHelper(answerRows)
 }

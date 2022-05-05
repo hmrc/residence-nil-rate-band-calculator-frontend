@@ -24,11 +24,10 @@
     errorSummary: playComponents.error_summary,
     heading: playComponents.heading,
     inputYesNo: playComponents.input_yes_no,
-    submitButton: playComponents.submit_button,
-    answerRowsHelper: playComponents.answer_rows
+    submitButton: playComponents.submit_button
 )
 
-@(form: Form[Boolean], answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
+@(form: Form[Boolean])(implicit request: Request[_], messages: Messages)
 
 @title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("transfer_available_when_property_changed.browser_title")) else messages("transfer_available_when_property_changed.browser_title")}
 
@@ -51,5 +50,4 @@
         )
         @submitButton()
     }
-    @answerRowsHelper(answerRows)
 }

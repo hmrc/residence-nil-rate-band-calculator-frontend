@@ -28,7 +28,7 @@ class ValueOfEstateViewSpec extends NewIntViewSpecBase {
 
   val messageKeyPrefix = "value_of_estate"
   val value_of_estate = injector.instanceOf[value_of_estate]
-  def createView(form: Form[Int]) = value_of_estate(form, Seq())(request, messages)
+  def createView(form: Form[Int]) = value_of_estate(form)(request, messages)
 
   "Value of Estate View" must {
 
@@ -46,8 +46,5 @@ class ValueOfEstateViewSpec extends NewIntViewSpecBase {
     behave like pageWithoutBackLink[Int](createView, fakeApplication.injector.instanceOf[ValueOfEstateController].form())
 
     behave like intPage(createView, messageKeyPrefix, ValueOfEstateController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), fakeApplication.injector.instanceOf[ValueOfEstateController].form())
-
-    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[ValueOfEstateController].form())
-
   }
 }

@@ -32,8 +32,8 @@ class DatePropertyWasChangedControllerSpec extends DateControllerSpecBase {
 
     def createView = (value: Option[Date]) => {
       value match {
-        case None => date_property_was_changed(dateOfDownsizingForm, answerRows = Seq())(fakeRequest, messages)
-        case Some(v) => date_property_was_changed(dateOfDownsizingForm.fill(v) , Seq())(fakeRequest, messages)
+        case None => date_property_was_changed(dateOfDownsizingForm)(fakeRequest, messages)
+        case Some(v) => date_property_was_changed(dateOfDownsizingForm.fill(v))(fakeRequest, messages)
       }
     }
 

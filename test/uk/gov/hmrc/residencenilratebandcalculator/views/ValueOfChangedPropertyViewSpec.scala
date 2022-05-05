@@ -28,7 +28,7 @@ class ValueOfChangedPropertyViewSpec extends NewIntViewSpecBase {
 
   val messageKeyPrefix = "value_of_changed_property"
   val value_of_changed_property = injector.instanceOf[value_of_changed_property]
-  def createView(form: Form[Int]) = value_of_changed_property(form, Seq())(request, messages)
+  def createView(form: Form[Int]) = value_of_changed_property(form)(request, messages)
 
   "Value Of Changed Property View" must {
 
@@ -37,8 +37,5 @@ class ValueOfChangedPropertyViewSpec extends NewIntViewSpecBase {
     behave like pageWithoutBackLink[Int](createView, fakeApplication.injector.instanceOf[ValueOfChangedPropertyController].form())
 
     behave like intPage(createView, messageKeyPrefix, ValueOfChangedPropertyController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), fakeApplication.injector.instanceOf[ValueOfChangedPropertyController].form())
-
-    behave like pageContainingPreviousAnswers(createView, fakeApplication.injector.instanceOf[ValueOfChangedPropertyController].form())
-
   }
 }

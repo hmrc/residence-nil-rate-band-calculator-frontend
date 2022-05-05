@@ -36,8 +36,8 @@ class ChargeableInheritedPropertyValueControllerSpec extends NewSimpleController
   "Chargeable Inherited Property Value Controller"  must {
 
     def createView = (value: Option[Map[String, String]]) => value match {
-      case None => chargeable_inherited_property_value(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), answerRows = Seq())(fakeRequest, messages)
-      case Some(v) => chargeable_inherited_property_value(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), Seq())(fakeRequest, messages)
+      case None => chargeable_inherited_property_value(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge))(fakeRequest, messages)
+      case Some(v) => chargeable_inherited_property_value(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v))(fakeRequest, messages)
     }
 
     def createController = () => new ChargeableInheritedPropertyValueController(messagesControllerComponents, mockSessionConnector, navigator, chargeable_inherited_property_value)

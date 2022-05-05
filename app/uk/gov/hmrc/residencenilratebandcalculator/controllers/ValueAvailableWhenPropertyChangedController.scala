@@ -73,13 +73,11 @@ class ValueAvailableWhenPropertyChangedController @Inject()(cc: DefaultMessagesC
     implicit request => {
       microserviceValues.map {
         case (nilRateValueJson, cacheMap) => {
-          val previousAnswers = answerRows(cacheMap, request)
           val nilRateBand = CurrencyFormatter.format(nilRateValueJson.json.toString())
 
           Ok(valueAvailableWhenPropertyChangedView(
             nilRateBand,
-            cacheMap.getEntry(controllerId).fold(form())(value => form().fill(value)),
-            previousAnswers))
+            cacheMap.getEntry(controllerId).fold(form())(value => form().fill(value))))
         }
       } recover {
         case _: NoCacheMapException => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
@@ -97,17 +95,15 @@ class ValueAvailableWhenPropertyChangedController @Inject()(cc: DefaultMessagesC
           val boundForm = form().bindFromRequest()
           val nilRateBand = nilRateValueJson.json.toString()
           val formattedNilRateBand = CurrencyFormatter.format(nilRateBand)
-          val previousAnswers = answerRows(cacheMap, request)
 
           boundForm.fold(
             formWithErrors => Future.successful(BadRequest(valueAvailableWhenPropertyChangedView(
-              formattedNilRateBand, formWithErrors, previousAnswers))),
+              formattedNilRateBand, formWithErrors))),
             value => {
               validate(value, nilRateBand).flatMap {
                 case Some(error) => Future.successful(BadRequest(valueAvailableWhenPropertyChangedView(
                   formattedNilRateBand,
-                  form().fill(value).withError(error),
-                  previousAnswers)))
+                  form().fill(value).withError(error))))
                 case None => sessionConnector.cache[Int](controllerId, value).map(cacheMap => Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
               }
             }
