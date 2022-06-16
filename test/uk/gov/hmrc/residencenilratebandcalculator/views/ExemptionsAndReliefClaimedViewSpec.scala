@@ -37,6 +37,6 @@ class ExemptionsAndReliefClaimedViewSpec extends NewBooleanViewSpecBase {
 
     behave like pageWithoutBackLink[Boolean](createView, injectedController.form())
 
-    behave like booleanPage(createView, messageKeyPrefix, ExemptionsAndReliefClaimedController.onSubmit().url, injectedController.form(), useNewValues = true)
+    behave like booleanPage(createView, messageKeyPrefix, ExemptionsAndReliefClaimedController.onSubmit.url, injectedController.form(), useNewValues = true)
   }
 }

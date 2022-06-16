@@ -68,7 +68,7 @@ trait NewSimpleControllerSpecBase extends CommonPlaySpec with HttpResponseMocks 
     }
 
     "return a redirect on submit with valid data" in {
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString)).withMethod("POST")
       for (v <- valuesToCacheBeforeSubmission) setCacheValue(v._1, v._2)
       setCacheValue(cacheKey, testValue)
       val result = createController().onSubmit(wts)(fakePostRequest)
@@ -76,7 +76,7 @@ trait NewSimpleControllerSpecBase extends CommonPlaySpec with HttpResponseMocks 
     }
 
     "store valid submitted data" in {
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString)).withMethod("POST")
       for (v <- valuesToCacheBeforeSubmission) setCacheValue(v._1, v._2)
       setCacheValue(cacheKey, testValue)
       await(createController().onSubmit(wts)(fakePostRequest))
@@ -86,7 +86,7 @@ trait NewSimpleControllerSpecBase extends CommonPlaySpec with HttpResponseMocks 
     "return bad request on submit with invalid data" in {
       for (v <- valuesToCacheBeforeLoad) setCacheValue(v._1, v._2)
       val value = "invalid data"
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
       val result = createController().onSubmit(wts)(fakePostRequest)
       status(result) shouldBe Status.BAD_REQUEST
     }
@@ -94,14 +94,14 @@ trait NewSimpleControllerSpecBase extends CommonPlaySpec with HttpResponseMocks 
     "return form with errors when invalid data is submitted" in {
       for (v <- valuesToCacheBeforeLoad) setCacheValue(v._1, v._2)
       val value = "invalid data"
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
       val result = createController().onSubmit(wts)(fakePostRequest)
       contentAsString(result) shouldBe createView(Some(Map("value" -> value))).toString
     }
 
     "not store invalid submitted data" in {
       val value = "invalid data"
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
       createController().onSubmit(wts)(fakePostRequest)
       verifyValueIsNotCached()
     }
@@ -120,14 +120,14 @@ trait NewSimpleControllerSpecBase extends CommonPlaySpec with HttpResponseMocks 
       expireSessionConnector()
       val result = createController().onPageLoad(rds)(fakeRequest)
       status(result) shouldBe Status.SEE_OTHER
-      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url)
     }
 
     "On a page submit with an expired session, return an redirect to an expired session page" in {
       expireSessionConnector()
       val result = createController().onSubmit(wts)(fakeRequest)
       status(result) shouldBe Status.SEE_OTHER
-      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url)
     }
 
     "The answer constants should be the same as the calulated constants for the controller" in {

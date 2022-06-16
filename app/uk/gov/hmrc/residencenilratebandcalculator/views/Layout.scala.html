@@ -58,7 +58,7 @@
 
     @if(timeoutEnabled) {
         @hmrcTimeoutDialogHelper(
-            signOutUrl = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url,
+            signOutUrl = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url,
             message = Some(Messages("timeout_dialog.message")),
             keepAliveButtonText = Some(Messages("timeout_dialog.button"))
         )
@@ -75,7 +75,7 @@
     pageTitle = Some(s"""$pageTitle - ${messages("service.name")} - GOV.UK"""),
     headBlock = Some(hmrcHead(headBlock = Some(head))),
     headerBlock = Some(hmrcStandardHeader(
-        serviceUrl = Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.CalculateThresholdIncreaseController.onPageLoad().url),
+        serviceUrl = Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.CalculateThresholdIncreaseController.onPageLoad.url),
         phaseBanner = Some(hmrcStandardBetaBanner(url = appConfig.betaFeedbackUnauthenticatedUrl)),
         userResearchBanner = None
     )),

@@ -33,7 +33,7 @@
 @layout(
     pageTitle = title
 ) {
-    @formWithCSRF(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ClaimDownsizingThresholdController.onSubmit(), 'autoComplete -> "off") {
+    @formWithCSRF(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ClaimDownsizingThresholdController.onSubmit, 'autoComplete -> "off") {
 
         @errorSummary(form.errors)
 

@@ -34,7 +34,6 @@ lazy val microservice = Project(appName, file("."))
   .settings(integrationTestSettings())
   .settings(
     Keys.fork in Test := true,
-    javaOptions in Test += "-Dconfig.file=conf/test.application.conf",
     scalacOptions ++= Seq("-feature"),
     dependencyOverrides += "commons-codec" % "commons-codec" % "1.12",
     retrieveManaged := true,
@@ -70,4 +69,4 @@ lazy val microservice = Project(appName, file("."))
       "uk.gov.hmrc.govukfrontend.views.html.components.implicits._"
     )
   )
-
+PlayKeys.playDefaultPort := 7111

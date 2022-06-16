@@ -49,7 +49,7 @@ class PartOfEstatePassingToDirectDescendantsViewSpec extends NewBooleanViewSpecB
 
     behave like pageWithoutBackLink[Boolean](createView, fakeApplication.injector.instanceOf[PartOfEstatePassingToDirectDescendantsController].form())
 
-    behave like booleanPage(createView, messageKeyPrefix, routes.PartOfEstatePassingToDirectDescendantsController.onSubmit().url, fakeApplication.injector.instanceOf[PartOfEstatePassingToDirectDescendantsController].form(), true)
+    behave like booleanPage(createView, messageKeyPrefix, routes.PartOfEstatePassingToDirectDescendantsController.onSubmit.url, fakeApplication.injector.instanceOf[PartOfEstatePassingToDirectDescendantsController].form(), true)
   }
 
 }

@@ -55,7 +55,7 @@ trait DateControllerSpecBase extends CommonPlaySpec with MockSessionConnector wi
     }
 
     "return a redirect on submit with valid data" in {
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody((s"$date${".day"}", "01"), (s"$date${".month"}", "01"), (s"$date${".year"}", "2018"))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody((s"$date${".day"}", "01"), (s"$date${".month"}", "01"), (s"$date${".year"}", "2018")).withMethod("POST")
       setCacheValue(cacheKey, new LocalDate(2018, 1, 1))
       val result = createController().onSubmit(wts)(fakePostRequest)
       status(result) shouldBe Status.SEE_OTHER
@@ -63,7 +63,7 @@ trait DateControllerSpecBase extends CommonPlaySpec with MockSessionConnector wi
 
     "store valid submitted data" in {
       val value = Date(new LocalDate(2018, 1, 1))
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody((s"$date${".day"}", "01"), (s"$date${".month"}", "01"), (s"$date${".year"}", "2018"))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody((s"$date${".day"}", "01"), (s"$date${".month"}", "01"), (s"$date${".year"}", "2018")).withMethod("POST")
       setCacheValue(cacheKey, new LocalDate(2018, 1, 1))
       await (createController().onSubmit(wts)(fakePostRequest))
       verifyValueIsCached(cacheKey, value)
@@ -71,21 +71,21 @@ trait DateControllerSpecBase extends CommonPlaySpec with MockSessionConnector wi
 
     "return bad request on submit with invalid data" in {
       val value = "not a number"
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody((s"$date${".day"}", value), (s"$date${".month"}", value), (s"$date${".year"}", value))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody((s"$date${".day"}", value), (s"$date${".month"}", value), (s"$date${".year"}", value)).withMethod("POST")
       val result = createController().onSubmit(wts)(fakePostRequest)
       status(result) shouldBe Status.BAD_REQUEST
     }
 
     "return form with errors when invalid data is submitted" in {
       val value = "not a number"
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody((s"$date${".day"}", value), (s"$date${".month"}", value), (s"$date${".year"}", value))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody((s"$date${".day"}", value), (s"$date${".month"}", value), (s"$date${".year"}", value)).withMethod("POST")
       val result = createController().onSubmit(wts)(fakePostRequest)
       contentAsString(result) should include("Give a correct date")
     }
 
     "not store invalid submitted data" in {
       val value = "not a number"
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("day", value), ("month", value), ("month", value))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("day", value), ("month", value), ("month", value)).withMethod("POST")
       createController().onSubmit(wts)(fakePostRequest)
       verifyValueIsNotCached()
     }
@@ -110,7 +110,7 @@ trait DateControllerSpecBase extends CommonPlaySpec with MockSessionConnector wi
 
       val result = createController().onPageLoad(rds)(fakeRequest)
       status(result) shouldBe Status.SEE_OTHER
-      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url)
     }
 
     "The answer constants should be the same as the calulated constants for the controller" in {

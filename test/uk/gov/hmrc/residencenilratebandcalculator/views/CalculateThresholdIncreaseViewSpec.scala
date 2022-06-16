@@ -51,7 +51,7 @@ class CalculateThresholdIncreaseViewSpec extends ViewSpecBase {
     "display a Start button linking to the 'Date Of Death' page" in {
       val doc = asDocument(calculate_threshold_increase()(request, messages))
       val startLink = doc.getElementsByClass("govuk-button govuk-button--start")
-      startLink.attr("href") shouldBe routes.DateOfDeathController.onPageLoad().url
+      startLink.attr("href") shouldBe routes.DateOfDeathController.onPageLoad.url
       startLink.text shouldBe messages("site.start_now")
     }
 

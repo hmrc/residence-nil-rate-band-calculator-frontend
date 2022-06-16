@@ -33,6 +33,6 @@ class GrossingUpOnEstateAssetsViewSpec extends NewBooleanViewSpecBase {
 
     behave like pageWithoutBackLink[Boolean](createView, fakeApplication.injector.instanceOf[GrossingUpOnEstateAssetsController].form())
 
-    behave like booleanPage(createView, messageKeyPrefix, GrossingUpOnEstateAssetsController.onSubmit().url, fakeApplication.injector.instanceOf[GrossingUpOnEstateAssetsController].form(), true)
+    behave like booleanPage(createView, messageKeyPrefix, GrossingUpOnEstateAssetsController.onSubmit.url, fakeApplication.injector.instanceOf[GrossingUpOnEstateAssetsController].form(), true)
   }
 }

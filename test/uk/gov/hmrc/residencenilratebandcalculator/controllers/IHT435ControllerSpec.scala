@@ -44,22 +44,22 @@ class IHT435ControllerSpec extends CommonPlaySpec with MockSessionConnector with
   "onPageLoad" must {
     "return 200" in {
       when(mockPDFHelper.generatePDF(any(), any())(any())) thenReturn Some(new ByteArrayOutputStream())
-      val result = controller.onPageLoad()(fakeRequest)
+      val result = controller.onPageLoad(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return exception when no resource" in {
       when(mockPDFHelper.generatePDF(any(), any())(any())) thenReturn None
       a[RuntimeException] shouldBe thrownBy {
-        status(controller.onPageLoad()(fakeRequest))
+        status(controller.onPageLoad(fakeRequest))
       }
     }
 
     "with an expired session return a redirect to an expired session page" in {
       expireSessionConnector()
-      val result = controller.onPageLoad()(fakeRequest)
+      val result = controller.onPageLoad(fakeRequest)
       status(result) shouldBe Status.SEE_OTHER
-      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url)
     }
   }
 }

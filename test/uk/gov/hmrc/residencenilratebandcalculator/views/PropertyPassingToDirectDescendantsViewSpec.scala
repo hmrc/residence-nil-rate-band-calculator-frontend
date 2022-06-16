@@ -36,7 +36,7 @@ class PropertyPassingToDirectDescendantsViewSpec extends NewBooleanViewSpecBase 
 
     behave like pageWithoutBackLink[String](createView, fakeApplication.injector.instanceOf[PropertyPassingToDirectDescendantsController].form())
 
-    behave like questionPage[String](createView, messageKeyPrefix, PropertyPassingToDirectDescendantsController.onSubmit().url, fakeApplication.injector.instanceOf[PropertyPassingToDirectDescendantsController].form())
+    behave like questionPage[String](createView, messageKeyPrefix, PropertyPassingToDirectDescendantsController.onSubmit.url, fakeApplication.injector.instanceOf[PropertyPassingToDirectDescendantsController].form())
   }
 
   "Property Passing To Direct Descendants View" when {

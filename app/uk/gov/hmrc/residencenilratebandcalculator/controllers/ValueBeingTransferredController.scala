@@ -86,7 +86,7 @@ class ValueBeingTransferredController @Inject()(cc: DefaultMessagesControllerCom
             cacheMap.getEntry(controllerId).fold(form())(value => form().fill(value))))
         }
       } recover {
-        case n: NoCacheMapException => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
+        case n: NoCacheMapException => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
         case r: RuntimeException => {
           logger.error(r.getMessage, r)
           throw r
@@ -118,7 +118,7 @@ class ValueBeingTransferredController @Inject()(cc: DefaultMessagesControllerCom
           )
         }
       } recover {
-        case n: NoCacheMapException => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
+        case n: NoCacheMapException => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
         case r: RuntimeException => {
           logger.error(r.getMessage, r)
           throw r

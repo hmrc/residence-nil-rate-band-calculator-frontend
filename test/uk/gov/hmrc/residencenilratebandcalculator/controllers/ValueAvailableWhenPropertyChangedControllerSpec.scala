@@ -72,7 +72,7 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends CommonPlaySpec wit
   }
 
   def createView = (value: Option[Map[String, String]]) => {
-    val answerRow = new AnswerRow("What was the date the property was disposed of?", "11 May 2018", routes.DatePropertyWasChangedController.onPageLoad().url)
+    val answerRow = new AnswerRow("What was the date the property was disposed of?", "11 May 2018", routes.DatePropertyWasChangedController.onPageLoad.url)
     value match {
       case None => value_available_when_property_changed("£100,000", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge))(fakeRequest, messages)
       case Some(v) => value_available_when_property_changed("£100,000",
@@ -108,14 +108,14 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends CommonPlaySpec wit
     }
 
     "return a redirect on submit with valid data" in {
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue)).withMethod("POST")
       setCacheMap(new CacheMap("", Map(Constants.datePropertyWasChangedId -> JsString("2018-5-11"))))
       val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
       status(result) shouldBe Status.SEE_OTHER
     }
 
     "store valid submitted data" in {
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", "100000"))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", "100000")).withMethod("POST")
       setCacheMap(new CacheMap("", Map(Constants.datePropertyWasChangedId -> JsString("2018-5-11"))))
       await(createController().onSubmit(Writes.IntWrites)(fakePostRequest))
       verifyValueIsCached(Constants.valueAvailableWhenPropertyChangedId, 100000)
@@ -124,7 +124,7 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends CommonPlaySpec wit
     "return bad request on submit with invalid data" in {
       setCacheMap(new CacheMap("", Map(Constants.datePropertyWasChangedId -> JsString("2018-5-11"))))
       val value = "invalid data"
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
       val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
       status(result) shouldBe Status.BAD_REQUEST
     }
@@ -132,14 +132,14 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends CommonPlaySpec wit
     "return form with errors when invalid data is submitted" in {
       setCacheMap(new CacheMap("", Map(Constants.datePropertyWasChangedId -> JsString("2018-5-11"))))
       val value = "invalid data"
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
       val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
       contentAsString(result) shouldBe createView(Some(Map("value" -> value))).toString
     }
 
     "not store invalid submitted data" in {
       val value = "invalid data"
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
       createController().onSubmit(Writes.IntWrites)(fakePostRequest)
       verifyValueIsNotCached()
     }
@@ -155,14 +155,14 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends CommonPlaySpec wit
       expireSessionConnector()
       val result = createController().onPageLoad(Reads.IntReads)(fakeRequest)
       status(result) shouldBe Status.SEE_OTHER
-      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url)
     }
 
     "On a page submit with an expired session, return an redirect to an expired session page" in {
       expireSessionConnector()
       val result = createController().onSubmit(Writes.IntWrites)(fakeRequest)
       status(result) shouldBe Status.SEE_OTHER
-      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url)
     }
 
     "The answer constants should be the same as the calulated constants for the controller" in {

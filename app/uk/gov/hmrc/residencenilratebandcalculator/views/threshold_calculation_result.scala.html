@@ -64,14 +64,14 @@
     </p>
 
     <p class="govuk-body">
-        <a href="@routes.IHT435Controller.onPageLoad()">@messages("threshold_calculation_result.pdf.guidance1")</a>. @messages("threshold_calculation_result.pdf.guidance2")
+        <a href="@routes.IHT435Controller.onPageLoad">@messages("threshold_calculation_result.pdf.guidance1")</a>. @messages("threshold_calculation_result.pdf.guidance2")
     </p>
 
     <p>
         @buttonLink(
             messageKey = messages("site.finish"),
             classes = "u--no-print",
-            href = routes.FeedbackSurveyController.redirectExitSurvey().url
+            href = routes.FeedbackSurveyController.redirectExitSurvey.url
         )
     </p>
 

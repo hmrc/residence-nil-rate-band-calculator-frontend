@@ -55,29 +55,29 @@ object AnswerRows extends JodaReads {
 
   private def errorString(title: String) = s"$title unavailable from cache"
 
-  def intAnswerRowFn(titleKey: String, title: String, url: () => Call) =
+  def intAnswerRowFn(titleKey: String, title: String, url: Call) =
     (jsValue: JsValue) => Json.fromJson[Int](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
-      value => AnswerRow(titleKey, value, url()) _
+      value => AnswerRow(titleKey, value, url) _
     })
 
-  def boolAnswerRowFn(titleKey: String, title: String, url: () => Call) =
+  def boolAnswerRowFn(titleKey: String, title: String, url: Call) =
     (jsValue: JsValue) => Json.fromJson[Boolean](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
-      value => AnswerRow(titleKey, value, url()) _
+      value => AnswerRow(titleKey, value, url) _
     })
 
-  def dateAnswerRowFn(titleKey: String, title: String, url: () => Call) =
+  def dateAnswerRowFn(titleKey: String, title: String, url: Call) =
     (jsValue: JsValue) => Json.fromJson[LocalDate](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
-      value => AnswerRow(titleKey, value, url()) _
+      value => AnswerRow(titleKey, value, url) _
     })
 
-  def percentAnswerRowFn(titleKey: String, title: String, url: () => Call) =
+  def percentAnswerRowFn(titleKey: String, title: String, url: Call) =
     (jsValue: JsValue) => Json.fromJson[Double](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
-      value => AnswerRow(titleKey, value, url()) _
+      value => AnswerRow(titleKey, value, url) _
     })
 
-  def propertyPassingToDirectDescendantsAnswerRowFn(titleKey: String, title: String, url: () => Call) =
+  def propertyPassingToDirectDescendantsAnswerRowFn(titleKey: String, title: String, url: Call) =
     (jsValue: JsValue) => Json.fromJson[String](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
-      value => AnswerRow(titleKey, s"property_passing_to_direct_descendants.$value", url()) _
+      value => AnswerRow(titleKey, s"property_passing_to_direct_descendants.$value", url) _
     })
 
   val answerRowFns = Map[String, JsValue => Messages => AnswerRow](

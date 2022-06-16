@@ -39,7 +39,7 @@ class AssetsPassingToDirectDescendantsViewSpec extends NewBooleanViewSpecBase {
 
     behave like pageWithoutBackLink[Boolean](createView, fakeApplication.injector.instanceOf[AssetsPassingToDirectDescendantsController].form())
 
-    behave like booleanPage(createView, messageKeyPrefix, AssetsPassingToDirectDescendantsController.onSubmit().url, fakeApplication.injector.instanceOf[AssetsPassingToDirectDescendantsController].form(), true)
+    behave like booleanPage(createView, messageKeyPrefix, AssetsPassingToDirectDescendantsController.onSubmit.url, fakeApplication.injector.instanceOf[AssetsPassingToDirectDescendantsController].form(), true)
   }
 
   "Assets Passing To Direct Descendants View" when {

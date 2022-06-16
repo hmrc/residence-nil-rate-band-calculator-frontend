@@ -34,7 +34,7 @@ class IHT435Controller @Inject()(val env: Environment,
 
   def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.fetch().map {
-      case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
+      case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
       case Some(cacheMap) =>
         def fail(msg: String) = {
           logger.error(msg)

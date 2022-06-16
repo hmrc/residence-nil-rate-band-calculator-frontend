@@ -48,6 +48,6 @@ class ValueBeingTransferredViewSpec extends NewIntViewSpecBase {
 
     behave like pageWithoutBackLink[Int](createView, controller)
 
-    behave like intPage(createView, messageKeyPrefix, ValueBeingTransferredController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), controller)
+    behave like intPage(createView, messageKeyPrefix, ValueBeingTransferredController.onSubmit.url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), controller)
   }
 }

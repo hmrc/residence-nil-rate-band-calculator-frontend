@@ -53,7 +53,7 @@ trait TransitionController extends FrontendController with I18nSupport {
           val userAnswers = new UserAnswers(cacheMap)
           Ok(createView(getReason(userAnswers), userAnswers))
         }
-        case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
+        case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
       }
   }
 }

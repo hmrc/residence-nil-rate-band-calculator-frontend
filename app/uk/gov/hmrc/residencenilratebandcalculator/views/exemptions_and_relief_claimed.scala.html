@@ -36,7 +36,7 @@
 @layout(
     pageTitle = title
 ) {
-    @formWithCSRF(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ExemptionsAndReliefClaimedController.onSubmit(), 'autoComplete -> "off") {
+    @formWithCSRF(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ExemptionsAndReliefClaimedController.onSubmit, 'autoComplete -> "off") {
 
         @errorSummary(form.errors)
 

@@ -39,6 +39,6 @@ class DatePropertyWasChangedViewSpec  extends NewDateViewSpecBase {
     behave like pageWithoutBackLink[Date](createView, fakeApplication.injector.instanceOf[DatePropertyWasChangedController].form())
 
     behave like datePage(createView, messageKeyPrefix,
-      DatePropertyWasChangedController.onSubmit().url, "dateOfDownsizing", dateOfDownsizingForm, fakeApplication.injector.instanceOf[DatePropertyWasChangedController].form())
+      DatePropertyWasChangedController.onSubmit.url, "dateOfDownsizing", dateOfDownsizingForm, fakeApplication.injector.instanceOf[DatePropertyWasChangedController].form())
   }
 }

@@ -35,7 +35,7 @@ class DateOfDeathViewSpec extends NewDateViewSpecBase {
 
     behave like rnrbPage[Date](createView, messageKeyPrefix, "guidance")(fakeApplication.injector.instanceOf[DateOfDeathController].form)
 
-    behave like datePage(createView, messageKeyPrefix, DateOfDeathController.onSubmit().url, "dateOfDeath",dateOfDeathForm,fakeApplication.injector.instanceOf[DateOfDeathController].form)
+    behave like datePage(createView, messageKeyPrefix, DateOfDeathController.onSubmit.url, "dateOfDeath",dateOfDeathForm,fakeApplication.injector.instanceOf[DateOfDeathController].form)
 
     "display the correct example" in {
       val doc = asDocument(createView(fakeApplication.injector.instanceOf[DateOfDeathController].form))

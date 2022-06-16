@@ -36,6 +36,6 @@ class PercentagePassedToDirectDescendantsViewSpec extends NewBigDecimalViewSpecB
 
     behave like pageWithoutBackLink[BigDecimal](createView, fakeApplication.injector.instanceOf[PercentagePassedToDirectDescendantsController].form())
 
-    behave like bigDecimalPage(createView, messageKeyPrefix, PercentagePassedToDirectDescendantsController.onSubmit().url, PositivePercentForm("", "", ""), fakeApplication.injector.instanceOf[PercentagePassedToDirectDescendantsController].form())
+    behave like bigDecimalPage(createView, messageKeyPrefix, PercentagePassedToDirectDescendantsController.onSubmit.url, PositivePercentForm("", "", ""), fakeApplication.injector.instanceOf[PercentagePassedToDirectDescendantsController].form())
   }
 }

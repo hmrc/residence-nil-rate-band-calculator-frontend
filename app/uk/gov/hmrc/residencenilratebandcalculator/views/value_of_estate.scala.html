@@ -33,7 +33,7 @@
     pageTitle = title
 ) {
 
-    @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfEstateController.onSubmit(), 'autoComplete -> "off") {
+    @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfEstateController.onSubmit, 'autoComplete -> "off") {
 
         @errorSummary(form.errors)
 

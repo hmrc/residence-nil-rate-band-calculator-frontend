@@ -56,5 +56,5 @@ object CustomLanguageController {
 
   lazy val englishLang = Lang("en")
 
-  protected def fallbackURL: String = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.CalculateThresholdIncreaseController.onPageLoad().url
+  protected def fallbackURL: String = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.CalculateThresholdIncreaseController.onPageLoad.url
 }

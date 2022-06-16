@@ -40,7 +40,7 @@ class SessionExpiredViewSpec extends ViewSpecBase {
       val doc = asDocument(session_expired()(request, messages))
       val startLink = doc.getElementById("start-again")
       startLink.className shouldBe "govuk-button"
-      startLink.attr("href") shouldBe routes.DateOfDeathController.onPageLoad().url
+      startLink.attr("href") shouldBe routes.DateOfDeathController.onPageLoad.url
       startLink.text shouldBe messages("site.start_again")
     }
 

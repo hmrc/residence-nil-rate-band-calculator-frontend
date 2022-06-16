@@ -58,7 +58,7 @@ class ChargeableEstateValueControllerSpec extends NewSimpleControllerSpecBase {
            Constants.valueOfEstateId))(Reads.IntReads, Writes.IntWrites)
 
     "return bad request on submit with a value greater than the previously saved Value Of Estate" in {
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString)).withMethod("POST")
       setCacheValue(Constants.valueOfEstateId, testValue - 1)
       val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
       status(result) shouldBe Status.BAD_REQUEST

@@ -73,68 +73,68 @@ class AnswerRowsSpec extends CommonPlaySpec with MockSessionConnector with JodaW
 
     "correctly create Integer AnswerRows without a fractional part" in {
       val data = 100
-      AnswerRows.intAnswerRowFn("message.key", "", () => Call("", "http://example.com"))(JsNumber(data))(messages) shouldBe
+      AnswerRows.intAnswerRowFn("message.key", "", Call("", "http://example.com"))(JsNumber(data))(messages) shouldBe
         AnswerRow(messages("message.key"), "£100", "http://example.com")
     }
 
     "throw an exception when intAnswerRowFn is not passed a JSON number" in {
       an[RuntimeException] should be thrownBy
-        AnswerRows.intAnswerRowFn("message.key", "", () => Call("", ""))(JsString(""))(messages)
+        AnswerRows.intAnswerRowFn("message.key", "", Call("", ""))(JsString(""))(messages)
     }
 
     "correctly create Boolean AnswerRows" in {
       val data = true
-      AnswerRows.boolAnswerRowFn("message.key", "", () => Call("", "http://example.com"))(JsBoolean(data))(messages) shouldBe
+      AnswerRows.boolAnswerRowFn("message.key", "", Call("", "http://example.com"))(JsBoolean(data))(messages) shouldBe
         AnswerRow(messages("message.key"), "Yes", "http://example.com")
     }
 
     "throw an exception when boolAnswerRowFn is not passed a JSON boolean" in {
       an[RuntimeException] should be thrownBy
-        AnswerRows.boolAnswerRowFn("message.key", "", () => Call("", ""))(JsString(""))(messages)
+        AnswerRows.boolAnswerRowFn("message.key", "", Call("", ""))(JsString(""))(messages)
     }
 
     "correctly create LocalDate AnswerRows" in {
       val data = new LocalDate(2017, 6, 1)
-      AnswerRows.dateAnswerRowFn("message.key", "", () => Call("", "http://example.com"))(JsString(data.toString))(messages) shouldBe
+      AnswerRows.dateAnswerRowFn("message.key", "", Call("", "http://example.com"))(JsString(data.toString))(messages) shouldBe
         AnswerRow(messages("message.key"), "1 June 2017", "http://example.com")
     }
 
     "throw an exception when dateAnswerRowFn is not passed a legal LocalDate" in {
       an[RuntimeException] should be thrownBy
-        AnswerRows.dateAnswerRowFn("message.key", "", () => Call("", ""))(JsString(""))(messages)
+        AnswerRows.dateAnswerRowFn("message.key", "", Call("", ""))(JsString(""))(messages)
     }
 
     "correctly create percentage AnswerRows" in {
       val data = 55.0
-      AnswerRows.percentAnswerRowFn("message.key", "", () => Call("", "http://example.com"))(JsNumber(data))(messages) shouldBe
+      AnswerRows.percentAnswerRowFn("message.key", "", Call("", "http://example.com"))(JsNumber(data))(messages) shouldBe
         AnswerRow(messages("message.key"), "55%", "http://example.com")
     }
 
     "throw an exception when percentAnswerRowFn is not passed a double" in {
       an[RuntimeException] should be thrownBy
-        AnswerRows.percentAnswerRowFn("message.key", "", () => Call("", ""))(JsString(""))(messages)
+        AnswerRows.percentAnswerRowFn("message.key", "", Call("", ""))(JsString(""))(messages)
     }
 
     "correctly create Chargeable Property Value AnswerRows without a fractional part" in {
       val data = PropertyValueAfterExemption(1000, 5000)
       AnswerRows.intAnswerRowFn("message.key", "",
-        () => Call("", "http://example.com"))(JsNumber(data.value))(messages) shouldBe
+        Call("", "http://example.com"))(JsNumber(data.value))(messages) shouldBe
         AnswerRow(messages("message.key"), "£1,000", "http://example.com")
 
       AnswerRows.intAnswerRowFn("message.key", "",
-        () => Call("", "http://example.com"))(JsNumber(data.inheritedValue))(messages) shouldBe
+        Call("", "http://example.com"))(JsNumber(data.inheritedValue))(messages) shouldBe
         AnswerRow(messages("message.key"), "£5,000", "http://example.com")
     }
 
     "correctly create Property Passing To Direct Descendants AnswerRow" in {
       val data = Constants.all
-      AnswerRows.propertyPassingToDirectDescendantsAnswerRowFn("message.key", "", () => Call("", "http://example.com"))(JsString(data))(messages) shouldBe
+      AnswerRows.propertyPassingToDirectDescendantsAnswerRowFn("message.key", "", Call("", "http://example.com"))(JsString(data))(messages) shouldBe
         AnswerRow(messages("message.key"), messages("property_passing_to_direct_descendants.all"), "http://example.com")
     }
 
     "throw an exception when propertyPassingToDirectDescendantsAnswerRowFn is not passed a string" in {
       an[RuntimeException] should be thrownBy
-        AnswerRows.propertyPassingToDirectDescendantsAnswerRowFn("message.key", "", () => Call("", ""))(JsBoolean(true))(messages)
+        AnswerRows.propertyPassingToDirectDescendantsAnswerRowFn("message.key", "", Call("", ""))(JsBoolean(true))(messages)
     }
 
     "ignore data in the cache map which does not have a corresponding key in the answer rows function map" in {

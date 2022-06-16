@@ -35,6 +35,6 @@ class TransferAnyUnusedThresholdViewSpec extends NewBooleanViewSpecBase {
 
     behave like pageWithoutBackLink[Boolean](createView, fakeApplication.injector.instanceOf[TransferAnyUnusedThresholdController].form())
 
-    behave like booleanPage(createView, messageKeyPrefix, TransferAnyUnusedThresholdController.onSubmit().url, fakeApplication.injector.instanceOf[TransferAnyUnusedThresholdController].form(), true)
+    behave like booleanPage(createView, messageKeyPrefix, TransferAnyUnusedThresholdController.onSubmit.url, fakeApplication.injector.instanceOf[TransferAnyUnusedThresholdController].form(), true)
   }
 }
