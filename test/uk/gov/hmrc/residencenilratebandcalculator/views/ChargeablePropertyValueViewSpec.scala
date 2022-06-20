@@ -36,7 +36,7 @@ class ChargeablePropertyValueViewSpec extends NewIntViewSpecBase {
 
     behave like pageWithoutBackLink[Int](createView, fakeApplication.injector.instanceOf[ChargeablePropertyValueController].form())
 
-    behave like intPage(createView, messageKeyPrefix, ChargeablePropertyValueController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), fakeApplication.injector.instanceOf[ChargeablePropertyValueController].form())
+    behave like intPage(createView, messageKeyPrefix, ChargeablePropertyValueController.onSubmit.url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), fakeApplication.injector.instanceOf[ChargeablePropertyValueController].form())
   }
 
 }

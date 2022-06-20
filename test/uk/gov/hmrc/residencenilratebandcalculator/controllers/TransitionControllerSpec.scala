@@ -63,7 +63,7 @@ class TransitionControllerSpec extends CommonPlaySpec with MockSessionConnector 
     }
 
     "return the Unable To Calculate Threshold Increase view for a GET" in {
-      val result = createController.onPageLoad()(fakeRequest)
+      val result = createController.onPageLoad(fakeRequest)
       contentAsString(result) shouldBe ""
     }
 
@@ -71,7 +71,7 @@ class TransitionControllerSpec extends CommonPlaySpec with MockSessionConnector 
       when(mockSessionConnector.fetch()(any[HeaderCarrier])) thenReturn Future.successful(None)
       val result = createController.onPageLoad(fakeRequest)
       status(result) shouldBe SEE_OTHER
-      redirectLocation(result) shouldBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) shouldBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
   }
 }

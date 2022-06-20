@@ -81,19 +81,19 @@ class CheckYourAnswersControllerSpec extends CommonPlaySpec with MockSessionConn
   "Check Your Answers Controller" must {
     "return 200 for a GET" in {
       setCacheMap(filledOutCacheMap)
-      val result = controller().onPageLoad()(fakeRequest)
+      val result = controller().onPageLoad(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return the Check Your Answers view for a GET" in {
       setCacheMap(filledOutCacheMap)
-      val result = controller().onPageLoad()(fakeRequest)
+      val result = controller().onPageLoad(fakeRequest)
       contentAsString(result) shouldBe check_your_answers(AnswerRows(filledOutCacheMap, messages))(fakeRequest, messages).toString()
     }
 
     "redirect when required answers are not present" in {
       setCacheMap(incompleteCacheMap)
-      val result = controller().onPageLoad()(fakeRequest)
+      val result = controller().onPageLoad(fakeRequest)
       status(result) shouldBe Status.SEE_OTHER
     }
   }

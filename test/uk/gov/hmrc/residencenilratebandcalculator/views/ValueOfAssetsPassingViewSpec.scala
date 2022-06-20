@@ -36,6 +36,6 @@ class ValueOfAssetsPassingViewSpec extends NewIntViewSpecBase {
 
     behave like pageWithoutBackLink[Int](createView, fakeApplication.injector.instanceOf[ValueOfAssetsPassingController].form())
 
-    behave like intPage(createView, messageKeyPrefix, ValueOfAssetsPassingController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), fakeApplication.injector.instanceOf[ValueOfAssetsPassingController].form())
+    behave like intPage(createView, messageKeyPrefix, ValueOfAssetsPassingController.onSubmit.url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), fakeApplication.injector.instanceOf[ValueOfAssetsPassingController].form())
   }
 }

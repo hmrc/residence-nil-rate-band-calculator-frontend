@@ -35,6 +35,6 @@ class TransferAvailableWhenPropertyChangedViewSpec extends NewBooleanViewSpecBas
 
     behave like pageWithoutBackLink[Boolean](createView, fakeApplication.injector.instanceOf[TransferAvailableWhenPropertyChangedController].form())
 
-    behave like booleanPage(createView, messageKeyPrefix, TransferAvailableWhenPropertyChangedController.onSubmit().url, fakeApplication.injector.instanceOf[TransferAvailableWhenPropertyChangedController].form(), true)
+    behave like booleanPage(createView, messageKeyPrefix, TransferAvailableWhenPropertyChangedController.onSubmit.url, fakeApplication.injector.instanceOf[TransferAvailableWhenPropertyChangedController].form(), true)
   }
 }

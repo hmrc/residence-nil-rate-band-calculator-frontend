@@ -39,7 +39,7 @@
 
     <p class="govuk-body">@messages("chargeable_property_value.guidance2")</p>
 
-    @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeablePropertyValueController.onSubmit(), 'autoComplete -> "off") {
+    @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeablePropertyValueController.onSubmit, 'autoComplete -> "off") {
 
         @inputValue(
             label = messages("chargeable_property_value.title"),

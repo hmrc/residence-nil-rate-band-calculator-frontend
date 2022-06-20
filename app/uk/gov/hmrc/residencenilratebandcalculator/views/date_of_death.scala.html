@@ -34,7 +34,7 @@
     pageTitle = title,
     timeoutEnabled = false
 ) {
-    @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onSubmit(), 'autoComplete -> "off") {
+    @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onSubmit, 'autoComplete -> "off") {
 
         @errorSummary(form.errors, key => s"$key.day")
 

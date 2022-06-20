@@ -35,6 +35,6 @@ class PropertyInEstateViewSpec  extends NewBooleanViewSpecBase {
 
     behave like pageWithoutBackLink[Boolean](createView, fakeApplication.injector.instanceOf[PropertyInEstateController].form())
 
-    behave like booleanPage(createView, messageKeyPrefix, PropertyInEstateController.onSubmit().url, fakeApplication.injector.instanceOf[PropertyInEstateController].form(), true)
+    behave like booleanPage(createView, messageKeyPrefix, PropertyInEstateController.onSubmit.url, fakeApplication.injector.instanceOf[PropertyInEstateController].form(), true)
   }
 }

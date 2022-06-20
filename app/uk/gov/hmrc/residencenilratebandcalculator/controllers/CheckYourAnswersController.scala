@@ -53,9 +53,9 @@ class CheckYourAnswersController @Inject()(cc: DefaultMessagesControllerComponen
               val messages = cc.messagesApi.preferred(request)
               Ok(checkYourAnswersView(AnswerRows(answers, messages)))
             } else {
-              Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
+              Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
             }
-          case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
+          case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
         }
       }
     }

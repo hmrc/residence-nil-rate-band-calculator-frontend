@@ -61,7 +61,7 @@ class ChargeablePropertyValueControllerSpec extends NewSimpleControllerSpecBase 
            Constants.percentagePassedToDirectDescendantsId))(Reads.IntReads, Writes.IntWrites)
 
     "return bad request on submit with a value greater than the previously saved Property Value" in {
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString)).withMethod("POST")
       setCacheValue(Constants.propertyValueId, testValue - 1)
       val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
       status(result) shouldBe Status.BAD_REQUEST

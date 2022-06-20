@@ -48,7 +48,7 @@ class CheckYourAnswersViewSpec extends HtmlSpec {
     "link to the threshold-calculation-result page" in {
       val doc = asDocument(createView())
       val continueLink = doc.getElementsByClass("govuk-button").get(0)
-      assert(continueLink.attr("href") == ThresholdCalculationResultController.onPageLoad().url)
+      assert(continueLink.attr("href") == ThresholdCalculationResultController.onPageLoad.url)
     }
     "display the all answer rows" in {
       val doc = asDocument(createView())

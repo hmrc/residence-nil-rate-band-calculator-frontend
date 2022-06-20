@@ -34,12 +34,12 @@ class CalculateThresholdIncreaseControllerSpec extends HtmlSpec {
   "Calculate Threshold Increase controller" must {
 
     "return 200 for a GET" in {
-      val result = new CalculateThresholdIncreaseController(messagesControllerComponents, calculateThresholdIncrease).onPageLoad()(fakeRequest)
+      val result = new CalculateThresholdIncreaseController(messagesControllerComponents, calculateThresholdIncrease).onPageLoad(fakeRequest)
       status(result) shouldBe 200
     }
 
     "return the View for a GET" in {
-      val result = new CalculateThresholdIncreaseController(messagesControllerComponents, calculateThresholdIncrease).onPageLoad()(fakeRequest)
+      val result = new CalculateThresholdIncreaseController(messagesControllerComponents, calculateThresholdIncrease).onPageLoad(fakeRequest)
       contentAsString(result) shouldBe calculateThresholdIncrease()(fakeRequest, messages).toString
     }
   }

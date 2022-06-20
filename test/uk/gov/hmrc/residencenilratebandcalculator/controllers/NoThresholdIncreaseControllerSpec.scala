@@ -70,12 +70,12 @@ class NoThresholdIncreaseControllerSpec extends CommonPlaySpec with MockSessionC
 
   "No Threshold Increase controller" must {
     "return 200 for a GET" in {
-      val result = new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase).onPageLoad()(fakeRequest)
+      val result = new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase).onPageLoad(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return the No Threshold Increase view for a GET" in {
-      val result = new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase).onPageLoad()(fakeRequest)
+      val result = new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase).onPageLoad(fakeRequest)
       contentAsString(result) shouldBe
         no_threshold_increase("no_threshold_increase.direct_descendant")(fakeRequest, messages).toString
     }

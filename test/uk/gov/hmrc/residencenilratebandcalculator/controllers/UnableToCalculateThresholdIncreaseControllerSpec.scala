@@ -70,12 +70,12 @@ class UnableToCalculateThresholdIncreaseControllerSpec extends CommonPlaySpec wi
 
   "Transition controller" must {
     "return 200 for a GET" in {
-      val result = new UnableToCalculateThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, unable_to_calculate_threshold_increase).onPageLoad()(fakeRequest)
+      val result = new UnableToCalculateThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, unable_to_calculate_threshold_increase).onPageLoad(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return the Unable To Calculate Threshold Increase view for a GET" in {
-      val result = new UnableToCalculateThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, unable_to_calculate_threshold_increase).onPageLoad()(fakeRequest)
+      val result = new UnableToCalculateThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, unable_to_calculate_threshold_increase).onPageLoad(fakeRequest)
       contentAsString(result) shouldBe
         unable_to_calculate_threshold_increase("unable_to_calculate_threshold_increase.grossing_up")(fakeRequest, messages).toString
     }

@@ -111,14 +111,14 @@ class ValueBeingTransferredControllerSpec extends CommonPlaySpec with HttpRespon
     }
 
     "return a redirect on submit with valid data" in {
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue)).withMethod("POST")
       setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"), "value" -> JsNumber(100000))))
       val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
       status(result) shouldBe Status.SEE_OTHER
     }
 
     "store valid submitted data" in {
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", "100000"))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", "100000")).withMethod("POST")
       setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"), "value" -> JsNumber(100000))))
       await(createController().onSubmit(Writes.IntWrites)(fakePostRequest))
       verifyValueIsCached(Constants.valueBeingTransferredId, 100000)
@@ -127,7 +127,7 @@ class ValueBeingTransferredControllerSpec extends CommonPlaySpec with HttpRespon
     "return bad request on submit with invalid data" in {
       setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"))))
       val value = "invalid data"
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
       val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
       status(result) shouldBe Status.BAD_REQUEST
     }
@@ -135,7 +135,7 @@ class ValueBeingTransferredControllerSpec extends CommonPlaySpec with HttpRespon
     "return form with errors when invalid data is submitted" in {
       setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"))))
       val value = "invalid data"
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
       val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
       contentAsString(result) shouldBe createViewWithBacklink(Some(Map("value" -> value))).toString
     }
@@ -143,7 +143,7 @@ class ValueBeingTransferredControllerSpec extends CommonPlaySpec with HttpRespon
     "not store invalid submitted data" in {
       setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"))))
       val value = "invalid data"
-      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value))
+      val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
       createController().onSubmit(Writes.IntWrites)(fakePostRequest)
       verifyValueIsNotCached()
     }
@@ -158,14 +158,14 @@ class ValueBeingTransferredControllerSpec extends CommonPlaySpec with HttpRespon
       expireSessionConnector()
       val result = createController().onPageLoad(Reads.IntReads)(fakeRequest)
       status(result) shouldBe Status.SEE_OTHER
-      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url)
     }
 
     "On a page submit with an expired session, return an redirect to an expired session page" in {
       expireSessionConnector()
       val result = createController().onSubmit(Writes.IntWrites)(fakeRequest)
       status(result) shouldBe Status.SEE_OTHER
-      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url)
     }
 
     "The answer constants should be the same as the calulated constants for the controller" in {

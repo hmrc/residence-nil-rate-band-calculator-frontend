@@ -80,7 +80,7 @@ class ValueAvailableWhenPropertyChangedController @Inject()(cc: DefaultMessagesC
             cacheMap.getEntry(controllerId).fold(form())(value => form().fill(value))))
         }
       } recover {
-        case _: NoCacheMapException => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
+        case _: NoCacheMapException => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
         case r: RuntimeException =>
           logger.error(r.getMessage, r)
           throw r
@@ -110,7 +110,7 @@ class ValueAvailableWhenPropertyChangedController @Inject()(cc: DefaultMessagesC
           )
         }
       } recover {
-        case _: NoCacheMapException => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad())
+        case _: NoCacheMapException => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
         case r: RuntimeException =>
           logger.error(r.getMessage, r)
           throw r

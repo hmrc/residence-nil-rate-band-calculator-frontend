@@ -33,7 +33,7 @@ class ValidatedSession @Inject()(mcc: MessagesControllerComponents) extends Fron
     Action.async { implicit request =>
       if(request.session.get(SessionKeys.sessionId).isEmpty) {
         logger.warn("No session ID found; timing out")
-        Future.successful(Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad()))
+        Future.successful(Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad))
       } else {
         action(request)
       }

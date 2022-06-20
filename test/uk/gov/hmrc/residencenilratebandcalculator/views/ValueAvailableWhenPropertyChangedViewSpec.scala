@@ -48,7 +48,7 @@ class ValueAvailableWhenPropertyChangedViewSpec extends NewIntViewSpecBase {
 
     behave like pageWithoutBackLink[Int](createView, controller)
 
-    behave like intPage(createView, messageKeyPrefix, routes.ValueAvailableWhenPropertyChangedController.onSubmit().url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), controller)
+    behave like intPage(createView, messageKeyPrefix, routes.ValueAvailableWhenPropertyChangedController.onSubmit.url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), controller)
 
     "contain the appropriate maximum value of transferable residence nil rate band" in {
       val doc = asDocument(createView(controller))
