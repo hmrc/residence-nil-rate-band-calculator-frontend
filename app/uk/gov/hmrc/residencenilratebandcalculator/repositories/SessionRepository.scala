@@ -29,6 +29,7 @@ import reactivemongo.bson.{BSONDocument, _}
 import reactivemongo.play.json.ImplicitBSONHandlers._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.mongo.ReactiveRepository
+import uk.gov.hmrc.mongo.json.ReactiveMongoFormats
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -37,28 +38,8 @@ case class DatedCacheMap(id: String,
                          lastUpdated: DateTime = DateTime.now(DateTimeZone.UTC))
 
 object DatedCacheMap extends JodaReads with JodaWrites {
-  import play.api.libs.functional.syntax._
-  import play.api.libs.json.OWrites._
-  import play.api.libs.json.Reads._
-  import play.api.libs.json._
-
-  val datedCacheMapReads: Reads[DatedCacheMap] =
-    ((JsPath \ "id").read[String] and
-    (JsPath \ "data").read[Map[String, JsValue]] and
-    (JsPath \ "lastUpdated").read[DateTime]) { (id, data, lastUpdated) =>
-      new DatedCacheMap(id, data, lastUpdated)
-    }
-  val writeBuilder: FunctionalBuilder[OWrites]#CanBuild3[String, Map[String, JsValue], DateTime] =
-    (JsPath \ "id").write[String] and
-    (JsPath \ "data").write[Map[String, JsValue]] and
-    (JsPath \ "lastUpdated").write[DateTime]
-
-  val datedCacheMapWrites: OWrites[DatedCacheMap] =
-    writeBuilder.apply { datedCacheMap: DatedCacheMap =>
-      (datedCacheMap.id, datedCacheMap.data, datedCacheMap.lastUpdated)
-    }
-
-  implicit val formats: OFormat[DatedCacheMap] = OFormat(datedCacheMapReads, datedCacheMapWrites)
+  implicit val dateFormat = ReactiveMongoFormats.dateTimeFormats
+  implicit val formats = Json.format[DatedCacheMap]
 
   def apply(cacheMap: CacheMap): DatedCacheMap = DatedCacheMap(cacheMap.id, cacheMap.data)
 }
