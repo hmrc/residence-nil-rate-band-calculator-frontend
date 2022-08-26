@@ -16,6 +16,9 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.repositories
 
+import java.util.concurrent.TimeUnit
+
+import akka.actor.ActorSystem
 import javax.inject.{Inject, Singleton}
 import org.joda.time.{DateTime, DateTimeZone}
 import play.api.libs.functional.FunctionalBuilder
@@ -31,6 +34,7 @@ import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.mongo.ReactiveRepository
 import uk.gov.hmrc.mongo.json.ReactiveMongoFormats
 
+import scala.concurrent.duration.FiniteDuration
 import scala.concurrent.{ExecutionContext, Future}
 
 case class DatedCacheMap(id: String,
@@ -92,15 +96,38 @@ class ReactiveMongoRepository(config: Configuration, mongo: () => DefaultDB)(imp
         Some(cmSeq.head)
       }
     }
-
-
   }
+
+  def resetLastUpdated(): Future[Int] = {
+
+    val now = System.currentTimeMillis()
+
+    val selector = BSONDocument()
+    val modifier = BSONDocument("$set" -> BSONDocument("lastUpdated" -> BSONDateTime(now)))
+
+    collection.update(selector, modifier, multi=true) map {
+      result =>
+        result.ok match {
+          case false => -1
+          case true => result.nModified
+        }
+    }
+  }
+
+  val actorSystem = ActorSystem()
+  actorSystem.scheduler.scheduleOnce(FiniteDuration(10, TimeUnit.SECONDS)) {
+    resetLastUpdated() map { n =>
+      logger.info(s"Updated $n documents with a new lastUpdated timestamp")
+    }
+    actorSystem.terminate()
+  }
+
 }
 
 @Singleton
 class SessionRepository @Inject()(config: Configuration, mongoComponent: ReactiveMongoComponent)(implicit ex: ExecutionContext) {
 
-  private lazy val sessionRepository = new ReactiveMongoRepository(
+  lazy val sessionRepository = new ReactiveMongoRepository(
     config, mongoComponent.mongoConnector.db)
 
   def apply(): ReactiveMongoRepository = sessionRepository
