@@ -22,7 +22,7 @@ import play.api.mvc.{DefaultMessagesControllerComponents, Request}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, UserAnswers}
+import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_value
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
 

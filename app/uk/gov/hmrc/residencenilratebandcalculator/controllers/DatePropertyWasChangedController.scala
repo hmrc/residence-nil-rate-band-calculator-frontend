@@ -22,7 +22,7 @@ import play.api.mvc.{DefaultMessagesControllerComponents, Request}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
-import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, Date, UserAnswers}
+import uk.gov.hmrc.residencenilratebandcalculator.models.{Date, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_property_was_changed
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
 
