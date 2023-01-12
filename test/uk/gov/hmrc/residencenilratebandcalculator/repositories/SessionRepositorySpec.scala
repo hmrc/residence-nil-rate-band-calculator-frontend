@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,102 +16,56 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.repositories
 
-import org.mockito.ArgumentMatchers
-import org.scalatestplus.mockito.MockitoSugar
 import play.api.Configuration
-import reactivemongo.api.DefaultDB
-import reactivemongo.api.indexes.{CollectionIndexesManager, Index}
-import org.mockito.Mockito._
-import org.mockito.stubbing.OngoingStubbing
-import play.api.libs.json.{JsObject, Json}
-import reactivemongo.api.commands.{DefaultWriteResult, UpdateWriteResult, WriteConcern, WriteResult}
-import reactivemongo.bson.BSONDocument
-import reactivemongo.play.json.collection.JSONCollection
+import play.api.libs.json.Json
 import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.mongo.test.DefaultPlayMongoRepositorySupport
 import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 
-import scala.concurrent.{ExecutionContext, Future}
+class SessionRepositorySpec extends CommonPlaySpec with DefaultPlayMongoRepositorySupport[DatedCacheMap] with WithCommonFakeApplication{
 
-class SessionRepositorySpec extends CommonPlaySpec with MockitoSugar with WithCommonFakeApplication {
+  lazy val repository =  new ReactiveMongoRepository(
+    config = fakeApplication.injector.instanceOf[Configuration],
+    mongo = mongoComponent
+  )
 
-  lazy val configuration: Configuration = fakeApplication.injector.instanceOf[Configuration]
-  val mockCollection: JSONCollection = mock[JSONCollection]
-  val mockConnection: DefaultDB = mock[DefaultDB]
+  val cacheMap = CacheMap("id", Map("string" -> Json.toJson("testData")))
 
-  def setupIndexMocks(response: Boolean, errors: Boolean = false): OngoingStubbing[Future[Boolean]] = {
-      val mockIndexesManager = mock[CollectionIndexesManager]
-
-      when(mockCollection.indexesManager(ArgumentMatchers.any[ExecutionContext]))
-      .thenReturn(mockIndexesManager)
-
-      when(mockIndexesManager.ensure(ArgumentMatchers.any[Index]))
-      .thenReturn(if (errors) throw new Exception("Error message") else response)
-  }
-
-  def setupUpsertMocks(result: Future[UpdateWriteResult]): OngoingStubbing[Future[UpdateWriteResult]] = {
-    setupIndexMocks(response = true)
-
-    when(mockCollection.update(ArgumentMatchers.any[BSONDocument], ArgumentMatchers.any[BSONDocument], ArgumentMatchers.any[WriteConcern],
-      ArgumentMatchers.eq(true), ArgumentMatchers.any[Boolean])(ArgumentMatchers.any(), ArgumentMatchers.any(), ArgumentMatchers.any()))
-      .thenReturn(result)
-  }
-
-  def setupRemoveMocks(result: Future[WriteResult]): OngoingStubbing[Future[WriteResult]] = {
-    setupIndexMocks(response = true)
-
-    when(mockCollection.remove(ArgumentMatchers.any[JsObject], ArgumentMatchers.any[WriteConcern], ArgumentMatchers.any[Boolean])(ArgumentMatchers.any(), ArgumentMatchers.any()))
-      .thenReturn(result)
-  }
-
-  def testRepository() = new ReactiveMongoRepository(configuration, () => mockConnection) {
-    override lazy val collection: JSONCollection = mockCollection
-  }
-
-  "Calling upsert" should {
-
-    "return a successful true if the write result was ok" in {
-      val cacheMap = CacheMap("id", Map("string" -> Json.toJson("testData")))
-      val response = UpdateWriteResult(ok = true, 1, 1, Seq(), Seq(), None, None, None)
-
-      setupUpsertMocks(Future.successful(response))
-      await(testRepository().upsert(cacheMap)) shouldBe true
+  "SessionRepository" should {
+    "return None for a missing user session" when {
+      "the repository is empty" in {
+        await(repository.get(cacheMap.id)) shouldBe None
+      }
     }
 
-    "return a successful false if the write result has an issue" in {
-      val cacheMap = CacheMap("id", Map("string" -> Json.toJson("testData")))
-      val response = UpdateWriteResult(ok = false, 1, 1, Seq(), Seq(), None, None, None)
-
-      setupUpsertMocks(Future.successful(response))
-      await(testRepository().upsert(cacheMap)) shouldBe false
+    "return true" when {
+      "populating repository" in {
+        await(repository.upsert(cacheMap)) shouldBe true
+      }
+      "deleting data from repository" in {
+        await(repository.removeAll(cacheMap.id)) shouldBe true
+      }
     }
 
-    "return a failure if an exception occurs" in {
-      val cacheMap = CacheMap("id", Map("string" -> Json.toJson("testData")))
-
-      setupUpsertMocks(Future.failed(new Exception("test message")))
-      the[Exception] thrownBy await(testRepository().upsert(cacheMap)) should have message "test message"
-    }
-  }
-
-  "Calling removeAll" should {
-
-    "return a successful true if the write result was ok" in {
-      val response = new DefaultWriteResult(ok = true, 1, Seq(), None, None, None)
-
-      setupRemoveMocks(Future.successful(response))
-      await(testRepository().removeAll("id")) shouldBe true
+    "return the users answers" when {
+      "the repository is populated" in {
+        await(repository.upsert(cacheMap)) shouldBe true
+        await(repository.get(cacheMap.id)).nonEmpty shouldBe true
+      }
     }
 
-    "return a successful false if the write result has an issue" in {
-      val response = new DefaultWriteResult(ok = false, 1, Seq(), None, None, None)
-
-      setupRemoveMocks(Future.successful(response))
-      await(testRepository().removeAll("id")) shouldBe false
+    "remove the user's answers" when {
+      "the repository is empty" in {
+        await(repository.removeAll(cacheMap.id)) shouldBe true
+        await(repository.get(cacheMap.id)) shouldBe None
+      }
+      "they're in the repository" in {
+        await(repository.upsert(cacheMap)) shouldBe true
+        await(repository.get(cacheMap.id)).nonEmpty shouldBe true
+        await(repository.removeAll(cacheMap.id)) shouldBe true
+        await(repository.get(cacheMap.id)) shouldBe None
+      }
     }
 
-    "return a failure if an exception occurs" in {
-      setupRemoveMocks(Future.failed(new Exception("test message")))
-      the[Exception] thrownBy await(testRepository().removeAll("id")) should have message "test message"
-    }
   }
 }
