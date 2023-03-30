@@ -73,7 +73,7 @@ trait NewDateViewSpecBase extends NewViewSpecBase {
 
         "not render an error summary" in {
           val doc = asDocument(createView(emptyForm))
-          assertNotRenderedById(doc, "error-summary_header")
+          assertNotRenderedByCssSelector(doc, ".govuk-error-summary")
         }
       }
 
@@ -97,7 +97,7 @@ trait NewDateViewSpecBase extends NewViewSpecBase {
       "rendered with an error" must {
         "show an error summary" in {
           val doc = asDocument(createView(form.withError(error)))
-          assertRenderedById(doc, "error-summary-title")
+          assertRenderedByCssSelector(doc, ".govuk-error-summary")
         }
       }
     }

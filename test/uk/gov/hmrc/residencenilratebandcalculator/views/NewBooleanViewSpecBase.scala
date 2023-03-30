@@ -56,7 +56,7 @@ trait NewBooleanViewSpecBase extends NewViewSpecBase {
 
         "not render an error summary" in {
           val doc = asDocument(createView(emptyForm))
-          assertNotRenderedById(doc, "error-summary_header")
+          assertNotRenderedByCssSelector(doc, ".govuk-error-summary")
         }
       }
 
@@ -72,7 +72,7 @@ trait NewBooleanViewSpecBase extends NewViewSpecBase {
 
         "show an error summary" in {
           val doc = asDocument(createView(BooleanForm("").withError(error)))
-          assertRenderedById(doc, "error-summary-title")
+          assertRenderedByCssSelector(doc, ".govuk-error-summary")
         }
 
         "show an error in the value field's label" in {
@@ -99,7 +99,7 @@ trait NewBooleanViewSpecBase extends NewViewSpecBase {
 
     "not render an error summary" in {
       val doc = asDocument(createView(BooleanForm("").fill(answer)))
-      assertNotRenderedById(doc, "error-summary_header")
+      assertNotRenderedByCssSelector(doc, ".govuk-error-summary")
     }
   }
 }

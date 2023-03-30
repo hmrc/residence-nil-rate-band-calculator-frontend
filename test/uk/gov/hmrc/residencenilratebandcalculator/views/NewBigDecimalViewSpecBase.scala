@@ -54,12 +54,12 @@ trait NewBigDecimalViewSpecBase extends NewViewSpecBase {
 
           "show an error summary" in {
             val doc = asDocument(createView(form.withError(error)))
-            assertRenderedById(doc, "error-summary-title")
+            assertRenderedByCssSelector(doc, ".govuk-error-summary")
           }
 
           "show an error in the value field's label" in {
             val doc = asDocument(createView(form.withError(error)))
-            val errorSpan = doc.getElementsByClass("govuk-error-summary__list").first
+            val errorSpan = doc.getElementsByClass("govuk-list govuk-error-summary__list").first
             errorSpan.text shouldBe messages(errorMessage)
           }
         }
