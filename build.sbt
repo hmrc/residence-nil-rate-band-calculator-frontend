@@ -1,15 +1,14 @@
 import sbt._
 import scoverage.ScoverageKeys
 import uk.gov.hmrc.DefaultBuildSettings.{defaultSettings, integrationTestSettings, scalaSettings}
-import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin.publishingSettings
 
 
 lazy val appName = "residence-nil-rate-band-calculator-frontend"
 lazy val appDependencies: Seq[ModuleID] = AppDependencies()
 lazy val plugins : Seq[Plugins] = Seq.empty
 lazy val playSettings : Seq[Setting[_]] = Seq.empty
-lazy val scalaversion = "2.12.12"
-val silencerVersion = "1.7.1"
+lazy val scalaversion = "2.13.8"
+val silencerVersion = "1.7.12"
 
 lazy val microservice = Project(appName, file("."))
   .enablePlugins(Seq(play.sbt.PlayScala, SbtDistributablesPlugin) ++ plugins : _*)
@@ -19,14 +18,13 @@ lazy val microservice = Project(appName, file("."))
     ScoverageKeys.coverageExcludedFiles := "<empty>;Reverse.*;.*AuthService.*;.*CustomLanguageController.*;models/.data/..*;.*filters.*;.*handlers.*;.*components.*;" +
       ".*BuildInfo.*;.*javascript.*;.*FrontendAuditConnector.*;.*Routes.*;.*GuiceInjector;.*SessionConnector;.*frontendAppConfig;" +
       ".*ControllerConfiguration;.*RnrbConnector.*;.*StyleGuide;.*main_template.*;.*basic_template.*;.*views.*;",
-    ScoverageKeys.coverageMinimum := 90,
+    ScoverageKeys.coverageMinimumStmtTotal := 90,
     ScoverageKeys.coverageFailOnMinimum := true,
     ScoverageKeys.coverageHighlighting := true,
     parallelExecution in Test := false
   )
   .settings(scalaSettings: _*)
   .settings(scalaVersion:=scalaversion)
-  .settings(publishingSettings: _*)
   .settings(defaultSettings(): _*)
   .settings(libraryDependencies ++= appDependencies)
   .configs(IntegrationTest)
@@ -63,7 +61,6 @@ lazy val microservice = Project(appName, file("."))
   .settings(
     TwirlKeys.templateImports ++= Seq(
       "uk.gov.hmrc.govukfrontend.views.html.components._",
-      "uk.gov.hmrc.govukfrontend.views.html.helpers._",
       "uk.gov.hmrc.hmrcfrontend.views.html.components._",
       "uk.gov.hmrc.hmrcfrontend.views.html.helpers._",
       "uk.gov.hmrc.govukfrontend.views.html.components.implicits._"

@@ -48,7 +48,7 @@ class CascadeUpsert extends Logging {
 
   private def clearIfFalse[A](key: String, value: A, keysToRemove: Set[String], cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
     val mapToStore = value match {
-      case JsBoolean(false) => cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemove.contains(s)))
+      case JsBoolean(false) => cacheMap copy (data = cacheMap.data.view.filterKeys(s => !keysToRemove.contains(s)).toMap)
       case _ => cacheMap
     }
     store(key, value, mapToStore)
@@ -74,7 +74,7 @@ class CascadeUpsert extends Logging {
     )
 
     val mapToStore = value match {
-      case JsString(Constants.none) => cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemoveWhenNone.contains(s)))
+      case JsString(Constants.none) => cacheMap copy (data = cacheMap.data.view.filterKeys(s => !keysToRemoveWhenNone.contains(s)).toMap)
       case JsString(Constants.all) => cacheMap copy (data = cacheMap.data - Constants.percentagePassedToDirectDescendantsId)
       case _ => cacheMap
     }
@@ -142,9 +142,9 @@ class CascadeUpsert extends Logging {
       case JsString(d) =>
         Try(LocalDate.parse(d)) match {
           case Success(parsedDate) if parsedDate isBefore Constants.downsizingEligibilityDate =>
-            cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemoveWhenDateBeforeDownsizingDate.contains(s)))
+            cacheMap copy (data = cacheMap.data.view.filterKeys(s => !keysToRemoveWhenDateBeforeDownsizingDate.contains(s)).toMap)
           case Success(parsedDate) if parsedDate isBefore Constants.eligibilityDate =>
-            cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemoveWhenDateBeforeEligibilityDate.contains(s)))
+            cacheMap copy (data = cacheMap.data.view.filterKeys(s => !keysToRemoveWhenDateBeforeEligibilityDate.contains(s)).toMap)
           case Failure(e) =>
             val msg = s"Unable to parse value $value as the Date Property Was Changed"
             logger.error(msg, e)

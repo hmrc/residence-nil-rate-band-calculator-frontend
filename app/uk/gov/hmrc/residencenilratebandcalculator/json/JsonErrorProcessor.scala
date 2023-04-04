@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.json
 
 import play.api.libs.json.{JsPath, JsonValidationError}
+import scala.collection.Seq
 
 object JsonErrorProcessor {
   private def validationErrorToString(v: JsonValidationError): String = {

@@ -157,7 +157,7 @@ object AnswerRows extends JodaReads {
                           answerRowFns: Map[String, JsValue => Messages => AnswerRow],
                           rowOrder: Map[String, Int],
                           messages: Messages): Seq[AnswerRow] = {
-    val dataToInclude = cacheMap.data.filterKeys(key => answerRowFns.keys.toSeq contains key).toSeq
+    val dataToInclude = cacheMap.data.view.filterKeys(key => answerRowFns.keys.toSeq contains key).toSeq
     dataToInclude.sortWith { case ((key1, _), (key2, _)) => rowOrder(key1) < rowOrder(key2) }.map {
       case (key, value) => answerRowFns(key)(value)(messages)
     }
@@ -165,12 +165,12 @@ object AnswerRows extends JodaReads {
 
   def truncateAndLocateInCacheMap(id: String, cacheMap: CacheMap): CacheMap = {
     val truncatedList = rowOrderList.takeWhile(_ != id)
-    CacheMap(cacheMap.id, cacheMap.data.filterKeys(x => truncatedList.contains(x)))
+    CacheMap(cacheMap.id, cacheMap.data.view.filterKeys(x => truncatedList.contains(x)).toMap)
   }
 
   def truncateAndAddCurrentLocateInCacheMap(id: String, cacheMap: CacheMap) = {
     val truncatedList = rowOrderList.takeWhile(_ != id) :+ id
-    CacheMap(cacheMap.id, cacheMap.data.filterKeys(x => truncatedList.contains(x)))
+    CacheMap(cacheMap.id, cacheMap.data.view.filterKeys(x => truncatedList.contains(x)).toMap)
   }
 
 
