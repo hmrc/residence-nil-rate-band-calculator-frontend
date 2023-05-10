@@ -18,6 +18,11 @@ You will also need to have the [residence nil-rate band calculator](https://gith
     sm --start RNRB
     sm --start ASSETS_FRONTEND
 
+#### Test Coverage
+To run the test coverage suite
+
+ `sbt clean coverage test coverageReport`
+
 ## License
 
 This code is open source software licensed under the [Apache 2.0 License]("http://www.apache.org/licenses/LICENSE-2.0.html").
