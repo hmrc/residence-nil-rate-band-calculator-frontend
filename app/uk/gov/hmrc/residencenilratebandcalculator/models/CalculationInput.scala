@@ -84,6 +84,7 @@ object CalculationInput extends JodaReads {
     userAnswers.datePropertyWasChanged match {
       case Some(d) if d isBefore Constants.downsizingEligibilityDate => None
       case Some(_) => Some(DownsizingDetails(userAnswers))
+      case _ => None
     }
   } else {
     None

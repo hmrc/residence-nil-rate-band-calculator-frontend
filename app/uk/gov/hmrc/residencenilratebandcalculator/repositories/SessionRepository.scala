@@ -29,9 +29,8 @@ import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.mongo.play.json.{Codecs, PlayMongoRepository}
 import uk.gov.hmrc.mongo.play.json.formats.MongoJodaFormats.Implicits._
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.SECONDS
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 case class DatedCacheMap(id: String,
                          data: Map[String, JsValue],
@@ -43,7 +42,7 @@ object DatedCacheMap extends JodaReads with JodaWrites {
   def apply(cacheMap: CacheMap): DatedCacheMap = DatedCacheMap(cacheMap.id, cacheMap.data)
 }
 
-class ReactiveMongoRepository(config: Configuration, mongo: MongoComponent)
+class ReactiveMongoRepository(config: Configuration, mongo: MongoComponent)(implicit ec: ExecutionContext)
   extends PlayMongoRepository[DatedCacheMap](
     collectionName = config.get[String]("appName"),
     mongoComponent = mongo,
@@ -80,7 +79,7 @@ class ReactiveMongoRepository(config: Configuration, mongo: MongoComponent)
 }
 
 @Singleton
-class SessionRepository @Inject()(config: Configuration, mongoComponent: MongoComponent) {
+class SessionRepository @Inject()(config: Configuration, mongoComponent: MongoComponent)(implicit ec: ExecutionContext) {
 
   private lazy val sessionRepository = new ReactiveMongoRepository(config, mongoComponent)
 

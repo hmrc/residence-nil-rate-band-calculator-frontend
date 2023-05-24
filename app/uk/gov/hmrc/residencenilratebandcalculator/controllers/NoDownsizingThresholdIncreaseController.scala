@@ -47,6 +47,7 @@ class NoDownsizingThresholdIncreaseController @Inject()(cc: DefaultMessagesContr
     val reasonKey = reason match {
       case NoAssetsPassingToDirectDescendants => "no_downsizing_threshold_increase.no_assets_passing_to_direct_descendants_reason"
       case DatePropertyWasChangedTooEarly => "no_downsizing_threshold_increase.date_property_was_changed_too_early_reason"
+      case _ => ""
     }
     noDownsizingThresholdIncreaseView(reasonKey, navigator.nextPage(Constants.noDownsizingThresholdIncrease)(userAnswers))
   }
