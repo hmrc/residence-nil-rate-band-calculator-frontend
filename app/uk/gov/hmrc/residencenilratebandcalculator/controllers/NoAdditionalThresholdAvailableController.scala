@@ -47,6 +47,7 @@ class NoAdditionalThresholdAvailableController @Inject()(cc: DefaultMessagesCont
     val reasonKey = reason match {
       case NotCloselyInherited => "no_additional_threshold_available.not_closely_inherited_reason"
       case NoProperty => "no_additional_threshold_available.no_property_reason"
+      case _ => ""
     }
     noAdditionalThresholdAvailableView(reasonKey, navigator.nextPage(Constants.noAdditionalThresholdAvailableId)(userAnswers))
   }

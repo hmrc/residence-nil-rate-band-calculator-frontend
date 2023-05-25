@@ -40,6 +40,7 @@ class UnableToCalculateThresholdIncreaseController @Inject()(val cc: DefaultMess
     reason match {
       case GrossingUpForResidence => Constants.grossingUpOnEstatePropertyId
       case GrossingUpForOtherProperty => Constants.grossingUpOnEstateAssetsId
+      case _ => ""
     }
 
   def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[_]) =
