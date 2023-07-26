@@ -5,7 +5,6 @@ assets_passing_to_direct_descendants.guidance_no_property = Heblaw''r eiddo yr y
 assets_passing_to_direct_descendants.guidance_no_property.p2 = Rhaid bod disgynnydd uniongyrchol wedi cael asedion eraill o''r ystâd er mwyn i''r lwfans ar gyfer symud i gartref llai o faint gael ei hawlio.
 assets_passing_to_direct_descendants.error.required = Rhowch ateb ar gyfer a oedd unrhyw asedion eraill heblaw''r eiddo''n cael eu trosglwyddo i ddisgynnydd uniongyrchol
 
-calculate_threshold_increase.browser_title = Cyfrifwch RNRB
 calculate_threshold_increase.title = Cyfrifwch yr haen cyfradd sero ar gyfer cartrefi (RNRB) ar gyfer cartref a adawyd i ddisgynyddion uniongyrchol
 calculate_threshold_increase.guidance1 = Cyfrifwch yr RNRB i''w hawlio yn erbyn Treth Etifeddiant os yw cartref yn cael ei adael i blant neu ddisgynyddion uniongyrchol eraill. Mae''r gyfrifiannell hefyd yn cyfrifo''r RNRB os gwnaeth person symud i gartref llai o faint neu werthu ei gartref, ac unrhyw RNRB sydd heb ei defnyddio a allai gael ei throsglwyddo i''r ystâd.
 calculate_threshold_increase.guidance2 = I ddefnyddio''r gyfrifiannell hon i''ch helpu i lenwi ffurflen gyfrif IHT400, bydd angen y canlynol arnoch:
@@ -259,7 +258,6 @@ site.service_name = Cyfrifwch yr RNRB sydd ar gael
 service.name = Cyfrifwch yr RNRB sydd ar gael
 site.title.error=Gwall: {0}
 
-threshold_calculation_result.browser_title = Cyfrifiad terfynol
 threshold_calculation_result.info.zero.header = Nid oes cynnydd i drothwy''r Dreth Etifeddiant
 threshold_calculation_result.info.zero.guidance = Yn seiliedig ar y manylion yr ydych wedi''u rhoi, gellir cynyddu''r trothwy gan {0}.
 threshold_calculation_result.info.zero.threshold_change = Nid oes newid i''r trothwy presennol.
