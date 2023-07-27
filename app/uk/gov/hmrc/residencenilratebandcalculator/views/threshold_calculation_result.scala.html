@@ -24,9 +24,10 @@
 )
 
 @(residenceNilRateAmount: String)(implicit request: Request[_], messages: Messages)
+@title = @{if(residenceNilRateAmount == "£0.00") messages("threshold_calculation_result.info.zero.header") else messages("threshold_calculation_result.info.non_zero.header")}
 
 @layout(
-    pageTitle = messages("threshold_calculation_result.browser_title")
+    pageTitle = title
 ) {
 
     @if(residenceNilRateAmount == "£0.00") {

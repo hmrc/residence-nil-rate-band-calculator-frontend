@@ -5,7 +5,6 @@ assets_passing_to_direct_descendants.guidance_no_property = Other than any prope
 assets_passing_to_direct_descendants.guidance_no_property.p2 = A direct descendant or their spouse or civil partner must have received assets from the estate for the downsizing allowance to be claimed.
 assets_passing_to_direct_descendants.error.required = Give an answer for if any other assets apart from the property were passing to a direct descendant
 
-calculate_threshold_increase.browser_title = Calculate RNRB
 calculate_threshold_increase.title = Calculate the available residence nil rate band (RNRB) for a home left to direct descendants
 calculate_threshold_increase.guidance1 = Calculate the RNRB to claim against Inheritance Tax if a home is left to children or other direct descendants. The calculator also works out the RNRB if a person downsized or sold their home, and any unused RNRB that can be transferred to the estate.
 calculate_threshold_increase.guidance2 = To use this calculator to help complete an IHT400 account, you''ll need to have:
@@ -259,7 +258,6 @@ site.service_name = Calculate the available RNRB
 service.name = Calculate the available RNRB
 site.title.error = Error: {0}
 
-threshold_calculation_result.browser_title = Final calculation
 threshold_calculation_result.info.zero.header = There is no increase to the Inheritance Tax threshold
 threshold_calculation_result.info.zero.guidance = Based on the details you have given, the threshold can be increased by {0}.
 threshold_calculation_result.info.zero.threshold_change = There is no change to the current threshold.

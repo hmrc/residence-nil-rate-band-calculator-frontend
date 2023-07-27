@@ -92,7 +92,7 @@ class ThresholdCalculationResultControllerSpec extends NewSimpleControllerSpecBa
     "return the View for a GET" in {
       setCacheMap(cacheMap)
       val result = thresholdCalculationResultController().onPageLoad(fakeRequest)
-      contentAsString(result) should include("<title>Final calculation - Calculate the available RNRB - GOV.UK</title>")
+      contentAsString(result) should include("<title>You can claim residence nil rate band - Calculate the available RNRB - GOV.UK</title>")
     }
 
     "returns an Internal Server Error when the cache is in an unusable state" in {
