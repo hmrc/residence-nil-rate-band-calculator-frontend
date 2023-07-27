@@ -28,7 +28,7 @@ class CalculateThresholdIncreaseViewSpec extends ViewSpecBase {
   "Calculate Threshold Increase view" must {
     "display the correct browser title" in {
       val doc = asDocument(calculate_threshold_increase()(request, messages))
-      assertEqualsMessage(doc, "title", s"${messages(s"$messageKeyPrefix.browser_title")} - ${messages("service.name")} - GOV.UK")
+      assertEqualsMessage(doc, "title", s"${messages(s"$messageKeyPrefix.title")} - ${messages("service.name")} - GOV.UK")
     }
 
     "display the correct title" in {

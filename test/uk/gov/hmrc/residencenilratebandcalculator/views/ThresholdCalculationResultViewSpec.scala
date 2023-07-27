@@ -38,7 +38,7 @@ class ThresholdCalculationResultViewSpec extends HtmlSpec {
     "rendered" must {
       "display the correct browser title" in {
         val f = thisFixture()
-        assertEqualsMessage(f.doc, "title", s"${messages("threshold_calculation_result.browser_title")} - ${messages("service.name")} - GOV.UK")
+        assertEqualsMessage(f.doc, "title", s"${messages("threshold_calculation_result.info.non_zero.header")} - ${messages("service.name")} - GOV.UK")
       }
 
       "display the correct guidance" in {
