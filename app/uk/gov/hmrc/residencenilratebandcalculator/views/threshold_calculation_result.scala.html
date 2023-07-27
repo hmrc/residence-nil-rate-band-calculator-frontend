@@ -60,12 +60,12 @@
     </ul>
     <p class="govuk-body">@messages("threshold_calculation_result.action.guidance.continue")</p>
     <p class="govuk-body u--no-print">@messages("threshold_calculation_result.print_prefix")
-        <a href="javascript:window.print()">@messages("threshold_calculation_result.link_to_print")</a>
+        <a class="govuk-link" href="javascript:window.print()">@messages("threshold_calculation_result.link_to_print")</a>
         @messages("threshold_calculation_result.print_suffix")
     </p>
 
     <p class="govuk-body">
-        <a href="@routes.IHT435Controller.onPageLoad">@messages("threshold_calculation_result.pdf.guidance1")</a>. @messages("threshold_calculation_result.pdf.guidance2")
+        <a class="govuk-link" href="@routes.IHT435Controller.onPageLoad">@messages("threshold_calculation_result.pdf.guidance1")</a>. @messages("threshold_calculation_result.pdf.guidance2")
     </p>
 
     <p>
