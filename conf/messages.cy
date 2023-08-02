@@ -3,7 +3,7 @@ assets_passing_to_direct_descendants.title = A oes unrhyw asedion eraill yn cael
 assets_passing_to_direct_descendants.guidance = Nid yw hyn yn cynnwys yr eiddo, sydd werth {0}, yr ydych eisoes wedi''i ychwanegu i''r gyfrifiannell hon. Rhaid bod disgynnydd uniongyrchol wedi cael asedion eraill o''r ystâd er mwyn i''r trothwy ychwanegol ar gyfer symud i gartref llai o faint gael ei hawlio.
 assets_passing_to_direct_descendants.guidance_no_property = Heblaw''r eiddo yr ydych yn hawlio''r haen cyfradd sero ar gyfer cartrefi (RNRB) ar ei gyfer, a oes unrhyw asedion eraill yn cael eu trosglwyddo i ddisgynnydd uniongyrchol yn dilyn y farwolaeth?
 assets_passing_to_direct_descendants.guidance_no_property.p2 = Rhaid bod disgynnydd uniongyrchol wedi cael asedion eraill o''r ystâd er mwyn i''r lwfans ar gyfer symud i gartref llai o faint gael ei hawlio.
-assets_passing_to_direct_descendants.error.required = Rhowch ateb ar gyfer a oedd unrhyw asedion eraill heblaw''r eiddo''n cael eu trosglwyddo i ddisgynnydd uniongyrchol
+assets_passing_to_direct_descendants.error.required = Dewiswch 'Iawn' os oedd unrhyw asedion eraill, heblaw''r eiddo, yn cael eu trosglwyddo i ddisgynnydd uniongyrchol.
 
 calculate_threshold_increase.title = Cyfrifwch yr haen cyfradd sero ar gyfer cartrefi (RNRB) ar gyfer cartref a adawyd i ddisgynyddion uniongyrchol
 calculate_threshold_increase.guidance1 = Cyfrifwch yr RNRB i''w hawlio yn erbyn Treth Etifeddiant os yw cartref yn cael ei adael i blant neu ddisgynyddion uniongyrchol eraill. Mae''r gyfrifiannell hefyd yn cyfrifo''r RNRB os gwnaeth person symud i gartref llai o faint neu werthu ei gartref, ac unrhyw RNRB sydd heb ei defnyddio a allai gael ei throsglwyddo i''r ystâd.
@@ -68,7 +68,7 @@ claim_downsizing_threshold.guidance2 = Mae''n rhaid i unrhyw un o''r canlynol he
 claim_downsizing_threshold.guidance1.bullet1 = symudodd i gartref llai o faint ar neu ar ôl 8 Gorffennaf 2015 gan naill ai gwerthu''r eiddo a phrynu cartref rhatach neu''i werthu a pheidio â phrynu cartref arall
 claim_downsizing_threshold.guidance1.bullet2 = rhoddodd unrhyw ran o''r cartref i ffwrdd
 claim_downsizing_threshold.guidance1.bullet3 = roedd gan y person gartref a fyddai wedi bod yn gymwys am yr haen cyfradd sero ar gyfer cartrefi (RNRB) pe nai bai wedi''i werthu, ac wedi''i gadw tan y bu farw
-claim_downsizing_threshold.error.required = Rhowch ateb ar gyfer a ydych yn hawlio lwfans ar gyfer symud i gartref llai o faint ar gyfer yr ystâd hon.
+claim_downsizing_threshold.error.required = Dewiswch ''Iawn'' os ydych yn hawlio lwfans ar gyfer symud i gartref llai o faint ar gyfer yr ystâd hon.
 
 date.day = Diwrnod
 date.month = Mis
@@ -125,7 +125,7 @@ exemptions_and_relief_claimed.guidance2 = Atebwch yn gadarnhaol os oes unrhyw ra
 exemptions_and_relief_claimed.guidance2.bullet1 = cafodd ei throsglwyddo i''r priod neu''r partner sifil
 exemptions_and_relief_claimed.guidance2.bullet2 = cafodd ei throsglwyddo i elusen
 exemptions_and_relief_claimed.guidance2.bullet3 = mae rhyddhad, megis rhyddhad amaethyddol, yn berthnasol
-exemptions_and_relief_claimed.error.required = Rhowch ateb ar gyfer a oedd unrhyw ran o''r eiddo wedi''i heithrio rhag y Dreth Etifeddiant
+exemptions_and_relief_claimed.error.required = Dewiswch ''Iawn'' os oedd unrhyw ran o''r eiddo wedi''i heithrio rhag Treth Etifeddiant
 
 exit_questionnaire.browser_title = Arolwg
 exit_questionnaire.title = Arolwg
@@ -145,13 +145,13 @@ grossing_up_on_estate_assets.browser_title = A oes grosio i fyny neu ryngweithio
 grossing_up_on_estate_assets.title = A oes grosio i fyny neu ryngweithio''n berthnasol?
 grossing_up_on_estate_assets.guidance1 = Mae hyn yn erbyn yr asedion yn ystâd yr ymadawedig.
 grossing_up_on_estate_assets.guidance2 = Wrth lenwi''r ffurflen IHT400, mae''n bosibl y bu grosio i fyny neu ryngweithio''n berthnasol os gadawodd yr ymadawedig unrhyw roddion sy''n rhydd o dreth ac mae rhan o''r ystâd wedi''i heithrio rhag Treth Etifeddiant.
-grossing_up_on_estate_assets.error.required = Rhowch ateb ar gyfer a yw grosio i fyny neu ryngweithio''n berthnasol i asedion yn yr ystâd
+grossing_up_on_estate_assets.error.required = Dewiswch ''Iawn'' os yw grosio neu ryngweithio''n berthnasol i asedion yn yr ystâd.
 
 grossing_up_on_estate_property.browser_title = A oes grosio i fyny neu ryngweithio''n berthnasol?
 grossing_up_on_estate_property.title = A oes grosio i fyny neu ryngweithio''n berthnasol?
 grossing_up_on_estate_property.guidance1 = Mae hyn yn erbyn yr eiddo yr ydych wedi rhoi gwerth ar ei gyfer. 
 grossing_up_on_estate_property.guidance2 = Wrth lenwi''r ffurflen IHT400, mae''n bosibl y bu grosio i fyny neu ryngweithio''n berthnasol os gadawodd yr ymadawedig unrhyw roddion sy''n rhydd o dreth ac mae rhan o''r ystâd wedi''i heithrio rhag Treth Etifeddiant.
-grossing_up_on_estate_property.error.required = Rhowch ateb ar gyfer a yw grosio i fyny neu ryngweithio''n berthnasol i''r eiddo.
+grossing_up_on_estate_property.error.required = Dewiswch ''Iawn'' os yw grosio neu ryngweithio''n berthnasol i''r eiddo.
 
 no_additional_threshold_available.browser_title = Nid yw RNRB yn gymwys ar gyfer trosglwyddo tŷ
 no_additional_threshold_available.title = Nid yw RNRB yn gymwys ar gyfer trosglwyddo tŷ
@@ -185,7 +185,7 @@ part_of_estate_passing_to_direct_descendants.guidance3.bullet6 = plentyn a faeth
 part_of_estate_passing_to_direct_descendants.guidance3.bullet7 = plentyn y cafodd y person ei benodi''n warcheidwad neu''n warcheidwad arbennig ar ei gyfer pan roedd y plentyn o dan 18 mlwydd oed 
 part_of_estate_passing_to_direct_descendants.guidance3.bullet8 = plentyn mabwysiedig unrhyw un o blant yr ymadawedig
 part_of_estate_passing_to_direct_descendants.guidance4 = Nid yw disgynyddion uniongyrchol yn cynnwys neiaint, nithoedd, brodyr, chwiorydd neu berthnasau eraill nad ydynt wedi''u cynnwys uchod.
-part_of_estate_passing_to_direct_descendants.error.required = Rhowch ateb ar gyfer a drosglwyddwyd unrhyw ran o''r ystâd i ddisgynnydd uniongyrchol
+part_of_estate_passing_to_direct_descendants.error.required = Dewiswch ''Iawn'' os trosglwyddwyd unrhyw ran o''r ystâd i ddisgynnydd uniongyrchol.
 
 percentage_passed_to_direct_descendants.browser_title = Pa ganran o''r breswylfa sy''n cael ei throsglwyddo i ddisgynyddion uniongyrchol yn dilyn marwolaeth yr ymadawedig?
 percentage_passed_to_direct_descendants.title = Pa ganran o''r breswylfa sy''n cael ei throsglwyddo i ddisgynyddion uniongyrchol yn dilyn marwolaeth yr ymadawedig?
@@ -198,7 +198,7 @@ property_in_estate.browser_title = A yw''r ystâd yn cynnwys unrhyw eiddo preswy
 property_in_estate.title = A yw''r ystâd yn cynnwys unrhyw eiddo preswyl y bu''r ymadawedig yn berchen arno ac yn byw ynddo?
 property_in_estate.guidance1 = Gall hwn fod yn unrhyw eiddo y mae''r ymadawedig wedi perchen arno ac wedi byw ynddo yn ystod ei oes/hoes. 
 property_in_estate.guidance2 = Nid oes yn rhaid i''r eiddo fod yn un a adawyd i ddisgynnydd uniongyrchol.
-property_in_estate.error.required = Rhowch ateb ar gyfer a oedd yr ystâd yn cynnwys unrhyw eiddo y bu''r ymadawedig yn berchen arno ac yn byw ynddo
+property_in_estate.error.required = Dewiswch 'Iawn' os yw''r ystâd yn cynnwys unrhyw eiddo preswyl y bu''r ymadawedig yn berchen arno ac yn byw ynddo?
 
 property_passing_to_direct_descendants.all = Iawn, cafodd y cyfan ohono''i droslwyddo
 property_passing_to_direct_descendants.some = Iawn, cafodd rhan ohono''i droslwyddo
@@ -282,12 +282,12 @@ transfer_any_unused_threshold.browser_title = A ydych am drosglwyddo unrhyw haen
 transfer_any_unused_threshold.title = A ydych am drosglwyddo unrhyw haen cyfradd sero preswyl sydd heb ei defnyddio?
 transfer_any_unused_threshold.guidance1 = Bydd y trosglwyddiad hwn o ystâd priod neu bartner sifil a fu farw cyn y person yr ydych yn delio a''i ystâd.
 transfer_any_unused_threshold.guidance2 = Bydd angen copi o ffurflen IHT436 wedi''i llenwi arnoch os ydych yn trosglwyddo unrhyw RNRB sydd heb ei defnyddio o ystâd rhywun arall.
-transfer_any_unused_threshold.error.required = Rhowch ateb os ydych am drosglwyddo unrhyw haen gyfradd sero preswyl sydd heb ei defnyddio o ystâd priod neu bartner sifil yr ymadawedig
+transfer_any_unused_threshold.error.required = Dewiswch ''Iawn'' os ydych am drosglwyddo unrhyw haen gyfradd sero preswyl sydd heb ei defnyddio o ystâd priod neu bartner sifil yr ymadawedig.
 
 transfer_available_when_property_changed.browser_title = Os gwnaed cais dilys am haen cyfradd sero preswyl (RNRB) ar y dyddiad gwaredu, a fyddai unrhyw haen cyfradd sero preswyl trosglwyddadwy wedi bod ar gael ar yr adeg honno?
 transfer_available_when_property_changed.title = Os gwnaed cais dilys am haen cyfradd sero preswyl (RNRB) ar y dyddiad gwaredu, a fyddai unrhyw haen cyfradd sero preswyl trosglwyddadwy wedi bod ar gael ar yr adeg honno?
 transfer_available_when_property_changed.guidance = Atebwch iawn os oedd y dyddiad y symudodd yr ymadawedig i gartref llai o faint ar ôl y dyddiad y bu i''w briod/phriod neu''i bartner/phartner sifil farw.
-transfer_available_when_property_changed.error.required = Rhowch ateb ar gyfer a fyddai cais am unrhyw lwfans ar ddyddiad gwerthu''r eiddo neu''i roi i ffwrdd wedi gadael unrhyw ran o''r lwfans hwnnw ar gael i''w drosglwyddo
+transfer_available_when_property_changed.error.required = Dewiswch ''Iawn'' os byddai hawliad am unrhyw lwfans ar ddyddiad gwerthu''r eiddo neu os byddai rhoi''r eiddo i ffwrdd wedi gadael unrhyw ran o''r lwfans hwnnw ar gael i''w drosglwyddo.
 
 unable_to_calculate_threshold_increase.browser_title = Ni allwch gael cyfrifiad wrth ddefnyddio''r gwasanaeth hwn
 unable_to_calculate_threshold_increase.grossing_up.title = Ni allwch gael cyfrifiad wrth ddefnyddio''r gwasanaeth hwn

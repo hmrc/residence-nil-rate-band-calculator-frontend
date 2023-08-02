@@ -3,7 +3,7 @@ assets_passing_to_direct_descendants.title = Do any other assets pass to a direc
 assets_passing_to_direct_descendants.guidance = This doesn''t include the property worth {0} that you have already added to this calculator. A direct descendant or their spouse or civil partner must have received other assets from the estate for the downsizing allowance to be claimed.
 assets_passing_to_direct_descendants.guidance_no_property = Other than any property that you are claiming RNRB for, do any other assets pass to a direct descendant following the death?
 assets_passing_to_direct_descendants.guidance_no_property.p2 = A direct descendant or their spouse or civil partner must have received assets from the estate for the downsizing allowance to be claimed.
-assets_passing_to_direct_descendants.error.required = Give an answer for if any other assets apart from the property were passing to a direct descendant
+assets_passing_to_direct_descendants.error.required = Select yes if any other assets apart from the property were passing to a direct descendant
 
 calculate_threshold_increase.title = Calculate the available residence nil rate band (RNRB) for a home left to direct descendants
 calculate_threshold_increase.guidance1 = Calculate the RNRB to claim against Inheritance Tax if a home is left to children or other direct descendants. The calculator also works out the RNRB if a person downsized or sold their home, and any unused RNRB that can be transferred to the estate.
@@ -68,7 +68,7 @@ claim_downsizing_threshold.guidance2 = Any of the following must also apply to t
 claim_downsizing_threshold.guidance1.bullet1 = they downsized their home on or after 8 July 2015 by either selling it and buying a cheaper home or selling it and not buying another home
 claim_downsizing_threshold.guidance1.bullet2 = they gave any part of their home away
 claim_downsizing_threshold.guidance1.bullet3 = they had a home that would have qualified for RNRB if they had not sold it and had kept it until they died
-claim_downsizing_threshold.error.required = Give an answer for if you are claiming any downsizing allowance for this estate
+claim_downsizing_threshold.error.required = Select yes if you are claiming any downsizing allowance for this estate
 
 date.day = Day
 date.month = Month
@@ -125,7 +125,7 @@ exemptions_and_relief_claimed.guidance2 = Answer yes if any part of the property
 exemptions_and_relief_claimed.guidance2.bullet1 = it passed to a spouse or civil partner
 exemptions_and_relief_claimed.guidance2.bullet2 = it passed to a charity
 exemptions_and_relief_claimed.guidance2.bullet3 = relief, like agriculture relief, applies
-exemptions_and_relief_claimed.error.required = Give an answer for if any part of the property was exempt from Inheritance Tax
+exemptions_and_relief_claimed.error.required = Select yes if any part of the property was exempt from Inheritance Tax
 
 exit_questionnaire.browser_title = Survey
 exit_questionnaire.title = Survey
@@ -145,13 +145,13 @@ grossing_up_on_estate_assets.browser_title = Does grossing-up or interaction app
 grossing_up_on_estate_assets.title = Does grossing-up or interaction apply?
 grossing_up_on_estate_assets.guidance1 = This is against the assets in the estate of the person who has died.
 grossing_up_on_estate_assets.guidance2 = When filling in the IHT400 form, grossing up or interaction might have been applied if the person who has died left any tax free gifts and some part of the estate is exempt from Inheritance Tax.
-grossing_up_on_estate_assets.error.required = Give an answer for if grossing up or interaction applies to the assets in the estate
+grossing_up_on_estate_assets.error.required = Select yes if grossing up or interaction applies to the assets in the estate
 
 grossing_up_on_estate_property.browser_title = Does grossing-up or interaction apply?
 grossing_up_on_estate_property.title = Does grossing-up or interaction apply?
 grossing_up_on_estate_property.guidance1 = This is against the property you have given the value of.
 grossing_up_on_estate_property.guidance2 = When filling in the IHT400 form, grossing up or interaction might have been applied if the person who has died left any tax free gifts and some part of the estate is exempt from Inheritance Tax.
-grossing_up_on_estate_property.error.required = Give an answer for if grossing up or interaction applies to the property
+grossing_up_on_estate_property.error.required = Select yes if grossing up or interaction applies to the property
 
 no_additional_threshold_available.browser_title = RNRB for passing on the home does not apply
 no_additional_threshold_available.title = RNRB for passing on the home does not apply
@@ -185,7 +185,7 @@ part_of_estate_passing_to_direct_descendants.guidance3.bullet6 = a child who the
 part_of_estate_passing_to_direct_descendants.guidance3.bullet7 = a child who they were appointed as a guardian or special guardian of when that child was under 18
 part_of_estate_passing_to_direct_descendants.guidance3.bullet8 = an adopted child of any children of the person who has died
 part_of_estate_passing_to_direct_descendants.guidance4 = Direct descendants do not include nephews, nieces, brothers, sisters or other relatives not included above.
-part_of_estate_passing_to_direct_descendants.error.required = Give an answer for if any of the estate passed to a direct descendant
+part_of_estate_passing_to_direct_descendants.error.required = Select yes if any of the estate passed to a direct descendant
 
 percentage_passed_to_direct_descendants.browser_title = What percentage of the residence passes to direct descendants following the deceased''s death?
 percentage_passed_to_direct_descendants.title = What percentage of the residence passes to direct descendants following the deceased''s death?
@@ -198,7 +198,7 @@ property_in_estate.browser_title = Does the estate include any residential prope
 property_in_estate.title = Does the estate include any residential property that the deceased owned and lived in?
 property_in_estate.guidance1 = This can be any property that the person who has died owned and also lived in during their lifetime.
 property_in_estate.guidance2 = This property does not need to be one that has been left to a direct descendant.
-property_in_estate.error.required = Give an answer for if the estate included any property owned and lived in by the person who has died
+property_in_estate.error.required = Select yes if the estate includes any residential property that the deceased owned and lived in?
 
 property_passing_to_direct_descendants.all = Yes, all of it passed
 property_passing_to_direct_descendants.some = Yes, some of it passed
@@ -282,12 +282,12 @@ transfer_any_unused_threshold.browser_title = Do you wish to transfer any unused
 transfer_any_unused_threshold.title = Do you wish to transfer any unused residence nil rate band?
 transfer_any_unused_threshold.guidance1 = This transfer will be from the estate of a spouse or civil partner who died before the person whose estate you are dealing with.
 transfer_any_unused_threshold.guidance2 = You will need a completed copy of the IHT436 form if you are transferring any unused RNRB from somebody else''s estate.
-transfer_any_unused_threshold.error.required = Give an answer for if you want to transfer any unused residence nil rate band from the estate of a spouse or civil partner of the person who has died
+transfer_any_unused_threshold.error.required = Select yes if you want to transfer any unused residence nil rate band from the estate of a spouse or civil partner of the person who has died
 
 transfer_available_when_property_changed.browser_title = If a valid claim for RNRB had been made at the date of disposal would any transferable residence nil rate band have been available at that time?
 transfer_available_when_property_changed.title = If a valid claim for RNRB had been made at the date of disposal would any transferable residence nil rate band have been available at that time?
 transfer_available_when_property_changed.guidance = Answer yes if the date that the person who has died downsized their home was after the date that their spouse or civil partner died.
-transfer_available_when_property_changed.error.required = Give an answer for if a claim for any allowance at the date of sale or giving the property away would have left any of that allowance available to transfer
+transfer_available_when_property_changed.error.required = Select yes if a claim for any allowance at the date of sale or giving the property away would have left any of that allowance available to transfer
 
 unable_to_calculate_threshold_increase.browser_title = You cannot get a calculation using this service
 unable_to_calculate_threshold_increase.grossing_up.title = You cannot get a calculation using this service
