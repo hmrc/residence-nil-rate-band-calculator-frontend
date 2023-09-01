@@ -20,7 +20,7 @@ import org.joda.time.LocalDate
 import play.api.i18n.Messages
 import play.api.libs.json.{JodaReads, JsValue, Json}
 import play.api.mvc.Call
-import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 

@@ -25,10 +25,9 @@ import play.api.Environment
 import play.api.i18n.Lang
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 import play.api.mvc.{DefaultMessagesControllerComponents, MessagesControllerComponents}
-import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
-
+import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 @Singleton
 class PDFHelperImpl @Inject()(val env: Environment,
                               val cc: DefaultMessagesControllerComponents) extends PDFHelper

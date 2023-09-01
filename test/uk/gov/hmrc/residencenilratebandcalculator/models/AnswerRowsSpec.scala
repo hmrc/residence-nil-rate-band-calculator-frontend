@@ -21,7 +21,7 @@ import play.api.i18n.{Messages, MessagesApi}
 import play.api.libs.json._
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.MockSessionConnector

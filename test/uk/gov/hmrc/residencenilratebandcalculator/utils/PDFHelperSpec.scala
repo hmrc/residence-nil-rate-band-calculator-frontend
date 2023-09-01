@@ -22,7 +22,7 @@ import play.api.Environment
 import play.api.i18n.Lang
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import play.api.mvc.{DefaultMessagesControllerComponents, MessagesControllerComponents}
-import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
 import org.scalatest.matchers
 import matchers.should.Matchers.convertToAnyShouldWrapper
