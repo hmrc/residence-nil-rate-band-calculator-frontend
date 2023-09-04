@@ -24,7 +24,7 @@ import org.mongodb.scala.model.Filters._
 import org.mongodb.scala.model.Indexes._
 import org.mongodb.scala.model.Updates._
 import org.mongodb.scala.model.{IndexModel, IndexOptions, UpdateOptions}
-import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.mongo.play.json.{Codecs, PlayMongoRepository}
 import uk.gov.hmrc.mongo.play.json.formats.MongoJodaFormats.Implicits._

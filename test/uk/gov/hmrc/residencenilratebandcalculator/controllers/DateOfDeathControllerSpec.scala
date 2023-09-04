@@ -19,7 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import akka.stream.Materializer
 import org.jsoup.Jsoup
 import org.mockito.ArgumentMatchers
-import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date

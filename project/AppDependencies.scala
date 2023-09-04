@@ -4,7 +4,8 @@ import play.sbt.PlayImport._
 private object AppDependencies {
 
   val bootstrapVersion = "7.15.0"
-  val mongoPlayVersion = "1.2.0"
+  val
+  mongoPlayVersion = "1.2.0"
 
   val compile = Seq(
     ws,
@@ -12,7 +13,6 @@ private object AppDependencies {
     "uk.gov.hmrc"       %% "play-frontend-hmrc"         % "7.7.0-play-28",
     "com.typesafe.play" %% "play-json-joda"             % "2.9.4",
     "uk.gov.hmrc"       %% "bootstrap-frontend-play-28" % bootstrapVersion,
-    "uk.gov.hmrc"       %% "http-caching-client"        % "10.0.0-play-28",
     "org.apache.pdfbox" %  "pdfbox"                     % "2.0.28",
     "uk.gov.hmrc"       %% "play-language"              % "6.2.0-play-28",
     nettyServer

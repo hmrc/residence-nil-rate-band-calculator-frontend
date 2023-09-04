@@ -26,7 +26,7 @@ import play.api.libs.json.{Reads, Writes, _}
 import play.api.mvc.{DefaultMessagesControllerComponents, Result}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks

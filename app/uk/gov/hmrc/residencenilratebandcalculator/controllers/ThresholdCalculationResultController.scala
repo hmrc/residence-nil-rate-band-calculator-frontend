@@ -21,7 +21,7 @@ import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import uk.gov.hmrc.residencenilratebandcalculator.Constants

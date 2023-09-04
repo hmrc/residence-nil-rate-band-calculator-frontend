@@ -18,7 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import org.joda.time.LocalDate
 import play.api.libs.json._
-import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
 import org.scalatest.matchers
 import matchers.should.Matchers.convertToAnyShouldWrapper

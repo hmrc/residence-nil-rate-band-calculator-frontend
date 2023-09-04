@@ -24,7 +24,7 @@ import org.scalatest.BeforeAndAfter
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.json.{JsValue, Reads, Writes}
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec

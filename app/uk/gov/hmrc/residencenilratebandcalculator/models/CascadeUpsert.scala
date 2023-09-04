@@ -20,7 +20,7 @@ import javax.inject.Singleton
 import org.joda.time.LocalDate
 import play.api.Logging
 import play.api.libs.json._
-import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 import scala.util.{Failure, Success, Try}

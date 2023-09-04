@@ -21,7 +21,7 @@ import play.api.data.Form
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.{DefaultMessagesControllerComponents, Request}
 import uk.gov.hmrc.http.SessionId
-import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession

@@ -19,7 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import play.api.http.Status
 import play.api.libs.json.{Json, Reads, Writes}
 import play.api.mvc.DefaultMessagesControllerComponents
-import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm

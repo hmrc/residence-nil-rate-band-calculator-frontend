@@ -23,7 +23,7 @@ import play.api.mvc.DefaultMessagesControllerComponents
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.SessionKeys
-import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
