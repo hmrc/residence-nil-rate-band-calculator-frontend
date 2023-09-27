@@ -72,8 +72,7 @@
     @hmrcReportTechnicalIssueHelper()
 }
 @allScripts = {
-    @hmrcScripts()
-    @scripts
+    @hmrcScripts(scripts)
 }
 @govukLayout(
     pageTitle = Some(s"""$pageTitle - ${messages("service.name")} - GOV.UK"""),
