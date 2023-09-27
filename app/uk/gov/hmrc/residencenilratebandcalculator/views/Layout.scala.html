@@ -35,7 +35,8 @@
 
 @(
     pageTitle: String,
-    timeoutEnabled: Boolean = true
+    timeoutEnabled: Boolean = true,
+    scripts: Option[Html] = None
 )(
     contentBlock: Html
 )(
@@ -70,7 +71,10 @@
     @contentBlock
     @hmrcReportTechnicalIssueHelper()
 }
-
+@allScripts = {
+    @hmrcScripts()
+    @scripts
+}
 @govukLayout(
     pageTitle = Some(s"""$pageTitle - ${messages("service.name")} - GOV.UK"""),
     headBlock = Some(hmrcHead(headBlock = Some(head))),
@@ -80,6 +84,6 @@
         userResearchBanner = None
     )),
     beforeContentBlock = Some(accountMenu),
-    scriptsBlock = Some(hmrcScripts()),
+    scriptsBlock = Some(allScripts),
     footerBlock = Some(hmrcStandardFooter())
 )(mainContent)
