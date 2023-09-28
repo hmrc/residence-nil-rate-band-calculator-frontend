@@ -3,7 +3,7 @@ import play.sbt.PlayImport._
 
 private object AppDependencies {
 
-  val bootstrapVersion = "7.15.0"
+  val bootstrapVersion = "7.22.0"
   val
   mongoPlayVersion = "1.2.0"
 
