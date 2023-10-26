@@ -17,6 +17,8 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.hmrcfrontend.views.config.StandardBetaBanner
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcReportTechnicalIssue
+@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.hmrcstandardpage._
+
 
 
 @this(
@@ -30,6 +32,7 @@
     hmrcLanguageSelectHelper: HmrcLanguageSelectHelper,
     hmrcReportTechnicalIssueHelper: HmrcReportTechnicalIssueHelper,
     backLink: playComponents.back_link,
+    hmrcStandardPage: HmrcStandardPage,
     appConfig: FrontendAppConfig
 )
 
@@ -71,18 +74,21 @@
     @contentBlock
     @hmrcReportTechnicalIssueHelper()
 }
-@allScripts = {
-    @hmrcScripts(scripts)
-}
-@govukLayout(
-    pageTitle = Some(s"""$pageTitle - ${messages("service.name")} - GOV.UK"""),
-    headBlock = Some(hmrcHead(headBlock = Some(head))),
-    headerBlock = Some(hmrcStandardHeader(
-        serviceUrl = Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.CalculateThresholdIncreaseController.onPageLoad.url),
-        phaseBanner = Some(hmrcStandardBetaBanner(url = appConfig.betaFeedbackUnauthenticatedUrl)),
-        userResearchBanner = None
-    )),
-    beforeContentBlock = Some(accountMenu),
-    scriptsBlock = Some(allScripts),
-    footerBlock = Some(hmrcStandardFooter())
+
+@hmrcStandardPage(
+    HmrcStandardPageParams(
+        serviceURLs = ServiceURLs(
+            serviceUrl = Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.CalculateThresholdIncreaseController.onPageLoad.url)
+        ),
+        banners = Banners(
+            phaseBanner = Some(hmrcStandardBetaBanner(url = appConfig.betaFeedbackUnauthenticatedUrl)),
+        ),
+        templateOverrides = TemplateOverrides(
+            additionalHeadBlock = Some(head),
+            beforeContentBlock = Some(accountMenu),
+            additionalScriptsBlock = scripts
+        ),
+        serviceName = Some(messages("service.name")),
+        pageTitle = Some(s"""$pageTitle - ${messages("service.name")} - GOV.UK""")
+    )
 )(mainContent)
