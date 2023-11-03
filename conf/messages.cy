@@ -367,6 +367,6 @@ global.error.pageNotFound404.title=Heb ddod o hyd i''r dudalen – 404
 global.error.pageNotFound404.heading=Ni ellir dod o hyd i''r dudalen hon
 global.error.pageNotFound404.message=Gwiriwch eich bod wedi nodi''r cyfeiriad gwe cywir.
 
-error.InternalServerError500.title = Mae''n ddrwg gennym, mae problem gyda''r gwasanaeth - Cyfrifwch yr RNRB sydd ar gael - GOV.UK
+error.InternalServerError500.title = Mae''n ddrwg gennym, mae problem gyda''r gwasanaeth
 error.InternalServerError500.heading = Mae''n ddrwg gennym, mae problem gyda''r gwasanaeth
 error.InternalServerError500.message = Rhowch gynnig arall arni yn nes ymlaen.
