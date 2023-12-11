@@ -10,7 +10,7 @@ private object AppDependencies {
   val compile = Seq(
     ws,
     "uk.gov.hmrc.mongo" %% "hmrc-mongo-play-28"         % mongoPlayVersion,
-    "uk.gov.hmrc"       %% "play-frontend-hmrc"         % "7.7.0-play-28",
+    "uk.gov.hmrc"       %% "play-frontend-hmrc"         % "7.28.0-play-28",
     "com.typesafe.play" %% "play-json-joda"             % "2.9.4",
     "uk.gov.hmrc"       %% "bootstrap-frontend-play-28" % bootstrapVersion,
     "org.apache.pdfbox" %  "pdfbox"                     % "2.0.28",
