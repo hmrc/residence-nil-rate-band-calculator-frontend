@@ -16,6 +16,8 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
+import org.jsoup.nodes.Document
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_threshold_increase
 
 import scala.language.reflectiveCalls
@@ -23,10 +25,14 @@ import scala.language.reflectiveCalls
 class NoThresholdIncreaseViewSpec extends HtmlSpec {
 
   val prefix = "no_threshold_increase.direct_descendants"
-  val no_threshold_increase = injector.instanceOf[no_threshold_increase]
-  def fixture() = new {
-    val view = no_threshold_increase(prefix)(request, messages)
-    val doc = asDocument(view)
+  val no_threshold_increase: no_threshold_increase = injector.instanceOf[no_threshold_increase]
+  def fixture(): Object {
+    val view: HtmlFormat.Appendable
+
+    val doc: Document
+  } = new {
+    val view: HtmlFormat.Appendable = no_threshold_increase(prefix)(request, messages)
+    val doc: Document = asDocument(view)
   }
 
   "No Threshold Increase View" must {
@@ -38,7 +44,7 @@ class NoThresholdIncreaseViewSpec extends HtmlSpec {
 
     "display the correct page title" in {
       val f = fixture()
-      assertPageTitleEqualsMessage(f.doc, s"${prefix}.title")
+      assertPageTitleEqualsMessage(f.doc, s"$prefix.title")
     }
 
     "not display the HMRC logo" in {

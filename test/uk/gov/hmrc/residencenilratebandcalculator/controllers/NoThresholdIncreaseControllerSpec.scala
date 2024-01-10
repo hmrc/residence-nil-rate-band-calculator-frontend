@@ -17,32 +17,32 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.http.Status
-import play.api.i18n.MessagesApi
+import play.api.i18n.{Messages, MessagesApi}
+import play.api.inject.Injector
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
-import play.api.mvc.DefaultMessagesControllerComponents
+import play.api.mvc.{AnyContentAsEmpty, DefaultMessagesControllerComponents}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
-import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRows
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CacheMap}
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoThresholdIncreaseReason.{DateOfDeath, DirectDescendant}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_threshold_increase
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 
 class NoThresholdIncreaseControllerSpec extends CommonPlaySpec with MockSessionConnector with WithCommonFakeApplication{
 
-  val fakeRequest = FakeRequest("", "")
+  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
 
-  val injector = fakeApplication.injector
+  val injector: Injector = fakeApplication.injector
 
-  val mockConfig = injector.instanceOf[FrontendAppConfig]
+  val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
-  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
 
-  def messagesApi = injector.instanceOf[MessagesApi]
-  def messages = messagesApi.preferred(fakeRequest)
+  def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
+  def messages: Messages = messagesApi.preferred(fakeRequest)
 
-  val no_threshold_increase = fakeApplication.injector.instanceOf[no_threshold_increase]
+  val no_threshold_increase: no_threshold_increase = fakeApplication.injector.instanceOf[no_threshold_increase]
 
   val filledOutCacheMap = new CacheMap("",
     Map[String, JsValue](

@@ -16,35 +16,36 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import akka.stream.Materializer
+import org.apache.pekko.stream.Materializer
 import org.jsoup.Jsoup
 import org.mockito.ArgumentMatchers
-import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
-import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.models.Date
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
-import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 import org.mockito.Mockito._
+import org.mockito.stubbing.OngoingStubbing
 import play.api.mvc.DefaultMessagesControllerComponents
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
+import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
+import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
+import uk.gov.hmrc.residencenilratebandcalculator.models.{CacheMap, Date}
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
+import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 
 import scala.concurrent.Future
 
 class DateOfDeathControllerSpec extends DateControllerSpecBase with CommonPlaySpec {
 
-  val mockConnector = mock[SessionConnector]
-  val mockConfig = injector.instanceOf[FrontendAppConfig]
-  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val mockConnector: SessionConnector = mock[SessionConnector]
+  val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
+  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
   val mockValidatedSession: ValidatedSession = injector.instanceOf[ValidatedSession]
-  val date_of_death = injector.instanceOf[date_of_death]
+  val date_of_death: date_of_death = injector.instanceOf[date_of_death]
   val controller = new DateOfDeathController(messagesControllerComponents, mockConnector, navigator, mockValidatedSession, date_of_death)
 
-  implicit val mat = fakeApplication.injector.instanceOf[Materializer]
+  implicit val mat: Materializer = fakeApplication.injector.instanceOf[Materializer]
 
-  def setupMock(result: Future[Option[CacheMap]]) = {
+  def setupMock(result: Future[Option[CacheMap]]): OngoingStubbing[Future[Option[CacheMap]]] = {
     when(mockConnector.fetch()(ArgumentMatchers.any[HeaderCarrier]))
       .thenReturn(result)
   }
@@ -90,12 +91,13 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase with CommonPlaySp
 
   "Date of Death Controller" must {
 
-    def createView = (value: Option[Date]) => value match {
+    def createView: Option[Date] => HtmlFormat.Appendable = {
       case None => date_of_death(dateOfDeathForm)(fakeRequest, messages)
       case Some(v) => date_of_death(dateOfDeathForm.fill(v))(fakeRequest, messages)
     }
 
-    def createController = () => new DateOfDeathController(messagesControllerComponents, mockSessionConnector, navigator, mockValidatedSession, date_of_death)
+    def createController: () => DateOfDeathController = () =>
+      new DateOfDeathController(messagesControllerComponents, mockSessionConnector, navigator, mockValidatedSession, date_of_death)
 
     behave like rnrbDateController(createController, createView, Constants.dateOfDeathId)(Date.dateReads, Date.dateWrites)
   }

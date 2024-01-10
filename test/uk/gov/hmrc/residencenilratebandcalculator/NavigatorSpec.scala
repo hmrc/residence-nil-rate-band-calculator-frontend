@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator
 
-import org.joda.time.LocalDate
+import java.time.LocalDate
 import org.mockito.Mockito._
 import org.scalatestplus.mockito.MockitoSugar
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
@@ -34,7 +34,7 @@ class NavigatorSpec extends CommonPlaySpec with Matchers with MockitoSugar {
 
     "return a function that goes to the Part of Estate Passing to Direct Descendants controller when given DateOfDeath, and the date of death is after 5 April 2017" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.dateOfDeath) thenReturn Some(new LocalDate(2017, 4, 6))
+      when(mockCacheMap.dateOfDeath) thenReturn Some(LocalDate.of(2017, 4, 6))
       navigator.nextPage(Constants.dateOfDeathId)(mockCacheMap) shouldBe routes.PartOfEstatePassingToDirectDescendantsController.onPageLoad
     }
 
@@ -52,13 +52,13 @@ class NavigatorSpec extends CommonPlaySpec with Matchers with MockitoSugar {
 
     "return a function that goes to the No Threshold Increase controller when given DateOfDeath, and the date of death is 5 April 2017" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.dateOfDeath) thenReturn Some(new LocalDate(2017, 4, 5))
+      when(mockCacheMap.dateOfDeath) thenReturn Some(LocalDate.of(2017, 4, 5))
       navigator.nextPage(Constants.dateOfDeathId)(mockCacheMap) shouldBe routes.NoThresholdIncreaseController.onPageLoad
     }
 
     "return a function that goes to the No Threshold Increase controller when given DateOfDeath, and the date of death is before 5 April 2017" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.dateOfDeath) thenReturn Some(new LocalDate(2017, 4, 4))
+      when(mockCacheMap.dateOfDeath) thenReturn Some(LocalDate.of(2017, 4, 4))
       navigator.nextPage(Constants.dateOfDeathId)(mockCacheMap) shouldBe routes.NoThresholdIncreaseController.onPageLoad
     }
 
@@ -203,13 +203,13 @@ class NavigatorSpec extends CommonPlaySpec with Matchers with MockitoSugar {
     "return a call to the No Downsizing Threshold Increase Controller onPageLoad method when a date before 8th July 2015 is" +
       "supplied as the Date Property Was Changed " in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.datePropertyWasChanged) thenReturn Some(new LocalDate(2015, 7, 7))
+      when(mockCacheMap.datePropertyWasChanged) thenReturn Some(LocalDate.of(2015, 7, 7))
       navigator.nextPage(Constants.datePropertyWasChangedId)(mockCacheMap) shouldBe routes.NoDownsizingThresholdIncreaseController.onPageLoad
     }
 
     "return a call to the Value Of Changed Property Controller onPageLoad method when a date on or after 8th July 2015 is supplied as the Date Property Was Changed" in {
       val mockCacheMap = mock[UserAnswers]
-      when(mockCacheMap.datePropertyWasChanged) thenReturn Some(new LocalDate(2015, 7, 8))
+      when(mockCacheMap.datePropertyWasChanged) thenReturn Some(LocalDate.of(2015, 7, 8))
       navigator.nextPage(Constants.datePropertyWasChangedId)(mockCacheMap) shouldBe routes.ValueOfChangedPropertyController.onPageLoad
     }
 

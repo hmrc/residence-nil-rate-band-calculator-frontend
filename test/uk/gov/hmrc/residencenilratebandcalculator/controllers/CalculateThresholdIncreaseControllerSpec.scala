@@ -16,20 +16,19 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import play.api.mvc.DefaultMessagesControllerComponents
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
+import play.api.mvc.{AnyContentAsEmpty, DefaultMessagesControllerComponents}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.calculate_threshold_increase
-import org.scalatest.matchers
-import matchers.should.Matchers.convertToAnyShouldWrapper
 
 class CalculateThresholdIncreaseControllerSpec extends HtmlSpec {
 
-  val fakeRequest = FakeRequest("", "")
+  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
 
-  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-  val calculateThresholdIncrease = fakeApplication.injector.instanceOf[calculate_threshold_increase]
+  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val calculateThresholdIncrease: calculate_threshold_increase = fakeApplication().injector.instanceOf[calculate_threshold_increase]
 
   "Calculate Threshold Increase controller" must {
 

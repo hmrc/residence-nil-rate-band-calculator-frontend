@@ -14,7 +14,6 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
 @this(
@@ -35,7 +34,7 @@
 ) {
 
     @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeableInheritedPropertyValueController.onSubmit,
-        'autoComplete -> "off") {
+        Symbol("autoComplete") -> "off") {
 
         @errorSummary(form.errors)
 

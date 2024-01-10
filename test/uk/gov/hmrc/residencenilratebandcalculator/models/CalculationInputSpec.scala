@@ -16,19 +16,21 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import org.joda.time.LocalDate
 import org.mockito.Mockito._
-import org.scalatestplus.mockito.MockitoSugar
+import org.mockito.stubbing.OngoingStubbing
 import org.scalatest.BeforeAndAfter
-import play.api.libs.json.Json
-import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import org.scalatest.matchers.should.Matchers
+import org.scalatestplus.mockito.MockitoSugar
+import play.api.libs.json.Json
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
+
+import java.time.LocalDate
 
 class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matchers with BeforeAndAfter {
 
   val cacheMapKey = "a"
-  val dateOfDeath = new LocalDate(2020, 1, 1)
+  val dateOfDeath: LocalDate = LocalDate.of(2020, 1, 1)
   val valueOfEstate = 1
   val chargeableEstateValue = 2
   val propertyValue = 3
@@ -37,7 +39,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
   val valueOfChangedProperty = 6
   val valueOfAssetsPassing = 7
   val valueAvailableWhenPropertyChanged = 8
-  val datePropertyWasChanged = new LocalDate(2018, 2, 2)
+  val datePropertyWasChanged: LocalDate = LocalDate.of(2018, 2, 2)
   val chargeablePropertyValue = 9
   val chargeableInheritedPropertyValue = 10
 
@@ -67,7 +69,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
                 chargeableInheritedPropertyValue: Option[Int] = None,
                 propertyValue: Option[Int] = None,
                 valueOfChangedProperty: Option[Int] = None
-               ) = {
+               ): OngoingStubbing[Option[Boolean]] = {
     when(userAnswers.assetsPassingToDirectDescendants) thenReturn assetsPassingToDirectDescendants
     when(userAnswers.transferAnyUnusedThreshold) thenReturn transferAnyUnusedThreshold
     when(userAnswers.transferAvailableWhenPropertyChanged) thenReturn transferAvailableWhenPropertyChanged

@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossingUpOnEstatePropertyController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_estate_property
@@ -24,15 +25,15 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_esta
 class GrossingUpOnEstatePropertyViewSpec extends NewBooleanViewSpecBase {
 
   val messageKeyPrefix = "grossing_up_on_estate_property"
-  val grossing_up_on_estate_property = injector.instanceOf[grossing_up_on_estate_property]
-  def createView(form: Form[Boolean]) = grossing_up_on_estate_property(form)(request, messages)
+  val grossing_up_on_estate_property: grossing_up_on_estate_property = injector.instanceOf[grossing_up_on_estate_property]
+  def createView(form: Form[Boolean]): HtmlFormat.Appendable = grossing_up_on_estate_property(form)(request, messages)
 
   "Grossing Up On Estate Property View" must {
 
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")(fakeApplication.injector.instanceOf[GrossingUpOnEstatePropertyController].form())
+    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")(fakeApplication().injector.instanceOf[GrossingUpOnEstatePropertyController].form())
 
-    behave like pageWithoutBackLink[Boolean](createView, fakeApplication.injector.instanceOf[GrossingUpOnEstatePropertyController].form())
+    behave like pageWithoutBackLink[Boolean](createView, fakeApplication().injector.instanceOf[GrossingUpOnEstatePropertyController].form())
 
-    behave like booleanPage(createView, messageKeyPrefix, GrossingUpOnEstatePropertyController.onSubmit.url, fakeApplication.injector.instanceOf[GrossingUpOnEstatePropertyController].form(), true)
+    behave like booleanPage(createView, messageKeyPrefix, GrossingUpOnEstatePropertyController.onSubmit.url, fakeApplication().injector.instanceOf[GrossingUpOnEstatePropertyController].form(), true)
   }
 }

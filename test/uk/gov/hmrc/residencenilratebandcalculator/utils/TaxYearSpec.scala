@@ -16,15 +16,15 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
-import org.joda.time.{DateTime, LocalDate}
-import org.joda.time.format.DateTimeFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import org.scalatestplus.play.PlaySpec
 import org.scalatest.matchers
 import matchers.should.Matchers.convertToAnyShouldWrapper
 
 class TaxYearSpec extends PlaySpec {
 
-  val DateFormatter = DateTimeFormat.forPattern("yyyy/MM/dd")
+  val DateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd")
 
   val DefaultToFromDateString = "2000 to 2001"
   "Tax year utils" must {
@@ -52,20 +52,6 @@ class TaxYearSpec extends PlaySpec {
       TaxYear(startYear).yearRange shouldBe expectedRange
     }
 
-    "have correct finish instant value" in {
-      val startYear = 2000
-      val expectedDate = LocalDate.parse("2001/04/06", DateFormatter)
-      val dateString = TaxYear(startYear).finishInstant.toString("yyyy-MM-dd")
-      LocalDate.parse(dateString) shouldBe expectedDate
-    }
-
-    "have correct start instant value" in {
-      val startYear = 2000
-      val expectedDate = LocalDate.parse("2000/04/06", DateFormatter)
-      val dateString = TaxYear(startYear).startInstant.toString("yyyy-MM-dd")
-      LocalDate.parse(dateString) shouldBe expectedDate
-    }
-
     "have correct to string impl" in {
       val startYear = 2000
       TaxYear(startYear).toString shouldBe DefaultToFromDateString
@@ -73,7 +59,7 @@ class TaxYearSpec extends PlaySpec {
 
     "have current tax year check" in {
       class CurrentTaxYearUnderTest extends CurrentTaxYear{
-        override def now: () => DateTime = ???
+        override def now: () => LocalDate = ???
       }
 
       val currentTaxYearUnderTest = new CurrentTaxYearUnderTest()

@@ -16,11 +16,11 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import org.joda.time.LocalDate
-import play.api.libs.json.JodaReads
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
-class UserAnswers(cacheMap: CacheMap) extends JodaReads {
+import java.time.LocalDate
+
+class UserAnswers(cacheMap: CacheMap) {
 
   def assetsPassingToDirectDescendants: Option[Boolean] = cacheMap.getEntry[Boolean](Constants.assetsPassingToDirectDescendantsId)
 

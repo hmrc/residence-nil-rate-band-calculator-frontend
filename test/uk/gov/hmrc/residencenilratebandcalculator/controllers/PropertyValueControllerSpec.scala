@@ -32,8 +32,8 @@ class PropertyValueControllerSpec extends NewSimpleControllerSpecBase with Commo
   val errorKeyTooLarge = "error.value_too_large"
   val messageKeyPrefix = "property_value"
 
-  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-  val property_value = injector.instanceOf[property_value]
+  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val property_value: property_value = injector.instanceOf[property_value]
   "Property Value Controller" must {
     def createView = (value: Option[Map[String, String]]) => value match {
       case None => property_value(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge))(fakeRequest, messages)

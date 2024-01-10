@@ -16,11 +16,9 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import org.joda.time.LocalDate
-import play.api.libs.json.{JodaReads, Json, OFormat}
+import java.time.LocalDate
+import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
-import play.api.libs.json.JodaWrites._
-import play.api.libs.json.JodaReads._
 
 case class CalculationInput(dateOfDeath: LocalDate,
                             valueOfEstate: Int,
@@ -31,7 +29,7 @@ case class CalculationInput(dateOfDeath: LocalDate,
                             propertyValueAfterExemption: Option[PropertyValueAfterExemption],
                             downsizingDetails: Option[DownsizingDetails])
 
-object CalculationInput extends JodaReads {
+object CalculationInput {
   implicit val formats: OFormat[CalculationInput] = Json.format[CalculationInput]
 
   def apply(userAnswers: UserAnswers): CalculationInput = {

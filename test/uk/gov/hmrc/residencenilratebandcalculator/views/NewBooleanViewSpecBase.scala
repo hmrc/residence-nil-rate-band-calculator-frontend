@@ -16,8 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import org.scalatest.matchers
-import matchers.should.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
@@ -26,7 +25,7 @@ trait NewBooleanViewSpecBase extends NewViewSpecBase {
 
   def booleanPage(createView: Form[Boolean] => HtmlFormat.Appendable,
                   messageKeyPrefix: String,
-                  expectedFormAction: String, emptyForm: Form[Boolean], useNewValues: Boolean = false) = {
+                  expectedFormAction: String, emptyForm: Form[Boolean], useNewValues: Boolean = false): Unit = {
 
     behave like questionPage[Boolean](createView, messageKeyPrefix, expectedFormAction, emptyForm)
 
@@ -85,7 +84,7 @@ trait NewBooleanViewSpecBase extends NewViewSpecBase {
   }
 
   def answeredBooleanPage(createView: (Form[Boolean]) => HtmlFormat.Appendable,
-                          answer: Boolean, emptyForm: Form[Boolean], useNewValues: Boolean = false) = {
+                          answer: Boolean, emptyForm: Form[Boolean], useNewValues: Boolean = false): Unit = {
 
     val yes = if(useNewValues) "value" else "yes"
     val no = if(useNewValues) "value-2" else "no"

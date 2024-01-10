@@ -16,8 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms.mappings
 
-import org.joda.time.format.DateTimeFormatterBuilder
-import org.joda.time.{DateTimeFieldType, LocalDate}
+import java.time.LocalDate
 import play.api.data.Forms.{mapping, text}
 import play.api.data.Mapping
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationResult}
@@ -59,20 +58,7 @@ object DateMapping {
                                          errorInvalidMonthAndYearKey: String)
 
   private def parseTupleAsDate(dateAsTuple: (String, String, String)) = {
-    val requiredYearLength = 4
-
-    val dateFormatter = new DateTimeFormatterBuilder()
-      .appendDayOfMonth(1)
-      .appendLiteral(' ')
-      .appendMonthOfYear(1)
-      .appendLiteral(' ')
-      .appendFixedDecimal(DateTimeFieldType.year(), requiredYearLength)
-      .toFormatter
-
-    dateAsTuple match {
-      case (day: String, month: String, year: String) =>
-        Try(LocalDate.parse(s"$day $month $year", dateFormatter)).toOption
-    }
+    Try(LocalDate.of(dateAsTuple._3.toInt, dateAsTuple._2.toInt, dateAsTuple._1.toInt)).toOption
   }
 
   private val checkForAllDateElementsInvalid:(Int,Int,Int,ValidationErrorMessageKeyProfile) => Option[String] =
@@ -156,10 +142,12 @@ object DateMapping {
   )((day, month, year) => (day, month, year))(date => Option(date))
     .verifying(constraint)
     .transform[LocalDate]((date: (String, String, String)) => parseTupleAsDate(date).orNull,
-    localDate => Option(localDate) match {
-      case Some(date) => (localDate.dayOfMonth().get().toString, localDate.monthOfYear().get().toString, localDate.year().get().toString)
-      case _ => ("", "", "")
-    })
+      localDate => Option(localDate) match {
+        case Some(date) =>
+          (localDate.getDayOfMonth.toString, localDate.getMonthValue.toString, localDate.getYear.toString)
+        case _ =>
+          ("", "", "")
+      })
 
   private def apply(validationErrorMessageKeyProfile: ValidationErrorMessageKeyProfile): Mapping[LocalDate] =
     dateMapping(dateConstraint(validationErrorMessageKeyProfile))

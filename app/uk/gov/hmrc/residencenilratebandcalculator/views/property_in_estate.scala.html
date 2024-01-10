@@ -33,7 +33,7 @@
 @layout(
     pageTitle = title
 ) {
-    @formWithCSRF(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyInEstateController.onSubmit, 'autoComplete -> "off") {
+    @formWithCSRF(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyInEstateController.onSubmit, Symbol("autoComplete") -> "off") {
 
         @errorSummary(form.errors)
 

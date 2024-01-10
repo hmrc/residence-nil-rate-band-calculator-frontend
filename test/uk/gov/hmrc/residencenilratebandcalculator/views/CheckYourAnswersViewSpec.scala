@@ -16,20 +16,20 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import play.api.i18n.Messages
 import play.api.mvc.Call
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.check_your_answers
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ThresholdCalculationResultController
 import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 
 class CheckYourAnswersViewSpec extends HtmlSpec {
   val messageKeyPrefix = "check_your_answers"
-  val check_your_answers = injector.instanceOf[check_your_answers]
+  val check_your_answers: check_your_answers = injector.instanceOf[check_your_answers]
   val numberOfRows = 22
   val answerRows: Seq[AnswerRow] = (1 to numberOfRows).map {
     i => AnswerRow(titleKey = s"title$i", amount = i, url = Call("GET", s"url$i"))(messages)
   }
-  def createView() = check_your_answers(answerRows)(request, messages)
+  def createView(): HtmlFormat.Appendable = check_your_answers(answerRows)(request, messages)
 
   "Check Your Answers View" must {
     "display the correct browser title" in {

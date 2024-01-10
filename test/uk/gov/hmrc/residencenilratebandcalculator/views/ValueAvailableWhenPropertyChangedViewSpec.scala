@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
 import play.api.mvc.DefaultMessagesControllerComponents
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.Navigator
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
@@ -25,22 +26,20 @@ import uk.gov.hmrc.residencenilratebandcalculator.controllers.{ValueAvailableWhe
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_available_when_property_changed
 
-import scala.language.reflectiveCalls
-
 class ValueAvailableWhenPropertyChangedViewSpec extends NewIntViewSpecBase {
 
   val messageKeyPrefix = "value_available_when_property_changed"
-  val navigator = injector.instanceOf[Navigator]
+  val navigator: Navigator = injector.instanceOf[Navigator]
   var mockSessionConnector: SessionConnector = _
   val mockRnrbConnector : RnrbConnector = mock[RnrbConnector]
   val mockValidatedSession: ValidatedSession = mock[ValidatedSession]
-  val value_available_when_property_changed = injector.instanceOf[value_available_when_property_changed]
+  val value_available_when_property_changed: value_available_when_property_changed = injector.instanceOf[value_available_when_property_changed]
 
-  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
 
-  val controller = new ValueAvailableWhenPropertyChangedController(messagesControllerComponents, mockSessionConnector, navigator, mockRnrbConnector, mockValidatedSession, value_available_when_property_changed).form()
+  val controller: Form[Int] = new ValueAvailableWhenPropertyChangedController(messagesControllerComponents, mockSessionConnector, navigator, mockRnrbConnector, mockValidatedSession, value_available_when_property_changed).form()
 
-  def createView(form: Form[Int]) = value_available_when_property_changed("100000", form)(request, messages)
+  def createView(form: Form[Int]): HtmlFormat.Appendable = value_available_when_property_changed("100000", form)(request, messages)
 
   "Value Available When Property Changed View" must {
 

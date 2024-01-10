@@ -18,25 +18,25 @@ package uk.gov.hmrc.residencenilratebandcalculator.utils
 
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm
+import org.scalatest
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.Environment
 import play.api.i18n.Lang
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import play.api.mvc.{DefaultMessagesControllerComponents, MessagesControllerComponents}
 import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
-import org.scalatest.matchers
-import matchers.should.Matchers.convertToAnyShouldWrapper
 
 class PDFHelperSpec extends BaseSpec {
-  private val injector = fakeApplication.injector
+  private val injector = fakeApplication().injector
   private val injectedEnv = injector.instanceOf[Environment]
-  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
 
   private val cacheMapKey = "aa"
   private val noDigitsInDate = 8
   private val noDigitsInDecimal = 7
   private val cacheMapAllNonDecimalFields: CacheMap = new CacheMap(cacheMapKey, Map[String, JsValue](
-    Constants.dateOfDeathId -> JsString("2017-5-12"),
+    Constants.dateOfDeathId -> JsString("2017-05-12"),
     Constants.assetsPassingToDirectDescendantsId -> JsBoolean(true),
     Constants.valueOfEstateId -> JsNumber(500000),
     Constants.chargeableEstateValueId -> JsNumber(450000),
@@ -49,7 +49,7 @@ class PDFHelperSpec extends BaseSpec {
     Constants.transferAnyUnusedThresholdId -> JsBoolean(true),
     Constants.valueBeingTransferredId -> JsNumber(88728),
     Constants.claimDownsizingThresholdId -> JsBoolean(false),
-    Constants.datePropertyWasChangedId -> JsString("2017-5-13"),
+    Constants.datePropertyWasChangedId -> JsString("2017-05-13"),
     Constants.valueOfChangedPropertyId -> JsNumber(888),
     Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
     Constants.grossingUpOnEstateAssetsId -> JsBoolean(false),
@@ -76,7 +76,7 @@ class PDFHelperSpec extends BaseSpec {
     optionPDAcroForm.fold[PDAcroForm](throw new RuntimeException("Unable to get stream"))(identity)
   }
 
-  private def checkMultipleFieldValues(acroForm: PDAcroForm, baseFieldName: String, expectedDate: String, totalFields: Int) = {
+  private def checkMultipleFieldValues(acroForm: PDAcroForm, baseFieldName: String, expectedDate: String, totalFields: Int): IndexedSeq[scalatest.Assertion] = {
     for (position <- 1 to totalFields) yield {
       val actualResult = acroForm.getField(baseFieldName + "_0" + position).getValueAsString
       val expectedResult = expectedDate.charAt(position - 1).toString
@@ -89,7 +89,7 @@ class PDFHelperSpec extends BaseSpec {
     s"generate from the cache the correct PDF value for $fieldName$suffix"
   }
 
-  private def pdfField(fieldName: String, expectedValue: String, generateWelshPDF: Boolean) = {
+  private def pdfField(fieldName: String, expectedValue: String, generateWelshPDF: Boolean): Unit = {
     describeTest(fieldName, isWelshTest = generateWelshPDF) in {
       acroForm(generateWelshPDF=generateWelshPDF).getField(fieldName).getValueAsString shouldBe expectedValue
     }
@@ -99,7 +99,7 @@ class PDFHelperSpec extends BaseSpec {
 
   private def no(welsh: Option[String] = None) = welsh.fold("No")(identity)
 
-  private def pdfFieldTestPart1(generateWelshPDF: Boolean) = {
+  private def pdfFieldTestPart1(generateWelshPDF: Boolean): Unit = {
     describeTest("IHT435_03", isWelshTest = generateWelshPDF) in {
       checkMultipleFieldValues(acroForm(generateWelshPDF=generateWelshPDF), "IHT435_03", "12052017", noDigitsInDate)
     }
@@ -148,7 +148,7 @@ class PDFHelperSpec extends BaseSpec {
     }
   }
 
-  private def pdfFieldTestPart2(generateWelshPDF: Boolean) = {
+  private def pdfFieldTestPart2(generateWelshPDF: Boolean): Unit = {
     describeTest("IHT435_10_1 to 7: decimal number with less than max mantissa", isWelshTest = generateWelshPDF) in {
       val cacheMap: CacheMap = new CacheMap(cacheMapKey, Map[String, JsValue](
         Constants.percentagePassedToDirectDescendantsId -> JsString("234.889"),
@@ -199,7 +199,7 @@ class PDFHelperSpec extends BaseSpec {
     }
   }
 
-  private def pdfFieldTestPart3(generateWelshPDF: Boolean) = {
+  private def pdfFieldTestPart3(generateWelshPDF: Boolean): Unit = {
     behave like pdfField(fieldName = "IHT435_21",
       expectedValue = "888",
       generateWelshPDF = generateWelshPDF)
@@ -247,7 +247,7 @@ class PDFHelperSpec extends BaseSpec {
     }
   }
 
-  private def pdfFieldTest(generateWelshPDF: Boolean) = {
+  private def pdfFieldTest(generateWelshPDF: Boolean): Unit = {
     pdfFieldTestPart1(generateWelshPDF = generateWelshPDF)
     pdfFieldTestPart2(generateWelshPDF = generateWelshPDF)
     pdfFieldTestPart3(generateWelshPDF = generateWelshPDF)

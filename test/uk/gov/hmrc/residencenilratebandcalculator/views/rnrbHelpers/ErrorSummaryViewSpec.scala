@@ -16,12 +16,11 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views.rnrbHelpers
 
+import org.mockito.Mockito._
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.data.{Form, FormError}
 import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.playComponents.error_summary
-import org.mockito.Mockito._
-import org.scalatest.matchers
-import matchers.should.Matchers.convertToAnyShouldWrapper
 
 class ErrorSummaryViewSpec extends HtmlSpec {
 
@@ -30,10 +29,10 @@ class ErrorSummaryViewSpec extends HtmlSpec {
   val message1 = "message1"
   val message2 = "message2"
 
-  val error = FormError(errorKey1, message1)
-  val error2 = FormError(errorKey2, message2)
+  val error: FormError = FormError(errorKey1, message1)
+  val error2: FormError = FormError(errorKey2, message2)
 
-  val error_summary = injector.instanceOf[error_summary]
+  val error_summary: error_summary = injector.instanceOf[error_summary]
 
   def createForm(errors: Seq[FormError]): Form[Int] = {
     val form = mock[Form[Int]]

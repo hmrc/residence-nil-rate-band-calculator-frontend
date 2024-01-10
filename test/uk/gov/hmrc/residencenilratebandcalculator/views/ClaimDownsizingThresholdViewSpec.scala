@@ -17,17 +17,16 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.ClaimDownsizingThresholdController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.claim_downsizing_threshold
 
-import scala.language.reflectiveCalls
-
 class ClaimDownsizingThresholdViewSpec extends NewBooleanViewSpecBase {
 
   val messageKeyPrefix = "claim_downsizing_threshold"
-  val claim_downsizing_threshold = injector.instanceOf[claim_downsizing_threshold]
-  def createView(form: Form[Boolean]) = claim_downsizing_threshold(form)(request, messages)
+  val claim_downsizing_threshold: claim_downsizing_threshold = injector.instanceOf[claim_downsizing_threshold]
+  def createView(form: Form[Boolean]): HtmlFormat.Appendable = claim_downsizing_threshold(form)(request, messages)
 
   "Claim Downsizing Threshold View" must {
 
@@ -36,10 +35,10 @@ class ClaimDownsizingThresholdViewSpec extends NewBooleanViewSpecBase {
       "guidance1.bullet1",
       "guidance1.bullet2",
       "guidance1.bullet3"
-    )(fakeApplication.injector.instanceOf[ClaimDownsizingThresholdController].form())
+    )(fakeApplication().injector.instanceOf[ClaimDownsizingThresholdController].form())
 
-    behave like pageWithoutBackLink[Boolean](createView, fakeApplication.injector.instanceOf[ClaimDownsizingThresholdController].form())
+    behave like pageWithoutBackLink[Boolean](createView, fakeApplication().injector.instanceOf[ClaimDownsizingThresholdController].form())
 
-    behave like booleanPage(createView, messageKeyPrefix, ClaimDownsizingThresholdController.onSubmit.url, fakeApplication.injector.instanceOf[ClaimDownsizingThresholdController].form(), true)
+    behave like booleanPage(createView, messageKeyPrefix, ClaimDownsizingThresholdController.onSubmit.url, fakeApplication().injector.instanceOf[ClaimDownsizingThresholdController].form(), true)
   }
 }

@@ -16,31 +16,22 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
-import org.joda.time.format.DateTimeFormatterBuilder
-import org.joda.time.{DateTimeFieldType, LocalDate}
-
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import scala.util.{Failure, Success, Try}
 
 object Transformers {
 
-  val requiredYearLength = 4
-
-  val dateFormatter = new DateTimeFormatterBuilder()
-    .appendDayOfMonth(1)
-    .appendLiteral(' ')
-    .appendMonthOfYear(1)
-    .appendLiteral(' ')
-    .appendFixedDecimal(DateTimeFieldType.year(), requiredYearLength)
-    .toFormatter
+  val dateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d M yyyy")
 
   def constructDate(day: Int, month: Int, year: Int): LocalDate = LocalDate.parse(s"$day $month $year", dateFormatter)
 
-  val stringToInt: Option[String] => Int = (input) => Try(input.getOrElse("").trim.toInt) match {
+  val stringToInt: Option[String] => Int = input => Try(input.getOrElse("").trim.toInt) match {
     case Success(value) => value
     case Failure(_) => 0
   }
 
-  val intToString: Int => Option[String] = (input) => Some(input.toString)
+  val intToString: Int => Option[String] = input => Some(input.toString)
 
   def stripOffQuotesIfPresent(s:String): String = s.replaceAll("^\"|\"$", "")
 
@@ -50,8 +41,8 @@ object Transformers {
   def transformDateFormat(dateAsString:String): String = {
     val dateComponents = stripOffQuotesIfPresent(dateAsString).split("-")
     if (dateComponents.size != 3 || dateComponents(0).length != 4 ||
-      dateComponents(1).length == 0 || dateComponents(1).length > 2 ||
-      dateComponents(2).length == 0 || dateComponents(2).length > 2) {
+      dateComponents(1).isEmpty || dateComponents(1).length > 2 ||
+      dateComponents(2).isEmpty || dateComponents(2).length > 2) {
       throw new RuntimeException("Invalid date:" + dateAsString)
     }
     val year = dateComponents(0)

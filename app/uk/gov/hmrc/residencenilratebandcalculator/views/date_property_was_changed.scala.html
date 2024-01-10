@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, Date}
+@import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
 @this(
@@ -34,7 +34,7 @@
     pageTitle = title
 ) {
 
-    @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DatePropertyWasChangedController.onSubmit, 'autoComplete -> "off") {
+    @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DatePropertyWasChangedController.onSubmit, Symbol("autoComplete") -> "off") {
 
         @errorSummary(form.errors, key => s"$key.day")
 

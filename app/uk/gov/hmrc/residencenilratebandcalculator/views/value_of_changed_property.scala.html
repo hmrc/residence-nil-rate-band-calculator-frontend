@@ -33,7 +33,7 @@
 @layout(pageTitle = title) {
 
     @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfChangedPropertyController.onSubmit,
-    'autoComplete -> "off") {
+        Symbol("autoComplete") -> "off") {
 
         @errorSummary(form.errors)
 

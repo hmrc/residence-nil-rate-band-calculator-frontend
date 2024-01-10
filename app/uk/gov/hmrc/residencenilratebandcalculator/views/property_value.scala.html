@@ -47,7 +47,7 @@
     </ul>
 
     <p class="govuk-body">@messages("property_value.guidance4")</p>
-    @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyValueController.onSubmit, 'autoComplete -> "off") {
+    @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.PropertyValueController.onSubmit, Symbol("autoComplete") -> "off") {
 
         @inputValue(
             label = messages("property_value.title"),

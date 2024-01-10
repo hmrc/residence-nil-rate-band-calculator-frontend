@@ -17,9 +17,9 @@
 package uk.gov.hmrc.residencenilratebandcalculator.common
 
 import org.scalatest.{BeforeAndAfterAll, Suite}
-import play.api.{Application, Play}
 import play.api.inject.guice.{GuiceApplicationBuilder, GuiceableModule}
 import play.api.test.Helpers.running
+import play.api.{Application, Play}
 
 import scala.concurrent.ExecutionContext
 
@@ -30,12 +30,12 @@ trait WithCommonFakeApplication extends BeforeAndAfterAll {
 
   def bindModules: Seq[GuiceableModule] = Seq()
 
-  override def beforeAll() {
+  override def beforeAll(): Unit = {
     super.beforeAll()
     Play.start(fakeApplication)
   }
 
-  override def afterAll() {
+  override def afterAll(): Unit = {
     super.afterAll()
     Play.stop(fakeApplication)
   }

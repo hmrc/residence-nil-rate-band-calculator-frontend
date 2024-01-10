@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.DefaultMessagesControllerComponents
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exemptions_and_relief_claimed
@@ -27,22 +28,22 @@ class ExemptionsAndReliefClaimedControllerSpec extends NewSimpleControllerSpecBa
   val messageKey = "exemptions_and_relief_claimed.error.required"
   val messageKeyPrefix = "exemptions_and_relief_claimed"
 
-  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-  val exemptions_and_relief_claimed = injector.instanceOf[exemptions_and_relief_claimed]
+  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val exemptions_and_relief_claimed: exemptions_and_relief_claimed = injector.instanceOf[exemptions_and_relief_claimed]
   "Exemptions And Relief Claimed Controller" must {
 
-    def createView = (value: Option[Map[String, String]]) => {
-      value match {
-        case None => exemptions_and_relief_claimed(BooleanForm.apply(messageKey))(fakeRequest, messages)
-        case Some(v) => exemptions_and_relief_claimed(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
-      }
+    def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
+      case None => exemptions_and_relief_claimed(BooleanForm.apply(messageKey))(fakeRequest, messages)
+      case Some(v) => exemptions_and_relief_claimed(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
     }
 
-    def createController = () => new ExemptionsAndReliefClaimedController(messagesControllerComponents, mockSessionConnector, navigator, exemptions_and_relief_claimed)
+    def createController: () => ExemptionsAndReliefClaimedController = () =>
+      new ExemptionsAndReliefClaimedController(messagesControllerComponents, mockSessionConnector, navigator, exemptions_and_relief_claimed)
 
     val testValue = true
 
-    behave like rnrbController[Boolean](createController, createView, Constants.exemptionsAndReliefClaimedId, messageKeyPrefix, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+    behave like rnrbController[Boolean](
+      createController, createView, Constants.exemptionsAndReliefClaimedId, messageKeyPrefix, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
 
     behave like nonStartingController[Boolean](createController,
       List(Constants.dateOfDeathId,

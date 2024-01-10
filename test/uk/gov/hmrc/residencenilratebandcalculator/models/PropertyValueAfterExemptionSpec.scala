@@ -16,10 +16,9 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.libs.json._
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
-import org.scalatest.matchers
-import matchers.should.Matchers.convertToAnyShouldWrapper
 
 class PropertyValueAfterExemptionSpec extends BaseSpec {
 

@@ -19,8 +19,9 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito._
 import play.api.http.Status
-import play.api.i18n.MessagesApi
-import play.api.mvc.{DefaultMessagesControllerComponents, Request}
+import play.api.i18n.{Messages, MessagesApi}
+import play.api.inject.Injector
+import play.api.mvc.{AnyContentAsEmpty, DefaultMessagesControllerComponents, Request}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
@@ -28,25 +29,25 @@ import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, GetReason, Reason, UserAnswers}
+import uk.gov.hmrc.residencenilratebandcalculator.models.{GetReason, Reason, UserAnswers}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class TransitionControllerSpec extends CommonPlaySpec with MockSessionConnector with WithCommonFakeApplication {
 
-  val fakeRequest = FakeRequest("", "")
+  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
 
-  val injector = fakeApplication.injector
+  val injector: Injector = fakeApplication.injector
 
-  def mockMessagesApi = injector.instanceOf[MessagesApi]
+  def mockMessagesApi: MessagesApi = injector.instanceOf[MessagesApi]
 
   val injectedMessagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
 
-  def messages = mockMessagesApi.preferred(fakeRequest)
+  def messages: Messages = mockMessagesApi.preferred(fakeRequest)
 
   private[controllers] class TestTransitionController extends FrontendController(injectedMessagesControllerComponents) with TransitionController {
     val sessionConnector: SessionConnector = mockSessionConnector
-    val getReason: GetReason = new GetReason { def apply(userAnswers: UserAnswers) = new Reason{} }
+    val getReason: GetReason = new GetReason { def apply(userAnswers: UserAnswers): Reason = new Reason{} }
     override implicit val ec: ExecutionContext = injector.instanceOf[ExecutionContext]
     def getControllerId(reason: Reason) = ""
 

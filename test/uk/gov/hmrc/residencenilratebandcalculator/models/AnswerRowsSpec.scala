@@ -16,31 +16,32 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import org.joda.time.LocalDate
 import play.api.i18n.{Messages, MessagesApi}
+import play.api.inject.Injector
 import play.api.libs.json._
-import play.api.mvc.Call
+import play.api.mvc.{AnyContentAsEmpty, Call}
 import play.api.test.FakeRequest
-import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
-import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.MockSessionConnector
 
-class AnswerRowsSpec extends CommonPlaySpec with MockSessionConnector with JodaWrites with WithCommonFakeApplication {
+import java.time.LocalDate
 
-  val fakeRequest = FakeRequest("", "")
+class AnswerRowsSpec extends CommonPlaySpec with MockSessionConnector with WithCommonFakeApplication {
 
-  val injector = fakeApplication.injector
+  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
 
-  val cacheMap = CacheMap("", Map[String, JsValue](
+  val injector: Injector = fakeApplication.injector
+
+  val cacheMap: CacheMap = CacheMap("", Map[String, JsValue](
     "id1" -> JsBoolean(true),
     "id2" -> JsNumber(1000),
-    "id3" -> Json.toJson(new LocalDate(2017, 6, 1))
+    "id3" -> Json.toJson(LocalDate.of(2017, 6, 1))
   ))
 
-  def messagesApi = injector.instanceOf[MessagesApi]
+  def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
 
-  def messages = messagesApi.preferred(fakeRequest)
+  def messages: Messages = messagesApi.preferred(fakeRequest)
 
   "Answer Rows" must {
 
@@ -94,7 +95,10 @@ class AnswerRowsSpec extends CommonPlaySpec with MockSessionConnector with JodaW
     }
 
     "correctly create LocalDate AnswerRows" in {
-      val data = new LocalDate(2017, 6, 1)
+      val day = 1
+      val month = 6
+      val year = 2017
+      val data = LocalDate.of(year, month, day)
       AnswerRows.dateAnswerRowFn("message.key", "", Call("", "http://example.com"))(JsString(data.toString))(messages) shouldBe
         AnswerRow(messages("message.key"), "1 June 2017", "http://example.com")
     }

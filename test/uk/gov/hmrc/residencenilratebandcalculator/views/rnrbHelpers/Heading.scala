@@ -21,7 +21,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.playComponents.head
 
 class Heading extends HtmlSpec {
 
-  val heading = injector.instanceOf[heading]
+  val heading: heading = injector.instanceOf[heading]
 
   "Heading" when {
     "rendered" must {

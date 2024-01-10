@@ -16,17 +16,16 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import org.joda.time.LocalDate
+import java.time.LocalDate
 import play.api.i18n.Messages
-import play.api.libs.json.{JodaReads, JsValue, Json}
+import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.Call
-import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 
-object AnswerRows extends JodaReads {
+object AnswerRows {
 
-  val rowOrderList = List[String](
+  val rowOrderList: List[String] = List[String](
     Constants.dateOfDeathId,
     Constants.partOfEstatePassingToDirectDescendantsId,
     Constants.valueOfEstateId,
@@ -51,36 +50,36 @@ object AnswerRows extends JodaReads {
     Constants.valueAvailableWhenPropertyChangedId
   )
 
-  val rowOrder = rowOrderList.zipWithIndex.toMap
+  val rowOrder: Map[String, Int] = rowOrderList.zipWithIndex.toMap
 
   private def errorString(title: String) = s"$title unavailable from cache"
 
-  def intAnswerRowFn(titleKey: String, title: String, url: Call) =
+  def intAnswerRowFn(titleKey: String, title: String, url: Call): JsValue => Messages => AnswerRow =
     (jsValue: JsValue) => Json.fromJson[Int](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
-      value => AnswerRow(titleKey, value, url) _
+      value => AnswerRow(titleKey, value, url)
     })
 
-  def boolAnswerRowFn(titleKey: String, title: String, url: Call) =
+  def boolAnswerRowFn(titleKey: String, title: String, url: Call): JsValue => Messages => AnswerRow =
     (jsValue: JsValue) => Json.fromJson[Boolean](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
-      value => AnswerRow(titleKey, value, url) _
+      value => AnswerRow(titleKey, value, url)
     })
 
-  def dateAnswerRowFn(titleKey: String, title: String, url: Call) =
+  def dateAnswerRowFn(titleKey: String, title: String, url: Call): JsValue => Messages => AnswerRow =
     (jsValue: JsValue) => Json.fromJson[LocalDate](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
-      value => AnswerRow(titleKey, value, url) _
+      value => AnswerRow(titleKey, value, url)
     })
 
-  def percentAnswerRowFn(titleKey: String, title: String, url: Call) =
+  def percentAnswerRowFn(titleKey: String, title: String, url: Call): JsValue => Messages => AnswerRow =
     (jsValue: JsValue) => Json.fromJson[Double](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
-      value => AnswerRow(titleKey, value, url) _
+      value => AnswerRow(titleKey, value, url)
     })
 
-  def propertyPassingToDirectDescendantsAnswerRowFn(titleKey: String, title: String, url: Call) =
+  def propertyPassingToDirectDescendantsAnswerRowFn(titleKey: String, title: String, url: Call): JsValue => Messages => AnswerRow =
     (jsValue: JsValue) => Json.fromJson[String](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
-      value => AnswerRow(titleKey, s"property_passing_to_direct_descendants.$value", url) _
+      value => AnswerRow(titleKey, s"property_passing_to_direct_descendants.$value", url)
     })
 
-  val answerRowFns = Map[String, JsValue => Messages => AnswerRow](
+  val answerRowFns: Map[String, JsValue => Messages => AnswerRow] = Map[String, JsValue => Messages => AnswerRow](
     Constants.dateOfDeathId ->
       dateAnswerRowFn("check_your_answers.date_of_death.title", "Date of death", routes.DateOfDeathController.onPageLoad),
     Constants.partOfEstatePassingToDirectDescendantsId ->
@@ -168,11 +167,11 @@ object AnswerRows extends JodaReads {
     CacheMap(cacheMap.id, cacheMap.data.view.filterKeys(x => truncatedList.contains(x)).toMap)
   }
 
-  def truncateAndAddCurrentLocateInCacheMap(id: String, cacheMap: CacheMap) = {
+  def truncateAndAddCurrentLocateInCacheMap(id: String, cacheMap: CacheMap): CacheMap = {
     val truncatedList = rowOrderList.takeWhile(_ != id) :+ id
     CacheMap(cacheMap.id, cacheMap.data.view.filterKeys(x => truncatedList.contains(x)).toMap)
   }
 
 
-  def apply(cacheMap: CacheMap, messages: Messages) = constructAnswerRows(cacheMap, answerRowFns, rowOrder, messages)
+  def apply(cacheMap: CacheMap, messages: Messages): Seq[AnswerRow] = constructAnswerRows(cacheMap, answerRowFns, rowOrder, messages)
 }

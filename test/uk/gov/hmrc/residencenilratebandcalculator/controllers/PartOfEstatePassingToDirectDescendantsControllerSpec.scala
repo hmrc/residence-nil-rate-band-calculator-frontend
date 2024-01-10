@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.DefaultMessagesControllerComponents
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.part_of_estate_passing_to_direct_descendants
@@ -27,15 +28,13 @@ class PartOfEstatePassingToDirectDescendantsControllerSpec extends NewSimpleCont
   val messageKey = "part_of_estate_passing_to_direct_descendants.error.required"
   val messageKeyPrefix = "part_of_estate_passing_to_direct_descendants"
 
-  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-  val part_of_estate_passing_to_direct_descendants = injector.instanceOf[part_of_estate_passing_to_direct_descendants]
+  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val part_of_estate_passing_to_direct_descendants: part_of_estate_passing_to_direct_descendants = injector.instanceOf[part_of_estate_passing_to_direct_descendants]
   "Part Of Estate Passing To Direct Descendants Controller" must {
 
-    def createView = (value: Option[Map[String, String]]) => {
-      value match {
-        case None => part_of_estate_passing_to_direct_descendants(BooleanForm.apply(messageKey))(fakeRequest, messages)
-        case Some(v) => part_of_estate_passing_to_direct_descendants(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
-      }
+    def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
+      case None => part_of_estate_passing_to_direct_descendants(BooleanForm.apply(messageKey))(fakeRequest, messages)
+      case Some(v) => part_of_estate_passing_to_direct_descendants(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
     }
 
     def createController = () => new PartOfEstatePassingToDirectDescendantsController(messagesControllerComponents, mockSessionConnector, navigator, part_of_estate_passing_to_direct_descendants)

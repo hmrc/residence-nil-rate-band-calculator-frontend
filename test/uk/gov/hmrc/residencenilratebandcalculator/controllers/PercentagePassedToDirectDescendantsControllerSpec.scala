@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.DefaultMessagesControllerComponents
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PositivePercentForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_passed_to_direct_descendants
@@ -29,22 +30,24 @@ class PercentagePassedToDirectDescendantsControllerSpec extends NewSimpleControl
   val errorKeyOutOfRange = "percentage_passed_to_direct_descendants.error.out_of_range"
   val messageKeyPrefix = "percentage_passed_to_direct_descendants"
 
-  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-  val percentage_passed_to_direct_descendants = injector.instanceOf[percentage_passed_to_direct_descendants]
+  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val percentage_passed_to_direct_descendants: percentage_passed_to_direct_descendants = injector.instanceOf[percentage_passed_to_direct_descendants]
   "Percentage Passed To Direct Descendants Controller" must {
 
-    def createView = (value: Option[Map[String, String]]) => {
-      value match {
-        case None => percentage_passed_to_direct_descendants(PositivePercentForm.apply(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange))(fakeRequest, messages)
-        case Some(v) => percentage_passed_to_direct_descendants(PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange).bind(v))(fakeRequest, messages)
-      }
+    def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
+      case None => percentage_passed_to_direct_descendants(PositivePercentForm.apply(
+        errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange))(fakeRequest, messages)
+      case Some(v) => percentage_passed_to_direct_descendants(PositivePercentForm(
+        errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange).bind(v))(fakeRequest, messages)
     }
 
-    def createController = () => new PercentagePassedToDirectDescendantsController(messagesControllerComponents, mockSessionConnector, navigator, percentage_passed_to_direct_descendants)
+    def createController = () => new PercentagePassedToDirectDescendantsController(
+      messagesControllerComponents, mockSessionConnector, navigator, percentage_passed_to_direct_descendants)
 
     val testValue = BigDecimal(50)
 
-    behave like rnrbController[BigDecimal](createController, createView, Constants.percentagePassedToDirectDescendantsId, messageKeyPrefix, testValue)(Reads.bigDecReads, Writes.BigDecimalWrites)
+    behave like rnrbController[BigDecimal](
+      createController, createView, Constants.percentagePassedToDirectDescendantsId, messageKeyPrefix, testValue)(Reads.bigDecReads, Writes.BigDecimalWrites)
 
     behave like nonStartingController[BigDecimal](createController,
       List(Constants.dateOfDeathId,

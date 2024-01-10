@@ -17,29 +17,30 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.mvc.DefaultMessagesControllerComponents
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_property_was_changed
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 
 class DatePropertyWasChangedControllerSpec extends DateControllerSpecBase {
-  val mockConfig = injector.instanceOf[FrontendAppConfig]
+  val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
-  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-  val date_property_was_changed = injector.instanceOf[date_property_was_changed]
+  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val date_property_was_changed: date_property_was_changed = injector.instanceOf[date_property_was_changed]
 
   "Date Property Was Changed Controller" must {
 
-    def createView = (value: Option[Date]) => {
-      value match {
-        case None => date_property_was_changed(dateOfDownsizingForm)(fakeRequest, messages)
-        case Some(v) => date_property_was_changed(dateOfDownsizingForm.fill(v))(fakeRequest, messages)
-      }
+    def createView: Option[Date] => HtmlFormat.Appendable = {
+      case None => date_property_was_changed(dateOfDownsizingForm)(fakeRequest, messages)
+      case Some(v) => date_property_was_changed(dateOfDownsizingForm.fill(v))(fakeRequest, messages)
     }
 
-    def createController = () => new DatePropertyWasChangedController(messagesControllerComponents, mockSessionConnector, navigator, date_property_was_changed)
+    def createController: () => DatePropertyWasChangedController = () =>
+      new DatePropertyWasChangedController(messagesControllerComponents, mockSessionConnector, navigator, date_property_was_changed)
 
-    behave like rnrbDateController(createController, createView, Constants.datePropertyWasChangedId, "dateOfDownsizing")(Date.dateReads, Date.dateWrites)
+    behave like rnrbDateController(
+      createController, createView, Constants.datePropertyWasChangedId, "dateOfDownsizing")(Date.dateReads, Date.dateWrites)
 
     behave like nonStartingDateController(createController,
       List(Constants.dateOfDeathId,
@@ -52,7 +53,7 @@ class DatePropertyWasChangedControllerSpec extends DateControllerSpecBase {
            Constants.percentagePassedToDirectDescendantsId,
            Constants.transferAnyUnusedThresholdId,
            Constants.valueBeingTransferredId,
-           Constants.claimDownsizingThresholdId))(Date.dateReads)
+           Constants.claimDownsizingThresholdId))
   }
 
 }

@@ -16,8 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import org.scalatest.matchers
-import matchers.should.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.data.{Form, FormError}
 import play.api.i18n.Lang
 import play.twirl.api.HtmlFormat
@@ -28,7 +27,7 @@ trait NewViewSpecBase extends HtmlSpec {
 
   val errorKey = "value"
   val errorMessage = "error.number"
-  val error = FormError(errorKey, errorMessage)
+  val error: FormError = FormError(errorKey, errorMessage)
 
   def rnrbPage[A: ClassTag](createView: Form[A] => HtmlFormat.Appendable,
                             messageKeyPrefix: String,

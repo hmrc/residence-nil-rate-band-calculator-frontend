@@ -18,7 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator
 
 import javax.inject.{Inject, Singleton}
 
-import org.joda.time.LocalDate
+import java.time.LocalDate
 import play.api.mvc.Call
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers

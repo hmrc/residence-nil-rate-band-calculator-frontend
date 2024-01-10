@@ -30,7 +30,7 @@ object DateForm {
     )(Date.apply)(Date.unapply)
   )
 
-  val dateOfDownsizingForm = Form(
+  val dateOfDownsizingForm: Form[Date] = Form(
     mapping(
       "dateOfDownsizing" -> DateMapping.downSizingDate
     )(Date.apply)(Date.unapply)

@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.DefaultMessagesControllerComponents
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_available_when_property_changed
@@ -27,18 +28,18 @@ class TransferAvailableWhenPropertyChangedControllerSpec extends NewSimpleContro
   val messageKey = "transfer_available_when_property_changed.error.required"
   val messageKeyPrefix = "transfer_available_when_property_changed"
 
-  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-  val transfer_available_when_property_changed = injector.instanceOf[transfer_available_when_property_changed]
+  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val transfer_available_when_property_changed: transfer_available_when_property_changed = injector.instanceOf[transfer_available_when_property_changed]
   "Transfer Available When Property Changed Controller" must {
 
-    def createView = (value: Option[Map[String, String]]) => {
-      value match {
-        case None => transfer_available_when_property_changed(BooleanForm.apply(messageKey))(fakeRequest, messages)
-        case Some(v) => transfer_available_when_property_changed(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
-      }
+    def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
+      case None => transfer_available_when_property_changed(BooleanForm.apply(messageKey))(fakeRequest, messages)
+      case Some(v) => transfer_available_when_property_changed(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
     }
 
-    def createController = () => new TransferAvailableWhenPropertyChangedController(messagesControllerComponents, mockSessionConnector, navigator, transfer_available_when_property_changed)
+    def createController: () => TransferAvailableWhenPropertyChangedController = () =>
+      new TransferAvailableWhenPropertyChangedController(
+        messagesControllerComponents, mockSessionConnector, navigator, transfer_available_when_property_changed)
 
     val testValue = true
 

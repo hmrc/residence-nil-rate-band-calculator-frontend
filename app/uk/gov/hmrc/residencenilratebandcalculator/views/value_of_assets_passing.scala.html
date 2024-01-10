@@ -34,7 +34,7 @@
     pageTitle = title
 ) {
 
-    @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfAssetsPassingController.onSubmit, 'autoComplete -> "off") {
+    @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ValueOfAssetsPassingController.onSubmit, Symbol("autoComplete") -> "off") {
 
         @errorSummary(form.errors)
 

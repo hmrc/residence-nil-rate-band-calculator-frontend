@@ -27,7 +27,7 @@ class ExemptionsAndReliefClaimedViewSpec extends NewBooleanViewSpecBase {
   val messageKeyPrefix = "exemptions_and_relief_claimed"
 
   lazy val injectedController: ExemptionsAndReliefClaimedController = injector.instanceOf[ExemptionsAndReliefClaimedController]
-  val exemptions_and_relief_claimed = injector.instanceOf[exemptions_and_relief_claimed]
+  val exemptions_and_relief_claimed: exemptions_and_relief_claimed = injector.instanceOf[exemptions_and_relief_claimed]
   def createView(form: Form[Boolean]): HtmlFormat.Appendable = exemptions_and_relief_claimed(form)(request, messages)
 
   "Exemptions And Relief Claimed View" must {

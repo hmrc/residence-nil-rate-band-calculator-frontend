@@ -17,11 +17,10 @@
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import org.mockito.Mockito._
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import org.scalatestplus.mockito.MockitoSugar
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetUnableToCalculateThresholdIncreaseReason.{GrossingUpForOtherProperty, GrossingUpForResidence}
-import org.scalatest.matchers
-import matchers.should.Matchers.convertToAnyShouldWrapper
 
 class GetUnableToCalculateThresholdIncreaseReasonSpec extends BaseSpec with MockitoSugar {
   "GetUnableToCalculateThresholdIncreaseReason" must {

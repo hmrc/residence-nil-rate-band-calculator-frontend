@@ -19,12 +19,13 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.i18n._
+import play.api.inject.Injector
 import play.api.libs.json._
+import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.http.SessionKeys
-import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.models._
@@ -34,17 +35,17 @@ import scala.reflect.ClassTag
 
 trait NewSimpleControllerSpecBase extends CommonPlaySpec with HttpResponseMocks with MockSessionConnector with WithCommonFakeApplication {
 
-  val fakeRequest = FakeRequest("", "").withSession(SessionKeys.sessionId -> "id")
+  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "").withSession(SessionKeys.sessionId -> "id")
 
-  val injector = fakeApplication.injector
+  val injector: Injector = fakeApplication.injector
 
-  val navigator = injector.instanceOf[Navigator]
+  val navigator: Navigator = injector.instanceOf[Navigator]
 
-  def messagesApi = injector.instanceOf[MessagesApi]
+  def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
 
-  def messages = messagesApi.preferred(fakeRequest)
+  def messages: Messages = messagesApi.preferred(fakeRequest)
 
-  val mockConfig = injector.instanceOf[FrontendAppConfig]
+  val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
   def rnrbController[A: ClassTag](createController: () => ControllerBase[A],
                                   createView: (Option[Map[String, String]]) => HtmlFormat.Appendable,
@@ -53,7 +54,7 @@ trait NewSimpleControllerSpecBase extends CommonPlaySpec with HttpResponseMocks 
                                   testValue: A,
                                   valuesToCacheBeforeSubmission: Map[String, A] = Map[String, A](),
                                   valuesToCacheBeforeLoad: Map[String, Any] = Map[String, Any]())
-                                 (rds: Reads[A], wts: Writes[A]) = {
+                                 (rds: Reads[A], wts: Writes[A]): Unit = {
 
     "return 200 for a GET" in {
       for (v <- valuesToCacheBeforeLoad) setCacheValue(v._1, v._2)
@@ -114,7 +115,8 @@ trait NewSimpleControllerSpecBase extends CommonPlaySpec with HttpResponseMocks 
     }
   }
 
-  def nonStartingController[A: ClassTag](createController: () => SimpleControllerBase[A], answerRowConstants: List[String])(rds: Reads[A], wts: Writes[A]) = {
+  def nonStartingController[A: ClassTag](createController: () =>
+    SimpleControllerBase[A], answerRowConstants: List[String])(rds: Reads[A], wts: Writes[A]): Unit = {
 
     "On a page load with an expired session, return an redirect to an expired session page" in {
       expireSessionConnector()
@@ -157,7 +159,7 @@ trait NewSimpleControllerSpecBase extends CommonPlaySpec with HttpResponseMocks 
       val controllerId = createController().controllerId
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
-      answerRowConstants shouldBe (calculatedList)
+      answerRowConstants shouldBe calculatedList
     }
   }
 }

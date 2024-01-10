@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import org.joda.time.LocalDate
 import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito._
@@ -27,22 +26,22 @@ import play.api.libs.json._
 import play.api.mvc.DefaultMessagesControllerComponents
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
-import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, CalculationResult}
+import uk.gov.hmrc.residencenilratebandcalculator.models.{CacheMap, CalculationInput, CalculationResult}
 import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.threshold_calculation_result
 
+import java.time.LocalDate
 import scala.concurrent.Future
 import scala.util.Success
 
 class ThresholdCalculationResultControllerSpec extends NewSimpleControllerSpecBase with MockitoSugar with Matchers {
 
-  val testJsNumber = JsNumber(10)
+  val testJsNumber: JsNumber = JsNumber(10)
 
-  val dateOfDeath = new LocalDate(2020, 1, 1)
+  val dateOfDeath: LocalDate = LocalDate.of(2020, 1, 1)
   val dateOfDeathString = "2020-01-01"
   val valueOfEstate = 1
   val chargeableEstateValue = 2
@@ -52,18 +51,18 @@ class ThresholdCalculationResultControllerSpec extends NewSimpleControllerSpecBa
   val expectedCarriedForwardAmount = 9999
   val expectedDefaultAllowance = 3333
   val adjustedAllowance = 7777
-  val calculationResult = CalculationResult(expectedResidenceNilRateAmount, expectedApplicableNilRateBandAmount,
+  val calculationResult: CalculationResult = CalculationResult(expectedResidenceNilRateAmount, expectedApplicableNilRateBandAmount,
     expectedCarriedForwardAmount, expectedDefaultAllowance, adjustedAllowance)
 
   val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
 
   val mockValidatedSession: ValidatedSession = injector.instanceOf[ValidatedSession]
 
-  val expectedCalculationInput = CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, 0, 0, 0, None, None)
+  val expectedCalculationInput: CalculationInput = CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, 0, 0, 0, None, None)
 
-  val threshold_calculation_result = injector.instanceOf[threshold_calculation_result]
+  val threshold_calculation_result: threshold_calculation_result = injector.instanceOf[threshold_calculation_result]
 
-  val cacheMap = CacheMap("id", Map(
+  val cacheMap: CacheMap = CacheMap("id", Map(
     Constants.dateOfDeathId -> JsString(dateOfDeathString),
     Constants.valueOfEstateId -> JsNumber(valueOfEstate),
     Constants.chargeableEstateValueId -> JsNumber(chargeableEstateValue),
@@ -72,7 +71,7 @@ class ThresholdCalculationResultControllerSpec extends NewSimpleControllerSpecBa
     Constants.claimDownsizingThresholdId -> JsBoolean(false)
   ))
 
-  def mockRnrbConnector = {
+  def mockRnrbConnector: RnrbConnector = {
     val mockConnector = mock[RnrbConnector]
     when(mockConnector.send(any[CalculationInput])(any[HeaderCarrier])) thenReturn Future.successful(Success(calculationResult))
     mockConnector

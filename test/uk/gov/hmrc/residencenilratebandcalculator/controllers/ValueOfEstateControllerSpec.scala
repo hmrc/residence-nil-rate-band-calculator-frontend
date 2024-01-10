@@ -30,8 +30,8 @@ class ValueOfEstateControllerSpec extends NewSimpleControllerSpecBase {
   val errorKeyTooLarge = "error.value_too_large"
   val messageKeyPrefix = "value_of_estate"
 
-  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-  val value_of_estate = injector.instanceOf[value_of_estate]
+  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val value_of_estate: value_of_estate = injector.instanceOf[value_of_estate]
   "Value Of Estate Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {

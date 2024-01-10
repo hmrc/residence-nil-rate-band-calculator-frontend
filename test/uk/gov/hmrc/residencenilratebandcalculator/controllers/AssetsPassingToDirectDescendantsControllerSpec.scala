@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.DefaultMessagesControllerComponents
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.assets_passing_to_direct_descendants
@@ -27,24 +28,22 @@ class AssetsPassingToDirectDescendantsControllerSpec extends NewSimpleController
   val messageKey = "assets_passing_to_direct_descendants.error.required"
   val messageKeyPrefix = "assets_passing_to_direct_descendants"
 
-  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-  val assetsPassingToDirectDescendantsView = fakeApplication.injector.instanceOf[assets_passing_to_direct_descendants]
+  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val assetsPassingToDirectDescendantsView: assets_passing_to_direct_descendants = fakeApplication.injector.instanceOf[assets_passing_to_direct_descendants]
   "Assets Passing To Direct Descendants Controller" must {
 
     val propertyValue = 123456
     val formattedPropertyValue = Some("£123,456")
 
-    def createView = (value: Option[Map[String, String]]) => {
-
-      value match {
-        case None =>
-          assetsPassingToDirectDescendantsView(BooleanForm(messageKey), formattedPropertyValue)(fakeRequest, messages)
-        case Some(v) =>
-          assetsPassingToDirectDescendantsView(BooleanForm(messageKey).bind(v), formattedPropertyValue)(fakeRequest, messages)
-      }
+    def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
+      case None =>
+        assetsPassingToDirectDescendantsView(BooleanForm(messageKey), formattedPropertyValue)(fakeRequest, messages)
+      case Some(v) =>
+        assetsPassingToDirectDescendantsView(BooleanForm(messageKey).bind(v), formattedPropertyValue)(fakeRequest, messages)
     }
 
-    def createController = () => new AssetsPassingToDirectDescendantsController(mockSessionConnector, navigator, messagesControllerComponents, assetsPassingToDirectDescendantsView)
+    def createController: () => AssetsPassingToDirectDescendantsController = () =>
+      new AssetsPassingToDirectDescendantsController(mockSessionConnector, navigator, messagesControllerComponents, assetsPassingToDirectDescendantsView)
 
     val testValue = true
 

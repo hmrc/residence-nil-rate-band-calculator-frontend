@@ -17,25 +17,24 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfChangedPropertyController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_changed_property
 
-import scala.language.reflectiveCalls
-
 class ValueOfChangedPropertyViewSpec extends NewIntViewSpecBase {
 
   val messageKeyPrefix = "value_of_changed_property"
-  val value_of_changed_property = injector.instanceOf[value_of_changed_property]
-  def createView(form: Form[Int]) = value_of_changed_property(form)(request, messages)
+  val value_of_changed_property: value_of_changed_property = injector.instanceOf[value_of_changed_property]
+  def createView(form: Form[Int]): HtmlFormat.Appendable = value_of_changed_property(form)(request, messages)
 
   "Value Of Changed Property View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance3")(fakeApplication.injector.instanceOf[ValueOfChangedPropertyController].form())
+    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance3")(fakeApplication().injector.instanceOf[ValueOfChangedPropertyController].form())
 
-    behave like pageWithoutBackLink[Int](createView, fakeApplication.injector.instanceOf[ValueOfChangedPropertyController].form())
+    behave like pageWithoutBackLink[Int](createView, fakeApplication().injector.instanceOf[ValueOfChangedPropertyController].form())
 
-    behave like intPage(createView, messageKeyPrefix, ValueOfChangedPropertyController.onSubmit.url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), fakeApplication.injector.instanceOf[ValueOfChangedPropertyController].form())
+    behave like intPage(createView, messageKeyPrefix, ValueOfChangedPropertyController.onSubmit.url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), fakeApplication().injector.instanceOf[ValueOfChangedPropertyController].form())
   }
 }
