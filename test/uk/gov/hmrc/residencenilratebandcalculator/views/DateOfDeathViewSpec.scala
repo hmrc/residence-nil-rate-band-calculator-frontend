@@ -17,28 +17,27 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.DateOfDeathController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm.dateOfDeathForm
 
-import scala.language.reflectiveCalls
-
 class DateOfDeathViewSpec extends NewDateViewSpecBase {
 
   val messageKeyPrefix = "date_of_death"
-  val date_of_death = injector.instanceOf[date_of_death]
-  def createView(form: Form[Date]) = date_of_death(form)(request, messages)
+  val date_of_death: date_of_death = injector.instanceOf[date_of_death]
+  def createView(form: Form[Date]): HtmlFormat.Appendable = date_of_death(form)(request, messages)
 
   "Date of Death View" must {
 
-    behave like rnrbPage[Date](createView, messageKeyPrefix, "guidance")(fakeApplication.injector.instanceOf[DateOfDeathController].form)
+    behave like rnrbPage[Date](createView, messageKeyPrefix, "guidance")(fakeApplication().injector.instanceOf[DateOfDeathController].form)
 
-    behave like datePage(createView, messageKeyPrefix, DateOfDeathController.onSubmit.url, "dateOfDeath",dateOfDeathForm,fakeApplication.injector.instanceOf[DateOfDeathController].form)
+    behave like datePage(createView, messageKeyPrefix, DateOfDeathController.onSubmit.url, "dateOfDeath",dateOfDeathForm,fakeApplication().injector.instanceOf[DateOfDeathController].form)
 
     "display the correct example" in {
-      val doc = asDocument(createView(fakeApplication.injector.instanceOf[DateOfDeathController].form))
+      val doc = asDocument(createView(fakeApplication().injector.instanceOf[DateOfDeathController].form))
       assertContainsMessages(doc, s"$messageKeyPrefix.example")
     }
   }

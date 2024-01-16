@@ -16,12 +16,11 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import org.joda.time.LocalDate
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.libs.json._
-import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
-import org.scalatest.matchers
-import matchers.should.Matchers.convertToAnyShouldWrapper
+
+import java.time.LocalDate
 
 class UserAnswersSpec extends BaseSpec {
 
@@ -94,13 +93,13 @@ class UserAnswersSpec extends BaseSpec {
       "return the correct answer for Date Of Death" in {
         val cacheMap = CacheMap(cacheMapKey, Map(Constants.dateOfDeathId -> JsString("2018-01-01")))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.dateOfDeath shouldBe Some(new LocalDate(2018, 1, 1))
+        userAnswers.dateOfDeath shouldBe Some(LocalDate.of(2018, 1, 1))
       }
 
       "return the correct answer for Date Property Was Changed" in {
         val cacheMap = CacheMap(cacheMapKey, Map(Constants.datePropertyWasChangedId -> JsString("2018-01-01")))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.datePropertyWasChanged shouldBe Some(new LocalDate(2018, 1, 1))
+        userAnswers.datePropertyWasChanged shouldBe Some(LocalDate.of(2018, 1, 1))
       }
 
       "return the correct answer for Grossing Up On Estate Assets" in {

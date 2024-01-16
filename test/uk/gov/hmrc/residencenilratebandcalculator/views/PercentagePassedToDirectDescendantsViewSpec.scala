@@ -17,25 +17,24 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.PercentagePassedToDirectDescendantsController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PositivePercentForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_passed_to_direct_descendants
 
-import scala.language.reflectiveCalls
-
 class PercentagePassedToDirectDescendantsViewSpec extends NewBigDecimalViewSpecBase {
 
   val messageKeyPrefix = "percentage_passed_to_direct_descendants"
-  val percentage_passed_to_direct_descendants = injector.instanceOf[percentage_passed_to_direct_descendants]
-  def createView(form: Form[BigDecimal]) = percentage_passed_to_direct_descendants(form)(request, messages)
+  val percentage_passed_to_direct_descendants: percentage_passed_to_direct_descendants = injector.instanceOf[percentage_passed_to_direct_descendants]
+  def createView(form: Form[BigDecimal]): HtmlFormat.Appendable = percentage_passed_to_direct_descendants(form)(request, messages)
 
   "Percentage Passed To Direct Descendants View" must {
 
-    behave like rnrbPage[BigDecimal](createView, messageKeyPrefix, "guidance")(fakeApplication.injector.instanceOf[PercentagePassedToDirectDescendantsController].form())
+    behave like rnrbPage[BigDecimal](createView, messageKeyPrefix, "guidance")(fakeApplication().injector.instanceOf[PercentagePassedToDirectDescendantsController].form())
 
-    behave like pageWithoutBackLink[BigDecimal](createView, fakeApplication.injector.instanceOf[PercentagePassedToDirectDescendantsController].form())
+    behave like pageWithoutBackLink[BigDecimal](createView, fakeApplication().injector.instanceOf[PercentagePassedToDirectDescendantsController].form())
 
-    behave like bigDecimalPage(createView, messageKeyPrefix, PercentagePassedToDirectDescendantsController.onSubmit.url, PositivePercentForm("", "", ""), fakeApplication.injector.instanceOf[PercentagePassedToDirectDescendantsController].form())
+    behave like bigDecimalPage(createView, messageKeyPrefix, PercentagePassedToDirectDescendantsController.onSubmit.url, PositivePercentForm("", "", ""), fakeApplication().injector.instanceOf[PercentagePassedToDirectDescendantsController].form())
   }
 }

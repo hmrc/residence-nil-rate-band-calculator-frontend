@@ -32,14 +32,13 @@ package uk.gov.hmrc.residencenilratebandcalculator.utils
  * limitations under the License.
  */
 
-import org.joda.time.{DateTime, Interval, LocalDate}
+import java.time.LocalDate
 import scala.collection.immutable.Range.Inclusive
 
 
 case class TaxYear(startYear: Int) {
   lazy val finishYear: Int = startYear + 1
-  lazy val finishes: LocalDate = new LocalDate(finishYear, 4, 5)
-  lazy val previous: TaxYear = back(1)
+  lazy val finishes: LocalDate = LocalDate.of(finishYear, 4, 5)
   lazy val currentYear : Int = startYear
   lazy val next: TaxYear = forwards(1)
 
@@ -47,21 +46,15 @@ case class TaxYear(startYear: Int) {
 
   def forwards(years: Int): TaxYear = TaxYear(startYear + years)
 
-  def contains(date: LocalDate) = !(date.isBefore(starts) || date.isAfter(finishes))
+  def contains(date: LocalDate): Boolean = !(date.isBefore(starts) || date.isAfter(finishes))
 
   def starts: LocalDate = TaxYear.firstDayOfTaxYear(startYear)
 
   def yearRange: Inclusive = startYear to finishYear
 
-  def interval = new Interval(startInstant, finishInstant)
-
-  def finishInstant: DateTime = next.startInstant
-
-  def startInstant: DateTime = starts.toDateTimeAtStartOfDay(TaxYear.ukTime)
-
   override def toString = s"$startYear to $finishYear"
 }
 
 object TaxYear extends CurrentTaxYear with (Int => TaxYear) {
-  override def now = () => DateTime.now
+  override def now: () => LocalDate = () => LocalDate.now()
 }

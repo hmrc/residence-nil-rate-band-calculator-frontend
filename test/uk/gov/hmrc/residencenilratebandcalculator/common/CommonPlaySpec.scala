@@ -16,16 +16,15 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.common
 
-import java.nio.charset.Charset
-
-import akka.stream.Materializer
-import akka.util.ByteString
+import org.apache.pekko.stream.Materializer
+import org.apache.pekko.util.ByteString
 import org.scalatest.OptionValues
-import play.api.mvc.Result
-import scala.language.implicitConversions
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
-import scala.language.postfixOps
+import play.api.mvc.Result
+
+import java.nio.charset.Charset
+import scala.language.{implicitConversions, postfixOps}
 
 trait CommonPlaySpec extends AnyWordSpecLike with Matchers with OptionValues {
 

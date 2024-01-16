@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
-import org.joda.time.LocalDate
+import java.time.LocalDate
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 import uk.gov.hmrc.residencenilratebandcalculator.utils.Transformers._
 import org.scalatest.matchers
@@ -50,12 +50,12 @@ class TransformersSpec extends BaseSpec {
 
   "constructDate" must {
     "return a date when given valid inputs" in {
-      constructDate(1, 1, 2000) shouldBe new LocalDate(2000, 1, 1)
+      constructDate(1, 1, 2000) shouldBe LocalDate.of(2000, 1, 1)
     }
 
     "throw an exception when given invalid inputs" in {
       intercept[Exception] {
-        constructDate(30, 2, 2000)
+        constructDate(35, 2, 2000)
       }
     }
   }

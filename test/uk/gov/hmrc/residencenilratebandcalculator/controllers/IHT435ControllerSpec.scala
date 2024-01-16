@@ -16,8 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import java.io.ByteArrayOutputStream
-
 import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito._
 import play.api.Environment
@@ -27,6 +25,8 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.utils.PDFHelperImpl
+
+import java.io.ByteArrayOutputStream
 
 class IHT435ControllerSpec extends CommonPlaySpec with MockSessionConnector with WithCommonFakeApplication {
   private val fakeRequest = FakeRequest("", "")

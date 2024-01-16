@@ -19,6 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import play.api.http.Status
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.DefaultMessagesControllerComponents
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
@@ -32,16 +33,19 @@ class ChargeablePropertyValueControllerSpec extends NewSimpleControllerSpecBase 
   val errorKeyTooLarge = "error.value_too_large"
   val messageKeyPrefix = "chargeable_property_value"
 
-  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-  val chargeable_property_value = fakeApplication.injector.instanceOf[chargeable_property_value]
+  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val chargeable_property_value: chargeable_property_value = fakeApplication.injector.instanceOf[chargeable_property_value]
 
   "Chargeable Property Value Controller" must {
-    def createView = (value: Option[Map[String, String]]) => value match {
-      case None => chargeable_property_value(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge))(fakeRequest, messages)
-      case Some(v) => chargeable_property_value(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v))(fakeRequest, messages)
+    def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
+      case None => chargeable_property_value(
+        NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge))(fakeRequest, messages)
+      case Some(v) => chargeable_property_value(
+        NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v))(fakeRequest, messages)
     }
 
-    def createController = () => new ChargeablePropertyValueController(messagesControllerComponents, mockSessionConnector, navigator, chargeable_property_value)
+    def createController: () => ChargeablePropertyValueController = () =>
+      new ChargeablePropertyValueController(messagesControllerComponents, mockSessionConnector, navigator, chargeable_property_value)
 
     val testValue = 123
 

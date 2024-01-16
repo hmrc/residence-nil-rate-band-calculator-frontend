@@ -16,15 +16,14 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.calculate_threshold_increase
-import org.scalatest.matchers
-import matchers.should.Matchers.convertToAnyShouldWrapper
 
 class CalculateThresholdIncreaseViewSpec extends ViewSpecBase {
 
   val messageKeyPrefix = "calculate_threshold_increase"
-  val calculate_threshold_increase = injector.instanceOf[calculate_threshold_increase]
+  val calculate_threshold_increase: calculate_threshold_increase = injector.instanceOf[calculate_threshold_increase]
   "Calculate Threshold Increase view" must {
     "display the correct browser title" in {
       val doc = asDocument(calculate_threshold_increase()(request, messages))

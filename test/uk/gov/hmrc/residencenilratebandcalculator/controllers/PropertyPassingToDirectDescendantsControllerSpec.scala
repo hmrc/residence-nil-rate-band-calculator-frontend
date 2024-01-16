@@ -26,8 +26,8 @@ class PropertyPassingToDirectDescendantsControllerSpec extends NewSimpleControll
 
   val messageKeyPrefix = "property_passing_to_direct_descendants"
 
-  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-  val property_passing_to_direct_descendants = injector.instanceOf[property_passing_to_direct_descendants]
+  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val property_passing_to_direct_descendants: property_passing_to_direct_descendants = injector.instanceOf[property_passing_to_direct_descendants]
   "Property Passing To Direct Descendants Controller" must {
 
     def createView = (value: Option[Map[String, String]]) => {
@@ -37,11 +37,13 @@ class PropertyPassingToDirectDescendantsControllerSpec extends NewSimpleControll
       }
     }
 
-    def createController = () => new PropertyPassingToDirectDescendantsController(messagesControllerComponents, mockSessionConnector, navigator, property_passing_to_direct_descendants)
+    def createController = () => new PropertyPassingToDirectDescendantsController(
+      messagesControllerComponents, mockSessionConnector, navigator, property_passing_to_direct_descendants)
 
     val testValue = Constants.all
 
-    behave like rnrbController[String](createController, createView, Constants.propertyPassingToDirectDescendantsId, messageKeyPrefix, testValue)(Reads.StringReads, Writes.StringWrites)
+    behave like rnrbController[String](
+      createController, createView, Constants.propertyPassingToDirectDescendantsId, messageKeyPrefix, testValue)(Reads.StringReads, Writes.StringWrites)
 
     behave like nonStartingController[String](createController,
       List(Constants.dateOfDeathId,

@@ -16,20 +16,20 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import javax.inject.{Inject, Singleton}
 import play.api.data.Form
 import play.api.libs.json.{Reads, Writes}
-import play.api.mvc.{DefaultMessagesControllerComponents, Request}
+import play.api.mvc.{Action, AnyContent, DefaultMessagesControllerComponents, Request}
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.http.SessionId
-import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
-import uk.gov.hmrc.residencenilratebandcalculator.models.{Date, UserAnswers}
+import uk.gov.hmrc.residencenilratebandcalculator.models.{CacheMap, Date, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
 
+import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
@@ -39,13 +39,13 @@ class DateOfDeathController @Inject()(cc: DefaultMessagesControllerComponents,
                                       validatedSession: ValidatedSession,
                                       dateOfDeathView: date_of_death)(implicit ex: ExecutionContext) extends FrontendController(cc) with ControllerBase[Date] {
 
-  lazy val controllerId = Constants.dateOfDeathId
+  lazy val controllerId: String = Constants.dateOfDeathId
 
   def form: Form[Date] = dateOfDeathForm
 
-  def view(form: Form[Date])(implicit request: Request[_]) = dateOfDeathView(form)
+  def view(form: Form[Date])(implicit request: Request[_]): HtmlFormat.Appendable = dateOfDeathView(form)
 
-  def onPageLoad(implicit rds: Reads[Date]) = Action.async { implicit request =>
+  def onPageLoad(implicit rds: Reads[Date]): Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.fetch().map(
       optionalCacheMap => {
         val cacheMap: CacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
@@ -55,13 +55,13 @@ class DateOfDeathController @Inject()(cc: DefaultMessagesControllerComponents,
       })
   }
 
-  def onSubmit(implicit wts: Writes[Date]) = validatedSession.async { implicit request =>
+  def onSubmit(implicit wts: Writes[Date]): Action[AnyContent] = validatedSession.async { implicit request =>
     val boundForm = form.bindFromRequest()
     boundForm.fold(
       (formWithErrors: Form[Date]) => {
         Future.successful(BadRequest(view(formWithErrors)))
       },
-      (value) =>
+      value =>
         sessionConnector.cache[Date](controllerId, value).map(cacheMap =>
           Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
     )

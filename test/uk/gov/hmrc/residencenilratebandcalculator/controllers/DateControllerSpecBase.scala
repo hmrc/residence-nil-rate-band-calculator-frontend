@@ -16,33 +16,36 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import org.joda.time.LocalDate
 import play.api.http.Status
 import play.api.i18n._
+import play.api.inject.Injector
 import play.api.libs.json._
+import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.http.SessionKeys
-import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
-import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, Date}
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CacheMap, Date}
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
 
+import java.time.LocalDate
+
 trait DateControllerSpecBase extends CommonPlaySpec with MockSessionConnector with WithCommonFakeApplication {
-  val fakeRequest = FakeRequest("", "").withSession(SessionKeys.sessionId -> "id")
+  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "").withSession(SessionKeys.sessionId -> "id")
 
-  val injector = fakeApplication.injector
+  val injector: Injector = fakeApplication.injector
 
-  val navigator = injector.instanceOf[Navigator]
+  val navigator: Navigator = injector.instanceOf[Navigator]
 
-  def messagesApi = injector.instanceOf[MessagesApi]
-  def messages = messagesApi.preferred(fakeRequest)
+  def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
+
+  def messages: Messages = messagesApi.preferred(fakeRequest)
 
   def rnrbDateController(createController: () => ControllerBase[Date],
-                     createView: (Option[Date]) => HtmlFormat.Appendable,
-                     cacheKey: String,
-                     date: String = "dateOfDeath")(rds: Reads[Date], wts: Writes[Date]) = {
+                         createView: Option[Date] => HtmlFormat.Appendable,
+                         cacheKey: String,
+                         date: String = "dateOfDeath")(rds: Reads[Date], wts: Writes[Date]): Unit = {
 
     "return 200 for a GET" in {
       val result = createController().onPageLoad(rds)(fakeRequest)
@@ -55,17 +58,20 @@ trait DateControllerSpecBase extends CommonPlaySpec with MockSessionConnector wi
     }
 
     "return a redirect on submit with valid data" in {
+      val day = 1
+      val month = 1
+      val year = 2018
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody((s"$date${".day"}", "01"), (s"$date${".month"}", "01"), (s"$date${".year"}", "2018")).withMethod("POST")
-      setCacheValue(cacheKey, new LocalDate(2018, 1, 1))
+      setCacheValue(cacheKey, LocalDate.of(year, month, day))
       val result = createController().onSubmit(wts)(fakePostRequest)
       status(result) shouldBe Status.SEE_OTHER
     }
 
     "store valid submitted data" in {
-      val value = Date(new LocalDate(2018, 1, 1))
+      val value = Date(LocalDate.of(2018, 1, 1))
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody((s"$date${".day"}", "01"), (s"$date${".month"}", "01"), (s"$date${".year"}", "2018")).withMethod("POST")
-      setCacheValue(cacheKey, new LocalDate(2018, 1, 1))
-      await (createController().onSubmit(wts)(fakePostRequest))
+      setCacheValue(cacheKey, LocalDate.of(2018, 1, 1))
+      await(createController().onSubmit(wts)(fakePostRequest))
       verifyValueIsCached(cacheKey, value)
     }
 
@@ -94,7 +100,7 @@ trait DateControllerSpecBase extends CommonPlaySpec with MockSessionConnector wi
       val day = 1
       val month = 1
       val year = 2018
-      val value = Date(new LocalDate(year, month, day))
+      val value = Date(LocalDate.of(year, month, day))
       setCacheValue(cacheKey, value)
       val result = createController().onPageLoad(rds)(fakeRequest)
 
@@ -102,7 +108,7 @@ trait DateControllerSpecBase extends CommonPlaySpec with MockSessionConnector wi
     }
   }
 
-  def nonStartingDateController(createController: () => SimpleControllerBase[Date], answerRowConstants: List[String])(rds: Reads[Date]) = {
+  def nonStartingDateController(createController: () => SimpleControllerBase[Date], answerRowConstants: List[String]): Unit = {
     "On a page load with an expired session, return a redirect to an expired session page" in {
       expireSessionConnector()
 
@@ -131,7 +137,7 @@ trait DateControllerSpecBase extends CommonPlaySpec with MockSessionConnector wi
       val controllerId = createController().controllerId
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
-      answerRowConstants shouldBe (calculatedList)
+      answerRowConstants shouldBe calculatedList
     }
   }
 }

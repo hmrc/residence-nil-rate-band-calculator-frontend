@@ -16,16 +16,20 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
+import org.jsoup.nodes.Document
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.error_template
-
-import scala.language.reflectiveCalls
 
 class ErrorTemplateViewSpec extends HtmlSpec {
 
-  val error_template = injector.instanceOf[error_template]
-  def fixture() = new {
-    val view = error_template("title", "heading", "message")(request, messages)
-    val doc = asDocument(view)
+  val error_template: error_template = injector.instanceOf[error_template]
+  def fixture(): Object {
+    val view: HtmlFormat.Appendable
+
+    val doc: Document
+  } = new {
+    val view: HtmlFormat.Appendable = error_template("title", "heading", "message")(request, messages)
+    val doc: Document = asDocument(view)
   }
 
   "Error Template" must {

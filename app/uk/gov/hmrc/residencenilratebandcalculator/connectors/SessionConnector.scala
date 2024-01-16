@@ -28,29 +28,16 @@ import uk.gov.hmrc.http.HeaderCarrier
 @Singleton
 class SessionConnector @Inject()(val sessionRepository: SessionRepository, val cascadeUpsert: CascadeUpsert)(implicit ec: ExecutionContext) extends Logging {
 
-  def cache[A](key: String, value: A)(implicit wts: Writes[A], hc: HeaderCarrier) = {
+  def cache[A](key: String, value: A)(implicit wts: Writes[A], hc: HeaderCarrier): Future[CacheMap] = {
     hc.sessionId match {
       case None =>
        val msg = "Unable to find session with id " + hc.sessionId + "while caching " + key + " = " + value
        logger.error(msg)
        throw new RuntimeException(msg)
       case Some(id) =>
-        sessionRepository().get(id.toString).flatMap { optionalCacheMap =>
+        sessionRepository.get(id.toString).flatMap { optionalCacheMap =>
           val updatedCacheMap = cascadeUpsert(key, value, optionalCacheMap.getOrElse(new CacheMap(id.toString, Map())))
-          sessionRepository().upsert(updatedCacheMap).map {_ => updatedCacheMap}
-        }
-    }
-  }
-
-  def delete(key: String)(implicit hc: HeaderCarrier): Future[Boolean] = {
-    hc.sessionId match {
-      case None => Future(false)
-      case Some(id) =>
-        sessionRepository().get(id.toString).flatMap { optionalCacheMap =>
-          optionalCacheMap.fold(Future(false)) { cm =>
-            val newCacheMap: CacheMap = cm copy (data = cm.data - key)
-            sessionRepository().upsert(newCacheMap)
-          }
+          sessionRepository.upsert(updatedCacheMap).map {_ => updatedCacheMap}
         }
     }
   }
@@ -59,13 +46,13 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository, val c
     hc.sessionId match {
       case None => Future(false)
       case Some(id) =>
-        sessionRepository().removeAll(id.toString)
+        sessionRepository.removeAll(id.toString)
     }
 
   def fetch()(implicit hc: HeaderCarrier): Future[Option[CacheMap]] = {
     hc.sessionId match {
       case None => Future.successful(None)
-      case Some(id) => sessionRepository().get(id.toString)
+      case Some(id) => sessionRepository.get(id.toString)
     }
   }
 

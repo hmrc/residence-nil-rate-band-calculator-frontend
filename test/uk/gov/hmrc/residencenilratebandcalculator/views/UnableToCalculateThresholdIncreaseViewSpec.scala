@@ -16,6 +16,8 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
+import org.jsoup.nodes.Document
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.unable_to_calculate_threshold_increase
 
 import scala.language.reflectiveCalls
@@ -23,10 +25,14 @@ import scala.language.reflectiveCalls
 class UnableToCalculateThresholdIncreaseViewSpec extends HtmlSpec {
 
   val prefix = "unable_to_calculate_threshold_increase.grossing_up"
-  val unable_to_calculate_threshold_increase = injector.instanceOf[unable_to_calculate_threshold_increase]
-  def fixture() = new {
-    val view = unable_to_calculate_threshold_increase(prefix)(request, messages)
-    val doc = asDocument(view)
+  val unable_to_calculate_threshold_increase: unable_to_calculate_threshold_increase = injector.instanceOf[unable_to_calculate_threshold_increase]
+  def fixture(): Object {
+    val view: HtmlFormat.Appendable
+
+    val doc: Document
+  } = new {
+    val view: HtmlFormat.Appendable = unable_to_calculate_threshold_increase(prefix)(request, messages)
+    val doc: Document = asDocument(view)
   }
 
   "Unable To Calculate Threshold Increase View" must {

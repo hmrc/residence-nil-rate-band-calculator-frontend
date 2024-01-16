@@ -16,28 +16,24 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import org.joda.time.LocalDate
 import play.api.libs.json._
 
+import java.time.LocalDate
 import scala.util.{Failure, Success, Try}
 
 case class Date(date: LocalDate)
 
 object Date {
 
-  val dateReads = new Reads[Date] {
-    override def reads(json: JsValue) = {
-      Try(LocalDate.parse(json.as[JsString].value)) match {
-        case Success(jodaLocalDate) => JsSuccess(Date(jodaLocalDate))
-        case Failure(e) => JsError(JsonValidationError(e.getMessage))
-      }
+  val dateReads: Reads[Date] = (json: JsValue) => {
+    Try(LocalDate.parse(json.as[JsString].value)) match {
+      case Success(javaLocalDate) => JsSuccess(Date(javaLocalDate))
+      case Failure(e) => JsError(JsonValidationError(e.getMessage))
     }
   }
 
-  val dateWrites = new Writes[Date] {
-    override def writes(date: Date) = {
-      JsString(date.date.toString)
-    }
+  val dateWrites: Writes[Date] = (date: Date) => {
+    JsString(date.date.toString)
   }
 
   implicit val dateFormat: Format[Date] = Format(dateReads, dateWrites)

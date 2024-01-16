@@ -28,6 +28,6 @@ object FormValidators {
     case _ => false
   }
 
-  def isValidPropertyPassingToDirectDescendantsOption(value: String) =
+  def isValidPropertyPassingToDirectDescendantsOption(value: String): Boolean =
     Constants.propertyPassingToDirectDescendantsOptions.exists(radioOption => radioOption.value == value)
 }

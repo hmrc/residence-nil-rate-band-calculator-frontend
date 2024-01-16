@@ -5,18 +5,23 @@
 This service provides a frontend for the [residence nil-rate band](https://www.gov.uk/guidance/inheritance-tax-residence-nil-rate-band) calculator service.
 
 ### Requirements 
-This service is written in Scala and Play 2.6, so needs at least a JRE to run.
+This service is written in Scala and Play 3.0, so needs at least a JRE to run.
 
 ### Running locally
 To run the service locally:
 
     sbt 'run 7111'
 
-You will also need to have the [residence nil-rate band calculator](https://github.com/hmrc/residence-nil-rate-band-calculator) service and
-[Assets Frontend](https://github.com/hmrc/assets-frontend) running.  You can start these manually, or use the following [service manager](https://github.com/hmrc/service-manager) commands:
+You will also need to have the [residence nil-rate band calculator](https://github.com/hmrc/residence-nil-rate-band-calculator) service running.
+
+You can start this manually, or use the following [service manager](https://github.com/hmrc/service-manager) command:
 
     sm --start RNRB
-    sm --start ASSETS_FRONTEND
+
+To run dependencies for the service, use one of the following commands:
+
+    sm --start RNRB_ALL -r
+    sm --start RNRB_DEP -r (only starts dependencies.)
 
 #### Test Coverage
 To run the test coverage suite

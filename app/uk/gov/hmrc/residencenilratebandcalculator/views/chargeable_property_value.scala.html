@@ -14,7 +14,6 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
 @this(
@@ -39,7 +38,7 @@
 
     <p class="govuk-body">@messages("chargeable_property_value.guidance2")</p>
 
-    @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeablePropertyValueController.onSubmit, 'autoComplete -> "off") {
+    @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ChargeablePropertyValueController.onSubmit, Symbol("autoComplete") -> "off") {
 
         @inputValue(
             label = messages("chargeable_property_value.title"),

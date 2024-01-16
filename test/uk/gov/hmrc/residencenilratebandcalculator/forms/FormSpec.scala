@@ -16,25 +16,25 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
+import org.scalatest.Assertion
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.data.{Form, FormError}
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
-import org.scalatest.matchers
-import matchers.should.Matchers.convertToAnyShouldWrapper
 
 trait FormSpec extends BaseSpec {
-  def checkForError(form: Form[_], data: Map[String, String], expectedErrors: Seq[FormError]) = {
+  def checkForError(form: Form[_], data: Map[String, String], expectedErrors: Seq[FormError]): Assertion = {
     form.bind(data).fold(
       formWithErrors => {
         for (error <- formWithErrors.errors) expectedErrors should contain(FormError(error.key, error.message))
         formWithErrors.errors.size shouldBe expectedErrors.size
       },
-      form => {
+      _ => {
         fail("Expected a validation error when binding the form, but it was bound successfully.")
       }
     )
   }
 
-  def error(key: String, value: String) = Seq(FormError(key, value))
+  def error(key: String, value: String): Seq[FormError] = Seq(FormError(key, value))
 
-  lazy val emptyForm = Map[String, String]()
+  lazy val emptyForm: Map[String, String] = Map[String, String]()
 }

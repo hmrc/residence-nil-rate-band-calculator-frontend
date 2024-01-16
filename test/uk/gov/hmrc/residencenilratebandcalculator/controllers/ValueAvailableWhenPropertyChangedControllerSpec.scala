@@ -17,28 +17,28 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import org.jsoup.Jsoup
-import org.mockito.Mockito._
 import org.mockito.ArgumentMatchers._
+import org.mockito.Mockito._
 import play.api.data.FormError
 import play.api.http.Status
-import play.api.i18n.MessagesApi
-import play.api.libs.json.{Reads, Writes, _}
-import play.api.mvc.{DefaultMessagesControllerComponents, Result}
+import play.api.i18n.{Messages, MessagesApi}
+import play.api.inject.Injector
+import play.api.libs.json._
+import play.api.mvc.{AnyContentAsEmpty, DefaultMessagesControllerComponents, Result}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
+import play.twirl.api.HtmlFormat
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, SessionKeys}
+import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
-import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows}
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CacheMap}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_available_when_property_changed
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
-
 import scala.concurrent.Future
-import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, SessionKeys}
-import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 
 class ValueAvailableWhenPropertyChangedControllerSpec extends CommonPlaySpec with HttpResponseMocks with MockSessionConnector with WithCommonFakeApplication{
 
@@ -47,42 +47,42 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends CommonPlaySpec wit
   val errorKeyNonNumeric = "error.non_numeric"
   val errorKeyTooLarge = "error.value_too_large"
 
-  val fakeRequest = FakeRequest("", "").withSession(SessionKeys.sessionId -> "id")
+  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "").withSession(SessionKeys.sessionId -> "id")
 
-  val injector = fakeApplication.injector
+  val injector: Injector = fakeApplication.injector
 
-  val mockConfig = injector.instanceOf[FrontendAppConfig]
+  val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
-  val navigator = injector.instanceOf[Navigator]
+  val navigator: Navigator = injector.instanceOf[Navigator]
 
-  def messagesApi = injector.instanceOf[MessagesApi]
+  def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
 
-  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
 
   val mockValidatedSession: ValidatedSession = injector.instanceOf[ValidatedSession]
 
-  val value_available_when_property_changed = injector.instanceOf[value_available_when_property_changed]
+  val value_available_when_property_changed: value_available_when_property_changed = injector.instanceOf[value_available_when_property_changed]
 
-  def messages = messagesApi.preferred(fakeRequest)
+  def messages: Messages = messagesApi.preferred(fakeRequest)
 
-  def mockRnrbConnector = {
+  def mockRnrbConnector: RnrbConnector = {
     val mockConnector = mock[RnrbConnector]
-    when(mockConnector.getNilRateBand(any[String])(any[HeaderCarrier])) thenReturn Future.successful(HttpResponse(200, Some(JsNumber(100000))))
+    when(mockConnector.getNilRateBand(any[String])(any[HeaderCarrier]))thenReturn Future.successful(HttpResponse(200, Some(JsNumber(100000))))
     mockConnector
   }
 
-  def createView = (value: Option[Map[String, String]]) => {
-    val answerRow = new AnswerRow("What was the date the property was disposed of?", "11 May 2018", routes.DatePropertyWasChangedController.onPageLoad.url)
-    value match {
-      case None => value_available_when_property_changed("£100,000", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge))(fakeRequest, messages)
-      case Some(v) => value_available_when_property_changed("£100,000",
-        NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v))(fakeRequest, messages)
-    }
+  def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
+    case None => value_available_when_property_changed(
+      "£100,000", NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge))(fakeRequest, messages)
+    case Some(v) => value_available_when_property_changed(
+      "£100,000", NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v))(fakeRequest, messages)
   }
 
   def testValue = "100000"
 
-  def createController = () => new ValueAvailableWhenPropertyChangedController(messagesControllerComponents, mockSessionConnector, navigator, mockRnrbConnector, mockValidatedSession, value_available_when_property_changed)
+  def createController: () => ValueAvailableWhenPropertyChangedController = () =>
+    new ValueAvailableWhenPropertyChangedController(
+      messagesControllerComponents, mockSessionConnector, navigator, mockRnrbConnector, mockValidatedSession, value_available_when_property_changed)
 
   "Value Available When Property Changed Controller" must {
 

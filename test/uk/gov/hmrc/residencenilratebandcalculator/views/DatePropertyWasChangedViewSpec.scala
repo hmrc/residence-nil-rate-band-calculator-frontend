@@ -17,28 +17,26 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.DatePropertyWasChangedController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_property_was_changed
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
 
-import scala.language.reflectiveCalls
-
 class DatePropertyWasChangedViewSpec  extends NewDateViewSpecBase {
 
   val messageKeyPrefix = "date_property_was_changed"
-  val date_property_was_changed = injector.instanceOf[date_property_was_changed]
-  def createView(form: Form[Date]) =
-    date_property_was_changed(form)(request, messages)
+  val date_property_was_changed: date_property_was_changed = injector.instanceOf[date_property_was_changed]
+  def createView(form: Form[Date]): HtmlFormat.Appendable = date_property_was_changed(form)(request, messages)
 
   "Date Property Was Changed View" must {
 
-    behave like rnrbPage[Date](createView, messageKeyPrefix, "guidance1", "guidance2")(fakeApplication.injector.instanceOf[DatePropertyWasChangedController].form())
+    behave like rnrbPage[Date](createView, messageKeyPrefix, "guidance1", "guidance2")(fakeApplication().injector.instanceOf[DatePropertyWasChangedController].form())
 
-    behave like pageWithoutBackLink[Date](createView, fakeApplication.injector.instanceOf[DatePropertyWasChangedController].form())
+    behave like pageWithoutBackLink[Date](createView, fakeApplication().injector.instanceOf[DatePropertyWasChangedController].form())
 
     behave like datePage(createView, messageKeyPrefix,
-      DatePropertyWasChangedController.onSubmit.url, "dateOfDownsizing", dateOfDownsizingForm, fakeApplication.injector.instanceOf[DatePropertyWasChangedController].form())
+      DatePropertyWasChangedController.onSubmit.url, "dateOfDownsizing", dateOfDownsizingForm, fakeApplication().injector.instanceOf[DatePropertyWasChangedController].form())
   }
 }

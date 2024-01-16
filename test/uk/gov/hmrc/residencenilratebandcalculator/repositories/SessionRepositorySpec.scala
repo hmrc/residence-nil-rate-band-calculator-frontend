@@ -18,18 +18,18 @@ package uk.gov.hmrc.residencenilratebandcalculator.repositories
 
 import play.api.Configuration
 import play.api.libs.json.Json
-import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.mongo.test.DefaultPlayMongoRepositorySupport
 import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
+import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 
 class SessionRepositorySpec extends CommonPlaySpec with DefaultPlayMongoRepositorySupport[DatedCacheMap] with WithCommonFakeApplication{
 
-  lazy val repository =  new ReactiveMongoRepository(
+  lazy val repository = new SessionRepository(
     config = fakeApplication.injector.instanceOf[Configuration],
-    mongo = mongoComponent
+    mongoComponent = mongoComponent
   )
 
-  val cacheMap = CacheMap("id", Map("string" -> Json.toJson("testData")))
+  val cacheMap: CacheMap = CacheMap("id", Map("string" -> Json.toJson("testData")))
 
   "SessionRepository" should {
     "return None for a missing user session" when {

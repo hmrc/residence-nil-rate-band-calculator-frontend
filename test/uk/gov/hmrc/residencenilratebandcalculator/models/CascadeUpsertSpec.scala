@@ -16,21 +16,22 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import play.api.libs.json.{JodaWrites, JsBoolean, JsNumber, JsString}
-import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
+import play.api.libs.json.{JsBoolean, JsNumber, JsString}
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
-import org.scalatest.matchers
-import matchers.should.Matchers.convertToAnyShouldWrapper
 
-class CascadeUpsertSpec extends BaseSpec with JodaWrites {
+import java.time.LocalDate
+
+
+class CascadeUpsertSpec extends BaseSpec {
 
   val cacheMapKey = "a"
   val testNumber = 123
   val newTestNumber = 456
-  val oneDayBeforeDownsizingEligibilityDate = Constants.downsizingEligibilityDate.minusDays(1)
-  val oneDayBeforeEligibilityDate = Constants.eligibilityDate.minusDays(1)
+  val oneDayBeforeDownsizingEligibilityDate: LocalDate = Constants.downsizingEligibilityDate.minusDays(1)
+  val oneDayBeforeEligibilityDate: LocalDate = Constants.eligibilityDate.minusDays(1)
 
-  val fullCacheMap = CacheMap(cacheMapKey, Map(
+  val fullCacheMap: CacheMap = CacheMap(cacheMapKey, Map(
     Constants.dateOfDeathId -> JsString("2020-01-01"),
     Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
     Constants.valueOfEstateId -> JsNumber(testNumber),

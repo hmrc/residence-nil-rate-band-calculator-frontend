@@ -16,15 +16,14 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.session_expired
-import org.scalatest.matchers
-import matchers.should.Matchers.convertToAnyShouldWrapper
 
 class SessionExpiredViewSpec extends ViewSpecBase {
 
   val messageKeyPrefix = "session_expired"
-  val session_expired = injector.instanceOf[session_expired]
+  val session_expired: session_expired = injector.instanceOf[session_expired]
   "Session Expired view" must {
     "display the correct browser title" in {
       val doc = asDocument(session_expired()(request, messages))

@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.DefaultMessagesControllerComponents
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_in_estate
@@ -27,22 +28,22 @@ class PropertyInEstateControllerSpec extends NewSimpleControllerSpecBase {
   val messageKey = "property_in_estate.error.required"
   val messageKeyPrefix = "property_in_estate"
 
-  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-  val property_in_estate = injector.instanceOf[property_in_estate]
+  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val property_in_estate: property_in_estate = injector.instanceOf[property_in_estate]
   "Property In Estate Controller" must {
 
-    def createView = (value: Option[Map[String, String]]) => {
-      value match {
-        case None => property_in_estate(BooleanForm.apply(messageKey))(fakeRequest, messages)
-        case Some(v) => property_in_estate(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
-      }
+    def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
+      case None => property_in_estate(BooleanForm.apply(messageKey))(fakeRequest, messages)
+      case Some(v) => property_in_estate(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
     }
 
-    def createController = () => new PropertyInEstateController(messagesControllerComponents, mockSessionConnector, navigator, property_in_estate)
+    def createController: () => PropertyInEstateController = () => new PropertyInEstateController(
+      messagesControllerComponents, mockSessionConnector, navigator, property_in_estate)
 
     val testValue = true
 
-    behave like rnrbController[Boolean](createController, createView, Constants.propertyInEstateId, messageKeyPrefix, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+    behave like rnrbController[Boolean](
+      createController, createView, Constants.propertyInEstateId, messageKeyPrefix, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
 
     behave like nonStartingController[Boolean](createController,
       List(Constants.dateOfDeathId,

@@ -16,20 +16,25 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
+import org.jsoup.nodes.Document
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.threshold_calculation_result
-import org.scalatest.matchers
-import matchers.should.Matchers.convertToAnyShouldWrapper
 
 import scala.language.reflectiveCalls
 
 class ThresholdCalculationResultViewSpec extends HtmlSpec {
 
-  val threshold_calculation_result = injector.instanceOf[threshold_calculation_result]
+  val threshold_calculation_result: threshold_calculation_result = injector.instanceOf[threshold_calculation_result]
 
-  def fixture() = new {
-    val view = threshold_calculation_result("£10.00")(request, messages)
-    val doc = asDocument(view)
+  def fixture(): Object {
+    val view: HtmlFormat.Appendable
+
+    val doc: Document
+  } = new {
+    val view: HtmlFormat.Appendable = threshold_calculation_result("£10.00")(request, messages)
+    val doc: Document = asDocument(view)
   }
 
   "Threshold Calculation Result View" when {

@@ -16,8 +16,8 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.connectors
 
-import javax.inject.{Inject, Singleton}
 import play.api.libs.json._
+import uk.gov.hmrc.http.HttpReads.Implicits.readRaw
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.play.bootstrap.http.DefaultHttpClient
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
@@ -25,6 +25,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.exceptions.JsonInvalidExceptio
 import uk.gov.hmrc.residencenilratebandcalculator.json.JsonErrorProcessor
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, CalculationResult}
 
+import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
 
@@ -34,41 +35,35 @@ class RnrbConnector @Inject()(val http: DefaultHttpClient,
 
   lazy val serviceUrl: String = config.serviceUrl
   val baseSegment = "/residence-nil-rate-band-calculator/"
-  val schemaBaseSegment = s"${baseSegment}api/conf/0.1/schemas/"
   val jsonContentTypeHeader: (String, String) = ("Content-Type", "application/json")
 
-  def getStyleGuide()(implicit hc: HeaderCarrier): Future[HttpResponse] = http.GET(s"$serviceUrl${baseSegment}style-guide")
+  implicit val calculationResultWrites: Writes[CalculationInput] = Writes { (input: CalculationInput) =>
 
-  implicit val calculationResultWrites: Writes[CalculationInput] = new Writes[CalculationInput] {
-    def writes(o : CalculationInput): JsValue = {
-      import play.api.libs.json.JodaWrites.DefaultJodaLocalDateWrites
-
-      val propertyValueAfter = o.propertyValueAfterExemption match {
-        case Some(pvae) => Json.obj("propertyValueAfterExemption" -> pvae)
-        case _          => Json.obj()
-      }
-
-      val downsizingDetails = o.downsizingDetails match {
-        case Some(down) => Json.obj("downsizingDetails" ->
-          Json.obj(
-            "datePropertyWasChanged" -> Json.toJson(down.datePropertyWasChanged),
-            "valueOfChangedProperty" -> Json.toJson(down.valueOfChangedProperty),
-            "valueOfAssetsPassing" -> Json.toJson(down.valueOfAssetsPassing),
-            "valueAvailableWhenPropertyChanged" -> Json.toJson(down.valueAvailableWhenPropertyChanged)
-          )
-        )
-        case _          => Json.obj()
-      }
-
-      Json.obj(
-        "dateOfDeath" -> Json.toJson(o.dateOfDeath),
-        "valueOfEstate" -> Json.toJson(o.valueOfEstate),
-        "chargeableEstateValue" -> Json.toJson(o.chargeableEstateValue),
-        "propertyValue" -> Json.toJson(o.propertyValue),
-        "percentagePassedToDirectDescendants" -> Json.toJson(o.percentagePassedToDirectDescendants),
-        "valueBeingTransferred" -> Json.toJson(o.valueBeingTransferred)
-      ) ++ propertyValueAfter ++ downsizingDetails
+    val propertyValueAfter = input.propertyValueAfterExemption match {
+      case Some(pvae) => Json.obj("propertyValueAfterExemption" -> pvae)
+      case _ => Json.obj()
     }
+
+    val downsizingDetails = input.downsizingDetails match {
+      case Some(down) => Json.obj("downsizingDetails" ->
+        Json.obj(
+          "datePropertyWasChanged" -> Json.toJson(down.datePropertyWasChanged),
+          "valueOfChangedProperty" -> Json.toJson(down.valueOfChangedProperty),
+          "valueOfAssetsPassing" -> Json.toJson(down.valueOfAssetsPassing),
+          "valueAvailableWhenPropertyChanged" -> Json.toJson(down.valueAvailableWhenPropertyChanged)
+        )
+      )
+      case _ => Json.obj()
+    }
+
+    Json.obj(
+      "dateOfDeath" -> Json.toJson(input.dateOfDeath),
+      "valueOfEstate" -> Json.toJson(input.valueOfEstate),
+      "chargeableEstateValue" -> Json.toJson(input.chargeableEstateValue),
+      "propertyValue" -> Json.toJson(input.propertyValue),
+      "percentagePassedToDirectDescendants" -> Json.toJson(input.percentagePassedToDirectDescendants),
+      "valueBeingTransferred" -> Json.toJson(input.valueBeingTransferred)
+    ) ++ propertyValueAfter ++ downsizingDetails
   }
 
   def send(input: CalculationInput) (implicit hc: HeaderCarrier): Future[Try[CalculationResult]] = sendJson(Json.toJson(input))

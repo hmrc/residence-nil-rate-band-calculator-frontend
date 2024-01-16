@@ -16,27 +16,22 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import com.ibm.icu.text.SimpleDateFormat
-import com.ibm.icu.util.{TimeZone, ULocale}
-import org.joda.time.LocalDate
 import play.api.i18n.Messages
 import play.api.mvc.Call
 import uk.gov.hmrc.residencenilratebandcalculator.utils.{CurrencyFormatter, PercentageFormatter}
+
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 
 case class AnswerRow(title: String, data: String, url: String)
 
 object AnswerRow {
   private def formattedDate(localDate: LocalDate, msgs: Messages) = {
-    val defaultTimeZone = TimeZone.getTimeZone("Europe/London")
 
-    val langCode: String = msgs.lang.code
-    val validLang: Boolean = ULocale.getAvailableLocales.contains(new ULocale(langCode))
-    val locale: ULocale = if (validLang) new ULocale(langCode) else ULocale.getDefault
-    val sdf = new SimpleDateFormat("d MMMM y", locale)
+    val formatter = DateTimeFormatter.ofPattern("d MMMM y", msgs.lang.toLocale)
 
-    sdf.setTimeZone(defaultTimeZone)
-    sdf.format(localDate.toDate)
+    formatter.format(localDate)
   }
 
   def apply(titleKey: String, amount: Int, url: Call)(messages: Messages): AnswerRow = {

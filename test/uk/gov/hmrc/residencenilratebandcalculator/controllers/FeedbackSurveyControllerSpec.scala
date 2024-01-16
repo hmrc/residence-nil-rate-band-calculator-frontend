@@ -31,7 +31,7 @@ class FeedbackSurveyControllerSpec extends MockSessionConnector with CommonPlayS
   lazy val injector: Injector = fakeApplication.injector
   implicit lazy val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
   val mockValidatedSession: ValidatedSession = injector.instanceOf[ValidatedSession]
-  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
 
   "Feedback Survey controller" must {
     "return 303 for a GET" in {

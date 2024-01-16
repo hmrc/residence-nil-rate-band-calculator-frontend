@@ -35,7 +35,7 @@
     pageTitle = title
 ) {
 
-    @uiForm(action = TransferAvailableWhenPropertyChangedController.onSubmit, 'autoComplete -> "off") {
+    @uiForm(action = TransferAvailableWhenPropertyChangedController.onSubmit, Symbol("autoComplete") -> "off") {
 
         @errorSummary(form.errors)
 

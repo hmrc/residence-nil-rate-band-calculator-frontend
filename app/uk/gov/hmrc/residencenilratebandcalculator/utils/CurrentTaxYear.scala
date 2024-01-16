@@ -16,16 +16,12 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
-import org.joda.time.{DateTime, DateTimeZone, LocalDate, MonthDay}
+import java.time.{LocalDate, MonthDay}
 
 trait CurrentTaxYear {
-  final val ukTime: DateTimeZone = DateTimeZone.forID("Europe/London")
-  private val startOfTaxYear = new MonthDay(4, 6)
-  def now: () => DateTime
+  private val startOfTaxYear = MonthDay.of(4, 6)
+  def now: () => LocalDate
 
-  final def current: TaxYear = taxYearFor(today)
-
-  final def today = new LocalDate(now(), ukTime)
   final def taxYearFor(date: LocalDate): TaxYear = {
     if (date isBefore firstDayOfTaxYear(date.getYear)) {
       TaxYear(startYear = date.getYear - 1)
@@ -34,5 +30,5 @@ trait CurrentTaxYear {
     }
   }
 
-  final def firstDayOfTaxYear(year: Int) = startOfTaxYear.toLocalDate(year)
+  final def firstDayOfTaxYear(year: Int): LocalDate = startOfTaxYear.atYear(year)
 }

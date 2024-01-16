@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
 import play.api.mvc.DefaultMessagesControllerComponents
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.Navigator
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueBeingTransferredController
@@ -26,21 +27,19 @@ import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_being_transferred
 
-import scala.language.reflectiveCalls
-
 class ValueBeingTransferredViewSpec extends NewIntViewSpecBase {
 
   val messageKeyPrefix = "value_being_transferred"
-  val navigator = injector.instanceOf[Navigator]
+  val navigator: Navigator = injector.instanceOf[Navigator]
   var mockSessionConnector: SessionConnector = _
   val mockRnrbConnector : RnrbConnector = mock[RnrbConnector]
   val mockValidatedSession: ValidatedSession = mock[ValidatedSession]
-  val value_being_transferred = injector.instanceOf[value_being_transferred]
-  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val value_being_transferred: value_being_transferred = injector.instanceOf[value_being_transferred]
+  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
 
-  val controller = new ValueBeingTransferredController(messagesControllerComponents, mockSessionConnector, navigator, mockRnrbConnector, mockValidatedSession, value_being_transferred).form()
+  val controller: Form[Int] = new ValueBeingTransferredController(messagesControllerComponents, mockSessionConnector, navigator, mockRnrbConnector, mockValidatedSession, value_being_transferred).form()
 
-  def createView(form: Form[Int]) = value_being_transferred("100000", form)(request, messages)
+  def createView(form: Form[Int]): HtmlFormat.Appendable = value_being_transferred("100000", form)(request, messages)
 
   "Value Being Transferred View" must {
 

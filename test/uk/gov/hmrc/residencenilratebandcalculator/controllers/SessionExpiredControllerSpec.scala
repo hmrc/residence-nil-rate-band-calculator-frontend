@@ -34,10 +34,10 @@ class SessionExpiredControllerSpec extends CommonPlaySpec with MockSessionConnec
 
   def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
   def messages: Messages = messagesApi.preferred(request)
-  val fakeRequest = FakeRequest("", "")
+  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
 
-  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-  val session_expired = injector.instanceOf[session_expired]
+  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val session_expired: session_expired = injector.instanceOf[session_expired]
   "Session Expired controller" must {
 
     "return 200 for a GET" in {

@@ -16,10 +16,9 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
-import org.scalatest.matchers
-import matchers.should.Matchers.convertToAnyShouldWrapper
 
 trait NewIntViewSpecBase extends NewViewSpecBase {
 
@@ -28,7 +27,7 @@ trait NewIntViewSpecBase extends NewViewSpecBase {
   def intPage(createView: (Form[Int]) => HtmlFormat.Appendable,
               messageKeyPrefix: String,
               expectedFormAction: String,
-              form: Form[Int], emptyForm: Form[Int]) = {
+              form: Form[Int], emptyForm: Form[Int]): Unit = {
 
     behave like questionPage[Int](createView, messageKeyPrefix, expectedFormAction, emptyForm)
 

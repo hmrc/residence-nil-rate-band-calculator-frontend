@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.connectors
 
-import org.joda.time.LocalDate
 import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito._
@@ -26,11 +25,12 @@ import play.api.http.Status
 import play.api.libs.json._
 import uk.gov.hmrc.http.{HeaderCarrier, HttpReads, HttpResponse}
 import uk.gov.hmrc.play.bootstrap.http.DefaultHttpClient
+import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.JsonInvalidException
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, CalculationResult}
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 
+import java.time.LocalDate
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
@@ -44,28 +44,28 @@ class RnrbConnectorSpec extends CommonPlaySpec
     super.beforeEach()
   }
 
-  val httpMock = mock[DefaultHttpClient]
-  val configMock = mock[FrontendAppConfig]
+  val httpMock: DefaultHttpClient = mock[DefaultHttpClient]
+  val configMock: FrontendAppConfig = mock[FrontendAppConfig]
 
-  def getHttpMock(returnedData: JsValue) = {
+  def getHttpMock(returnedData: JsValue): DefaultHttpClient = {
     when(httpMock.POST(anyString, any[JsValue], any[Seq[(String, String)]])(any[Writes[JsValue]], any[HttpReads[Any]],
-      any[HeaderCarrier], any())) thenReturn Future.successful(HttpResponse.apply(Status.OK, Some(returnedData)))
-    when(httpMock.GET(any())(any[HttpReads[Any]], any[HeaderCarrier], any())) thenReturn Future.successful(HttpResponse.apply(Status.OK, Some(returnedData)))
+      any[HeaderCarrier], any())) thenReturn Future.successful(HttpResponse(Status.OK, returnedData.toString()))
+    when(httpMock.GET(any())(any[HttpReads[Any]], any[HeaderCarrier], any())) thenReturn Future.successful(HttpResponse(Status.OK, returnedData.toString()))
     httpMock
   }
 
-  val minimalJson = JsObject(Map[String, JsValue]())
+  val minimalJson: JsObject = JsObject(Map[String, JsValue]())
 
-  val dateOfDeath = new LocalDate(2020, 1, 1)
+  val dateOfDeath: LocalDate = LocalDate.of(2020, 1, 1)
   val valueOfEstate = 1
   val chargeableEstateValue = 2
-  val calculationInput = CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, 0, 0, 0, None, None)
+  val calculationInput: CalculationInput = CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, 0, 0, 0, None, None)
 
   "RNRB Connector" when {
 
     "provided with a Calculation Input" must {
       "call the Microservice with the given JSON" in {
-        implicit val headerCarrierNapper = ArgumentCaptor.forClass(classOf[HeaderCarrier])
+        implicit val headerCarrierNapper: ArgumentCaptor[HeaderCarrier] = ArgumentCaptor.forClass(classOf[HeaderCarrier])
         implicit val httpReadsNapper = ArgumentCaptor.forClass(classOf[HttpReads[Any]])
         implicit val jsonWritesNapper = ArgumentCaptor.forClass(classOf[Writes[JsValue]])
         val urlCaptor = ArgumentCaptor.forClass(classOf[String])
@@ -109,7 +109,7 @@ class RnrbConnectorSpec extends CommonPlaySpec
         result match {
           case Failure(exception) =>
             exception shouldBe a[JsonInvalidException]
-          case Success(_) => fail
+          case Success(_) => fail()
         }
       }
     }
@@ -161,7 +161,7 @@ class RnrbConnectorSpec extends CommonPlaySpec
         result match {
           case Failure(exception) =>
             exception shouldBe a[JsonInvalidException]
-          case Success(_) => fail
+          case Success(_) => fail()
         }
       }
     }

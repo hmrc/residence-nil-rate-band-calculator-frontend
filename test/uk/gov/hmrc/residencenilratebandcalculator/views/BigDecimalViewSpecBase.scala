@@ -16,19 +16,18 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
-import org.scalatest.matchers
-import matchers.should.Matchers.convertToAnyShouldWrapper
 
 trait BigDecimalViewSpecBase extends ViewSpecBase {
 
-  val number = BigDecimal(50.01)
+  val number: BigDecimal = BigDecimal(50.01)
 
   def bigDecimalPage(createView: (Form[BigDecimal]) => HtmlFormat.Appendable,
                      messageKeyPrefix: String,
                      expectedFormAction: String,
-                     form: Form[BigDecimal], emptyForm: Form[BigDecimal]) = {
+                     form: Form[BigDecimal], emptyForm: Form[BigDecimal]): Unit = {
     behave like questionPage[BigDecimal](createView, messageKeyPrefix, expectedFormAction, emptyForm)
 
     "behave like a page with an big decimal value field" when {

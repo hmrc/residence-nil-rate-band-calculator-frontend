@@ -22,7 +22,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.playComponents.answ
 
 class AnswerRowsViewSpec extends HtmlSpec {
 
-  val answer_rows = injector.instanceOf[answer_rows]
+  val answer_rows: answer_rows = injector.instanceOf[answer_rows]
 
   "Answer Rows View Spec" when {
     "rendered" must {

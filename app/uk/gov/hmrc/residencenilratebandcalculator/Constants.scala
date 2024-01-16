@@ -15,10 +15,9 @@
  */
 
 package uk.gov.hmrc.residencenilratebandcalculator
-
-import org.joda.time.LocalDate
-import play.api.mvc.Call
 import uk.gov.hmrc.residencenilratebandcalculator.models.RadioOption
+
+import java.time.LocalDate
 
 object Constants {
   val assetsPassingToDirectDescendantsId = "AssetsPassingToDirectDescendants"
@@ -39,8 +38,8 @@ object Constants {
   val grossingUpOnEstatePropertyId = "GrossingUpOnEstateProperty"
   val grossingUpOnEstateAssetsId = "GrossingUpOnEstateAssets"
   val downsizingDetails = "downsizingDetails"
-  val downsizingEligibilityDate = new LocalDate(2015, 7, 8)
-  val eligibilityDate = new LocalDate(2017, 4, 6)
+  val downsizingEligibilityDate: LocalDate = LocalDate.of(2015, 7, 8)
+  val eligibilityDate: LocalDate = LocalDate.of(2017, 4, 6)
   val propertyInEstateId = "PropertyInEstate"
   val valueOfEstateId = "ValueOfEstate"
   val percentagePassedToDirectDescendantsId = "PercentagePassedToDirectDescendants"
@@ -54,16 +53,13 @@ object Constants {
   val all = "all"
   val some = "some"
   val none = "none"
-  val propertyPassingToDirectDescendantsOptions = Seq(
+  val propertyPassingToDirectDescendantsOptions: Seq[RadioOption] = Seq(
     RadioOption("property_passing_to_direct_descendants", all),
     RadioOption("property_passing_to_direct_descendants", some),
     RadioOption("property_passing_to_direct_descendants", none)
   )
 
-  val callExitService =
-    Call("GET", "https://www.gov.uk/guidance/check-if-you-can-get-an-additional-inheritance-tax-threshold")
-
-  val bigDecimal100 = BigDecimal(100)
-  val bigDecimalZero = BigDecimal(0)
+  val bigDecimal100: BigDecimal = BigDecimal(100)
+  val bigDecimalZero: BigDecimal = BigDecimal(0)
   val intFour = 4
 }
