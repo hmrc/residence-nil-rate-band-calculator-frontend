@@ -18,7 +18,8 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.mvc.DefaultMessagesControllerComponents
 import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
+import uk.gov.hmrc.residencenilratebandcalculator.forms.DatePropertyWasChangedForm._
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_property_was_changed
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
@@ -28,19 +29,21 @@ class DatePropertyWasChangedControllerSpec extends DateControllerSpecBase {
 
   val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
   val date_property_was_changed: date_property_was_changed = injector.instanceOf[date_property_was_changed]
+  val mockValidatedSession: ValidatedSession = injector.instanceOf[ValidatedSession]
+
 
   "Date Property Was Changed Controller" must {
 
     def createView: Option[Date] => HtmlFormat.Appendable = {
-      case None => date_property_was_changed(dateOfDownsizingForm)(fakeRequest, messages)
-      case Some(v) => date_property_was_changed(dateOfDownsizingForm.fill(v))(fakeRequest, messages)
+      case None => date_property_was_changed(datePropertyWasChangedForm(messages))(fakeRequest, messages)
+      case Some(v) => date_property_was_changed(datePropertyWasChangedForm(messages).fill(v))(fakeRequest, messages)
     }
 
     def createController: () => DatePropertyWasChangedController = () =>
-      new DatePropertyWasChangedController(messagesControllerComponents, mockSessionConnector, navigator, date_property_was_changed)
+      new DatePropertyWasChangedController(messagesControllerComponents, mockSessionConnector, navigator, mockValidatedSession, date_property_was_changed)
 
     behave like rnrbDateController(
-      createController, createView, Constants.datePropertyWasChangedId, "dateOfDownsizing")(Date.dateReads, Date.dateWrites)
+      createController, createView, Constants.datePropertyWasChangedId, "datePropertyWasChanged")(Date.dateReads, Date.dateWrites)
 
     behave like nonStartingDateController(createController,
       List(Constants.dateOfDeathId,

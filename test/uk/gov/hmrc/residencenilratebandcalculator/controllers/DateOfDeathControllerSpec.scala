@@ -27,7 +27,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
-import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
+import uk.gov.hmrc.residencenilratebandcalculator.forms.DateOfDeathForm._
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CacheMap, Date}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
@@ -92,8 +92,8 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase with CommonPlaySp
   "Date of Death Controller" must {
 
     def createView: Option[Date] => HtmlFormat.Appendable = {
-      case None => date_of_death(dateOfDeathForm)(fakeRequest, messages)
-      case Some(v) => date_of_death(dateOfDeathForm.fill(v))(fakeRequest, messages)
+      case None => date_of_death(dateOfDeathForm(messages))(fakeRequest, messages)
+      case Some(v) => date_of_death(dateOfDeathForm(messages).fill(v))(fakeRequest, messages)
     }
 
     def createController: () => DateOfDeathController = () =>

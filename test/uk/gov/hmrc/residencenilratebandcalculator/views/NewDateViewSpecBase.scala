@@ -16,10 +16,12 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
+
 import java.time.LocalDate
+
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
+import uk.gov.hmrc.residencenilratebandcalculator.forms.DateOfDeathForm._
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import org.scalatest.matchers
 import matchers.should.Matchers.convertToAnyShouldWrapper

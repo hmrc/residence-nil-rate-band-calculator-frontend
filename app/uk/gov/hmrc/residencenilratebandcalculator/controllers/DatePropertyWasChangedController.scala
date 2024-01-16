@@ -18,28 +18,56 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
 import play.api.data.Form
-import play.api.mvc.{DefaultMessagesControllerComponents, Request}
+import play.api.libs.json.{Reads, Writes}
+import play.api.mvc.{Action, AnyContent, DefaultMessagesControllerComponents, Request}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm._
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
+import uk.gov.hmrc.residencenilratebandcalculator.forms.DatePropertyWasChangedForm._
 import uk.gov.hmrc.residencenilratebandcalculator.models.{Date, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_property_was_changed
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class DatePropertyWasChangedController @Inject()(cc: DefaultMessagesControllerComponents,
-                                                 override val sessionConnector: SessionConnector,
-                                                 override val navigator: Navigator,
+                                                 val sessionConnector: SessionConnector,
+                                                 val navigator: Navigator,
+                                                 validatedSession: ValidatedSession,
                                                  datePropertyWasChangedView: date_property_was_changed)
-                                                (override implicit val ec: ExecutionContext) extends FrontendController(cc) with SimpleControllerBase[Date]{
+                                                (implicit val ec: ExecutionContext) extends FrontendController(cc) with ControllerBase[Date] {
 
   val controllerId: String = Constants.datePropertyWasChangedId
 
-  def form = () => dateOfDownsizingForm
-
-  def view(form: Form[Date], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+  def view(form: Form[Date])(implicit request: Request[_]) = {
     datePropertyWasChangedView(form)
+  }
+
+  def onPageLoad(implicit rds: Reads[Date]): Action[AnyContent] = Action.async { implicit request =>
+    sessionConnector.fetch().map {
+      case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
+      case Some(cacheMap) => {
+          val datePropertyWasChanged = cacheMap.getEntry[Date](controllerId)
+          Ok(view(datePropertyWasChanged.fold(datePropertyWasChangedForm)(value => datePropertyWasChangedForm.fill(value))))
+        }
+    }
+  }
+
+  def onSubmit(implicit wts: Writes[Date]): Action[AnyContent] = validatedSession.async { implicit request =>
+    sessionConnector.fetch().flatMap {
+      case None => Future.successful(Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad))
+      case Some(_) => {
+        val boundForm = datePropertyWasChangedForm.bindFromRequest()
+        boundForm.fold(
+          (formWithErrors: Form[Date]) => {
+            Future.successful(BadRequest(view(formWithErrors)))
+          },
+          value =>
+            sessionConnector.cache[Date](controllerId, value).map(cacheMap =>
+              Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
+        )
+      }
+    }
   }
 }

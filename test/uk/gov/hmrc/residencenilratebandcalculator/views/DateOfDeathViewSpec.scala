@@ -18,11 +18,10 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.DateOfDeathController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
-import uk.gov.hmrc.residencenilratebandcalculator.forms.DateForm.dateOfDeathForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.DateOfDeathForm._
 
 class DateOfDeathViewSpec extends NewDateViewSpecBase {
 
@@ -32,12 +31,12 @@ class DateOfDeathViewSpec extends NewDateViewSpecBase {
 
   "Date of Death View" must {
 
-    behave like rnrbPage[Date](createView, messageKeyPrefix, "guidance")(fakeApplication().injector.instanceOf[DateOfDeathController].form)
+    behave like rnrbPage[Date](createView, messageKeyPrefix, "guidance")(dateOfDeathForm)
 
-    behave like datePage(createView, messageKeyPrefix, DateOfDeathController.onSubmit.url, "dateOfDeath",dateOfDeathForm,fakeApplication().injector.instanceOf[DateOfDeathController].form)
+    behave like datePage(createView, messageKeyPrefix, DateOfDeathController.onSubmit.url, "dateOfDeath", dateOfDeathForm,dateOfDeathForm)
 
     "display the correct example" in {
-      val doc = asDocument(createView(fakeApplication().injector.instanceOf[DateOfDeathController].form))
+      val doc = asDocument(createView(dateOfDeathForm))
       assertContainsMessages(doc, s"$messageKeyPrefix.example")
     }
   }

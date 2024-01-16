@@ -39,7 +39,7 @@ trait HtmlSpec extends BaseSpec { self: PlaySpec =>
   implicit lazy val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
   def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
-  def messages: Messages = messagesApi.preferred(request)
+  implicit val messages: Messages = messagesApi.preferred(request)
 
   def asDocument(html: Html): Document = Jsoup.parse(html.toString())
 
