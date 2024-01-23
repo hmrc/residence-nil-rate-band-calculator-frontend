@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,22 +17,16 @@
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
 import play.api.data.Form
-import play.api.data.Forms._
-import uk.gov.hmrc.residencenilratebandcalculator.forms.mappings.DateMapping
+import play.api.data.Forms.{mapping, of}
+import play.api.i18n.Messages
+import uk.gov.hmrc.residencenilratebandcalculator.forms.formatters.DateFormatter
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 
+object DateOfDeathForm {
 
-object DateForm {
-
-  val dateOfDeathForm: Form[Date] = Form(
+  def dateOfDeathForm(implicit messages: Messages): Form[Date] = Form(
     mapping(
-      "dateOfDeath" -> DateMapping.dateOfDeath
-    )(Date.apply)(Date.unapply)
-  )
-
-  val dateOfDownsizingForm: Form[Date] = Form(
-    mapping(
-      "dateOfDownsizing" -> DateMapping.downSizingDate
+      "dateOfDeath" -> of(DateFormatter("dateOfDeath"))
     )(Date.apply)(Date.unapply)
   )
 }

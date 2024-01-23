@@ -36,7 +36,7 @@
 ) {
     @uiForm(action = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.DateOfDeathController.onSubmit, Symbol("autoComplete") -> "off") {
 
-        @errorSummary(form.errors, key => s"$key.day")
+        @errorSummary(form.errors.headOption.toList, errorSuffixes = Some(Map("dateOfDeath" -> "day")))
 
         @heading(messages("date_of_death.title"))
 

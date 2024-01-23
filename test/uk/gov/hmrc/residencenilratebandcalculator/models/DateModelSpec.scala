@@ -22,7 +22,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
 import java.time.LocalDate
 
-class DateModelSpec extends BaseSpec {
+class DateSpec extends BaseSpec {
   "Date Model" must {
     "write itself as JSON exactly as if it were a Java LocalDate" in {
       val day = 1

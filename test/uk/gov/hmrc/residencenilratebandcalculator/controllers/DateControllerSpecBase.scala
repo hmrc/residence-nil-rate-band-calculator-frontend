@@ -28,7 +28,6 @@ import uk.gov.hmrc.http.SessionKeys
 import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CacheMap, Date}
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
-
 import java.time.LocalDate
 
 trait DateControllerSpecBase extends CommonPlaySpec with MockSessionConnector with WithCommonFakeApplication {
@@ -86,7 +85,7 @@ trait DateControllerSpecBase extends CommonPlaySpec with MockSessionConnector wi
       val value = "not a number"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody((s"$date${".day"}", value), (s"$date${".month"}", value), (s"$date${".year"}", value)).withMethod("POST")
       val result = createController().onSubmit(wts)(fakePostRequest)
-      contentAsString(result) should include("Give a correct date")
+      contentAsString(result) should include(messages(s"$date.error.invalid"))
     }
 
     "not store invalid submitted data" in {
@@ -108,7 +107,7 @@ trait DateControllerSpecBase extends CommonPlaySpec with MockSessionConnector wi
     }
   }
 
-  def nonStartingDateController(createController: () => SimpleControllerBase[Date], answerRowConstants: List[String]): Unit = {
+  def nonStartingDateController(createController: () => DatePropertyWasChangedController, answerRowConstants: List[String]): Unit = {
     "On a page load with an expired session, return a redirect to an expired session page" in {
       expireSessionConnector()
 
