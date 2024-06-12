@@ -326,8 +326,8 @@ value_available_when_property_changed.error.blank = Rhowch werth ar gyfer faint 
 
 value_being_transferred.browser_title = Faint o haen gyfradd sero breswyl drosglwyddadwy yr ydych yn ei hawlio?
 value_being_transferred.title = Faint o haen gyfradd sero breswyl drosglwyddadwy yr ydych yn ei hawlio?
-value_being_transferred.guidance1 = Dyma''r rhif yn naill ai blwch 15 neu flwch 21 ar y ffurflen IHT436.
-value_being_transferred.guidance2 = Os bu''r ymadawedig yn briod neu mewn partneriaeth sifil mwy nag unwaith yn ystod ei oes/hoes, a bu farw''i briod/phriod neu''i bartner/phartner sifil yn gyntaf, gallwch drosglwyddo mwy nag un lwfans.  Adiwch at ei gilydd y rhifau yn naill ai blwch 15 neu flwch 21 ar bob ffurflen IHT436.
+value_being_transferred.guidance1 = Dyma''r rhif yn naill ai blwch 15 neu flwch 22 ar y ffurflen IHT436.
+value_being_transferred.guidance2 = Os bu''r ymadawedig yn briod neu mewn partneriaeth sifil mwy nag unwaith yn ystod ei oes/hoes, a bu farw''i briod/phriod neu''i bartner/phartner sifil yn gyntaf, gallwch drosglwyddo mwy nag un lwfans.  Adiwch at ei gilydd y rhifau yn naill ai blwch 15 neu flwch 22 ar bob ffurflen IHT436.
 value_being_transferred.error = Rhowch werth nad yw''n fwy na''r uchafswm o £{0} a ganiateir yn {1} i {2}
 value_being_transferred.error.blank = Rhowch werth ar gyfer swm yr haen gyfradd sero breswyl sydd heb ei defnyddio yr ydych yn ei drosglwyddo o''r ffurflen IHT436
 
