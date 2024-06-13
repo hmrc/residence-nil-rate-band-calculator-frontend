@@ -4,10 +4,10 @@ resolvers += Resolver.url("hmrc-sbt-plugin-releases", url("https://artefacts.tax
 resolvers += "hmrc-releases" at "https://artefacts.tax.service.gov.uk/artifactory/hmrc-releases/"
 
 
-addSbtPlugin("uk.gov.hmrc"         % "sbt-auto-build"          % "3.20.0")
+addSbtPlugin("uk.gov.hmrc"         % "sbt-auto-build"          % "3.22.0")
 addSbtPlugin("org.playframework"   % "sbt-plugin"              % "3.0.0")
 addSbtPlugin("io.github.irundaia"  % "sbt-sassify"             % "1.5.2")
-addSbtPlugin("uk.gov.hmrc"         % "sbt-distributables"      % "2.4.0")
+addSbtPlugin("uk.gov.hmrc"         % "sbt-distributables"      % "2.5.0")
 addSbtPlugin("net.virtual-void"    % "sbt-dependency-graph"    % "0.9.2")
 addSbtPlugin("org.scalastyle"      % "scalastyle-sbt-plugin"   % "1.0.0" exclude("org.scala-lang.modules", "scala-xml_2.12"))
 addSbtPlugin("org.scoverage"       % "sbt-scoverage"           % "2.0.9")
