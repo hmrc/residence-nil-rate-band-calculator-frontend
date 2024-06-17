@@ -1,6 +1,4 @@
 # Residence Nil Rate Band Calculator Frontend
-..
-[![Build Status](https://travis-ci.org/hmrc/residence-nil-rate-band-calculator-frontend.svg?branch=master)](https://travis-ci.org/hmrc/residence-nil-rate-band-calculator-frontend) [ ![Download](https://api.bintray.com/packages/hmrc/releases/residence-nil-rate-band-calculator-frontend/images/download.svg) ](https://bintray.com/hmrc/releases/residence-nil-rate-band-calculator-frontend/_latestVersion)
 
 This service provides a frontend for the [residence nil-rate band](https://www.gov.uk/guidance/inheritance-tax-residence-nil-rate-band) calculator service.
 
@@ -14,14 +12,13 @@ To run the service locally:
 
 You will also need to have the [residence nil-rate band calculator](https://github.com/hmrc/residence-nil-rate-band-calculator) service running.
 
-You can start this manually, or use the following [service manager](https://github.com/hmrc/service-manager) command:
+You can start this manually, or use the following [service manager](https://github.com/hmrc/sm2) command:
 
-    sm --start RNRB
+    sm2 -start RNRB
 
-To run dependencies for the service, use one of the following commands:
+To run dependencies for the service, the following command:
 
-    sm --start RNRB_ALL -r
-    sm --start RNRB_DEP -r (only starts dependencies.)
+    sm2 -start RNRB_ALL
 
 #### Test Coverage
 To run the test coverage suite
