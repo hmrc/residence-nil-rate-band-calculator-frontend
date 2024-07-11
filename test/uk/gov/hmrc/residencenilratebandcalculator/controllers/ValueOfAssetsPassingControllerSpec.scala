@@ -76,12 +76,12 @@ class ValueOfAssetsPassingControllerSpec extends NewSimpleControllerSpecBase wit
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))
       setCacheValue(Constants.valueOfEstateId, testValue - 1)
       val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
-      status(result) shouldBe Status.BAD_REQUEST
+      status(result) mustBe Status.BAD_REQUEST
     }
 
     "return the correct view when provided with answers including a valid property value" in {
       val result = createController().view(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), new UserAnswers(CacheMap("id", Map(Constants.propertyValueId -> Json.toJson(1)))))(fakeRequest)
-      result shouldBe value_of_assets_passing(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), Some(CurrencyFormatter.format(1)))(fakeRequest,
+      result mustBe value_of_assets_passing(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), Some(CurrencyFormatter.format(1)))(fakeRequest,
         messages)
     }
   }

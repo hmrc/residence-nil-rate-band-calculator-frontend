@@ -17,7 +17,6 @@
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import org.mockito.Mockito._
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import org.scalatestplus.mockito.MockitoSugar
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoThresholdIncreaseReason.{DateOfDeath, DirectDescendant}
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
@@ -29,13 +28,13 @@ class GetNoThresholdIncreaseReasonSpec extends BaseSpec with MockitoSugar {
     "get DateOfDeath reason if date of death is before the eligibility date" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.dateOfDeath) thenReturn Some(Constants.eligibilityDate.minusDays(1))
-      GetNoThresholdIncreaseReason(userAnswers) shouldBe DateOfDeath
+      GetNoThresholdIncreaseReason(userAnswers) mustBe DateOfDeath
     }
 
     "get DirectDescendant reason if nothing has been left to direct descendants" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.partOfEstatePassingToDirectDescendants) thenReturn Some(false)
-      GetNoThresholdIncreaseReason(userAnswers) shouldBe DirectDescendant
+      GetNoThresholdIncreaseReason(userAnswers) mustBe DirectDescendant
     }
   }
 }

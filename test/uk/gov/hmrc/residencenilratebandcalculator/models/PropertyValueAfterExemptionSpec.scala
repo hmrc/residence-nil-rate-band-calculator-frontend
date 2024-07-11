@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.libs.json._
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
@@ -25,11 +24,11 @@ class PropertyValueAfterExemptionSpec extends BaseSpec {
   "Proeprty Values After Exemption model" must {
 
     "be parsable as JSON" in {
-      Json.toJson(PropertyValueAfterExemption(1, 2)) shouldBe Json.parse("""{"value":1,"inheritedValue":2}""")
+      Json.toJson(PropertyValueAfterExemption(1, 2)) mustBe Json.parse("""{"value":1,"inheritedValue":2}""")
     }
 
     "give an error when trying to contruct itself from invalid JSON" in {
-      Json.fromJson[PropertyValueAfterExemption](JsString("invalid data")) shouldBe a [JsError]
+      Json.fromJson[PropertyValueAfterExemption](JsString("invalid data")) mustBe a [JsError]
     }
   }
 }

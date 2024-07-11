@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.calculate_threshold_increase
 
@@ -50,8 +49,8 @@ class CalculateThresholdIncreaseViewSpec extends ViewSpecBase {
     "display a Start button linking to the 'Date Of Death' page" in {
       val doc = asDocument(calculate_threshold_increase()(request, messages))
       val startLink = doc.getElementsByClass("govuk-button govuk-button--start")
-      startLink.attr("href") shouldBe routes.DateOfDeathController.onPageLoad.url
-      startLink.text shouldBe messages("site.start_now")
+      startLink.attr("href") mustBe routes.DateOfDeathController.onPageLoad.url
+      startLink.text mustBe messages("site.start_now")
     }
 
     "not display the HMRC logo" in {

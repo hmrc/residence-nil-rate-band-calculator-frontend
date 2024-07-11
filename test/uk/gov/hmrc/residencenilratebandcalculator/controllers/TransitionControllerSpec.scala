@@ -60,19 +60,19 @@ class TransitionControllerSpec extends CommonPlaySpec with MockSessionConnector 
   "Transition controller" must {
     "return 200 for a GET" in {
       val result = createController.onPageLoad(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result) mustBe Status.OK
     }
 
     "return the Unable To Calculate Threshold Increase view for a GET" in {
       val result = createController.onPageLoad(fakeRequest)
-      contentAsString(result) shouldBe ""
+      contentAsString(result) mustBe ""
     }
 
     "redirect to the SessionExpiredController when no CacheMap can be found" in {
       when(mockSessionConnector.fetch()(any[HeaderCarrier])) thenReturn Future.successful(None)
       val result = createController.onPageLoad(fakeRequest)
-      status(result) shouldBe SEE_OTHER
-      redirectLocation(result) shouldBe Some(routes.SessionExpiredController.onPageLoad.url)
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
   }
 }

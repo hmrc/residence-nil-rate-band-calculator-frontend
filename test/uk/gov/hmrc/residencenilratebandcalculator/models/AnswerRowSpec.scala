@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.i18n.{Lang, Messages, MessagesApi}
 import play.api.inject.Injector
 import play.api.mvc.{AnyContentAsEmpty, Call}
@@ -43,32 +42,32 @@ class AnswerRowSpec extends BaseSpec {
   "Answer Row" must {
 
     "correctly format an integer as money without a fractional part" in {
-      AnswerRow("", 1000, mockCall)(messages).data shouldBe "£1,000"
+      AnswerRow("", 1000, mockCall)(messages).data mustBe "£1,000"
     }
 
     "correctly format a date" in {
-      AnswerRow("", LocalDate.from(testDate), mockCall)(messages).data shouldBe "1 June 2017"
-      AnswerRow("", LocalDate.from(testDate), mockCall)(welshMessages).data shouldBe "1 Mehefin 2017"
+      AnswerRow("", LocalDate.from(testDate), mockCall)(messages).data mustBe "1 June 2017"
+      AnswerRow("", LocalDate.from(testDate), mockCall)(welshMessages).data mustBe "1 Mehefin 2017"
     }
 
     "correctly format a true Boolean as Yes" in {
-      AnswerRow("", yesNo = true, mockCall)(messages).data shouldBe messages("site.yes")
+      AnswerRow("", yesNo = true, mockCall)(messages).data mustBe messages("site.yes")
     }
 
     "correctly format a false Boolean as No" in {
-      AnswerRow("", yesNo = false, mockCall)(messages).data shouldBe messages("site.no")
+      AnswerRow("", yesNo = false, mockCall)(messages).data mustBe messages("site.no")
     }
 
     "correctly format a string" in {
-      AnswerRow("", "abc", mockCall)(messages).data shouldBe "abc"
+      AnswerRow("", "abc", mockCall)(messages).data mustBe "abc"
     }
 
     "pull the title from the messages file" in {
-      AnswerRow("site.yes", yesNo = true, mockCall)(messages).title shouldBe messages("site.yes")
+      AnswerRow("site.yes", yesNo = true, mockCall)(messages).title mustBe messages("site.yes")
     }
 
     "use the url from the provided Call object" in {
-      AnswerRow("", yesNo = true, Call("", "http://example.com"))(messages).url shouldBe "http://example.com"
+      AnswerRow("", yesNo = true, Call("", "http://example.com"))(messages).url mustBe "http://example.com"
     }
   }
 }

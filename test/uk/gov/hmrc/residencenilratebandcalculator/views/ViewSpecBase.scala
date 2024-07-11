@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.data.{Form, FormError}
 import play.api.i18n.Lang
 import play.twirl.api.HtmlFormat
@@ -40,7 +39,7 @@ trait ViewSpecBase extends HtmlSpec {
           val doc = asDocument(createView(emptyForm))
           val nav = doc.getElementById("proposition-menu")
           val span = nav.children.first
-          span.text shouldBe messagesApi("site.service_name")
+          span.text mustBe messagesApi("site.service_name")
         }
 
         "display the correct browser title" in {
@@ -88,10 +87,10 @@ trait ViewSpecBase extends HtmlSpec {
         "contain a form that POSTs to the correct action" in {
           val doc = asDocument(createView(emptyForm))
           val forms = doc.getElementsByTag("form")
-          forms.size shouldBe 1
+          forms.size mustBe 1
           val form = forms.first
-          form.attr("method") shouldBe "POST"
-          form.attr("action") shouldBe expectedFormAction
+          form.attr("method") mustBe "POST"
+          form.attr("action") mustBe expectedFormAction
         }
 
         "contain a submit button" in {

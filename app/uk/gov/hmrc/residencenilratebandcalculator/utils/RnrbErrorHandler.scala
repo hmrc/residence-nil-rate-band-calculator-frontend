@@ -16,24 +16,20 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
-import javax.inject.Inject
-import play.api.i18n.{Messages, MessagesApi}
-import play.api.mvc.Request
+import play.api.i18n.MessagesApi
+import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import uk.gov.hmrc.play.bootstrap.frontend.http.FrontendErrorHandler
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.error_template
 
+import javax.inject.Inject
+import scala.concurrent.{ExecutionContext, Future}
+
 class RnrbErrorHandler @Inject()(val messagesApi: MessagesApi,
-                                 errorTemplateView: error_template) extends FrontendErrorHandler {
+                                 errorTemplateView: error_template
+                                )(implicit val ec: ExecutionContext) extends FrontendErrorHandler {
 
 
-  override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(implicit request: Request[_]) =
-    errorTemplateView(pageTitle, heading, message)
-
-  override def internalServerErrorTemplate(implicit request: Request[_]): Html = {
-    errorTemplateView(
-      Messages("error.InternalServerError500.title"),
-      Messages("error.InternalServerError500.heading"),
-      Messages("error.InternalServerError500.message"))
-  }
+  override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(implicit request: RequestHeader): Future[Html] =
+    Future.successful(errorTemplateView(pageTitle, heading, message))
 }

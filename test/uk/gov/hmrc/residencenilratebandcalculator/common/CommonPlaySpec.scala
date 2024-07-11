@@ -19,16 +19,16 @@ package uk.gov.hmrc.residencenilratebandcalculator.common
 import org.apache.pekko.stream.Materializer
 import org.apache.pekko.util.ByteString
 import org.scalatest.OptionValues
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpecLike
+import org.scalatest.matchers.must.Matchers
+import org.scalatestplus.play.PlaySpec
 import play.api.mvc.Result
 
 import java.nio.charset.Charset
 import scala.language.{implicitConversions, postfixOps}
 
-trait CommonPlaySpec extends AnyWordSpecLike with Matchers with OptionValues {
+trait CommonPlaySpec extends PlaySpec with Matchers with OptionValues {
 
-  import scala.concurrent.duration._
+  import scala.concurrent.duration.*
   import scala.concurrent.{Await, Future}
 
   implicit val defaultTimeout: FiniteDuration = 5 seconds

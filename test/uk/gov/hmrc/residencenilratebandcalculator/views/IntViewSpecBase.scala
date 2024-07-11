@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 
@@ -36,7 +35,7 @@ trait IntViewSpecBase extends ViewSpecBase {
 
         "contain a h1 with title" in {
           val doc = asDocument(createView(emptyForm))
-          doc.select("h1").text() shouldBe messages(s"$messageKeyPrefix.title")
+          doc.select("h1").text() mustBe messages(s"$messageKeyPrefix.title")
         }
         "contain an input for the value" in {
           val doc = asDocument(createView(emptyForm))
@@ -47,7 +46,7 @@ trait IntViewSpecBase extends ViewSpecBase {
       "rendered with a valid form" must {
         "include the form's value in the value input" in {
           val doc = asDocument(createView(form.fill(number)))
-          doc.getElementById("value").attr("value") shouldBe number.toString
+          doc.getElementById("value").attr("value") mustBe number.toString
         }
       }
 
@@ -61,7 +60,7 @@ trait IntViewSpecBase extends ViewSpecBase {
         "show an error in the value field's label" in {
           val doc = asDocument(createView(form.withError(error)))
           val errorSpan = doc.getElementsByClass("error-notification").first
-          errorSpan.text shouldBe messages(errorMessage)
+          errorSpan.text mustBe messages(errorMessage)
         }
       }
     }

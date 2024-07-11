@@ -17,7 +17,6 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import org.jsoup.nodes.Document
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.threshold_calculation_result
@@ -28,27 +27,17 @@ class ThresholdCalculationResultViewSpec extends HtmlSpec {
 
   val threshold_calculation_result: threshold_calculation_result = injector.instanceOf[threshold_calculation_result]
 
-  def fixture(): Object {
-    val view: HtmlFormat.Appendable
-
-    val doc: Document
-  } = new {
-    val view: HtmlFormat.Appendable = threshold_calculation_result("£10.00")(request, messages)
-    val doc: Document = asDocument(view)
-  }
+  val view: HtmlFormat.Appendable = threshold_calculation_result("£10.00")(request, messages)
+  val doc: Document = asDocument(view)
 
   "Threshold Calculation Result View" when {
-    def thisFixture() = fixture()
-
     "rendered" must {
       "display the correct browser title" in {
-        val f = thisFixture()
-        assertEqualsMessage(f.doc, "title", s"${messages("threshold_calculation_result.info.non_zero.header")} - ${messages("service.name")} - GOV.UK")
+        assertEqualsMessage(doc, "title", s"${messages("threshold_calculation_result.info.non_zero.header")} - ${messages("service.name")} - GOV.UK")
       }
 
       "display the correct guidance" in {
-        val f = thisFixture()
-        assertContainsMessages(f.doc, "threshold_calculation_result.action.header", "threshold_calculation_result.action.guidance.form_435",
+        assertContainsMessages(doc, "threshold_calculation_result.action.header", "threshold_calculation_result.action.guidance.form_435",
           "threshold_calculation_result.action.guidance.form_400", "threshold_calculation_result.action.guidance.continue",
           "threshold_calculation_result.print_prefix", "threshold_calculation_result.link_to_print", "threshold_calculation_result.print_suffix")
       }
@@ -76,15 +65,13 @@ class ThresholdCalculationResultViewSpec extends HtmlSpec {
       }
 
       "contain a link to the exit questionnaire" in {
-        val f = thisFixture()
-        val links = f.doc.getElementsByAttributeValue("href", routes.FeedbackSurveyController.redirectExitSurvey.url)
-        links.size shouldBe 1
-        links.first.text shouldBe messages("site.finish")
+        val links = doc.getElementsByAttributeValue("href", routes.FeedbackSurveyController.redirectExitSurvey.url)
+        links.size mustBe 1
+        links.first.text mustBe messages("site.finish")
       }
 
       "not display the HMRC logo" in {
-        val f = fixture()
-        assertNotRenderedByCssSelector(f.doc, ".organisation-logo")
+        assertNotRenderedByCssSelector(doc, ".organisation-logo")
       }
 
     }

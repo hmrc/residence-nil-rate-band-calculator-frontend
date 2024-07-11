@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.json
 
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.libs.json._
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
@@ -28,7 +27,7 @@ class JsonErrorProcessorSpec extends BaseSpec {
       val err: JsonValidationError = JsonValidationError(List("This thing wasn't there when it should have been."))
 
       JsonErrorProcessor(Seq((JsPath(), Seq(err))))
-        .shouldBe("JSON error: This thing wasn't there when it should have been.\n")
+        .mustBe("JSON error: This thing wasn't there when it should have been.\n")
     }
 
     "handle a multiple errors" in {
@@ -36,7 +35,7 @@ class JsonErrorProcessorSpec extends BaseSpec {
       val err2: JsonValidationError = JsonValidationError(List("String provided, Int required."))
 
       JsonErrorProcessor(Seq((JsPath(), Seq(err1)), (JsPath(), Seq(err2))))
-        .shouldBe("JSON error: Value missing.\nJSON error: String provided, Int required.\n")
+        .mustBe("JSON error: Value missing.\nJSON error: String provided, Int required.\n")
     }
   }
 }

@@ -71,31 +71,31 @@ class NoThresholdIncreaseControllerSpec extends CommonPlaySpec with MockSessionC
   "No Threshold Increase controller" must {
     "return 200 for a GET" in {
       val result = new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase).onPageLoad(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result) mustBe Status.OK
     }
 
     "return the No Threshold Increase view for a GET" in {
       val result = new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase).onPageLoad(fakeRequest)
-      contentAsString(result) shouldBe
+      contentAsString(result) mustBe
         no_threshold_increase("no_threshold_increase.direct_descendant")(fakeRequest, messages).toString
     }
 
-    "The answer constants should be the same as the calulated constants for the controller when the reason is DateOfDeath" in {
+    "The answer constants must be the same as the calulated constants for the controller when the reason is DateOfDeath" in {
       val controller = new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase)
       val controllerId = controller.getControllerId(DateOfDeath)
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
       val answerList = List()
-      answerList shouldBe calculatedList
+      answerList mustBe calculatedList
     }
 
-    "The answer constants should be the same as the calulated constants for the controller when the reason is DirectDescendant" in {
+    "The answer constants must be the same as the calulated constants for the controller when the reason is DirectDescendant" in {
       val controller = new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase)
       val controllerId = controller.getControllerId(DirectDescendant)
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
       val answerList = List(Constants.dateOfDeathId)
-      answerList shouldBe calculatedList
+      answerList mustBe calculatedList
     }
   }
 }

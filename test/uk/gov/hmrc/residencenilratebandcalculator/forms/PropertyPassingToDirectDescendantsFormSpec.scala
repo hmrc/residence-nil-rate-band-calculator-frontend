@@ -16,24 +16,23 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 
 class PropertyPassingToDirectDescendantsFormSpec extends FormSpec {
 
   "Property Passing To Direct Descendants form" must {
     "bind the value 'all'" in {
       val form = PropertyPassingToDirectDescendantsForm().bind(Map("value" -> "all"))
-      form.get shouldBe "all"
+      form.get mustBe "all"
     }
 
     "bind the value 'some'" in {
       val form = PropertyPassingToDirectDescendantsForm().bind(Map("value" -> "some"))
-      form.get shouldBe "some"
+      form.get mustBe "some"
     }
 
     "bind the value 'none'" in {
       val form = PropertyPassingToDirectDescendantsForm().bind(Map("value" -> "none"))
-      form.get shouldBe "none"
+      form.get mustBe "none"
     }
 
     "fail to bind a blank value" in {

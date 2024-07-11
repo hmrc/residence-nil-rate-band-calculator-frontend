@@ -17,7 +17,6 @@
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
 import org.scalatest.Assertion
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.data.{Form, FormError}
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
@@ -25,8 +24,8 @@ trait FormSpec extends BaseSpec {
   def checkForError(form: Form[_], data: Map[String, String], expectedErrors: Seq[FormError]): Assertion = {
     form.bind(data).fold(
       formWithErrors => {
-        for (error <- formWithErrors.errors) expectedErrors should contain(FormError(error.key, error.message))
-        formWithErrors.errors.size shouldBe expectedErrors.size
+        for (error <- formWithErrors.errors) expectedErrors must contain(FormError(error.key, error.message))
+        formWithErrors.errors.size mustBe expectedErrors.size
       },
       _ => {
         fail("Expected a validation error when binding the form, but it was bound successfully.")

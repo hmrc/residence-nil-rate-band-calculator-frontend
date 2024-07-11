@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.libs.json._
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
@@ -30,7 +29,7 @@ class DateSpec extends BaseSpec {
       val year = 2000
       val dateToJson = Json.toJson(Date(LocalDate.of(year, month, day)))
       val localDateToJson = Json.toJson(LocalDate.of(year, month, day))
-      dateToJson shouldBe localDateToJson
+      dateToJson mustBe localDateToJson
     }
 
     "be interchangeable with Java LocalDate" in {
@@ -40,20 +39,20 @@ class DateSpec extends BaseSpec {
       val date = Date(LocalDate.of(year, month, day))
       val javaDate = LocalDate.of(year, month, day)
 
-      Json.fromJson[LocalDate](Json.toJson(date)).get shouldBe javaDate
-      Json.fromJson[Date](Json.toJson(javaDate)).get shouldBe date
+      Json.fromJson[LocalDate](Json.toJson(date)).get mustBe javaDate
+      Json.fromJson[Date](Json.toJson(javaDate)).get mustBe date
     }
 
     "construct itself from a valid JSON representation" in {
       val day = 1
       val month = 1
       val year = 2000
-      Json.fromJson[Date](JsString("2000-01-01")).get shouldBe Date(LocalDate.of(year, month, day))
-//      Json.fromJson[Date](JsString("2000-1-1")).get shouldBe Date(LocalDate.of(year, month, day))
+      Json.fromJson[Date](JsString("2000-01-01")).get mustBe Date(LocalDate.of(year, month, day))
+//      Json.fromJson[Date](JsString("2000-1-1")).get mustBe Date(LocalDate.of(year, month, day))
     }
 
     "return JsFailure when constructing itself from invalid data" in {
-      Json.fromJson[Date](JsString("invalid data")) shouldBe a[JsError]
+      Json.fromJson[Date](JsString("invalid data")) mustBe a[JsError]
     }
   }
 }

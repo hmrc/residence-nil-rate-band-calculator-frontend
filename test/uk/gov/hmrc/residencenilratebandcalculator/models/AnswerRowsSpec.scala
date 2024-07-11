@@ -62,35 +62,35 @@ class AnswerRowsSpec extends CommonPlaySpec with MockSessionConnector with WithC
 
       val result = AnswerRows.constructAnswerRows(cacheMap, answerRowFns, rowOrder, messages)
 
-      result shouldBe Seq(
+      result mustBe Seq(
         AnswerRow("title1", "Yes", "http://example.com/one"),
         AnswerRow("title2", "£1,000.00", "http://example.com/two"),
         AnswerRow("title3", "1 June 2017", "http://example.com/three"))
     }
 
     "have the same keys in rowOrder and answerRowFns" in {
-      AnswerRows.rowOrder.keys shouldEqual AnswerRows.answerRowFns.keys
+      AnswerRows.rowOrder.keys mustBe AnswerRows.answerRowFns.keys
     }
 
     "correctly create Integer AnswerRows without a fractional part" in {
       val data = 100
-      AnswerRows.intAnswerRowFn("message.key", "", Call("", "http://example.com"))(JsNumber(data))(messages) shouldBe
+      AnswerRows.intAnswerRowFn("message.key", "", Call("", "http://example.com"))(JsNumber(data))(messages) mustBe
         AnswerRow(messages("message.key"), "£100", "http://example.com")
     }
 
     "throw an exception when intAnswerRowFn is not passed a JSON number" in {
-      an[RuntimeException] should be thrownBy
+      an[RuntimeException] must be thrownBy
         AnswerRows.intAnswerRowFn("message.key", "", Call("", ""))(JsString(""))(messages)
     }
 
     "correctly create Boolean AnswerRows" in {
       val data = true
-      AnswerRows.boolAnswerRowFn("message.key", "", Call("", "http://example.com"))(JsBoolean(data))(messages) shouldBe
+      AnswerRows.boolAnswerRowFn("message.key", "", Call("", "http://example.com"))(JsBoolean(data))(messages) mustBe
         AnswerRow(messages("message.key"), "Yes", "http://example.com")
     }
 
     "throw an exception when boolAnswerRowFn is not passed a JSON boolean" in {
-      an[RuntimeException] should be thrownBy
+      an[RuntimeException] must be thrownBy
         AnswerRows.boolAnswerRowFn("message.key", "", Call("", ""))(JsString(""))(messages)
     }
 
@@ -99,45 +99,45 @@ class AnswerRowsSpec extends CommonPlaySpec with MockSessionConnector with WithC
       val month = 6
       val year = 2017
       val data = LocalDate.of(year, month, day)
-      AnswerRows.dateAnswerRowFn("message.key", "", Call("", "http://example.com"))(JsString(data.toString))(messages) shouldBe
+      AnswerRows.dateAnswerRowFn("message.key", "", Call("", "http://example.com"))(JsString(data.toString))(messages) mustBe
         AnswerRow(messages("message.key"), "1 June 2017", "http://example.com")
     }
 
     "throw an exception when dateAnswerRowFn is not passed a legal LocalDate" in {
-      an[RuntimeException] should be thrownBy
+      an[RuntimeException] must be thrownBy
         AnswerRows.dateAnswerRowFn("message.key", "", Call("", ""))(JsString(""))(messages)
     }
 
     "correctly create percentage AnswerRows" in {
       val data = 55.0
-      AnswerRows.percentAnswerRowFn("message.key", "", Call("", "http://example.com"))(JsNumber(data))(messages) shouldBe
+      AnswerRows.percentAnswerRowFn("message.key", "", Call("", "http://example.com"))(JsNumber(data))(messages) mustBe
         AnswerRow(messages("message.key"), "55%", "http://example.com")
     }
 
     "throw an exception when percentAnswerRowFn is not passed a double" in {
-      an[RuntimeException] should be thrownBy
+      an[RuntimeException] must be thrownBy
         AnswerRows.percentAnswerRowFn("message.key", "", Call("", ""))(JsString(""))(messages)
     }
 
     "correctly create Chargeable Property Value AnswerRows without a fractional part" in {
       val data = PropertyValueAfterExemption(1000, 5000)
       AnswerRows.intAnswerRowFn("message.key", "",
-        Call("", "http://example.com"))(JsNumber(data.value))(messages) shouldBe
+        Call("", "http://example.com"))(JsNumber(data.value))(messages) mustBe
         AnswerRow(messages("message.key"), "£1,000", "http://example.com")
 
       AnswerRows.intAnswerRowFn("message.key", "",
-        Call("", "http://example.com"))(JsNumber(data.inheritedValue))(messages) shouldBe
+        Call("", "http://example.com"))(JsNumber(data.inheritedValue))(messages) mustBe
         AnswerRow(messages("message.key"), "£5,000", "http://example.com")
     }
 
     "correctly create Property Passing To Direct Descendants AnswerRow" in {
       val data = Constants.all
-      AnswerRows.propertyPassingToDirectDescendantsAnswerRowFn("message.key", "", Call("", "http://example.com"))(JsString(data))(messages) shouldBe
+      AnswerRows.propertyPassingToDirectDescendantsAnswerRowFn("message.key", "", Call("", "http://example.com"))(JsString(data))(messages) mustBe
         AnswerRow(messages("message.key"), messages("property_passing_to_direct_descendants.all"), "http://example.com")
     }
 
     "throw an exception when propertyPassingToDirectDescendantsAnswerRowFn is not passed a string" in {
-      an[RuntimeException] should be thrownBy
+      an[RuntimeException] must be thrownBy
         AnswerRows.propertyPassingToDirectDescendantsAnswerRowFn("message.key", "", Call("", ""))(JsBoolean(true))(messages)
     }
 
@@ -157,22 +157,22 @@ class AnswerRowsSpec extends CommonPlaySpec with MockSessionConnector with WithC
 
       val result = AnswerRows.constructAnswerRows(cacheMap, answerRowFns, rowOrder, messages)
 
-      result shouldBe Seq(AnswerRow("title1", "Yes", "http://example.com/one"))
+      result mustBe Seq(AnswerRow("title1", "Yes", "http://example.com/one"))
     }
 
-    "truncateAndLocateInCacheMap should return an empty map when the id does not exist in the rowOrder list" in {
+    "truncateAndLocateInCacheMap must return an empty map when the id does not exist in the rowOrder list" in {
       val result = AnswerRows.truncateAndLocateInCacheMap("this ID does not exist", cacheMap)
 
-      result.data shouldBe Map()
+      result.data mustBe Map()
     }
 
-    "truncateAndLocateInCacheMap should return an empty map when the id is valid but the cache map is empty" in {
+    "truncateAndLocateInCacheMap must return an empty map when the id is valid but the cache map is empty" in {
       val result = AnswerRows.truncateAndLocateInCacheMap("id1", CacheMap("", Map()))
 
-      result.data shouldBe Map()
+      result.data mustBe Map()
     }
 
-    "truncateAndLocateInCacheMap should return map of values from cache map which keyed by this " +
+    "truncateAndLocateInCacheMap must return map of values from cache map which keyed by this " +
       "constant and previous constants in the list" in {
 
       val cacheMap = CacheMap("", Map(
@@ -184,11 +184,11 @@ class AnswerRowsSpec extends CommonPlaySpec with MockSessionConnector with WithC
 
       val result = AnswerRows.truncateAndLocateInCacheMap(Constants.valueOfEstateId, cacheMap)
 
-      result.data shouldBe Map(Constants.dateOfDeathId -> JsNumber(0),
+      result.data mustBe Map(Constants.dateOfDeathId -> JsNumber(0),
         Constants.partOfEstatePassingToDirectDescendantsId -> JsNumber(1))
     }
 
-    "truncateAndLocateInCacheMap should return map of values from cache map which keyed by this " +
+    "truncateAndLocateInCacheMap must return map of values from cache map which keyed by this " +
       "constant and previous constants, not including any with no values" in {
 
       val cacheMap = CacheMap("", Map(
@@ -199,7 +199,7 @@ class AnswerRowsSpec extends CommonPlaySpec with MockSessionConnector with WithC
 
       val result = AnswerRows.truncateAndLocateInCacheMap(Constants.valueOfEstateId, cacheMap)
 
-      result.data shouldBe Map(Constants.dateOfDeathId -> JsNumber(0))
+      result.data mustBe Map(Constants.dateOfDeathId -> JsNumber(0))
     }
 
     "create answer rows when given truncated data" in {
@@ -229,7 +229,7 @@ class AnswerRowsSpec extends CommonPlaySpec with MockSessionConnector with WithC
         Constants.valueOfEstateId, cacheMap),
         answerRowFns, rowOrder, messages)
 
-      result shouldBe Seq(
+      result mustBe Seq(
         AnswerRow("title1", "Yes", "http://example.com/one"),
         AnswerRow("title2", "£1,000.00", "http://example.com/two"))
     }

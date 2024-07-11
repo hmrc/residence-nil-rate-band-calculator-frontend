@@ -52,39 +52,39 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase with CommonPlaySp
 
   "Loading the page" when {
 
-    "sessionConnector returns a fail" should {
+    "sessionConnector returns a fail" must {
 
       "return the exception" in {
         setupMock(Future.failed(new Exception("Test message")))
         val result = controller.onPageLoad(implicitly)(fakeRequest)
 
-        the[Exception] thrownBy await(result) should have message "Test message"
+        the[Exception] thrownBy await(result) must have message "Test message"
       }
     }
 
-    "sessionConnector returns a none" should {
+    "sessionConnector returns a none" must {
       lazy val result = controller.onPageLoad(implicitly)(fakeRequest)
 
       "return a status of OK" in {
         setupMock(Future.successful(None))
-        status(result) shouldBe 200
+        status(result) mustBe 200
       }
 
       "load the correct page" in {
-        Jsoup.parse(await(bodyOf(result))).title shouldBe "What was the date of death? - Calculate the available RNRB - GOV.UK"
+        Jsoup.parse(await(bodyOf(result))).title mustBe "What was the date of death? - Calculate the available RNRB - GOV.UK"
       }
     }
 
-    "sessionConnector returns a cachemap" should {
+    "sessionConnector returns a cachemap" must {
       lazy val result = controller.onPageLoad(implicitly)(fakeRequest)
 
       "return a status of OK" in {
         setupMock(Future.successful(Some(CacheMap("id", Map()))))
-        status(result) shouldBe 200
+        status(result) mustBe 200
       }
 
       "load the correct page" in {
-        Jsoup.parse(await(bodyOf(result))).title shouldBe "What was the date of death? - Calculate the available RNRB - GOV.UK"
+        Jsoup.parse(await(bodyOf(result))).title mustBe "What was the date of death? - Calculate the available RNRB - GOV.UK"
       }
     }
   }

@@ -48,9 +48,10 @@ class RnrbConnectorSpec extends CommonPlaySpec
   val configMock: FrontendAppConfig = mock[FrontendAppConfig]
 
   def getHttpMock(returnedData: JsValue): DefaultHttpClient = {
-    when(httpMock.POST(anyString, any[JsValue], any[Seq[(String, String)]])(any[Writes[JsValue]], any[HttpReads[Any]],
-      any[HeaderCarrier], any())) thenReturn Future.successful(HttpResponse(Status.OK, returnedData.toString()))
-    when(httpMock.GET(any())(any[HttpReads[Any]], any[HeaderCarrier], any())) thenReturn Future.successful(HttpResponse(Status.OK, returnedData.toString()))
+    when(httpMock.POST(anyString, any[JsValue], any[Seq[(String, String)]])(any[Writes[JsValue]](), any[HttpReads[_]](),
+      any[HeaderCarrier](), any())) thenReturn Future.successful(HttpResponse(Status.OK, returnedData.toString()))
+    when(httpMock.GET[HttpResponse](any())(any[HttpReads[HttpResponse]](), any[HeaderCarrier](), any())) thenReturn
+      Future.successful(HttpResponse(Status.OK, returnedData.toString()))
     httpMock
   }
 
@@ -78,9 +79,9 @@ class RnrbConnectorSpec extends CommonPlaySpec
 
         verify(httpMock).POST(urlCaptor.capture, bodyCaptor.capture, headersCaptor.capture)(jsonWritesNapper.capture,
           httpReadsNapper.capture, headerCarrierNapper.capture, any())
-        urlCaptor.getValue should endWith(s"${connector.baseSegment}calculate")
-        bodyCaptor.getValue shouldBe Json.toJson(calculationInput)
-        headersCaptor.getValue shouldBe Seq(connector.jsonContentTypeHeader)
+        urlCaptor.getValue must endWith(s"${connector.baseSegment}calculate")
+        bodyCaptor.getValue mustBe Json.toJson(calculationInput)
+        headersCaptor.getValue mustBe Seq(connector.jsonContentTypeHeader)
       }
 
       "return a case class representing the received JSON when the send method is successful" in {
@@ -96,7 +97,7 @@ class RnrbConnectorSpec extends CommonPlaySpec
           getHttpMock(Json.toJson(calculationResult))
         }.send(calculationInput))
 
-        result.get shouldBe calculationResult
+        result.get mustBe calculationResult
       }
 
       "return a string representing the error when send method fails" in {
@@ -108,7 +109,7 @@ class RnrbConnectorSpec extends CommonPlaySpec
 
         result match {
           case Failure(exception) =>
-            exception shouldBe a[JsonInvalidException]
+            exception mustBe a[JsonInvalidException]
           case Success(_) => fail()
         }
       }
@@ -130,9 +131,9 @@ class RnrbConnectorSpec extends CommonPlaySpec
 
         verify(httpMock).POST(urlCaptor.capture, bodyCaptor.capture, headersCaptor.capture)(jsonWritesNapper.capture,
           httpReadsNapper.capture, headerCarrierNapper.capture, any())
-        urlCaptor.getValue should endWith(s"${connector.baseSegment}calculate")
-        bodyCaptor.getValue shouldBe minimalJson
-        headersCaptor.getValue shouldBe Seq(connector.jsonContentTypeHeader)
+        urlCaptor.getValue must endWith(s"${connector.baseSegment}calculate")
+        bodyCaptor.getValue mustBe minimalJson
+        headersCaptor.getValue mustBe Seq(connector.jsonContentTypeHeader)
       }
 
       "return a case class representing the received JSON when the send method is successful" in {
@@ -148,7 +149,7 @@ class RnrbConnectorSpec extends CommonPlaySpec
           getHttpMock(Json.toJson(calculationResult))
         }.sendJson(minimalJson))
 
-        result.get shouldBe calculationResult
+        result.get mustBe calculationResult
       }
 
       "return a string representing the error when send method fails" in {
@@ -160,7 +161,7 @@ class RnrbConnectorSpec extends CommonPlaySpec
 
         result match {
           case Failure(exception) =>
-            exception shouldBe a[JsonInvalidException]
+            exception mustBe a[JsonInvalidException]
           case Success(_) => fail()
         }
       }

@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.data.{Form, FormError}
 import play.api.i18n.Lang
 import play.twirl.api.HtmlFormat
@@ -39,13 +38,13 @@ trait NewViewSpecBase extends HtmlSpec {
 
           val doc = asDocument(createView(emptyForm))
           val serviceName = doc.getElementsByClass("govuk-header__content").text
-          serviceName shouldBe messagesApi("site.service_name")
+          serviceName mustBe messagesApi("site.service_name")
         }
 
         "display the correct browser title" in {
           implicit val lang: Lang = Lang("en")
           val doc = asDocument(createView(emptyForm))
-          doc.select("title").text shouldBe (messagesApi(s"$messageKeyPrefix.browser_title") + " - Calculate the available RNRB - GOV.UK")
+          doc.select("title").first().text mustBe (messagesApi(s"$messageKeyPrefix.browser_title") + " - Calculate the available RNRB - GOV.UK")
         }
 
         "display the correct page title" in {
@@ -88,15 +87,15 @@ trait NewViewSpecBase extends HtmlSpec {
         "contain a form that POSTs to the correct action" in {
           val doc = asDocument(createView(emptyForm))
           val forms = doc.getElementsByTag("form")
-          forms.size shouldBe 1
+          forms.size mustBe 1
           val form = forms.first
-          form.attr("method") shouldBe "POST"
-          form.attr("action") shouldBe expectedFormAction
+          form.attr("method") mustBe "POST"
+          form.attr("action") mustBe expectedFormAction
         }
 
         "contain a submit button" in {
           val doc = asDocument(createView(emptyForm))
-          val input = assertRenderedById(doc, "submit")
+          assertRenderedById(doc, "submit")
         }
       }
     }

@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 
 class NonNegativeIntFormSpec extends FormSpec {
 
@@ -29,17 +28,17 @@ class NonNegativeIntFormSpec extends FormSpec {
 
     "bind positive numbers" in {
       val form = NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(Map("value" -> "1"))
-      form.get shouldBe 1
+      form.get mustBe 1
     }
 
     "bind positive numbers up to 2147483647" in {
       val form = NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(Map("value" -> "2147483647"))
-      form.get shouldBe 2147483647
+      form.get mustBe 2147483647
     }
 
     "bind positive, comma separated numbers" in {
       val form = NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(Map("value" -> "10,000"))
-      form.get shouldBe 10000
+      form.get mustBe 10000
     }
 
     "fail to bind negative numbers" in {

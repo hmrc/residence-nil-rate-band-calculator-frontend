@@ -27,7 +27,7 @@ object DatePropertyWasChangedForm {
   def datePropertyWasChangedForm(implicit messages: Messages): Form[Date] = Form(
     mapping(
       "datePropertyWasChanged" -> of(DateFormatter("datePropertyWasChanged"))
-    )(Date.apply)(Date.unapply)
+    )(Date.apply)(o => Some(o.date))
   )
 
 }

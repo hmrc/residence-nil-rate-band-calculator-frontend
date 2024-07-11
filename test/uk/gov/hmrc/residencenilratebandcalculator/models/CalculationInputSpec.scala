@@ -16,10 +16,9 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import org.mockito.Mockito._
+import org.mockito.Mockito.*
 import org.mockito.stubbing.OngoingStubbing
 import org.scalatest.BeforeAndAfter
-import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.json.Json
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
@@ -27,7 +26,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 
 import java.time.LocalDate
 
-class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matchers with BeforeAndAfter {
+class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with BeforeAndAfter {
 
   val cacheMapKey = "a"
   val dateOfDeath: LocalDate = LocalDate.of(2020, 1, 1)
@@ -48,7 +47,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
   before {
     userAnswers = mock[UserAnswers]
   }
-  
+
   def setupMock(assetsPassingToDirectDescendants: Option[Boolean] = None,
                 transferAnyUnusedThreshold: Option[Boolean] = None,
                 transferAvailableWhenPropertyChanged: Option[Boolean] = None,
@@ -109,21 +108,21 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
       "construct correctly from user answers" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
-        calculationInput shouldBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, 0, 0, 0, None, None)
+        calculationInput mustBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, 0, 0, 0, None, None)
       }
 
       "render to JSON" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
-        Json.toJson(calculationInput).toString shouldBe
-          """{
-            |"dateOfDeath":"2020-01-01",
-            |"valueOfEstate":1,
-            |"chargeableEstateValue":2,
-            |"propertyValue":0,
-            |"percentagePassedToDirectDescendants":0,
-            |"valueBeingTransferred":0
-            |}""".stripMargin.replaceAll("\\s+", "")
+        Json.toJson(calculationInput) mustBe
+          Json.obj(
+            "dateOfDeath" -> "2020-01-01",
+            "valueOfEstate" -> 1,
+            "chargeableEstateValue" -> 2,
+            "propertyValue" -> 0,
+            "percentagePassedToDirectDescendants" -> 0,
+            "valueBeingTransferred" -> 0
+          )
       }
     }
 
@@ -139,21 +138,21 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
       "construct correctly from user answers" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
-        calculationInput shouldBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, propertyValue, 0, 0, None, None)
+        calculationInput mustBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, propertyValue, 0, 0, None, None)
       }
 
       "render to JSON" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
-        Json.toJson(calculationInput).toString shouldBe
-          """{
-            |"dateOfDeath":"2020-01-01",
-            |"valueOfEstate":1,
-            |"chargeableEstateValue":2,
-            |"propertyValue":3,
-            |"percentagePassedToDirectDescendants":0,
-            |"valueBeingTransferred":0
-            |}""".stripMargin.replaceAll("\\s+", "")
+        Json.toJson(calculationInput) mustBe
+          Json.obj(
+            "dateOfDeath" -> "2020-01-01",
+            "valueOfEstate" -> 1,
+            "chargeableEstateValue" -> 2,
+            "propertyValue" -> 3,
+            "percentagePassedToDirectDescendants" -> 0,
+            "valueBeingTransferred" -> 0
+          )
       }
     }
 
@@ -169,22 +168,22 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
       "construct correctly from user answers" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
-        calculationInput shouldBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue,
+        calculationInput mustBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue,
           propertyValue, percentagePassedToDirectDescendants, 0, None, None)
       }
 
       "render to JSON" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
-        Json.toJson(calculationInput).toString shouldBe
-          """{
-            |"dateOfDeath":"2020-01-01",
-            |"valueOfEstate":1,
-            |"chargeableEstateValue":2,
-            |"propertyValue":3,
-            |"percentagePassedToDirectDescendants":4,
-            |"valueBeingTransferred":0
-            |}""".stripMargin.replaceAll("\\s+", "")
+        Json.toJson(calculationInput) mustBe
+          Json.obj(
+            "dateOfDeath" -> "2020-01-01",
+            "valueOfEstate" -> 1,
+            "chargeableEstateValue" -> 2,
+            "propertyValue" -> 3,
+            "percentagePassedToDirectDescendants" -> 4,
+            "valueBeingTransferred" -> 0
+          )
       }
     }
 
@@ -201,22 +200,22 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
       "construct correctly from user answers" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
-        calculationInput shouldBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue,
+        calculationInput mustBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue,
           propertyValue, percentagePassedToDirectDescendants, 0, None, None)
       }
 
       "render to JSON" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
-        Json.toJson(calculationInput).toString shouldBe
-          """{
-            |"dateOfDeath":"2020-01-01",
-            |"valueOfEstate":1,
-            |"chargeableEstateValue":2,
-            |"propertyValue":3,
-            |"percentagePassedToDirectDescendants":4,
-            |"valueBeingTransferred":0
-            |}""".stripMargin.replaceAll("\\s+", "")
+        Json.toJson(calculationInput) mustBe
+          Json.obj(
+            "dateOfDeath" -> "2020-01-01",
+            "valueOfEstate" -> 1,
+            "chargeableEstateValue" -> 2,
+            "propertyValue" -> 3,
+            "percentagePassedToDirectDescendants" -> 4,
+            "valueBeingTransferred" -> 0
+          )
       }
     }
 
@@ -234,7 +233,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
       "construct correctly from user answers" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
-        calculationInput shouldBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue,
+        calculationInput mustBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue,
           propertyValue, percentagePassedToDirectDescendants, 0,
           Some(PropertyValueAfterExemption(chargeablePropertyValue, chargeableInheritedPropertyValue)), None)
       }
@@ -242,19 +241,19 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
       "render to JSON" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
-        Json.toJson(calculationInput).toString shouldBe
-          """{
-            |"dateOfDeath":"2020-01-01",
-            |"valueOfEstate":1,
-            |"chargeableEstateValue":2,
-            |"propertyValue":3,
-            |"percentagePassedToDirectDescendants":4,
-            |"valueBeingTransferred":0,
-            |"propertyValueAfterExemption":{
-            |  "value":9,
-            |  "inheritedValue":10
-            |  }
-            |}""".stripMargin.replaceAll("\\s+", "")
+        Json.toJson(calculationInput) mustBe
+          Json.obj(
+            "dateOfDeath" -> "2020-01-01",
+            "valueOfEstate" -> 1,
+            "chargeableEstateValue" -> 2,
+            "propertyValue" -> 3,
+            "percentagePassedToDirectDescendants" -> 4,
+            "valueBeingTransferred" -> 0,
+            "propertyValueAfterExemption" -> Json.obj(
+              "value" -> 9,
+              "inheritedValue" -> 10
+            )
+          )
       }
     }
 
@@ -269,22 +268,22 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
       "construct correctly from user answers" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
-        calculationInput shouldBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue,
+        calculationInput mustBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue,
           propertyValue, percentagePassedToDirectDescendants, valueBeingTransferred, None, None)
       }
 
       "render to JSON" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
-        Json.toJson(calculationInput).toString shouldBe
-          """{
-            |"dateOfDeath":"2020-01-01",
-            |"valueOfEstate":1,
-            |"chargeableEstateValue":2,
-            |"propertyValue":3,
-            |"percentagePassedToDirectDescendants":4,
-            |"valueBeingTransferred":5
-            |}""".stripMargin.replaceAll("\\s+", "")
+        Json.toJson(calculationInput) mustBe
+          Json.obj(
+            "dateOfDeath" -> "2020-01-01",
+            "valueOfEstate" -> 1,
+            "chargeableEstateValue" -> 2,
+            "propertyValue" -> 3,
+            "percentagePassedToDirectDescendants" -> 4,
+            "valueBeingTransferred" -> 5
+          )
       }
     }
 
@@ -300,28 +299,28 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
       "construct correctly from user answers" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
-        calculationInput shouldBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue,
+        calculationInput mustBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue,
           propertyValue, percentagePassedToDirectDescendants, 0, None, Some(DownsizingDetails(datePropertyWasChanged, valueOfChangedProperty, 0, 0)))
       }
 
       "render to JSON" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
-        Json.toJson(calculationInput).toString shouldBe
-          """{
-            |"dateOfDeath":"2020-01-01",
-            |"valueOfEstate":1,
-            |"chargeableEstateValue":2,
-            |"propertyValue":3,
-            |"percentagePassedToDirectDescendants":4,
-            |"valueBeingTransferred":0,
-            |"downsizingDetails":{
-            |  "datePropertyWasChanged":"2018-02-02",
-            |  "valueOfChangedProperty":6,
-            |  "valueOfAssetsPassing":0,
-            |  "valueAvailableWhenPropertyChanged":0
-            |}
-            |}""".stripMargin.replaceAll("\\s+", "")
+        Json.toJson(calculationInput) mustBe
+          Json.obj(
+            "dateOfDeath" -> "2020-01-01",
+            "valueOfEstate" -> 1,
+            "chargeableEstateValue" -> 2,
+            "propertyValue" -> 3,
+            "percentagePassedToDirectDescendants" -> 4,
+            "valueBeingTransferred" -> 0,
+            "downsizingDetails" -> Json.obj(
+              "datePropertyWasChanged" -> "2018-02-02",
+              "valueOfChangedProperty" -> 6,
+              "valueOfAssetsPassing" -> 0,
+              "valueAvailableWhenPropertyChanged" -> 0
+            )
+          )
       }
     }
 
@@ -339,28 +338,28 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
       "construct correctly from user answers" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
-        calculationInput shouldBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, propertyValue, percentagePassedToDirectDescendants,
+        calculationInput mustBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, propertyValue, percentagePassedToDirectDescendants,
           0, None, Some(DownsizingDetails(datePropertyWasChanged, valueOfChangedProperty, valueOfAssetsPassing, 0)))
       }
 
       "render to JSON" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
-        Json.toJson(calculationInput).toString shouldBe
-          """{
-            |"dateOfDeath":"2020-01-01",
-            |"valueOfEstate":1,
-            |"chargeableEstateValue":2,
-            |"propertyValue":3,
-            |"percentagePassedToDirectDescendants":4,
-            |"valueBeingTransferred":0,
-            |"downsizingDetails":{
-            |  "datePropertyWasChanged":"2018-02-02",
-            |  "valueOfChangedProperty":6,
-            |  "valueOfAssetsPassing":7,
-            |  "valueAvailableWhenPropertyChanged":0
-            |}
-            |}""".stripMargin.replaceAll("\\s+", "")
+        Json.toJson(calculationInput) mustBe
+          Json.obj(
+            "dateOfDeath" -> "2020-01-01",
+            "valueOfEstate" -> 1,
+            "chargeableEstateValue" -> 2,
+            "propertyValue" -> 3,
+            "percentagePassedToDirectDescendants" -> 4,
+            "valueBeingTransferred" -> 0,
+            "downsizingDetails" -> Json.obj(
+              "datePropertyWasChanged" -> "2018-02-02",
+              "valueOfChangedProperty" -> 6,
+              "valueOfAssetsPassing" -> 7,
+              "valueAvailableWhenPropertyChanged" -> 0
+            )
+          )
       }
     }
 
@@ -379,7 +378,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
       "construct correctly from user answers" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
-        calculationInput shouldBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, propertyValue, percentagePassedToDirectDescendants,
+        calculationInput mustBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, propertyValue, percentagePassedToDirectDescendants,
           valueBeingTransferred, None, Some(DownsizingDetails(datePropertyWasChanged, valueOfChangedProperty, valueOfAssetsPassing,
             valueAvailableWhenPropertyChanged)))
       }
@@ -387,21 +386,21 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
       "render to JSON" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
-        Json.toJson(calculationInput).toString shouldBe
-          """{
-            |"dateOfDeath":"2020-01-01",
-            |"valueOfEstate":1,
-            |"chargeableEstateValue":2,
-            |"propertyValue":3,
-            |"percentagePassedToDirectDescendants":4,
-            |"valueBeingTransferred":5,
-            |"downsizingDetails":{
-            |  "datePropertyWasChanged":"2018-02-02",
-            |  "valueOfChangedProperty":6,
-            |  "valueOfAssetsPassing":7,
-            |  "valueAvailableWhenPropertyChanged":8
-            |}
-            |}""".stripMargin.replaceAll("\\s+", "")
+        Json.toJson(calculationInput) mustBe
+          Json.obj(
+            "dateOfDeath" -> "2020-01-01",
+            "valueOfEstate" -> 1,
+            "chargeableEstateValue" -> 2,
+            "propertyValue" -> 3,
+            "percentagePassedToDirectDescendants" -> 4,
+            "valueBeingTransferred" -> 5,
+            "downsizingDetails" -> Json.obj(
+              "datePropertyWasChanged" -> "2018-02-02",
+              "valueOfChangedProperty" -> 6,
+              "valueOfAssetsPassing" -> 7,
+              "valueAvailableWhenPropertyChanged" -> 8
+            )
+          )
       }
     }
 
@@ -418,22 +417,22 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
       "construct correctly from user answers" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
-        calculationInput shouldBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, propertyValue, percentagePassedToDirectDescendants,
+        calculationInput mustBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, propertyValue, percentagePassedToDirectDescendants,
           valueBeingTransferred, None, None)
       }
 
       "render to JSON" in {
         buildAnswers
         val calculationInput = CalculationInput(userAnswers)
-        Json.toJson(calculationInput).toString shouldBe
-          """{
-            |"dateOfDeath":"2020-01-01",
-            |"valueOfEstate":1,
-            |"chargeableEstateValue":2,
-            |"propertyValue":3,
-            |"percentagePassedToDirectDescendants":4,
-            |"valueBeingTransferred":5
-            |}""".stripMargin.replaceAll("\\s+", "")
+        Json.toJson(calculationInput) mustBe
+          Json.obj(
+            "dateOfDeath" -> "2020-01-01",
+            "valueOfEstate" -> 1,
+            "chargeableEstateValue" -> 2,
+            "propertyValue" -> 3,
+            "percentagePassedToDirectDescendants" -> 4,
+            "valueBeingTransferred" -> 5
+          )
       }
     }
 
@@ -444,7 +443,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Date of Death was not answered"
+        exception.getMessage mustBe "requirement failed: Date of Death was not answered"
       }
     }
 
@@ -455,7 +454,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Value Of Estate was not answered"
+        exception.getMessage mustBe "requirement failed: Value Of Estate was not answered"
       }
     }
 
@@ -466,7 +465,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Chargeable Estate Value was not answered"
+        exception.getMessage mustBe "requirement failed: Chargeable Estate Value was not answered"
       }
     }
 
@@ -477,7 +476,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Property In Estate was not answered"
+        exception.getMessage mustBe "requirement failed: Property In Estate was not answered"
       }
     }
 
@@ -489,7 +488,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Property Value was not answered"
+        exception.getMessage mustBe "requirement failed: Property Value was not answered"
       }
     }
 
@@ -501,7 +500,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Property Passing To Direct Descendants was not answered"
+        exception.getMessage mustBe "requirement failed: Property Passing To Direct Descendants was not answered"
       }
     }
 
@@ -513,7 +512,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Percentage Passed To Direct Descendants was not answered"
+        exception.getMessage mustBe "requirement failed: Percentage Passed To Direct Descendants was not answered"
       }
     }
 
@@ -526,7 +525,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Exemptions And Relief Claimed was not answered"
+        exception.getMessage mustBe "requirement failed: Exemptions And Relief Claimed was not answered"
       }
     }
 
@@ -539,7 +538,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Exemptions And Relief Claimed was not answered"
+        exception.getMessage mustBe "requirement failed: Exemptions And Relief Claimed was not answered"
       }
     }
 
@@ -552,7 +551,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Grossing Up On Estate Property was not answered"
+        exception.getMessage mustBe "requirement failed: Grossing Up On Estate Property was not answered"
       }
     }
 
@@ -565,7 +564,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Chargeable Property Value was not answered"
+        exception.getMessage mustBe "requirement failed: Chargeable Property Value was not answered"
       }
     }
 
@@ -579,7 +578,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Chargeable Inherited Property Value was not answered"
+        exception.getMessage mustBe "requirement failed: Chargeable Inherited Property Value was not answered"
       }
     }
 
@@ -591,7 +590,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Transfer Any Unused Allowance was not answered"
+        exception.getMessage mustBe "requirement failed: Transfer Any Unused Allowance was not answered"
       }
     }
 
@@ -604,7 +603,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Value Being Transferred was not answered"
+        exception.getMessage mustBe "requirement failed: Value Being Transferred was not answered"
       }
     }
 
@@ -617,7 +616,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Claim Downsizing Threshold was not answered"
+        exception.getMessage mustBe "requirement failed: Claim Downsizing Threshold was not answered"
       }
     }
 
@@ -630,7 +629,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Date Property Was Changed was not answered"
+        exception.getMessage mustBe "requirement failed: Date Property Was Changed was not answered"
       }
     }
 
@@ -643,7 +642,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Value Of Changed Property was not answered"
+        exception.getMessage mustBe "requirement failed: Value Of Changed Property was not answered"
       }
     }
 
@@ -657,7 +656,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Assets Passing To Direct Descendants was not answered"
+        exception.getMessage mustBe "requirement failed: Assets Passing To Direct Descendants was not answered"
       }
     }
 
@@ -672,7 +671,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Value Of Assets Passing was not answered"
+        exception.getMessage mustBe "requirement failed: Value Of Assets Passing was not answered"
       }
     }
 
@@ -688,7 +687,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Transfer Available When Property Changed was not answered"
+        exception.getMessage mustBe "requirement failed: Transfer Available When Property Changed was not answered"
       }
     }
 
@@ -717,7 +716,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with Matcher
           CalculationInput(userAnswers)
         }
 
-        exception.getMessage shouldBe "requirement failed: Value Available When Property Changed was not answered"
+        exception.getMessage mustBe "requirement failed: Value Available When Property Changed was not answered"
       }
     }
   }

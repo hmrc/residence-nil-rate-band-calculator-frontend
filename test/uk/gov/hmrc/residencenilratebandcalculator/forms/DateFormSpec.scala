@@ -18,7 +18,6 @@ package uk.gov.hmrc.residencenilratebandcalculator.forms
 
 import java.time.LocalDate
 
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.data.Form
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.mvc.AnyContentAsEmpty
@@ -162,7 +161,7 @@ class DateFormSpec extends FormSpec {
 
   private def dateField(dateForm: Form[Date], fieldName: String, errorKeyPrefix: String): Unit = {
     "not give an error for a valid date" in {
-      dateForm.bind(completeDate(fieldName)).get shouldBe Date(LocalDate.of(2015, 1, 1))
+      dateForm.bind(completeDate(fieldName)).get mustBe Date(LocalDate.of(2015, 1, 1))
     }
     dateFieldCheckMultipleFields(dateForm, fieldName, errorKeyPrefix)
     dateFieldCheckDay(dateForm, fieldName, errorKeyPrefix)

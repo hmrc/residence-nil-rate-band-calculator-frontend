@@ -17,7 +17,6 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views.rnrbHelpers
 
 import org.mockito.Mockito._
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.data.{Form, FormError}
 import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.playComponents.error_summary
@@ -53,7 +52,7 @@ class ErrorSummaryViewSpec extends HtmlSpec {
     "given no errors" must {
 
       "not render anything" in {
-        error_summary(Seq())(messages).toString.trim shouldBe ""
+        error_summary(Seq())(messages).toString.trim mustBe ""
       }
     }
 
@@ -62,7 +61,7 @@ class ErrorSummaryViewSpec extends HtmlSpec {
       "render a title" in {
         val doc = asDocument(error_summary(Seq(error))(messages))
         val heading = doc.getElementsByClass("govuk-error-summary__title")
-        heading.text shouldBe messages("error.summary.title")
+        heading.text mustBe messages("error.summary.title")
       }
 
       "render some help text" in {
@@ -74,8 +73,8 @@ class ErrorSummaryViewSpec extends HtmlSpec {
         val doc = asDocument(error_summary(Seq(error))(messages))
         val ul = doc.getElementsByClass("govuk-list govuk-error-summary__list").first
         val link = ul.getElementsByTag("li").first.getElementsByTag("a").first
-        link.attr("href") shouldBe s"#$errorKey1"
-        link.text shouldBe message1
+        link.attr("href") mustBe s"#$errorKey1"
+        link.text mustBe message1
       }
     }
 
@@ -84,7 +83,7 @@ class ErrorSummaryViewSpec extends HtmlSpec {
       "render a title" in {
         val doc = asDocument(error_summary(Seq(error, error2))(messages))
         val heading = doc.getElementsByClass("govuk-error-summary__title")
-        heading.text shouldBe messages("error.summary.title")
+        heading.text mustBe messages("error.summary.title")
       }
 
       "render some help text" in {
@@ -96,16 +95,16 @@ class ErrorSummaryViewSpec extends HtmlSpec {
         val doc = asDocument(error_summary(Seq(error, error2))(messages))
         val ul = doc.getElementsByClass("govuk-list govuk-error-summary__list").first
         val link = ul.getElementsByTag("li").first.getElementsByTag("a").first
-        link.attr("href") shouldBe s"#$errorKey1"
-        link.text shouldBe message1
+        link.attr("href") mustBe s"#$errorKey1"
+        link.text mustBe message1
       }
 
       "render a link to the second error key" in {
         val doc = asDocument(error_summary(Seq(error, error2))(messages))
         val ul = doc.getElementsByClass("govuk-list govuk-error-summary__list").first
         val link = ul.getElementsByTag("li").get(1).getElementsByTag("a").first
-        link.attr("href") shouldBe s"#$errorKey2"
-        link.text shouldBe message2
+        link.attr("href") mustBe s"#$errorKey2"
+        link.text mustBe message2
       }
     }
   }

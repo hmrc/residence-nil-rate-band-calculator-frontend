@@ -59,13 +59,13 @@ trait NewSimpleControllerSpecBase extends CommonPlaySpec with HttpResponseMocks 
     "return 200 for a GET" in {
       for (v <- valuesToCacheBeforeLoad) setCacheValue(v._1, v._2)
       val result = createController().onPageLoad(rds)(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result) mustBe Status.OK
     }
 
     "return the View for a GET" in {
       for (v <- valuesToCacheBeforeLoad) setCacheValue(v._1, v._2)
       val result = createController().onPageLoad(rds)(fakeRequest)
-      Jsoup.parse(contentAsString(result)).title() shouldBe messages(s"$messageKeyPrefix.title") + " - Calculate the available RNRB - GOV.UK"
+      Jsoup.parse(contentAsString(result)).title() mustBe messages(s"$messageKeyPrefix.title") + " - Calculate the available RNRB - GOV.UK"
     }
 
     "return a redirect on submit with valid data" in {
@@ -73,7 +73,7 @@ trait NewSimpleControllerSpecBase extends CommonPlaySpec with HttpResponseMocks 
       for (v <- valuesToCacheBeforeSubmission) setCacheValue(v._1, v._2)
       setCacheValue(cacheKey, testValue)
       val result = createController().onSubmit(wts)(fakePostRequest)
-      status(result) shouldBe Status.SEE_OTHER
+      status(result) mustBe Status.SEE_OTHER
     }
 
     "store valid submitted data" in {
@@ -89,7 +89,7 @@ trait NewSimpleControllerSpecBase extends CommonPlaySpec with HttpResponseMocks 
       val value = "invalid data"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
       val result = createController().onSubmit(wts)(fakePostRequest)
-      status(result) shouldBe Status.BAD_REQUEST
+      status(result) mustBe Status.BAD_REQUEST
     }
 
     "return form with errors when invalid data is submitted" in {
@@ -97,7 +97,7 @@ trait NewSimpleControllerSpecBase extends CommonPlaySpec with HttpResponseMocks 
       val value = "invalid data"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
       val result = createController().onSubmit(wts)(fakePostRequest)
-      contentAsString(result) shouldBe createView(Some(Map("value" -> value))).toString
+      contentAsString(result) mustBe createView(Some(Map("value" -> value))).toString
     }
 
     "not store invalid submitted data" in {
@@ -111,7 +111,7 @@ trait NewSimpleControllerSpecBase extends CommonPlaySpec with HttpResponseMocks 
       for (v <- valuesToCacheBeforeLoad) setCacheValue(v._1, v._2)
       setCacheValue(cacheKey, testValue)
       val result = createController().onPageLoad(rds)(fakeRequest)
-      contentAsString(result) shouldBe createView(Some(Map("value" -> testValue.toString))).toString
+      contentAsString(result) mustBe createView(Some(Map("value" -> testValue.toString))).toString
     }
   }
 
@@ -121,18 +121,18 @@ trait NewSimpleControllerSpecBase extends CommonPlaySpec with HttpResponseMocks 
     "On a page load with an expired session, return an redirect to an expired session page" in {
       expireSessionConnector()
       val result = createController().onPageLoad(rds)(fakeRequest)
-      status(result) shouldBe Status.SEE_OTHER
-      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url)
+      status(result) mustBe Status.SEE_OTHER
+      redirectLocation(result) mustBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url)
     }
 
     "On a page submit with an expired session, return an redirect to an expired session page" in {
       expireSessionConnector()
       val result = createController().onSubmit(wts)(fakeRequest)
-      status(result) shouldBe Status.SEE_OTHER
-      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url)
+      status(result) mustBe Status.SEE_OTHER
+      redirectLocation(result) mustBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url)
     }
 
-    "The answer constants should be the same as the calulated constants for the controller" in {
+    "The answer constants must be the same as the calulated constants for the controller" in {
       val filledOutCacheMap = new CacheMap("",
         Map[String, JsValue](
           Constants.dateOfDeathId -> JsString("2019-03-04"),
@@ -159,7 +159,7 @@ trait NewSimpleControllerSpecBase extends CommonPlaySpec with HttpResponseMocks 
       val controllerId = createController().controllerId
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
-      answerRowConstants shouldBe calculatedList
+      answerRowConstants mustBe calculatedList
     }
   }
 }

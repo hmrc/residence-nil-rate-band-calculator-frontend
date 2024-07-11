@@ -19,7 +19,6 @@ package uk.gov.hmrc.residencenilratebandcalculator.utils
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm
 import org.scalatest
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.Environment
 import play.api.i18n.Lang
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
@@ -91,7 +90,7 @@ class PDFHelperSpec extends BaseSpec {
 
   private def pdfField(fieldName: String, expectedValue: String, generateWelshPDF: Boolean): Unit = {
     describeTest(fieldName, isWelshTest = generateWelshPDF) in {
-      acroForm(generateWelshPDF=generateWelshPDF).getField(fieldName).getValueAsString shouldBe expectedValue
+      acroForm(generateWelshPDF=generateWelshPDF).getField(fieldName).getValueAsString mustBe expectedValue
     }
   }
 
@@ -243,7 +242,7 @@ class PDFHelperSpec extends BaseSpec {
         )
       )
       acroForm(filledCacheMap = cacheMap, generateWelshPDF = generateWelshPDF).getField("IHT435_26")
-        .getValueAsString shouldBe no(if (generateWelshPDF) Some("Na fyddai") else None)
+        .getValueAsString mustBe no(if (generateWelshPDF) Some("Na fyddai") else None)
     }
   }
 

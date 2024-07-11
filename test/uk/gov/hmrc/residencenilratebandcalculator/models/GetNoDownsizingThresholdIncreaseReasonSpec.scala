@@ -17,7 +17,6 @@
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import org.mockito.Mockito._
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import org.scalatestplus.mockito.MockitoSugar
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThresholdIncreaseReason.{DatePropertyWasChangedTooEarly, NoAssetsPassingToDirectDescendants}
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
@@ -27,13 +26,13 @@ class GetNoDownsizingThresholdIncreaseReasonSpec extends BaseSpec with MockitoSu
     "get the 'no assets passing to a direct descendant' reason when there are no assets passing to direct descendants" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.assetsPassingToDirectDescendants) thenReturn Some(false)
-      GetNoDownsizingThresholdIncreaseReason(userAnswers) shouldBe NoAssetsPassingToDirectDescendants
+      GetNoDownsizingThresholdIncreaseReason(userAnswers) mustBe NoAssetsPassingToDirectDescendants
     }
 
     "get the 'Date Property Was Changed too early' reason when the property is disposed of before 8 July 2015" in {
       val userAnswers = mock[UserAnswers]
       when(userAnswers.datePropertyWasChanged) thenReturn Some(Constants.downsizingEligibilityDate.minusDays(1))
-      GetNoDownsizingThresholdIncreaseReason(userAnswers) shouldBe DatePropertyWasChangedTooEarly
+      GetNoDownsizingThresholdIncreaseReason(userAnswers) mustBe DatePropertyWasChangedTooEarly
     }
   }
 }

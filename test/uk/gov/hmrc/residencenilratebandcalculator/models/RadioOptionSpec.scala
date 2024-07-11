@@ -16,14 +16,13 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
 class RadioOptionSpec extends BaseSpec {
 
   "Radio Option" must {
     "build correctly using the apply method" in {
-      RadioOption("prefix", "option") shouldBe RadioOption("prefix.option", "option", "prefix.option")
+      RadioOption("prefix", "option") mustBe RadioOption("prefix.option", "option", "prefix.option")
     }
   }
 }
