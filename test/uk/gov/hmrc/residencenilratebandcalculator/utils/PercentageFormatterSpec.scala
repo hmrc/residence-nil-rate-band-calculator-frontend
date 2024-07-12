@@ -16,25 +16,24 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
 class PercentageFormatterSpec extends BaseSpec {
   "PercentageFormatter" must {
     "format 0  as 0% without a trailing fractional part" in {
-      PercentageFormatter.format(0) shouldBe "0%"
+      PercentageFormatter.format(0) mustBe "0%"
     }
 
     "format 25 as 25 without a trailing fractional part" in {
-      PercentageFormatter.format(25) shouldBe "25%"
+      PercentageFormatter.format(25) mustBe "25%"
     }
 
     "format 50.0001 as 50.0001%" in {
-      PercentageFormatter.format(50.0001) shouldBe "50.0001%"
+      PercentageFormatter.format(50.0001) mustBe "50.0001%"
     }
 
     "format 50.00019999999 as 50.0002%" in {
-      PercentageFormatter.format(50.00019999999) shouldBe "50.0002%"
+      PercentageFormatter.format(50.00019999999) mustBe "50.0002%"
     }
   }
 }

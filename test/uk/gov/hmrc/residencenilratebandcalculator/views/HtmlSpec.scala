@@ -25,8 +25,7 @@ import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, FrontendAppConfig}
-import org.scalatest.{Assertion, matchers}
-import matchers.should.Matchers.convertToAnyShouldWrapper
+import org.scalatest.Assertion
 
 import scala.concurrent.ExecutionContext
 
@@ -57,7 +56,7 @@ trait HtmlSpec extends BaseSpec { self: PlaySpec =>
 
   def assertPageTitleEqualsMessage(doc: Document, expectedMessageKey: String, args: Any*): Assertion = {
     val headers = doc.getElementsByTag("h1")
-    headers.first.text.replaceAll("\u00a0", " ") shouldBe messages(expectedMessageKey, args:_*).replaceAll("&nbsp;", " ")
+    headers.first.text.replaceAll("\u00a0", " ") mustBe messages(expectedMessageKey, args:_*).replaceAll("&nbsp;", " ")
   }
 
   def assertContainsText(doc:Document, text: String): Assertion = assert(doc.toString.contains(text), "\n\ntext " + text + " was not rendered on the page.\n")

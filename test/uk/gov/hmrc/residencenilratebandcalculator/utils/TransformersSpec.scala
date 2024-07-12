@@ -20,37 +20,36 @@ import java.time.LocalDate
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 import uk.gov.hmrc.residencenilratebandcalculator.utils.Transformers._
 import org.scalatest.matchers
-import matchers.should.Matchers.convertToAnyShouldWrapper
 
 class TransformersSpec extends BaseSpec {
 
   "intToString" must {
     "convert an int to a string" in {
-      intToString(1) shouldBe Some("1")
+      intToString(1) mustBe Some("1")
     }
   }
 
   "stringToInt" must {
     "convert a numeric string to an integer" in {
-      stringToInt(Some("1")) shouldBe 1
+      stringToInt(Some("1")) mustBe 1
     }
 
     "convert a non-numeric string to 0" in {
-      stringToInt(Some("not a number")) shouldBe 0
+      stringToInt(Some("not a number")) mustBe 0
     }
 
     "convert None to 0" in {
-      stringToInt(None) shouldBe 0
+      stringToInt(None) mustBe 0
     }
 
     "convert an empty string to 0" in {
-      stringToInt(Some("")) shouldBe 0
+      stringToInt(Some("")) mustBe 0
     }
   }
 
   "constructDate" must {
     "return a date when given valid inputs" in {
-      constructDate(1, 1, 2000) shouldBe LocalDate.of(2000, 1, 1)
+      constructDate(1, 1, 2000) mustBe LocalDate.of(2000, 1, 1)
     }
 
     "throw an exception when given invalid inputs" in {
@@ -62,36 +61,36 @@ class TransformersSpec extends BaseSpec {
 
   "transformDateFormat" must {
     "behave correctly for a valid date where there are no quotes" in {
-      transformDateFormat("2017-5-12") shouldBe "12052017"
+      transformDateFormat("2017-5-12") mustBe "12052017"
     }
     "behave correctly for a valid date where month has no leading zero" in {
-      transformDateFormat("\"2017-5-12\"") shouldBe "12052017"
+      transformDateFormat("\"2017-5-12\"") mustBe "12052017"
     }
     "behave correctly for a valid date where day has no leading zero" in {
-      transformDateFormat("\"2017-05-03\"") shouldBe "03052017"
+      transformDateFormat("\"2017-05-03\"") mustBe "03052017"
     }
     "throw an exception where day is empty" in {
-      a[RuntimeException] shouldBe thrownBy {
+      a[RuntimeException] mustBe thrownBy {
         transformDateFormat("\"2017--03\"")
       }
     }
     "throw an exception where month is empty" in {
-      a[RuntimeException] shouldBe thrownBy {
+      a[RuntimeException] mustBe thrownBy {
         transformDateFormat("\"2017-03-\"")
       }
     }
     "throw an exception where year is empty" in {
-      a[RuntimeException] shouldBe thrownBy {
+      a[RuntimeException] mustBe thrownBy {
         transformDateFormat("\"--03-04\"")
       }
     }
     "throw an exception where day is too long" in {
-      a[RuntimeException] shouldBe thrownBy {
+      a[RuntimeException] mustBe thrownBy {
         transformDateFormat("2017-5-124")
       }
     }
     "throw an exception where month is too long" in {
-      a[RuntimeException] shouldBe thrownBy {
+      a[RuntimeException] mustBe thrownBy {
         transformDateFormat("2017-124-5")
       }
     }
@@ -99,36 +98,36 @@ class TransformersSpec extends BaseSpec {
 
   "stripOffQuotesIfPresent" must {
     "strip off quotes" in {
-      stripOffQuotesIfPresent("\"abc\"") shouldBe "abc"
+      stripOffQuotesIfPresent("\"abc\"") mustBe "abc"
     }
     "work where no quotes" in {
-      stripOffQuotesIfPresent("abc") shouldBe "abc"
+      stripOffQuotesIfPresent("abc") mustBe "abc"
     }
   }
 
   "transformDecimalFormat" must {
     "transform correctly where decimal number of less than maximum size" in {
-      transformDecimalFormat("34.8899") shouldBe " 348899"
+      transformDecimalFormat("34.8899") mustBe " 348899"
     }
 
     "transform correctly where decimal number of maximum size" in {
-      transformDecimalFormat("234.8899") shouldBe "2348899"
+      transformDecimalFormat("234.8899") mustBe "2348899"
     }
 
     "transform correctly where decimal number with less than max mantissa" in {
-      transformDecimalFormat("234.889") shouldBe "234889 "
+      transformDecimalFormat("234.889") mustBe "234889 "
     }
 
     "transform correctly where decimal number with no decimal point where max" in {
-      transformDecimalFormat("234") shouldBe "234    "
+      transformDecimalFormat("234") mustBe "234    "
     }
 
     "transform correctly where decimal number with no decimal point where less than max" in {
-      transformDecimalFormat("34") shouldBe " 34    "
+      transformDecimalFormat("34") mustBe " 34    "
     }
 
     "transform correctly where empty string" in {
-      transformDecimalFormat("") shouldBe "       "
+      transformDecimalFormat("") mustBe "       "
     }
   }
 }

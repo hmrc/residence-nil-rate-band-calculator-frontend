@@ -27,6 +27,6 @@ object DateOfDeathForm {
   def dateOfDeathForm(implicit messages: Messages): Form[Date] = Form(
     mapping(
       "dateOfDeath" -> of(DateFormatter("dateOfDeath"))
-    )(Date.apply)(Date.unapply)
+    )(Date.apply)(o => Some(o.date))
   )
 }

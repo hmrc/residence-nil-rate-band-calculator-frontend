@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 
 class BooleanFormSpec extends FormSpec {
 
@@ -26,12 +25,12 @@ class BooleanFormSpec extends FormSpec {
 
     "bind true" in {
       val form = BooleanForm(errorKey).bind(Map("value" -> "true"))
-      form.get shouldBe true
+      form.get mustBe true
     }
 
     "bind false" in {
       val form = BooleanForm(errorKey).bind(Map("value" -> "false"))
-      form.get shouldBe false
+      form.get mustBe false
     }
 
     "fail to bind non-booleans" in {

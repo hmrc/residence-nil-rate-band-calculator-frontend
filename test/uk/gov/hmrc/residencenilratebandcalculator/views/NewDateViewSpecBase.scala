@@ -23,8 +23,6 @@ import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.forms.DateOfDeathForm._
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
-import org.scalatest.matchers
-import matchers.should.Matchers.convertToAnyShouldWrapper
 
 trait NewDateViewSpecBase extends NewViewSpecBase {
 
@@ -82,17 +80,17 @@ trait NewDateViewSpecBase extends NewViewSpecBase {
       "rendered with a value" must {
         "include the day value in the day input" in {
           val doc = asDocument(createView(form.fill(date)))
-          doc.getElementById(s"$pageType${".day"}").attr("value") shouldBe day.toString
+          doc.getElementById(s"$pageType${".day"}").attr("value") mustBe day.toString
         }
 
         "include the month value in the month input" in {
           val doc = asDocument(createView(form.fill(date)))
-          doc.getElementById(s"$pageType${".month"}").attr("value") shouldBe month.toString
+          doc.getElementById(s"$pageType${".month"}").attr("value") mustBe month.toString
         }
 
         "include the year value in the year input" in {
           val doc = asDocument(createView(form.fill(date)))
-          doc.getElementById(s"$pageType${".year"}").attr("value") shouldBe year.toString
+          doc.getElementById(s"$pageType${".year"}").attr("value") mustBe year.toString
         }
       }
 

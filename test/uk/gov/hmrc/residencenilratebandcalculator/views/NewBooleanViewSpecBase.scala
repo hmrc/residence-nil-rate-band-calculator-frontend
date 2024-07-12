@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
@@ -37,8 +36,8 @@ trait NewBooleanViewSpecBase extends NewViewSpecBase {
         "contain a legend for the question" in {
           val doc = asDocument(createView(emptyForm))
           val legends = doc.getElementsByTag("legend")
-          legends.size shouldBe 1
-          legends.first.text shouldBe messages(s"$messageKeyPrefix.title")
+          legends.size mustBe 1
+          legends.first.text mustBe messages(s"$messageKeyPrefix.title")
         }
 
         "contain an input for the value" in {
@@ -77,7 +76,7 @@ trait NewBooleanViewSpecBase extends NewViewSpecBase {
         "show an error in the value field's label" in {
           val doc = asDocument(createView(BooleanForm("").withError(error)))
           val errorSpan = doc.getElementsByClass("govuk-error-summary__list").first
-          errorSpan.text shouldBe messages(errorMessage)
+          errorSpan.text mustBe messages(errorMessage)
         }
       }
     }
@@ -91,7 +90,6 @@ trait NewBooleanViewSpecBase extends NewViewSpecBase {
 
     "have only the correct value checked" in {
       val doc = asDocument(createView(BooleanForm("").fill(answer)))
-      val test = asDocument(createView(emptyForm))
       assert(doc.getElementById(yes).hasAttr("checked") == answer)
       assert(doc.getElementById(no).hasAttr("checked") != answer)
     }

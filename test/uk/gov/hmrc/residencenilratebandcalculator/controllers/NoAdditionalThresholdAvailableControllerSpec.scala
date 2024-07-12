@@ -79,7 +79,7 @@ class NoAdditionalThresholdAvailableControllerSpec extends CommonPlaySpec with H
         messagesControllerComponents, mockSessionConnector, navigator, no_additional_threshold_available)
 
       val result = controller.onPageLoad(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result) mustBe Status.OK
     }
 
     "return the View for a GET" in {
@@ -87,7 +87,7 @@ class NoAdditionalThresholdAvailableControllerSpec extends CommonPlaySpec with H
         messagesControllerComponents, mockSessionConnector, navigator, no_additional_threshold_available)
 
       val result = controller.onPageLoad(fakeRequest)
-      contentAsString(result) shouldBe
+      contentAsString(result) mustBe
         no_additional_threshold_available(
           "no_additional_threshold_available.no_property_reason", routes.TransferAnyUnusedThresholdController.onPageLoad)(fakeRequest, messages).toString
     }
@@ -97,10 +97,10 @@ class NoAdditionalThresholdAvailableControllerSpec extends CommonPlaySpec with H
       val controller = new NoAdditionalThresholdAvailableController(
         messagesControllerComponents, mockSessionConnector, navigator, no_additional_threshold_available)
 
-      an[RuntimeException] should be thrownBy controller.onPageLoad(fakeRequest)
+      an[RuntimeException] must be thrownBy controller.onPageLoad(fakeRequest)
     }
 
-    "The answer constants should be the same as the calulated constants for the controller when the reason is NotCloselyInherited" in {
+    "The answer constants must be the same as the calulated constants for the controller when the reason is NotCloselyInherited" in {
       val controller = new NoAdditionalThresholdAvailableController(
         messagesControllerComponents, mockSessionConnector, navigator, no_additional_threshold_available)
       val controllerId = controller.getControllerId(NotCloselyInherited)
@@ -112,10 +112,10 @@ class NoAdditionalThresholdAvailableControllerSpec extends CommonPlaySpec with H
         Constants.chargeableEstateValueId,
         Constants.propertyInEstateId,
         Constants.propertyValueId)
-      answerList shouldBe calculatedList
+      answerList mustBe calculatedList
     }
 
-    "The answer constants should be the same as the calulated constants for the controller when the reason is NoProperty" in {
+    "The answer constants must be the same as the calulated constants for the controller when the reason is NoProperty" in {
       val controller = new NoAdditionalThresholdAvailableController(
         messagesControllerComponents, mockSessionConnector, navigator, no_additional_threshold_available)
       val controllerId = controller.getControllerId(NoProperty)
@@ -125,7 +125,7 @@ class NoAdditionalThresholdAvailableControllerSpec extends CommonPlaySpec with H
         Constants.partOfEstatePassingToDirectDescendantsId,
         Constants.valueOfEstateId,
         Constants.chargeableEstateValueId)
-      answerList shouldBe calculatedList
+      answerList mustBe calculatedList
     }
   }
 }

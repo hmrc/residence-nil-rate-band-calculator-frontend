@@ -16,36 +16,35 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
 class CurrencyFormatterSpec extends BaseSpec {
   "CurrencyFormatter" must {
     "format 0 GBP as £0 without a trailing fractional part" in {
-      CurrencyFormatter.format(0) shouldBe "£0"
+      CurrencyFormatter.format(0) mustBe "£0"
     }
 
     "format 25 GBP as £25 without a trailing fractional part" in {
-      CurrencyFormatter.format(25) shouldBe "£25"
+      CurrencyFormatter.format(25) mustBe "£25"
     }
 
     "format 1000000 GBP as £1,000,000 without a trailing fractional part" in {
-      CurrencyFormatter.format(1000000) shouldBe "£1,000,000"
+      CurrencyFormatter.format(1000000) mustBe "£1,000,000"
     }
 
     "format -1000000 GBP as -£1,000,000 without a trailing fractional part" in {
-      CurrencyFormatter.format(-1000000) shouldBe "-£1,000,000"
+      CurrencyFormatter.format(-1000000) mustBe "-£1,000,000"
     }
 
     "format \"0\" GBP as £0" in {
-      CurrencyFormatter.format("0") shouldBe "£0"
+      CurrencyFormatter.format("0") mustBe "£0"
     }
 
     "format NotANumber by throwing a NumberFormatException" in {
       val exception = intercept[NumberFormatException] {
         CurrencyFormatter.format("NotANumber")
       }
-      exception.getMessage shouldBe "For input string: \"NotANumber\""
+      exception.getMessage mustBe "For input string: \"NotANumber\""
     }
   }
 }

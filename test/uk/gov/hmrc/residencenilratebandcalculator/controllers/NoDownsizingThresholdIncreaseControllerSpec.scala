@@ -83,7 +83,7 @@ class NoDownsizingThresholdIncreaseControllerSpec extends CommonPlaySpec
         messagesControllerComponents, mockSessionConnector, navigator, no_downsizing_threshold_increase)
 
       val result = controller.onPageLoad(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result) mustBe Status.OK
     }
 
     "return the View for a GET" in {
@@ -91,7 +91,7 @@ class NoDownsizingThresholdIncreaseControllerSpec extends CommonPlaySpec
         messagesControllerComponents, mockSessionConnector, navigator, no_downsizing_threshold_increase)
 
       val result = controller.onPageLoad(fakeRequest)
-      contentAsString(result) shouldBe
+      contentAsString(result) mustBe
         no_downsizing_threshold_increase("no_downsizing_threshold_increase.date_property_was_changed_too_early_reason",
           routes.CheckYourAnswersController.onPageLoad)(fakeRequest, messages).toString
     }
@@ -104,7 +104,7 @@ class NoDownsizingThresholdIncreaseControllerSpec extends CommonPlaySpec
       val result = controller.createView(NoAssetsPassingToDirectDescendants, userAnswers)(fakeRequest)
       val target = no_downsizing_threshold_increase("no_downsizing_threshold_increase.no_assets_passing_to_direct_descendants_reason",
         navigator.nextPage(Constants.noDownsizingThresholdIncrease)(userAnswers))(fakeRequest, messages).toString()
-      result.toString() shouldBe target
+      result.toString() mustBe target
 
     }
 
@@ -113,10 +113,10 @@ class NoDownsizingThresholdIncreaseControllerSpec extends CommonPlaySpec
       val controller = new NoDownsizingThresholdIncreaseController(
         messagesControllerComponents, mockSessionConnector, navigator, no_downsizing_threshold_increase)
 
-      an[RuntimeException] should be thrownBy controller.onPageLoad(fakeRequest)
+      an[RuntimeException] must be thrownBy controller.onPageLoad(fakeRequest)
     }
 
-    "The answer constants should be the same as the calulated constants for the controller when the reason is NotCloselyInherited" in {
+    "The answer constants must be the same as the calulated constants for the controller when the reason is NotCloselyInherited" in {
       val controller = new NoAdditionalThresholdAvailableController(
         messagesControllerComponents, mockSessionConnector, navigator, no_additional_threshold_available)
       val controllerId = controller.getControllerId(NoAssetsPassingToDirectDescendants)
@@ -126,10 +126,10 @@ class NoDownsizingThresholdIncreaseControllerSpec extends CommonPlaySpec
         Constants.partOfEstatePassingToDirectDescendantsId,
         Constants.valueOfEstateId,
         Constants.chargeableEstateValueId)
-      answerList shouldBe (calculatedList)
+      answerList mustBe (calculatedList)
     }
 
-    "The answer constants should be the same as the calulated constants for the controller when the reason is another reason" in {
+    "The answer constants must be the same as the calulated constants for the controller when the reason is another reason" in {
       val controller = new NoAdditionalThresholdAvailableController(
         messagesControllerComponents, mockSessionConnector, navigator, no_additional_threshold_available)
       val controllerId = controller.getControllerId(DatePropertyWasChangedTooEarly)
@@ -139,19 +139,19 @@ class NoDownsizingThresholdIncreaseControllerSpec extends CommonPlaySpec
         Constants.partOfEstatePassingToDirectDescendantsId,
         Constants.valueOfEstateId,
         Constants.chargeableEstateValueId)
-      answerList shouldBe (calculatedList)
+      answerList mustBe (calculatedList)
     }
 
-    "getControllerId" should {
+    "getControllerId" must {
 
       "return assetsPassingToDirectDescendantsId constant when no assets is passed in as the reason" in {
         val controller = fakeApplication.injector.instanceOf[NoDownsizingThresholdIncreaseController]
-        controller.getControllerId(NoAssetsPassingToDirectDescendants) shouldBe Constants.assetsPassingToDirectDescendantsId
+        controller.getControllerId(NoAssetsPassingToDirectDescendants) mustBe Constants.assetsPassingToDirectDescendantsId
       }
 
       "return datePropertyWasChangedId constant when assets are passed as the reason" in {
         val controller = fakeApplication.injector.instanceOf[NoDownsizingThresholdIncreaseController]
-        controller.getControllerId(NotCloselyInherited) shouldBe Constants.datePropertyWasChangedId
+        controller.getControllerId(NotCloselyInherited) mustBe Constants.datePropertyWasChangedId
       }
     }
   }

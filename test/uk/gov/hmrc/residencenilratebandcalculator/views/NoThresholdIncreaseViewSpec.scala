@@ -26,30 +26,21 @@ class NoThresholdIncreaseViewSpec extends HtmlSpec {
 
   val prefix = "no_threshold_increase.direct_descendants"
   val no_threshold_increase: no_threshold_increase = injector.instanceOf[no_threshold_increase]
-  def fixture(): Object {
-    val view: HtmlFormat.Appendable
-
-    val doc: Document
-  } = new {
-    val view: HtmlFormat.Appendable = no_threshold_increase(prefix)(request, messages)
-    val doc: Document = asDocument(view)
-  }
+  val view: HtmlFormat.Appendable = no_threshold_increase(prefix)(request, messages)
+  val doc: Document = asDocument(view)
 
   "No Threshold Increase View" must {
 
     "display the correct browser title" in {
-      val f = fixture()
-      assertEqualsMessage(f.doc, "title", s"${messages("no_threshold_increase.browser_title")} - ${messages("service.name")} - GOV.UK")
+      assertEqualsMessage(doc, "title", s"${messages("no_threshold_increase.browser_title")} - ${messages("service.name")} - GOV.UK")
     }
 
     "display the correct page title" in {
-      val f = fixture()
-      assertPageTitleEqualsMessage(f.doc, s"$prefix.title")
+      assertPageTitleEqualsMessage(doc, s"$prefix.title")
     }
 
     "not display the HMRC logo" in {
-      val f = fixture()
-      assertNotRenderedByCssSelector(f.doc, ".organisation-logo")
+      assertNotRenderedByCssSelector(doc, ".organisation-logo")
     }
 
   }

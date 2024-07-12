@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.libs.json.{JsBoolean, JsNumber, JsString}
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
 
@@ -61,7 +60,7 @@ class CascadeUpsertSpec extends BaseSpec {
     "asked to save a value for date of death" must {
       "not delete any other answers" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.dateOfDeathId, Constants.eligibilityDate, fullCacheMap)
-        updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size
+        updatedCacheMap.data.keys.size mustBe fullCacheMap.data.keys.size
       }
     }
 
@@ -69,37 +68,37 @@ class CascadeUpsertSpec extends BaseSpec {
 
       "delete the existing 'Property Value'" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.propertyInEstateId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.propertyValueId
+        updatedCacheMap.data.keys must not contain Constants.propertyValueId
       }
 
       "delete the existing 'Property Passing To Direct Descendants'" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.propertyInEstateId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.propertyPassingToDirectDescendantsId
+        updatedCacheMap.data.keys must not contain Constants.propertyPassingToDirectDescendantsId
       }
 
       "delete the existing 'Percentage Passed To Direct Descendants'" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.propertyInEstateId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.percentagePassedToDirectDescendantsId
+        updatedCacheMap.data.keys must not contain Constants.percentagePassedToDirectDescendantsId
       }
 
       "delete the existing 'Exemptions And Relief Claimed' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.propertyInEstateId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.exemptionsAndReliefClaimedId
+        updatedCacheMap.data.keys must not contain Constants.exemptionsAndReliefClaimedId
       }
 
       "delete the existing 'Chargeable Property Value' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.propertyInEstateId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.chargeablePropertyValueId
+        updatedCacheMap.data.keys must not contain Constants.chargeablePropertyValueId
       }
 
       "delete the existing 'Chargeable Inherited Property Value' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.propertyInEstateId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.chargeableInheritedPropertyValueId
+        updatedCacheMap.data.keys must not contain Constants.chargeableInheritedPropertyValueId
       }
 
       "not delete any other answers" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.propertyInEstateId, false, fullCacheMap)
-        updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size - 6
+        updatedCacheMap.data.keys.size mustBe fullCacheMap.data.keys.size - 6
       }
     }
 
@@ -107,34 +106,34 @@ class CascadeUpsertSpec extends BaseSpec {
 
       "not delete existing answers for other questions" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.propertyInEstateId, true, fullCacheMap)
-        updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size
+        updatedCacheMap.data.keys.size mustBe fullCacheMap.data.keys.size
       }
     }
 
     "asked to save the answer 'none' for Property Passing To Direct Descendants" must {
       "delete the existing 'Percentage Passed To Direct Descendants' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.none, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.percentagePassedToDirectDescendantsId
+        updatedCacheMap.data.keys must not contain Constants.percentagePassedToDirectDescendantsId
       }
 
       "delete the existing 'Exemptions And Relief Claimed' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.none, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.exemptionsAndReliefClaimedId
+        updatedCacheMap.data.keys must not contain Constants.exemptionsAndReliefClaimedId
       }
 
       "delete the existing 'Chargeable Property Value' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.none, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.chargeablePropertyValueId
+        updatedCacheMap.data.keys must not contain Constants.chargeablePropertyValueId
       }
 
       "delete the existing 'Chargeable Inherited Property Value' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.none, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.chargeableInheritedPropertyValueId
+        updatedCacheMap.data.keys must not contain Constants.chargeableInheritedPropertyValueId
       }
 
       "not delete any other answers" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.none, fullCacheMap)
-        updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size - 4
+        updatedCacheMap.data.keys.size mustBe fullCacheMap.data.keys.size - 4
       }
     }
 
@@ -142,12 +141,12 @@ class CascadeUpsertSpec extends BaseSpec {
 
       "delete the existing 'Percentage Passed To Direct Descendants' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.all, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.percentagePassedToDirectDescendantsId
+        updatedCacheMap.data.keys must not contain Constants.percentagePassedToDirectDescendantsId
       }
 
       "not delete any other answers" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.all, fullCacheMap)
-        updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size - 1
+        updatedCacheMap.data.keys.size mustBe fullCacheMap.data.keys.size - 1
       }
     }
 
@@ -155,7 +154,7 @@ class CascadeUpsertSpec extends BaseSpec {
 
       "not delete existing answers for other questions" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.some, fullCacheMap)
-        updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size
+        updatedCacheMap.data.keys.size mustBe fullCacheMap.data.keys.size
       }
     }
 
@@ -163,22 +162,22 @@ class CascadeUpsertSpec extends BaseSpec {
 
       "delete the existing 'Chargeable Property Value' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.exemptionsAndReliefClaimedId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.chargeablePropertyValueId
+        updatedCacheMap.data.keys must not contain Constants.chargeablePropertyValueId
       }
 
       "delete the existing 'Chargeable Inherited Property Value' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.exemptionsAndReliefClaimedId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.chargeableInheritedPropertyValueId
+        updatedCacheMap.data.keys must not contain Constants.chargeableInheritedPropertyValueId
       }
 
       "delete the existing 'Grossing Up On Estate Property' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.exemptionsAndReliefClaimedId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.grossingUpOnEstatePropertyId
+        updatedCacheMap.data.keys must not contain Constants.grossingUpOnEstatePropertyId
       }
 
       "not delete any other answers" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.exemptionsAndReliefClaimedId, false, fullCacheMap)
-        updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size - 3
+        updatedCacheMap.data.keys.size mustBe fullCacheMap.data.keys.size - 3
       }
     }
 
@@ -186,7 +185,7 @@ class CascadeUpsertSpec extends BaseSpec {
 
       "not delete existing answers for other questions" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.exemptionsAndReliefClaimedId, true, fullCacheMap)
-        updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size
+        updatedCacheMap.data.keys.size mustBe fullCacheMap.data.keys.size
       }
     }
 
@@ -194,22 +193,22 @@ class CascadeUpsertSpec extends BaseSpec {
 
       "delete the existing 'Value Being Transferred' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.transferAnyUnusedThresholdId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.valueBeingTransferredId
+        updatedCacheMap.data.keys must not contain Constants.valueBeingTransferredId
       }
 
       "delete the existing 'Transfer Available When Property Changed' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.transferAnyUnusedThresholdId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.transferAvailableWhenPropertyChangedId
+        updatedCacheMap.data.keys must not contain Constants.transferAvailableWhenPropertyChangedId
       }
 
       "delete the existing 'Value Available When Property Changed' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.transferAnyUnusedThresholdId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.valueAvailableWhenPropertyChangedId
+        updatedCacheMap.data.keys must not contain Constants.valueAvailableWhenPropertyChangedId
       }
 
       "not delete any other answers" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.transferAnyUnusedThresholdId, false, fullCacheMap)
-        updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size - 3
+        updatedCacheMap.data.keys.size mustBe fullCacheMap.data.keys.size - 3
       }
     }
 
@@ -217,7 +216,7 @@ class CascadeUpsertSpec extends BaseSpec {
 
       "not delete existing answers for other questions" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.transferAnyUnusedThresholdId, true, fullCacheMap)
-        updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size
+        updatedCacheMap.data.keys.size mustBe fullCacheMap.data.keys.size
       }
     }
 
@@ -225,42 +224,42 @@ class CascadeUpsertSpec extends BaseSpec {
 
       "delete the existing 'Date Property Was Changed' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.datePropertyWasChangedId
+        updatedCacheMap.data.keys must not contain Constants.datePropertyWasChangedId
       }
 
       "delete the existing 'Value Of Changed Property' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.valueOfChangedPropertyId
+        updatedCacheMap.data.keys must not contain Constants.valueOfChangedPropertyId
       }
 
       "delete the existing 'Assets Passing To Direct Descendants' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.assetsPassingToDirectDescendantsId
+        updatedCacheMap.data.keys must not contain Constants.assetsPassingToDirectDescendantsId
       }
 
       "delete the existing 'Value Of Assets Passing' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.valueOfAssetsPassingId
+        updatedCacheMap.data.keys must not contain Constants.valueOfAssetsPassingId
       }
 
       "delete the existing 'Transfer Available When Property Changed' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.transferAvailableWhenPropertyChangedId
+        updatedCacheMap.data.keys must not contain Constants.transferAvailableWhenPropertyChangedId
       }
 
       "delete the existing 'Grossing Up On Estate Assets' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.grossingUpOnEstateAssetsId
+        updatedCacheMap.data.keys must not contain Constants.grossingUpOnEstateAssetsId
       }
 
       "delete the existing 'Value Available When Property Changed' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.valueAvailableWhenPropertyChangedId
+        updatedCacheMap.data.keys must not contain Constants.valueAvailableWhenPropertyChangedId
       }
 
       "not delete any other answers" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, false, fullCacheMap)
-        updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size - 7
+        updatedCacheMap.data.keys.size mustBe fullCacheMap.data.keys.size - 7
       }
     }
 
@@ -268,7 +267,7 @@ class CascadeUpsertSpec extends BaseSpec {
 
       "not delete existing answers for other questions" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.claimDownsizingThresholdId, true, fullCacheMap)
-        updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size
+        updatedCacheMap.data.keys.size mustBe fullCacheMap.data.keys.size
       }
     }
 
@@ -276,27 +275,27 @@ class CascadeUpsertSpec extends BaseSpec {
 
       "delete the existing 'Value Of Assets Passing' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.assetsPassingToDirectDescendantsId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.valueOfAssetsPassingId
+        updatedCacheMap.data.keys must not contain Constants.valueOfAssetsPassingId
       }
 
       "delete the existing 'Transfer Available When Property Changed' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.assetsPassingToDirectDescendantsId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.transferAvailableWhenPropertyChangedId
+        updatedCacheMap.data.keys must not contain Constants.transferAvailableWhenPropertyChangedId
       }
 
       "delete the existing 'Grossing Up On Estate Assets' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.assetsPassingToDirectDescendantsId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.grossingUpOnEstateAssetsId
+        updatedCacheMap.data.keys must not contain Constants.grossingUpOnEstateAssetsId
       }
 
       "delete the existing 'Value Available When Property Changed' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.assetsPassingToDirectDescendantsId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.valueAvailableWhenPropertyChangedId
+        updatedCacheMap.data.keys must not contain Constants.valueAvailableWhenPropertyChangedId
       }
 
       "not delete any other answers" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.assetsPassingToDirectDescendantsId, false, fullCacheMap)
-        updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size - 4
+        updatedCacheMap.data.keys.size mustBe fullCacheMap.data.keys.size - 4
       }
     }
 
@@ -304,7 +303,7 @@ class CascadeUpsertSpec extends BaseSpec {
 
       "not delete existing answers for other questions" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.assetsPassingToDirectDescendantsId, true, fullCacheMap)
-        updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size
+        updatedCacheMap.data.keys.size mustBe fullCacheMap.data.keys.size
       }
     }
 
@@ -312,12 +311,12 @@ class CascadeUpsertSpec extends BaseSpec {
 
       "delete the existing 'Value Available When Property Changed' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.transferAvailableWhenPropertyChangedId, false, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.valueAvailableWhenPropertyChangedId
+        updatedCacheMap.data.keys must not contain Constants.valueAvailableWhenPropertyChangedId
       }
 
       "not delete any other answers" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.transferAvailableWhenPropertyChangedId, false, fullCacheMap)
-        updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size - 1
+        updatedCacheMap.data.keys.size mustBe fullCacheMap.data.keys.size - 1
       }
     }
 
@@ -325,44 +324,44 @@ class CascadeUpsertSpec extends BaseSpec {
 
       "not delete existing answers for other questions" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.transferAvailableWhenPropertyChangedId, true, fullCacheMap)
-        updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size
+        updatedCacheMap.data.keys.size mustBe fullCacheMap.data.keys.size
       }
     }
 
     "asked to save a value before 8 July 2015 for Date Property Was Changed" must {
       "delete the existing 'Value Of Changed Property' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.valueOfChangedPropertyId
+        updatedCacheMap.data.keys must not contain Constants.valueOfChangedPropertyId
       }
 
       "delete the existing 'Assets Passing To Direct Descendants' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.assetsPassingToDirectDescendantsId
+        updatedCacheMap.data.keys must not contain Constants.assetsPassingToDirectDescendantsId
       }
 
       "delete the existing 'Value Of Assets Passing' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.valueOfAssetsPassingId
+        updatedCacheMap.data.keys must not contain Constants.valueOfAssetsPassingId
       }
 
       "delete the existing 'Transfer Available When Property Changed' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.transferAvailableWhenPropertyChangedId
+        updatedCacheMap.data.keys must not contain Constants.transferAvailableWhenPropertyChangedId
       }
 
       "delete the existing 'Grossing Up On Estate Assets' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.grossingUpOnEstateAssetsId
+        updatedCacheMap.data.keys must not contain Constants.grossingUpOnEstateAssetsId
       }
 
       "delete the existing 'Value Available When Property Changed' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.valueAvailableWhenPropertyChangedId
+        updatedCacheMap.data.keys must not contain Constants.valueAvailableWhenPropertyChangedId
       }
 
       "not delete any other answers" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
-        updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size - 6
+        updatedCacheMap.data.keys.size mustBe fullCacheMap.data.keys.size - 6
       }
     }
 
@@ -370,17 +369,17 @@ class CascadeUpsertSpec extends BaseSpec {
 
       "delete the existing 'Transfer Available When Property Changed' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeEligibilityDate, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.transferAvailableWhenPropertyChangedId
+        updatedCacheMap.data.keys must not contain Constants.transferAvailableWhenPropertyChangedId
       }
 
       "delete the existing 'Value Available When Property Changed' answer" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeEligibilityDate, fullCacheMap)
-        updatedCacheMap.data.keys should not contain Constants.valueAvailableWhenPropertyChangedId
+        updatedCacheMap.data.keys must not contain Constants.valueAvailableWhenPropertyChangedId
       }
 
       "not delete any other answers" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeEligibilityDate, fullCacheMap)
-        updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size - 2
+        updatedCacheMap.data.keys.size mustBe fullCacheMap.data.keys.size - 2
       }
     }
 
@@ -388,7 +387,7 @@ class CascadeUpsertSpec extends BaseSpec {
 
       "not delete existing answers for other questions" in {
         val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, Constants.eligibilityDate, fullCacheMap)
-        updatedCacheMap.data.keys.size shouldBe fullCacheMap.data.keys.size
+        updatedCacheMap.data.keys.size mustBe fullCacheMap.data.keys.size
       }
     }
   }

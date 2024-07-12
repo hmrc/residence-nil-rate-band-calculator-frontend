@@ -62,7 +62,7 @@ class DateFormatterSpec extends FormSpec {
   val testMaxDate: LocalDate = testDate.plusYears(1)
 
   val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "").withSession(SessionKeys.sessionId -> "id")
-  def messages: Messages = fakeApplication.injector.instanceOf[MessagesApi].preferred(fakeRequest)
+  def messages: Messages = fakeApplication().injector.instanceOf[MessagesApi].preferred(fakeRequest)
 
   val testFormatter: DateFormatter = DateFormatter(testKey)(messages)
   val dateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy", messages.lang.toLocale)

@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 
 class PositivePercentFormSpec extends FormSpec {
 
@@ -28,12 +27,12 @@ class PositivePercentFormSpec extends FormSpec {
 
     "bind positive numbers" in {
       val form = PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange).bind(Map("value" -> "0.0001"))
-      form.get shouldBe BigDecimal(0.0001)
+      form.get mustBe BigDecimal(0.0001)
     }
 
     "bind numbers as high as 100" in {
       val form = PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange).bind(Map("value" -> "100"))
-      form.get shouldBe 100
+      form.get mustBe 100
     }
 
     "fail to bind negative numbers" in {

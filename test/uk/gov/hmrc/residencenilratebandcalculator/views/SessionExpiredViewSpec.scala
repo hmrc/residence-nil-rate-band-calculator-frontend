@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.session_expired
 
@@ -38,9 +37,9 @@ class SessionExpiredViewSpec extends ViewSpecBase {
     "display a Start Again button linking to the 'Calculate Threshold Increase' page" in {
       val doc = asDocument(session_expired()(request, messages))
       val startLink = doc.getElementById("start-again")
-      startLink.className shouldBe "govuk-button"
-      startLink.attr("href") shouldBe routes.DateOfDeathController.onPageLoad.url
-      startLink.text shouldBe messages("site.start_again")
+      startLink.className mustBe "govuk-button"
+      startLink.attr("href") mustBe routes.DateOfDeathController.onPageLoad.url
+      startLink.text mustBe messages("site.start_again")
     }
 
     "not display the HMRC logo" in {

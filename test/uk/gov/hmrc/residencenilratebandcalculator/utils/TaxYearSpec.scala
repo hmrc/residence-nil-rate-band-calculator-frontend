@@ -19,8 +19,6 @@ package uk.gov.hmrc.residencenilratebandcalculator.utils
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import org.scalatestplus.play.PlaySpec
-import org.scalatest.matchers
-import matchers.should.Matchers.convertToAnyShouldWrapper
 
 class TaxYearSpec extends PlaySpec {
 
@@ -30,31 +28,31 @@ class TaxYearSpec extends PlaySpec {
   "Tax year utils" must {
     "have tax year navigation" in {
       val startYear = 2000
-      TaxYear(startYear).back(1).currentYear shouldBe 1999
-      TaxYear(startYear).forwards(3).currentYear shouldBe 2003
+      TaxYear(startYear).back(1).currentYear mustBe 1999
+      TaxYear(startYear).forwards(3).currentYear mustBe 2003
     }
 
     "have check equality" in {
       val startYear = 2000
       val date = LocalDate.parse("2001/01/01", DateFormatter)
-      TaxYear(startYear).contains(date) shouldBe true
+      TaxYear(startYear).contains(date) mustBe true
     }
 
     "have correct start date" in {
       val startYear = 2000
       val date = LocalDate.parse("2000/04/06", DateFormatter)
-      TaxYear(startYear).starts shouldBe date
+      TaxYear(startYear).starts mustBe date
     }
 
     "have correct range based on start date" in {
       val startYear = 2000
       val expectedRange = startYear to startYear + 1
-      TaxYear(startYear).yearRange shouldBe expectedRange
+      TaxYear(startYear).yearRange mustBe expectedRange
     }
 
     "have correct to string impl" in {
       val startYear = 2000
-      TaxYear(startYear).toString shouldBe DefaultToFromDateString
+      TaxYear(startYear).toString mustBe DefaultToFromDateString
     }
 
     "have current tax year check" in {
@@ -64,7 +62,7 @@ class TaxYearSpec extends PlaySpec {
 
       val currentTaxYearUnderTest = new CurrentTaxYearUnderTest()
       val taxYearResult = currentTaxYearUnderTest.taxYearFor(LocalDate.parse("2000/04/06", DateFormatter))
-      taxYearResult.toString() shouldBe DefaultToFromDateString
+      taxYearResult.toString() mustBe DefaultToFromDateString
     }
   }
 }

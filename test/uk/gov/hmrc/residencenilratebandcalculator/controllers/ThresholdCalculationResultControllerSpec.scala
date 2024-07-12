@@ -19,7 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito._
-import org.scalatest.matchers.should.Matchers
+import org.scalatest.matchers.must.Matchers
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.http.Status
 import play.api.libs.json._
@@ -85,13 +85,13 @@ class ThresholdCalculationResultControllerSpec extends NewSimpleControllerSpecBa
     "return 200 for a GET" in {
       setCacheMap(cacheMap)
       val result = thresholdCalculationResultController().onPageLoad(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result) mustBe Status.OK
     }
 
     "return the View for a GET" in {
       setCacheMap(cacheMap)
       val result = thresholdCalculationResultController().onPageLoad(fakeRequest)
-      contentAsString(result) should include("<title>You can claim residence nil rate band - Calculate the available RNRB - GOV.UK</title>")
+      contentAsString(result) must include("<title>You can claim residence nil rate band - Calculate the available RNRB - GOV.UK</title>")
     }
 
     "returns an Internal Server Error when the cache is in an unusable state" in {
@@ -107,21 +107,21 @@ class ThresholdCalculationResultControllerSpec extends NewSimpleControllerSpecBa
       val jsonNapper = ArgumentCaptor.forClass(classOf[CalculationInput])
       await(thresholdCalculationResultController(connector).onPageLoad(fakeRequest))
       verify(connector).send(jsonNapper.capture)(any[HeaderCarrier])
-      jsonNapper.getValue shouldBe expectedCalculationInput
+      jsonNapper.getValue mustBe expectedCalculationInput
     }
 
     "display the calculation result if the Microservice successfully returns it" in {
       setCacheMap(cacheMap)
       val result = thresholdCalculationResultController().onPageLoad(fakeRequest)
       val contents = contentAsString(result)
-      contents should include(CurrencyFormatter.format(expectedResidenceNilRateAmount))
+      contents must include(CurrencyFormatter.format(expectedResidenceNilRateAmount))
     }
 
     "redirect to the SessionExpiredController if no CacheMap can be found" in {
       when(mockSessionConnector.fetch()(any[HeaderCarrier])) thenReturn Future.successful(None)
       val result = thresholdCalculationResultController().onPageLoad(fakeRequest)
-      status(result) shouldBe SEE_OTHER
-      redirectLocation(result) shouldBe Some(routes.SessionExpiredController.onPageLoad.url)
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
   }
 }

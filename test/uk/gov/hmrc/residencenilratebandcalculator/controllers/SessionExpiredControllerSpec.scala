@@ -42,12 +42,12 @@ class SessionExpiredControllerSpec extends CommonPlaySpec with MockSessionConnec
 
     "return 200 for a GET" in {
       val result = new SessionExpiredController(messagesControllerComponents, mockSessionConnector, session_expired).onPageLoad(fakeRequest)
-      status(result) shouldBe 200
+      status(result) mustBe 200
     }
 
     "return the View for a GET" in {
       val result = new SessionExpiredController(messagesControllerComponents, mockSessionConnector, session_expired).onPageLoad(fakeRequest)
-      contentAsString(result) shouldBe session_expired()(fakeRequest, messages).toString
+      contentAsString(result) mustBe session_expired()(fakeRequest, messages).toString
     }
   }
 }

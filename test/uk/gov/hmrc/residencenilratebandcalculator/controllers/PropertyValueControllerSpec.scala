@@ -60,7 +60,7 @@ class PropertyValueControllerSpec extends NewSimpleControllerSpecBase with Commo
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString)).withMethod("POST")
       setCacheValue(Constants.valueOfEstateId, testValue - 1)
       val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
-      status(result) shouldBe Status.BAD_REQUEST
+      status(result) mustBe Status.BAD_REQUEST
     }
   }
 }

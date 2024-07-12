@@ -25,16 +25,16 @@ class KeepAliveControllerSpec extends CommonPlaySpec with WithCommonFakeApplicat
 
   val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
 
-  "Calling the onPageLoad action" should {
+  "Calling the onPageLoad action" must {
     lazy val result = fakeApplication.injector.instanceOf[KeepAliveController].onPageLoad(fakeRequest)
     lazy implicit val mat: Materializer = fakeApplication.injector.instanceOf[Materializer]
 
     "return a status of 200" in {
-      status(result) shouldBe 200
+      status(result) mustBe 200
     }
 
     "return the message 'OK'" in {
-      await(bodyOf(result)) shouldBe "OK"
+      await(bodyOf(result)) mustBe "OK"
     }
   }
 }

@@ -37,7 +37,7 @@ class FeedbackSurveyControllerSpec extends MockSessionConnector with CommonPlayS
     "return 303 for a GET" in {
       val testController = new FeedbackSurveyController(messagesControllerComponents, mockConfig, mockValidatedSession)
       val result = testController.redirectExitSurvey(request)
-      status(result) shouldBe Status.SEE_OTHER
+      status(result) mustBe Status.SEE_OTHER
     }
   }
 }

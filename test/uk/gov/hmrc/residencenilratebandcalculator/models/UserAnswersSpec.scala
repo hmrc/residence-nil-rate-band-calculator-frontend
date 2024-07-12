@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.libs.json._
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
 
@@ -33,127 +32,127 @@ class UserAnswersSpec extends BaseSpec {
       "return the correct answer for Any Assets Passing To Direct Descendant" in {
         val cacheMap = CacheMap(cacheMapKey, Map(Constants.assetsPassingToDirectDescendantsId -> JsBoolean(true)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.assetsPassingToDirectDescendants shouldBe Some(true)
+        userAnswers.assetsPassingToDirectDescendants mustBe Some(true)
       }
 
       "return the correct answer for Transfer Any Unused Allowance" in {
         val cacheMap = CacheMap(cacheMapKey, Map(Constants.transferAnyUnusedThresholdId -> JsBoolean(true)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.transferAnyUnusedThreshold shouldBe Some(true)
+        userAnswers.transferAnyUnusedThreshold mustBe Some(true)
       }
 
       "return the correct answer for Transfer Available When Property Changed" in {
         val cacheMap = CacheMap(cacheMapKey, Map(Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.transferAvailableWhenPropertyChanged shouldBe Some(true)
+        userAnswers.transferAvailableWhenPropertyChanged mustBe Some(true)
       }
 
       "return the correct answer for Claim Downsizing Threshold" in {
         val cacheMap = CacheMap(cacheMapKey, Map(Constants.claimDownsizingThresholdId -> JsBoolean(true)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.claimDownsizingThreshold shouldBe Some(true)
+        userAnswers.claimDownsizingThreshold mustBe Some(true)
       }
 
       "return the correct answer for Exemptions And Relief Claimed" in {
         val cacheMap = CacheMap(cacheMapKey, Map(Constants.exemptionsAndReliefClaimedId -> JsBoolean(true)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.exemptionsAndReliefClaimed shouldBe Some(true)
+        userAnswers.exemptionsAndReliefClaimed mustBe Some(true)
       }
 
       "return the correct answer for Property Passing To Direct Descendants" in {
         val cacheMap = CacheMap(cacheMapKey, Map(Constants.propertyPassingToDirectDescendantsId -> JsString("abc")))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.propertyPassingToDirectDescendants shouldBe Some("abc")
+        userAnswers.propertyPassingToDirectDescendants mustBe Some("abc")
       }
 
       "return the correct answer for Assets Passing To Direct Descendant" in {
         val cacheMap = CacheMap(cacheMapKey, Map(Constants.valueOfAssetsPassingId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.valueOfAssetsPassing shouldBe Some(1)
+        userAnswers.valueOfAssetsPassing mustBe Some(1)
       }
 
       "return the correct answer for Value Being Transferred" in {
         val cacheMap = CacheMap(cacheMapKey, Map(Constants.valueBeingTransferredId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.valueBeingTransferred shouldBe Some(1)
+        userAnswers.valueBeingTransferred mustBe Some(1)
       }
 
       "return the correct answer for Value Available When Property Changed" in {
         val cacheMap = CacheMap(cacheMapKey, Map(Constants.valueAvailableWhenPropertyChangedId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.valueAvailableWhenPropertyChanged shouldBe Some(1)
+        userAnswers.valueAvailableWhenPropertyChanged mustBe Some(1)
       }
 
       "return the correct answer for Chargeable Estate Value" in {
         val cacheMap = CacheMap(cacheMapKey, Map(Constants.chargeableEstateValueId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.chargeableEstateValue shouldBe Some(1)
+        userAnswers.chargeableEstateValue mustBe Some(1)
       }
 
       "return the correct answer for Date Of Death" in {
         val cacheMap = CacheMap(cacheMapKey, Map(Constants.dateOfDeathId -> JsString("2018-01-01")))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.dateOfDeath shouldBe Some(LocalDate.of(2018, 1, 1))
+        userAnswers.dateOfDeath mustBe Some(LocalDate.of(2018, 1, 1))
       }
 
       "return the correct answer for Date Property Was Changed" in {
         val cacheMap = CacheMap(cacheMapKey, Map(Constants.datePropertyWasChangedId -> JsString("2018-01-01")))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.datePropertyWasChanged shouldBe Some(LocalDate.of(2018, 1, 1))
+        userAnswers.datePropertyWasChanged mustBe Some(LocalDate.of(2018, 1, 1))
       }
 
       "return the correct answer for Grossing Up On Estate Assets" in {
         val cacheMap = CacheMap(cacheMapKey, Map(Constants.grossingUpOnEstateAssetsId -> JsBoolean(false)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.grossingUpOnEstateAssets shouldBe Some(false)
+        userAnswers.grossingUpOnEstateAssets mustBe Some(false)
       }
 
       "return the correct answer for Grossing Up On Estate Property" in {
         val cacheMap = CacheMap(cacheMapKey, Map(Constants.grossingUpOnEstatePropertyId -> JsBoolean(false)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.grossingUpOnEstateProperty shouldBe Some(false)
+        userAnswers.grossingUpOnEstateProperty mustBe Some(false)
       }
 
       "return the correct answer for Property In Estate" in {
         val cacheMap = CacheMap(cacheMapKey, Map(Constants.propertyInEstateId -> JsBoolean(true)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.propertyInEstate shouldBe Some(true)
+        userAnswers.propertyInEstate mustBe Some(true)
       }
 
       "return the correct answer for Value Of Estate" in {
         val cacheMap = CacheMap(cacheMapKey, Map(Constants.valueOfEstateId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.valueOfEstate shouldBe Some(1)
+        userAnswers.valueOfEstate mustBe Some(1)
       }
 
       "return the correct answer for Percentage Passed To Direct Descendants" in {
         val cacheMap = CacheMap(cacheMapKey, Map(Constants.percentagePassedToDirectDescendantsId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.percentagePassedToDirectDescendants shouldBe Some(1)
+        userAnswers.percentagePassedToDirectDescendants mustBe Some(1)
       }
 
       "return the correct answer for Property Value" in {
         val cacheMap = CacheMap(cacheMapKey, Map(Constants.propertyValueId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.propertyValue shouldBe Some(1)
+        userAnswers.propertyValue mustBe Some(1)
       }
 
       "return the correct answer for Property Value After Exemption" in {
         val cacheMap = CacheMap(cacheMapKey, Map(Constants.chargeablePropertyValueId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.chargeablePropertyValue shouldBe Some(1)
+        userAnswers.chargeablePropertyValue mustBe Some(1)
       }
 
       "return the correct answer for Property Value After Exemption Closely Inherited" in {
         val cacheMap = CacheMap(cacheMapKey, Map(Constants.chargeableInheritedPropertyValueId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.chargeableInheritedPropertyValue shouldBe Some(1)
+        userAnswers.chargeableInheritedPropertyValue mustBe Some(1)
       }
 
       "return the correct answer for Value Of Changed Property" in {
         val cacheMap = CacheMap(cacheMapKey, Map(Constants.valueOfChangedPropertyId -> JsNumber(1)))
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.valueOfChangedProperty shouldBe Some(1)
+        userAnswers.valueOfChangedProperty mustBe Some(1)
       }
 
       "return true from isTransferAvailableWhenPropertyChanged when " +
@@ -170,7 +169,7 @@ class UserAnswersSpec extends BaseSpec {
           )
         )
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.isTransferAvailableWhenPropertyChanged shouldBe Some(true)
+        userAnswers.isTransferAvailableWhenPropertyChanged mustBe Some(true)
       }
 
       "return false from isTransferAvailableWhenPropertyChanged when " +
@@ -187,7 +186,7 @@ class UserAnswersSpec extends BaseSpec {
           )
         )
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.isTransferAvailableWhenPropertyChanged shouldBe Some(false)
+        userAnswers.isTransferAvailableWhenPropertyChanged mustBe Some(false)
       }
 
       "return false from isTransferAvailableWhenPropertyChanged when " +
@@ -202,7 +201,7 @@ class UserAnswersSpec extends BaseSpec {
           )
         )
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.isTransferAvailableWhenPropertyChanged shouldBe Some(false)
+        userAnswers.isTransferAvailableWhenPropertyChanged mustBe Some(false)
       }
 
       "return transferAvailableWhenPropertyChanged from isTransferAvailableWhenPropertyChanged when " +
@@ -214,7 +213,7 @@ class UserAnswersSpec extends BaseSpec {
           )
         )
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.isTransferAvailableWhenPropertyChanged shouldBe Some(true)
+        userAnswers.isTransferAvailableWhenPropertyChanged mustBe Some(true)
       }
 
       "return 100 from getPercentagePassedToDirectDescendants when " +
@@ -229,7 +228,7 @@ class UserAnswersSpec extends BaseSpec {
           )
         )
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.getPercentagePassedToDirectDescendants shouldBe Constants.bigDecimal100
+        userAnswers.getPercentagePassedToDirectDescendants mustBe Constants.bigDecimal100
       }
 
       "return 60.9999 from getPercentagePassedToDirectDescendants when " +
@@ -244,7 +243,7 @@ class UserAnswersSpec extends BaseSpec {
           )
         )
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.getPercentagePassedToDirectDescendants shouldBe BigDecimal(60.9999)
+        userAnswers.getPercentagePassedToDirectDescendants mustBe BigDecimal(60.9999)
       }
 
       "return 0 from getPercentagePassedToDirectDescendants when " +
@@ -259,7 +258,7 @@ class UserAnswersSpec extends BaseSpec {
           )
         )
         val userAnswers = new UserAnswers(cacheMap)
-        userAnswers.getPercentagePassedToDirectDescendants shouldBe BigDecimal(0)
+        userAnswers.getPercentagePassedToDirectDescendants mustBe BigDecimal(0)
       }
     }
 
@@ -268,103 +267,103 @@ class UserAnswersSpec extends BaseSpec {
 
       "return None for Any Assets Passing To Direct Descendant" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.assetsPassingToDirectDescendants shouldBe None
+        userAnswers.assetsPassingToDirectDescendants mustBe None
       }
 
       "return None for Transfer Any Unused Allowance" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.transferAnyUnusedThreshold shouldBe None
+        userAnswers.transferAnyUnusedThreshold mustBe None
       }
 
       "return None for Transfer Available When Property Changed" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.transferAvailableWhenPropertyChanged shouldBe None
+        userAnswers.transferAvailableWhenPropertyChanged mustBe None
       }
 
       "return None for Claim Downsizing Threshold" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.claimDownsizingThreshold shouldBe None
+        userAnswers.claimDownsizingThreshold mustBe None
       }
 
       "return None for Exemptions And Relief Claimed" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.exemptionsAndReliefClaimed shouldBe None
+        userAnswers.exemptionsAndReliefClaimed mustBe None
       }
 
       "return None for Property Passing To Direct Descendants" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.propertyPassingToDirectDescendants shouldBe None
+        userAnswers.propertyPassingToDirectDescendants mustBe None
       }
 
       "return None for Assets Passing To Direct Descendant" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.valueOfAssetsPassing shouldBe None
+        userAnswers.valueOfAssetsPassing mustBe None
       }
 
       "return None for Value Being Transferred" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.valueBeingTransferred shouldBe None
+        userAnswers.valueBeingTransferred mustBe None
       }
 
       "return None for Value Available When Property Changed" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.valueAvailableWhenPropertyChanged shouldBe None
+        userAnswers.valueAvailableWhenPropertyChanged mustBe None
       }
 
       "return None for Chargeable Estate Value" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.chargeableEstateValue shouldBe None
+        userAnswers.chargeableEstateValue mustBe None
       }
 
       "return None for Date Of Death" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.dateOfDeath shouldBe None
+        userAnswers.dateOfDeath mustBe None
       }
 
       "return None for Date Property Was Changed" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.datePropertyWasChanged shouldBe None
+        userAnswers.datePropertyWasChanged mustBe None
       }
 
       "return None for Property In Estate" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.propertyInEstate shouldBe None
+        userAnswers.propertyInEstate mustBe None
       }
 
       "return None for Value Of Estate" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.valueOfEstate shouldBe None
+        userAnswers.valueOfEstate mustBe None
       }
 
       "return None for Percentage Passed To Direct Descendants" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.percentagePassedToDirectDescendants shouldBe None
+        userAnswers.percentagePassedToDirectDescendants mustBe None
       }
 
       "return None for Property Value" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.propertyValue shouldBe None
+        userAnswers.propertyValue mustBe None
       }
 
       "return None for Property Value After Exemption" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.chargeablePropertyValue shouldBe None
+        userAnswers.chargeablePropertyValue mustBe None
       }
 
       "return None for Value Of Changed Property" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.valueOfChangedProperty shouldBe None
+        userAnswers.valueOfChangedProperty mustBe None
       }
 
 
       "return None from isTransferAvailableWhenPropertyChanged" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.isTransferAvailableWhenPropertyChanged shouldBe None
+        userAnswers.isTransferAvailableWhenPropertyChanged mustBe None
       }
 
       "return 0 from getPercentagePassedToDirectDescendants" in {
         val userAnswers = new UserAnswers(emptyCacheMap)
-        userAnswers.getPercentagePassedToDirectDescendants shouldBe BigDecimal(0)
+        userAnswers.getPercentagePassedToDirectDescendants mustBe BigDecimal(0)
       }
     }
   }

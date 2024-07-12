@@ -21,7 +21,7 @@ import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito._
 import org.mockito.stubbing.OngoingStubbing
 import org.scalatest.BeforeAndAfter
-import org.scalatest.matchers.should.Matchers
+import org.scalatest.matchers.must.Matchers
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.json.{JsValue, Reads, Writes}
 import uk.gov.hmrc.http.HeaderCarrier
@@ -64,7 +64,7 @@ trait MockSessionConnector extends CommonPlaySpec with MockitoSugar with Matcher
     implicit val writesnapper = ArgumentCaptor.forClass(classOf[Writes[A]])
     val valueCaptor = ArgumentCaptor.forClass(value.getClass)
     verify(mockSessionConnector).cache[A](matches(key), valueCaptor.capture)(writesnapper.capture, headnapper.capture)
-    valueCaptor.getValue shouldBe value
+    valueCaptor.getValue mustBe value
   }
 
   def verifyValueIsNotCached(): Future[CacheMap] = verify(mockSessionConnector, never()).cache(anyString(), any())(any(), any[HeaderCarrier])

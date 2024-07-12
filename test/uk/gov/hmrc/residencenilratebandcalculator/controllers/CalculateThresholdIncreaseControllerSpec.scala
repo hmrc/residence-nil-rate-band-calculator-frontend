@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.mvc.{AnyContentAsEmpty, DefaultMessagesControllerComponents}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -34,12 +33,12 @@ class CalculateThresholdIncreaseControllerSpec extends HtmlSpec {
 
     "return 200 for a GET" in {
       val result = new CalculateThresholdIncreaseController(messagesControllerComponents, calculateThresholdIncrease).onPageLoad(fakeRequest)
-      status(result) shouldBe 200
+      status(result) mustBe 200
     }
 
     "return the View for a GET" in {
       val result = new CalculateThresholdIncreaseController(messagesControllerComponents, calculateThresholdIncrease).onPageLoad(fakeRequest)
-      contentAsString(result) shouldBe calculateThresholdIncrease()(fakeRequest, messages).toString
+      contentAsString(result) mustBe calculateThresholdIncrease()(fakeRequest, messages).toString
     }
   }
 }

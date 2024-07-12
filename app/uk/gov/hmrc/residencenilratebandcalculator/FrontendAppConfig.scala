@@ -16,37 +16,25 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator
 
-import javax.inject.{Inject, Singleton}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
-trait AppConfig {
-  val reportAProblemPartialUrl: String
-  val reportAProblemNonJSUrl: String
-  val timeOutCountdownSeconds: Int
-  val timeOutSession: Int
-  val isWelshEnabled: Boolean
-  val betaFeedbackUnauthenticatedUrl : String
-  val betaFeedbackUrl : String
-  val feedbackSurvey : String
-}
+import javax.inject.{Inject, Singleton}
 
 @Singleton
-class FrontendAppConfig @Inject()(val servicesConfig: ServicesConfig) extends AppConfig {
+class FrontendAppConfig @Inject()(val servicesConfig: ServicesConfig) {
   private def loadConfig(key: String) = servicesConfig.getString(key)
 
   lazy val contactHost: String = servicesConfig.getConfString("contact-frontend.www", "")
   lazy val contactFormServiceIdentifier = "RNRB"
 
-  override lazy val timeOutCountdownSeconds: Int = loadConfig("timeOutCountdownSeconds").toInt
-  override lazy val timeOutSession: Int = loadConfig("mongodb.timeToLiveInSeconds").toInt
-  override lazy val reportAProblemPartialUrl = s"$contactHost/contact/problem_reports_ajax?service=$contactFormServiceIdentifier"
-  override lazy val reportAProblemNonJSUrl = s"$contactHost/contact/problem_reports_nonjs?service=$contactFormServiceIdentifier"
-  override lazy val betaFeedbackUrl = s"$contactHost/contact/beta-feedback?service=$contactFormServiceIdentifier"
-  override lazy val betaFeedbackUnauthenticatedUrl = s"$contactHost/contact/beta-feedback-unauthenticated?service=$contactFormServiceIdentifier"
-  override lazy val feedbackSurvey: String = loadConfig("feedback-survey-frontend.url")
+  lazy val timeOutCountdownSeconds: Int = loadConfig("timeOutCountdownSeconds").toInt
+  lazy val timeOutSession: Int = loadConfig("mongodb.timeToLiveInSeconds").toInt
+  lazy val reportAProblemPartialUrl = s"$contactHost/contact/problem_reports_ajax?service=$contactFormServiceIdentifier"
+  lazy val reportAProblemNonJSUrl = s"$contactHost/contact/problem_reports_nonjs?service=$contactFormServiceIdentifier"
+  lazy val betaFeedbackUrl = s"$contactHost/contact/beta-feedback?service=$contactFormServiceIdentifier"
+  lazy val betaFeedbackUnauthenticatedUrl = s"$contactHost/contact/beta-feedback-unauthenticated?service=$contactFormServiceIdentifier"
+  lazy val feedbackSurvey: String = loadConfig("feedback-survey-frontend.url")
   lazy val serviceUrl: String = servicesConfig.baseUrl("residence-nil-rate-band-calculator")
 
-  override val isWelshEnabled: Boolean = true
-
-
+  val isWelshEnabled: Boolean = true
 }

@@ -26,30 +26,21 @@ class UnableToCalculateThresholdIncreaseViewSpec extends HtmlSpec {
 
   val prefix = "unable_to_calculate_threshold_increase.grossing_up"
   val unable_to_calculate_threshold_increase: unable_to_calculate_threshold_increase = injector.instanceOf[unable_to_calculate_threshold_increase]
-  def fixture(): Object {
-    val view: HtmlFormat.Appendable
-
-    val doc: Document
-  } = new {
-    val view: HtmlFormat.Appendable = unable_to_calculate_threshold_increase(prefix)(request, messages)
-    val doc: Document = asDocument(view)
-  }
+  val view: HtmlFormat.Appendable = unable_to_calculate_threshold_increase(prefix)(request, messages)
+  val doc: Document = asDocument(view)
 
   "Unable To Calculate Threshold Increase View" must {
 
     "display the correct browser title" in {
-      val f = fixture()
-      assertEqualsMessage(f.doc, "title", messages("unable_to_calculate_threshold_increase.browser_title") + " - Calculate the available RNRB - GOV.UK")
+      assertEqualsMessage(doc, "title", messages("unable_to_calculate_threshold_increase.browser_title") + " - Calculate the available RNRB - GOV.UK")
     }
 
     "display the correct page title" in {
-      val f = fixture()
-      assertPageTitleEqualsMessage(f.doc, s"$prefix.title")
+      assertPageTitleEqualsMessage(doc, s"$prefix.title")
     }
 
     "display the correct guidance" in {
-      val f = fixture()
-      assertContainsMessages(f.doc,
+      assertContainsMessages(doc,
         s"$prefix.next.title",
         s"$prefix.next.guidance1",
         s"$prefix.next.guidance2",
@@ -62,8 +53,7 @@ class UnableToCalculateThresholdIncreaseViewSpec extends HtmlSpec {
     }
 
     "not display the HMRC logo" in {
-      val f = fixture()
-      assertNotRenderedByCssSelector(f.doc, ".organisation-logo")
+      assertNotRenderedByCssSelector(doc, ".organisation-logo")
     }
 
   }

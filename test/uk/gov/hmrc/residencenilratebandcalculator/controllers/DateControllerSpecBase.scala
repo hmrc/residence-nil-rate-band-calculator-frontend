@@ -48,12 +48,12 @@ trait DateControllerSpecBase extends CommonPlaySpec with MockSessionConnector wi
 
     "return 200 for a GET" in {
       val result = createController().onPageLoad(rds)(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result) mustBe Status.OK
     }
 
     "return the View for a GET" in {
       val result = createController().onPageLoad(rds)(fakeRequest)
-      contentAsString(result) shouldBe createView(None).toString
+      contentAsString(result) mustBe createView(None).toString
     }
 
     "return a redirect on submit with valid data" in {
@@ -63,7 +63,7 @@ trait DateControllerSpecBase extends CommonPlaySpec with MockSessionConnector wi
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody((s"$date${".day"}", "01"), (s"$date${".month"}", "01"), (s"$date${".year"}", "2018")).withMethod("POST")
       setCacheValue(cacheKey, LocalDate.of(year, month, day))
       val result = createController().onSubmit(wts)(fakePostRequest)
-      status(result) shouldBe Status.SEE_OTHER
+      status(result) mustBe Status.SEE_OTHER
     }
 
     "store valid submitted data" in {
@@ -78,14 +78,14 @@ trait DateControllerSpecBase extends CommonPlaySpec with MockSessionConnector wi
       val value = "not a number"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody((s"$date${".day"}", value), (s"$date${".month"}", value), (s"$date${".year"}", value)).withMethod("POST")
       val result = createController().onSubmit(wts)(fakePostRequest)
-      status(result) shouldBe Status.BAD_REQUEST
+      status(result) mustBe Status.BAD_REQUEST
     }
 
     "return form with errors when invalid data is submitted" in {
       val value = "not a number"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody((s"$date${".day"}", value), (s"$date${".month"}", value), (s"$date${".year"}", value)).withMethod("POST")
       val result = createController().onSubmit(wts)(fakePostRequest)
-      contentAsString(result) should include(messages(s"$date.error.invalid"))
+      contentAsString(result) must include(messages(s"$date.error.invalid"))
     }
 
     "not store invalid submitted data" in {
@@ -103,7 +103,7 @@ trait DateControllerSpecBase extends CommonPlaySpec with MockSessionConnector wi
       setCacheValue(cacheKey, value)
       val result = createController().onPageLoad(rds)(fakeRequest)
 
-      contentAsString(result) shouldBe createView(Some(value)).toString
+      contentAsString(result) mustBe createView(Some(value)).toString
     }
   }
 
@@ -114,11 +114,11 @@ trait DateControllerSpecBase extends CommonPlaySpec with MockSessionConnector wi
       val rds = Date.dateReads
 
       val result = createController().onPageLoad(rds)(fakeRequest)
-      status(result) shouldBe Status.SEE_OTHER
-      redirectLocation(result) shouldBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url)
+      status(result) mustBe Status.SEE_OTHER
+      redirectLocation(result) mustBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url)
     }
 
-    "The answer constants should be the same as the calulated constants for the controller" in {
+    "The answer constants must be the same as the calulated constants for the controller" in {
       val filledOutCacheMap = new CacheMap("",
         Map[String, JsValue](
           Constants.dateOfDeathId -> JsString("2019-03-04"),
@@ -136,7 +136,7 @@ trait DateControllerSpecBase extends CommonPlaySpec with MockSessionConnector wi
       val controllerId = createController().controllerId
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
-      answerRowConstants shouldBe calculatedList
+      answerRowConstants mustBe calculatedList
     }
   }
 }
