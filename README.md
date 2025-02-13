@@ -14,11 +14,11 @@ You will also need to have the [residence nil-rate band calculator](https://gith
 
 You can start this manually, or use the following [service manager](https://github.com/hmrc/sm2) command:
 
-    sm2 -start RNRB
+    sm2 --start RNRB
 
 To run dependencies for the service, the following command:
 
-    sm2 -start RNRB_ALL
+    sm2 --start RNRB_ALL
 
 #### Test Coverage
 To run the test coverage suite
