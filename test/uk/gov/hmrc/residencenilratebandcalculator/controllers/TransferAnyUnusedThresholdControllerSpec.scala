@@ -25,35 +25,54 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_any_unused
 
 class TransferAnyUnusedThresholdControllerSpec extends NewSimpleControllerSpecBase {
 
-  val messageKey = "transfer_any_unused_threshold.error.required"
+  val messageKey       = "transfer_any_unused_threshold.error.required"
   val messageKeyPrefix = "transfer_any_unused_threshold"
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val messagesControllerComponents: DefaultMessagesControllerComponents =
+    injector.instanceOf[DefaultMessagesControllerComponents]
+
   val transfer_any_unused_threshold: transfer_any_unused_threshold = injector.instanceOf[transfer_any_unused_threshold]
+
   "Transfer Any Unused Threshold Controller" must {
 
     def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
-      case None => transfer_any_unused_threshold(BooleanForm.apply(messageKey))(fakeRequest, messages)
+      case None    => transfer_any_unused_threshold(BooleanForm.apply(messageKey))(fakeRequest, messages)
       case Some(v) => transfer_any_unused_threshold(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
     }
 
     def createController: () => TransferAnyUnusedThresholdController = () =>
       new TransferAnyUnusedThresholdController(
-        messagesControllerComponents, mockSessionConnector, navigator, transfer_any_unused_threshold)
+        messagesControllerComponents,
+        mockSessionConnector,
+        navigator,
+        transfer_any_unused_threshold
+      )
 
     val testValue = true
 
-    behave like rnrbController(createController, createView, Constants.transferAnyUnusedThresholdId, messageKeyPrefix, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+    behave.like(
+      rnrbController(createController, createView, Constants.transferAnyUnusedThresholdId, messageKeyPrefix, testValue)(
+        Reads.BooleanReads,
+        Writes.BooleanWrites
+      )
+    )
 
-    behave like nonStartingController[Boolean](createController,
-      List(Constants.dateOfDeathId,
-           Constants.partOfEstatePassingToDirectDescendantsId,
-           Constants.valueOfEstateId,
-           Constants.chargeableEstateValueId,
-           Constants.propertyInEstateId,
-           Constants.propertyValueId,
-           Constants.propertyPassingToDirectDescendantsId,
-           Constants.percentagePassedToDirectDescendantsId,
-           Constants.chargeablePropertyValueId))(Reads.BooleanReads, Writes.BooleanWrites)
+    behave.like(
+      nonStartingController[Boolean](
+        createController,
+        List(
+          Constants.dateOfDeathId,
+          Constants.partOfEstatePassingToDirectDescendantsId,
+          Constants.valueOfEstateId,
+          Constants.chargeableEstateValueId,
+          Constants.propertyInEstateId,
+          Constants.propertyValueId,
+          Constants.propertyPassingToDirectDescendantsId,
+          Constants.percentagePassedToDirectDescendantsId,
+          Constants.chargeablePropertyValueId
+        )
+      )(Reads.BooleanReads, Writes.BooleanWrites)
+    )
   }
+
 }

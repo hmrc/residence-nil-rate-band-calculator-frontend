@@ -28,9 +28,9 @@ class AnswerRowsViewSpec extends HtmlSpec {
     "rendered" must {
 
       "contain four description details when passed a seq containing a single row" in {
-        val row = AnswerRow("Title", "Data", "http://www.example.com")
+        val row     = AnswerRow("Title", "Data", "http://www.example.com")
         val partial = answer_rows(Seq[AnswerRow](row))(messages)
-        val doc = asDocument(partial)
+        val doc     = asDocument(partial)
         assert(doc.select("dd").size() == 4)
         assertContainsText(doc, row.title)
         assertContainsText(doc, row.data)
@@ -38,10 +38,10 @@ class AnswerRowsViewSpec extends HtmlSpec {
       }
 
       "contains six description details when passed a seq containing 2 rows" in {
-        val row1 = AnswerRow("Title1", "Data1", "http://www.example.com/1")
-        val row2 = AnswerRow("Title2", "Data2", "http://www.example.com/2")
+        val row1    = AnswerRow("Title1", "Data1", "http://www.example.com/1")
+        val row2    = AnswerRow("Title2", "Data2", "http://www.example.com/2")
         val partial = answer_rows(Seq[AnswerRow](row1, row2))(messages)
-        val doc = asDocument(partial)
+        val doc     = asDocument(partial)
 
         assert(doc.select("dd").size() == 6)
 
@@ -55,14 +55,15 @@ class AnswerRowsViewSpec extends HtmlSpec {
       }
 
       "display the last item in the Answer Rows collection as the first (non-heading) item in the previous answers" in {
-        val row1 = AnswerRow("Title1", "Data1", "http://www.example.com/1")
-        val row2 = AnswerRow("Title2", "Data2", "http://www.example.com/2")
+        val row1    = AnswerRow("Title1", "Data1", "http://www.example.com/1")
+        val row2    = AnswerRow("Title2", "Data2", "http://www.example.com/2")
         val partial = answer_rows(Seq[AnswerRow](row1, row2))(messages)
-        val doc = asDocument(partial)
+        val doc     = asDocument(partial)
         assertEqualsValue(doc, "details div dl div:first-child dt", messages("site.previous_answers"))
         assertEqualsValue(doc, "details div dl div:nth-child(2) dt", row2.title)
         assertEqualsValue(doc, "details div dl div:nth-child(3) dt", row1.title)
       }
     }
   }
+
 }

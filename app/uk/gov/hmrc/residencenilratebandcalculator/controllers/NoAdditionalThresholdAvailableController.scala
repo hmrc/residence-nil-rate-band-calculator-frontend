@@ -20,7 +20,10 @@ import javax.inject.{Inject, Singleton}
 import play.api.mvc.{DefaultMessagesControllerComponents, Request}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.{NoProperty, NotCloselyInherited}
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.{
+  NoProperty,
+  NotCloselyInherited
+}
 import uk.gov.hmrc.residencenilratebandcalculator.models._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_additional_threshold_available
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
@@ -28,27 +31,33 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class NoAdditionalThresholdAvailableController @Inject()(cc: DefaultMessagesControllerComponents,
-                                                         override val sessionConnector: SessionConnector,
-                                                         val navigator: Navigator,
-                                                         noAdditionalThresholdAvailableView: no_additional_threshold_available)
-                                                        (override implicit val ec: ExecutionContext)
-  extends FrontendController(cc) with TransitionController {
+class NoAdditionalThresholdAvailableController @Inject() (
+    cc: DefaultMessagesControllerComponents,
+    override val sessionConnector: SessionConnector,
+    val navigator: Navigator,
+    noAdditionalThresholdAvailableView: no_additional_threshold_available
+)(override implicit val ec: ExecutionContext)
+    extends FrontendController(cc)
+    with TransitionController {
 
   val getReason = GetNoAdditionalThresholdAvailableReason
 
   def getControllerId(reason: Reason) =
     reason match {
       case NotCloselyInherited => Constants.propertyPassingToDirectDescendantsId
-      case _ => Constants.propertyInEstateId
+      case _                   => Constants.propertyInEstateId
     }
 
   def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[_]) = {
     val reasonKey = reason match {
       case NotCloselyInherited => "no_additional_threshold_available.not_closely_inherited_reason"
-      case NoProperty => "no_additional_threshold_available.no_property_reason"
-      case _ => ""
+      case NoProperty          => "no_additional_threshold_available.no_property_reason"
+      case _                   => ""
     }
-    noAdditionalThresholdAvailableView(reasonKey, navigator.nextPage(Constants.noAdditionalThresholdAvailableId)(userAnswers))
+    noAdditionalThresholdAvailableView(
+      reasonKey,
+      navigator.nextPage(Constants.noAdditionalThresholdAvailableId)(userAnswers)
+    )
   }
+
 }

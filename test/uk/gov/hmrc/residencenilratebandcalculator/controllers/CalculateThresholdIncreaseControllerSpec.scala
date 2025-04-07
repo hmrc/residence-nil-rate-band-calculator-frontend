@@ -26,19 +26,25 @@ class CalculateThresholdIncreaseControllerSpec extends HtmlSpec {
 
   val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-  val calculateThresholdIncrease: calculate_threshold_increase = fakeApplication().injector.instanceOf[calculate_threshold_increase]
+  val messagesControllerComponents: DefaultMessagesControllerComponents =
+    injector.instanceOf[DefaultMessagesControllerComponents]
+
+  val calculateThresholdIncrease: calculate_threshold_increase =
+    fakeApplication().injector.instanceOf[calculate_threshold_increase]
 
   "Calculate Threshold Increase controller" must {
 
     "return 200 for a GET" in {
-      val result = new CalculateThresholdIncreaseController(messagesControllerComponents, calculateThresholdIncrease).onPageLoad(fakeRequest)
+      val result = new CalculateThresholdIncreaseController(messagesControllerComponents, calculateThresholdIncrease)
+        .onPageLoad(fakeRequest)
       status(result) mustBe 200
     }
 
     "return the View for a GET" in {
-      val result = new CalculateThresholdIncreaseController(messagesControllerComponents, calculateThresholdIncrease).onPageLoad(fakeRequest)
+      val result = new CalculateThresholdIncreaseController(messagesControllerComponents, calculateThresholdIncrease)
+        .onPageLoad(fakeRequest)
       contentAsString(result) mustBe calculateThresholdIncrease()(fakeRequest, messages).toString
     }
   }
+
 }

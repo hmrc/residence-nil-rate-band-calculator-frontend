@@ -16,17 +16,17 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
-
 class PositivePercentFormSpec extends FormSpec {
 
-  val errorKeyBlank = "blank"
+  val errorKeyBlank      = "blank"
   val errorKeyNonNumeric = "non numeric"
   val errorKeyOutOfRange = "out of range"
 
   "Positive Percent Int Form" must {
 
     "bind positive numbers" in {
-      val form = PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange).bind(Map("value" -> "0.0001"))
+      val form =
+        PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange).bind(Map("value" -> "0.0001"))
       form.get mustBe BigDecimal(0.0001)
     }
 
@@ -37,32 +37,57 @@ class PositivePercentFormSpec extends FormSpec {
 
     "fail to bind negative numbers" in {
       val expectedError = error("value", errorKeyNonNumeric)
-      checkForError(PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange), Map("value" -> "-0.0001"), expectedError)
+      checkForError(
+        PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange),
+        Map("value" -> "-0.0001"),
+        expectedError
+      )
     }
 
     "fail to bind zero" in {
       val expectedError = error("value", errorKeyOutOfRange)
-      checkForError(PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange), Map("value" -> "0"), expectedError)
+      checkForError(
+        PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange),
+        Map("value" -> "0"),
+        expectedError
+      )
     }
 
     "fail to bind numbers greater than 100" in {
       val expectedError = error("value", errorKeyOutOfRange)
-      checkForError(PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange), Map("value" -> "100.0001"), expectedError)
+      checkForError(
+        PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange),
+        Map("value" -> "100.0001"),
+        expectedError
+      )
     }
 
     "fail to bind non-numerics" in {
       val expectedError = error("value", errorKeyNonNumeric)
-      checkForError(PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange), Map("value" -> "not a number"), expectedError)
+      checkForError(
+        PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange),
+        Map("value" -> "not a number"),
+        expectedError
+      )
     }
 
     "fail to bind a blank value" in {
       val expectedError = error("value", errorKeyBlank)
-      checkForError(PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange), Map("value" -> ""), expectedError)
+      checkForError(
+        PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange),
+        Map("value" -> ""),
+        expectedError
+      )
     }
 
     "fail to bind when value is omitted" in {
       val expectedError = error("value", errorKeyBlank)
-      checkForError(PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange), emptyForm, expectedError)
+      checkForError(
+        PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange),
+        emptyForm,
+        expectedError
+      )
     }
   }
+
 }

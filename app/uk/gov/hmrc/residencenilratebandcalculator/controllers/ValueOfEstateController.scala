@@ -29,18 +29,26 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class ValueOfEstateController @Inject()(cc: DefaultMessagesControllerComponents,
-                                        override val sessionConnector: SessionConnector,
-                                        override val navigator: Navigator,
-                                        valueOfEstateView: value_of_estate)
-                                       (override implicit val ec: ExecutionContext) extends FrontendController(cc) with SimpleControllerBase[Int] {
+class ValueOfEstateController @Inject() (
+    cc: DefaultMessagesControllerComponents,
+    override val sessionConnector: SessionConnector,
+    override val navigator: Navigator,
+    valueOfEstateView: value_of_estate
+)(override implicit val ec: ExecutionContext)
+    extends FrontendController(cc)
+    with SimpleControllerBase[Int] {
 
   override val controllerId = Constants.valueOfEstateId
 
   override def form = () =>
-    NonNegativeIntForm("value_of_estate.error.blank", "error.whole_pounds", "value_of_estate.error.non_numeric", "error.value_too_large")
+    NonNegativeIntForm(
+      "value_of_estate.error.blank",
+      "error.whole_pounds",
+      "value_of_estate.error.non_numeric",
+      "error.value_too_large"
+    )
 
-  override def view(form: Form[Int], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+  override def view(form: Form[Int], userAnswers: UserAnswers)(implicit request: Request[_]) =
     valueOfEstateView(form)
-  }
+
 }

@@ -25,16 +25,13 @@ case class Date(date: LocalDate)
 
 object Date {
 
-  val dateReads: Reads[Date] = (json: JsValue) => {
+  val dateReads: Reads[Date] = (json: JsValue) =>
     Try(LocalDate.parse(json.as[JsString].value)) match {
       case Success(javaLocalDate) => JsSuccess(Date(javaLocalDate))
-      case Failure(e) => JsError(JsonValidationError(e.getMessage))
+      case Failure(e)             => JsError(JsonValidationError(e.getMessage))
     }
-  }
 
-  val dateWrites: Writes[Date] = (date: Date) => {
-    JsString(date.date.toString)
-  }
+  val dateWrites: Writes[Date] = (date: Date) => JsString(date.date.toString)
 
   implicit val dateFormat: Format[Date] = Format(dateReads, dateWrites)
 }

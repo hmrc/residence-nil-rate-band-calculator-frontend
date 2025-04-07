@@ -26,21 +26,22 @@ import scala.concurrent.{ExecutionContext, Future}
 import uk.gov.hmrc.http.HeaderCarrier
 
 @Singleton
-class SessionConnector @Inject()(val sessionRepository: SessionRepository, val cascadeUpsert: CascadeUpsert)(implicit ec: ExecutionContext) extends Logging {
+class SessionConnector @Inject() (val sessionRepository: SessionRepository, val cascadeUpsert: CascadeUpsert)(
+    implicit ec: ExecutionContext
+) extends Logging {
 
-  def cache[A](key: String, value: A)(implicit wts: Writes[A], hc: HeaderCarrier): Future[CacheMap] = {
+  def cache[A](key: String, value: A)(implicit wts: Writes[A], hc: HeaderCarrier): Future[CacheMap] =
     hc.sessionId match {
       case None =>
-       val msg = "Unable to find session with id " + hc.sessionId + "while caching " + key + " = " + value
-       logger.error(msg)
-       throw new RuntimeException(msg)
+        val msg = "Unable to find session with id " + hc.sessionId + "while caching " + key + " = " + value
+        logger.error(msg)
+        throw new RuntimeException(msg)
       case Some(id) =>
         sessionRepository.get(id.toString).flatMap { optionalCacheMap =>
           val updatedCacheMap = cascadeUpsert(key, value, optionalCacheMap.getOrElse(new CacheMap(id.toString, Map())))
-          sessionRepository.upsert(updatedCacheMap).map {_ => updatedCacheMap}
+          sessionRepository.upsert(updatedCacheMap).map(_ => updatedCacheMap)
         }
     }
-  }
 
   def removeAll(implicit hc: HeaderCarrier): Future[Boolean] =
     hc.sessionId match {
@@ -49,19 +50,15 @@ class SessionConnector @Inject()(val sessionRepository: SessionRepository, val c
         sessionRepository.removeAll(id.toString)
     }
 
-  def fetch()(implicit hc: HeaderCarrier): Future[Option[CacheMap]] = {
+  def fetch()(implicit hc: HeaderCarrier): Future[Option[CacheMap]] =
     hc.sessionId match {
-      case None => Future.successful(None)
+      case None     => Future.successful(None)
       case Some(id) => sessionRepository.get(id.toString)
     }
-  }
 
   def fetchAndGetEntry[A](key: String)(implicit hc: HeaderCarrier, rds: Reads[A]): Future[Option[A]] = {
     val futureOptionCacheMap = fetch()
-    futureOptionCacheMap.map {optionalCacheMap =>
-      optionalCacheMap.flatMap { cm =>
-        cm.getEntry(key)
-      }
-    }
+    futureOptionCacheMap.map(optionalCacheMap => optionalCacheMap.flatMap(cm => cm.getEntry(key)))
   }
+
 }

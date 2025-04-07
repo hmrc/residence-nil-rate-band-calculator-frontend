@@ -25,10 +25,10 @@ class ErrorSummaryViewSpec extends HtmlSpec {
 
   val errorKey1 = "key1"
   val errorKey2 = "key2"
-  val message1 = "message1"
-  val message2 = "message2"
+  val message1  = "message1"
+  val message2  = "message2"
 
-  val error: FormError = FormError(errorKey1, message1)
+  val error: FormError  = FormError(errorKey1, message1)
   val error2: FormError = FormError(errorKey2, message2)
 
   val error_summary: error_summary = injector.instanceOf[error_summary]
@@ -45,8 +45,6 @@ class ErrorSummaryViewSpec extends HtmlSpec {
     form
   }
 
-
-
   "Error summary" when {
 
     "given no errors" must {
@@ -59,7 +57,7 @@ class ErrorSummaryViewSpec extends HtmlSpec {
     "given an error" must {
 
       "render a title" in {
-        val doc = asDocument(error_summary(Seq(error))(messages))
+        val doc     = asDocument(error_summary(Seq(error))(messages))
         val heading = doc.getElementsByClass("govuk-error-summary__title")
         heading.text mustBe messages("error.summary.title")
       }
@@ -70,8 +68,8 @@ class ErrorSummaryViewSpec extends HtmlSpec {
       }
 
       "render a link to the error key" in {
-        val doc = asDocument(error_summary(Seq(error))(messages))
-        val ul = doc.getElementsByClass("govuk-list govuk-error-summary__list").first
+        val doc  = asDocument(error_summary(Seq(error))(messages))
+        val ul   = doc.getElementsByClass("govuk-list govuk-error-summary__list").first
         val link = ul.getElementsByTag("li").first.getElementsByTag("a").first
         link.attr("href") mustBe s"#$errorKey1"
         link.text mustBe message1
@@ -81,7 +79,7 @@ class ErrorSummaryViewSpec extends HtmlSpec {
     "given two errors" must {
 
       "render a title" in {
-        val doc = asDocument(error_summary(Seq(error, error2))(messages))
+        val doc     = asDocument(error_summary(Seq(error, error2))(messages))
         val heading = doc.getElementsByClass("govuk-error-summary__title")
         heading.text mustBe messages("error.summary.title")
       }
@@ -92,20 +90,21 @@ class ErrorSummaryViewSpec extends HtmlSpec {
       }
 
       "render a link to the first error key" in {
-        val doc = asDocument(error_summary(Seq(error, error2))(messages))
-        val ul = doc.getElementsByClass("govuk-list govuk-error-summary__list").first
+        val doc  = asDocument(error_summary(Seq(error, error2))(messages))
+        val ul   = doc.getElementsByClass("govuk-list govuk-error-summary__list").first
         val link = ul.getElementsByTag("li").first.getElementsByTag("a").first
         link.attr("href") mustBe s"#$errorKey1"
         link.text mustBe message1
       }
 
       "render a link to the second error key" in {
-        val doc = asDocument(error_summary(Seq(error, error2))(messages))
-        val ul = doc.getElementsByClass("govuk-list govuk-error-summary__list").first
+        val doc  = asDocument(error_summary(Seq(error, error2))(messages))
+        val ul   = doc.getElementsByClass("govuk-list govuk-error-summary__list").first
         val link = ul.getElementsByTag("li").get(1).getElementsByTag("a").first
         link.attr("href") mustBe s"#$errorKey2"
         link.text mustBe message2
       }
     }
   }
+
 }

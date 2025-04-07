@@ -27,11 +27,18 @@ import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCo
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CacheMap}
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.{NoProperty, NotCloselyInherited}
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.{
+  NoProperty,
+  NotCloselyInherited
+}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_additional_threshold_available
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
-class NoAdditionalThresholdAvailableControllerSpec extends CommonPlaySpec with HttpResponseMocks with MockSessionConnector with WithCommonFakeApplication {
+class NoAdditionalThresholdAvailableControllerSpec
+    extends CommonPlaySpec
+    with HttpResponseMocks
+    with MockSessionConnector
+    with WithCommonFakeApplication {
 
   val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
 
@@ -41,42 +48,50 @@ class NoAdditionalThresholdAvailableControllerSpec extends CommonPlaySpec with H
 
   val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val messagesControllerComponents: DefaultMessagesControllerComponents =
+    injector.instanceOf[DefaultMessagesControllerComponents]
 
   def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
 
   def messages: Messages = messagesApi.preferred(fakeRequest)
 
-  val no_additional_threshold_available: no_additional_threshold_available = fakeApplication.injector.instanceOf[no_additional_threshold_available]
+  val no_additional_threshold_available: no_additional_threshold_available =
+    fakeApplication.injector.instanceOf[no_additional_threshold_available]
 
-  val filledOutCacheMap = new CacheMap("",
+  val filledOutCacheMap = new CacheMap(
+    "",
     Map[String, JsValue](
-      Constants.dateOfDeathId -> JsString("2019-03-04"),
+      Constants.dateOfDeathId                            -> JsString("2019-03-04"),
       Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
-      Constants.valueOfEstateId -> JsNumber(500000),
-      Constants.chargeableEstateValueId -> JsNumber(450000),
-      Constants.propertyInEstateId -> JsBoolean(true),
-      Constants.propertyValueId -> JsNumber(400000),
-      Constants.grossingUpOnEstateAssetsId -> JsBoolean(true),
-      Constants.propertyPassingToDirectDescendantsId -> JsBoolean(true),
-      Constants.percentagePassedToDirectDescendantsId -> JsNumber(100),
-      Constants.transferAnyUnusedThresholdId -> JsBoolean(true),
-      Constants.valueBeingTransferredId -> JsNumber(50000),
-      Constants.claimDownsizingThresholdId -> JsBoolean(true),
-      Constants.datePropertyWasChangedId -> JsString("2018-03-02"),
-      Constants.valueOfChangedPropertyId -> JsNumber(100000),
-      Constants.assetsPassingToDirectDescendantsId -> JsBoolean(true),
-      Constants.grossingUpOnEstateAssetsId -> JsBoolean(true),
-      Constants.chargeablePropertyValueId -> JsNumber(50000),
-      Constants.valueOfAssetsPassingId -> JsNumber(1000),
-      Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true),
-      Constants.valueAvailableWhenPropertyChangedId -> JsNumber(1000)
-    ))
+      Constants.valueOfEstateId                          -> JsNumber(500000),
+      Constants.chargeableEstateValueId                  -> JsNumber(450000),
+      Constants.propertyInEstateId                       -> JsBoolean(true),
+      Constants.propertyValueId                          -> JsNumber(400000),
+      Constants.grossingUpOnEstateAssetsId               -> JsBoolean(true),
+      Constants.propertyPassingToDirectDescendantsId     -> JsBoolean(true),
+      Constants.percentagePassedToDirectDescendantsId    -> JsNumber(100),
+      Constants.transferAnyUnusedThresholdId             -> JsBoolean(true),
+      Constants.valueBeingTransferredId                  -> JsNumber(50000),
+      Constants.claimDownsizingThresholdId               -> JsBoolean(true),
+      Constants.datePropertyWasChangedId                 -> JsString("2018-03-02"),
+      Constants.valueOfChangedPropertyId                 -> JsNumber(100000),
+      Constants.assetsPassingToDirectDescendantsId       -> JsBoolean(true),
+      Constants.grossingUpOnEstateAssetsId               -> JsBoolean(true),
+      Constants.chargeablePropertyValueId                -> JsNumber(50000),
+      Constants.valueOfAssetsPassingId                   -> JsNumber(1000),
+      Constants.transferAvailableWhenPropertyChangedId   -> JsBoolean(true),
+      Constants.valueAvailableWhenPropertyChangedId      -> JsNumber(1000)
+    )
+  )
 
   "No Additional Threshold Available Controller" must {
     "return 200 for a GET" in {
       val controller = new NoAdditionalThresholdAvailableController(
-        messagesControllerComponents, mockSessionConnector, navigator, no_additional_threshold_available)
+        messagesControllerComponents,
+        mockSessionConnector,
+        navigator,
+        no_additional_threshold_available
+      )
 
       val result = controller.onPageLoad(fakeRequest)
       status(result) mustBe Status.OK
@@ -84,48 +99,71 @@ class NoAdditionalThresholdAvailableControllerSpec extends CommonPlaySpec with H
 
     "return the View for a GET" in {
       val controller = new NoAdditionalThresholdAvailableController(
-        messagesControllerComponents, mockSessionConnector, navigator, no_additional_threshold_available)
+        messagesControllerComponents,
+        mockSessionConnector,
+        navigator,
+        no_additional_threshold_available
+      )
 
       val result = controller.onPageLoad(fakeRequest)
       contentAsString(result) mustBe
         no_additional_threshold_available(
-          "no_additional_threshold_available.no_property_reason", routes.TransferAnyUnusedThresholdController.onPageLoad)(fakeRequest, messages).toString
+          "no_additional_threshold_available.no_property_reason",
+          routes.TransferAnyUnusedThresholdController.onPageLoad
+        )(fakeRequest, messages).toString
     }
 
     "throw an exception when the cache is unavailable" in {
       val mockSessionConnector = mock[SessionConnector]
       val controller = new NoAdditionalThresholdAvailableController(
-        messagesControllerComponents, mockSessionConnector, navigator, no_additional_threshold_available)
+        messagesControllerComponents,
+        mockSessionConnector,
+        navigator,
+        no_additional_threshold_available
+      )
 
       an[RuntimeException] must be thrownBy controller.onPageLoad(fakeRequest)
     }
 
     "The answer constants must be the same as the calulated constants for the controller when the reason is NotCloselyInherited" in {
       val controller = new NoAdditionalThresholdAvailableController(
-        messagesControllerComponents, mockSessionConnector, navigator, no_additional_threshold_available)
-      val controllerId = controller.getControllerId(NotCloselyInherited)
+        messagesControllerComponents,
+        mockSessionConnector,
+        navigator,
+        no_additional_threshold_available
+      )
+      val controllerId        = controller.getControllerId(NotCloselyInherited)
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
-      val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
-      val answerList = List(Constants.dateOfDeathId,
+      val calculatedList      = AnswerRows.rowOrderList.filter(calculatedConstants contains _)
+      val answerList = List(
+        Constants.dateOfDeathId,
         Constants.partOfEstatePassingToDirectDescendantsId,
         Constants.valueOfEstateId,
         Constants.chargeableEstateValueId,
         Constants.propertyInEstateId,
-        Constants.propertyValueId)
+        Constants.propertyValueId
+      )
       answerList mustBe calculatedList
     }
 
     "The answer constants must be the same as the calulated constants for the controller when the reason is NoProperty" in {
       val controller = new NoAdditionalThresholdAvailableController(
-        messagesControllerComponents, mockSessionConnector, navigator, no_additional_threshold_available)
-      val controllerId = controller.getControllerId(NoProperty)
+        messagesControllerComponents,
+        mockSessionConnector,
+        navigator,
+        no_additional_threshold_available
+      )
+      val controllerId        = controller.getControllerId(NoProperty)
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
-      val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
-      val answerList = List(Constants.dateOfDeathId,
+      val calculatedList      = AnswerRows.rowOrderList.filter(calculatedConstants contains _)
+      val answerList = List(
+        Constants.dateOfDeathId,
         Constants.partOfEstatePassingToDirectDescendantsId,
         Constants.valueOfEstateId,
-        Constants.chargeableEstateValueId)
+        Constants.chargeableEstateValueId
+      )
       answerList mustBe calculatedList
     }
   }
+
 }

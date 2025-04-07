@@ -37,19 +37,20 @@ class IHT435ControllerSpec extends CommonPlaySpec with MockSessionConnector with
 
   private val mockPDFHelper = mock[PDFHelperImpl]
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val messagesControllerComponents: DefaultMessagesControllerComponents =
+    injector.instanceOf[DefaultMessagesControllerComponents]
 
   private def controller = new IHT435Controller(env, messagesControllerComponents, mockSessionConnector, mockPDFHelper)
 
   "onPageLoad" must {
     "return 200" in {
-      when(mockPDFHelper.generatePDF(any(), any())(any())) thenReturn Some(new ByteArrayOutputStream())
+      when(mockPDFHelper.generatePDF(any(), any())(any())).thenReturn(Some(new ByteArrayOutputStream()))
       val result = controller.onPageLoad(fakeRequest)
       status(result) mustBe Status.OK
     }
 
     "return exception when no resource" in {
-      when(mockPDFHelper.generatePDF(any(), any())(any())) thenReturn None
+      when(mockPDFHelper.generatePDF(any(), any())(any())).thenReturn(None)
       a[RuntimeException] mustBe thrownBy {
         status(controller.onPageLoad(fakeRequest))
       }
@@ -59,7 +60,10 @@ class IHT435ControllerSpec extends CommonPlaySpec with MockSessionConnector with
       expireSessionConnector()
       val result = controller.onPageLoad(fakeRequest)
       status(result) mustBe Status.SEE_OTHER
-      redirectLocation(result) mustBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url)
+      redirectLocation(result) mustBe Some(
+        uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url
+      )
     }
   }
+
 }

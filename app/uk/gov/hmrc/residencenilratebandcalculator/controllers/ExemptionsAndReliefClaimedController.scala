@@ -29,17 +29,20 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class ExemptionsAndReliefClaimedController @Inject()(cc: DefaultMessagesControllerComponents,
-                                                     override val sessionConnector: SessionConnector,
-                                                     override val navigator: Navigator,
-                                                     exemptionsAndReliefClaimedView: exemptions_and_relief_claimed)
-                                                    (override implicit val ec: ExecutionContext) extends FrontendController(cc) with SimpleControllerBase[Boolean] {
+class ExemptionsAndReliefClaimedController @Inject() (
+    cc: DefaultMessagesControllerComponents,
+    override val sessionConnector: SessionConnector,
+    override val navigator: Navigator,
+    exemptionsAndReliefClaimedView: exemptions_and_relief_claimed
+)(override implicit val ec: ExecutionContext)
+    extends FrontendController(cc)
+    with SimpleControllerBase[Boolean] {
 
   override val controllerId: String = Constants.exemptionsAndReliefClaimedId
 
   override def form: () => Form[Boolean] = () => BooleanForm("exemptions_and_relief_claimed.error.required")
 
-  override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+  override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[_]) =
     exemptionsAndReliefClaimedView(form)
-  }
+
 }

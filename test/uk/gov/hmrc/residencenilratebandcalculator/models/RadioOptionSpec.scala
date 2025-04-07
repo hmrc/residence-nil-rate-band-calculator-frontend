@@ -25,4 +25,5 @@ class RadioOptionSpec extends BaseSpec {
       RadioOption("prefix", "option") mustBe RadioOption("prefix.option", "option", "prefix.option")
     }
   }
+
 }

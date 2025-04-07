@@ -25,11 +25,11 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.calculate_threshold
 import scala.concurrent.Future
 
 @Singleton
-class CalculateThresholdIncreaseController @Inject()(val cc: DefaultMessagesControllerComponents,
-                                                     calculateThresholdIncreaseView: calculate_threshold_increase
-                                                     ) extends FrontendController(cc) with I18nSupport {
+class CalculateThresholdIncreaseController @Inject() (
+    val cc: DefaultMessagesControllerComponents,
+    calculateThresholdIncreaseView: calculate_threshold_increase
+) extends FrontendController(cc)
+    with I18nSupport {
 
-  def onPageLoad = Action.async { implicit request =>
-    Future.successful(Ok(calculateThresholdIncreaseView()))
-  }
+  def onPageLoad = Action.async(implicit request => Future.successful(Ok(calculateThresholdIncreaseView())))
 }

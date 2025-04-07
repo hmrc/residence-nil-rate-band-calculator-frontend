@@ -38,28 +38,36 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class ValueBeingTransferredController @Inject()(cc: DefaultMessagesControllerComponents,
-                                                val sessionConnector: SessionConnector,
-                                                val navigator: Navigator,
-                                                val rnrbConnector: RnrbConnector,
-                                                validatedSession: ValidatedSession,
-                                                valueBeingTransferredView: value_being_transferred)
-                                               (implicit ec: ExecutionContext) extends FrontendController(cc) with Logging {
+class ValueBeingTransferredController @Inject() (
+    cc: DefaultMessagesControllerComponents,
+    val sessionConnector: SessionConnector,
+    val navigator: Navigator,
+    val rnrbConnector: RnrbConnector,
+    validatedSession: ValidatedSession,
+    valueBeingTransferredView: value_being_transferred
+)(implicit ec: ExecutionContext)
+    extends FrontendController(cc)
+    with Logging {
 
   val controllerId = Constants.valueBeingTransferredId
 
   def form = () =>
-    NonNegativeIntForm("value_being_transferred.error.blank", "error.whole_pounds", "error.non_numeric", "error.value_too_large")
+    NonNegativeIntForm(
+      "value_being_transferred.error.blank",
+      "error.whole_pounds",
+      "error.non_numeric",
+      "error.value_too_large"
+    )
 
   private def getCacheMap(implicit hc: HeaderCarrier): Future[CacheMap] = sessionConnector.fetch().map {
     case Some(cacheMap) => cacheMap
-    case None => throw new NoCacheMapException("CacheMap not available")
+    case None           => throw new NoCacheMapException("CacheMap not available")
   }
 
   def microserviceValues(implicit hc: HeaderCarrier): Future[(HttpResponse, CacheMap)] = for {
-    dateOfDeath <- getCacheMap.map(_.data(Constants.dateOfDeathId).toString().replaceAll("\"", ""))
+    dateOfDeath      <- getCacheMap.map(_.data(Constants.dateOfDeathId).toString().replaceAll("\"", ""))
     nilRateValueJson <- rnrbConnector.getNilRateBand(dateOfDeath)
-    cacheMap <- getCacheMap
+    cacheMap         <- getCacheMap
   } yield (nilRateValueJson, cacheMap)
 
   def answerRows(cacheMap: CacheMap, request: Request[_]): Seq[AnswerRow] = AnswerRows.constructAnswerRows(
@@ -74,76 +82,86 @@ class ValueBeingTransferredController @Inject()(cc: DefaultMessagesControllerCom
     NumberFormat.getCurrencyInstance(Locale.UK).format(number)
   }
 
-  def onPageLoad(implicit rds: Reads[Int]) = Action.async {
-    implicit request => {
-      microserviceValues.map {
-        case (nilRateValueJson, cacheMap) => {
+  def onPageLoad(implicit rds: Reads[Int]) = Action.async { implicit request =>
+    microserviceValues
+      .map { case (nilRateValueJson, cacheMap) =>
 
-          val nilRateBand = formatJsonNumber(nilRateValueJson.json.toString())
-          implicit val messages = messagesApi.preferred(request)
-          Ok(valueBeingTransferredView(
+        val nilRateBand       = formatJsonNumber(nilRateValueJson.json.toString())
+        implicit val messages = messagesApi.preferred(request)
+        Ok(
+          valueBeingTransferredView(
             nilRateBand,
-            cacheMap.getEntry(controllerId).fold(form())(value => form().fill(value))))
-        }
-      } recover {
-        case n: NoCacheMapException => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
-        case r: RuntimeException => {
-          logger.error(r.getMessage, r)
-          throw r
-        }
-      }
-    }
-  }
-
-  def onSubmit(implicit wts: Writes[Int]) = validatedSession.async {
-    implicit request => {
-      microserviceValues.flatMap {
-        case (nilRateValueJson, cacheMap) => {
-          val boundForm = form().bindFromRequest()
-          val nilRateBand = nilRateValueJson.json.toString()
-          val formattedNilRateBand = formatJsonNumber(nilRateBand)
-          val userAnswers = new UserAnswers(cacheMap)
-          implicit val messages = messagesApi.preferred(request)
-          boundForm.fold(
-            formWithErrors => Future.successful(BadRequest(valueBeingTransferredView(
-              formattedNilRateBand, formWithErrors))),
-            (value) => {
-              validate(value, nilRateBand, userAnswers).flatMap {
-                case Some(error) => Future.successful(BadRequest(valueBeingTransferredView(
-                  formattedNilRateBand,
-                  form().fill(value).withError(error))))
-                case None => sessionConnector.cache[Int](controllerId, value).map(cacheMap => Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
-              }
-            }
+            cacheMap.getEntry(controllerId).fold(form())(value => form().fill(value))
           )
-        }
-      } recover {
-        case n: NoCacheMapException => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
-        case r: RuntimeException => {
+        )
+      }
+      .recover {
+        case n: NoCacheMapException =>
+          Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
+        case r: RuntimeException =>
           logger.error(r.getMessage, r)
           throw r
-        }
       }
-    }
   }
 
+  def onSubmit(implicit wts: Writes[Int]) = validatedSession.async { implicit request =>
+    microserviceValues
+      .flatMap { case (nilRateValueJson, cacheMap) =>
+        val boundForm            = form().bindFromRequest()
+        val nilRateBand          = nilRateValueJson.json.toString()
+        val formattedNilRateBand = formatJsonNumber(nilRateBand)
+        val userAnswers          = new UserAnswers(cacheMap)
+        implicit val messages    = messagesApi.preferred(request)
+        boundForm.fold(
+          formWithErrors =>
+            Future.successful(BadRequest(valueBeingTransferredView(formattedNilRateBand, formWithErrors))),
+          value =>
+            validate(value, nilRateBand, userAnswers).flatMap {
+              case Some(error) =>
+                Future.successful(
+                  BadRequest(valueBeingTransferredView(formattedNilRateBand, form().fill(value).withError(error)))
+                )
+              case None =>
+                sessionConnector
+                  .cache[Int](controllerId, value)
+                  .map(cacheMap => Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
+            }
+        )
+      }
+      .recover {
+        case n: NoCacheMapException =>
+          Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
+        case r: RuntimeException =>
+          logger.error(r.getMessage, r)
+          throw r
+      }
+  }
 
   def validate(value: Int, nilRateBandStr: String, userAnswers: UserAnswers): Future[Option[FormError]] = {
-    val nrb = try {
-      Integer.parseInt(nilRateBandStr)
-    } catch {
-      case e: NumberFormatException => {
-        logger.error(e.getMessage, e)
-        throw new NumberFormatException("Bad value in nil rate band")
+    val nrb =
+      try
+        Integer.parseInt(nilRateBandStr)
+      catch {
+        case e: NumberFormatException =>
+          logger.error(e.getMessage, e)
+          throw new NumberFormatException("Bad value in nil rate band")
       }
-    }
 
     if (value <= nrb) {
       Future.successful(None)
     } else {
       val dateOfDeath = userAnswers.dateOfDeath.getOrElse(throw new RuntimeException("Date of death was not answered"))
-      val taxYear = TaxYear.taxYearFor(dateOfDeath)
-      Future.successful(Some(FormError("value", "value_being_transferred.error", Seq(nrb, s"${taxYear.startYear}", s"${taxYear.finishYear}"))))
+      val taxYear     = TaxYear.taxYearFor(dateOfDeath)
+      Future.successful(
+        Some(
+          FormError(
+            "value",
+            "value_being_transferred.error",
+            Seq(nrb, s"${taxYear.startYear}", s"${taxYear.finishYear}")
+          )
+        )
+      )
     }
   }
+
 }

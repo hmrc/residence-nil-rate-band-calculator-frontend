@@ -70,4 +70,5 @@ class AnswerRowSpec extends BaseSpec {
       AnswerRow("", yesNo = true, Call("", "http://example.com"))(messages).url mustBe "http://example.com"
     }
   }
+
 }

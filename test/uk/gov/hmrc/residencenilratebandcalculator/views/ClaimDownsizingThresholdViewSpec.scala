@@ -24,21 +24,39 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.claim_downsizing_th
 
 class ClaimDownsizingThresholdViewSpec extends NewBooleanViewSpecBase {
 
-  val messageKeyPrefix = "claim_downsizing_threshold"
+  val messageKeyPrefix                                       = "claim_downsizing_threshold"
   val claim_downsizing_threshold: claim_downsizing_threshold = injector.instanceOf[claim_downsizing_threshold]
   def createView(form: Form[Boolean]): HtmlFormat.Appendable = claim_downsizing_threshold(form)(request, messages)
 
   "Claim Downsizing Threshold View" must {
 
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix,
-      "guidance1",
-      "guidance1.bullet1",
-      "guidance1.bullet2",
-      "guidance1.bullet3"
-    )(fakeApplication().injector.instanceOf[ClaimDownsizingThresholdController].form())
+    behave.like(
+      rnrbPage[Boolean](
+        createView,
+        messageKeyPrefix,
+        "guidance1",
+        "guidance1.bullet1",
+        "guidance1.bullet2",
+        "guidance1.bullet3"
+      )(fakeApplication().injector.instanceOf[ClaimDownsizingThresholdController].form())
+    )
 
-    behave like pageWithoutBackLink[Boolean](createView, fakeApplication().injector.instanceOf[ClaimDownsizingThresholdController].form())
+    behave.like(
+      pageWithoutBackLink[Boolean](
+        createView,
+        fakeApplication().injector.instanceOf[ClaimDownsizingThresholdController].form()
+      )
+    )
 
-    behave like booleanPage(createView, messageKeyPrefix, ClaimDownsizingThresholdController.onSubmit.url, fakeApplication().injector.instanceOf[ClaimDownsizingThresholdController].form(), true)
+    behave.like(
+      booleanPage(
+        createView,
+        messageKeyPrefix,
+        ClaimDownsizingThresholdController.onSubmit.url,
+        fakeApplication().injector.instanceOf[ClaimDownsizingThresholdController].form(),
+        true
+      )
+    )
   }
+
 }

@@ -24,20 +24,22 @@ import scala.reflect.ClassTag
 
 trait ViewSpecBase extends HtmlSpec {
 
-  val errorKey = "value"
-  val errorMessage = "error.number"
+  val errorKey         = "value"
+  val errorMessage     = "error.number"
   val error: FormError = FormError(errorKey, errorMessage)
 
-  def rnrbPage[A: ClassTag](createView: Form[A] => HtmlFormat.Appendable,
-                            messageKeyPrefix: String,
-                            expectedGuidanceKeys: String*)(emptyForm: Form[A]): Unit = {
+  def rnrbPage[A: ClassTag](
+      createView: Form[A] => HtmlFormat.Appendable,
+      messageKeyPrefix: String,
+      expectedGuidanceKeys: String*
+  )(emptyForm: Form[A]): Unit =
     "behave like a standard RNRB page" when {
       "rendered" must {
         "have the correct banner title" in {
           implicit val lang: Lang = Lang("en")
 
-          val doc = asDocument(createView(emptyForm))
-          val nav = doc.getElementById("proposition-menu")
+          val doc  = asDocument(createView(emptyForm))
+          val nav  = doc.getElementById("proposition-menu")
           val span = nav.children.first
           span.text mustBe messagesApi("site.service_name")
         }
@@ -63,9 +65,8 @@ trait ViewSpecBase extends HtmlSpec {
         }
       }
     }
-  }
 
-  def pageWithoutBackLink[A: ClassTag](createView: (Form[A]) => HtmlFormat.Appendable, emptyForm: Form[A]): Unit = {
+  def pageWithoutBackLink[A: ClassTag](createView: (Form[A]) => HtmlFormat.Appendable, emptyForm: Form[A]): Unit =
 
     "behave like a page without a back link" when {
       "rendered" must {
@@ -76,16 +77,18 @@ trait ViewSpecBase extends HtmlSpec {
         }
       }
     }
-  }
 
-  def questionPage[A: ClassTag](createView: Form[A] => HtmlFormat.Appendable,
-                                messageKeyPrefix: String,
-                                expectedFormAction: String, emptyForm: Form[A]): Unit = {
+  def questionPage[A: ClassTag](
+      createView: Form[A] => HtmlFormat.Appendable,
+      messageKeyPrefix: String,
+      expectedFormAction: String,
+      emptyForm: Form[A]
+  ): Unit =
 
     "behave like a page with a question" when {
       "rendered" must {
         "contain a form that POSTs to the correct action" in {
-          val doc = asDocument(createView(emptyForm))
+          val doc   = asDocument(createView(emptyForm))
           val forms = doc.getElementsByTag("form")
           forms.size mustBe 1
           val form = forms.first
@@ -99,9 +102,11 @@ trait ViewSpecBase extends HtmlSpec {
         }
       }
     }
-  }
 
-  def pageContainingPreviousAnswers[A: ClassTag](createView: Form[A] => HtmlFormat.Appendable, emptyForm: Form[A]): Unit = {
+  def pageContainingPreviousAnswers[A: ClassTag](
+      createView: Form[A] => HtmlFormat.Appendable,
+      emptyForm: Form[A]
+  ): Unit =
     "behave like a page containing previous answers" when {
       "rendered" must {
         "contain the Show previous answers link" in {
@@ -110,7 +115,5 @@ trait ViewSpecBase extends HtmlSpec {
         }
       }
     }
-
-  }
 
 }

@@ -26,16 +26,36 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_inherite
 class ChargeableInheritedPropertyValueViewSpec extends NewIntViewSpecBase {
 
   val messageKeyPrefix = "chargeable_inherited_property_value"
-  val chargeable_inherited_property_value: chargeable_inherited_property_value = injector.instanceOf[chargeable_inherited_property_value]
+
+  val chargeable_inherited_property_value: chargeable_inherited_property_value =
+    injector.instanceOf[chargeable_inherited_property_value]
+
   def createView(form: Form[Int]): HtmlFormat.Appendable = chargeable_inherited_property_value(form)(request, messages)
 
   "Chargeable Inherited Property Value View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2")(fakeApplication().injector.instanceOf[ChargeableInheritedPropertyValueController].form())
+    behave.like(
+      rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2")(
+        fakeApplication().injector.instanceOf[ChargeableInheritedPropertyValueController].form()
+      )
+    )
 
-    behave like pageWithoutBackLink[Int](createView, fakeApplication().injector.instanceOf[ChargeableInheritedPropertyValueController].form())
+    behave.like(
+      pageWithoutBackLink[Int](
+        createView,
+        fakeApplication().injector.instanceOf[ChargeableInheritedPropertyValueController].form()
+      )
+    )
 
-    behave like intPage(createView, messageKeyPrefix, ChargeableInheritedPropertyValueController.onSubmit.url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), fakeApplication().injector.instanceOf[ChargeableInheritedPropertyValueController].form())
+    behave.like(
+      intPage(
+        createView,
+        messageKeyPrefix,
+        ChargeableInheritedPropertyValueController.onSubmit.url,
+        NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage),
+        fakeApplication().injector.instanceOf[ChargeableInheritedPropertyValueController].form()
+      )
+    )
   }
 
 }

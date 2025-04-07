@@ -22,12 +22,19 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_additional_thres
 
 class NoAdditionalThresholdAvailableViewSpec extends HtmlSpec {
   implicit val msg: Messages = messages
-  val messageKeyPrefix = "no_additional_threshold_available"
-  val no_additional_threshold_available: no_additional_threshold_available = injector.instanceOf[no_additional_threshold_available]
+  val messageKeyPrefix       = "no_additional_threshold_available"
+
+  val no_additional_threshold_available: no_additional_threshold_available =
+    injector.instanceOf[no_additional_threshold_available]
+
   "No Additional Threshold Available View" must {
     "display the correct browser title" in {
       val doc = asDocument(no_additional_threshold_available("", Call("", "")))
-      assertEqualsMessage(doc, "title", s"${messages(s"$messageKeyPrefix.browser_title")} - ${messages("service.name")} - GOV.UK")
+      assertEqualsMessage(
+        doc,
+        "title",
+        s"${messages(s"$messageKeyPrefix.browser_title")} - ${messages("service.name")} - GOV.UK"
+      )
     }
 
     "display the correct page title" in {
@@ -47,7 +54,7 @@ class NoAdditionalThresholdAvailableViewSpec extends HtmlSpec {
 
     "contain a link to the given page" in {
       val exampleURL = "http://www.example.com"
-      val doc = asDocument(no_additional_threshold_available("", Call("GET", exampleURL)))
+      val doc        = asDocument(no_additional_threshold_available("", Call("GET", exampleURL)))
       assertContainsText(doc, exampleURL)
     }
 
@@ -56,4 +63,5 @@ class NoAdditionalThresholdAvailableViewSpec extends HtmlSpec {
       assertNotRenderedByCssSelector(doc, ".organisation-logo")
     }
   }
+
 }

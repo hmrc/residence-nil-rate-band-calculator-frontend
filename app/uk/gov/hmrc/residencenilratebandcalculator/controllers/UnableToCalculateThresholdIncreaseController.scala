@@ -20,7 +20,10 @@ import javax.inject.{Inject, Singleton}
 import play.api.mvc.{DefaultMessagesControllerComponents, Request}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetUnableToCalculateThresholdIncreaseReason.{GrossingUpForOtherProperty, GrossingUpForResidence}
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetUnableToCalculateThresholdIncreaseReason.{
+  GrossingUpForOtherProperty,
+  GrossingUpForResidence
+}
 import uk.gov.hmrc.residencenilratebandcalculator.models._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.unable_to_calculate_threshold_increase
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
@@ -28,21 +31,24 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class UnableToCalculateThresholdIncreaseController @Inject()(val cc: DefaultMessagesControllerComponents,
-                                                             override val sessionConnector: SessionConnector,
-                                                             unableToCalculateThresholdIncreaseView: unable_to_calculate_threshold_increase)
-                                                            (override implicit val ec: ExecutionContext)
-  extends FrontendController(cc) with TransitionController {
+class UnableToCalculateThresholdIncreaseController @Inject() (
+    val cc: DefaultMessagesControllerComponents,
+    override val sessionConnector: SessionConnector,
+    unableToCalculateThresholdIncreaseView: unable_to_calculate_threshold_increase
+)(override implicit val ec: ExecutionContext)
+    extends FrontendController(cc)
+    with TransitionController {
 
   val getReason = GetUnableToCalculateThresholdIncreaseReason
 
   def getControllerId(reason: Reason) =
     reason match {
-      case GrossingUpForResidence => Constants.grossingUpOnEstatePropertyId
+      case GrossingUpForResidence     => Constants.grossingUpOnEstatePropertyId
       case GrossingUpForOtherProperty => Constants.grossingUpOnEstateAssetsId
-      case _ => ""
+      case _                          => ""
     }
 
   def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[_]) =
     unableToCalculateThresholdIncreaseView("unable_to_calculate_threshold_increase.grossing_up")
+
 }

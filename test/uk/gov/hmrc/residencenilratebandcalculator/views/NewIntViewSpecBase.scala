@@ -23,12 +23,15 @@ trait NewIntViewSpecBase extends NewViewSpecBase {
 
   val number = 123
 
-  def intPage(createView: (Form[Int]) => HtmlFormat.Appendable,
-              messageKeyPrefix: String,
-              expectedFormAction: String,
-              form: Form[Int], emptyForm: Form[Int]): Unit = {
+  def intPage(
+      createView: (Form[Int]) => HtmlFormat.Appendable,
+      messageKeyPrefix: String,
+      expectedFormAction: String,
+      form: Form[Int],
+      emptyForm: Form[Int]
+  ): Unit = {
 
-    behave like questionPage[Int](createView, messageKeyPrefix, expectedFormAction, emptyForm)
+    behave.like(questionPage[Int](createView, messageKeyPrefix, expectedFormAction, emptyForm))
 
     "behave like a page with an integer value field" when {
       "rendered" must {
@@ -58,11 +61,12 @@ trait NewIntViewSpecBase extends NewViewSpecBase {
         }
 
         "show an error in the value field's label" in {
-          val doc = asDocument(createView(form.withError(error)))
+          val doc       = asDocument(createView(form.withError(error)))
           val errorSpan = doc.getElementsByClass("govuk-error-message").first
           errorSpan.text mustBe "Error: " + messages(errorMessage)
         }
       }
     }
   }
+
 }

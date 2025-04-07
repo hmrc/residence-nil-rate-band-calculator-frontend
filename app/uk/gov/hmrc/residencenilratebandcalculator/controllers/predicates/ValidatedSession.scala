@@ -25,18 +25,23 @@ import scala.concurrent.Future
 import uk.gov.hmrc.http.SessionKeys
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 
-class ValidatedSession @Inject()(mcc: MessagesControllerComponents) extends FrontendController(mcc) with I18nSupport with Logging {
+class ValidatedSession @Inject() (mcc: MessagesControllerComponents)
+    extends FrontendController(mcc)
+    with I18nSupport
+    with Logging {
 
   private type AsyncRequest = Request[AnyContent] => Future[Result]
 
-  def async(action: AsyncRequest): Action[AnyContent] = {
+  def async(action: AsyncRequest): Action[AnyContent] =
     Action.async { implicit request =>
-      if(request.session.get(SessionKeys.sessionId).isEmpty) {
+      if (request.session.get(SessionKeys.sessionId).isEmpty) {
         logger.warn("No session ID found; timing out")
-        Future.successful(Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad))
+        Future.successful(
+          Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
+        )
       } else {
         action(request)
       }
     }
-  }
+
 }

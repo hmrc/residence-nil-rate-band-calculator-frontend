@@ -24,11 +24,13 @@ import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.Validat
 
 import scala.concurrent.Future
 
-class FeedbackSurveyController @Inject()(cc: DefaultMessagesControllerComponents,
-                                         appConfig: FrontendAppConfig,
-                                         validatedSession: ValidatedSession) extends FrontendController(cc) {
-  def redirectExitSurvey: Action[AnyContent] = validatedSession.async { implicit request => {
-      Future.successful(Redirect(appConfig.feedbackSurvey).withNewSession)
-    }
-  }
+class FeedbackSurveyController @Inject() (
+    cc: DefaultMessagesControllerComponents,
+    appConfig: FrontendAppConfig,
+    validatedSession: ValidatedSession
+) extends FrontendController(cc) {
+
+  def redirectExitSurvey: Action[AnyContent] =
+    validatedSession.async(implicit request => Future.successful(Redirect(appConfig.feedbackSurvey).withNewSession))
+
 }

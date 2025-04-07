@@ -25,15 +25,37 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_available_
 class TransferAvailableWhenPropertyChangedViewSpec extends NewBooleanViewSpecBase {
 
   val messageKeyPrefix = "transfer_available_when_property_changed"
-  val transfer_available_when_property_changed: transfer_available_when_property_changed = injector.instanceOf[transfer_available_when_property_changed]
-  def createView(form: Form[Boolean]): HtmlFormat.Appendable = transfer_available_when_property_changed(form)(request, messages)
+
+  val transfer_available_when_property_changed: transfer_available_when_property_changed =
+    injector.instanceOf[transfer_available_when_property_changed]
+
+  def createView(form: Form[Boolean]): HtmlFormat.Appendable =
+    transfer_available_when_property_changed(form)(request, messages)
 
   "Transfer Available When Property Changed View" must {
 
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance")(fakeApplication().injector.instanceOf[TransferAvailableWhenPropertyChangedController].form())
+    behave.like(
+      rnrbPage[Boolean](createView, messageKeyPrefix, "guidance")(
+        fakeApplication().injector.instanceOf[TransferAvailableWhenPropertyChangedController].form()
+      )
+    )
 
-    behave like pageWithoutBackLink[Boolean](createView, fakeApplication().injector.instanceOf[TransferAvailableWhenPropertyChangedController].form())
+    behave.like(
+      pageWithoutBackLink[Boolean](
+        createView,
+        fakeApplication().injector.instanceOf[TransferAvailableWhenPropertyChangedController].form()
+      )
+    )
 
-    behave like booleanPage(createView, messageKeyPrefix, TransferAvailableWhenPropertyChangedController.onSubmit.url, fakeApplication().injector.instanceOf[TransferAvailableWhenPropertyChangedController].form(), useNewValues = true)
+    behave.like(
+      booleanPage(
+        createView,
+        messageKeyPrefix,
+        TransferAvailableWhenPropertyChangedController.onSubmit.url,
+        fakeApplication().injector.instanceOf[TransferAvailableWhenPropertyChangedController].form(),
+        useNewValues = true
+      )
+    )
   }
+
 }

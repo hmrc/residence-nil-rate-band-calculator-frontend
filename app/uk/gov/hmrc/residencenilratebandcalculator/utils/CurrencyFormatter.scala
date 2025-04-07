@@ -20,13 +20,14 @@ import java.text.NumberFormat
 import java.util.Locale
 
 object CurrencyFormatter {
+
   def format(amount: Int): String = {
     val formatter = NumberFormat.getCurrencyInstance(Locale.UK)
     formatter.setMaximumFractionDigits(0)
     formatter.format(amount)
   }
 
-  def format(amountStr: String): String = {
+  def format(amountStr: String): String =
     this.format(Integer.parseInt(amountStr))
-  }
+
 }

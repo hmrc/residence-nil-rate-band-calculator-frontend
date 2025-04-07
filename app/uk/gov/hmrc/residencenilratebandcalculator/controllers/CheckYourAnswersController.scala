@@ -30,34 +30,36 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.check_your_answers
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class CheckYourAnswersController @Inject()(cc: DefaultMessagesControllerComponents,
-                                           sessionConnector: SessionConnector,
-                                           validatedSession: ValidatedSession,
-                                           checkYourAnswersView: check_your_answers)
-                                          (implicit ec: ExecutionContext)
-  extends FrontendController(cc) with I18nSupport with Logging {
+class CheckYourAnswersController @Inject() (
+    cc: DefaultMessagesControllerComponents,
+    sessionConnector: SessionConnector,
+    validatedSession: ValidatedSession,
+    checkYourAnswersView: check_your_answers
+)(implicit ec: ExecutionContext)
+    extends FrontendController(cc)
+    with I18nSupport
+    with Logging {
 
-  def onPageLoad = {
-    validatedSession.async {
-      implicit request => {
-        sessionConnector.fetch().map {
-          case Some(answers) =>
-            val requiredAnswers = Set(
-              Constants.noDownsizingThresholdIncrease,
-              Constants.valueAvailableWhenPropertyChangedId,
-              Constants.transferAvailableWhenPropertyChangedId,
-              Constants.claimDownsizingThresholdId,
-              Constants.valueOfAssetsPassingId
-            )
-            if (requiredAnswers.intersect(answers.data.keys.toSet).nonEmpty) {
-              val messages = cc.messagesApi.preferred(request)
-              Ok(checkYourAnswersView(AnswerRows(answers, messages)))
-            } else {
-              Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
-            }
-          case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
-        }
+  def onPageLoad =
+    validatedSession.async { implicit request =>
+      sessionConnector.fetch().map {
+        case Some(answers) =>
+          val requiredAnswers = Set(
+            Constants.noDownsizingThresholdIncrease,
+            Constants.valueAvailableWhenPropertyChangedId,
+            Constants.transferAvailableWhenPropertyChangedId,
+            Constants.claimDownsizingThresholdId,
+            Constants.valueOfAssetsPassingId
+          )
+          if (requiredAnswers.intersect(answers.data.keys.toSet).nonEmpty) {
+            val messages = cc.messagesApi.preferred(request)
+            Ok(checkYourAnswersView(AnswerRows(answers, messages)))
+          } else {
+            Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
+          }
+        case None =>
+          Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
       }
     }
-  }
+
 }

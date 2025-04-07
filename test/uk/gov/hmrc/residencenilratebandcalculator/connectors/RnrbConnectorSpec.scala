@@ -34,8 +34,11 @@ import java.time.LocalDate
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
-class RnrbConnectorSpec extends CommonPlaySpec
-  with MockitoSugar with BeforeAndAfterEach with WithCommonFakeApplication  {
+class RnrbConnectorSpec
+    extends CommonPlaySpec
+    with MockitoSugar
+    with BeforeAndAfterEach
+    with WithCommonFakeApplication {
 
   private implicit val hc: HeaderCarrier = HeaderCarrier()
 
@@ -44,54 +47,72 @@ class RnrbConnectorSpec extends CommonPlaySpec
     super.beforeEach()
   }
 
-  val httpMock: DefaultHttpClient = mock[DefaultHttpClient]
+  val httpMock: DefaultHttpClient   = mock[DefaultHttpClient]
   val configMock: FrontendAppConfig = mock[FrontendAppConfig]
 
   def getHttpMock(returnedData: JsValue): DefaultHttpClient = {
-    when(httpMock.POST(anyString, any[JsValue], any[Seq[(String, String)]])(any[Writes[JsValue]](), any[HttpReads[_]](),
-      any[HeaderCarrier](), any())) thenReturn Future.successful(HttpResponse(Status.OK, returnedData.toString()))
-    when(httpMock.GET[HttpResponse](any())(any[HttpReads[HttpResponse]](), any[HeaderCarrier](), any())) thenReturn
-      Future.successful(HttpResponse(Status.OK, returnedData.toString()))
+    when(
+      httpMock.POST(anyString, any[JsValue], any[Seq[(String, String)]])(
+        any[Writes[JsValue]](),
+        any[HttpReads[_]](),
+        any[HeaderCarrier](),
+        any()
+      )
+    ).thenReturn(Future.successful(HttpResponse(Status.OK, returnedData.toString())))
+    when(httpMock.GET[HttpResponse](any())(any[HttpReads[HttpResponse]](), any[HeaderCarrier](), any()))
+      .thenReturn(Future.successful(HttpResponse(Status.OK, returnedData.toString())))
     httpMock
   }
 
   val minimalJson: JsObject = JsObject(Map[String, JsValue]())
 
   val dateOfDeath: LocalDate = LocalDate.of(2020, 1, 1)
-  val valueOfEstate = 1
-  val chargeableEstateValue = 2
-  val calculationInput: CalculationInput = CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, 0, 0, 0, None, None)
+  val valueOfEstate          = 1
+  val chargeableEstateValue  = 2
+
+  val calculationInput: CalculationInput =
+    CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, 0, 0, 0, None, None)
 
   "RNRB Connector" when {
 
     "provided with a Calculation Input" must {
       "call the Microservice with the given JSON" in {
-        implicit val headerCarrierNapper: ArgumentCaptor[HeaderCarrier] = ArgumentCaptor.forClass(classOf[HeaderCarrier])
-        implicit val httpReadsNapper = ArgumentCaptor.forClass(classOf[HttpReads[Any]])
+        implicit val headerCarrierNapper: ArgumentCaptor[HeaderCarrier] =
+          ArgumentCaptor.forClass(classOf[HeaderCarrier])
+        implicit val httpReadsNapper  = ArgumentCaptor.forClass(classOf[HttpReads[Any]])
         implicit val jsonWritesNapper = ArgumentCaptor.forClass(classOf[Writes[JsValue]])
-        val urlCaptor = ArgumentCaptor.forClass(classOf[String])
-        val bodyCaptor = ArgumentCaptor.forClass(classOf[JsValue])
-        val headersCaptor = ArgumentCaptor.forClass(classOf[Seq[(String, String)]])
-        val httpMock = getHttpMock(minimalJson)
+        val urlCaptor                 = ArgumentCaptor.forClass(classOf[String])
+        val bodyCaptor                = ArgumentCaptor.forClass(classOf[JsValue])
+        val headersCaptor             = ArgumentCaptor.forClass(classOf[Seq[(String, String)]])
+        val httpMock                  = getHttpMock(minimalJson)
 
         val connector = new RnrbConnector(httpMock, configMock)
         await(connector.send(calculationInput))
 
-        verify(httpMock).POST(urlCaptor.capture, bodyCaptor.capture, headersCaptor.capture)(jsonWritesNapper.capture,
-          httpReadsNapper.capture, headerCarrierNapper.capture, any())
+        verify(httpMock).POST(urlCaptor.capture, bodyCaptor.capture, headersCaptor.capture)(
+          jsonWritesNapper.capture,
+          httpReadsNapper.capture,
+          headerCarrierNapper.capture,
+          any()
+        )
         urlCaptor.getValue must endWith(s"${connector.baseSegment}calculate")
         bodyCaptor.getValue mustBe Json.toJson(calculationInput)
         headersCaptor.getValue mustBe Seq(connector.jsonContentTypeHeader)
       }
 
       "return a case class representing the received JSON when the send method is successful" in {
-        val residenceNilRateAmount = 100
+        val residenceNilRateAmount      = 100
         val applicableNilRateBandAmount = 100
-        val carryForwardAmount = 100
-        val defaultAllowanceAmount = 100
-        val adjustedAllowanceAmount = 100
-        val calculationResult = CalculationResult(residenceNilRateAmount, applicableNilRateBandAmount, carryForwardAmount,
-          defaultAllowanceAmount, adjustedAllowanceAmount)
+        val carryForwardAmount          = 100
+        val defaultAllowanceAmount      = 100
+        val adjustedAllowanceAmount     = 100
+        val calculationResult = CalculationResult(
+          residenceNilRateAmount,
+          applicableNilRateBandAmount,
+          carryForwardAmount,
+          defaultAllowanceAmount,
+          adjustedAllowanceAmount
+        )
 
         val result = await(new RnrbConnector(httpMock, configMock) {
           getHttpMock(Json.toJson(calculationResult))
@@ -119,31 +140,40 @@ class RnrbConnectorSpec extends CommonPlaySpec
 
       "call the Microservice with the given JSON" in {
         implicit val headerCarrierNapper = ArgumentCaptor.forClass(classOf[HeaderCarrier])
-        implicit val httpReadsNapper = ArgumentCaptor.forClass(classOf[HttpReads[Any]])
-        implicit val jsonWritesNapper = ArgumentCaptor.forClass(classOf[Writes[JsValue]])
-        val urlCaptor = ArgumentCaptor.forClass(classOf[String])
-        val bodyCaptor = ArgumentCaptor.forClass(classOf[JsValue])
-        val headersCaptor = ArgumentCaptor.forClass(classOf[Seq[(String, String)]])
-        val httpMock = getHttpMock(minimalJson)
+        implicit val httpReadsNapper     = ArgumentCaptor.forClass(classOf[HttpReads[Any]])
+        implicit val jsonWritesNapper    = ArgumentCaptor.forClass(classOf[Writes[JsValue]])
+        val urlCaptor                    = ArgumentCaptor.forClass(classOf[String])
+        val bodyCaptor                   = ArgumentCaptor.forClass(classOf[JsValue])
+        val headersCaptor                = ArgumentCaptor.forClass(classOf[Seq[(String, String)]])
+        val httpMock                     = getHttpMock(minimalJson)
 
         val connector = new RnrbConnector(httpMock, configMock)
         await(connector.sendJson(minimalJson))
 
-        verify(httpMock).POST(urlCaptor.capture, bodyCaptor.capture, headersCaptor.capture)(jsonWritesNapper.capture,
-          httpReadsNapper.capture, headerCarrierNapper.capture, any())
+        verify(httpMock).POST(urlCaptor.capture, bodyCaptor.capture, headersCaptor.capture)(
+          jsonWritesNapper.capture,
+          httpReadsNapper.capture,
+          headerCarrierNapper.capture,
+          any()
+        )
         urlCaptor.getValue must endWith(s"${connector.baseSegment}calculate")
         bodyCaptor.getValue mustBe minimalJson
         headersCaptor.getValue mustBe Seq(connector.jsonContentTypeHeader)
       }
 
       "return a case class representing the received JSON when the send method is successful" in {
-        val residenceNilRateAmount = 100
+        val residenceNilRateAmount      = 100
         val applicableNilRateBandAmount = 100
-        val carryForwardAmount = 100
-        val defaultAllowanceAmount = 100
-        val adjustedAllowanceAmount = 100
-        val calculationResult = CalculationResult(residenceNilRateAmount, applicableNilRateBandAmount, carryForwardAmount,
-          defaultAllowanceAmount, adjustedAllowanceAmount)
+        val carryForwardAmount          = 100
+        val defaultAllowanceAmount      = 100
+        val adjustedAllowanceAmount     = 100
+        val calculationResult = CalculationResult(
+          residenceNilRateAmount,
+          applicableNilRateBandAmount,
+          carryForwardAmount,
+          defaultAllowanceAmount,
+          adjustedAllowanceAmount
+        )
 
         val result = await(new RnrbConnector(httpMock, configMock) {
           getHttpMock(Json.toJson(calculationResult))
@@ -155,7 +185,7 @@ class RnrbConnectorSpec extends CommonPlaySpec
       "return a string representing the error when send method fails" in {
         val errorResponse = JsString("Something went wrong!")
 
-        val result = await(new RnrbConnector(httpMock, configMock){
+        val result = await(new RnrbConnector(httpMock, configMock) {
           getHttpMock(errorResponse)
         }.sendJson(minimalJson))
 
@@ -167,4 +197,5 @@ class RnrbConnectorSpec extends CommonPlaySpec
       }
     }
   }
+
 }

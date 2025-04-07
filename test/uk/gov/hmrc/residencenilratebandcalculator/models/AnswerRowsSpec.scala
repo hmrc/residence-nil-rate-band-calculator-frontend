@@ -33,11 +33,14 @@ class AnswerRowsSpec extends CommonPlaySpec with MockSessionConnector with WithC
 
   val injector: Injector = fakeApplication.injector
 
-  val cacheMap: CacheMap = CacheMap("", Map[String, JsValue](
-    "id1" -> JsBoolean(true),
-    "id2" -> JsNumber(1000),
-    "id3" -> Json.toJson(LocalDate.of(2017, 6, 1))
-  ))
+  val cacheMap: CacheMap = CacheMap(
+    "",
+    Map[String, JsValue](
+      "id1" -> JsBoolean(true),
+      "id2" -> JsNumber(1000),
+      "id3" -> Json.toJson(LocalDate.of(2017, 6, 1))
+    )
+  )
 
   def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
 
@@ -65,7 +68,8 @@ class AnswerRowsSpec extends CommonPlaySpec with MockSessionConnector with WithC
       result mustBe Seq(
         AnswerRow("title1", "Yes", "http://example.com/one"),
         AnswerRow("title2", "£1,000.00", "http://example.com/two"),
-        AnswerRow("title3", "1 June 2017", "http://example.com/three"))
+        AnswerRow("title3", "1 June 2017", "http://example.com/three")
+      )
     }
 
     "have the same keys in rowOrder and answerRowFns" in {
@@ -95,11 +99,13 @@ class AnswerRowsSpec extends CommonPlaySpec with MockSessionConnector with WithC
     }
 
     "correctly create LocalDate AnswerRows" in {
-      val day = 1
+      val day   = 1
       val month = 6
-      val year = 2017
-      val data = LocalDate.of(year, month, day)
-      AnswerRows.dateAnswerRowFn("message.key", "", Call("", "http://example.com"))(JsString(data.toString))(messages) mustBe
+      val year  = 2017
+      val data  = LocalDate.of(year, month, day)
+      AnswerRows.dateAnswerRowFn("message.key", "", Call("", "http://example.com"))(JsString(data.toString))(
+        messages
+      ) mustBe
         AnswerRow(messages("message.key"), "1 June 2017", "http://example.com")
     }
 
@@ -121,31 +127,40 @@ class AnswerRowsSpec extends CommonPlaySpec with MockSessionConnector with WithC
 
     "correctly create Chargeable Property Value AnswerRows without a fractional part" in {
       val data = PropertyValueAfterExemption(1000, 5000)
-      AnswerRows.intAnswerRowFn("message.key", "",
-        Call("", "http://example.com"))(JsNumber(data.value))(messages) mustBe
+      AnswerRows.intAnswerRowFn("message.key", "", Call("", "http://example.com"))(JsNumber(data.value))(
+        messages
+      ) mustBe
         AnswerRow(messages("message.key"), "£1,000", "http://example.com")
 
-      AnswerRows.intAnswerRowFn("message.key", "",
-        Call("", "http://example.com"))(JsNumber(data.inheritedValue))(messages) mustBe
+      AnswerRows.intAnswerRowFn("message.key", "", Call("", "http://example.com"))(JsNumber(data.inheritedValue))(
+        messages
+      ) mustBe
         AnswerRow(messages("message.key"), "£5,000", "http://example.com")
     }
 
     "correctly create Property Passing To Direct Descendants AnswerRow" in {
       val data = Constants.all
-      AnswerRows.propertyPassingToDirectDescendantsAnswerRowFn("message.key", "", Call("", "http://example.com"))(JsString(data))(messages) mustBe
+      AnswerRows.propertyPassingToDirectDescendantsAnswerRowFn("message.key", "", Call("", "http://example.com"))(
+        JsString(data)
+      )(messages) mustBe
         AnswerRow(messages("message.key"), messages("property_passing_to_direct_descendants.all"), "http://example.com")
     }
 
     "throw an exception when propertyPassingToDirectDescendantsAnswerRowFn is not passed a string" in {
       an[RuntimeException] must be thrownBy
-        AnswerRows.propertyPassingToDirectDescendantsAnswerRowFn("message.key", "", Call("", ""))(JsBoolean(true))(messages)
+        AnswerRows.propertyPassingToDirectDescendantsAnswerRowFn("message.key", "", Call("", ""))(JsBoolean(true))(
+          messages
+        )
     }
 
     "ignore data in the cache map which does not have a corresponding key in the answer rows function map" in {
-      val cacheMap = CacheMap("", Map[String, JsValue](
-        "id1" -> JsBoolean(true),
-        "id2" -> JsNumber(1000)
-      ))
+      val cacheMap = CacheMap(
+        "",
+        Map[String, JsValue](
+          "id1" -> JsBoolean(true),
+          "id2" -> JsNumber(1000)
+        )
+      )
       setCacheMap(cacheMap)
 
       val answerRowFns = Map[String, JsValue => Messages => AnswerRow](
@@ -175,64 +190,86 @@ class AnswerRowsSpec extends CommonPlaySpec with MockSessionConnector with WithC
     "truncateAndLocateInCacheMap must return map of values from cache map which keyed by this " +
       "constant and previous constants in the list" in {
 
-      val cacheMap = CacheMap("", Map(
-        Constants.dateOfDeathId -> JsNumber(0),
-        Constants.partOfEstatePassingToDirectDescendantsId -> JsNumber(1),
-        Constants.valueOfEstateId -> JsNumber(2),
-        Constants.chargeableEstateValueId -> JsNumber(3)
-      ))
+        val cacheMap = CacheMap(
+          "",
+          Map(
+            Constants.dateOfDeathId                            -> JsNumber(0),
+            Constants.partOfEstatePassingToDirectDescendantsId -> JsNumber(1),
+            Constants.valueOfEstateId                          -> JsNumber(2),
+            Constants.chargeableEstateValueId                  -> JsNumber(3)
+          )
+        )
 
-      val result = AnswerRows.truncateAndLocateInCacheMap(Constants.valueOfEstateId, cacheMap)
+        val result = AnswerRows.truncateAndLocateInCacheMap(Constants.valueOfEstateId, cacheMap)
 
-      result.data mustBe Map(Constants.dateOfDeathId -> JsNumber(0),
-        Constants.partOfEstatePassingToDirectDescendantsId -> JsNumber(1))
-    }
+        result.data mustBe Map(
+          Constants.dateOfDeathId                            -> JsNumber(0),
+          Constants.partOfEstatePassingToDirectDescendantsId -> JsNumber(1)
+        )
+      }
 
     "truncateAndLocateInCacheMap must return map of values from cache map which keyed by this " +
       "constant and previous constants, not including any with no values" in {
 
-      val cacheMap = CacheMap("", Map(
-        Constants.dateOfDeathId -> JsNumber(0),
-        Constants.valueOfEstateId -> JsNumber(2),
-        Constants.chargeableEstateValueId -> JsNumber(3)
-      ))
+        val cacheMap = CacheMap(
+          "",
+          Map(
+            Constants.dateOfDeathId           -> JsNumber(0),
+            Constants.valueOfEstateId         -> JsNumber(2),
+            Constants.chargeableEstateValueId -> JsNumber(3)
+          )
+        )
 
-      val result = AnswerRows.truncateAndLocateInCacheMap(Constants.valueOfEstateId, cacheMap)
+        val result = AnswerRows.truncateAndLocateInCacheMap(Constants.valueOfEstateId, cacheMap)
 
-      result.data mustBe Map(Constants.dateOfDeathId -> JsNumber(0))
-    }
+        result.data mustBe Map(Constants.dateOfDeathId -> JsNumber(0))
+      }
 
     "create answer rows when given truncated data" in {
 
-      val cacheMap = CacheMap("", Map(
-        Constants.dateOfDeathId -> JsNumber(0),
-        Constants.partOfEstatePassingToDirectDescendantsId -> JsNumber(1),
-        Constants.valueOfEstateId -> JsNumber(2),
-        Constants.chargeableEstateValueId -> JsNumber(3)
-      ))
+      val cacheMap = CacheMap(
+        "",
+        Map(
+          Constants.dateOfDeathId                            -> JsNumber(0),
+          Constants.partOfEstatePassingToDirectDescendantsId -> JsNumber(1),
+          Constants.valueOfEstateId                          -> JsNumber(2),
+          Constants.chargeableEstateValueId                  -> JsNumber(3)
+        )
+      )
 
       setCacheMap(cacheMap)
 
       val answerRowFns = Map[String, JsValue => Messages => AnswerRow](
-        Constants.dateOfDeathId -> ((_: JsValue) => (_: Messages) => AnswerRow("title1", "Yes", "http://example.com/one")),
-        Constants.partOfEstatePassingToDirectDescendantsId -> ((_: JsValue) => (_: Messages) => AnswerRow("title2", "£1,000.00", "http://example.com/two")),
-        Constants.valueOfEstateId -> ((_: JsValue) => (_: Messages) => AnswerRow("title3", "1 June 2017", "http://example.com/three"))
+        Constants.dateOfDeathId -> ((_: JsValue) =>
+          (_: Messages) => AnswerRow("title1", "Yes", "http://example.com/one")
+        ),
+        Constants.partOfEstatePassingToDirectDescendantsId -> ((_: JsValue) =>
+          (_: Messages) => AnswerRow("title2", "£1,000.00", "http://example.com/two")
+        ),
+        Constants.valueOfEstateId -> ((_: JsValue) =>
+          (_: Messages) => AnswerRow("title3", "1 June 2017", "http://example.com/three")
+        )
       )
       val rowOrder = Map[String, Int](
-        Constants.dateOfDeathId -> 0,
+        Constants.dateOfDeathId                            -> 0,
         Constants.partOfEstatePassingToDirectDescendantsId -> 1,
-        Constants.valueOfEstateId -> 2,
-        Constants.chargeableEstateValueId -> 3
+        Constants.valueOfEstateId                          -> 2,
+        Constants.chargeableEstateValueId                  -> 3
       )
 
-      val result = AnswerRows.constructAnswerRows(AnswerRows.truncateAndLocateInCacheMap(
-        Constants.valueOfEstateId, cacheMap),
-        answerRowFns, rowOrder, messages)
+      val result = AnswerRows.constructAnswerRows(
+        AnswerRows.truncateAndLocateInCacheMap(Constants.valueOfEstateId, cacheMap),
+        answerRowFns,
+        rowOrder,
+        messages
+      )
 
       result mustBe Seq(
         AnswerRow("title1", "Yes", "http://example.com/one"),
-        AnswerRow("title2", "£1,000.00", "http://example.com/two"))
+        AnswerRow("title2", "£1,000.00", "http://example.com/two")
+      )
     }
 
   }
+
 }

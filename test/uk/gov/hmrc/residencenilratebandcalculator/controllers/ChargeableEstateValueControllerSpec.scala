@@ -26,38 +26,59 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_estate_v
 
 class ChargeableEstateValueControllerSpec extends NewSimpleControllerSpecBase {
 
-  val errorKeyBlank = "chargeable_estate_value.error.blank"
-  val errorKeyDecimal = "error.whole_pounds"
+  val errorKeyBlank      = "chargeable_estate_value.error.blank"
+  val errorKeyDecimal    = "error.whole_pounds"
   val errorKeyNonNumeric = "chargeable_estate_value.error.non_numeric"
-  val errorKeyTooLarge = "error.value_too_large"
-  val messageKeyPrefix = "chargeable_estate_value"
+  val errorKeyTooLarge   = "error.value_too_large"
+  val messageKeyPrefix   = "chargeable_estate_value"
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val messagesControllerComponents: DefaultMessagesControllerComponents =
+    injector.instanceOf[DefaultMessagesControllerComponents]
+
   val chargeable_estate_value: chargeable_estate_value = fakeApplication.injector.instanceOf[chargeable_estate_value]
 
   "Chargeable Estate Value Controller" must {
 
     def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
-      case None => chargeable_estate_value(
-        NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge))(fakeRequest, messages)
-      case Some(v) => chargeable_estate_value(
-        NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v))(fakeRequest, messages)
+      case None =>
+        chargeable_estate_value(
+          NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge)
+        )(fakeRequest, messages)
+      case Some(v) =>
+        chargeable_estate_value(
+          NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v)
+        )(fakeRequest, messages)
     }
 
     def createController: () => ChargeableEstateValueController = () =>
-      new ChargeableEstateValueController(messagesControllerComponents, mockSessionConnector, navigator, chargeable_estate_value)
+      new ChargeableEstateValueController(
+        messagesControllerComponents,
+        mockSessionConnector,
+        navigator,
+        chargeable_estate_value
+      )
 
     val testValue = 123
 
     val valuesToCacheBeforeSubmission = Map(Constants.valueOfEstateId -> testValue)
 
-    behave like rnrbController(createController, createView, Constants.chargeableEstateValueId,
-      messageKeyPrefix, testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
+    behave.like(
+      rnrbController(
+        createController,
+        createView,
+        Constants.chargeableEstateValueId,
+        messageKeyPrefix,
+        testValue,
+        valuesToCacheBeforeSubmission
+      )(Reads.IntReads, Writes.IntWrites)
+    )
 
-    behave like nonStartingController[Int](createController,
-      List(Constants.dateOfDeathId,
-           Constants.partOfEstatePassingToDirectDescendantsId,
-           Constants.valueOfEstateId))(Reads.IntReads, Writes.IntWrites)
+    behave.like(
+      nonStartingController[Int](
+        createController,
+        List(Constants.dateOfDeathId, Constants.partOfEstatePassingToDirectDescendantsId, Constants.valueOfEstateId)
+      )(Reads.IntReads, Writes.IntWrites)
+    )
 
     "return bad request on submit with a value greater than the previously saved Value Of Estate" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString)).withMethod("POST")
@@ -66,4 +87,5 @@ class ChargeableEstateValueControllerSpec extends NewSimpleControllerSpecBase {
       status(result) mustBe Status.BAD_REQUEST
     }
   }
+
 }

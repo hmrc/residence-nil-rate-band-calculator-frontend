@@ -27,36 +27,53 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 class DatePropertyWasChangedControllerSpec extends DateControllerSpecBase {
   val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-  val date_property_was_changed: date_property_was_changed = injector.instanceOf[date_property_was_changed]
-  val mockValidatedSession: ValidatedSession = injector.instanceOf[ValidatedSession]
+  val messagesControllerComponents: DefaultMessagesControllerComponents =
+    injector.instanceOf[DefaultMessagesControllerComponents]
 
+  val date_property_was_changed: date_property_was_changed = injector.instanceOf[date_property_was_changed]
+  val mockValidatedSession: ValidatedSession               = injector.instanceOf[ValidatedSession]
 
   "Date Property Was Changed Controller" must {
 
     def createView: Option[Date] => HtmlFormat.Appendable = {
-      case None => date_property_was_changed(datePropertyWasChangedForm(messages))(fakeRequest, messages)
+      case None    => date_property_was_changed(datePropertyWasChangedForm(messages))(fakeRequest, messages)
       case Some(v) => date_property_was_changed(datePropertyWasChangedForm(messages).fill(v))(fakeRequest, messages)
     }
 
     def createController: () => DatePropertyWasChangedController = () =>
-      new DatePropertyWasChangedController(messagesControllerComponents, mockSessionConnector, navigator, mockValidatedSession, date_property_was_changed)
+      new DatePropertyWasChangedController(
+        messagesControllerComponents,
+        mockSessionConnector,
+        navigator,
+        mockValidatedSession,
+        date_property_was_changed
+      )
 
-    behave like rnrbDateController(
-      createController, createView, Constants.datePropertyWasChangedId, "datePropertyWasChanged")(Date.dateReads, Date.dateWrites)
+    behave.like(
+      rnrbDateController(createController, createView, Constants.datePropertyWasChangedId, "datePropertyWasChanged")(
+        Date.dateReads,
+        Date.dateWrites
+      )
+    )
 
-    behave like nonStartingDateController(createController,
-      List(Constants.dateOfDeathId,
-           Constants.partOfEstatePassingToDirectDescendantsId,
-           Constants.valueOfEstateId,
-           Constants.chargeableEstateValueId,
-           Constants.propertyInEstateId,
-           Constants.propertyValueId,
-           Constants.propertyPassingToDirectDescendantsId,
-           Constants.percentagePassedToDirectDescendantsId,
-           Constants.transferAnyUnusedThresholdId,
-           Constants.valueBeingTransferredId,
-           Constants.claimDownsizingThresholdId))
+    behave.like(
+      nonStartingDateController(
+        createController,
+        List(
+          Constants.dateOfDeathId,
+          Constants.partOfEstatePassingToDirectDescendantsId,
+          Constants.valueOfEstateId,
+          Constants.chargeableEstateValueId,
+          Constants.propertyInEstateId,
+          Constants.propertyValueId,
+          Constants.propertyPassingToDirectDescendantsId,
+          Constants.percentagePassedToDirectDescendantsId,
+          Constants.transferAnyUnusedThresholdId,
+          Constants.valueBeingTransferredId,
+          Constants.claimDownsizingThresholdId
+        )
+      )
+    )
   }
 
 }

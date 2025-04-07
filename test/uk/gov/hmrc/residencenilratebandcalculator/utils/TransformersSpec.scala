@@ -52,11 +52,10 @@ class TransformersSpec extends BaseSpec {
       constructDate(1, 1, 2000) mustBe LocalDate.of(2000, 1, 1)
     }
 
-    "throw an exception when given invalid inputs" in {
+    "throw an exception when given invalid inputs" in
       intercept[Exception] {
         constructDate(35, 2, 2000)
       }
-    }
   }
 
   "transformDateFormat" must {
@@ -130,4 +129,5 @@ class TransformersSpec extends BaseSpec {
       transformDecimalFormat("") mustBe "       "
     }
   }
+
 }

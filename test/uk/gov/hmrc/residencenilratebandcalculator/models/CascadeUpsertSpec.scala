@@ -21,39 +21,41 @@ import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
 
 import java.time.LocalDate
 
-
 class CascadeUpsertSpec extends BaseSpec {
 
-  val cacheMapKey = "a"
-  val testNumber = 123
-  val newTestNumber = 456
+  val cacheMapKey                                      = "a"
+  val testNumber                                       = 123
+  val newTestNumber                                    = 456
   val oneDayBeforeDownsizingEligibilityDate: LocalDate = Constants.downsizingEligibilityDate.minusDays(1)
-  val oneDayBeforeEligibilityDate: LocalDate = Constants.eligibilityDate.minusDays(1)
+  val oneDayBeforeEligibilityDate: LocalDate           = Constants.eligibilityDate.minusDays(1)
 
-  val fullCacheMap: CacheMap = CacheMap(cacheMapKey, Map(
-    Constants.dateOfDeathId -> JsString("2020-01-01"),
-    Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
-    Constants.valueOfEstateId -> JsNumber(testNumber),
-    Constants.chargeableEstateValueId -> JsNumber(testNumber),
-    Constants.propertyInEstateId -> JsBoolean(true),
-    Constants.propertyValueId -> JsNumber(testNumber),
-    Constants.propertyPassingToDirectDescendantsId -> JsString(Constants.some),
-    Constants.percentagePassedToDirectDescendantsId -> JsNumber(testNumber),
-    Constants.exemptionsAndReliefClaimedId -> JsBoolean(true),
-    Constants.grossingUpOnEstatePropertyId -> JsBoolean(false),
-    Constants.chargeablePropertyValueId -> JsNumber(testNumber),
-    Constants.chargeableInheritedPropertyValueId -> JsNumber(testNumber),
-    Constants.transferAnyUnusedThresholdId -> JsBoolean(true),
-    Constants.valueBeingTransferredId -> JsNumber(testNumber),
-    Constants.claimDownsizingThresholdId -> JsBoolean(true),
-    Constants.datePropertyWasChangedId -> JsString("2019-01-01"),
-    Constants.valueOfChangedPropertyId -> JsNumber(testNumber),
-    Constants.assetsPassingToDirectDescendantsId -> JsBoolean(true),
-    Constants.grossingUpOnEstateAssetsId -> JsBoolean(false),
-    Constants.valueOfAssetsPassingId -> JsNumber(testNumber),
-    Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true),
-    Constants.valueAvailableWhenPropertyChangedId -> JsNumber(testNumber)
-  ))
+  val fullCacheMap: CacheMap = CacheMap(
+    cacheMapKey,
+    Map(
+      Constants.dateOfDeathId                            -> JsString("2020-01-01"),
+      Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
+      Constants.valueOfEstateId                          -> JsNumber(testNumber),
+      Constants.chargeableEstateValueId                  -> JsNumber(testNumber),
+      Constants.propertyInEstateId                       -> JsBoolean(true),
+      Constants.propertyValueId                          -> JsNumber(testNumber),
+      Constants.propertyPassingToDirectDescendantsId     -> JsString(Constants.some),
+      Constants.percentagePassedToDirectDescendantsId    -> JsNumber(testNumber),
+      Constants.exemptionsAndReliefClaimedId             -> JsBoolean(true),
+      Constants.grossingUpOnEstatePropertyId             -> JsBoolean(false),
+      Constants.chargeablePropertyValueId                -> JsNumber(testNumber),
+      Constants.chargeableInheritedPropertyValueId       -> JsNumber(testNumber),
+      Constants.transferAnyUnusedThresholdId             -> JsBoolean(true),
+      Constants.valueBeingTransferredId                  -> JsNumber(testNumber),
+      Constants.claimDownsizingThresholdId               -> JsBoolean(true),
+      Constants.datePropertyWasChangedId                 -> JsString("2019-01-01"),
+      Constants.valueOfChangedPropertyId                 -> JsNumber(testNumber),
+      Constants.assetsPassingToDirectDescendantsId       -> JsBoolean(true),
+      Constants.grossingUpOnEstateAssetsId               -> JsBoolean(false),
+      Constants.valueOfAssetsPassingId                   -> JsNumber(testNumber),
+      Constants.transferAvailableWhenPropertyChangedId   -> JsBoolean(true),
+      Constants.valueAvailableWhenPropertyChangedId      -> JsNumber(testNumber)
+    )
+  )
 
   "Cascade Upsert" when {
 
@@ -112,27 +114,32 @@ class CascadeUpsertSpec extends BaseSpec {
 
     "asked to save the answer 'none' for Property Passing To Direct Descendants" must {
       "delete the existing 'Percentage Passed To Direct Descendants' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.none, fullCacheMap)
+        val updatedCacheMap =
+          (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.none, fullCacheMap)
         updatedCacheMap.data.keys must not contain Constants.percentagePassedToDirectDescendantsId
       }
 
       "delete the existing 'Exemptions And Relief Claimed' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.none, fullCacheMap)
+        val updatedCacheMap =
+          (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.none, fullCacheMap)
         updatedCacheMap.data.keys must not contain Constants.exemptionsAndReliefClaimedId
       }
 
       "delete the existing 'Chargeable Property Value' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.none, fullCacheMap)
+        val updatedCacheMap =
+          (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.none, fullCacheMap)
         updatedCacheMap.data.keys must not contain Constants.chargeablePropertyValueId
       }
 
       "delete the existing 'Chargeable Inherited Property Value' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.none, fullCacheMap)
+        val updatedCacheMap =
+          (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.none, fullCacheMap)
         updatedCacheMap.data.keys must not contain Constants.chargeableInheritedPropertyValueId
       }
 
       "not delete any other answers" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.none, fullCacheMap)
+        val updatedCacheMap =
+          (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.none, fullCacheMap)
         updatedCacheMap.data.keys.size mustBe fullCacheMap.data.keys.size - 4
       }
     }
@@ -140,12 +147,14 @@ class CascadeUpsertSpec extends BaseSpec {
     "asked to save the answer 'all' for Property Passing To Direct Descendants" must {
 
       "delete the existing 'Percentage Passed To Direct Descendants' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.all, fullCacheMap)
+        val updatedCacheMap =
+          (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.all, fullCacheMap)
         updatedCacheMap.data.keys must not contain Constants.percentagePassedToDirectDescendantsId
       }
 
       "not delete any other answers" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.all, fullCacheMap)
+        val updatedCacheMap =
+          (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.all, fullCacheMap)
         updatedCacheMap.data.keys.size mustBe fullCacheMap.data.keys.size - 1
       }
     }
@@ -153,7 +162,8 @@ class CascadeUpsertSpec extends BaseSpec {
     "asked to save the answer 'some' for Property Passing To Direct Descendants" must {
 
       "not delete existing answers for other questions" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.some, fullCacheMap)
+        val updatedCacheMap =
+          (new CascadeUpsert)(Constants.propertyPassingToDirectDescendantsId, Constants.some, fullCacheMap)
         updatedCacheMap.data.keys.size mustBe fullCacheMap.data.keys.size
       }
     }
@@ -330,37 +340,44 @@ class CascadeUpsertSpec extends BaseSpec {
 
     "asked to save a value before 8 July 2015 for Date Property Was Changed" must {
       "delete the existing 'Value Of Changed Property' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
+        val updatedCacheMap =
+          (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys must not contain Constants.valueOfChangedPropertyId
       }
 
       "delete the existing 'Assets Passing To Direct Descendants' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
+        val updatedCacheMap =
+          (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys must not contain Constants.assetsPassingToDirectDescendantsId
       }
 
       "delete the existing 'Value Of Assets Passing' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
+        val updatedCacheMap =
+          (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys must not contain Constants.valueOfAssetsPassingId
       }
 
       "delete the existing 'Transfer Available When Property Changed' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
+        val updatedCacheMap =
+          (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys must not contain Constants.transferAvailableWhenPropertyChangedId
       }
 
       "delete the existing 'Grossing Up On Estate Assets' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
+        val updatedCacheMap =
+          (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys must not contain Constants.grossingUpOnEstateAssetsId
       }
 
       "delete the existing 'Value Available When Property Changed' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
+        val updatedCacheMap =
+          (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys must not contain Constants.valueAvailableWhenPropertyChangedId
       }
 
       "not delete any other answers" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
+        val updatedCacheMap =
+          (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeDownsizingEligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys.size mustBe fullCacheMap.data.keys.size - 6
       }
     }
@@ -368,17 +385,20 @@ class CascadeUpsertSpec extends BaseSpec {
     "asked to save a value between 8 July 2015 and 5 April 2017 for Date Property Was Changed" must {
 
       "delete the existing 'Transfer Available When Property Changed' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeEligibilityDate, fullCacheMap)
+        val updatedCacheMap =
+          (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeEligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys must not contain Constants.transferAvailableWhenPropertyChangedId
       }
 
       "delete the existing 'Value Available When Property Changed' answer" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeEligibilityDate, fullCacheMap)
+        val updatedCacheMap =
+          (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeEligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys must not contain Constants.valueAvailableWhenPropertyChangedId
       }
 
       "not delete any other answers" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeEligibilityDate, fullCacheMap)
+        val updatedCacheMap =
+          (new CascadeUpsert)(Constants.datePropertyWasChangedId, oneDayBeforeEligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys.size mustBe fullCacheMap.data.keys.size - 2
       }
     }
@@ -386,9 +406,11 @@ class CascadeUpsertSpec extends BaseSpec {
     "asked to save a value on or after 6 April 2017 for Date Property Was Changed" must {
 
       "not delete existing answers for other questions" in {
-        val updatedCacheMap = (new CascadeUpsert)(Constants.datePropertyWasChangedId, Constants.eligibilityDate, fullCacheMap)
+        val updatedCacheMap =
+          (new CascadeUpsert)(Constants.datePropertyWasChangedId, Constants.eligibilityDate, fullCacheMap)
         updatedCacheMap.data.keys.size mustBe fullCacheMap.data.keys.size
       }
     }
   }
+
 }

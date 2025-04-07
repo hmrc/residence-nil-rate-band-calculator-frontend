@@ -21,12 +21,17 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.calculate_threshold
 
 class CalculateThresholdIncreaseViewSpec extends ViewSpecBase {
 
-  val messageKeyPrefix = "calculate_threshold_increase"
+  val messageKeyPrefix                                           = "calculate_threshold_increase"
   val calculate_threshold_increase: calculate_threshold_increase = injector.instanceOf[calculate_threshold_increase]
+
   "Calculate Threshold Increase view" must {
     "display the correct browser title" in {
       val doc = asDocument(calculate_threshold_increase()(request, messages))
-      assertEqualsMessage(doc, "title", s"${messages(s"$messageKeyPrefix.title")} - ${messages("service.name")} - GOV.UK")
+      assertEqualsMessage(
+        doc,
+        "title",
+        s"${messages(s"$messageKeyPrefix.title")} - ${messages("service.name")} - GOV.UK"
+      )
     }
 
     "display the correct title" in {
@@ -47,7 +52,7 @@ class CalculateThresholdIncreaseViewSpec extends ViewSpecBase {
     }
 
     "display a Start button linking to the 'Date Of Death' page" in {
-      val doc = asDocument(calculate_threshold_increase()(request, messages))
+      val doc       = asDocument(calculate_threshold_increase()(request, messages))
       val startLink = doc.getElementsByClass("govuk-button govuk-button--start")
       startLink.attr("href") mustBe routes.DateOfDeathController.onPageLoad.url
       startLink.text mustBe messages("site.start_now")
@@ -58,4 +63,5 @@ class CalculateThresholdIncreaseViewSpec extends ViewSpecBase {
       assertNotRenderedByCssSelector(doc, ".organisation-logo")
     }
   }
+
 }

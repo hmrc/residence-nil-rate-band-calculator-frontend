@@ -30,12 +30,14 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class AssetsPassingToDirectDescendantsController @Inject()(override val sessionConnector: SessionConnector,
-                                                           override val navigator: Navigator,
-                                                           cc: DefaultMessagesControllerComponents,
-                                                           assetsPassingToDirectDescendantsView: assets_passing_to_direct_descendants)
-                                                          (override implicit val ec: ExecutionContext)
-  extends FrontendController(cc) with SimpleControllerBase[Boolean] {
+class AssetsPassingToDirectDescendantsController @Inject() (
+    override val sessionConnector: SessionConnector,
+    override val navigator: Navigator,
+    cc: DefaultMessagesControllerComponents,
+    assetsPassingToDirectDescendantsView: assets_passing_to_direct_descendants
+)(override implicit val ec: ExecutionContext)
+    extends FrontendController(cc)
+    with SimpleControllerBase[Boolean] {
 
   override val controllerId: String = Constants.assetsPassingToDirectDescendantsId
 
@@ -44,7 +46,7 @@ class AssetsPassingToDirectDescendantsController @Inject()(override val sessionC
   override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[_]) = {
     val formattedPropertyValue = userAnswers.propertyValue match {
       case Some(value) => Some(CurrencyFormatter.format(value))
-      case _ => None
+      case _           => None
     }
     assetsPassingToDirectDescendantsView(form, formattedPropertyValue)
   }

@@ -24,8 +24,9 @@ trait HttpResponseMocks extends MockitoSugar {
 
   def mockResponse(status: Int, body: String) = {
     val response = mock[HttpResponse]
-    when (response.status) thenReturn status
-    when (response.body) thenReturn body
+    when(response.status).thenReturn(status)
+    when(response.body).thenReturn(body)
     response
   }
+
 }

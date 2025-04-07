@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
-
 class BooleanFormSpec extends FormSpec {
 
   val errorKey = "error.key"
@@ -48,4 +47,5 @@ class BooleanFormSpec extends FormSpec {
       checkForError(BooleanForm(errorKey), emptyForm, expectedError)
     }
   }
+
 }

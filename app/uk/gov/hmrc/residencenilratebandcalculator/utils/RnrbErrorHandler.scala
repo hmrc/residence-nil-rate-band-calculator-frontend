@@ -25,11 +25,13 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.error_template
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class RnrbErrorHandler @Inject()(val messagesApi: MessagesApi,
-                                 errorTemplateView: error_template
-                                )(implicit val ec: ExecutionContext) extends FrontendErrorHandler {
+class RnrbErrorHandler @Inject() (val messagesApi: MessagesApi, errorTemplateView: error_template)(
+    implicit val ec: ExecutionContext
+) extends FrontendErrorHandler {
 
-
-  override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(implicit request: RequestHeader): Future[Html] =
+  override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(
+      implicit request: RequestHeader
+  ): Future[Html] =
     Future.successful(errorTemplateView(pageTitle, heading, message))
+
 }

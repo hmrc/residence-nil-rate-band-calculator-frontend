@@ -24,20 +24,18 @@ import play.api.libs.functional.syntax._
 case class PropertyValueAfterExemption(value: Int, inheritedValue: Int)
 
 object PropertyValueAfterExemption {
-  val propertyValueAfterExemptionReads: Reads[PropertyValueAfterExemption] = (
-    (__ \ "value").read[Int] and
-    (__ \ "inheritedValue").read[Int]
-  )(PropertyValueAfterExemption.apply _)
 
-  val propertyValueAfterExemptionWrites: Writes[PropertyValueAfterExemption] = (
-    (__ \ "value").write[Int] and
-    (__ \ "inheritedValue").write[Int]
-  )(o => Tuple.fromProductTyped(o))
+  val propertyValueAfterExemptionReads: Reads[PropertyValueAfterExemption] =
+    (__ \ "value").read[Int].and((__ \ "inheritedValue").read[Int])(PropertyValueAfterExemption.apply _)
+
+  val propertyValueAfterExemptionWrites: Writes[PropertyValueAfterExemption] =
+    (__ \ "value").write[Int].and((__ \ "inheritedValue").write[Int])(o => Tuple.fromProductTyped(o))
 
   implicit val propertyValueAfterExemptionFormat: Format[PropertyValueAfterExemption] =
     Format(propertyValueAfterExemptionReads, propertyValueAfterExemptionWrites)
+
 }
 
 sealed abstract class PropertyValueAfterExemptionKey
-case object Value extends PropertyValueAfterExemptionKey
+case object Value          extends PropertyValueAfterExemptionKey
 case object InheritedValue extends PropertyValueAfterExemptionKey

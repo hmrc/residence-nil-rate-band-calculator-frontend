@@ -25,25 +25,49 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.part_of_estate_pass
 
 class PartOfEstatePassingToDirectDescendantsControllerSpec extends NewSimpleControllerSpecBase {
 
-  val messageKey = "part_of_estate_passing_to_direct_descendants.error.required"
+  val messageKey       = "part_of_estate_passing_to_direct_descendants.error.required"
   val messageKeyPrefix = "part_of_estate_passing_to_direct_descendants"
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-  val part_of_estate_passing_to_direct_descendants: part_of_estate_passing_to_direct_descendants = injector.instanceOf[part_of_estate_passing_to_direct_descendants]
+  val messagesControllerComponents: DefaultMessagesControllerComponents =
+    injector.instanceOf[DefaultMessagesControllerComponents]
+
+  val part_of_estate_passing_to_direct_descendants: part_of_estate_passing_to_direct_descendants =
+    injector.instanceOf[part_of_estate_passing_to_direct_descendants]
+
   "Part Of Estate Passing To Direct Descendants Controller" must {
 
     def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
       case None => part_of_estate_passing_to_direct_descendants(BooleanForm.apply(messageKey))(fakeRequest, messages)
-      case Some(v) => part_of_estate_passing_to_direct_descendants(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
+      case Some(v) =>
+        part_of_estate_passing_to_direct_descendants(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
     }
 
-    def createController = () => new PartOfEstatePassingToDirectDescendantsController(messagesControllerComponents, mockSessionConnector, navigator, part_of_estate_passing_to_direct_descendants)
+    def createController = () =>
+      new PartOfEstatePassingToDirectDescendantsController(
+        messagesControllerComponents,
+        mockSessionConnector,
+        navigator,
+        part_of_estate_passing_to_direct_descendants
+      )
 
     val testValue = true
 
-    behave like
-      rnrbController[Boolean](createController, createView, Constants.partOfEstatePassingToDirectDescendantsId, messageKeyPrefix, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+    behave.like(
+      rnrbController[Boolean](
+        createController,
+        createView,
+        Constants.partOfEstatePassingToDirectDescendantsId,
+        messageKeyPrefix,
+        testValue
+      )(Reads.BooleanReads, Writes.BooleanWrites)
+    )
 
-    behave like nonStartingController[Boolean](createController, answerRowConstants = List(Constants.dateOfDeathId))(Reads.BooleanReads, Writes.BooleanWrites)
+    behave.like(
+      nonStartingController[Boolean](createController, answerRowConstants = List(Constants.dateOfDeathId))(
+        Reads.BooleanReads,
+        Writes.BooleanWrites
+      )
+    )
   }
+
 }

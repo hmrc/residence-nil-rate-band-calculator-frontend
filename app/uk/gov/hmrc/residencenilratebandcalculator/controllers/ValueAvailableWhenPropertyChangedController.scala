@@ -38,28 +38,37 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class ValueAvailableWhenPropertyChangedController @Inject()(cc: DefaultMessagesControllerComponents,
-                                                            val sessionConnector: SessionConnector,
-                                                            val navigator: Navigator,
-                                                            val rnrbConnector: RnrbConnector,
-                                                            validatedSession: ValidatedSession,
-                                                            valueAvailableWhenPropertyChangedView: value_available_when_property_changed)
-                                                           (implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport with Logging {
+class ValueAvailableWhenPropertyChangedController @Inject() (
+    cc: DefaultMessagesControllerComponents,
+    val sessionConnector: SessionConnector,
+    val navigator: Navigator,
+    val rnrbConnector: RnrbConnector,
+    validatedSession: ValidatedSession,
+    valueAvailableWhenPropertyChangedView: value_available_when_property_changed
+)(implicit ec: ExecutionContext)
+    extends FrontendController(cc)
+    with I18nSupport
+    with Logging {
 
   val controllerId: String = Constants.valueAvailableWhenPropertyChangedId
 
   def form = () =>
-    NonNegativeIntForm("value_available_when_property_changed.error.blank", "error.whole_pounds", "error.non_numeric", "error.value_too_large")
+    NonNegativeIntForm(
+      "value_available_when_property_changed.error.blank",
+      "error.whole_pounds",
+      "error.non_numeric",
+      "error.value_too_large"
+    )
 
   private def getCacheMap(implicit hc: HeaderCarrier): Future[CacheMap] = sessionConnector.fetch().map {
     case Some(cacheMap) => cacheMap
-    case None => throw new NoCacheMapException("CacheMap not available")
+    case None           => throw new NoCacheMapException("CacheMap not available")
   }
 
   def microserviceValues(implicit hc: HeaderCarrier): Future[(HttpResponse, CacheMap)] = for {
-    dateOfDisposal <- getCacheMap.map(_.data(Constants.datePropertyWasChangedId).toString().replaceAll("\"", ""))
+    dateOfDisposal   <- getCacheMap.map(_.data(Constants.datePropertyWasChangedId).toString().replaceAll("\"", ""))
     nilRateValueJson <- rnrbConnector.getNilRateBand(dateOfDisposal)
-    cacheMap <- getCacheMap
+    cacheMap         <- getCacheMap
   } yield (nilRateValueJson, cacheMap)
 
   def answerRows(cacheMap: CacheMap, request: Request[_]): Seq[AnswerRow] = AnswerRows.constructAnswerRows(
@@ -69,65 +78,70 @@ class ValueAvailableWhenPropertyChangedController @Inject()(cc: DefaultMessagesC
     messagesApi.preferred(request)
   )
 
-  def onPageLoad(implicit rds: Reads[Int]) = Action.async {
-    implicit request => {
-      microserviceValues.map {
-        case (nilRateValueJson, cacheMap) => {
-          val nilRateBand = CurrencyFormatter.format(nilRateValueJson.json.toString())
+  def onPageLoad(implicit rds: Reads[Int]) = Action.async { implicit request =>
+    microserviceValues
+      .map { case (nilRateValueJson, cacheMap) =>
+        val nilRateBand = CurrencyFormatter.format(nilRateValueJson.json.toString())
 
-          Ok(valueAvailableWhenPropertyChangedView(
+        Ok(
+          valueAvailableWhenPropertyChangedView(
             nilRateBand,
-            cacheMap.getEntry(controllerId).fold(form())(value => form().fill(value))))
-        }
-      } recover {
-        case _: NoCacheMapException => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
-        case r: RuntimeException =>
-          logger.error(r.getMessage, r)
-          throw r
-      }
-    }
-  }
-
-  def onSubmit(implicit wts: Writes[Int]) = validatedSession.async {
-    implicit request => {
-      microserviceValues.flatMap {
-        case (nilRateValueJson, cacheMap) => {
-          val boundForm = form().bindFromRequest()
-          val nilRateBand = nilRateValueJson.json.toString()
-          val formattedNilRateBand = CurrencyFormatter.format(nilRateBand)
-
-          boundForm.fold(
-            formWithErrors => Future.successful(BadRequest(valueAvailableWhenPropertyChangedView(
-              formattedNilRateBand, formWithErrors))),
-            value => {
-              validate(value, nilRateBand).flatMap {
-                case Some(error) => Future.successful(BadRequest(valueAvailableWhenPropertyChangedView(
-                  formattedNilRateBand,
-                  form().fill(value).withError(error))))
-                case None => sessionConnector.cache[Int](controllerId, value).map(cacheMap => Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
-              }
-            }
+            cacheMap.getEntry(controllerId).fold(form())(value => form().fill(value))
           )
-        }
-      } recover {
-        case _: NoCacheMapException => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
+        )
+      }
+      .recover {
+        case _: NoCacheMapException =>
+          Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
         case r: RuntimeException =>
           logger.error(r.getMessage, r)
           throw r
       }
-    }
   }
 
+  def onSubmit(implicit wts: Writes[Int]) = validatedSession.async { implicit request =>
+    microserviceValues
+      .flatMap { case (nilRateValueJson, cacheMap) =>
+        val boundForm            = form().bindFromRequest()
+        val nilRateBand          = nilRateValueJson.json.toString()
+        val formattedNilRateBand = CurrencyFormatter.format(nilRateBand)
+
+        boundForm.fold(
+          formWithErrors =>
+            Future.successful(BadRequest(valueAvailableWhenPropertyChangedView(formattedNilRateBand, formWithErrors))),
+          value =>
+            validate(value, nilRateBand).flatMap {
+              case Some(error) =>
+                Future.successful(
+                  BadRequest(
+                    valueAvailableWhenPropertyChangedView(formattedNilRateBand, form().fill(value).withError(error))
+                  )
+                )
+              case None =>
+                sessionConnector
+                  .cache[Int](controllerId, value)
+                  .map(cacheMap => Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
+            }
+        )
+      }
+      .recover {
+        case _: NoCacheMapException =>
+          Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
+        case r: RuntimeException =>
+          logger.error(r.getMessage, r)
+          throw r
+      }
+  }
 
   def validate(value: Int, nilRateBandStr: String): Future[Option[FormError]] = {
-    val nrb = try {
-      Integer.parseInt(nilRateBandStr)
-    } catch {
-      case e: NumberFormatException => {
-        logger.error(e.getMessage, e)
-        throw new NumberFormatException("Bad value in nil rate band")
+    val nrb =
+      try
+        Integer.parseInt(nilRateBandStr)
+      catch {
+        case e: NumberFormatException =>
+          logger.error(e.getMessage, e)
+          throw new NumberFormatException("Bad value in nil rate band")
       }
-    }
 
     if (value <= nrb) {
       Future.successful(None)
@@ -135,4 +149,5 @@ class ValueAvailableWhenPropertyChangedController @Inject()(cc: DefaultMessagesC
       Future.successful(Some(FormError("value", "value_available_when_property_changed.error", Seq(nrb))))
     }
   }
+
 }

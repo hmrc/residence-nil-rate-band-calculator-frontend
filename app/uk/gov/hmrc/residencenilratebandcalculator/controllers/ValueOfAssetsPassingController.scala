@@ -30,29 +30,38 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class ValueOfAssetsPassingController @Inject()(cc: DefaultMessagesControllerComponents,
-                                               override val sessionConnector: SessionConnector,
-                                               override val navigator: Navigator,
-                                               valueOfAssetsPassingView: value_of_assets_passing)
-                                              (override implicit val ec: ExecutionContext) extends FrontendController(cc) with SimpleControllerBase[Int] {
+class ValueOfAssetsPassingController @Inject() (
+    cc: DefaultMessagesControllerComponents,
+    override val sessionConnector: SessionConnector,
+    override val navigator: Navigator,
+    valueOfAssetsPassingView: value_of_assets_passing
+)(override implicit val ec: ExecutionContext)
+    extends FrontendController(cc)
+    with SimpleControllerBase[Int] {
 
   override val controllerId = Constants.valueOfAssetsPassingId
 
   override def form = () =>
-    NonNegativeIntForm("value_of_assets_passing.error.blank", "error.whole_pounds", "error.non_numeric", "error.value_too_large")
+    NonNegativeIntForm(
+      "value_of_assets_passing.error.blank",
+      "error.whole_pounds",
+      "error.non_numeric",
+      "error.value_too_large"
+    )
 
   override def view(form: Form[Int], userAnswers: UserAnswers)(implicit request: Request[_]) = {
     val formattedPropertyValue = userAnswers.propertyValue match {
       case Some(value) => Some(CurrencyFormatter.format(value))
-      case _ => None
+      case _           => None
     }
     valueOfAssetsPassingView(form, formattedPropertyValue)
   }
 
-  override def validate(value: Int, userAnswers: UserAnswers): Option[FormError] = {
+  override def validate(value: Int, userAnswers: UserAnswers): Option[FormError] =
     userAnswers.valueOfEstate match {
-      case Some(v) if value > v => Some(FormError("value", "value_of_assets_passing.greater_than_estate_value.error", Seq(v)))
+      case Some(v) if value > v =>
+        Some(FormError("value", "value_of_assets_passing.greater_than_estate_value.error", Seq(v)))
       case _ => None
     }
-  }
+
 }

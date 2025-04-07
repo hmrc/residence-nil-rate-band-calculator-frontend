@@ -28,27 +28,35 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class NoDownsizingThresholdIncreaseController @Inject()(cc: DefaultMessagesControllerComponents,
-                                                        override val sessionConnector: SessionConnector,
-                                                        val navigator: Navigator,
-                                                        noDownsizingThresholdIncreaseView: no_downsizing_threshold_increase)
-                                                       (override implicit val ec: ExecutionContext)
-  extends FrontendController(cc) with TransitionController {
+class NoDownsizingThresholdIncreaseController @Inject() (
+    cc: DefaultMessagesControllerComponents,
+    override val sessionConnector: SessionConnector,
+    val navigator: Navigator,
+    noDownsizingThresholdIncreaseView: no_downsizing_threshold_increase
+)(override implicit val ec: ExecutionContext)
+    extends FrontendController(cc)
+    with TransitionController {
 
   val getReason = GetNoDownsizingThresholdIncreaseReason
 
   def getControllerId(reason: Reason): String =
     reason match {
       case NoAssetsPassingToDirectDescendants => Constants.assetsPassingToDirectDescendantsId
-      case _ => Constants.datePropertyWasChangedId
+      case _                                  => Constants.datePropertyWasChangedId
     }
 
   def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[_]) = {
     val reasonKey = reason match {
-      case NoAssetsPassingToDirectDescendants => "no_downsizing_threshold_increase.no_assets_passing_to_direct_descendants_reason"
-      case DatePropertyWasChangedTooEarly => "no_downsizing_threshold_increase.date_property_was_changed_too_early_reason"
+      case NoAssetsPassingToDirectDescendants =>
+        "no_downsizing_threshold_increase.no_assets_passing_to_direct_descendants_reason"
+      case DatePropertyWasChangedTooEarly =>
+        "no_downsizing_threshold_increase.date_property_was_changed_too_early_reason"
       case _ => ""
     }
-    noDownsizingThresholdIncreaseView(reasonKey, navigator.nextPage(Constants.noDownsizingThresholdIncrease)(userAnswers))
+    noDownsizingThresholdIncreaseView(
+      reasonKey,
+      navigator.nextPage(Constants.noDownsizingThresholdIncrease)(userAnswers)
+    )
   }
+
 }

@@ -33,7 +33,11 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 
 import scala.reflect.ClassTag
 
-trait SimpleControllerSpecBase extends CommonPlaySpec with HttpResponseMocks with MockSessionConnector with WithCommonFakeApplication {
+trait SimpleControllerSpecBase
+    extends CommonPlaySpec
+    with HttpResponseMocks
+    with MockSessionConnector
+    with WithCommonFakeApplication {
 
   val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "").withSession(SessionKeys.sessionId -> "id")
 
@@ -47,14 +51,15 @@ trait SimpleControllerSpecBase extends CommonPlaySpec with HttpResponseMocks wit
 
   val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
-  def rnrbController[A: ClassTag](createController: () => ControllerBase[A],
-                                  createView: Option[Map[String, String]] => HtmlFormat.Appendable,
-                                  cacheKey: String,
-                                  messageKeyPrefix: String,
-                                  testValue: A,
-                                  valuesToCacheBeforeSubmission: Map[String, A] = Map[String, A](),
-                                  valuesToCacheBeforeLoad: Map[String, Any] = Map[String, Any]())
-                                 (rds: Reads[A], wts: Writes[A]): Unit = {
+  def rnrbController[A: ClassTag](
+      createController: () => ControllerBase[A],
+      createView: Option[Map[String, String]] => HtmlFormat.Appendable,
+      cacheKey: String,
+      messageKeyPrefix: String,
+      testValue: A,
+      valuesToCacheBeforeSubmission: Map[String, A] = Map[String, A](),
+      valuesToCacheBeforeLoad: Map[String, Any] = Map[String, Any]()
+  )(rds: Reads[A], wts: Writes[A]): Unit = {
 
     "return 200 for a GET" in {
       for (v <- valuesToCacheBeforeLoad) setCacheValue(v._1, v._2)
@@ -86,22 +91,22 @@ trait SimpleControllerSpecBase extends CommonPlaySpec with HttpResponseMocks wit
 
     "return bad request on submit with invalid data" in {
       for (v <- valuesToCacheBeforeLoad) setCacheValue(v._1, v._2)
-      val value = "invalid data"
+      val value           = "invalid data"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
-      val result = createController().onSubmit(wts)(fakePostRequest)
+      val result          = createController().onSubmit(wts)(fakePostRequest)
       status(result) mustBe Status.BAD_REQUEST
     }
 
     "return form with errors when invalid data is submitted" in {
       for (v <- valuesToCacheBeforeLoad) setCacheValue(v._1, v._2)
-      val value = "invalid data"
+      val value           = "invalid data"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
-      val result = createController().onSubmit(wts)(fakePostRequest)
+      val result          = createController().onSubmit(wts)(fakePostRequest)
       contentAsString(result) mustBe createView(Some(Map("value" -> value))).toString
     }
 
     "not store invalid submitted data" in {
-      val value = "invalid data"
+      val value           = "invalid data"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
       createController().onSubmit(wts)(fakePostRequest)
       verifyValueIsNotCached()
@@ -115,50 +120,60 @@ trait SimpleControllerSpecBase extends CommonPlaySpec with HttpResponseMocks wit
     }
   }
 
-  def nonStartingController[A: ClassTag](createController: () => SimpleControllerBase[A], answerRowConstants: List[String])(rds: Reads[A], wts: Writes[A]): Unit = {
+  def nonStartingController[A: ClassTag](
+      createController: () => SimpleControllerBase[A],
+      answerRowConstants: List[String]
+  )(rds: Reads[A], wts: Writes[A]): Unit = {
 
     "On a page load with an expired session, return an redirect to an expired session page" in {
       expireSessionConnector()
       val result = createController().onPageLoad(rds)(fakeRequest)
       status(result) mustBe Status.SEE_OTHER
-      redirectLocation(result) mustBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url)
+      redirectLocation(result) mustBe Some(
+        uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url
+      )
     }
 
     "On a page submit with an expired session, return an redirect to an expired session page" in {
       expireSessionConnector()
       val result = createController().onSubmit(wts)(fakeRequest)
       status(result) mustBe Status.SEE_OTHER
-      redirectLocation(result) mustBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url)
+      redirectLocation(result) mustBe Some(
+        uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url
+      )
     }
 
     "The answer constants must be the same as the calulated constants for the controller" in {
-      val filledOutCacheMap = new CacheMap("",
+      val filledOutCacheMap = new CacheMap(
+        "",
         Map[String, JsValue](
-          Constants.dateOfDeathId -> JsString("2019-03-04"),
+          Constants.dateOfDeathId                            -> JsString("2019-03-04"),
           Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
-          Constants.valueOfEstateId -> JsNumber(500000),
-          Constants.chargeableEstateValueId -> JsNumber(450000),
-          Constants.propertyInEstateId -> JsBoolean(true),
-          Constants.propertyValueId -> JsNumber(400000),
-          Constants.grossingUpOnEstateAssetsId -> JsBoolean(true),
-          Constants.propertyPassingToDirectDescendantsId -> JsBoolean(true),
-          Constants.percentagePassedToDirectDescendantsId -> JsNumber(100),
-          Constants.transferAnyUnusedThresholdId -> JsBoolean(true),
-          Constants.valueBeingTransferredId -> JsNumber(50000),
-          Constants.claimDownsizingThresholdId -> JsBoolean(true),
-          Constants.datePropertyWasChangedId -> JsString("2018-03-02"),
-          Constants.valueOfChangedPropertyId -> JsNumber(100000),
-          Constants.assetsPassingToDirectDescendantsId -> JsBoolean(true),
-          Constants.grossingUpOnEstateAssetsId -> JsBoolean(true),
-          Constants.chargeablePropertyValueId -> JsNumber(50000),
-          Constants.valueOfAssetsPassingId -> JsNumber(1000),
-          Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true),
-          Constants.valueAvailableWhenPropertyChangedId -> JsNumber(1000)
-        ))
-      val controllerId = createController().controllerId
+          Constants.valueOfEstateId                          -> JsNumber(500000),
+          Constants.chargeableEstateValueId                  -> JsNumber(450000),
+          Constants.propertyInEstateId                       -> JsBoolean(true),
+          Constants.propertyValueId                          -> JsNumber(400000),
+          Constants.grossingUpOnEstateAssetsId               -> JsBoolean(true),
+          Constants.propertyPassingToDirectDescendantsId     -> JsBoolean(true),
+          Constants.percentagePassedToDirectDescendantsId    -> JsNumber(100),
+          Constants.transferAnyUnusedThresholdId             -> JsBoolean(true),
+          Constants.valueBeingTransferredId                  -> JsNumber(50000),
+          Constants.claimDownsizingThresholdId               -> JsBoolean(true),
+          Constants.datePropertyWasChangedId                 -> JsString("2018-03-02"),
+          Constants.valueOfChangedPropertyId                 -> JsNumber(100000),
+          Constants.assetsPassingToDirectDescendantsId       -> JsBoolean(true),
+          Constants.grossingUpOnEstateAssetsId               -> JsBoolean(true),
+          Constants.chargeablePropertyValueId                -> JsNumber(50000),
+          Constants.valueOfAssetsPassingId                   -> JsNumber(1000),
+          Constants.transferAvailableWhenPropertyChangedId   -> JsBoolean(true),
+          Constants.valueAvailableWhenPropertyChangedId      -> JsNumber(1000)
+        )
+      )
+      val controllerId        = createController().controllerId
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
-      val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
-      answerRowConstants mustBe (calculatedList)
+      val calculatedList      = AnswerRows.rowOrderList.filter(calculatedConstants contains _)
+      answerRowConstants mustBe calculatedList
     }
   }
+
 }

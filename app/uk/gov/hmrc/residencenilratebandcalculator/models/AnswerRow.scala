@@ -23,10 +23,10 @@ import uk.gov.hmrc.residencenilratebandcalculator.utils.{CurrencyFormatter, Perc
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-
 case class AnswerRow(title: String, data: String, url: String)
 
 object AnswerRow {
+
   private def formattedDate(localDate: LocalDate, msgs: Messages) = {
 
     val formatter = DateTimeFormatter.ofPattern("d MMMM y", msgs.lang.toLocale)
@@ -34,9 +34,8 @@ object AnswerRow {
     formatter.format(localDate)
   }
 
-  def apply(titleKey: String, amount: Int, url: Call)(messages: Messages): AnswerRow = {
+  def apply(titleKey: String, amount: Int, url: Call)(messages: Messages): AnswerRow =
     AnswerRow(messages(titleKey), CurrencyFormatter.format(amount), url.url)
-  }
 
   def apply(titleKey: String, yesNo: Boolean, url: Call)(messages: Messages): AnswerRow =
     AnswerRow(messages(titleKey), if (yesNo) messages("site.yes") else messages("site.no"), url.url)
@@ -44,10 +43,10 @@ object AnswerRow {
   def apply(titleKey: String, date: LocalDate, url: Call)(messages: Messages): AnswerRow =
     AnswerRow(messages(titleKey), formattedDate(date, messages), url.url)
 
-  def apply(titleKey: String, percent: Double, url: Call)(messages: Messages): AnswerRow = {
+  def apply(titleKey: String, percent: Double, url: Call)(messages: Messages): AnswerRow =
     AnswerRow(messages(titleKey), PercentageFormatter.format(percent), url.url)
-  }
 
   def apply(titleKey: String, valueKey: String, url: Call)(messages: Messages): AnswerRow =
     AnswerRow(messages(titleKey), messages(valueKey), url.url)
+
 }

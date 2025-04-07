@@ -37,18 +37,27 @@ import scala.concurrent.Future
 class DateOfDeathControllerSpec extends DateControllerSpecBase with CommonPlaySpec {
 
   val mockConnector: SessionConnector = mock[SessionConnector]
-  val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
-  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val mockConfig: FrontendAppConfig   = injector.instanceOf[FrontendAppConfig]
+
+  val messagesControllerComponents: DefaultMessagesControllerComponents =
+    injector.instanceOf[DefaultMessagesControllerComponents]
+
   val mockValidatedSession: ValidatedSession = injector.instanceOf[ValidatedSession]
-  val date_of_death: date_of_death = injector.instanceOf[date_of_death]
-  val controller = new DateOfDeathController(messagesControllerComponents, mockConnector, navigator, mockValidatedSession, date_of_death)
+  val date_of_death: date_of_death           = injector.instanceOf[date_of_death]
+
+  val controller = new DateOfDeathController(
+    messagesControllerComponents,
+    mockConnector,
+    navigator,
+    mockValidatedSession,
+    date_of_death
+  )
 
   implicit val mat: Materializer = fakeApplication.injector.instanceOf[Materializer]
 
-  def setupMock(result: Future[Option[CacheMap]]): OngoingStubbing[Future[Option[CacheMap]]] = {
+  def setupMock(result: Future[Option[CacheMap]]): OngoingStubbing[Future[Option[CacheMap]]] =
     when(mockConnector.fetch()(ArgumentMatchers.any[HeaderCarrier]))
       .thenReturn(result)
-  }
 
   "Loading the page" when {
 
@@ -58,7 +67,7 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase with CommonPlaySp
         setupMock(Future.failed(new Exception("Test message")))
         val result = controller.onPageLoad(implicitly)(fakeRequest)
 
-        the[Exception] thrownBy await(result) must have message "Test message"
+        (the[Exception] thrownBy await(result) must have).message("Test message")
       }
     }
 
@@ -71,7 +80,9 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase with CommonPlaySp
       }
 
       "load the correct page" in {
-        Jsoup.parse(await(bodyOf(result))).title mustBe "What was the date of death? - Calculate the available RNRB - GOV.UK"
+        Jsoup
+          .parse(await(bodyOf(result)))
+          .title mustBe "What was the date of death? - Calculate the available RNRB - GOV.UK"
       }
     }
 
@@ -84,7 +95,9 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase with CommonPlaySp
       }
 
       "load the correct page" in {
-        Jsoup.parse(await(bodyOf(result))).title mustBe "What was the date of death? - Calculate the available RNRB - GOV.UK"
+        Jsoup
+          .parse(await(bodyOf(result)))
+          .title mustBe "What was the date of death? - Calculate the available RNRB - GOV.UK"
       }
     }
   }
@@ -92,13 +105,22 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase with CommonPlaySp
   "Date of Death Controller" must {
 
     def createView: Option[Date] => HtmlFormat.Appendable = {
-      case None => date_of_death(dateOfDeathForm(messages))(fakeRequest, messages)
+      case None    => date_of_death(dateOfDeathForm(messages))(fakeRequest, messages)
       case Some(v) => date_of_death(dateOfDeathForm(messages).fill(v))(fakeRequest, messages)
     }
 
     def createController: () => DateOfDeathController = () =>
-      new DateOfDeathController(messagesControllerComponents, mockSessionConnector, navigator, mockValidatedSession, date_of_death)
+      new DateOfDeathController(
+        messagesControllerComponents,
+        mockSessionConnector,
+        navigator,
+        mockValidatedSession,
+        date_of_death
+      )
 
-    behave like rnrbDateController(createController, createView, Constants.dateOfDeathId)(Date.dateReads, Date.dateWrites)
+    behave.like(
+      rnrbDateController(createController, createView, Constants.dateOfDeathId)(Date.dateReads, Date.dateWrites)
+    )
   }
+
 }

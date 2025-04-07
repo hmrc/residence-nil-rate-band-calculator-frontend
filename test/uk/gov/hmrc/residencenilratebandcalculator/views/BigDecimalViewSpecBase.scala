@@ -23,11 +23,14 @@ trait BigDecimalViewSpecBase extends ViewSpecBase {
 
   val number: BigDecimal = BigDecimal(50.01)
 
-  def bigDecimalPage(createView: (Form[BigDecimal]) => HtmlFormat.Appendable,
-                     messageKeyPrefix: String,
-                     expectedFormAction: String,
-                     form: Form[BigDecimal], emptyForm: Form[BigDecimal]): Unit = {
-    behave like questionPage[BigDecimal](createView, messageKeyPrefix, expectedFormAction, emptyForm)
+  def bigDecimalPage(
+      createView: (Form[BigDecimal]) => HtmlFormat.Appendable,
+      messageKeyPrefix: String,
+      expectedFormAction: String,
+      form: Form[BigDecimal],
+      emptyForm: Form[BigDecimal]
+  ): Unit = {
+    behave.like(questionPage[BigDecimal](createView, messageKeyPrefix, expectedFormAction, emptyForm))
 
     "behave like a page with an big decimal value field" when {
       "rendered" must {
@@ -56,7 +59,7 @@ trait BigDecimalViewSpecBase extends ViewSpecBase {
           }
 
           "show an error in the value field's label" in {
-            val doc = asDocument(createView(form.withError(error)))
+            val doc       = asDocument(createView(form.withError(error)))
             val errorSpan = doc.getElementsByClass("error-notification").first
             errorSpan.text mustBe messages(errorMessage)
           }
@@ -64,4 +67,5 @@ trait BigDecimalViewSpecBase extends ViewSpecBase {
       }
     }
   }
+
 }

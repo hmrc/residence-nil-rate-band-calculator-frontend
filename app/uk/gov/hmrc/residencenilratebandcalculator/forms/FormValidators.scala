@@ -25,9 +25,10 @@ object FormValidators {
 
   def isValidDate(day: Int, month: Int, year: Int): Boolean = Try(constructDate(day, month, year)) match {
     case Success(_) => true
-    case _ => false
+    case _          => false
   }
 
   def isValidPropertyPassingToDirectDescendantsOption(value: String): Boolean =
     Constants.propertyPassingToDirectDescendantsOptions.exists(radioOption => radioOption.value == value)
+
 }

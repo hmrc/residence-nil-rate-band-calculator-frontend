@@ -25,22 +25,28 @@ import scala.language.reflectiveCalls
 class UnableToCalculateThresholdIncreaseViewSpec extends HtmlSpec {
 
   val prefix = "unable_to_calculate_threshold_increase.grossing_up"
-  val unable_to_calculate_threshold_increase: unable_to_calculate_threshold_increase = injector.instanceOf[unable_to_calculate_threshold_increase]
+
+  val unable_to_calculate_threshold_increase: unable_to_calculate_threshold_increase =
+    injector.instanceOf[unable_to_calculate_threshold_increase]
+
   val view: HtmlFormat.Appendable = unable_to_calculate_threshold_increase(prefix)(request, messages)
-  val doc: Document = asDocument(view)
+  val doc: Document               = asDocument(view)
 
   "Unable To Calculate Threshold Increase View" must {
 
-    "display the correct browser title" in {
-      assertEqualsMessage(doc, "title", messages("unable_to_calculate_threshold_increase.browser_title") + " - Calculate the available RNRB - GOV.UK")
-    }
+    "display the correct browser title" in
+      assertEqualsMessage(
+        doc,
+        "title",
+        messages("unable_to_calculate_threshold_increase.browser_title") + " - Calculate the available RNRB - GOV.UK"
+      )
 
-    "display the correct page title" in {
+    "display the correct page title" in
       assertPageTitleEqualsMessage(doc, s"$prefix.title")
-    }
 
-    "display the correct guidance" in {
-      assertContainsMessages(doc,
+    "display the correct guidance" in
+      assertContainsMessages(
+        doc,
         s"$prefix.next.title",
         s"$prefix.next.guidance1",
         s"$prefix.next.guidance2",
@@ -49,12 +55,11 @@ class UnableToCalculateThresholdIncreaseViewSpec extends HtmlSpec {
         s"$prefix.next.guidance3.addr3",
         s"$prefix.next.guidance4",
         s"$prefix.next.guidance5"
-       )
-    }
+      )
 
-    "not display the HMRC logo" in {
+    "not display the HMRC logo" in
       assertNotRenderedByCssSelector(doc, ".organisation-logo")
-    }
 
   }
+
 }

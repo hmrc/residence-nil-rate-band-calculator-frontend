@@ -29,4 +29,5 @@ object DateOfDeathForm {
       "dateOfDeath" -> of(DateFormatter("dateOfDeath"))
     )(Date.apply)(o => Some(o.date))
   )
+
 }

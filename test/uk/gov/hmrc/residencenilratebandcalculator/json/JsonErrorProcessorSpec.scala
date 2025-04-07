@@ -38,4 +38,5 @@ class JsonErrorProcessorSpec extends BaseSpec {
         .mustBe("JSON error: Value missing.\nJSON error: String provided, Int required.\n")
     }
   }
+
 }

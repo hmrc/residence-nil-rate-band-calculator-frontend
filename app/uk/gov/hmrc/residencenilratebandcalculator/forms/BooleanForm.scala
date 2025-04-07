@@ -21,18 +21,18 @@ import play.api.data.Forms._
 import play.api.data.format.Formatter
 
 object BooleanForm extends FormErrorHelper {
+
   def booleanFormat(errorKey: String): Formatter[Boolean] = new Formatter[Boolean] {
 
     override val format = Some(("format.boolean", Nil))
 
-    def bind(key: String, data: Map[String, String]) = {
+    def bind(key: String, data: Map[String, String]) =
       data.get(key) match {
-        case Some("true") => Right(true)
+        case Some("true")  => Right(true)
         case Some("false") => Right(false)
-        case Some(_) => produceError(key, errorKey)
-        case None => produceError(key, errorKey)
+        case Some(_)       => produceError(key, errorKey)
+        case None          => produceError(key, errorKey)
       }
-    }
 
     def unbind(key: String, value: Boolean) = Map(key -> value.toString)
   }

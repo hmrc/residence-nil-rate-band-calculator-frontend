@@ -25,17 +25,26 @@ import uk.gov.hmrc.residencenilratebandcalculator.forms.DatePropertyWasChangedFo
 
 class DatePropertyWasChangedViewSpec extends NewDateViewSpecBase {
 
-  val messageKeyPrefix = "date_property_was_changed"
+  val messageKeyPrefix                                     = "date_property_was_changed"
   val date_property_was_changed: date_property_was_changed = injector.instanceOf[date_property_was_changed]
-  def createView(form: Form[Date]): HtmlFormat.Appendable = date_property_was_changed(form)(request, messages)
+  def createView(form: Form[Date]): HtmlFormat.Appendable  = date_property_was_changed(form)(request, messages)
 
   "Date Property Was Changed View" must {
 
-    behave like rnrbPage[Date](createView, messageKeyPrefix, "guidance1", "guidance2")(datePropertyWasChangedForm)
+    behave.like(rnrbPage[Date](createView, messageKeyPrefix, "guidance1", "guidance2")(datePropertyWasChangedForm))
 
-    behave like pageWithoutBackLink[Date](createView, datePropertyWasChangedForm)
+    behave.like(pageWithoutBackLink[Date](createView, datePropertyWasChangedForm))
 
-    behave like datePage(createView, messageKeyPrefix,
-      DatePropertyWasChangedController.onSubmit.url, "datePropertyWasChanged", datePropertyWasChangedForm, datePropertyWasChangedForm)
+    behave.like(
+      datePage(
+        createView,
+        messageKeyPrefix,
+        DatePropertyWasChangedController.onSubmit.url,
+        "datePropertyWasChanged",
+        datePropertyWasChangedForm,
+        datePropertyWasChangedForm
+      )
+    )
   }
+
 }

@@ -59,7 +59,8 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
 
   override def onPageLoad(implicit rds: Reads[A]): Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.fetch().map {
-      case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
+      case None =>
+        Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
       case Some(cacheMap) =>
         val userAnswers = new UserAnswers(cacheMap)
         Ok(view(cacheMap.getEntry(controllerId).fold(form())(value => form().fill(value)), userAnswers))
@@ -68,22 +69,24 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
 
   def onSubmit(implicit wts: Writes[A]): Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.fetch().flatMap {
-      case None => Future.successful(Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad))
+      case None =>
+        Future.successful(
+          Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
+        )
       case Some(cacheMap) =>
         val userAnswers = new UserAnswers(cacheMap)
-        val boundForm = form().bindFromRequest()
+        val boundForm   = form().bindFromRequest()
         boundForm.fold(
-          (formWithErrors: Form[A]) =>
-            Future.successful(BadRequest(view(formWithErrors,
-              userAnswers))),
-          value => validate(value, userAnswers) match {
-            case Some(error) =>
-              Future.successful(BadRequest(view(form().fill(value).withError(error),
-                userAnswers)))
-            case None =>
-              sessionConnector.cache[A](controllerId, value).map(cacheMap =>
-                Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
-          }
+          (formWithErrors: Form[A]) => Future.successful(BadRequest(view(formWithErrors, userAnswers))),
+          value =>
+            validate(value, userAnswers) match {
+              case Some(error) =>
+                Future.successful(BadRequest(view(form().fill(value).withError(error), userAnswers)))
+              case None =>
+                sessionConnector
+                  .cache[A](controllerId, value)
+                  .map(cacheMap => Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
+            }
         )
     }
   }

@@ -18,11 +18,12 @@ package uk.gov.hmrc.residencenilratebandcalculator.models
 
 object GetNoDownsizingThresholdIncreaseReason extends GetReason {
   case object NoAssetsPassingToDirectDescendants extends Reason
-  case object DatePropertyWasChangedTooEarly extends Reason
+  case object DatePropertyWasChangedTooEarly     extends Reason
 
   def apply(userAnswers: UserAnswers) =
     userAnswers.assetsPassingToDirectDescendants match {
       case Some(false) => NoAssetsPassingToDirectDescendants
-      case _ => DatePropertyWasChangedTooEarly
+      case _           => DatePropertyWasChangedTooEarly
     }
+
 }

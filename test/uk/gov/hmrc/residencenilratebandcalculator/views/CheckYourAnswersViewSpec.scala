@@ -23,19 +23,23 @@ import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ThresholdCa
 import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 
 class CheckYourAnswersViewSpec extends HtmlSpec {
-  val messageKeyPrefix = "check_your_answers"
+  val messageKeyPrefix                       = "check_your_answers"
   val check_your_answers: check_your_answers = injector.instanceOf[check_your_answers]
-  val numberOfRows = 22
-  val answerRows: Seq[AnswerRow] = (1 to numberOfRows).map {
-    i => AnswerRow(titleKey = s"title$i", amount = i, url = Call("GET", s"url$i"))(messages)
-  }
+  val numberOfRows                           = 22
+
+  val answerRows: Seq[AnswerRow] =
+    (1 to numberOfRows).map(i => AnswerRow(titleKey = s"title$i", amount = i, url = Call("GET", s"url$i"))(messages))
+
   def createView(): HtmlFormat.Appendable = check_your_answers(answerRows)(request, messages)
 
   "Check Your Answers View" must {
     "display the correct browser title" in {
       val doc = asDocument(createView())
-      assertEqualsMessage(doc, "title",
-        s"${messages(s"$messageKeyPrefix.browser_title")} - ${messages("service.name")} - GOV.UK")
+      assertEqualsMessage(
+        doc,
+        "title",
+        s"${messages(s"$messageKeyPrefix.browser_title")} - ${messages("service.name")} - GOV.UK"
+      )
     }
     "display the correct page title" in {
       val doc = asDocument(createView())
@@ -46,7 +50,7 @@ class CheckYourAnswersViewSpec extends HtmlSpec {
       assertRenderedByCssSelector(doc, ".govuk-button")
     }
     "link to the threshold-calculation-result page" in {
-      val doc = asDocument(createView())
+      val doc          = asDocument(createView())
       val continueLink = doc.getElementsByClass("govuk-button").get(0)
       assert(continueLink.attr("href") == ThresholdCalculationResultController.onPageLoad.url)
     }
@@ -62,4 +66,5 @@ class CheckYourAnswersViewSpec extends HtmlSpec {
       }
     }
   }
+
 }

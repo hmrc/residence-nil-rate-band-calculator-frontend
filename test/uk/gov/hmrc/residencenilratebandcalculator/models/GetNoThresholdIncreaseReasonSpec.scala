@@ -27,14 +27,15 @@ class GetNoThresholdIncreaseReasonSpec extends BaseSpec with MockitoSugar {
 
     "get DateOfDeath reason if date of death is before the eligibility date" in {
       val userAnswers = mock[UserAnswers]
-      when(userAnswers.dateOfDeath) thenReturn Some(Constants.eligibilityDate.minusDays(1))
+      when(userAnswers.dateOfDeath).thenReturn(Some(Constants.eligibilityDate.minusDays(1)))
       GetNoThresholdIncreaseReason(userAnswers) mustBe DateOfDeath
     }
 
     "get DirectDescendant reason if nothing has been left to direct descendants" in {
       val userAnswers = mock[UserAnswers]
-      when(userAnswers.partOfEstatePassingToDirectDescendants) thenReturn Some(false)
+      when(userAnswers.partOfEstatePassingToDirectDescendants).thenReturn(Some(false))
       GetNoThresholdIncreaseReason(userAnswers) mustBe DirectDescendant
     }
   }
+
 }

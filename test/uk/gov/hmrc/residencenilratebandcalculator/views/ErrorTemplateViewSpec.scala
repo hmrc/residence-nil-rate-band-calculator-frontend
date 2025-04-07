@@ -23,20 +23,18 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.error_template
 class ErrorTemplateViewSpec extends HtmlSpec {
 
   val error_template: error_template = injector.instanceOf[error_template]
-  val view: HtmlFormat.Appendable = error_template("title", "heading", "message")(request, messages)
-  val doc: Document = asDocument(view)
+  val view: HtmlFormat.Appendable    = error_template("title", "heading", "message")(request, messages)
+  val doc: Document                  = asDocument(view)
 
   "Error Template" must {
-    "display the correct page title" in {
+    "display the correct page title" in
       assertEqualsMessage(doc, "h1", "heading")
-    }
 
-    "display the correct browser title" in {
+    "display the correct browser title" in
       assertEqualsMessage(doc, "title", s"${messages("title")} - ${messages("service.name")} - GOV.UK")
-    }
 
-    "display the correct message" in {
+    "display the correct message" in
       assertContainsText(doc, "message")
-    }
   }
+
 }

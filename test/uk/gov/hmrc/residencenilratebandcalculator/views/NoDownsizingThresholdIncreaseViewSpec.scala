@@ -22,12 +22,19 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_downsizing_thres
 
 class NoDownsizingThresholdIncreaseViewSpec extends HtmlSpec {
   implicit val msg: Messages = messages
-  val messageKeyPrefix = "no_downsizing_threshold_increase"
-  val no_downsizing_threshold_increase: no_downsizing_threshold_increase = injector.instanceOf[no_downsizing_threshold_increase]
+  val messageKeyPrefix       = "no_downsizing_threshold_increase"
+
+  val no_downsizing_threshold_increase: no_downsizing_threshold_increase =
+    injector.instanceOf[no_downsizing_threshold_increase]
+
   "No Downsizing Threshold Increase View" must {
     "display the correct browser title" in {
       val doc = asDocument(no_downsizing_threshold_increase("", Call("", "")))
-      assertEqualsMessage(doc, "title", s"${messages(s"$messageKeyPrefix.browser_title")} - ${messages("service.name")} - GOV.UK")
+      assertEqualsMessage(
+        doc,
+        "title",
+        s"${messages(s"$messageKeyPrefix.browser_title")} - ${messages("service.name")} - GOV.UK"
+      )
     }
 
     "display the correct page title" in {
@@ -42,7 +49,7 @@ class NoDownsizingThresholdIncreaseViewSpec extends HtmlSpec {
 
     "contain a link to the given page" in {
       val exampleURL = "http://www.example.com"
-      val doc = asDocument(no_downsizing_threshold_increase("", Call("GET", exampleURL)))
+      val doc        = asDocument(no_downsizing_threshold_increase("", Call("GET", exampleURL)))
       assertContainsText(doc, exampleURL)
     }
 
@@ -51,4 +58,5 @@ class NoDownsizingThresholdIncreaseViewSpec extends HtmlSpec {
       assertNotRenderedByCssSelector(doc, ".organisation-logo")
     }
   }
+
 }

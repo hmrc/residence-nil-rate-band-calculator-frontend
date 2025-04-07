@@ -28,33 +28,60 @@ class AssetsPassingToDirectDescendantsViewSpec extends NewBooleanViewSpecBase {
 
   val formattedPropertyValue = "£123,456.78"
 
-  val assets_passing_to_direct_descendants: assets_passing_to_direct_descendants = injector.instanceOf[assets_passing_to_direct_descendants]
+  val assets_passing_to_direct_descendants: assets_passing_to_direct_descendants =
+    injector.instanceOf[assets_passing_to_direct_descendants]
+
   def createView(form: Form[Boolean]): HtmlFormat.Appendable =
     assets_passing_to_direct_descendants(form, None)(request, messages)
 
   "Assets Passing To Direct Descendants View" must {
 
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix)(fakeApplication().injector.instanceOf[AssetsPassingToDirectDescendantsController].form())
+    behave.like(
+      rnrbPage[Boolean](createView, messageKeyPrefix)(
+        fakeApplication().injector.instanceOf[AssetsPassingToDirectDescendantsController].form()
+      )
+    )
 
-    behave like pageWithoutBackLink[Boolean](createView, fakeApplication().injector.instanceOf[AssetsPassingToDirectDescendantsController].form())
+    behave.like(
+      pageWithoutBackLink[Boolean](
+        createView,
+        fakeApplication().injector.instanceOf[AssetsPassingToDirectDescendantsController].form()
+      )
+    )
 
-    behave like booleanPage(createView, messageKeyPrefix, AssetsPassingToDirectDescendantsController.onSubmit.url, fakeApplication().injector.instanceOf[AssetsPassingToDirectDescendantsController].form(), true)
+    behave.like(
+      booleanPage(
+        createView,
+        messageKeyPrefix,
+        AssetsPassingToDirectDescendantsController.onSubmit.url,
+        fakeApplication().injector.instanceOf[AssetsPassingToDirectDescendantsController].form(),
+        true
+      )
+    )
   }
 
   "Assets Passing To Direct Descendants View" when {
 
     "there is a property in the estate" must {
       "contain guidance that includes the property value" in {
-        val doc = asDocument(assets_passing_to_direct_descendants(fakeApplication().injector.instanceOf[AssetsPassingToDirectDescendantsController].form(), Some(formattedPropertyValue))(request, messages))
+        val doc = asDocument(
+          assets_passing_to_direct_descendants(
+            fakeApplication().injector.instanceOf[AssetsPassingToDirectDescendantsController].form(),
+            Some(formattedPropertyValue)
+          )(request, messages)
+        )
         assertContainsText(doc, messages("assets_passing_to_direct_descendants.guidance", formattedPropertyValue))
       }
     }
 
     "there is no property in the estate" must {
       "contain guidance that does not include the property value" in {
-        val doc = asDocument(createView(fakeApplication().injector.instanceOf[AssetsPassingToDirectDescendantsController].form()))
+        val doc = asDocument(
+          createView(fakeApplication().injector.instanceOf[AssetsPassingToDirectDescendantsController].form())
+        )
         assertContainsText(doc, messages("assets_passing_to_direct_descendants.guidance_no_property"))
       }
     }
   }
+
 }

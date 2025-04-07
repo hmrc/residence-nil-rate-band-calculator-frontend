@@ -29,17 +29,21 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.part_of_estate_pass
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class PartOfEstatePassingToDirectDescendantsController @Inject()(cc: DefaultMessagesControllerComponents,
-                                                                 override val sessionConnector: SessionConnector,
-                                                                 override val navigator: Navigator,
-                                                                 partOfEstatePassingToDirectDescendantsView: part_of_estate_passing_to_direct_descendants)
-                                                                (override implicit val ec: ExecutionContext) extends FrontendController(cc) with SimpleControllerBase[Boolean] {
+class PartOfEstatePassingToDirectDescendantsController @Inject() (
+    cc: DefaultMessagesControllerComponents,
+    override val sessionConnector: SessionConnector,
+    override val navigator: Navigator,
+    partOfEstatePassingToDirectDescendantsView: part_of_estate_passing_to_direct_descendants
+)(override implicit val ec: ExecutionContext)
+    extends FrontendController(cc)
+    with SimpleControllerBase[Boolean] {
 
   override val controllerId: String = Constants.partOfEstatePassingToDirectDescendantsId
 
-  override def form: () => Form[Boolean] = () => BooleanForm("part_of_estate_passing_to_direct_descendants.error.required")
+  override def form: () => Form[Boolean] = () =>
+    BooleanForm("part_of_estate_passing_to_direct_descendants.error.required")
 
-  override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+  override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[_]) =
     partOfEstatePassingToDirectDescendantsView(form)
-  }
+
 }

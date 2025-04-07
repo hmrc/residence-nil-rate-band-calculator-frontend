@@ -40,12 +40,16 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig,
 
 import scala.concurrent.Future
 
-class ValueBeingTransferredControllerSpec extends CommonPlaySpec with HttpResponseMocks with MockSessionConnector with WithCommonFakeApplication {
+class ValueBeingTransferredControllerSpec
+    extends CommonPlaySpec
+    with HttpResponseMocks
+    with MockSessionConnector
+    with WithCommonFakeApplication {
 
-  val errorKeyBlank = "value_being_transferred.error.blank"
-  val errorKeyDecimal = "error.whole_pounds"
+  val errorKeyBlank      = "value_being_transferred.error.blank"
+  val errorKeyDecimal    = "error.whole_pounds"
   val errorKeyNonNumeric = "error.non_numeric"
-  val errorKeyTooLarge = "error.value_too_large"
+  val errorKeyTooLarge   = "error.value_too_large"
 
   val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "").withSession(SessionKeys.sessionId -> "id")
 
@@ -59,7 +63,8 @@ class ValueBeingTransferredControllerSpec extends CommonPlaySpec with HttpRespon
 
   def messages: Messages = messagesApi.preferred(fakeRequest)
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val messagesControllerComponents: DefaultMessagesControllerComponents =
+    injector.instanceOf[DefaultMessagesControllerComponents]
 
   val mockValidatedSession: ValidatedSession = injector.instanceOf[ValidatedSession]
 
@@ -67,28 +72,46 @@ class ValueBeingTransferredControllerSpec extends CommonPlaySpec with HttpRespon
 
   def mockRnrbConnector: RnrbConnector = {
     val mockConnector = mock[RnrbConnector]
-    when(mockConnector.getNilRateBand(any[String])(any[HeaderCarrier])) thenReturn
-      Future.successful(HttpResponse(200, JsNumber(100000).toString))
+    when(mockConnector.getNilRateBand(any[String])(any[HeaderCarrier]))
+      .thenReturn(Future.successful(HttpResponse(200, JsNumber(100000).toString)))
     mockConnector
   }
 
   def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
-    case None => value_being_transferred("£100,000.00", NonNegativeIntForm.apply(
-      errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge))(fakeRequest, messages)
-    case Some(v) => value_being_transferred("£100,000.00", NonNegativeIntForm(
-      errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v))(fakeRequest, messages)
+    case None =>
+      value_being_transferred(
+        "£100,000.00",
+        NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge)
+      )(fakeRequest, messages)
+    case Some(v) =>
+      value_being_transferred(
+        "£100,000.00",
+        NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v)
+      )(fakeRequest, messages)
   }
 
   def createViewWithBacklink: Option[Map[String, String]] => HtmlFormat.Appendable = {
-    case None => value_being_transferred("£100,000.00", NonNegativeIntForm.apply(
-      errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge))(fakeRequest, messages)
-    case Some(v) => value_being_transferred("£100,000.00", NonNegativeIntForm(
-      errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v))(fakeRequest, messages)
+    case None =>
+      value_being_transferred(
+        "£100,000.00",
+        NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge)
+      )(fakeRequest, messages)
+    case Some(v) =>
+      value_being_transferred(
+        "£100,000.00",
+        NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v)
+      )(fakeRequest, messages)
   }
 
   def createController: () => ValueBeingTransferredController = () =>
     new ValueBeingTransferredController(
-      messagesControllerComponents, mockSessionConnector, navigator, mockRnrbConnector, mockValidatedSession, value_being_transferred)
+      messagesControllerComponents,
+      mockSessionConnector,
+      navigator,
+      mockRnrbConnector,
+      mockValidatedSession,
+      value_being_transferred
+    )
 
   def testValue = "100000"
 
@@ -102,7 +125,9 @@ class ValueBeingTransferredControllerSpec extends CommonPlaySpec with HttpRespon
     "if the date of death key is set return the View for a GET" in {
       setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"))))
       val result = createController().onPageLoad(Reads.IntReads)(fakeRequest)
-      Jsoup.parse(contentAsString(result)).title() mustBe messages("value_being_transferred.title") + " - Calculate the available RNRB - GOV.UK"
+      Jsoup.parse(contentAsString(result)).title() mustBe messages(
+        "value_being_transferred.title"
+      ) + " - Calculate the available RNRB - GOV.UK"
     }
 
     "if the date of death key is not set throw an exception" in {
@@ -129,30 +154,35 @@ class ValueBeingTransferredControllerSpec extends CommonPlaySpec with HttpRespon
 
     "return bad request on submit with invalid data" in {
       setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"))))
-      val value = "invalid data"
+      val value           = "invalid data"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
-      val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
+      val result          = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
       status(result) mustBe Status.BAD_REQUEST
     }
 
     "return form with errors when invalid data is submitted" in {
       setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"))))
-      val value = "invalid data"
+      val value           = "invalid data"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
-      val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
+      val result          = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
       contentAsString(result) mustBe createViewWithBacklink(Some(Map("value" -> value))).toString
     }
 
     "not store invalid submitted data" in {
       setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"))))
-      val value = "invalid data"
+      val value           = "invalid data"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
       createController().onSubmit(Writes.IntWrites)(fakePostRequest)
       verifyValueIsNotCached()
     }
 
     "get a previously stored value from keystore" in {
-      setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"), Constants.valueBeingTransferredId -> JsNumber(100000))))
+      setCacheMap(
+        new CacheMap(
+          "",
+          Map(Constants.dateOfDeathId -> JsString("2017-5-11"), Constants.valueBeingTransferredId -> JsNumber(100000))
+        )
+      )
       val result = createController().onPageLoad(Reads.IntReads)(fakeRequest)
       contentAsString(result) mustBe createView(Some(Map("value" -> testValue))).toString
     }
@@ -161,71 +191,80 @@ class ValueBeingTransferredControllerSpec extends CommonPlaySpec with HttpRespon
       expireSessionConnector()
       val result = createController().onPageLoad(Reads.IntReads)(fakeRequest)
       status(result) mustBe Status.SEE_OTHER
-      redirectLocation(result) mustBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url)
+      redirectLocation(result) mustBe Some(
+        uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url
+      )
     }
 
     "On a page submit with an expired session, return an redirect to an expired session page" in {
       expireSessionConnector()
       val result = createController().onSubmit(Writes.IntWrites)(fakeRequest)
       status(result) mustBe Status.SEE_OTHER
-      redirectLocation(result) mustBe Some(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url)
+      redirectLocation(result) mustBe Some(
+        uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url
+      )
     }
 
     "The answer constants must be the same as the calulated constants for the controller" in {
-      val filledOutCacheMap = new CacheMap("",
+      val filledOutCacheMap = new CacheMap(
+        "",
         Map[String, JsValue](
-          Constants.dateOfDeathId -> JsString("2019-03-04"),
+          Constants.dateOfDeathId                            -> JsString("2019-03-04"),
           Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
-          Constants.valueOfEstateId -> JsNumber(500000),
-          Constants.chargeableEstateValueId -> JsNumber(450000),
-          Constants.propertyInEstateId -> JsBoolean(true),
-          Constants.propertyValueId -> JsNumber(400000),
-          Constants.propertyPassingToDirectDescendantsId -> JsBoolean(true),
-          Constants.percentagePassedToDirectDescendantsId -> JsNumber(100),
-          Constants.transferAnyUnusedThresholdId -> JsBoolean(true)
-        ))
-      val controllerId = createController().controllerId
+          Constants.valueOfEstateId                          -> JsNumber(500000),
+          Constants.chargeableEstateValueId                  -> JsNumber(450000),
+          Constants.propertyInEstateId                       -> JsBoolean(true),
+          Constants.propertyValueId                          -> JsNumber(400000),
+          Constants.propertyPassingToDirectDescendantsId     -> JsBoolean(true),
+          Constants.percentagePassedToDirectDescendantsId    -> JsNumber(100),
+          Constants.transferAnyUnusedThresholdId             -> JsBoolean(true)
+        )
+      )
+      val controllerId        = createController().controllerId
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
-      val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
-      calculatedList mustBe (
-        List(Constants.dateOfDeathId,
-             Constants.partOfEstatePassingToDirectDescendantsId,
-             Constants.valueOfEstateId,
-             Constants.chargeableEstateValueId,
-             Constants.propertyInEstateId,
-             Constants.propertyValueId,
-             Constants.propertyPassingToDirectDescendantsId,
-             Constants.percentagePassedToDirectDescendantsId,
-             Constants.transferAnyUnusedThresholdId))
-      true mustBe(true)
+      val calculatedList      = AnswerRows.rowOrderList.filter(calculatedConstants contains _)
+      calculatedList mustBe (List(
+        Constants.dateOfDeathId,
+        Constants.partOfEstatePassingToDirectDescendantsId,
+        Constants.valueOfEstateId,
+        Constants.chargeableEstateValueId,
+        Constants.propertyInEstateId,
+        Constants.propertyValueId,
+        Constants.propertyPassingToDirectDescendantsId,
+        Constants.percentagePassedToDirectDescendantsId,
+        Constants.transferAnyUnusedThresholdId
+      ))
+      true mustBe true
     }
 
     "validate" must {
 
       "return a FormError when given a value greater than the nil rate band for the year of death" in {
-        val cacheMap = CacheMap("a", Map(Constants.dateOfDeathId -> JsString("2020-01-01")))
+        val cacheMap    = CacheMap("a", Map(Constants.dateOfDeathId -> JsString("2020-01-01")))
         val userAnswers = new UserAnswers(cacheMap)
-        val testValue = 123000
-        val controller = createController()
-        val result = controller.validate(testValue, "100000", userAnswers)
-        result.map(x => x must be(Some(FormError("value", "value_being_transferred.error", Seq(100000, "2019", "2020")))))
+        val testValue   = 123000
+        val controller  = createController()
+        val result      = controller.validate(testValue, "100000", userAnswers)
+        result.map(x =>
+          x must be(Some(FormError("value", "value_being_transferred.error", Seq(100000, "2019", "2020"))))
+        )
       }
 
       "return a None when given a value less than or equal to the nil rate band for the year of death" in {
-        val cacheMap = CacheMap("a", Map(Constants.dateOfDeathId -> JsString("2020-01-01")))
+        val cacheMap    = CacheMap("a", Map(Constants.dateOfDeathId -> JsString("2020-01-01")))
         val userAnswers = new UserAnswers(cacheMap)
-        val testValue = 90000
-        val controller = createController()
-        val result = controller.validate(testValue, "100000", userAnswers)
+        val testValue   = 90000
+        val controller  = createController()
+        val result      = controller.validate(testValue, "100000", userAnswers)
         result.map(x => x must be(None))
       }
 
       "throw an exception when given a nil rate band that cannot be parsed into an int" in {
         val exception = intercept[NumberFormatException] {
-          val cacheMap = CacheMap("a", Map(Constants.dateOfDeathId -> JsString("2020-01-01")))
+          val cacheMap    = CacheMap("a", Map(Constants.dateOfDeathId -> JsString("2020-01-01")))
           val userAnswers = new UserAnswers(cacheMap)
-          val testValue = 90000
-          val controller = createController()
+          val testValue   = 90000
+          val controller  = createController()
           controller.validate(testValue, "not a number", userAnswers)
         }
         exception.getMessage mustBe "Bad value in nil rate band"
@@ -234,4 +273,5 @@ class ValueBeingTransferredControllerSpec extends CommonPlaySpec with HttpRespon
     }
 
   }
+
 }

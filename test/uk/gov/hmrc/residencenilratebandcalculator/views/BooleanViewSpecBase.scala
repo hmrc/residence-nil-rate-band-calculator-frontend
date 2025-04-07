@@ -22,19 +22,23 @@ import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 
 trait BooleanViewSpecBase extends ViewSpecBase {
 
-  def booleanPage(createView: Form[Boolean] => HtmlFormat.Appendable,
-                  messageKeyPrefix: String,
-                  expectedFormAction: String, emptyForm: Form[Boolean], useNewValues: Boolean = false): Unit = {
+  def booleanPage(
+      createView: Form[Boolean] => HtmlFormat.Appendable,
+      messageKeyPrefix: String,
+      expectedFormAction: String,
+      emptyForm: Form[Boolean],
+      useNewValues: Boolean = false
+  ): Unit = {
 
-    behave like questionPage[Boolean](createView, messageKeyPrefix, expectedFormAction, emptyForm)
+    behave.like(questionPage[Boolean](createView, messageKeyPrefix, expectedFormAction, emptyForm))
 
-    val yes = if(useNewValues) "value-true" else "yes"
-    val no = if(useNewValues) "value-false" else "no"
+    val yes = if (useNewValues) "value-true" else "yes"
+    val no  = if (useNewValues) "value-false" else "no"
 
     "behave like a page with a Yes/No question" when {
       "rendered" must {
         "contain a legend for the question" in {
-          val doc = asDocument(createView(emptyForm))
+          val doc     = asDocument(createView(emptyForm))
           val legends = doc.getElementsByTag("legend")
           legends.size mustBe 1
           legends.first.text mustBe messages(s"$messageKeyPrefix.title")
@@ -58,13 +62,11 @@ trait BooleanViewSpecBase extends ViewSpecBase {
         }
       }
 
-      "rendered with a value of true" must {
-        behave like answeredBooleanPage(createView, true, emptyForm, useNewValues)
-      }
+      "rendered with a value of true" must
+        behave.like(answeredBooleanPage(createView, true, emptyForm, useNewValues))
 
-      "rendered with a value of false" must {
-        behave like answeredBooleanPage(createView, false, emptyForm, useNewValues)
-      }
+      "rendered with a value of false" must
+        behave.like(answeredBooleanPage(createView, false, emptyForm, useNewValues))
 
       "rendered with an error" must {
 
@@ -74,7 +76,7 @@ trait BooleanViewSpecBase extends ViewSpecBase {
         }
 
         "show an error in the value field's label" in {
-          val doc = asDocument(createView(BooleanForm("").withError(error)))
+          val doc       = asDocument(createView(BooleanForm("").withError(error)))
           val errorSpan = doc.getElementsByClass("error-notification").first
           errorSpan.text mustBe messages(errorMessage)
         }
@@ -82,11 +84,15 @@ trait BooleanViewSpecBase extends ViewSpecBase {
     }
   }
 
-  def answeredBooleanPage(createView: (Form[Boolean]) => HtmlFormat.Appendable,
-                          answer: Boolean, emptyForm: Form[Boolean], useNewValues: Boolean = false): Unit = {
+  def answeredBooleanPage(
+      createView: (Form[Boolean]) => HtmlFormat.Appendable,
+      answer: Boolean,
+      emptyForm: Form[Boolean],
+      useNewValues: Boolean = false
+  ): Unit = {
 
-    val yes = if(useNewValues) "value-true" else "yes"
-    val no = if(useNewValues) "value-false" else "no"
+    val yes = if (useNewValues) "value-true" else "yes"
+    val no  = if (useNewValues) "value-false" else "no"
 
     "have only the correct value checked" in {
       val doc = asDocument(createView(BooleanForm("").fill(answer)))
@@ -99,4 +105,5 @@ trait BooleanViewSpecBase extends ViewSpecBase {
       assertNotRenderedById(doc, "error-summary_header")
     }
   }
+
 }

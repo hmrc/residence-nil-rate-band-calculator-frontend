@@ -22,7 +22,10 @@ import uk.gov.hmrc.mongo.test.DefaultPlayMongoRepositorySupport
 import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 
-class SessionRepositorySpec extends CommonPlaySpec with DefaultPlayMongoRepositorySupport[DatedCacheMap] with WithCommonFakeApplication {
+class SessionRepositorySpec
+    extends CommonPlaySpec
+    with DefaultPlayMongoRepositorySupport[DatedCacheMap]
+    with WithCommonFakeApplication {
 
   val repository: SessionRepository = new SessionRepository(
     config = fakeApplication.injector.instanceOf[Configuration],
@@ -68,4 +71,5 @@ class SessionRepositorySpec extends CommonPlaySpec with DefaultPlayMongoReposito
     }
 
   }
+
 }

@@ -46,14 +46,14 @@ trait TransitionController extends FrontendController with I18nSupport {
 
   def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[_]): HtmlFormat.Appendable
 
-  def onPageLoad: Action[AnyContent] = Action.async {
-    implicit request =>
-      sessionConnector.fetch().map {
-        case Some(cacheMap) => {
-          val userAnswers = new UserAnswers(cacheMap)
-          Ok(createView(getReason(userAnswers), userAnswers))
-        }
-        case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
-      }
+  def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
+    sessionConnector.fetch().map {
+      case Some(cacheMap) =>
+        val userAnswers = new UserAnswers(cacheMap)
+        Ok(createView(getReason(userAnswers), userAnswers))
+      case None =>
+        Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
+    }
   }
+
 }
