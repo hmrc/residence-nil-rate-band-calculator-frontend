@@ -20,14 +20,16 @@ import java.time.LocalDate
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
-case class CalculationInput(dateOfDeath: LocalDate,
-                            valueOfEstate: Int,
-                            chargeableEstateValue: Int,
-                            propertyValue: Int,
-                            percentagePassedToDirectDescendants: BigDecimal,
-                            valueBeingTransferred: Int,
-                            propertyValueAfterExemption: Option[PropertyValueAfterExemption],
-                            downsizingDetails: Option[DownsizingDetails])
+case class CalculationInput(
+    dateOfDeath: LocalDate,
+    valueOfEstate: Int,
+    chargeableEstateValue: Int,
+    propertyValue: Int,
+    percentagePassedToDirectDescendants: BigDecimal,
+    valueBeingTransferred: Int,
+    propertyValueAfterExemption: Option[PropertyValueAfterExemption],
+    downsizingDetails: Option[DownsizingDetails]
+)
 
 object CalculationInput {
   implicit val formats: OFormat[CalculationInput] = Json.format[CalculationInput]
@@ -56,10 +58,12 @@ object CalculationInput {
 
   def getChargeablePropertyValue(userAnswers: UserAnswers): Option[PropertyValueAfterExemption] =
     if (userAnswers.chargeablePropertyValue.isDefined) {
-      Some(PropertyValueAfterExemption(
-        userAnswers.chargeablePropertyValue.get,
-        userAnswers.chargeableInheritedPropertyValue.get
-      ))
+      Some(
+        PropertyValueAfterExemption(
+          userAnswers.chargeablePropertyValue.get,
+          userAnswers.chargeableInheritedPropertyValue.get
+        )
+      )
     } else {
       None
     }
@@ -80,9 +84,9 @@ object CalculationInput {
     require(userAnswers.datePropertyWasChanged.isDefined, "Date Property Was Changed was not answered")
 
     userAnswers.datePropertyWasChanged match {
-      case Some(d) if d isBefore Constants.downsizingEligibilityDate => None
-      case Some(_) => Some(DownsizingDetails(userAnswers))
-      case _ => None
+      case Some(d) if d.isBefore(Constants.downsizingEligibilityDate) => None
+      case Some(_)                                                    => Some(DownsizingDetails(userAnswers))
+      case _                                                          => None
     }
   } else {
     None
@@ -90,17 +94,24 @@ object CalculationInput {
 
   private def requirePropertyInEstateDependencies(userAnswers: UserAnswers) = {
     require(userAnswers.propertyValue.isDefined, "Property Value was not answered")
-    require(userAnswers.propertyPassingToDirectDescendants.isDefined, "Property Passing To Direct Descendants was not answered")
+    require(
+      userAnswers.propertyPassingToDirectDescendants.isDefined,
+      "Property Passing To Direct Descendants was not answered"
+    )
 
-    if(userAnswers.propertyPassingToDirectDescendants.get == Constants.some) {
-      require(userAnswers.percentagePassedToDirectDescendants.isDefined, "Percentage Passed To Direct Descendants was not answered")
+    if (userAnswers.propertyPassingToDirectDescendants.get == Constants.some) {
+      require(
+        userAnswers.percentagePassedToDirectDescendants.isDefined,
+        "Percentage Passed To Direct Descendants was not answered"
+      )
     }
-    if (userAnswers.propertyPassingToDirectDescendants.get != Constants.none) requirePropertyPassingToDirectDescendantsDependencies(userAnswers)
+    if (userAnswers.propertyPassingToDirectDescendants.get != Constants.none)
+      requirePropertyPassingToDirectDescendantsDependencies(userAnswers)
   }
 
   private def requirePropertyPassingToDirectDescendantsDependencies(userAnswers: UserAnswers) = {
     require(userAnswers.exemptionsAndReliefClaimed.isDefined, "Exemptions And Relief Claimed was not answered")
-    if(userAnswers.exemptionsAndReliefClaimed.get) requireExemptionsDependancies(userAnswers)
+    if (userAnswers.exemptionsAndReliefClaimed.get) requireExemptionsDependancies(userAnswers)
   }
 
   private def requireExemptionsDependancies(userAnswers: UserAnswers) = {
@@ -110,17 +121,23 @@ object CalculationInput {
 
   private def requireNoGrossingUpDependancies(userAnswers: UserAnswers) = {
     require(userAnswers.chargeablePropertyValue.isDefined, "Chargeable Property Value was not answered")
-    require(userAnswers.chargeableInheritedPropertyValue.isDefined, "Chargeable Inherited Property Value was not answered")
+    require(
+      userAnswers.chargeableInheritedPropertyValue.isDefined,
+      "Chargeable Inherited Property Value was not answered"
+    )
   }
 
   private def requireValueBeingTransferredDependencies(userAnswers: UserAnswers) =
     require(userAnswers.valueBeingTransferred.isDefined, "Value Being Transferred was not answered")
+
 }
 
-case class DownsizingDetails(datePropertyWasChanged: LocalDate,
-                             valueOfChangedProperty: Int,
-                             valueOfAssetsPassing: Int,
-                             valueAvailableWhenPropertyChanged: Int)
+case class DownsizingDetails(
+    datePropertyWasChanged: LocalDate,
+    valueOfChangedProperty: Int,
+    valueOfAssetsPassing: Int,
+    valueAvailableWhenPropertyChanged: Int
+)
 
 object DownsizingDetails {
   implicit val formats: OFormat[DownsizingDetails] = Json.format[DownsizingDetails]
@@ -128,38 +145,56 @@ object DownsizingDetails {
   def apply(userAnswers: UserAnswers): DownsizingDetails = {
     require(userAnswers.datePropertyWasChanged.isDefined, "Date Property Was Changed was not answered")
     require(userAnswers.valueOfChangedProperty.isDefined, "Value Of Changed Property was not answered")
-    require(userAnswers.assetsPassingToDirectDescendants.isDefined, "Assets Passing To Direct Descendants was not answered")
+    require(
+      userAnswers.assetsPassingToDirectDescendants.isDefined,
+      "Assets Passing To Direct Descendants was not answered"
+    )
     if (userAnswers.assetsPassingToDirectDescendants.get) requireValueOfAssetsPassingDependancies(userAnswers)
 
     DownsizingDetails(
       userAnswers.datePropertyWasChanged.get,
       userAnswers.valueOfChangedProperty.get,
       getValueOfAssetsPassing(userAnswers),
-      getValueAvailableWhenPropertyChanged(userAnswers))
+      getValueAvailableWhenPropertyChanged(userAnswers)
+    )
   }
 
-  private def getValueOfAssetsPassing(userAnswers: UserAnswers) = userAnswers.assetsPassingToDirectDescendants.get match {
-    case true => userAnswers.valueOfAssetsPassing.get
-    case _ => 0
-  }
+  private def getValueOfAssetsPassing(userAnswers: UserAnswers) =
+    userAnswers.assetsPassingToDirectDescendants.get match {
+      case true => userAnswers.valueOfAssetsPassing.get
+      case _    => 0
+    }
 
-  private def getValueAvailableWhenPropertyChanged(userAnswers: UserAnswers) = userAnswers.assetsPassingToDirectDescendants.get match {
-    case true if userAnswers.transferAvailableWhenPropertyChanged.isDefined && userAnswers.transferAvailableWhenPropertyChanged.get =>
-      userAnswers.valueAvailableWhenPropertyChanged.get
-    case _ => 0
-  }
+  private def getValueAvailableWhenPropertyChanged(userAnswers: UserAnswers) =
+    userAnswers.assetsPassingToDirectDescendants.get match {
+      case true
+          if userAnswers.transferAvailableWhenPropertyChanged.isDefined && userAnswers.transferAvailableWhenPropertyChanged.get =>
+        userAnswers.valueAvailableWhenPropertyChanged.get
+      case _ => 0
+    }
 
   private def requireValueOfAssetsPassingDependancies(userAnswers: UserAnswers) = {
     require(userAnswers.valueOfAssetsPassing.isDefined, "Value Of Assets Passing was not answered")
-    if (userAnswers.transferAnyUnusedThreshold.get && !(userAnswers.datePropertyWasChanged.get isBefore Constants.eligibilityDate)) {
+    if (
+      userAnswers.transferAnyUnusedThreshold.get && !userAnswers.datePropertyWasChanged.get.isBefore(
+        Constants.eligibilityDate
+      )
+    ) {
       requireTransferAvailableWhenPropertyChangedDependencies(userAnswers)
     }
   }
 
   private def requireTransferAvailableWhenPropertyChangedDependencies(userAnswers: UserAnswers) = {
-    require(userAnswers.transferAvailableWhenPropertyChanged.isDefined, "Transfer Available When Property Changed was not answered")
+    require(
+      userAnswers.transferAvailableWhenPropertyChanged.isDefined,
+      "Transfer Available When Property Changed was not answered"
+    )
     if (userAnswers.transferAvailableWhenPropertyChanged.get) {
-      require(userAnswers.valueAvailableWhenPropertyChanged.isDefined, "Value Available When Property Changed was not answered")
+      require(
+        userAnswers.valueAvailableWhenPropertyChanged.isDefined,
+        "Value Available When Property Changed was not answered"
+      )
     }
   }
+
 }

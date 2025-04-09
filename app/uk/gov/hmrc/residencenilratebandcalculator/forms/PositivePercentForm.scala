@@ -22,24 +22,26 @@ import play.api.data.format.Formatter
 
 object PositivePercentForm extends FormErrorHelper {
 
-  def positivePercentFormatter(errorKeyBlank: String, errorKeyNonNumeric: String, errorKeyOutOfRange: String) = new Formatter[BigDecimal] {
+  def positivePercentFormatter(errorKeyBlank: String, errorKeyNonNumeric: String, errorKeyOutOfRange: String) =
+    new Formatter[BigDecimal] {
 
-    val decimalRegex = """^(\d*\.?\d*)$""".r
+      val decimalRegex = """^(\d*\.?\d*)$""".r
 
-    def bind(key: String, data: Map[String, String]) = {
-      data.get(key) match {
-        case None => produceError(key, errorKeyBlank)
-        case Some("") => produceError(key, errorKeyBlank)
-        case Some(s) => s.trim.replace(",", "") match {
-          case decimalRegex(str) if BigDecimal(str) <= 0 || BigDecimal(str) > 100 => produceError(key, errorKeyOutOfRange)
-          case decimalRegex(str) => Right(BigDecimal(str))
-          case _ => produceError(key, errorKeyNonNumeric)
+      def bind(key: String, data: Map[String, String]) =
+        data.get(key) match {
+          case None     => produceError(key, errorKeyBlank)
+          case Some("") => produceError(key, errorKeyBlank)
+          case Some(s) =>
+            s.trim.replace(",", "") match {
+              case decimalRegex(str) if BigDecimal(str) <= 0 || BigDecimal(str) > 100 =>
+                produceError(key, errorKeyOutOfRange)
+              case decimalRegex(str) => Right(BigDecimal(str))
+              case _                 => produceError(key, errorKeyNonNumeric)
+            }
         }
-      }
-    }
 
-    def unbind(key: String, value: BigDecimal) = Map(key -> value.toString)
-  }
+      def unbind(key: String, value: BigDecimal) = Map(key -> value.toString)
+    }
 
   def apply(errorKeyBlank: String, errorKeyNonNumeric: String, errorKeyOutOfRange: String): Form[BigDecimal] =
     Form(single("value" -> of(positivePercentFormatter(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange))))

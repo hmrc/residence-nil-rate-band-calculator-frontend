@@ -16,59 +16,89 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
-
 class NonNegativeIntFormSpec extends FormSpec {
 
-  val errorKeyBlank = "blank"
-  val errorKeyDecimal = "decimal"
+  val errorKeyBlank      = "blank"
+  val errorKeyDecimal    = "decimal"
   val errorKeyNonNumeric = "non numeric"
-  val errorKeyTooLarge = "too high"
+  val errorKeyTooLarge   = "too high"
 
   "Non Negative Int Form" must {
 
     "bind positive numbers" in {
-      val form = NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(Map("value" -> "1"))
+      val form = NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(
+        Map("value" -> "1")
+      )
       form.get mustBe 1
     }
 
     "bind positive numbers up to 2147483647" in {
-      val form = NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(Map("value" -> "2147483647"))
+      val form = NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(
+        Map("value" -> "2147483647")
+      )
       form.get mustBe 2147483647
     }
 
     "bind positive, comma separated numbers" in {
-      val form = NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(Map("value" -> "10,000"))
+      val form = NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(
+        Map("value" -> "10,000")
+      )
       form.get mustBe 10000
     }
 
     "fail to bind negative numbers" in {
       val expectedError = error("value", errorKeyNonNumeric)
-      checkForError(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), Map("value" -> "-1"), expectedError)
+      checkForError(
+        NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),
+        Map("value" -> "-1"),
+        expectedError
+      )
     }
 
     "fail to bind non-numerics" in {
       val expectedError = error("value", errorKeyNonNumeric)
-      checkForError(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), Map("value" -> "not a number"), expectedError)
+      checkForError(
+        NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),
+        Map("value" -> "not a number"),
+        expectedError
+      )
     }
 
     "fail to bind a blank value" in {
       val expectedError = error("value", errorKeyBlank)
-      checkForError(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), Map("value" -> ""), expectedError)
+      checkForError(
+        NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),
+        Map("value" -> ""),
+        expectedError
+      )
     }
 
     "fail to bind when value is omitted" in {
       val expectedError = error("value", errorKeyBlank)
-      checkForError(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), emptyForm, expectedError)
+      checkForError(
+        NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),
+        emptyForm,
+        expectedError
+      )
     }
 
     "fail to bind decimal numbers" in {
       val expectedError = error("value", errorKeyDecimal)
-      checkForError(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), Map("value" -> "123.45"), expectedError)
+      checkForError(
+        NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),
+        Map("value" -> "123.45"),
+        expectedError
+      )
     }
 
     "fail to bind a number of too high a value" in {
       val expectedError = error("value", errorKeyTooLarge)
-      checkForError(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), Map("value" -> "2147483648"), expectedError)
+      checkForError(
+        NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),
+        Map("value" -> "2147483648"),
+        expectedError
+      )
     }
   }
+
 }

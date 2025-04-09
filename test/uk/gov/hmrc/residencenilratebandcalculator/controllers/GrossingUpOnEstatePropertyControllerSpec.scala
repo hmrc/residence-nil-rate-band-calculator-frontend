@@ -25,35 +25,57 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_esta
 
 class GrossingUpOnEstatePropertyControllerSpec extends NewSimpleControllerSpecBase {
 
-  val messageKey = "grossing_up_on_estate_property.error.required"
+  val messageKey       = "grossing_up_on_estate_property.error.required"
   val messageKeyPrefix = "grossing_up_on_estate_property"
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-  val grossing_up_on_estate_property: grossing_up_on_estate_property = injector.instanceOf[grossing_up_on_estate_property]
+  val messagesControllerComponents: DefaultMessagesControllerComponents =
+    injector.instanceOf[DefaultMessagesControllerComponents]
+
+  val grossing_up_on_estate_property: grossing_up_on_estate_property =
+    injector.instanceOf[grossing_up_on_estate_property]
 
   "Grossing Up On Estate Property Controller" must {
 
     def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
-      case None => grossing_up_on_estate_property(BooleanForm.apply(messageKey))(fakeRequest, messages)
+      case None    => grossing_up_on_estate_property(BooleanForm.apply(messageKey))(fakeRequest, messages)
       case Some(v) => grossing_up_on_estate_property(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
     }
 
     def createController: () => GrossingUpOnEstatePropertyController = () =>
-      new GrossingUpOnEstatePropertyController(messagesControllerComponents, mockSessionConnector, navigator, grossing_up_on_estate_property)
+      new GrossingUpOnEstatePropertyController(
+        messagesControllerComponents,
+        mockSessionConnector,
+        navigator,
+        grossing_up_on_estate_property
+      )
 
     val testValue = false
 
-    behave like rnrbController[Boolean](
-        createController, createView, Constants.grossingUpOnEstatePropertyId, messageKeyPrefix, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+    behave.like(
+      rnrbController[Boolean](
+        createController,
+        createView,
+        Constants.grossingUpOnEstatePropertyId,
+        messageKeyPrefix,
+        testValue
+      )(Reads.BooleanReads, Writes.BooleanWrites)
+    )
 
-    behave like nonStartingController[Boolean](createController,
-      List(Constants.dateOfDeathId,
-           Constants.partOfEstatePassingToDirectDescendantsId,
-           Constants.valueOfEstateId,
-           Constants.chargeableEstateValueId,
-           Constants.propertyInEstateId,
-           Constants.propertyValueId,
-           Constants.propertyPassingToDirectDescendantsId,
-           Constants.percentagePassedToDirectDescendantsId))(Reads.BooleanReads, Writes.BooleanWrites)
+    behave.like(
+      nonStartingController[Boolean](
+        createController,
+        List(
+          Constants.dateOfDeathId,
+          Constants.partOfEstatePassingToDirectDescendantsId,
+          Constants.valueOfEstateId,
+          Constants.chargeableEstateValueId,
+          Constants.propertyInEstateId,
+          Constants.propertyValueId,
+          Constants.propertyPassingToDirectDescendantsId,
+          Constants.percentagePassedToDirectDescendantsId
+        )
+      )(Reads.BooleanReads, Writes.BooleanWrites)
+    )
   }
+
 }

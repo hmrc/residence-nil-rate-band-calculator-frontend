@@ -29,18 +29,20 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class ClaimDownsizingThresholdController @Inject()(cc: DefaultMessagesControllerComponents,
-                                                   override val sessionConnector: SessionConnector,
-                                                   override val navigator: Navigator,
-                                                   claimDownsizingThresholdView: claim_downsizing_threshold)
-                                                  (override implicit val ec: ExecutionContext) extends FrontendController(cc) with SimpleControllerBase[Boolean] {
+class ClaimDownsizingThresholdController @Inject() (
+    cc: DefaultMessagesControllerComponents,
+    override val sessionConnector: SessionConnector,
+    override val navigator: Navigator,
+    claimDownsizingThresholdView: claim_downsizing_threshold
+)(override implicit val ec: ExecutionContext)
+    extends FrontendController(cc)
+    with SimpleControllerBase[Boolean] {
 
   override val controllerId: String = Constants.claimDownsizingThresholdId
 
   override def form: () => Form[Boolean] = () => BooleanForm("claim_downsizing_threshold.error.required")
 
-  override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+  override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[_]) =
     claimDownsizingThresholdView(form)
-  }
 
 }

@@ -36,12 +36,16 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
 
 @Singleton
-class ThresholdCalculationResultController @Inject()(cc: DefaultMessagesControllerComponents,
-                                                     rnrbConnector: RnrbConnector, sessionConnector: SessionConnector,
-                                                     validatedSession: ValidatedSession,
-                                                     thresholdCalculationResultView: threshold_calculation_result)
-                                                    (implicit ec: ExecutionContext)
-  extends FrontendController(cc) with I18nSupport with Logging {
+class ThresholdCalculationResultController @Inject() (
+    cc: DefaultMessagesControllerComponents,
+    rnrbConnector: RnrbConnector,
+    sessionConnector: SessionConnector,
+    validatedSession: ValidatedSession,
+    thresholdCalculationResultView: threshold_calculation_result
+)(implicit ec: ExecutionContext)
+    extends FrontendController(cc)
+    with I18nSupport
+    with Logging {
 
   private def fail(ex: Throwable) = {
     logger.error(ex.getMessage, ex)
@@ -50,38 +54,35 @@ class ThresholdCalculationResultController @Inject()(cc: DefaultMessagesControll
 
   private def getAnswers(implicit hc: HeaderCarrier) = sessionConnector.fetch().map {
     case Some(answers) => Success(answers)
-    case None => Failure(new NoCacheMapException("Unable to retrieve cache map from SessionConnector"))
+    case None          => Failure(new NoCacheMapException("Unable to retrieve cache map from SessionConnector"))
   }
 
   private def getInput(tryAnswers: Try[CacheMap]) = tryAnswers match {
     case Success(answers) => Future.successful(Try(CalculationInput(new UserAnswers(answers))))
-    case Failure(ex) => Future.successful(Failure(ex))
+    case Failure(ex)      => Future.successful(Failure(ex))
   }
 
-  private def getResult(tryInput: Try[CalculationInput]) (implicit hc: HeaderCarrier) = tryInput match {
+  private def getResult(tryInput: Try[CalculationInput])(implicit hc: HeaderCarrier) = tryInput match {
     case Success(input) => rnrbConnector.send(input)
-    case Failure(ex) => Future.successful(Failure(ex))
+    case Failure(ex)    => Future.successful(Failure(ex))
   }
 
-  def onPageLoad = validatedSession.async {
-    implicit request => {
+  def onPageLoad = validatedSession.async { implicit request =>
+    implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
-      implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
-
-      for {
-        tryAnswers <- getAnswers
-        tryInput <- getInput(tryAnswers)
-        tryResult <- getResult(tryInput)
-      } yield {
-        (tryResult, tryAnswers) match {
-          case (_, Failure(_)) => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
-          case (Failure(ex), _) => fail(ex)
-          case (Success(result), Success(_)) =>
-            sessionConnector.cache[Int](Constants.thresholdCalculationResultId, result.residenceNilRateAmount)
-            val residenceNilRateAmount = CurrencyFormatter.format(result.residenceNilRateAmount)
-            Ok(thresholdCalculationResultView(residenceNilRateAmount))
-        }
-      }
+    for {
+      tryAnswers <- getAnswers
+      tryInput   <- getInput(tryAnswers)
+      tryResult  <- getResult(tryInput)
+    } yield (tryResult, tryAnswers) match {
+      case (_, Failure(_)) =>
+        Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
+      case (Failure(ex), _) => fail(ex)
+      case (Success(result), Success(_)) =>
+        sessionConnector.cache[Int](Constants.thresholdCalculationResultId, result.residenceNilRateAmount)
+        val residenceNilRateAmount = CurrencyFormatter.format(result.residenceNilRateAmount)
+        Ok(thresholdCalculationResultView(residenceNilRateAmount))
     }
   }
+
 }

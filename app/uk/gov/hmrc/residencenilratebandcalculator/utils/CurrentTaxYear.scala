@@ -22,13 +22,12 @@ trait CurrentTaxYear {
   private val startOfTaxYear = MonthDay.of(4, 6)
   def now: () => LocalDate
 
-  final def taxYearFor(date: LocalDate): TaxYear = {
-    if (date isBefore firstDayOfTaxYear(date.getYear)) {
+  final def taxYearFor(date: LocalDate): TaxYear =
+    if (date.isBefore(firstDayOfTaxYear(date.getYear))) {
       TaxYear(startYear = date.getYear - 1)
     } else {
       TaxYear(startYear = date.getYear)
     }
-  }
 
   final def firstDayOfTaxYear(year: Int): LocalDate = startOfTaxYear.atYear(year)
 }

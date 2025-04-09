@@ -24,17 +24,38 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_value
 
 class PropertyValueViewSpec extends NewIntViewSpecBase {
 
-  val messageKeyPrefix = "property_value"
-  val property_value: property_value = injector.instanceOf[property_value]
+  val messageKeyPrefix                                   = "property_value"
+  val property_value: property_value                     = injector.instanceOf[property_value]
   def createView(form: Form[Int]): HtmlFormat.Appendable = property_value(form)(request, messages)
 
   "Property Value View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2", "guidance3",
-      "guidance3.bullet1", "guidance3.bullet2", "guidance4")(fakeApplication().injector.instanceOf[PropertyValueController].form())
+    behave.like(
+      rnrbPage[Int](
+        createView,
+        messageKeyPrefix,
+        "guidance1",
+        "guidance2",
+        "guidance3",
+        "guidance3.bullet1",
+        "guidance3.bullet2",
+        "guidance4"
+      )(fakeApplication().injector.instanceOf[PropertyValueController].form())
+    )
 
-    behave like pageWithoutBackLink[Int](createView, fakeApplication().injector.instanceOf[PropertyValueController].form())
+    behave.like(
+      pageWithoutBackLink[Int](createView, fakeApplication().injector.instanceOf[PropertyValueController].form())
+    )
 
-    behave like intPage(createView, messageKeyPrefix, "/calculate-additional-inheritance-tax-threshold/property-value", NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), fakeApplication().injector.instanceOf[PropertyValueController].form())
+    behave.like(
+      intPage(
+        createView,
+        messageKeyPrefix,
+        "/calculate-additional-inheritance-tax-threshold/property-value",
+        NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage),
+        fakeApplication().injector.instanceOf[PropertyValueController].form()
+      )
+    )
   }
+
 }

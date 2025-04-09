@@ -28,7 +28,8 @@ class PropertyValueAfterExemptionSpec extends BaseSpec {
     }
 
     "give an error when trying to contruct itself from invalid JSON" in {
-      Json.fromJson[PropertyValueAfterExemption](JsString("invalid data")) mustBe a [JsError]
+      Json.fromJson[PropertyValueAfterExemption](JsString("invalid data")) mustBe a[JsError]
     }
   }
+
 }

@@ -29,27 +29,32 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class PropertyValueController @Inject()(cc: DefaultMessagesControllerComponents,
-                                        override val sessionConnector: SessionConnector,
-                                        override val navigator: Navigator,
-                                        propertyValueView: property_value)
-                                       (override implicit val ec: ExecutionContext) extends FrontendController(cc) with SimpleControllerBase[Int] {
-
+class PropertyValueController @Inject() (
+    cc: DefaultMessagesControllerComponents,
+    override val sessionConnector: SessionConnector,
+    override val navigator: Navigator,
+    propertyValueView: property_value
+)(override implicit val ec: ExecutionContext)
+    extends FrontendController(cc)
+    with SimpleControllerBase[Int] {
 
   override val controllerId = Constants.propertyValueId
 
   override def form = () =>
-    NonNegativeIntForm("property_value.error.blank", "error.whole_pounds", "property_value.error.non_numeric", "error.value_too_large")
+    NonNegativeIntForm(
+      "property_value.error.blank",
+      "error.whole_pounds",
+      "property_value.error.non_numeric",
+      "error.value_too_large"
+    )
 
-  override def view(form: Form[Int], userAnswers: UserAnswers)
-                   (implicit request: Request[_]) = {
+  override def view(form: Form[Int], userAnswers: UserAnswers)(implicit request: Request[_]) =
     propertyValueView(form)
-  }
 
-  override def validate(value: Int, userAnswers: UserAnswers): Option[FormError] = {
+  override def validate(value: Int, userAnswers: UserAnswers): Option[FormError] =
     userAnswers.valueOfEstate match {
       case Some(v) if value > v => Some(FormError("value", "property_value.greater_than_value_of_estate.error", Seq(v)))
-      case _ => None
+      case _                    => None
     }
-  }
+
 }

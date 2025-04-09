@@ -28,38 +28,53 @@ class ThresholdCalculationResultViewSpec extends HtmlSpec {
   val threshold_calculation_result: threshold_calculation_result = injector.instanceOf[threshold_calculation_result]
 
   val view: HtmlFormat.Appendable = threshold_calculation_result("£10.00")(request, messages)
-  val doc: Document = asDocument(view)
+  val doc: Document               = asDocument(view)
 
   "Threshold Calculation Result View" when {
     "rendered" must {
-      "display the correct browser title" in {
-        assertEqualsMessage(doc, "title", s"${messages("threshold_calculation_result.info.non_zero.header")} - ${messages("service.name")} - GOV.UK")
-      }
+      "display the correct browser title" in
+        assertEqualsMessage(
+          doc,
+          "title",
+          s"${messages("threshold_calculation_result.info.non_zero.header")} - ${messages("service.name")} - GOV.UK"
+        )
 
-      "display the correct guidance" in {
-        assertContainsMessages(doc, "threshold_calculation_result.action.header", "threshold_calculation_result.action.guidance.form_435",
-          "threshold_calculation_result.action.guidance.form_400", "threshold_calculation_result.action.guidance.continue",
-          "threshold_calculation_result.print_prefix", "threshold_calculation_result.link_to_print", "threshold_calculation_result.print_suffix")
-      }
+      "display the correct guidance" in
+        assertContainsMessages(
+          doc,
+          "threshold_calculation_result.action.header",
+          "threshold_calculation_result.action.guidance.form_435",
+          "threshold_calculation_result.action.guidance.form_400",
+          "threshold_calculation_result.action.guidance.continue",
+          "threshold_calculation_result.print_prefix",
+          "threshold_calculation_result.link_to_print",
+          "threshold_calculation_result.print_suffix"
+        )
 
       "display the correct information when there is no Residence Nil Rate Amount" in {
         val residenceNilRateAmount = "£0.00"
-        val view = threshold_calculation_result(residenceNilRateAmount)(request, messages)
-        val doc = asDocument(view)
+        val view                   = threshold_calculation_result(residenceNilRateAmount)(request, messages)
+        val doc                    = asDocument(view)
 
-        assertContainsMessages(doc, "threshold_calculation_result.info.zero.header",
-          "threshold_calculation_result.info.zero.threshold_change")
+        assertContainsMessages(
+          doc,
+          "threshold_calculation_result.info.zero.header",
+          "threshold_calculation_result.info.zero.threshold_change"
+        )
         assertContainsText(doc, messages("threshold_calculation_result.info.zero.guidance", residenceNilRateAmount))
         assertContainsText(doc, messages("threshold_calculation_result.action.guidance", residenceNilRateAmount))
       }
 
       "display the correct information when there is a positive Residence Nil Rate Amount" in {
         val residenceNilRateAmount = "£10.00"
-        val view = threshold_calculation_result(residenceNilRateAmount)(request, messages)
-        val doc = asDocument(view)
+        val view                   = threshold_calculation_result(residenceNilRateAmount)(request, messages)
+        val doc                    = asDocument(view)
 
-        assertContainsMessages(doc, "threshold_calculation_result.info.non_zero.header",
-          "threshold_calculation_result.info.non_zero.threshold_change")
+        assertContainsMessages(
+          doc,
+          "threshold_calculation_result.info.non_zero.header",
+          "threshold_calculation_result.info.non_zero.threshold_change"
+        )
         assertContainsText(doc, messages("threshold_calculation_result.info.non_zero.guidance", residenceNilRateAmount))
         assertContainsText(doc, messages("threshold_calculation_result.action.guidance", residenceNilRateAmount))
       }
@@ -70,10 +85,10 @@ class ThresholdCalculationResultViewSpec extends HtmlSpec {
         links.first.text mustBe messages("site.finish")
       }
 
-      "not display the HMRC logo" in {
+      "not display the HMRC logo" in
         assertNotRenderedByCssSelector(doc, ".organisation-logo")
-      }
 
     }
   }
+
 }

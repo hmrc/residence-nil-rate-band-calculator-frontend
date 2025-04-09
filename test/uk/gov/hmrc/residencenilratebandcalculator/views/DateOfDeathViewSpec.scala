@@ -25,19 +25,29 @@ import uk.gov.hmrc.residencenilratebandcalculator.forms.DateOfDeathForm._
 
 class DateOfDeathViewSpec extends NewDateViewSpecBase {
 
-  val messageKeyPrefix = "date_of_death"
-  val date_of_death: date_of_death = injector.instanceOf[date_of_death]
+  val messageKeyPrefix                                    = "date_of_death"
+  val date_of_death: date_of_death                        = injector.instanceOf[date_of_death]
   def createView(form: Form[Date]): HtmlFormat.Appendable = date_of_death(form)(request, messages)
 
   "Date of Death View" must {
 
-    behave like rnrbPage[Date](createView, messageKeyPrefix, "guidance")(dateOfDeathForm)
+    behave.like(rnrbPage[Date](createView, messageKeyPrefix, "guidance")(dateOfDeathForm))
 
-    behave like datePage(createView, messageKeyPrefix, DateOfDeathController.onSubmit.url, "dateOfDeath", dateOfDeathForm,dateOfDeathForm)
+    behave.like(
+      datePage(
+        createView,
+        messageKeyPrefix,
+        DateOfDeathController.onSubmit.url,
+        "dateOfDeath",
+        dateOfDeathForm,
+        dateOfDeathForm
+      )
+    )
 
     "display the correct example" in {
       val doc = asDocument(createView(dateOfDeathForm))
       assertContainsMessages(doc, s"$messageKeyPrefix.example")
     }
   }
+
 }

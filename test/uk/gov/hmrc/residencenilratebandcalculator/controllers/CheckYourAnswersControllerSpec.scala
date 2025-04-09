@@ -33,49 +33,60 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 class CheckYourAnswersControllerSpec extends CommonPlaySpec with MockSessionConnector with WithCommonFakeApplication {
 
   val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "").withSession(SessionKeys.sessionId -> "id")
-  val injector: Injector = fakeApplication.injector
+  val injector: Injector                               = fakeApplication.injector
 
   val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-  val validatedSession: ValidatedSession = injector.instanceOf[ValidatedSession]
-  def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
-  def messages: Messages = messagesApi.preferred(fakeRequest)
+  val messagesControllerComponents: DefaultMessagesControllerComponents =
+    injector.instanceOf[DefaultMessagesControllerComponents]
+
+  val validatedSession: ValidatedSession     = injector.instanceOf[ValidatedSession]
+  def messagesApi: MessagesApi               = injector.instanceOf[MessagesApi]
+  def messages: Messages                     = messagesApi.preferred(fakeRequest)
   val check_your_answers: check_your_answers = fakeApplication.injector.instanceOf[check_your_answers]
 
-  val filledOutCacheMap = new CacheMap("id",
+  val filledOutCacheMap = new CacheMap(
+    "id",
     Map[String, JsValue](
-      Constants.dateOfDeathId -> JsString("2019-03-04"),
+      Constants.dateOfDeathId                            -> JsString("2019-03-04"),
       Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
-      Constants.valueOfEstateId -> JsNumber(1234),
-      Constants.chargeableEstateValueId -> JsNumber(1234),
-      Constants.propertyInEstateId -> JsBoolean(true),
-      Constants.propertyValueId -> JsNumber(1234),
-      Constants.propertyPassingToDirectDescendantsId -> JsString(Constants.some),
-      Constants.percentagePassedToDirectDescendantsId -> JsNumber(100),
-      Constants.transferAnyUnusedThresholdId -> JsBoolean(true),
-      Constants.valueBeingTransferredId -> JsNumber(50000),
-      Constants.claimDownsizingThresholdId -> JsBoolean(true),
-      Constants.datePropertyWasChangedId -> JsString("2018-03-02"),
-      Constants.valueOfChangedPropertyId -> JsNumber(100000),
-      Constants.assetsPassingToDirectDescendantsId -> JsBoolean(true),
-      Constants.grossingUpOnEstateAssetsId -> JsBoolean(true),
-      Constants.chargeablePropertyValueId -> JsNumber(50000),
-      Constants.valueOfAssetsPassingId -> JsNumber(1000),
-      Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true),
-      Constants.valueAvailableWhenPropertyChangedId -> JsNumber(1000)
-    ))
+      Constants.valueOfEstateId                          -> JsNumber(1234),
+      Constants.chargeableEstateValueId                  -> JsNumber(1234),
+      Constants.propertyInEstateId                       -> JsBoolean(true),
+      Constants.propertyValueId                          -> JsNumber(1234),
+      Constants.propertyPassingToDirectDescendantsId     -> JsString(Constants.some),
+      Constants.percentagePassedToDirectDescendantsId    -> JsNumber(100),
+      Constants.transferAnyUnusedThresholdId             -> JsBoolean(true),
+      Constants.valueBeingTransferredId                  -> JsNumber(50000),
+      Constants.claimDownsizingThresholdId               -> JsBoolean(true),
+      Constants.datePropertyWasChangedId                 -> JsString("2018-03-02"),
+      Constants.valueOfChangedPropertyId                 -> JsNumber(100000),
+      Constants.assetsPassingToDirectDescendantsId       -> JsBoolean(true),
+      Constants.grossingUpOnEstateAssetsId               -> JsBoolean(true),
+      Constants.chargeablePropertyValueId                -> JsNumber(50000),
+      Constants.valueOfAssetsPassingId                   -> JsNumber(1000),
+      Constants.transferAvailableWhenPropertyChangedId   -> JsBoolean(true),
+      Constants.valueAvailableWhenPropertyChangedId      -> JsNumber(1000)
+    )
+  )
 
+  val incompleteCacheMap = new CacheMap(
+    "id",
+    filledOutCacheMap.data -- Seq(
+      Constants.noDownsizingThresholdIncrease,
+      Constants.valueAvailableWhenPropertyChangedId,
+      Constants.transferAvailableWhenPropertyChangedId,
+      Constants.claimDownsizingThresholdId,
+      Constants.valueOfAssetsPassingId
+    )
+  )
 
-  val incompleteCacheMap = new CacheMap("id", filledOutCacheMap.data -- Seq(
-    Constants.noDownsizingThresholdIncrease,
-    Constants.valueAvailableWhenPropertyChangedId,
-    Constants.transferAvailableWhenPropertyChangedId,
-    Constants.claimDownsizingThresholdId,
-    Constants.valueOfAssetsPassingId
-  ))
-
-  def controller() = new CheckYourAnswersController(messagesControllerComponents, mockSessionConnector, validatedSession, check_your_answers)
+  def controller() = new CheckYourAnswersController(
+    messagesControllerComponents,
+    mockSessionConnector,
+    validatedSession,
+    check_your_answers
+  )
 
   "Check Your Answers Controller" must {
     "return 200 for a GET" in {
@@ -87,7 +98,8 @@ class CheckYourAnswersControllerSpec extends CommonPlaySpec with MockSessionConn
     "return the Check Your Answers view for a GET" in {
       setCacheMap(filledOutCacheMap)
       val result = controller().onPageLoad(fakeRequest)
-      contentAsString(result) mustBe check_your_answers(AnswerRows(filledOutCacheMap, messages))(fakeRequest, messages).toString()
+      contentAsString(result) mustBe check_your_answers(AnswerRows(filledOutCacheMap, messages))(fakeRequest, messages)
+        .toString()
     }
 
     "redirect when required answers are not present" in {

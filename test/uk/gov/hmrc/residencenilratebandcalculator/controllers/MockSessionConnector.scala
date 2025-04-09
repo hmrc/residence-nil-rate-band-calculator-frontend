@@ -36,49 +36,59 @@ import scala.reflect.ClassTag
 trait MockSessionConnector extends CommonPlaySpec with MockitoSugar with Matchers with BeforeAndAfter {
 
   var mockSessionConnector: SessionConnector = _
-  var mockCacheMap: CacheMap = _
+  var mockCacheMap: CacheMap                 = _
 
   before {
     mockCacheMap = mock[CacheMap]
-    when(mockCacheMap.data) thenReturn Map[String, JsValue]()
-    when(mockCacheMap.getEntry[Boolean](anyString())(ArgumentCaptor.forClass(classOf[Reads[Boolean]]).capture())) thenReturn None
-    when(mockCacheMap.getEntry[Int](anyString())(ArgumentCaptor.forClass(classOf[Reads[Int]]).capture())) thenReturn None
-    when(mockCacheMap.getEntry[Date](anyString())(ArgumentCaptor.forClass(classOf[Reads[Date]]).capture())) thenReturn None
+    when(mockCacheMap.data).thenReturn(Map[String, JsValue]())
+    when(mockCacheMap.getEntry[Boolean](anyString())(ArgumentCaptor.forClass(classOf[Reads[Boolean]]).capture()))
+      .thenReturn(None)
+    when(mockCacheMap.getEntry[Int](anyString())(ArgumentCaptor.forClass(classOf[Reads[Int]]).capture()))
+      .thenReturn(None)
+    when(mockCacheMap.getEntry[Date](anyString())(ArgumentCaptor.forClass(classOf[Reads[Date]]).capture()))
+      .thenReturn(None)
 
     mockSessionConnector = mock[SessionConnector]
-    when(mockSessionConnector.cache(anyString(), anyInt())(any(), any[HeaderCarrier])) thenReturn Future.successful(mockCacheMap)
-    when(mockSessionConnector.fetchAndGetEntry[Int](anyString())(any[HeaderCarrier], any())) thenReturn Future.successful(None)
+    when(mockSessionConnector.cache(anyString(), anyInt())(any(), any[HeaderCarrier]))
+      .thenReturn(Future.successful(mockCacheMap))
+    when(mockSessionConnector.fetchAndGetEntry[Int](anyString())(any[HeaderCarrier], any()))
+      .thenReturn(Future.successful(None))
 
-    when(mockSessionConnector.cache(anyString(), anyBoolean())(any(), any[HeaderCarrier])) thenReturn Future.successful(mockCacheMap)
-    when(mockSessionConnector.fetchAndGetEntry[Boolean](anyString())(any[HeaderCarrier], any())) thenReturn Future.successful(None)
+    when(mockSessionConnector.cache(anyString(), anyBoolean())(any(), any[HeaderCarrier]))
+      .thenReturn(Future.successful(mockCacheMap))
+    when(mockSessionConnector.fetchAndGetEntry[Boolean](anyString())(any[HeaderCarrier], any()))
+      .thenReturn(Future.successful(None))
 
-    when(mockSessionConnector.cache(anyString(), any[LocalDate]())(any(), any[HeaderCarrier])) thenReturn Future.successful(mockCacheMap)
-    when(mockSessionConnector.fetchAndGetEntry[LocalDate](anyString())(any[HeaderCarrier], any())) thenReturn Future.successful(None)
+    when(mockSessionConnector.cache(anyString(), any[LocalDate]())(any(), any[HeaderCarrier]))
+      .thenReturn(Future.successful(mockCacheMap))
+    when(mockSessionConnector.fetchAndGetEntry[LocalDate](anyString())(any[HeaderCarrier], any()))
+      .thenReturn(Future.successful(None))
 
-    when(mockSessionConnector.fetch()(any[HeaderCarrier])) thenReturn Future.successful(Some(mockCacheMap))
-    when(mockSessionConnector.removeAll(any())) thenReturn Future.successful(true)
+    when(mockSessionConnector.fetch()(any[HeaderCarrier])).thenReturn(Future.successful(Some(mockCacheMap)))
+    when(mockSessionConnector.removeAll(any())).thenReturn(Future.successful(true))
   }
 
   def verifyValueIsCached[A: ClassTag](key: String, value: A): Any = {
-    implicit val headnapper = ArgumentCaptor.forClass(classOf[HeaderCarrier])
+    implicit val headnapper   = ArgumentCaptor.forClass(classOf[HeaderCarrier])
     implicit val writesnapper = ArgumentCaptor.forClass(classOf[Writes[A]])
-    val valueCaptor = ArgumentCaptor.forClass(value.getClass)
+    val valueCaptor           = ArgumentCaptor.forClass(value.getClass)
     verify(mockSessionConnector).cache[A](matches(key), valueCaptor.capture)(writesnapper.capture, headnapper.capture)
     valueCaptor.getValue mustBe value
   }
 
-  def verifyValueIsNotCached(): Future[CacheMap] = verify(mockSessionConnector, never()).cache(anyString(), any())(any(), any[HeaderCarrier])
+  def verifyValueIsNotCached(): Future[CacheMap] =
+    verify(mockSessionConnector, never()).cache(anyString(), any())(any(), any[HeaderCarrier])
 
   def setCacheValue[A](key: String, value: A): OngoingStubbing[Option[A]] = {
-    when(mockSessionConnector.fetchAndGetEntry[A](matches(key))(any[HeaderCarrier], any())) thenReturn Future.successful(Some(value))
-    when(mockCacheMap.getEntry[A](matches(key))(any())) thenReturn Some(value)
+    when(mockSessionConnector.fetchAndGetEntry[A](matches(key))(any[HeaderCarrier], any()))
+      .thenReturn(Future.successful(Some(value)))
+    when(mockCacheMap.getEntry[A](matches(key))(any())).thenReturn(Some(value))
   }
 
-  def setCacheMap(cacheMap: CacheMap): OngoingStubbing[Future[Option[CacheMap]]] = {
-    when(mockSessionConnector.fetch()(any[HeaderCarrier])) thenReturn Future.successful(Some(cacheMap))
-  }
+  def setCacheMap(cacheMap: CacheMap): OngoingStubbing[Future[Option[CacheMap]]] =
+    when(mockSessionConnector.fetch()(any[HeaderCarrier])).thenReturn(Future.successful(Some(cacheMap)))
 
-  def expireSessionConnector(): OngoingStubbing[Future[Option[CacheMap]]] = {
-    when(mockSessionConnector.fetch()(any[HeaderCarrier])) thenReturn Future.successful(None)
-  }
+  def expireSessionConnector(): OngoingStubbing[Future[Option[CacheMap]]] =
+    when(mockSessionConnector.fetch()(any[HeaderCarrier])).thenReturn(Future.successful(None))
+
 }

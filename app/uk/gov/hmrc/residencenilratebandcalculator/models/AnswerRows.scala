@@ -55,110 +55,186 @@ object AnswerRows {
   private def errorString(title: String) = s"$title unavailable from cache"
 
   def intAnswerRowFn(titleKey: String, title: String, url: Call): JsValue => Messages => AnswerRow =
-    (jsValue: JsValue) => Json.fromJson[Int](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
-      value => AnswerRow(titleKey, value, url)
-    })
+    (jsValue: JsValue) =>
+      Json
+        .fromJson[Int](jsValue)
+        .fold(_ => throw new RuntimeException(errorString(title)), value => AnswerRow(titleKey, value, url))
 
   def boolAnswerRowFn(titleKey: String, title: String, url: Call): JsValue => Messages => AnswerRow =
-    (jsValue: JsValue) => Json.fromJson[Boolean](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
-      value => AnswerRow(titleKey, value, url)
-    })
+    (jsValue: JsValue) =>
+      Json
+        .fromJson[Boolean](jsValue)
+        .fold(_ => throw new RuntimeException(errorString(title)), value => AnswerRow(titleKey, value, url))
 
   def dateAnswerRowFn(titleKey: String, title: String, url: Call): JsValue => Messages => AnswerRow =
-    (jsValue: JsValue) => Json.fromJson[LocalDate](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
-      value => AnswerRow(titleKey, value, url)
-    })
+    (jsValue: JsValue) =>
+      Json
+        .fromJson[LocalDate](jsValue)
+        .fold(_ => throw new RuntimeException(errorString(title)), value => AnswerRow(titleKey, value, url))
 
   def percentAnswerRowFn(titleKey: String, title: String, url: Call): JsValue => Messages => AnswerRow =
-    (jsValue: JsValue) => Json.fromJson[Double](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
-      value => AnswerRow(titleKey, value, url)
-    })
+    (jsValue: JsValue) =>
+      Json
+        .fromJson[Double](jsValue)
+        .fold(_ => throw new RuntimeException(errorString(title)), value => AnswerRow(titleKey, value, url))
 
-  def propertyPassingToDirectDescendantsAnswerRowFn(titleKey: String, title: String, url: Call): JsValue => Messages => AnswerRow =
-    (jsValue: JsValue) => Json.fromJson[String](jsValue).fold(_ => throw new RuntimeException(errorString(title)), {
-      value => AnswerRow(titleKey, s"property_passing_to_direct_descendants.$value", url)
-    })
+  def propertyPassingToDirectDescendantsAnswerRowFn(
+      titleKey: String,
+      title: String,
+      url: Call
+  ): JsValue => Messages => AnswerRow =
+    (jsValue: JsValue) =>
+      Json
+        .fromJson[String](jsValue)
+        .fold(
+          _ => throw new RuntimeException(errorString(title)),
+          value => AnswerRow(titleKey, s"property_passing_to_direct_descendants.$value", url)
+        )
 
   val answerRowFns: Map[String, JsValue => Messages => AnswerRow] = Map[String, JsValue => Messages => AnswerRow](
     Constants.dateOfDeathId ->
-      dateAnswerRowFn("check_your_answers.date_of_death.title", "Date of death", routes.DateOfDeathController.onPageLoad),
+      dateAnswerRowFn(
+        "check_your_answers.date_of_death.title",
+        "Date of death",
+        routes.DateOfDeathController.onPageLoad
+      ),
     Constants.partOfEstatePassingToDirectDescendantsId ->
-      boolAnswerRowFn("check_your_answers.part_of_estate_passing_to_direct_descendants.title",
+      boolAnswerRowFn(
+        "check_your_answers.part_of_estate_passing_to_direct_descendants.title",
         Constants.partOfEstatePassingToDirectDescendantsId,
-        routes.PartOfEstatePassingToDirectDescendantsController.onPageLoad),
+        routes.PartOfEstatePassingToDirectDescendantsController.onPageLoad
+      ),
     Constants.valueOfEstateId ->
-      intAnswerRowFn("check_your_answers.value_of_estate.title", Constants.valueOfEstateId, routes.ValueOfEstateController.onPageLoad),
+      intAnswerRowFn(
+        "check_your_answers.value_of_estate.title",
+        Constants.valueOfEstateId,
+        routes.ValueOfEstateController.onPageLoad
+      ),
     Constants.chargeableEstateValueId ->
-      intAnswerRowFn("check_your_answers.chargeable_estate_value.title", "Chargeable transfer amount", routes.ChargeableEstateValueController.onPageLoad),
+      intAnswerRowFn(
+        "check_your_answers.chargeable_estate_value.title",
+        "Chargeable transfer amount",
+        routes.ChargeableEstateValueController.onPageLoad
+      ),
     Constants.propertyInEstateId ->
-      boolAnswerRowFn("check_your_answers.property_in_estate.title", Constants.propertyInEstateId, routes.PropertyInEstateController.onPageLoad),
+      boolAnswerRowFn(
+        "check_your_answers.property_in_estate.title",
+        Constants.propertyInEstateId,
+        routes.PropertyInEstateController.onPageLoad
+      ),
     Constants.claimDownsizingThresholdId ->
-      boolAnswerRowFn("check_your_answers.claim_downsizing_threshold.title", Constants.claimDownsizingThresholdId,
-        routes.ClaimDownsizingThresholdController.onPageLoad),
+      boolAnswerRowFn(
+        "check_your_answers.claim_downsizing_threshold.title",
+        Constants.claimDownsizingThresholdId,
+        routes.ClaimDownsizingThresholdController.onPageLoad
+      ),
     Constants.datePropertyWasChangedId ->
-      dateAnswerRowFn("check_your_answers.date_property_was_changed.title", Constants.datePropertyWasChangedId,
-        routes.DatePropertyWasChangedController.onPageLoad),
+      dateAnswerRowFn(
+        "check_your_answers.date_property_was_changed.title",
+        Constants.datePropertyWasChangedId,
+        routes.DatePropertyWasChangedController.onPageLoad
+      ),
     Constants.valueOfChangedPropertyId ->
-      intAnswerRowFn("check_your_answers.value_of_changed_property.title", Constants.valueOfChangedPropertyId,
-        routes.ValueOfChangedPropertyController.onPageLoad),
+      intAnswerRowFn(
+        "check_your_answers.value_of_changed_property.title",
+        Constants.valueOfChangedPropertyId,
+        routes.ValueOfChangedPropertyController.onPageLoad
+      ),
     Constants.assetsPassingToDirectDescendantsId ->
-      boolAnswerRowFn("check_your_answers.assets_passing_to_direct_descendants.title",
+      boolAnswerRowFn(
+        "check_your_answers.assets_passing_to_direct_descendants.title",
         Constants.assetsPassingToDirectDescendantsId,
-        routes.AssetsPassingToDirectDescendantsController.onPageLoad),
+        routes.AssetsPassingToDirectDescendantsController.onPageLoad
+      ),
     Constants.transferAnyUnusedThresholdId ->
-      boolAnswerRowFn("check_your_answers.transfer_any_unused_threshold.title", Constants.transferAnyUnusedThresholdId,
-        routes.TransferAnyUnusedThresholdController.onPageLoad),
+      boolAnswerRowFn(
+        "check_your_answers.transfer_any_unused_threshold.title",
+        Constants.transferAnyUnusedThresholdId,
+        routes.TransferAnyUnusedThresholdController.onPageLoad
+      ),
     Constants.transferAvailableWhenPropertyChangedId ->
-      boolAnswerRowFn("check_your_answers.transfer_available_when_property_changed.title",
+      boolAnswerRowFn(
+        "check_your_answers.transfer_available_when_property_changed.title",
         Constants.transferAvailableWhenPropertyChangedId,
-        routes.TransferAvailableWhenPropertyChangedController.onPageLoad),
+        routes.TransferAvailableWhenPropertyChangedController.onPageLoad
+      ),
     Constants.exemptionsAndReliefClaimedId ->
-      boolAnswerRowFn("check_your_answers.exemptions_and_relief_claimed.title", Constants.exemptionsAndReliefClaimedId,
-        routes.ExemptionsAndReliefClaimedController.onPageLoad),
+      boolAnswerRowFn(
+        "check_your_answers.exemptions_and_relief_claimed.title",
+        Constants.exemptionsAndReliefClaimedId,
+        routes.ExemptionsAndReliefClaimedController.onPageLoad
+      ),
     Constants.valueOfAssetsPassingId ->
-      intAnswerRowFn("check_your_answers.value_of_assets_passing.title",
+      intAnswerRowFn(
+        "check_your_answers.value_of_assets_passing.title",
         Constants.valueOfAssetsPassingId,
-        routes.ValueOfAssetsPassingController.onPageLoad),
+        routes.ValueOfAssetsPassingController.onPageLoad
+      ),
     Constants.valueBeingTransferredId ->
-      intAnswerRowFn("check_your_answers.value_being_transferred.title", Constants.valueBeingTransferredId,
-        routes.ValueBeingTransferredController.onPageLoad),
+      intAnswerRowFn(
+        "check_your_answers.value_being_transferred.title",
+        Constants.valueBeingTransferredId,
+        routes.ValueBeingTransferredController.onPageLoad
+      ),
     Constants.valueAvailableWhenPropertyChangedId ->
-      intAnswerRowFn("check_your_answers.value_available_when_property_changed.title",
+      intAnswerRowFn(
+        "check_your_answers.value_available_when_property_changed.title",
         Constants.valueAvailableWhenPropertyChangedId,
-        routes.ValueAvailableWhenPropertyChangedController.onPageLoad),
+        routes.ValueAvailableWhenPropertyChangedController.onPageLoad
+      ),
     Constants.propertyPassingToDirectDescendantsId ->
-      propertyPassingToDirectDescendantsAnswerRowFn("check_your_answers.property_passing_to_direct_descendants.title",
-        Constants.propertyPassingToDirectDescendantsId, routes.PropertyPassingToDirectDescendantsController.onPageLoad),
+      propertyPassingToDirectDescendantsAnswerRowFn(
+        "check_your_answers.property_passing_to_direct_descendants.title",
+        Constants.propertyPassingToDirectDescendantsId,
+        routes.PropertyPassingToDirectDescendantsController.onPageLoad
+      ),
     Constants.grossingUpOnEstateAssetsId ->
-      boolAnswerRowFn("check_your_answers.grossing_up_on_estate_assets.title",
+      boolAnswerRowFn(
+        "check_your_answers.grossing_up_on_estate_assets.title",
         Constants.grossingUpOnEstateAssetsId,
-        routes.GrossingUpOnEstateAssetsController.onPageLoad),
+        routes.GrossingUpOnEstateAssetsController.onPageLoad
+      ),
     Constants.grossingUpOnEstatePropertyId ->
-      boolAnswerRowFn("check_your_answers.grossing_up_on_estate_property.title",
+      boolAnswerRowFn(
+        "check_your_answers.grossing_up_on_estate_property.title",
         Constants.grossingUpOnEstatePropertyId,
-        routes.GrossingUpOnEstatePropertyController.onPageLoad),
+        routes.GrossingUpOnEstatePropertyController.onPageLoad
+      ),
     Constants.percentagePassedToDirectDescendantsId ->
-      percentAnswerRowFn("check_your_answers.percentage_passed_to_direct_descendants.title", Constants.percentagePassedToDirectDescendantsId,
-        routes.PercentagePassedToDirectDescendantsController.onPageLoad),
+      percentAnswerRowFn(
+        "check_your_answers.percentage_passed_to_direct_descendants.title",
+        Constants.percentagePassedToDirectDescendantsId,
+        routes.PercentagePassedToDirectDescendantsController.onPageLoad
+      ),
     Constants.propertyValueId ->
-      intAnswerRowFn("check_your_answers.property_value.title", "Property value", routes.PropertyValueController.onPageLoad),
+      intAnswerRowFn(
+        "check_your_answers.property_value.title",
+        "Property value",
+        routes.PropertyValueController.onPageLoad
+      ),
     Constants.chargeablePropertyValueId ->
-      intAnswerRowFn("check_your_answers.chargeable_property_value.title",
+      intAnswerRowFn(
+        "check_your_answers.chargeable_property_value.title",
         Constants.chargeablePropertyValueId,
-        routes.ChargeablePropertyValueController.onPageLoad),
+        routes.ChargeablePropertyValueController.onPageLoad
+      ),
     Constants.chargeableInheritedPropertyValueId ->
-      intAnswerRowFn("check_your_answers.chargeable_inherited_property_value.title",
+      intAnswerRowFn(
+        "check_your_answers.chargeable_inherited_property_value.title",
         Constants.chargeableInheritedPropertyValueId,
-      routes.ChargeableInheritedPropertyValueController.onPageLoad)
+        routes.ChargeableInheritedPropertyValueController.onPageLoad
+      )
   )
 
-  def constructAnswerRows(cacheMap: CacheMap,
-                          answerRowFns: Map[String, JsValue => Messages => AnswerRow],
-                          rowOrder: Map[String, Int],
-                          messages: Messages): Seq[AnswerRow] = {
+  def constructAnswerRows(
+      cacheMap: CacheMap,
+      answerRowFns: Map[String, JsValue => Messages => AnswerRow],
+      rowOrder: Map[String, Int],
+      messages: Messages
+  ): Seq[AnswerRow] = {
     val dataToInclude = cacheMap.data.view.filterKeys(key => answerRowFns.keys.toSeq contains key).toSeq
-    dataToInclude.sortWith { case ((key1, _), (key2, _)) => rowOrder(key1) < rowOrder(key2) }.map {
-      case (key, value) => answerRowFns(key)(value)(messages)
+    dataToInclude.sortWith { case ((key1, _), (key2, _)) => rowOrder(key1) < rowOrder(key2) }.map { case (key, value) =>
+      answerRowFns(key)(value)(messages)
     }
   }
 
@@ -172,6 +248,7 @@ object AnswerRows {
     CacheMap(cacheMap.id, cacheMap.data.view.filterKeys(x => truncatedList.contains(x)).toMap)
   }
 
+  def apply(cacheMap: CacheMap, messages: Messages): Seq[AnswerRow] =
+    constructAnswerRows(cacheMap, answerRowFns, rowOrder, messages)
 
-  def apply(cacheMap: CacheMap, messages: Messages): Seq[AnswerRow] = constructAnswerRows(cacheMap, answerRowFns, rowOrder, messages)
 }

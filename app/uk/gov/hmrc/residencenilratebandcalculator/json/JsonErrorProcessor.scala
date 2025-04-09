@@ -20,16 +20,16 @@ import play.api.libs.json.{JsPath, JsonValidationError}
 import scala.collection.Seq
 
 object JsonErrorProcessor {
-  private def validationErrorToString(v: JsonValidationError): String = {
+
+  private def validationErrorToString(v: JsonValidationError): String =
     v.messages.foldLeft(new StringBuilder())(_ append _).toString()
-  }
 
   private def errorTupleToString(t: (JsPath, Seq[JsonValidationError])): String = {
     val validationErrors = t._2.map(validationErrorToString).foldLeft(new StringBuilder())(_ append _).toString()
     "JSON error: " + validationErrors + "\n"
   }
 
-  def apply(errs: Seq[(JsPath, Seq[JsonValidationError])]): String = {
+  def apply(errs: Seq[(JsPath, Seq[JsonValidationError])]): String =
     errs.map(errorTupleToString).foldLeft(new StringBuilder())(_ append _).toString()
-  }
+
 }

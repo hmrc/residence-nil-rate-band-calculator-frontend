@@ -26,7 +26,7 @@ import scala.concurrent.ExecutionContext
 trait WithCommonFakeApplication extends BeforeAndAfterAll {
   this: Suite =>
 
-  lazy val fakeApplication: Application = new GuiceApplicationBuilder().bindings(bindModules:_*).build()
+  lazy val fakeApplication: Application = new GuiceApplicationBuilder().bindings(bindModules: _*).build()
 
   def bindModules: Seq[GuiceableModule] = Seq()
 
@@ -40,11 +40,10 @@ trait WithCommonFakeApplication extends BeforeAndAfterAll {
     Play.stop(fakeApplication)
   }
 
-  def evaluateUsingPlay[T](block: => T): T = {
+  def evaluateUsingPlay[T](block: => T): T =
     running(fakeApplication) {
       block
     }
-  }
 
   implicit val ec: ExecutionContext = fakeApplication.injector.instanceOf[ExecutionContext]
 

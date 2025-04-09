@@ -26,31 +26,58 @@ class PropertyPassingToDirectDescendantsControllerSpec extends NewSimpleControll
 
   val messageKeyPrefix = "property_passing_to_direct_descendants"
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-  val property_passing_to_direct_descendants: property_passing_to_direct_descendants = injector.instanceOf[property_passing_to_direct_descendants]
+  val messagesControllerComponents: DefaultMessagesControllerComponents =
+    injector.instanceOf[DefaultMessagesControllerComponents]
+
+  val property_passing_to_direct_descendants: property_passing_to_direct_descendants =
+    injector.instanceOf[property_passing_to_direct_descendants]
+
   "Property Passing To Direct Descendants Controller" must {
 
-    def createView = (value: Option[Map[String, String]]) => {
+    def createView = (value: Option[Map[String, String]]) =>
       value match {
-        case None => property_passing_to_direct_descendants(PropertyPassingToDirectDescendantsForm.apply())(fakeRequest, messages)
-        case Some(v) => property_passing_to_direct_descendants(PropertyPassingToDirectDescendantsForm().bind(v))(fakeRequest, messages)
+        case None =>
+          property_passing_to_direct_descendants(PropertyPassingToDirectDescendantsForm.apply())(fakeRequest, messages)
+        case Some(v) =>
+          property_passing_to_direct_descendants(PropertyPassingToDirectDescendantsForm().bind(v))(
+            fakeRequest,
+            messages
+          )
       }
-    }
 
-    def createController = () => new PropertyPassingToDirectDescendantsController(
-      messagesControllerComponents, mockSessionConnector, navigator, property_passing_to_direct_descendants)
+    def createController = () =>
+      new PropertyPassingToDirectDescendantsController(
+        messagesControllerComponents,
+        mockSessionConnector,
+        navigator,
+        property_passing_to_direct_descendants
+      )
 
     val testValue = Constants.all
 
-    behave like rnrbController[String](
-      createController, createView, Constants.propertyPassingToDirectDescendantsId, messageKeyPrefix, testValue)(Reads.StringReads, Writes.StringWrites)
+    behave.like(
+      rnrbController[String](
+        createController,
+        createView,
+        Constants.propertyPassingToDirectDescendantsId,
+        messageKeyPrefix,
+        testValue
+      )(Reads.StringReads, Writes.StringWrites)
+    )
 
-    behave like nonStartingController[String](createController,
-      List(Constants.dateOfDeathId,
-           Constants.partOfEstatePassingToDirectDescendantsId,
-           Constants.valueOfEstateId,
-           Constants.chargeableEstateValueId,
-           Constants.propertyInEstateId,
-           Constants.propertyValueId))(Reads.StringReads, Writes.StringWrites)
+    behave.like(
+      nonStartingController[String](
+        createController,
+        List(
+          Constants.dateOfDeathId,
+          Constants.partOfEstatePassingToDirectDescendantsId,
+          Constants.valueOfEstateId,
+          Constants.chargeableEstateValueId,
+          Constants.propertyInEstateId,
+          Constants.propertyValueId
+        )
+      )(Reads.StringReads, Writes.StringWrites)
+    )
   }
+
 }

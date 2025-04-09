@@ -26,16 +26,36 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_passing_to
 class PropertyPassingToDirectDescendantsViewSpec extends NewBooleanViewSpecBase {
 
   val messageKeyPrefix = "property_passing_to_direct_descendants"
-  val property_passing_to_direct_descendants: property_passing_to_direct_descendants = injector.instanceOf[property_passing_to_direct_descendants]
-  def createView(form: Form[String]): HtmlFormat.Appendable = property_passing_to_direct_descendants(form)(request, messages)
+
+  val property_passing_to_direct_descendants: property_passing_to_direct_descendants =
+    injector.instanceOf[property_passing_to_direct_descendants]
+
+  def createView(form: Form[String]): HtmlFormat.Appendable =
+    property_passing_to_direct_descendants(form)(request, messages)
 
   "Property Passing To Direct Descendants View" must {
 
-    behave like rnrbPage[String](createView, messageKeyPrefix, "guidance1", "guidance2")(fakeApplication().injector.instanceOf[PropertyPassingToDirectDescendantsController].form())
+    behave.like(
+      rnrbPage[String](createView, messageKeyPrefix, "guidance1", "guidance2")(
+        fakeApplication().injector.instanceOf[PropertyPassingToDirectDescendantsController].form()
+      )
+    )
 
-    behave like pageWithoutBackLink[String](createView, fakeApplication().injector.instanceOf[PropertyPassingToDirectDescendantsController].form())
+    behave.like(
+      pageWithoutBackLink[String](
+        createView,
+        fakeApplication().injector.instanceOf[PropertyPassingToDirectDescendantsController].form()
+      )
+    )
 
-    behave like questionPage[String](createView, messageKeyPrefix, PropertyPassingToDirectDescendantsController.onSubmit.url, fakeApplication().injector.instanceOf[PropertyPassingToDirectDescendantsController].form())
+    behave.like(
+      questionPage[String](
+        createView,
+        messageKeyPrefix,
+        PropertyPassingToDirectDescendantsController.onSubmit.url,
+        fakeApplication().injector.instanceOf[PropertyPassingToDirectDescendantsController].form()
+      )
+    )
   }
 
   "Property Passing To Direct Descendants View" when {
@@ -80,4 +100,5 @@ class PropertyPassingToDirectDescendantsViewSpec extends NewBooleanViewSpecBase 
       }
     }
   }
+
 }

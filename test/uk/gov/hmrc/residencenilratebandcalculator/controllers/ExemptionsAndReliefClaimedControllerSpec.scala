@@ -25,34 +25,56 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.exemptions_and_reli
 
 class ExemptionsAndReliefClaimedControllerSpec extends NewSimpleControllerSpecBase {
 
-  val messageKey = "exemptions_and_relief_claimed.error.required"
+  val messageKey       = "exemptions_and_relief_claimed.error.required"
   val messageKeyPrefix = "exemptions_and_relief_claimed"
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val messagesControllerComponents: DefaultMessagesControllerComponents =
+    injector.instanceOf[DefaultMessagesControllerComponents]
+
   val exemptions_and_relief_claimed: exemptions_and_relief_claimed = injector.instanceOf[exemptions_and_relief_claimed]
+
   "Exemptions And Relief Claimed Controller" must {
 
     def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
-      case None => exemptions_and_relief_claimed(BooleanForm.apply(messageKey))(fakeRequest, messages)
+      case None    => exemptions_and_relief_claimed(BooleanForm.apply(messageKey))(fakeRequest, messages)
       case Some(v) => exemptions_and_relief_claimed(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
     }
 
     def createController: () => ExemptionsAndReliefClaimedController = () =>
-      new ExemptionsAndReliefClaimedController(messagesControllerComponents, mockSessionConnector, navigator, exemptions_and_relief_claimed)
+      new ExemptionsAndReliefClaimedController(
+        messagesControllerComponents,
+        mockSessionConnector,
+        navigator,
+        exemptions_and_relief_claimed
+      )
 
     val testValue = true
 
-    behave like rnrbController[Boolean](
-      createController, createView, Constants.exemptionsAndReliefClaimedId, messageKeyPrefix, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+    behave.like(
+      rnrbController[Boolean](
+        createController,
+        createView,
+        Constants.exemptionsAndReliefClaimedId,
+        messageKeyPrefix,
+        testValue
+      )(Reads.BooleanReads, Writes.BooleanWrites)
+    )
 
-    behave like nonStartingController[Boolean](createController,
-      List(Constants.dateOfDeathId,
-        Constants.partOfEstatePassingToDirectDescendantsId,
-        Constants.valueOfEstateId,
-        Constants.chargeableEstateValueId,
-        Constants.propertyInEstateId,
-        Constants.propertyValueId,
-        Constants.propertyPassingToDirectDescendantsId,
-        Constants.percentagePassedToDirectDescendantsId))(Reads.BooleanReads, Writes.BooleanWrites)
+    behave.like(
+      nonStartingController[Boolean](
+        createController,
+        List(
+          Constants.dateOfDeathId,
+          Constants.partOfEstatePassingToDirectDescendantsId,
+          Constants.valueOfEstateId,
+          Constants.chargeableEstateValueId,
+          Constants.propertyInEstateId,
+          Constants.propertyValueId,
+          Constants.propertyPassingToDirectDescendantsId,
+          Constants.percentagePassedToDirectDescendantsId
+        )
+      )(Reads.BooleanReads, Writes.BooleanWrites)
+    )
   }
+
 }

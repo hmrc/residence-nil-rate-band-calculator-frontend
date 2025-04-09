@@ -33,35 +33,38 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class DateOfDeathController @Inject()(cc: DefaultMessagesControllerComponents,
-                                      val sessionConnector: SessionConnector,
-                                      val navigator: Navigator,
-                                      validatedSession: ValidatedSession,
-                                      dateOfDeathView: date_of_death)(implicit ex: ExecutionContext) extends FrontendController(cc) with ControllerBase[Date] {
+class DateOfDeathController @Inject() (
+    cc: DefaultMessagesControllerComponents,
+    val sessionConnector: SessionConnector,
+    val navigator: Navigator,
+    validatedSession: ValidatedSession,
+    dateOfDeathView: date_of_death
+)(implicit ex: ExecutionContext)
+    extends FrontendController(cc)
+    with ControllerBase[Date] {
 
   lazy val controllerId: String = Constants.dateOfDeathId
 
   def view(form: Form[Date])(implicit request: Request[_]): HtmlFormat.Appendable = dateOfDeathView(form)
 
   def onPageLoad(implicit rds: Reads[Date]): Action[AnyContent] = Action.async { implicit request =>
-    sessionConnector.fetch().map(
-      optionalCacheMap => {
-        val cacheMap: CacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
-        val dateOfDeath = cacheMap.getEntry[Date](controllerId)
+    sessionConnector.fetch().map { optionalCacheMap =>
+      val cacheMap: CacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
+      val dateOfDeath        = cacheMap.getEntry[Date](controllerId)
 
-        Ok(view(dateOfDeath.fold(dateOfDeathForm)(value => dateOfDeathForm.fill(value))))
-      })
+      Ok(view(dateOfDeath.fold(dateOfDeathForm)(value => dateOfDeathForm.fill(value))))
+    }
   }
 
   def onSubmit(implicit wts: Writes[Date]): Action[AnyContent] = validatedSession.async { implicit request =>
     val boundForm = dateOfDeathForm.bindFromRequest()
     boundForm.fold(
-      (formWithErrors: Form[Date]) => {
-        Future.successful(BadRequest(view(formWithErrors)))
-      },
+      (formWithErrors: Form[Date]) => Future.successful(BadRequest(view(formWithErrors))),
       value =>
-        sessionConnector.cache[Date](controllerId, value).map(cacheMap =>
-          Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
+        sessionConnector
+          .cache[Date](controllerId, value)
+          .map(cacheMap => Redirect(navigator.nextPage(controllerId)(new UserAnswers(cacheMap))))
     )
   }
+
 }

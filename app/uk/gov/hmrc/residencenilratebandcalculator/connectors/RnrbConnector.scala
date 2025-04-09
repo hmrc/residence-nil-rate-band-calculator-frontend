@@ -30,56 +30,60 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
 
 @Singleton
-class RnrbConnector @Inject()(val http: DefaultHttpClient,
-                              val config: FrontendAppConfig)(implicit ec: ExecutionContext) {
+class RnrbConnector @Inject() (val http: DefaultHttpClient, val config: FrontendAppConfig)(
+    implicit ec: ExecutionContext
+) {
 
-  lazy val serviceUrl: String = config.serviceUrl
-  val baseSegment = "/residence-nil-rate-band-calculator/"
+  lazy val serviceUrl: String                 = config.serviceUrl
+  val baseSegment                             = "/residence-nil-rate-band-calculator/"
   val jsonContentTypeHeader: (String, String) = ("Content-Type", "application/json")
 
   implicit val calculationResultWrites: Writes[CalculationInput] = Writes { (input: CalculationInput) =>
-
     val propertyValueAfter = input.propertyValueAfterExemption match {
       case Some(pvae) => Json.obj("propertyValueAfterExemption" -> pvae)
-      case _ => Json.obj()
+      case _          => Json.obj()
     }
 
     val downsizingDetails = input.downsizingDetails match {
-      case Some(down) => Json.obj("downsizingDetails" ->
+      case Some(down) =>
         Json.obj(
-          "datePropertyWasChanged" -> Json.toJson(down.datePropertyWasChanged),
-          "valueOfChangedProperty" -> Json.toJson(down.valueOfChangedProperty),
-          "valueOfAssetsPassing" -> Json.toJson(down.valueOfAssetsPassing),
-          "valueAvailableWhenPropertyChanged" -> Json.toJson(down.valueAvailableWhenPropertyChanged)
+          "downsizingDetails" ->
+            Json.obj(
+              "datePropertyWasChanged"            -> Json.toJson(down.datePropertyWasChanged),
+              "valueOfChangedProperty"            -> Json.toJson(down.valueOfChangedProperty),
+              "valueOfAssetsPassing"              -> Json.toJson(down.valueOfAssetsPassing),
+              "valueAvailableWhenPropertyChanged" -> Json.toJson(down.valueAvailableWhenPropertyChanged)
+            )
         )
-      )
       case _ => Json.obj()
     }
 
     Json.obj(
-      "dateOfDeath" -> Json.toJson(input.dateOfDeath),
-      "valueOfEstate" -> Json.toJson(input.valueOfEstate),
-      "chargeableEstateValue" -> Json.toJson(input.chargeableEstateValue),
-      "propertyValue" -> Json.toJson(input.propertyValue),
+      "dateOfDeath"                         -> Json.toJson(input.dateOfDeath),
+      "valueOfEstate"                       -> Json.toJson(input.valueOfEstate),
+      "chargeableEstateValue"               -> Json.toJson(input.chargeableEstateValue),
+      "propertyValue"                       -> Json.toJson(input.propertyValue),
       "percentagePassedToDirectDescendants" -> Json.toJson(input.percentagePassedToDirectDescendants),
-      "valueBeingTransferred" -> Json.toJson(input.valueBeingTransferred)
+      "valueBeingTransferred"               -> Json.toJson(input.valueBeingTransferred)
     ) ++ propertyValueAfter ++ downsizingDetails
   }
 
-  def send(input: CalculationInput) (implicit hc: HeaderCarrier): Future[Try[CalculationResult]] = sendJson(Json.toJson(input))
+  def send(input: CalculationInput)(implicit hc: HeaderCarrier): Future[Try[CalculationResult]] = sendJson(
+    Json.toJson(input)
+  )
 
-  def sendJson(json: JsValue) (implicit hc: HeaderCarrier): Future[Try[CalculationResult]] = {
-    http.POST[JsValue,HttpResponse](s"$serviceUrl${baseSegment}calculate", json, Seq(jsonContentTypeHeader))
-      .map {
-        response =>
-          Json.fromJson[CalculationResult](response.json) match {
-            case JsSuccess(result, _) => Success(result)
-            case JsError(error) =>
-              Failure(new JsonInvalidException(JsonErrorProcessor(error)))
-          }
+  def sendJson(json: JsValue)(implicit hc: HeaderCarrier): Future[Try[CalculationResult]] =
+    http
+      .POST[JsValue, HttpResponse](s"$serviceUrl${baseSegment}calculate", json, Seq(jsonContentTypeHeader))
+      .map { response =>
+        Json.fromJson[CalculationResult](response.json) match {
+          case JsSuccess(result, _) => Success(result)
+          case JsError(error) =>
+            Failure(new JsonInvalidException(JsonErrorProcessor(error)))
+        }
       }
-  }
 
-  def getNilRateBand(dateStr: String)(implicit hc: HeaderCarrier): Future[HttpResponse] = http.GET(s"$serviceUrl${baseSegment}nilrateband/$dateStr")
+  def getNilRateBand(dateStr: String)(implicit hc: HeaderCarrier): Future[HttpResponse] =
+    http.GET(s"$serviceUrl${baseSegment}nilrateband/$dateStr")
 
 }

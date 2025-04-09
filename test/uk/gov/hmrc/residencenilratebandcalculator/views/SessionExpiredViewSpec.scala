@@ -21,12 +21,17 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.session_expired
 
 class SessionExpiredViewSpec extends ViewSpecBase {
 
-  val messageKeyPrefix = "session_expired"
+  val messageKeyPrefix                 = "session_expired"
   val session_expired: session_expired = injector.instanceOf[session_expired]
+
   "Session Expired view" must {
     "display the correct browser title" in {
       val doc = asDocument(session_expired()(request, messages))
-      assertEqualsMessage(doc, "title", s"${messages(s"$messageKeyPrefix.browser_title")} - ${messages("service.name")} - GOV.UK")
+      assertEqualsMessage(
+        doc,
+        "title",
+        s"${messages(s"$messageKeyPrefix.browser_title")} - ${messages("service.name")} - GOV.UK"
+      )
     }
 
     "display the correct title" in {
@@ -35,7 +40,7 @@ class SessionExpiredViewSpec extends ViewSpecBase {
     }
 
     "display a Start Again button linking to the 'Calculate Threshold Increase' page" in {
-      val doc = asDocument(session_expired()(request, messages))
+      val doc       = asDocument(session_expired()(request, messages))
       val startLink = doc.getElementById("start-again")
       startLink.className mustBe "govuk-button"
       startLink.attr("href") mustBe routes.DateOfDeathController.onPageLoad.url
@@ -47,4 +52,5 @@ class SessionExpiredViewSpec extends ViewSpecBase {
       assertNotRenderedByCssSelector(doc, ".organisation-logo")
     }
   }
+
 }

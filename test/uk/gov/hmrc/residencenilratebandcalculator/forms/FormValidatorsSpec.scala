@@ -22,22 +22,23 @@ class FormValidatorsSpec extends PlaySpec {
 
   "The isValidDate method" must {
 
-    "return a response of true" when{
+    "return a response of true" when {
 
       "provided with a valid date" in {
-        FormValidators.isValidDate(4,6,2017) mustBe true
+        FormValidators.isValidDate(4, 6, 2017) mustBe true
       }
     }
 
     "return a response of false" when {
 
       "provided with an invalid day" in {
-        FormValidators.isValidDate(80,6,2017) mustBe false
+        FormValidators.isValidDate(80, 6, 2017) mustBe false
       }
 
       "provided with an invalid month" in {
-        FormValidators.isValidDate(4,13,2017) mustBe false
+        FormValidators.isValidDate(4, 13, 2017) mustBe false
       }
     }
   }
+
 }

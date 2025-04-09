@@ -28,32 +28,52 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_available_whe
 
 class ValueAvailableWhenPropertyChangedViewSpec extends NewIntViewSpecBase {
 
-  val messageKeyPrefix = "value_available_when_property_changed"
-  val navigator: Navigator = injector.instanceOf[Navigator]
+  val messageKeyPrefix                       = "value_available_when_property_changed"
+  val navigator: Navigator                   = injector.instanceOf[Navigator]
   var mockSessionConnector: SessionConnector = _
-  val mockRnrbConnector : RnrbConnector = mock[RnrbConnector]
+  val mockRnrbConnector: RnrbConnector       = mock[RnrbConnector]
   val mockValidatedSession: ValidatedSession = mock[ValidatedSession]
-  val value_available_when_property_changed: value_available_when_property_changed = injector.instanceOf[value_available_when_property_changed]
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val value_available_when_property_changed: value_available_when_property_changed =
+    injector.instanceOf[value_available_when_property_changed]
 
-  val controller: Form[Int] = new ValueAvailableWhenPropertyChangedController(messagesControllerComponents, mockSessionConnector, navigator, mockRnrbConnector, mockValidatedSession, value_available_when_property_changed).form()
+  val messagesControllerComponents: DefaultMessagesControllerComponents =
+    injector.instanceOf[DefaultMessagesControllerComponents]
 
-  def createView(form: Form[Int]): HtmlFormat.Appendable = value_available_when_property_changed("100000", form)(request, messages)
+  val controller: Form[Int] = new ValueAvailableWhenPropertyChangedController(
+    messagesControllerComponents,
+    mockSessionConnector,
+    navigator,
+    mockRnrbConnector,
+    mockValidatedSession,
+    value_available_when_property_changed
+  ).form()
+
+  def createView(form: Form[Int]): HtmlFormat.Appendable =
+    value_available_when_property_changed("100000", form)(request, messages)
 
   "Value Available When Property Changed View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance1")(controller)
+    behave.like(rnrbPage[Int](createView, messageKeyPrefix, "guidance1")(controller))
 
-    behave like pageWithoutBackLink[Int](createView, controller)
+    behave.like(pageWithoutBackLink[Int](createView, controller))
 
-    behave like intPage(createView, messageKeyPrefix, routes.ValueAvailableWhenPropertyChangedController.onSubmit.url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), controller)
+    behave.like(
+      intPage(
+        createView,
+        messageKeyPrefix,
+        routes.ValueAvailableWhenPropertyChangedController.onSubmit.url,
+        NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage),
+        controller
+      )
+    )
 
     "contain the appropriate maximum value of transferable residence nil rate band" in {
-      val doc = asDocument(createView(controller))
+      val doc      = asDocument(createView(controller))
       val maxValue = "100000"
       assertContainsText(doc, maxValue)
     }
 
   }
+
 }

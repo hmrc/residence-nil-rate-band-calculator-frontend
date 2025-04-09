@@ -26,51 +26,79 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.{CacheMap, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_assets_passing
 
-class ValueOfAssetsPassingControllerSpec extends NewSimpleControllerSpecBase with CommonPlaySpec{
+class ValueOfAssetsPassingControllerSpec extends NewSimpleControllerSpecBase with CommonPlaySpec {
 
-  val errorKeyBlank = "value_of_assets_passing.error.blank"
-  val errorKeyDecimal = "error.whole_pounds"
+  val errorKeyBlank      = "value_of_assets_passing.error.blank"
+  val errorKeyDecimal    = "error.whole_pounds"
   val errorKeyNonNumeric = "error.non_numeric"
-  val errorKeyTooLarge = "error.value_too_large"
-  val messageKeyPrefix = "value_of_assets_passing"
+  val errorKeyTooLarge   = "error.value_too_large"
+  val messageKeyPrefix   = "value_of_assets_passing"
 
   val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-  val value_of_assets_passing = injector.instanceOf[value_of_assets_passing]
+  val value_of_assets_passing      = injector.instanceOf[value_of_assets_passing]
+
   "Value Of Assets Passing Controller" must {
 
-    def createView = (value: Option[Map[String, String]]) => {
+    def createView = (value: Option[Map[String, String]]) =>
       value match {
-        case None => value_of_assets_passing(NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), formattedPropertyValue = None)(fakeRequest, messages)
-        case Some(v) => value_of_assets_passing(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v), None)(fakeRequest, messages)
+        case None =>
+          value_of_assets_passing(
+            NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),
+            formattedPropertyValue = None
+          )(fakeRequest, messages)
+        case Some(v) =>
+          value_of_assets_passing(
+            NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v),
+            None
+          )(fakeRequest, messages)
       }
-    }
 
-    def createController = () => new ValueOfAssetsPassingController(messagesControllerComponents, mockSessionConnector, navigator, value_of_assets_passing)
+    def createController = () =>
+      new ValueOfAssetsPassingController(
+        messagesControllerComponents,
+        mockSessionConnector,
+        navigator,
+        value_of_assets_passing
+      )
 
     val testValue = 123
 
     val valuesToCacheBeforeSubmission = Map(Constants.valueOfEstateId -> testValue)
 
-    behave like rnrbController[Int](createController, createView, Constants.valueOfAssetsPassingId,
-      messageKeyPrefix, testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
+    behave.like(
+      rnrbController[Int](
+        createController,
+        createView,
+        Constants.valueOfAssetsPassingId,
+        messageKeyPrefix,
+        testValue,
+        valuesToCacheBeforeSubmission
+      )(Reads.IntReads, Writes.IntWrites)
+    )
 
-    behave like nonStartingController[Int](createController,
-      List(Constants.dateOfDeathId,
-        Constants.partOfEstatePassingToDirectDescendantsId,
-        Constants.valueOfEstateId,
-        Constants.chargeableEstateValueId,
-        Constants.propertyInEstateId,
-        Constants.propertyValueId,
-        Constants.propertyPassingToDirectDescendantsId,
-        Constants.percentagePassedToDirectDescendantsId,
-        Constants.chargeablePropertyValueId,
-        Constants.transferAnyUnusedThresholdId,
-        Constants.valueBeingTransferredId,
-        Constants.claimDownsizingThresholdId,
-        Constants.datePropertyWasChangedId,
-        Constants.valueOfChangedPropertyId,
-        Constants.assetsPassingToDirectDescendantsId,
-        Constants.grossingUpOnEstateAssetsId))(Reads.IntReads, Writes.IntWrites)
+    behave.like(
+      nonStartingController[Int](
+        createController,
+        List(
+          Constants.dateOfDeathId,
+          Constants.partOfEstatePassingToDirectDescendantsId,
+          Constants.valueOfEstateId,
+          Constants.chargeableEstateValueId,
+          Constants.propertyInEstateId,
+          Constants.propertyValueId,
+          Constants.propertyPassingToDirectDescendantsId,
+          Constants.percentagePassedToDirectDescendantsId,
+          Constants.chargeablePropertyValueId,
+          Constants.transferAnyUnusedThresholdId,
+          Constants.valueBeingTransferredId,
+          Constants.claimDownsizingThresholdId,
+          Constants.datePropertyWasChangedId,
+          Constants.valueOfChangedPropertyId,
+          Constants.assetsPassingToDirectDescendantsId,
+          Constants.grossingUpOnEstateAssetsId
+        )
+      )(Reads.IntReads, Writes.IntWrites)
+    )
 
     "return bad request on submit with a value greater than the previously saved Value Of Estate" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))
@@ -80,9 +108,15 @@ class ValueOfAssetsPassingControllerSpec extends NewSimpleControllerSpecBase wit
     }
 
     "return the correct view when provided with answers including a valid property value" in {
-      val result = createController().view(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), new UserAnswers(CacheMap("id", Map(Constants.propertyValueId -> Json.toJson(1)))))(fakeRequest)
-      result mustBe value_of_assets_passing(NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge), Some(CurrencyFormatter.format(1)))(fakeRequest,
-        messages)
+      val result = createController().view(
+        NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),
+        new UserAnswers(CacheMap("id", Map(Constants.propertyValueId -> Json.toJson(1))))
+      )(fakeRequest)
+      result mustBe value_of_assets_passing(
+        NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),
+        Some(CurrencyFormatter.format(1))
+      )(fakeRequest, messages)
     }
   }
+
 }

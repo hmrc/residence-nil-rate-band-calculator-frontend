@@ -25,43 +25,66 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_available_
 
 class TransferAvailableWhenPropertyChangedControllerSpec extends NewSimpleControllerSpecBase {
 
-  val messageKey = "transfer_available_when_property_changed.error.required"
+  val messageKey       = "transfer_available_when_property_changed.error.required"
   val messageKeyPrefix = "transfer_available_when_property_changed"
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-  val transfer_available_when_property_changed: transfer_available_when_property_changed = injector.instanceOf[transfer_available_when_property_changed]
+  val messagesControllerComponents: DefaultMessagesControllerComponents =
+    injector.instanceOf[DefaultMessagesControllerComponents]
+
+  val transfer_available_when_property_changed: transfer_available_when_property_changed =
+    injector.instanceOf[transfer_available_when_property_changed]
+
   "Transfer Available When Property Changed Controller" must {
 
     def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
-      case None => transfer_available_when_property_changed(BooleanForm.apply(messageKey))(fakeRequest, messages)
+      case None    => transfer_available_when_property_changed(BooleanForm.apply(messageKey))(fakeRequest, messages)
       case Some(v) => transfer_available_when_property_changed(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
     }
 
     def createController: () => TransferAvailableWhenPropertyChangedController = () =>
       new TransferAvailableWhenPropertyChangedController(
-        messagesControllerComponents, mockSessionConnector, navigator, transfer_available_when_property_changed)
+        messagesControllerComponents,
+        mockSessionConnector,
+        navigator,
+        transfer_available_when_property_changed
+      )
 
     val testValue = true
 
-    behave like rnrbController(createController, createView, Constants.transferAvailableWhenPropertyChangedId, messageKeyPrefix,testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+    behave.like(
+      rnrbController(
+        createController,
+        createView,
+        Constants.transferAvailableWhenPropertyChangedId,
+        messageKeyPrefix,
+        testValue
+      )(Reads.BooleanReads, Writes.BooleanWrites)
+    )
 
-    behave like nonStartingController[Boolean](createController,
-      List(Constants.dateOfDeathId,
-           Constants.partOfEstatePassingToDirectDescendantsId,
-           Constants.valueOfEstateId,
-           Constants.chargeableEstateValueId,
-           Constants.propertyInEstateId,
-           Constants.propertyValueId,
-           Constants.propertyPassingToDirectDescendantsId,
-           Constants.percentagePassedToDirectDescendantsId,
-           Constants.chargeablePropertyValueId,
-           Constants.transferAnyUnusedThresholdId,
-           Constants.valueBeingTransferredId,
-           Constants.claimDownsizingThresholdId,
-           Constants.datePropertyWasChangedId,
-           Constants.valueOfChangedPropertyId,
-           Constants.assetsPassingToDirectDescendantsId,
-           Constants.grossingUpOnEstateAssetsId,
-           Constants.valueOfAssetsPassingId))(Reads.BooleanReads, Writes.BooleanWrites)
+    behave.like(
+      nonStartingController[Boolean](
+        createController,
+        List(
+          Constants.dateOfDeathId,
+          Constants.partOfEstatePassingToDirectDescendantsId,
+          Constants.valueOfEstateId,
+          Constants.chargeableEstateValueId,
+          Constants.propertyInEstateId,
+          Constants.propertyValueId,
+          Constants.propertyPassingToDirectDescendantsId,
+          Constants.percentagePassedToDirectDescendantsId,
+          Constants.chargeablePropertyValueId,
+          Constants.transferAnyUnusedThresholdId,
+          Constants.valueBeingTransferredId,
+          Constants.claimDownsizingThresholdId,
+          Constants.datePropertyWasChangedId,
+          Constants.valueOfChangedPropertyId,
+          Constants.assetsPassingToDirectDescendantsId,
+          Constants.grossingUpOnEstateAssetsId,
+          Constants.valueOfAssetsPassingId
+        )
+      )(Reads.BooleanReads, Writes.BooleanWrites)
+    )
   }
+
 }

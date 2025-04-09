@@ -25,16 +25,34 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_estate_v
 
 class ChargeableEstateValueViewSpec extends NewIntViewSpecBase {
 
-  val messageKeyPrefix = "chargeable_estate_value"
-  val chargeable_estate_value: chargeable_estate_value = injector.instanceOf[chargeable_estate_value]
+  val messageKeyPrefix                                   = "chargeable_estate_value"
+  val chargeable_estate_value: chargeable_estate_value   = injector.instanceOf[chargeable_estate_value]
   def createView(form: Form[Int]): HtmlFormat.Appendable = chargeable_estate_value(form)(request, messages)
 
   "Chargeable Estate Value View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix, "guidance")(fakeApplication().injector.instanceOf[ChargeableEstateValueController].form())
+    behave.like(
+      rnrbPage[Int](createView, messageKeyPrefix, "guidance")(
+        fakeApplication().injector.instanceOf[ChargeableEstateValueController].form()
+      )
+    )
 
-    behave like pageWithoutBackLink[Int](createView, fakeApplication().injector.instanceOf[ChargeableEstateValueController].form())
+    behave.like(
+      pageWithoutBackLink[Int](
+        createView,
+        fakeApplication().injector.instanceOf[ChargeableEstateValueController].form()
+      )
+    )
 
-    behave like intPage(createView, messageKeyPrefix, ChargeableEstateValueController.onSubmit.url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), fakeApplication().injector.instanceOf[ChargeableEstateValueController].form())
+    behave.like(
+      intPage(
+        createView,
+        messageKeyPrefix,
+        ChargeableEstateValueController.onSubmit.url,
+        NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage),
+        fakeApplication().injector.instanceOf[ChargeableEstateValueController].form()
+      )
+    )
   }
+
 }

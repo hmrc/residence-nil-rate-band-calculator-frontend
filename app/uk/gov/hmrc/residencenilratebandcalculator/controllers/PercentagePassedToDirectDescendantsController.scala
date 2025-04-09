@@ -28,19 +28,25 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
 
 import scala.concurrent.ExecutionContext
 
-class PercentagePassedToDirectDescendantsController  @Inject()(cc: DefaultMessagesControllerComponents,
-                                                               override val sessionConnector: SessionConnector,
-                                                               override val navigator: Navigator,
-                                                               percentagePassedToDirectDescendantsView: percentage_passed_to_direct_descendants)
-                                                              (implicit val ec: ExecutionContext) extends FrontendController(cc) with SimpleControllerBase[BigDecimal] {
-
+class PercentagePassedToDirectDescendantsController @Inject() (
+    cc: DefaultMessagesControllerComponents,
+    override val sessionConnector: SessionConnector,
+    override val navigator: Navigator,
+    percentagePassedToDirectDescendantsView: percentage_passed_to_direct_descendants
+)(implicit val ec: ExecutionContext)
+    extends FrontendController(cc)
+    with SimpleControllerBase[BigDecimal] {
 
   override val controllerId = Constants.percentagePassedToDirectDescendantsId
 
-  override def form = () => PositivePercentForm("percentage_passed_to_direct_descendants.error.required",
-    "percentage_passed_to_direct_descendants.error.non_numeric", "percentage_passed_to_direct_descendants.error.out_of_range")
+  override def form = () =>
+    PositivePercentForm(
+      "percentage_passed_to_direct_descendants.error.required",
+      "percentage_passed_to_direct_descendants.error.non_numeric",
+      "percentage_passed_to_direct_descendants.error.out_of_range"
+    )
 
-  override def view(form: Form[BigDecimal], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+  override def view(form: Form[BigDecimal], userAnswers: UserAnswers)(implicit request: Request[_]) =
     percentagePassedToDirectDescendantsView(form)
-  }
+
 }

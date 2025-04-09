@@ -29,17 +29,20 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class PropertyPassingToDirectDescendantsController @Inject()(cc: DefaultMessagesControllerComponents,
-                                                             override val sessionConnector: SessionConnector,
-                                                             override val navigator: Navigator,
-                                                             propertyPassingToDirectDescendantsView: property_passing_to_direct_descendants)
-                                                            (override implicit val ec: ExecutionContext) extends FrontendController(cc) with SimpleControllerBase[String] {
+class PropertyPassingToDirectDescendantsController @Inject() (
+    cc: DefaultMessagesControllerComponents,
+    override val sessionConnector: SessionConnector,
+    override val navigator: Navigator,
+    propertyPassingToDirectDescendantsView: property_passing_to_direct_descendants
+)(override implicit val ec: ExecutionContext)
+    extends FrontendController(cc)
+    with SimpleControllerBase[String] {
 
   override val controllerId: String = Constants.propertyPassingToDirectDescendantsId
 
   override def form: () => Form[String] = () => PropertyPassingToDirectDescendantsForm()
 
-  override def view(form: Form[String], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+  override def view(form: Form[String], userAnswers: UserAnswers)(implicit request: Request[_]) =
     propertyPassingToDirectDescendantsView(form)
-  }
+
 }

@@ -21,17 +21,17 @@ import play.api.data.{Form, FormError}
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
 trait FormSpec extends BaseSpec {
-  def checkForError(form: Form[_], data: Map[String, String], expectedErrors: Seq[FormError]): Assertion = {
-    form.bind(data).fold(
-      formWithErrors => {
-        for (error <- formWithErrors.errors) expectedErrors must contain(FormError(error.key, error.message))
-        formWithErrors.errors.size mustBe expectedErrors.size
-      },
-      _ => {
-        fail("Expected a validation error when binding the form, but it was bound successfully.")
-      }
-    )
-  }
+
+  def checkForError(form: Form[_], data: Map[String, String], expectedErrors: Seq[FormError]): Assertion =
+    form
+      .bind(data)
+      .fold(
+        formWithErrors => {
+          for (error <- formWithErrors.errors) expectedErrors must contain(FormError(error.key, error.message))
+          formWithErrors.errors.size mustBe expectedErrors.size
+        },
+        _ => fail("Expected a validation error when binding the form, but it was bound successfully.")
+      )
 
   def error(key: String, value: String): Seq[FormError] = Seq(FormError(key, value))
 

@@ -32,49 +32,58 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.duration.SECONDS
 import scala.concurrent.{ExecutionContext, Future}
 
-case class DatedCacheMap(id: String,
-                         data: Map[String, JsValue],
-                         lastUpdated: Instant = Instant.now())
+case class DatedCacheMap(id: String, data: Map[String, JsValue], lastUpdated: Instant = Instant.now())
 
 object DatedCacheMap {
-  implicit val dateFormat: Format[Instant] = MongoJavatimeFormats.Implicits.jatInstantFormat
+  implicit val dateFormat: Format[Instant]    = MongoJavatimeFormats.Implicits.jatInstantFormat
   implicit val formats: Format[DatedCacheMap] = Json.format[DatedCacheMap]
 
   def apply(cacheMap: CacheMap): DatedCacheMap = DatedCacheMap(cacheMap.id, cacheMap.data)
 }
 
 @Singleton
-class SessionRepository @Inject()(config: Configuration, mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
-  extends PlayMongoRepository[DatedCacheMap](
-    collectionName = config.get[String]("appName"),
-    mongoComponent = mongoComponent,
-    domainFormat = DatedCacheMap.formats,
-    indexes = Seq(
-      IndexModel(ascending("lastUpdated"), IndexOptions()
-        .name("userAnswersExpiry")
-        .expireAfter(config.get[Long]("mongodb.timeToLiveInSeconds"), SECONDS)),
-      IndexModel(ascending("id"), IndexOptions()
-        .name("idIndex"))
-    ),
-    extraCodecs = Seq(Codecs.playFormatCodec(CacheMap.formats))
-  ) {
+class SessionRepository @Inject() (config: Configuration, mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+    extends PlayMongoRepository[DatedCacheMap](
+      collectionName = config.get[String]("appName"),
+      mongoComponent = mongoComponent,
+      domainFormat = DatedCacheMap.formats,
+      indexes = Seq(
+        IndexModel(
+          ascending("lastUpdated"),
+          IndexOptions()
+            .name("userAnswersExpiry")
+            .expireAfter(config.get[Long]("mongodb.timeToLiveInSeconds"), SECONDS)
+        ),
+        IndexModel(
+          ascending("id"),
+          IndexOptions()
+            .name("idIndex")
+        )
+      ),
+      extraCodecs = Seq(Codecs.playFormatCodec(CacheMap.formats))
+    ) {
 
   def upsert(cm: CacheMap): Future[Boolean] = {
     val dcm = DatedCacheMap(cm)
-    collection.replaceOne(
-      filter = equal("id", dcm.id),
-      replacement = dcm,
-      ReplaceOptions().upsert(true)
-    ).toFuture().map(_.wasAcknowledged())
+    collection
+      .replaceOne(
+        filter = equal("id", dcm.id),
+        replacement = dcm,
+        ReplaceOptions().upsert(true)
+      )
+      .toFuture()
+      .map(_.wasAcknowledged())
   }
 
-  def removeAll(id: String): Future[Boolean] = {
-    collection.deleteMany(
-      filter = all("id", id)
-    ).toFuture().map(_.wasAcknowledged())
-  }
-
+  def removeAll(id: String): Future[Boolean] =
+    collection
+      .deleteMany(
+        filter = all("id", id)
+      )
+      .toFuture()
+      .map(_.wasAcknowledged())
 
   def get(id: String): Future[Option[CacheMap]] =
     collection.find[CacheMap](and(equal("id", id))).headOption()
+
 }

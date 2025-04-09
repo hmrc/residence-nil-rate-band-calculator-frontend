@@ -28,13 +28,23 @@ import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCo
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.NotCloselyInherited
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThresholdIncreaseReason.{DatePropertyWasChangedTooEarly, NoAssetsPassingToDirectDescendants}
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThresholdIncreaseReason.{
+  DatePropertyWasChangedTooEarly,
+  NoAssetsPassingToDirectDescendants
+}
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CacheMap, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.{no_additional_threshold_available, no_downsizing_threshold_increase}
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.{
+  no_additional_threshold_available,
+  no_downsizing_threshold_increase
+}
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
-class NoDownsizingThresholdIncreaseControllerSpec extends CommonPlaySpec
-  with HttpResponseMocks with MockSessionConnector with MockitoSugar with WithCommonFakeApplication {
+class NoDownsizingThresholdIncreaseControllerSpec
+    extends CommonPlaySpec
+    with HttpResponseMocks
+    with MockSessionConnector
+    with MockitoSugar
+    with WithCommonFakeApplication {
 
   val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
 
@@ -44,43 +54,53 @@ class NoDownsizingThresholdIncreaseControllerSpec extends CommonPlaySpec
 
   val navigator: Navigator = injector.instanceOf[Navigator]
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val messagesControllerComponents: DefaultMessagesControllerComponents =
+    injector.instanceOf[DefaultMessagesControllerComponents]
 
   def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
 
   def messages: Messages = messagesApi.preferred(fakeRequest)
 
-  val no_downsizing_threshold_increase: no_downsizing_threshold_increase = fakeApplication.injector.instanceOf[no_downsizing_threshold_increase]
-  val no_additional_threshold_available: no_additional_threshold_available = fakeApplication.injector.instanceOf[no_additional_threshold_available]
+  val no_downsizing_threshold_increase: no_downsizing_threshold_increase =
+    fakeApplication.injector.instanceOf[no_downsizing_threshold_increase]
 
-  val filledOutCacheMap = new CacheMap("",
+  val no_additional_threshold_available: no_additional_threshold_available =
+    fakeApplication.injector.instanceOf[no_additional_threshold_available]
+
+  val filledOutCacheMap = new CacheMap(
+    "",
     Map[String, JsValue](
-      Constants.dateOfDeathId -> JsString("2019-03-04"),
+      Constants.dateOfDeathId                            -> JsString("2019-03-04"),
       Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
-      Constants.valueOfEstateId -> JsNumber(500000),
-      Constants.chargeableEstateValueId -> JsNumber(450000),
-      Constants.propertyInEstateId -> JsBoolean(true),
-      Constants.propertyValueId -> JsNumber(400000),
-      Constants.grossingUpOnEstateAssetsId -> JsBoolean(true),
-      Constants.propertyPassingToDirectDescendantsId -> JsBoolean(true),
-      Constants.percentagePassedToDirectDescendantsId -> JsNumber(100),
-      Constants.transferAnyUnusedThresholdId -> JsBoolean(true),
-      Constants.valueBeingTransferredId -> JsNumber(50000),
-      Constants.claimDownsizingThresholdId -> JsBoolean(true),
-      Constants.datePropertyWasChangedId -> JsString("2018-03-02"),
-      Constants.valueOfChangedPropertyId -> JsNumber(100000),
-      Constants.assetsPassingToDirectDescendantsId -> JsBoolean(true),
-      Constants.grossingUpOnEstateAssetsId -> JsBoolean(true),
-      Constants.chargeablePropertyValueId -> JsNumber(50000),
-      Constants.valueOfAssetsPassingId -> JsNumber(1000),
-      Constants.transferAvailableWhenPropertyChangedId -> JsBoolean(true),
-      Constants.valueAvailableWhenPropertyChangedId -> JsNumber(1000)
-    ))
+      Constants.valueOfEstateId                          -> JsNumber(500000),
+      Constants.chargeableEstateValueId                  -> JsNumber(450000),
+      Constants.propertyInEstateId                       -> JsBoolean(true),
+      Constants.propertyValueId                          -> JsNumber(400000),
+      Constants.grossingUpOnEstateAssetsId               -> JsBoolean(true),
+      Constants.propertyPassingToDirectDescendantsId     -> JsBoolean(true),
+      Constants.percentagePassedToDirectDescendantsId    -> JsNumber(100),
+      Constants.transferAnyUnusedThresholdId             -> JsBoolean(true),
+      Constants.valueBeingTransferredId                  -> JsNumber(50000),
+      Constants.claimDownsizingThresholdId               -> JsBoolean(true),
+      Constants.datePropertyWasChangedId                 -> JsString("2018-03-02"),
+      Constants.valueOfChangedPropertyId                 -> JsNumber(100000),
+      Constants.assetsPassingToDirectDescendantsId       -> JsBoolean(true),
+      Constants.grossingUpOnEstateAssetsId               -> JsBoolean(true),
+      Constants.chargeablePropertyValueId                -> JsNumber(50000),
+      Constants.valueOfAssetsPassingId                   -> JsNumber(1000),
+      Constants.transferAvailableWhenPropertyChangedId   -> JsBoolean(true),
+      Constants.valueAvailableWhenPropertyChangedId      -> JsNumber(1000)
+    )
+  )
 
   "No Downsizing Threshold Increase Controller" must {
     "return 200 for a GET" in {
       val controller = new NoDownsizingThresholdIncreaseController(
-        messagesControllerComponents, mockSessionConnector, navigator, no_downsizing_threshold_increase)
+        messagesControllerComponents,
+        mockSessionConnector,
+        navigator,
+        no_downsizing_threshold_increase
+      )
 
       val result = controller.onPageLoad(fakeRequest)
       status(result) mustBe Status.OK
@@ -88,22 +108,34 @@ class NoDownsizingThresholdIncreaseControllerSpec extends CommonPlaySpec
 
     "return the View for a GET" in {
       val controller = new NoDownsizingThresholdIncreaseController(
-        messagesControllerComponents, mockSessionConnector, navigator, no_downsizing_threshold_increase)
+        messagesControllerComponents,
+        mockSessionConnector,
+        navigator,
+        no_downsizing_threshold_increase
+      )
 
       val result = controller.onPageLoad(fakeRequest)
       contentAsString(result) mustBe
-        no_downsizing_threshold_increase("no_downsizing_threshold_increase.date_property_was_changed_too_early_reason",
-          routes.CheckYourAnswersController.onPageLoad)(fakeRequest, messages).toString
+        no_downsizing_threshold_increase(
+          "no_downsizing_threshold_increase.date_property_was_changed_too_early_reason",
+          routes.CheckYourAnswersController.onPageLoad
+        )(fakeRequest, messages).toString
     }
 
     "return the view with the no assets key when that is the reason" in {
       val controller = new NoDownsizingThresholdIncreaseController(
-        messagesControllerComponents, mockSessionConnector, navigator, no_downsizing_threshold_increase)
+        messagesControllerComponents,
+        mockSessionConnector,
+        navigator,
+        no_downsizing_threshold_increase
+      )
       val userAnswers = new UserAnswers(filledOutCacheMap)
 
       val result = controller.createView(NoAssetsPassingToDirectDescendants, userAnswers)(fakeRequest)
-      val target = no_downsizing_threshold_increase("no_downsizing_threshold_increase.no_assets_passing_to_direct_descendants_reason",
-        navigator.nextPage(Constants.noDownsizingThresholdIncrease)(userAnswers))(fakeRequest, messages).toString()
+      val target = no_downsizing_threshold_increase(
+        "no_downsizing_threshold_increase.no_assets_passing_to_direct_descendants_reason",
+        navigator.nextPage(Constants.noDownsizingThresholdIncrease)(userAnswers)
+      )(fakeRequest, messages).toString()
       result.toString() mustBe target
 
     }
@@ -111,42 +143,60 @@ class NoDownsizingThresholdIncreaseControllerSpec extends CommonPlaySpec
     "throw an exception when the cache is unavailable" in {
       val mockSessionConnector = mock[SessionConnector]
       val controller = new NoDownsizingThresholdIncreaseController(
-        messagesControllerComponents, mockSessionConnector, navigator, no_downsizing_threshold_increase)
+        messagesControllerComponents,
+        mockSessionConnector,
+        navigator,
+        no_downsizing_threshold_increase
+      )
 
       an[RuntimeException] must be thrownBy controller.onPageLoad(fakeRequest)
     }
 
     "The answer constants must be the same as the calulated constants for the controller when the reason is NotCloselyInherited" in {
       val controller = new NoAdditionalThresholdAvailableController(
-        messagesControllerComponents, mockSessionConnector, navigator, no_additional_threshold_available)
-      val controllerId = controller.getControllerId(NoAssetsPassingToDirectDescendants)
+        messagesControllerComponents,
+        mockSessionConnector,
+        navigator,
+        no_additional_threshold_available
+      )
+      val controllerId        = controller.getControllerId(NoAssetsPassingToDirectDescendants)
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
-      val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
-      val answerList = List(Constants.dateOfDeathId,
+      val calculatedList      = AnswerRows.rowOrderList.filter(calculatedConstants contains _)
+      val answerList = List(
+        Constants.dateOfDeathId,
         Constants.partOfEstatePassingToDirectDescendantsId,
         Constants.valueOfEstateId,
-        Constants.chargeableEstateValueId)
-      answerList mustBe (calculatedList)
+        Constants.chargeableEstateValueId
+      )
+      answerList mustBe calculatedList
     }
 
     "The answer constants must be the same as the calulated constants for the controller when the reason is another reason" in {
       val controller = new NoAdditionalThresholdAvailableController(
-        messagesControllerComponents, mockSessionConnector, navigator, no_additional_threshold_available)
-      val controllerId = controller.getControllerId(DatePropertyWasChangedTooEarly)
+        messagesControllerComponents,
+        mockSessionConnector,
+        navigator,
+        no_additional_threshold_available
+      )
+      val controllerId        = controller.getControllerId(DatePropertyWasChangedTooEarly)
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
-      val calculatedList = AnswerRows.rowOrderList filter (calculatedConstants contains _)
-      val answerList = List(Constants.dateOfDeathId,
+      val calculatedList      = AnswerRows.rowOrderList.filter(calculatedConstants contains _)
+      val answerList = List(
+        Constants.dateOfDeathId,
         Constants.partOfEstatePassingToDirectDescendantsId,
         Constants.valueOfEstateId,
-        Constants.chargeableEstateValueId)
-      answerList mustBe (calculatedList)
+        Constants.chargeableEstateValueId
+      )
+      answerList mustBe calculatedList
     }
 
     "getControllerId" must {
 
       "return assetsPassingToDirectDescendantsId constant when no assets is passed in as the reason" in {
         val controller = fakeApplication.injector.instanceOf[NoDownsizingThresholdIncreaseController]
-        controller.getControllerId(NoAssetsPassingToDirectDescendants) mustBe Constants.assetsPassingToDirectDescendantsId
+        controller.getControllerId(
+          NoAssetsPassingToDirectDescendants
+        ) mustBe Constants.assetsPassingToDirectDescendantsId
       }
 
       "return datePropertyWasChangedId constant when assets are passed as the reason" in {
@@ -155,4 +205,5 @@ class NoDownsizingThresholdIncreaseControllerSpec extends CommonPlaySpec
       }
     }
   }
+
 }

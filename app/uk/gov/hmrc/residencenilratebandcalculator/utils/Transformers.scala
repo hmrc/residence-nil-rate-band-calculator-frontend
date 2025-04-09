@@ -26,46 +26,47 @@ object Transformers {
 
   def constructDate(day: Int, month: Int, year: Int): LocalDate = LocalDate.parse(s"$day $month $year", dateFormatter)
 
-  val stringToInt: Option[String] => Int = input => Try(input.getOrElse("").trim.toInt) match {
-    case Success(value) => value
-    case Failure(_) => 0
-  }
+  val stringToInt: Option[String] => Int = input =>
+    Try(input.getOrElse("").trim.toInt) match {
+      case Success(value) => value
+      case Failure(_)     => 0
+    }
 
   val intToString: Int => Option[String] = input => Some(input.toString)
 
-  def stripOffQuotesIfPresent(s:String): String = s.replaceAll("^\"|\"$", "")
+  def stripOffQuotesIfPresent(s: String): String = s.replaceAll("^\"|\"$", "")
 
-  /**
-    * Change the format of a date from "2017-5-12" (with or without quotes) to 12052017.
+  /** Change the format of a date from "2017-5-12" (with or without quotes) to 12052017.
     */
-  def transformDateFormat(dateAsString:String): String = {
+  def transformDateFormat(dateAsString: String): String = {
     val dateComponents = stripOffQuotesIfPresent(dateAsString).split("-")
-    if (dateComponents.size != 3 || dateComponents(0).length != 4 ||
+    if (
+      dateComponents.size != 3 || dateComponents(0).length != 4 ||
       dateComponents(1).isEmpty || dateComponents(1).length > 2 ||
-      dateComponents(2).isEmpty || dateComponents(2).length > 2) {
+      dateComponents(2).isEmpty || dateComponents(2).length > 2
+    ) {
       throw new RuntimeException("Invalid date:" + dateAsString)
     }
-    val year = dateComponents(0)
-    val month = ("0" + dateComponents(1)) takeRight 2
-    val day = ("0" + dateComponents(2)) takeRight 2
+    val year  = dateComponents(0)
+    val month = ("0" + dateComponents(1)).takeRight(2)
+    val day   = ("0" + dateComponents(2)).takeRight(2)
     day + month + year
   }
 
-  /**
-    * Change the format of a decimal number from "889.9988" to "8899988", i.e.
-    * 3 digits for integer portion, 4 digits for mantissa. Pads integer to left with
-    * up to 3 spaces and mantissa to right with up to 4 spaces. If no decimal point then
-    * assumes this is integer portion.
+  /** Change the format of a decimal number from "889.9988" to "8899988", i.e. 3 digits for integer portion, 4 digits
+    * for mantissa. Pads integer to left with up to 3 spaces and mantissa to right with up to 4 spaces. If no decimal
+    * point then assumes this is integer portion.
     */
-  def transformDecimalFormat(s:String):String = {
+  def transformDecimalFormat(s: String): String = {
     val splitDecimal = Transformers.stripOffQuotesIfPresent(s).split('.')
     val decimalParts = if (splitDecimal.length == 2) {
       splitDecimal.toSeq
     } else {
       Seq(s, "")
     }
-    val integer = ("   " + decimalParts.head) takeRight 3
-    val mantissa = (decimalParts(1) + "    ") take 4
+    val integer  = ("   " + decimalParts.head).takeRight(3)
+    val mantissa = (decimalParts(1) + "    ").take(4)
     integer + mantissa
   }
+
 }

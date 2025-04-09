@@ -22,21 +22,22 @@ import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 import java.time.LocalDate
 
 class DateSpec extends BaseSpec {
+
   "Date Model" must {
     "write itself as JSON exactly as if it were a Java LocalDate" in {
-      val day = 1
-      val month = 1
-      val year = 2000
-      val dateToJson = Json.toJson(Date(LocalDate.of(year, month, day)))
+      val day             = 1
+      val month           = 1
+      val year            = 2000
+      val dateToJson      = Json.toJson(Date(LocalDate.of(year, month, day)))
       val localDateToJson = Json.toJson(LocalDate.of(year, month, day))
       dateToJson mustBe localDateToJson
     }
 
     "be interchangeable with Java LocalDate" in {
-      val day = 1
-      val month = 6
-      val year = 2017
-      val date = Date(LocalDate.of(year, month, day))
+      val day      = 1
+      val month    = 6
+      val year     = 2017
+      val date     = Date(LocalDate.of(year, month, day))
       val javaDate = LocalDate.of(year, month, day)
 
       Json.fromJson[LocalDate](Json.toJson(date)).get mustBe javaDate
@@ -44,9 +45,9 @@ class DateSpec extends BaseSpec {
     }
 
     "construct itself from a valid JSON representation" in {
-      val day = 1
+      val day   = 1
       val month = 1
-      val year = 2000
+      val year  = 2000
       Json.fromJson[Date](JsString("2000-01-01")).get mustBe Date(LocalDate.of(year, month, day))
 //      Json.fromJson[Date](JsString("2000-1-1")).get mustBe Date(LocalDate.of(year, month, day))
     }
@@ -55,4 +56,5 @@ class DateSpec extends BaseSpec {
       Json.fromJson[Date](JsString("invalid data")) mustBe a[JsError]
     }
   }
+
 }

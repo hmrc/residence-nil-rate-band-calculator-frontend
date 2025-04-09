@@ -25,35 +25,54 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.claim_downsizing_th
 
 class ClaimDownsizingThresholdControllerSpec extends NewSimpleControllerSpecBase {
 
-  val messageKey = "claim_downsizing_threshold.error.required"
+  val messageKey       = "claim_downsizing_threshold.error.required"
   val messageKeyPrefix = "claim_downsizing_threshold"
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-  val claim_downsizing_threshold: claim_downsizing_threshold = fakeApplication.injector.instanceOf[claim_downsizing_threshold]
+  val messagesControllerComponents: DefaultMessagesControllerComponents =
+    injector.instanceOf[DefaultMessagesControllerComponents]
+
+  val claim_downsizing_threshold: claim_downsizing_threshold =
+    fakeApplication.injector.instanceOf[claim_downsizing_threshold]
 
   def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
-    case None => claim_downsizing_threshold(BooleanForm.apply(messageKey))(fakeRequest, messages)
+    case None    => claim_downsizing_threshold(BooleanForm.apply(messageKey))(fakeRequest, messages)
     case Some(v) => claim_downsizing_threshold(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
   }
 
   def createController: () => ClaimDownsizingThresholdController = () =>
-    new ClaimDownsizingThresholdController(messagesControllerComponents, mockSessionConnector, navigator, claim_downsizing_threshold)
+    new ClaimDownsizingThresholdController(
+      messagesControllerComponents,
+      mockSessionConnector,
+      navigator,
+      claim_downsizing_threshold
+    )
 
   val testValue = true
 
-  behave like rnrbController(
-    createController, createView, Constants.claimDownsizingThresholdId, messageKeyPrefix, testValue)(Reads.BooleanReads, Writes.BooleanWrites)
+  behave.like(
+    rnrbController(createController, createView, Constants.claimDownsizingThresholdId, messageKeyPrefix, testValue)(
+      Reads.BooleanReads,
+      Writes.BooleanWrites
+    )
+  )
 
-  behave like nonStartingController[Boolean](createController,
-    List(Constants.dateOfDeathId,
-      Constants.partOfEstatePassingToDirectDescendantsId,
-      Constants.valueOfEstateId,
-      Constants.chargeableEstateValueId,
-      Constants.propertyInEstateId,
-      Constants.propertyValueId,
-      Constants.propertyPassingToDirectDescendantsId,
-      Constants.percentagePassedToDirectDescendantsId,
-      Constants.chargeablePropertyValueId,
-      Constants.transferAnyUnusedThresholdId,
-      Constants.valueBeingTransferredId))(Reads.BooleanReads, Writes.BooleanWrites)
+  behave.like(
+    nonStartingController[Boolean](
+      createController,
+      List(
+        Constants.dateOfDeathId,
+        Constants.partOfEstatePassingToDirectDescendantsId,
+        Constants.valueOfEstateId,
+        Constants.chargeableEstateValueId,
+        Constants.propertyInEstateId,
+        Constants.propertyValueId,
+        Constants.propertyPassingToDirectDescendantsId,
+        Constants.percentagePassedToDirectDescendantsId,
+        Constants.chargeablePropertyValueId,
+        Constants.transferAnyUnusedThresholdId,
+        Constants.valueBeingTransferredId
+      )
+    )(Reads.BooleanReads, Writes.BooleanWrites)
+  )
+
 }

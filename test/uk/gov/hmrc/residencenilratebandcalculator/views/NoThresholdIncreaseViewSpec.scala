@@ -24,24 +24,26 @@ import scala.language.reflectiveCalls
 
 class NoThresholdIncreaseViewSpec extends HtmlSpec {
 
-  val prefix = "no_threshold_increase.direct_descendants"
+  val prefix                                       = "no_threshold_increase.direct_descendants"
   val no_threshold_increase: no_threshold_increase = injector.instanceOf[no_threshold_increase]
-  val view: HtmlFormat.Appendable = no_threshold_increase(prefix)(request, messages)
-  val doc: Document = asDocument(view)
+  val view: HtmlFormat.Appendable                  = no_threshold_increase(prefix)(request, messages)
+  val doc: Document                                = asDocument(view)
 
   "No Threshold Increase View" must {
 
-    "display the correct browser title" in {
-      assertEqualsMessage(doc, "title", s"${messages("no_threshold_increase.browser_title")} - ${messages("service.name")} - GOV.UK")
-    }
+    "display the correct browser title" in
+      assertEqualsMessage(
+        doc,
+        "title",
+        s"${messages("no_threshold_increase.browser_title")} - ${messages("service.name")} - GOV.UK"
+      )
 
-    "display the correct page title" in {
+    "display the correct page title" in
       assertPageTitleEqualsMessage(doc, s"$prefix.title")
-    }
 
-    "not display the HMRC logo" in {
+    "not display the HMRC logo" in
       assertNotRenderedByCssSelector(doc, ".organisation-logo")
-    }
 
   }
+
 }

@@ -28,26 +28,35 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
 
 import scala.concurrent.ExecutionContext
 
-class ChargeableInheritedPropertyValueController @Inject()(cc: DefaultMessagesControllerComponents,
-                                                           override val sessionConnector: SessionConnector,
-                                                           override val navigator: Navigator,
-                                                           chargeableInheritedPropertyValueView: chargeable_inherited_property_value)
-                                                          (override implicit val ec: ExecutionContext)
-                                                          extends FrontendController(cc) with SimpleControllerBase[Int] {
+class ChargeableInheritedPropertyValueController @Inject() (
+    cc: DefaultMessagesControllerComponents,
+    override val sessionConnector: SessionConnector,
+    override val navigator: Navigator,
+    chargeableInheritedPropertyValueView: chargeable_inherited_property_value
+)(override implicit val ec: ExecutionContext)
+    extends FrontendController(cc)
+    with SimpleControllerBase[Int] {
 
   override val controllerId: String = Constants.chargeableInheritedPropertyValueId
 
   override def form: () => Form[Int] = () =>
-    NonNegativeIntForm("chargeable_inherited_property_value.error.blank", "error.whole_pounds", "error.non_numeric", "error.value_too_large")
+    NonNegativeIntForm(
+      "chargeable_inherited_property_value.error.blank",
+      "error.whole_pounds",
+      "error.non_numeric",
+      "error.value_too_large"
+    )
 
-  override def view(form: Form[Int], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+  override def view(form: Form[Int], userAnswers: UserAnswers)(implicit request: Request[_]) =
     chargeableInheritedPropertyValueView(form)
-  }
 
-  override def validate(value: Int, userAnswers: UserAnswers): Option[FormError] = {
+  override def validate(value: Int, userAnswers: UserAnswers): Option[FormError] =
     userAnswers.chargeablePropertyValue match {
-      case Some(v) if value > v => Some(FormError("value", "chargeable_inherited_property_value.greater_than_chargeable_property_value.error", Seq(v)))
+      case Some(v) if value > v =>
+        Some(
+          FormError("value", "chargeable_inherited_property_value.greater_than_chargeable_property_value.error", Seq(v))
+        )
       case _ => None
     }
-  }
+
 }

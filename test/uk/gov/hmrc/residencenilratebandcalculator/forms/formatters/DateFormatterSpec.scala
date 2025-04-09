@@ -30,41 +30,41 @@ import uk.gov.hmrc.residencenilratebandcalculator.forms.formatters.DateFormatter
 class DateFormatterSpec extends FormSpec {
 
   object Errors {
-    val dateRequiredError = s"$testKey.error.required"
-    val dayRequiredError = s"$testKey.error.required.day"
-    val dayMonthRequiredError = s"$testKey.error.required.dayMonth"
-    val dayYearRequiredError = s"$testKey.error.required.dayYear"
-    val monthRequiredError = s"$testKey.error.required.month"
+    val dateRequiredError      = s"$testKey.error.required"
+    val dayRequiredError       = s"$testKey.error.required.day"
+    val dayMonthRequiredError  = s"$testKey.error.required.dayMonth"
+    val dayYearRequiredError   = s"$testKey.error.required.dayYear"
+    val monthRequiredError     = s"$testKey.error.required.month"
     val monthYearRequiredError = s"$testKey.error.required.monthYear"
-    val yearRequiredError = s"$testKey.error.required.year"
+    val yearRequiredError      = s"$testKey.error.required.year"
 
-    val dateInvalidError = s"$testKey.error.invalid"
-    val dayInvalidError = s"$testKey.error.invalid.day"
-    val dayMonthInvalidError = s"$testKey.error.invalid.dayMonth"
-    val dayYearInvalidError = s"$testKey.error.invalid.dayYear"
-    val monthInvalidError = s"$testKey.error.invalid.month"
+    val dateInvalidError      = s"$testKey.error.invalid"
+    val dayInvalidError       = s"$testKey.error.invalid.day"
+    val dayMonthInvalidError  = s"$testKey.error.invalid.dayMonth"
+    val dayYearInvalidError   = s"$testKey.error.invalid.dayYear"
+    val monthInvalidError     = s"$testKey.error.invalid.month"
     val monthYearInvalidError = s"$testKey.error.invalid.monthYear"
-    val yearInvalidError = s"$testKey.error.invalid.year"
+    val yearInvalidError      = s"$testKey.error.invalid.year"
 
-    val dateNotRealError = s"$testKey.error.notReal"
-    val dayNotRealError = s"$testKey.error.notReal.day"
+    val dateNotRealError  = s"$testKey.error.notReal"
+    val dayNotRealError   = s"$testKey.error.notReal.day"
     val monthNotRealError = s"$testKey.error.notReal.month"
-    val yearNotRealError = s"$testKey.error.notReal.year"
+    val yearNotRealError  = s"$testKey.error.notReal.year"
   }
 
-  val testKey = "testKey"
-  val dayKey = s"$testKey.day"
+  val testKey  = "testKey"
+  val dayKey   = s"$testKey.day"
   val monthKey = s"$testKey.month"
-  val yearKey = s"$testKey.year"
+  val yearKey  = s"$testKey.year"
 
-  val testDate: LocalDate = LocalDate.of(2000, 2, 1)
+  val testDate: LocalDate    = LocalDate.of(2000, 2, 1)
   val testMinDate: LocalDate = testDate.minusYears(1)
   val testMaxDate: LocalDate = testDate.plusYears(1)
 
   val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "").withSession(SessionKeys.sessionId -> "id")
   def messages: Messages = fakeApplication().injector.instanceOf[MessagesApi].preferred(fakeRequest)
 
-  val testFormatter: DateFormatter = DateFormatter(testKey)(messages)
+  val testFormatter: DateFormatter     = DateFormatter(testKey)(messages)
   val dateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy", messages.lang.toLocale)
 
   "testFormatter.bind" when {
@@ -73,9 +73,9 @@ class DateFormatterSpec extends FormSpec {
         testFormatter.bind(
           testKey,
           Map(
-            dayKey -> "",
+            dayKey   -> "",
             monthKey -> "1",
-            yearKey -> "2000"
+            yearKey  -> "2000"
           )
         ) mustBe Left(List(FormError(dayKey, Errors.dayRequiredError)))
       }
@@ -83,9 +83,9 @@ class DateFormatterSpec extends FormSpec {
         testFormatter.bind(
           testKey,
           Map(
-            dayKey -> "1",
+            dayKey   -> "1",
             monthKey -> "",
-            yearKey -> "2000"
+            yearKey  -> "2000"
           )
         ) mustBe Left(List(FormError(monthKey, Errors.monthRequiredError)))
       }
@@ -93,9 +93,9 @@ class DateFormatterSpec extends FormSpec {
         testFormatter.bind(
           testKey,
           Map(
-            dayKey -> "1",
+            dayKey   -> "1",
             monthKey -> "1",
-            yearKey -> ""
+            yearKey  -> ""
           )
         ) mustBe Left(List(FormError(yearKey, Errors.yearRequiredError)))
       }
@@ -105,39 +105,45 @@ class DateFormatterSpec extends FormSpec {
         testFormatter.bind(
           testKey,
           Map(
-            dayKey -> "",
+            dayKey   -> "",
             monthKey -> "",
-            yearKey -> "2000"
+            yearKey  -> "2000"
           )
-        ) mustBe Left(List(FormError(dayKey, Errors.dayMonthRequiredError), FormError(monthKey, Errors.dayMonthRequiredError)))
+        ) mustBe Left(
+          List(FormError(dayKey, Errors.dayMonthRequiredError), FormError(monthKey, Errors.dayMonthRequiredError))
+        )
       }
       "return day/year required errors when the day and year are missing" in {
         testFormatter.bind(
           testKey,
           Map(
-            dayKey -> "",
+            dayKey   -> "",
             monthKey -> "1",
-            yearKey -> ""
+            yearKey  -> ""
           )
-        ) mustBe Left(List(FormError(dayKey, Errors.dayYearRequiredError), FormError(yearKey, Errors.dayYearRequiredError)))
+        ) mustBe Left(
+          List(FormError(dayKey, Errors.dayYearRequiredError), FormError(yearKey, Errors.dayYearRequiredError))
+        )
       }
       "return month/year required errors when the month and year are missing" in {
         testFormatter.bind(
           testKey,
           Map(
-            dayKey -> "1",
+            dayKey   -> "1",
             monthKey -> "",
-            yearKey -> ""
+            yearKey  -> ""
           )
-        ) mustBe Left(List(FormError(monthKey, Errors.monthYearRequiredError), FormError(yearKey, Errors.monthYearRequiredError)))
+        ) mustBe Left(
+          List(FormError(monthKey, Errors.monthYearRequiredError), FormError(yearKey, Errors.monthYearRequiredError))
+        )
       }
       "return global required error when the day, month and year are missing" in {
         testFormatter.bind(
           testKey,
           Map(
-            dayKey -> "",
+            dayKey   -> "",
             monthKey -> "",
-            yearKey -> ""
+            yearKey  -> ""
           )
         ) mustBe Left(List(FormError(testKey, Errors.dateRequiredError)))
       }
@@ -147,9 +153,9 @@ class DateFormatterSpec extends FormSpec {
         testFormatter.bind(
           testKey,
           Map(
-            dayKey -> "a",
+            dayKey   -> "a",
             monthKey -> "1",
-            yearKey -> "2000"
+            yearKey  -> "2000"
           )
         ) mustBe Left(List(FormError(dayKey, Errors.dayInvalidError)))
       }
@@ -157,9 +163,9 @@ class DateFormatterSpec extends FormSpec {
         testFormatter.bind(
           testKey,
           Map(
-            dayKey -> "1",
+            dayKey   -> "1",
             monthKey -> "b",
-            yearKey -> "2000"
+            yearKey  -> "2000"
           )
         ) mustBe Left(List(FormError(monthKey, Errors.monthInvalidError)))
       }
@@ -167,9 +173,9 @@ class DateFormatterSpec extends FormSpec {
         testFormatter.bind(
           testKey,
           Map(
-            dayKey -> "1",
+            dayKey   -> "1",
             monthKey -> "1",
-            yearKey -> "c"
+            yearKey  -> "c"
           )
         ) mustBe Left(List(FormError(yearKey, Errors.yearInvalidError)))
       }
@@ -179,39 +185,45 @@ class DateFormatterSpec extends FormSpec {
         testFormatter.bind(
           testKey,
           Map(
-            dayKey -> "a",
+            dayKey   -> "a",
             monthKey -> "b",
-            yearKey -> "2000"
+            yearKey  -> "2000"
           )
-        ) mustBe Left(List(FormError(dayKey, Errors.dayMonthInvalidError), FormError(monthKey, Errors.dayMonthInvalidError)))
+        ) mustBe Left(
+          List(FormError(dayKey, Errors.dayMonthInvalidError), FormError(monthKey, Errors.dayMonthInvalidError))
+        )
       }
       "return invalid errors on day/year keys when the day and year are invalid" in {
         testFormatter.bind(
           testKey,
           Map(
-            dayKey -> "a",
+            dayKey   -> "a",
             monthKey -> "1",
-            yearKey -> "c"
+            yearKey  -> "c"
           )
-        ) mustBe Left(List(FormError(dayKey, Errors.dayYearInvalidError), FormError(yearKey, Errors.dayYearInvalidError)))
+        ) mustBe Left(
+          List(FormError(dayKey, Errors.dayYearInvalidError), FormError(yearKey, Errors.dayYearInvalidError))
+        )
       }
       "return invalid errors on month/year keys when the month and year are invalid" in {
         testFormatter.bind(
           testKey,
           Map(
-            dayKey -> "1",
+            dayKey   -> "1",
             monthKey -> "b",
-            yearKey -> "c"
+            yearKey  -> "c"
           )
-        ) mustBe Left(List(FormError(monthKey, Errors.monthYearInvalidError), FormError(yearKey, Errors.monthYearInvalidError)))
+        ) mustBe Left(
+          List(FormError(monthKey, Errors.monthYearInvalidError), FormError(yearKey, Errors.monthYearInvalidError))
+        )
       }
       "return global invalid error when the day, month and year are invalid" in {
         testFormatter.bind(
           testKey,
           Map(
-            dayKey -> "a",
+            dayKey   -> "a",
             monthKey -> "b",
-            yearKey -> "c"
+            yearKey  -> "c"
           )
         ) mustBe Left(List(FormError(testKey, Errors.dateInvalidError)))
       }
@@ -221,9 +233,9 @@ class DateFormatterSpec extends FormSpec {
         testFormatter.bind(
           testKey,
           Map(
-            dayKey -> "32",
+            dayKey   -> "32",
             monthKey -> "1",
-            yearKey -> "2000"
+            yearKey  -> "2000"
           )
         ) mustBe Left(List(FormError(dayKey, Errors.dayNotRealError)))
       }
@@ -231,9 +243,9 @@ class DateFormatterSpec extends FormSpec {
         testFormatter.bind(
           testKey,
           Map(
-            dayKey -> "1",
+            dayKey   -> "1",
             monthKey -> "13",
-            yearKey -> "2000"
+            yearKey  -> "2000"
           )
         ) mustBe Left(List(FormError(monthKey, Errors.monthNotRealError)))
       }
@@ -241,9 +253,9 @@ class DateFormatterSpec extends FormSpec {
         testFormatter.bind(
           testKey,
           Map(
-            dayKey -> "1",
+            dayKey   -> "1",
             monthKey -> "1",
-            yearKey -> "10000"
+            yearKey  -> "10000"
           )
         ) mustBe Left(List(FormError(yearKey, Errors.yearNotRealError)))
       }
@@ -251,9 +263,9 @@ class DateFormatterSpec extends FormSpec {
         testFormatter.bind(
           testKey,
           Map(
-            dayKey -> "0",
+            dayKey   -> "0",
             monthKey -> "0",
-            yearKey -> "999"
+            yearKey  -> "999"
           )
         ) mustBe Left(List(FormError(testKey, Errors.dateNotRealError)))
       }
@@ -261,9 +273,9 @@ class DateFormatterSpec extends FormSpec {
         testFormatter.bind(
           testKey,
           Map(
-            dayKey -> "29",
+            dayKey   -> "29",
             monthKey -> "2",
-            yearKey -> "2001"
+            yearKey  -> "2001"
           )
         ) mustBe Left(List(FormError(testKey, Errors.dateNotRealError)))
       }
@@ -273,9 +285,9 @@ class DateFormatterSpec extends FormSpec {
         testFormatter.bind(
           testKey,
           Map(
-            dayKey -> "1",
+            dayKey   -> "1",
             monthKey -> "1",
-            yearKey -> "2000"
+            yearKey  -> "2000"
           )
         ) mustBe Right(LocalDate.of(2000, 1, 1))
       }
@@ -286,9 +298,9 @@ class DateFormatterSpec extends FormSpec {
         formatter.bind(
           testKey,
           Map(
-            dayKey -> "2",
+            dayKey   -> "2",
             monthKey -> "2",
-            yearKey -> "2001"
+            yearKey  -> "2001"
           )
         ) mustBe Right(LocalDate.of(2001, 2, 2))
       }
@@ -296,9 +308,9 @@ class DateFormatterSpec extends FormSpec {
         formatter.bind(
           testKey,
           Map(
-            dayKey -> "30",
+            dayKey   -> "30",
             monthKey -> "1",
-            yearKey -> "1999"
+            yearKey  -> "1999"
           )
         ) mustBe Right(LocalDate.of(1999, 1, 30))
       }
@@ -308,10 +320,11 @@ class DateFormatterSpec extends FormSpec {
   "testFormatter.unbind" must {
     "return a map with the correct day, month and year" in {
       testFormatter.unbind(testKey, testDate) mustBe Map(
-        dayKey -> testDate.getDayOfMonth.toString,
+        dayKey   -> testDate.getDayOfMonth.toString,
         monthKey -> testDate.getMonthValue.toString,
-        yearKey -> testDate.getYear.toString
+        yearKey  -> testDate.getYear.toString
       )
     }
   }
+
 }

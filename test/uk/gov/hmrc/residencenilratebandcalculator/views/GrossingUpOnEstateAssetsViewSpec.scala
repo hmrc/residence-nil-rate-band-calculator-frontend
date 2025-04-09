@@ -24,16 +24,34 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_esta
 
 class GrossingUpOnEstateAssetsViewSpec extends NewBooleanViewSpecBase {
 
-  val messageKeyPrefix = "grossing_up_on_estate_assets"
+  val messageKeyPrefix                                           = "grossing_up_on_estate_assets"
   val grossing_up_on_estate_assets: grossing_up_on_estate_assets = injector.instanceOf[grossing_up_on_estate_assets]
-  def createView(form: Form[Boolean]): HtmlFormat.Appendable = grossing_up_on_estate_assets(form)(request, messages)
+  def createView(form: Form[Boolean]): HtmlFormat.Appendable     = grossing_up_on_estate_assets(form)(request, messages)
 
   "Grossing Up On Estate AssetsView" must {
 
-    behave like rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")(fakeApplication().injector.instanceOf[GrossingUpOnEstateAssetsController].form())
+    behave.like(
+      rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")(
+        fakeApplication().injector.instanceOf[GrossingUpOnEstateAssetsController].form()
+      )
+    )
 
-    behave like pageWithoutBackLink[Boolean](createView, fakeApplication().injector.instanceOf[GrossingUpOnEstateAssetsController].form())
+    behave.like(
+      pageWithoutBackLink[Boolean](
+        createView,
+        fakeApplication().injector.instanceOf[GrossingUpOnEstateAssetsController].form()
+      )
+    )
 
-    behave like booleanPage(createView, messageKeyPrefix, GrossingUpOnEstateAssetsController.onSubmit.url, fakeApplication().injector.instanceOf[GrossingUpOnEstateAssetsController].form(), true)
+    behave.like(
+      booleanPage(
+        createView,
+        messageKeyPrefix,
+        GrossingUpOnEstateAssetsController.onSubmit.url,
+        fakeApplication().injector.instanceOf[GrossingUpOnEstateAssetsController].form(),
+        true
+      )
+    )
   }
+
 }

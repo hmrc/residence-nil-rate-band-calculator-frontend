@@ -25,6 +25,7 @@ class TaxYearSpec extends PlaySpec {
   val DateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd")
 
   val DefaultToFromDateString = "2000 to 2001"
+
   "Tax year utils" must {
     "have tax year navigation" in {
       val startYear = 2000
@@ -34,18 +35,18 @@ class TaxYearSpec extends PlaySpec {
 
     "have check equality" in {
       val startYear = 2000
-      val date = LocalDate.parse("2001/01/01", DateFormatter)
+      val date      = LocalDate.parse("2001/01/01", DateFormatter)
       TaxYear(startYear).contains(date) mustBe true
     }
 
     "have correct start date" in {
       val startYear = 2000
-      val date = LocalDate.parse("2000/04/06", DateFormatter)
+      val date      = LocalDate.parse("2000/04/06", DateFormatter)
       TaxYear(startYear).starts mustBe date
     }
 
     "have correct range based on start date" in {
-      val startYear = 2000
+      val startYear     = 2000
       val expectedRange = startYear to startYear + 1
       TaxYear(startYear).yearRange mustBe expectedRange
     }
@@ -56,13 +57,14 @@ class TaxYearSpec extends PlaySpec {
     }
 
     "have current tax year check" in {
-      class CurrentTaxYearUnderTest extends CurrentTaxYear{
+      class CurrentTaxYearUnderTest extends CurrentTaxYear {
         override def now: () => LocalDate = ???
       }
 
       val currentTaxYearUnderTest = new CurrentTaxYearUnderTest()
-      val taxYearResult = currentTaxYearUnderTest.taxYearFor(LocalDate.parse("2000/04/06", DateFormatter))
+      val taxYearResult           = currentTaxYearUnderTest.taxYearFor(LocalDate.parse("2000/04/06", DateFormatter))
       taxYearResult.toString() mustBe DefaultToFromDateString
     }
   }
+
 }

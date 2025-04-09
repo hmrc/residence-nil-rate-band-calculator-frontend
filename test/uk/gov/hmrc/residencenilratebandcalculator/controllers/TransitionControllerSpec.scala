@@ -41,18 +41,22 @@ class TransitionControllerSpec extends CommonPlaySpec with MockSessionConnector 
 
   def mockMessagesApi: MessagesApi = injector.instanceOf[MessagesApi]
 
-  val injectedMessagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val injectedMessagesControllerComponents: DefaultMessagesControllerComponents =
+    injector.instanceOf[DefaultMessagesControllerComponents]
 
   def messages: Messages = mockMessagesApi.preferred(fakeRequest)
 
-  private[controllers] class TestTransitionController extends FrontendController(injectedMessagesControllerComponents) with TransitionController {
+  private[controllers] class TestTransitionController
+      extends FrontendController(injectedMessagesControllerComponents)
+      with TransitionController {
     val sessionConnector: SessionConnector = mockSessionConnector
-    val getReason: GetReason = new GetReason { def apply(userAnswers: UserAnswers): Reason = new Reason{} }
+    val getReason: GetReason = new GetReason { def apply(userAnswers: UserAnswers): Reason = new Reason {} }
     override implicit val ec: ExecutionContext = injector.instanceOf[ExecutionContext]
-    def getControllerId(reason: Reason) = ""
+    def getControllerId(reason: Reason)        = ""
 
     def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[_]): HtmlFormat.Appendable =
       HtmlFormat.empty
+
   }
 
   def createController = new TestTransitionController()
@@ -69,10 +73,11 @@ class TransitionControllerSpec extends CommonPlaySpec with MockSessionConnector 
     }
 
     "redirect to the SessionExpiredController when no CacheMap can be found" in {
-      when(mockSessionConnector.fetch()(any[HeaderCarrier])) thenReturn Future.successful(None)
+      when(mockSessionConnector.fetch()(any[HeaderCarrier])).thenReturn(Future.successful(None))
       val result = createController.onPageLoad(fakeRequest)
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
   }
+
 }

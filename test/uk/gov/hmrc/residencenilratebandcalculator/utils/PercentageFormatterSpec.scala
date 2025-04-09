@@ -19,6 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.utils
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
 class PercentageFormatterSpec extends BaseSpec {
+
   "PercentageFormatter" must {
     "format 0  as 0% without a trailing fractional part" in {
       PercentageFormatter.format(0) mustBe "0%"
@@ -36,4 +37,5 @@ class PercentageFormatterSpec extends BaseSpec {
       PercentageFormatter.format(50.00019999999) mustBe "50.0002%"
     }
   }
+
 }

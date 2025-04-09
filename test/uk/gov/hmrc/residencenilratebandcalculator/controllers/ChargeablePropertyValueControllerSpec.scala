@@ -27,42 +27,68 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_property
 
 class ChargeablePropertyValueControllerSpec extends NewSimpleControllerSpecBase with CommonPlaySpec {
 
-  val errorKeyBlank = "chargeable_property_value.error.blank"
-  val errorKeyDecimal = "error.whole_pounds"
+  val errorKeyBlank      = "chargeable_property_value.error.blank"
+  val errorKeyDecimal    = "error.whole_pounds"
   val errorKeyNonNumeric = "chargeable_property_value.error.non_numeric"
-  val errorKeyTooLarge = "error.value_too_large"
-  val messageKeyPrefix = "chargeable_property_value"
+  val errorKeyTooLarge   = "error.value_too_large"
+  val messageKeyPrefix   = "chargeable_property_value"
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-  val chargeable_property_value: chargeable_property_value = fakeApplication.injector.instanceOf[chargeable_property_value]
+  val messagesControllerComponents: DefaultMessagesControllerComponents =
+    injector.instanceOf[DefaultMessagesControllerComponents]
+
+  val chargeable_property_value: chargeable_property_value =
+    fakeApplication.injector.instanceOf[chargeable_property_value]
 
   "Chargeable Property Value Controller" must {
     def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
-      case None => chargeable_property_value(
-        NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge))(fakeRequest, messages)
-      case Some(v) => chargeable_property_value(
-        NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v))(fakeRequest, messages)
+      case None =>
+        chargeable_property_value(
+          NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge)
+        )(fakeRequest, messages)
+      case Some(v) =>
+        chargeable_property_value(
+          NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v)
+        )(fakeRequest, messages)
     }
 
     def createController: () => ChargeablePropertyValueController = () =>
-      new ChargeablePropertyValueController(messagesControllerComponents, mockSessionConnector, navigator, chargeable_property_value)
+      new ChargeablePropertyValueController(
+        messagesControllerComponents,
+        mockSessionConnector,
+        navigator,
+        chargeable_property_value
+      )
 
     val testValue = 123
 
     val valuesToCacheBeforeSubmission = Map(Constants.propertyValueId -> testValue)
 
-    behave like rnrbController(createController, createView, Constants.chargeablePropertyValueId,
-      messageKeyPrefix, testValue, valuesToCacheBeforeSubmission)(Reads.IntReads, Writes.IntWrites)
+    behave.like(
+      rnrbController(
+        createController,
+        createView,
+        Constants.chargeablePropertyValueId,
+        messageKeyPrefix,
+        testValue,
+        valuesToCacheBeforeSubmission
+      )(Reads.IntReads, Writes.IntWrites)
+    )
 
-    behave like nonStartingController[Int](createController,
-      List(Constants.dateOfDeathId,
-           Constants.partOfEstatePassingToDirectDescendantsId,
-           Constants.valueOfEstateId,
-           Constants.chargeableEstateValueId,
-           Constants.propertyInEstateId,
-           Constants.propertyValueId,
-           Constants.propertyPassingToDirectDescendantsId,
-           Constants.percentagePassedToDirectDescendantsId))(Reads.IntReads, Writes.IntWrites)
+    behave.like(
+      nonStartingController[Int](
+        createController,
+        List(
+          Constants.dateOfDeathId,
+          Constants.partOfEstatePassingToDirectDescendantsId,
+          Constants.valueOfEstateId,
+          Constants.chargeableEstateValueId,
+          Constants.propertyInEstateId,
+          Constants.propertyValueId,
+          Constants.propertyPassingToDirectDescendantsId,
+          Constants.percentagePassedToDirectDescendantsId
+        )
+      )(Reads.IntReads, Writes.IntWrites)
+    )
 
     "return bad request on submit with a value greater than the previously saved Property Value" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString)).withMethod("POST")
@@ -71,4 +97,5 @@ class ChargeablePropertyValueControllerSpec extends NewSimpleControllerSpecBase 
       status(result) mustBe Status.BAD_REQUEST
     }
   }
+
 }

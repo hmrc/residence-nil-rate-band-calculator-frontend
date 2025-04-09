@@ -20,11 +20,12 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 object GetNoAdditionalThresholdAvailableReason extends GetReason {
   case object NotCloselyInherited extends Reason
-  case object NoProperty extends Reason
+  case object NoProperty          extends Reason
 
   def apply(userAnswers: UserAnswers) =
     userAnswers.propertyPassingToDirectDescendants match {
       case Some(Constants.none) => NotCloselyInherited
-      case _ => NoProperty
+      case _                    => NoProperty
     }
+
 }

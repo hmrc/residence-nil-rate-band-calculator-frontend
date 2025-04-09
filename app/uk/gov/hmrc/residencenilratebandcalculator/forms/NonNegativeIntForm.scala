@@ -24,36 +24,47 @@ import scala.util.Try
 
 object NonNegativeIntForm extends FormErrorHelper {
 
-  def nonNegativeIntFormatter(errorKeyBlank: String, errorKeyDecimal: String, errorKeyNonNumeric: String, errorKeyTooLarge: String) = new Formatter[Int] {
+  def nonNegativeIntFormatter(
+      errorKeyBlank: String,
+      errorKeyDecimal: String,
+      errorKeyNonNumeric: String,
+      errorKeyTooLarge: String
+  ) = new Formatter[Int] {
 
-    def isInt(str: String) = {
-      Try {str.toInt}.isSuccess
-    }
+    def isInt(str: String) =
+      Try(str.toInt).isSuccess
 
-
-
-    val intRegex = """^(\d+)$""".r
+    val intRegex     = """^(\d+)$""".r
     val decimalRegex = """^(\d*\.\d*)$""".r
-    def numberTooLarge(input: String) = {
-      Try {BigDecimal(input) > 2147483647}.getOrElse(false)
-    }
+    def numberTooLarge(input: String) =
+      Try(BigDecimal(input) > 2147483647).getOrElse(false)
 
-    def bind(key: String, data: Map[String, String]) = {
+    def bind(key: String, data: Map[String, String]) =
       data.get(key) match {
-        case None => produceError(key, errorKeyBlank)
+        case None     => produceError(key, errorKeyBlank)
         case Some("") => produceError(key, errorKeyBlank)
-        case Some(s) => s.trim.replace(",", "") match {
-          case input if numberTooLarge(input) => produceError(key, errorKeyTooLarge)
-          case intRegex(str) if isInt(str) => Right(str.toInt)
-          case decimalRegex(_) => produceError(key, errorKeyDecimal)
-          case _ => produceError(key, errorKeyNonNumeric)
-        }
+        case Some(s) =>
+          s.trim.replace(",", "") match {
+            case input if numberTooLarge(input) => produceError(key, errorKeyTooLarge)
+            case intRegex(str) if isInt(str)    => Right(str.toInt)
+            case decimalRegex(_)                => produceError(key, errorKeyDecimal)
+            case _                              => produceError(key, errorKeyNonNumeric)
+          }
       }
-    }
 
     def unbind(key: String, value: Int) = Map(key -> value.toString)
   }
 
-  def apply(errorKeyBlank: String, errorKeyDecimal: String, errorKeyNonNumeric: String, errorKeyTooLarge: String): Form[Int] =
-    Form(single("value" -> of(nonNegativeIntFormatter(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge))))
+  def apply(
+      errorKeyBlank: String,
+      errorKeyDecimal: String,
+      errorKeyNonNumeric: String,
+      errorKeyTooLarge: String
+  ): Form[Int] =
+    Form(
+      single(
+        "value" -> of(nonNegativeIntFormatter(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge))
+      )
+    )
+
 }

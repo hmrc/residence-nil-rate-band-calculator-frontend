@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
-
 class PropertyPassingToDirectDescendantsFormSpec extends FormSpec {
 
   "Property Passing To Direct Descendants form" must {
@@ -45,4 +44,5 @@ class PropertyPassingToDirectDescendantsFormSpec extends FormSpec {
       checkForError(PropertyPassingToDirectDescendantsForm(), emptyForm, expectedError)
     }
   }
+
 }

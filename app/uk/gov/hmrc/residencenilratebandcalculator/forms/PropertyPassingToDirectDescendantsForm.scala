@@ -26,13 +26,14 @@ object PropertyPassingToDirectDescendantsForm extends FormErrorHelper {
   def propertyPassingToDirectDescendantsFormatter = new Formatter[String] {
 
     def bind(key: String, data: Map[String, String]) = data.get(key) match {
-        case Some(s) if isValidPropertyPassingToDirectDescendantsOption(s) => Right(s)
-        case _ => produceError(key, "error.invalid_property_passing_to_direct_descendants_option")
-      }
+      case Some(s) if isValidPropertyPassingToDirectDescendantsOption(s) => Right(s)
+      case _ => produceError(key, "error.invalid_property_passing_to_direct_descendants_option")
+    }
 
     def unbind(key: String, value: String) = Map(key -> value)
   }
 
   def apply(): Form[String] =
     Form(single("value" -> of(propertyPassingToDirectDescendantsFormatter)))
+
 }

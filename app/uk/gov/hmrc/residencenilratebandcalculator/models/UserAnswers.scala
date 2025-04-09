@@ -22,25 +22,30 @@ import java.time.LocalDate
 
 class UserAnswers(cacheMap: CacheMap) {
 
-  def assetsPassingToDirectDescendants: Option[Boolean] = cacheMap.getEntry[Boolean](Constants.assetsPassingToDirectDescendantsId)
+  def assetsPassingToDirectDescendants: Option[Boolean] =
+    cacheMap.getEntry[Boolean](Constants.assetsPassingToDirectDescendantsId)
 
   def transferAnyUnusedThreshold: Option[Boolean] = cacheMap.getEntry[Boolean](Constants.transferAnyUnusedThresholdId)
 
-  def transferAvailableWhenPropertyChanged: Option[Boolean] = cacheMap.getEntry[Boolean](Constants.transferAvailableWhenPropertyChangedId)
+  def transferAvailableWhenPropertyChanged: Option[Boolean] =
+    cacheMap.getEntry[Boolean](Constants.transferAvailableWhenPropertyChangedId)
 
   def claimDownsizingThreshold: Option[Boolean] = cacheMap.getEntry[Boolean](Constants.claimDownsizingThresholdId)
 
-  def partOfEstatePassingToDirectDescendants: Option[Boolean] = cacheMap.getEntry[Boolean](Constants.partOfEstatePassingToDirectDescendantsId)
+  def partOfEstatePassingToDirectDescendants: Option[Boolean] =
+    cacheMap.getEntry[Boolean](Constants.partOfEstatePassingToDirectDescendantsId)
 
   def exemptionsAndReliefClaimed: Option[Boolean] = cacheMap.getEntry[Boolean](Constants.exemptionsAndReliefClaimedId)
 
-  def propertyPassingToDirectDescendants: Option[String] = cacheMap.getEntry[String](Constants.propertyPassingToDirectDescendantsId)
+  def propertyPassingToDirectDescendants: Option[String] =
+    cacheMap.getEntry[String](Constants.propertyPassingToDirectDescendantsId)
 
   def valueOfAssetsPassing: Option[Int] = cacheMap.getEntry[Int](Constants.valueOfAssetsPassingId)
 
   def valueBeingTransferred: Option[Int] = cacheMap.getEntry[Int](Constants.valueBeingTransferredId)
 
-  def valueAvailableWhenPropertyChanged: Option[Int] = cacheMap.getEntry[Int](Constants.valueAvailableWhenPropertyChangedId)
+  def valueAvailableWhenPropertyChanged: Option[Int] =
+    cacheMap.getEntry[Int](Constants.valueAvailableWhenPropertyChangedId)
 
   def chargeableEstateValue: Option[Int] = cacheMap.getEntry[Int](Constants.chargeableEstateValueId)
 
@@ -56,11 +61,13 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def valueOfEstate: Option[Int] = cacheMap.getEntry[Int](Constants.valueOfEstateId)
 
-  def percentagePassedToDirectDescendants: Option[BigDecimal] = cacheMap.getEntry[BigDecimal](Constants.percentagePassedToDirectDescendantsId)
+  def percentagePassedToDirectDescendants: Option[BigDecimal] =
+    cacheMap.getEntry[BigDecimal](Constants.percentagePassedToDirectDescendantsId)
 
   def chargeablePropertyValue: Option[Int] = cacheMap.getEntry[Int](Constants.chargeablePropertyValueId)
 
-  def chargeableInheritedPropertyValue: Option[Int] = cacheMap.getEntry[Int](Constants.chargeableInheritedPropertyValueId)
+  def chargeableInheritedPropertyValue: Option[Int] =
+    cacheMap.getEntry[Int](Constants.chargeableInheritedPropertyValueId)
 
   def propertyValue: Option[Int] = cacheMap.getEntry[Int](Constants.propertyValueId)
 
@@ -68,17 +75,19 @@ class UserAnswers(cacheMap: CacheMap) {
 
   def getPercentagePassedToDirectDescendants: BigDecimal =
     (propertyInEstate, propertyPassingToDirectDescendants) match {
-    case (Some(true), Some(directToDescendants)) if directToDescendants == Constants.all => Constants.bigDecimal100
-    case (Some(true), Some(directToDescendants)) if directToDescendants == Constants.some =>
-      percentagePassedToDirectDescendants.map(
-        _.setScale(Constants.intFour, BigDecimal.RoundingMode.HALF_UP)).fold(Constants.bigDecimalZero)(identity)
-    case _ => Constants.bigDecimalZero
-  }
+      case (Some(true), Some(directToDescendants)) if directToDescendants == Constants.all => Constants.bigDecimal100
+      case (Some(true), Some(directToDescendants)) if directToDescendants == Constants.some =>
+        percentagePassedToDirectDescendants
+          .map(_.setScale(Constants.intFour, BigDecimal.RoundingMode.HALF_UP))
+          .fold(Constants.bigDecimalZero)(identity)
+      case _ => Constants.bigDecimalZero
+    }
 
   def isTransferAvailableWhenPropertyChanged: Option[Boolean] =
     (claimDownsizingThreshold, transferAnyUnusedThreshold, datePropertyWasChanged) match {
-      case (Some(true), Some(false), _) => Some(false)
+      case (Some(true), Some(false), _)                                            => Some(false)
       case (Some(true), _, Some(date)) if date.isBefore(Constants.eligibilityDate) => Some(false)
       case _ => transferAvailableWhenPropertyChanged
     }
+
 }

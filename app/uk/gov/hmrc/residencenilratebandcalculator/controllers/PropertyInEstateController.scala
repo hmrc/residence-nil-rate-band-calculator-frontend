@@ -29,17 +29,20 @@ import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class PropertyInEstateController @Inject()(cc: DefaultMessagesControllerComponents,
-                                           override val sessionConnector: SessionConnector,
-                                           override val navigator: Navigator,
-                                           propertyInEstateView: property_in_estate)
-                                          (override implicit val ec: ExecutionContext) extends FrontendController(cc) with SimpleControllerBase[Boolean] {
+class PropertyInEstateController @Inject() (
+    cc: DefaultMessagesControllerComponents,
+    override val sessionConnector: SessionConnector,
+    override val navigator: Navigator,
+    propertyInEstateView: property_in_estate
+)(override implicit val ec: ExecutionContext)
+    extends FrontendController(cc)
+    with SimpleControllerBase[Boolean] {
 
   override val controllerId: String = Constants.propertyInEstateId
 
   override def form: () => Form[Boolean] = () => BooleanForm("property_in_estate.error.required")
 
-  override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+  override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[_]) =
     propertyInEstateView(form)
-  }
+
 }

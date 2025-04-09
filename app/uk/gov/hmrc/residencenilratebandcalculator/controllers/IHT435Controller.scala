@@ -27,14 +27,20 @@ import uk.gov.hmrc.residencenilratebandcalculator.utils.PDFHelperImpl
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class IHT435Controller @Inject()(val env: Environment,
-                                 val cc: DefaultMessagesControllerComponents,
-                                 val sessionConnector: SessionConnector,
-                                 val pdfHelper: PDFHelperImpl)(implicit ex: ExecutionContext) extends FrontendController(cc) with I18nSupport with Logging {
+class IHT435Controller @Inject() (
+    val env: Environment,
+    val cc: DefaultMessagesControllerComponents,
+    val sessionConnector: SessionConnector,
+    val pdfHelper: PDFHelperImpl
+)(implicit ex: ExecutionContext)
+    extends FrontendController(cc)
+    with I18nSupport
+    with Logging {
 
   def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.fetch().map {
-      case None => Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
+      case None =>
+        Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
       case Some(cacheMap) =>
         def fail(msg: String) = {
           logger.error(msg)
@@ -42,13 +48,17 @@ class IHT435Controller @Inject()(val env: Environment,
         }
 
         implicit val currentLang: Lang = request.lang
-        val generateWelshPDF = messagesApi.preferred(request).lang.code == "cy"
+        val generateWelshPDF           = messagesApi.preferred(request).lang.code == "cy"
 
-        pdfHelper.generatePDF(cacheMap = cacheMap, generateWelshPDF = generateWelshPDF).map(baos => {
-          val result = Ok(baos.toByteArray).as("application/pdf")
-          baos.close()
-          result
-        }).fold(fail("Unable to locate PDF template resource"))(identity)
+        pdfHelper
+          .generatePDF(cacheMap = cacheMap, generateWelshPDF = generateWelshPDF)
+          .map { baos =>
+            val result = Ok(baos.toByteArray).as("application/pdf")
+            baos.close()
+            result
+          }
+          .fold(fail("Unable to locate PDF template resource"))(identity)
     }
   }
+
 }

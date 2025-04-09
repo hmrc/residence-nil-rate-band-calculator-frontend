@@ -17,12 +17,13 @@
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
 object GetUnableToCalculateThresholdIncreaseReason extends GetReason {
-  case object GrossingUpForResidence extends Reason
+  case object GrossingUpForResidence     extends Reason
   case object GrossingUpForOtherProperty extends Reason
 
   def apply(userAnswers: UserAnswers) =
     userAnswers.grossingUpOnEstateProperty match {
       case Some(true) => GrossingUpForResidence
-      case _ => GrossingUpForOtherProperty
+      case _          => GrossingUpForOtherProperty
     }
+
 }

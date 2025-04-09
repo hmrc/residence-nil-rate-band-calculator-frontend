@@ -23,24 +23,23 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 
 @Singleton
-class CustomLanguageController @Inject()(val cc: MessagesControllerComponents,
-                                         val appConfig: FrontendAppConfig) extends FrontendController(cc) with I18nSupport {
+class CustomLanguageController @Inject() (val cc: MessagesControllerComponents, val appConfig: FrontendAppConfig)
+    extends FrontendController(cc)
+    with I18nSupport {
 
-  def langToCall(lang: String): Call = {
-    if(appConfig.isWelshEnabled) {
+  def langToCall(lang: String): Call =
+    if (appConfig.isWelshEnabled) {
       uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.CustomLanguageController.switchToLanguage(lang)
     } else {
       uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.CustomLanguageController.switchToLanguage("english")
     }
-  }
 
-  def loadedLanguageMessages(implicit request: Request[_]): Messages = {
+  def loadedLanguageMessages(implicit request: Request[_]): Messages =
     cc.messagesApi.preferred(request)
-  }
 
   def switchToLanguage(language: String): Action[AnyContent] = Action { implicit request =>
     val lang =
-      if(appConfig.isWelshEnabled) {
+      if (appConfig.isWelshEnabled) {
         CustomLanguageController.languageMap.getOrElse(language, Lang.defaultLang)
       } else {
         CustomLanguageController.englishLang
@@ -49,6 +48,7 @@ class CustomLanguageController @Inject()(val cc: MessagesControllerComponents,
 
     Redirect(redirectURL).withLang(Lang.apply(lang.code)).flashing(Flash(Map("switching-language" -> "true")))
   }
+
 }
 
 object CustomLanguageController {
@@ -56,5 +56,7 @@ object CustomLanguageController {
 
   lazy val englishLang = Lang("en")
 
-  protected def fallbackURL: String = uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.CalculateThresholdIncreaseController.onPageLoad.url
+  protected def fallbackURL: String =
+    uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.CalculateThresholdIncreaseController.onPageLoad.url
+
 }

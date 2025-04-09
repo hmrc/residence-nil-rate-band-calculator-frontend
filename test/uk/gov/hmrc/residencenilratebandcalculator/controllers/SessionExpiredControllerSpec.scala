@@ -29,25 +29,31 @@ class SessionExpiredControllerSpec extends CommonPlaySpec with MockSessionConnec
 
   implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
 
-  lazy val injector: Injector = fakeApplication.injector
+  lazy val injector: Injector                     = fakeApplication.injector
   implicit lazy val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
-  def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
-  def messages: Messages = messagesApi.preferred(request)
+  def messagesApi: MessagesApi                         = injector.instanceOf[MessagesApi]
+  def messages: Messages                               = messagesApi.preferred(request)
   val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+  val messagesControllerComponents: DefaultMessagesControllerComponents =
+    injector.instanceOf[DefaultMessagesControllerComponents]
+
   val session_expired: session_expired = injector.instanceOf[session_expired]
+
   "Session Expired controller" must {
 
     "return 200 for a GET" in {
-      val result = new SessionExpiredController(messagesControllerComponents, mockSessionConnector, session_expired).onPageLoad(fakeRequest)
+      val result = new SessionExpiredController(messagesControllerComponents, mockSessionConnector, session_expired)
+        .onPageLoad(fakeRequest)
       status(result) mustBe 200
     }
 
     "return the View for a GET" in {
-      val result = new SessionExpiredController(messagesControllerComponents, mockSessionConnector, session_expired).onPageLoad(fakeRequest)
+      val result = new SessionExpiredController(messagesControllerComponents, mockSessionConnector, session_expired)
+        .onPageLoad(fakeRequest)
       contentAsString(result) mustBe session_expired()(fakeRequest, messages).toString
     }
   }
+
 }

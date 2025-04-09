@@ -28,28 +28,31 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_threshold_increa
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class NoThresholdIncreaseController  @Inject()(cc: DefaultMessagesControllerComponents,
-                                               override val sessionConnector: SessionConnector,
-                                               noThresholdIncreaseView: no_threshold_increase)
-                                              (override implicit val ec: ExecutionContext)
-  extends FrontendController(cc) with TransitionController {
+class NoThresholdIncreaseController @Inject() (
+    cc: DefaultMessagesControllerComponents,
+    override val sessionConnector: SessionConnector,
+    noThresholdIncreaseView: no_threshold_increase
+)(override implicit val ec: ExecutionContext)
+    extends FrontendController(cc)
+    with TransitionController {
 
   val getReason = GetNoThresholdIncreaseReason
 
   def getControllerId(reason: Reason) =
     reason match {
-      case DateOfDeath => Constants.dateOfDeathId
+      case DateOfDeath      => Constants.dateOfDeathId
       case DirectDescendant => Constants.partOfEstatePassingToDirectDescendantsId
-      case _ => ""
+      case _                => ""
     }
 
   def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[_]) = {
     val prefix = reason match {
-      case DateOfDeath => "no_threshold_increase.date_of_death"
+      case DateOfDeath      => "no_threshold_increase.date_of_death"
       case DirectDescendant => "no_threshold_increase.direct_descendant"
-      case _ => ""
+      case _                => ""
     }
 
     noThresholdIncreaseView(prefix)
   }
+
 }

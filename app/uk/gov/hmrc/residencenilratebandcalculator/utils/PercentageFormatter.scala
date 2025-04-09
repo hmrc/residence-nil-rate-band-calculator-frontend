@@ -21,6 +21,7 @@ import java.text.NumberFormat
 import java.util.Locale
 
 object PercentageFormatter {
+
   def format(percent: Double): String = {
     val formatter = NumberFormat.getNumberInstance(Locale.UK)
     formatter.setMaximumFractionDigits(4)
@@ -28,4 +29,5 @@ object PercentageFormatter {
     formatter.setRoundingMode(RoundingMode.HALF_UP)
     formatter.format(percent) + "%"
   }
+
 }

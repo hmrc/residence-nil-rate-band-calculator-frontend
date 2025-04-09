@@ -25,25 +25,40 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_estate
 
 class ValueOfEstateViewSpec extends NewIntViewSpecBase {
 
-  val messageKeyPrefix = "value_of_estate"
-  val value_of_estate: value_of_estate = injector.instanceOf[value_of_estate]
+  val messageKeyPrefix                                   = "value_of_estate"
+  val value_of_estate: value_of_estate                   = injector.instanceOf[value_of_estate]
   def createView(form: Form[Int]): HtmlFormat.Appendable = value_of_estate(form)(request, messages)
 
   "Value of Estate View" must {
 
-    behave like rnrbPage[Int](createView, messageKeyPrefix,
-      "guidance1",
-      "guidance1.bullet1",
-      "guidance1.bullet2",
-      "guidance1.bullet3",
-      "guidance1.bullet4",
-      "guidance1.bullet5",
-      "guidance1.bullet6",
-      "guidance2"
-    )(fakeApplication().injector.instanceOf[ValueOfEstateController].form())
+    behave.like(
+      rnrbPage[Int](
+        createView,
+        messageKeyPrefix,
+        "guidance1",
+        "guidance1.bullet1",
+        "guidance1.bullet2",
+        "guidance1.bullet3",
+        "guidance1.bullet4",
+        "guidance1.bullet5",
+        "guidance1.bullet6",
+        "guidance2"
+      )(fakeApplication().injector.instanceOf[ValueOfEstateController].form())
+    )
 
-    behave like pageWithoutBackLink[Int](createView, fakeApplication().injector.instanceOf[ValueOfEstateController].form())
+    behave.like(
+      pageWithoutBackLink[Int](createView, fakeApplication().injector.instanceOf[ValueOfEstateController].form())
+    )
 
-    behave like intPage(createView, messageKeyPrefix, ValueOfEstateController.onSubmit.url, NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage), fakeApplication().injector.instanceOf[ValueOfEstateController].form())
+    behave.like(
+      intPage(
+        createView,
+        messageKeyPrefix,
+        ValueOfEstateController.onSubmit.url,
+        NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage),
+        fakeApplication().injector.instanceOf[ValueOfEstateController].form()
+      )
+    )
   }
+
 }

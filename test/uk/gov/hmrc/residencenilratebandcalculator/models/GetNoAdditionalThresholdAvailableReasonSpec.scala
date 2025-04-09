@@ -18,21 +18,26 @@ package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import org.mockito.Mockito._
 import org.scalatestplus.mockito.MockitoSugar
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.{NoProperty, NotCloselyInherited}
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.{
+  NoProperty,
+  NotCloselyInherited
+}
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
 
 class GetNoAdditionalThresholdAvailableReasonSpec extends BaseSpec with MockitoSugar {
+
   "GetNoAdditionalThresholdAvailableReason" must {
     "get the 'Not closely inherited' reason when there is no closely inherited property" in {
       val userAnswers = mock[UserAnswers]
-      when(userAnswers.propertyPassingToDirectDescendants) thenReturn Some(Constants.none)
+      when(userAnswers.propertyPassingToDirectDescendants).thenReturn(Some(Constants.none))
       GetNoAdditionalThresholdAvailableReason(userAnswers) mustBe NotCloselyInherited
     }
 
     "get the 'No property' reason when there is no property in the estate" in {
       val userAnswers = mock[UserAnswers]
-      when(userAnswers.propertyInEstate) thenReturn Some(false)
+      when(userAnswers.propertyInEstate).thenReturn(Some(false))
       GetNoAdditionalThresholdAvailableReason(userAnswers) mustBe NoProperty
     }
   }
+
 }

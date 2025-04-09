@@ -28,29 +28,30 @@ import play.api.mvc.{DefaultMessagesControllerComponents, MessagesControllerComp
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
+
 @Singleton
-class PDFHelperImpl @Inject()(val env: Environment,
-                              val cc: DefaultMessagesControllerComponents) extends PDFHelper
+class PDFHelperImpl @Inject() (val env: Environment, val cc: DefaultMessagesControllerComponents) extends PDFHelper
 
 trait PDFHelper {
   val env: Environment
   val cc: MessagesControllerComponents
 
-  private val retrieveValueToStoreFor1Field: (String, Int) => String = (v, _) => v
+  private val retrieveValueToStoreFor1Field: (String, Int) => String         = (v, _) => v
   private val retrieveValueToStoreForMoreThan1Field: (String, Int) => String = (v, i) => v.charAt(i).toString
-  private val cacheMapIdToEnglishYesNo:String => (String, String) = _ => ("Yes", "No")
-  private val welshYesNo1 = ("Oes", "Nac oes")
-  private val welshYesNo2 = ("Ydw", "Nac ydw")
-  private val welshYesNo3 = ("Ydy", "Nac ydy")
-  private val welshYesNo4 = ("Byddai", "Na fyddai")
-  private val cacheMapIdToWelshYesNo:String => (String, String) = {
-      case Constants.propertyInEstateId => welshYesNo3
-      case Constants.transferAnyUnusedThresholdId => welshYesNo2
-      case Constants.transferAvailableWhenPropertyChangedId => welshYesNo4
-      case Constants.claimDownsizingThresholdId => welshYesNo2
-      case Constants.grossingUpOnEstateAssetsId => welshYesNo3
-      case Constants.grossingUpOnEstatePropertyId => welshYesNo3
-      case _ => welshYesNo1
+  private val cacheMapIdToEnglishYesNo: String => (String, String)           = _ => ("Yes", "No")
+  private val welshYesNo1                                                    = ("Oes", "Nac oes")
+  private val welshYesNo2                                                    = ("Ydw", "Nac ydw")
+  private val welshYesNo3                                                    = ("Ydy", "Nac ydy")
+  private val welshYesNo4                                                    = ("Byddai", "Na fyddai")
+
+  private val cacheMapIdToWelshYesNo: String => (String, String) = {
+    case Constants.propertyInEstateId                     => welshYesNo3
+    case Constants.transferAnyUnusedThresholdId           => welshYesNo2
+    case Constants.transferAvailableWhenPropertyChangedId => welshYesNo4
+    case Constants.claimDownsizingThresholdId             => welshYesNo2
+    case Constants.grossingUpOnEstateAssetsId             => welshYesNo3
+    case Constants.grossingUpOnEstatePropertyId           => welshYesNo3
+    case _                                                => welshYesNo1
   }
 
   private val cacheMapIdToFieldName = Map[String, Seq[String]](
@@ -65,10 +66,10 @@ trait PDFHelper {
       "IHT435_03_08"
     ),
     Constants.partOfEstatePassingToDirectDescendantsId -> Seq("IHT435_05"),
-    Constants.valueOfEstateId -> Seq("IHT435_06"),
-    Constants.chargeableEstateValueId -> Seq("IHT435_07"),
-    Constants.propertyInEstateId -> Seq("IHT435_08"),
-    Constants.propertyValueId -> Seq("IHT435_10"),
+    Constants.valueOfEstateId                          -> Seq("IHT435_06"),
+    Constants.chargeableEstateValueId                  -> Seq("IHT435_07"),
+    Constants.propertyInEstateId                       -> Seq("IHT435_08"),
+    Constants.propertyValueId                          -> Seq("IHT435_10"),
     Constants.percentagePassedToDirectDescendantsId -> Seq(
       "IHT435_10_01",
       "IHT435_10_02",
@@ -78,13 +79,13 @@ trait PDFHelper {
       "IHT435_10_06",
       "IHT435_10_07"
     ),
-    Constants.exemptionsAndReliefClaimedId -> Seq("IHT435_12"),
-    Constants.grossingUpOnEstatePropertyId -> Seq("IHT435_13"),
-    Constants.chargeablePropertyValueId -> Seq("IHT435_14"),
+    Constants.exemptionsAndReliefClaimedId       -> Seq("IHT435_12"),
+    Constants.grossingUpOnEstatePropertyId       -> Seq("IHT435_13"),
+    Constants.chargeablePropertyValueId          -> Seq("IHT435_14"),
     Constants.chargeableInheritedPropertyValueId -> Seq("IHT435_15"),
-    Constants.transferAnyUnusedThresholdId -> Seq("IHT435_16"),
-    Constants.valueBeingTransferredId -> Seq("IHT435_17"),
-    Constants.claimDownsizingThresholdId -> Seq("IHT435_18"),
+    Constants.transferAnyUnusedThresholdId       -> Seq("IHT435_16"),
+    Constants.valueBeingTransferredId            -> Seq("IHT435_17"),
+    Constants.claimDownsizingThresholdId         -> Seq("IHT435_18"),
     Constants.datePropertyWasChangedId -> Seq(
       "IHT435_20_01",
       "IHT435_20_02",
@@ -95,13 +96,13 @@ trait PDFHelper {
       "IHT435_20_07",
       "IHT435_20_08"
     ),
-    Constants.valueOfChangedPropertyId -> Seq("IHT435_21"),
-    Constants.assetsPassingToDirectDescendantsId -> Seq("IHT435_22"),
-    Constants.grossingUpOnEstateAssetsId -> Seq("IHT435_23"),
-    Constants.valueOfAssetsPassingId -> Seq("IHT435_24"),
+    Constants.valueOfChangedPropertyId               -> Seq("IHT435_21"),
+    Constants.assetsPassingToDirectDescendantsId     -> Seq("IHT435_22"),
+    Constants.grossingUpOnEstateAssetsId             -> Seq("IHT435_23"),
+    Constants.valueOfAssetsPassingId                 -> Seq("IHT435_24"),
     Constants.transferAvailableWhenPropertyChangedId -> Seq("IHT435_26"),
-    Constants.valueAvailableWhenPropertyChangedId -> Seq("IHT435_27"),
-    Constants.thresholdCalculationResultId -> Seq("IHT435_28")
+    Constants.valueAvailableWhenPropertyChangedId    -> Seq("IHT435_27"),
+    Constants.thresholdCalculationResultId           -> Seq("IHT435_28")
   )
 
   private def setupPDFDocument(pdf: PDDocument)(implicit lang: Lang): Unit = {
@@ -123,50 +124,50 @@ trait PDFHelper {
     }
   }
 
-  private def jsValueToString(jsVal: JsValue, generateWelshValue: Boolean, cacheId: String): String = {
+  private def jsValueToString(jsVal: JsValue, generateWelshValue: Boolean, cacheId: String): String =
     jsVal match {
       case b: JsBoolean => booleanValueForPDF(b.value, generateWelshValue, cacheId)
-      case s: JsString => s.toString
-      case _ => jsVal.toString
+      case s: JsString  => s.toString
+      case _            => jsVal.toString
     }
-  }
 
   private def formatValueForPDF(jsVal: String, cacheId: String): String = {
-    val dateCacheIds = Set(Constants.dateOfDeathId, Constants.datePropertyWasChangedId)
+    val dateCacheIds    = Set(Constants.dateOfDeathId, Constants.datePropertyWasChangedId)
     val decimalCacheIds = Set(Constants.percentagePassedToDirectDescendantsId)
     jsVal match {
-      case s if dateCacheIds.contains(cacheId) => Transformers.transformDateFormat(s)
+      case s if dateCacheIds.contains(cacheId)    => Transformers.transformDateFormat(s)
       case s if decimalCacheIds.contains(cacheId) => Transformers.transformDecimalFormat(s)
-      case s => s
+      case s                                      => s
     }
   }
 
-  private def storeFormattedValueInPDFFields(fieldNames: Seq[String], valueFormattedForPDF: String, form: PDAcroForm) = {
+  private def storeFormattedValueInPDFFields(
+      fieldNames: Seq[String],
+      valueFormattedForPDF: String,
+      form: PDAcroForm
+  ) = {
     val retrieveValueToStore: (String, Int) => String =
       if (fieldNames.size == 1) retrieveValueToStoreFor1Field else retrieveValueToStoreForMoreThan1Field
-    fieldNames.indices foreach { i =>
+    fieldNames.indices.foreach { i =>
       form.getField(fieldNames(i)).setValue(retrieveValueToStore(valueFormattedForPDF, i))
     }
   }
 
   private def storeValuesInPDF(cacheMap: CacheMap, form: PDAcroForm, storeWelshValues: Boolean) = {
     val ua = new UserAnswers(cacheMap)
-    cacheMapIdToFieldName foreach {
-      case (cacheId, fieldNames) =>
-        val optionalJsVal = cacheMap.data.get(cacheId)
-        val valueFormattedForPDF: Option[String] = (optionalJsVal, cacheId) match {
-          case (_, Constants.percentagePassedToDirectDescendantsId) =>
-            Some(formatValueForPDF(ua.getPercentagePassedToDirectDescendants.toString, cacheId))
-          case (_, Constants.transferAvailableWhenPropertyChangedId) =>
-            ua.isTransferAvailableWhenPropertyChanged.map( isAvailable =>
-              formatValueForPDF(booleanValueForPDF(isAvailable, storeWelshValues, cacheId), cacheId)
-            )
-          case (Some(jsVal), _) => Some(formatValueForPDF(jsValueToString(jsVal, storeWelshValues, cacheId), cacheId))
-          case _ => None
-        }
-        valueFormattedForPDF.foreach{ value =>
-          storeFormattedValueInPDFFields(fieldNames, value, form)
-        }
+    cacheMapIdToFieldName.foreach { case (cacheId, fieldNames) =>
+      val optionalJsVal = cacheMap.data.get(cacheId)
+      val valueFormattedForPDF: Option[String] = (optionalJsVal, cacheId) match {
+        case (_, Constants.percentagePassedToDirectDescendantsId) =>
+          Some(formatValueForPDF(ua.getPercentagePassedToDirectDescendants.toString, cacheId))
+        case (_, Constants.transferAvailableWhenPropertyChangedId) =>
+          ua.isTransferAvailableWhenPropertyChanged.map(isAvailable =>
+            formatValueForPDF(booleanValueForPDF(isAvailable, storeWelshValues, cacheId), cacheId)
+          )
+        case (Some(jsVal), _) => Some(formatValueForPDF(jsValueToString(jsVal, storeWelshValues, cacheId), cacheId))
+        case _                => None
+      }
+      valueFormattedForPDF.foreach(value => storeFormattedValueInPDFFields(fieldNames, value, form))
     }
   }
 
@@ -178,7 +179,7 @@ trait PDFHelper {
     }
     env.resourceAsStream(s"resource/$resourceName").map { is =>
       var pdd: Option[PDDocument] = None
-      val baos = new ByteArrayOutputStream()
+      val baos                    = new ByteArrayOutputStream()
       try {
         pdd = Option(PDDocument.load(is))
         pdd.foreach { pdf =>
@@ -193,4 +194,5 @@ trait PDFHelper {
       baos
     }
   }
+
 }
