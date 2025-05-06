@@ -22,9 +22,9 @@ import play.api.inject.Injector
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import play.api.mvc.{AnyContentAsEmpty, DefaultMessagesControllerComponents}
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
-import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CacheMap}
+import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CacheMap, Reason, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoThresholdIncreaseReason.{DateOfDeath, DirectDescendant}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_threshold_increase
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
@@ -35,6 +35,10 @@ class NoThresholdIncreaseControllerSpec
     with WithCommonFakeApplication {
 
   val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
+
+  val userAnswers = mock[UserAnswers]
+
+  val reason = mock[Reason]
 
   val injector: Injector = fakeApplication.injector
 
@@ -88,6 +92,21 @@ class NoThresholdIncreaseControllerSpec
           .onPageLoad(fakeRequest)
       contentAsString(result) mustBe
         no_threshold_increase("no_threshold_increase.direct_descendant")(fakeRequest, messages).toString
+    }
+
+    "return the No Threshold Increase view for none case a GET" in {
+      val result =
+        new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase)
+          .createView(reason, userAnswers)(fakeRequest)
+      contentAsString(result) mustBe
+        no_threshold_increase("")(fakeRequest, messages).toString
+    }
+
+    "return none for getControllerId when no reason" in {
+      val result =
+        new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase)
+          .getControllerId(reason)
+      assert(result == "")
     }
 
     "The answer constants must be the same as the calulated constants for the controller when the reason is DateOfDeath" in {

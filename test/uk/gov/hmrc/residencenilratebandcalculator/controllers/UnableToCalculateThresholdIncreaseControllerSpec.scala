@@ -22,10 +22,16 @@ import play.api.inject.Injector
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import play.api.mvc.{AnyContentAsEmpty, DefaultMessagesControllerComponents}
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CacheMap}
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetUnableToCalculateThresholdIncreaseReason.GrossingUpForResidence
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetUnableToCalculateThresholdIncreaseReason.{
+  GrossingUpForOtherProperty,
+  GrossingUpForResidence
+}
+
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThresholdIncreaseReason.NoAssetsPassingToDirectDescendants
+
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.unable_to_calculate_threshold_increase
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 
@@ -126,7 +132,7 @@ class UnableToCalculateThresholdIncreaseControllerSpec
         mockSessionConnector,
         unable_to_calculate_threshold_increase
       )
-      val controllerId        = controller.getControllerId(GrossingUpForResidence)
+      val controllerId        = controller.getControllerId(GrossingUpForOtherProperty)
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList      = AnswerRows.rowOrderList.filter(calculatedConstants contains _)
       val answerList = List(
@@ -137,7 +143,47 @@ class UnableToCalculateThresholdIncreaseControllerSpec
         Constants.propertyInEstateId,
         Constants.propertyValueId,
         Constants.propertyPassingToDirectDescendantsId,
-        Constants.percentagePassedToDirectDescendantsId
+        Constants.percentagePassedToDirectDescendantsId,
+        Constants.chargeablePropertyValueId,
+        Constants.transferAnyUnusedThresholdId,
+        Constants.valueBeingTransferredId,
+        Constants.claimDownsizingThresholdId,
+        Constants.datePropertyWasChangedId,
+        Constants.valueOfChangedPropertyId,
+        Constants.assetsPassingToDirectDescendantsId
+      )
+      answerList mustBe calculatedList
+    }
+
+    "The answer constants must be the same as the calulated constants for the controller when the reason is NoAssetsPassingToDirectDescendants" in {
+      val controller = new UnableToCalculateThresholdIncreaseController(
+        messagesControllerComponents,
+        mockSessionConnector,
+        unable_to_calculate_threshold_increase
+      )
+      val controllerId        = controller.getControllerId(NoAssetsPassingToDirectDescendants)
+      val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
+      val calculatedList      = AnswerRows.rowOrderList.filter(calculatedConstants contains _)
+      val answerList = List(
+        Constants.dateOfDeathId,
+        Constants.partOfEstatePassingToDirectDescendantsId,
+        Constants.valueOfEstateId,
+        Constants.chargeableEstateValueId,
+        Constants.propertyInEstateId,
+        Constants.propertyValueId,
+        Constants.propertyPassingToDirectDescendantsId,
+        Constants.percentagePassedToDirectDescendantsId,
+        Constants.chargeablePropertyValueId,
+        Constants.transferAnyUnusedThresholdId,
+        Constants.valueBeingTransferredId,
+        Constants.claimDownsizingThresholdId,
+        Constants.datePropertyWasChangedId,
+        Constants.valueOfChangedPropertyId,
+        Constants.assetsPassingToDirectDescendantsId,
+        Constants.grossingUpOnEstateAssetsId,
+        Constants.valueOfAssetsPassingId,
+        Constants.transferAvailableWhenPropertyChangedId,
+        Constants.valueAvailableWhenPropertyChangedId
       )
       answerList mustBe calculatedList
     }

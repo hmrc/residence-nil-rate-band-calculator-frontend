@@ -71,13 +71,6 @@ class ValueAvailableWhenPropertyChangedController @Inject() (
     cacheMap         <- getCacheMap
   } yield (nilRateValueJson, cacheMap)
 
-  def answerRows(cacheMap: CacheMap, request: Request[_]): Seq[AnswerRow] = AnswerRows.constructAnswerRows(
-    AnswerRows.truncateAndLocateInCacheMap(controllerId, cacheMap),
-    AnswerRows.answerRowFns,
-    AnswerRows.rowOrder,
-    messagesApi.preferred(request)
-  )
-
   def onPageLoad(implicit rds: Reads[Int]) = Action.async { implicit request =>
     microserviceValues
       .map { case (nilRateValueJson, cacheMap) =>
