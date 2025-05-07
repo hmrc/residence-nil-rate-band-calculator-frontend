@@ -50,9 +50,6 @@ class DateFormatterSpec extends FormSpec {
     val dayNotRealError   = s"$testKey.error.notReal.day"
     val monthNotRealError = s"$testKey.error.notReal.month"
     val yearNotRealError  = s"$testKey.error.notReal.year"
-
-    val dateMinError = s"$testKey.error.range.min"
-    val dateMaxError = s"$testKey.error.range.max"
   }
 
   val testKey  = "testKey"

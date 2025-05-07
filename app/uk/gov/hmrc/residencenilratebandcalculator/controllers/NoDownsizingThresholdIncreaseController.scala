@@ -39,12 +39,6 @@ class NoDownsizingThresholdIncreaseController @Inject() (
 
   val getReason = GetNoDownsizingThresholdIncreaseReason
 
-  def getControllerId(reason: Reason): String =
-    reason match {
-      case NoAssetsPassingToDirectDescendants => Constants.assetsPassingToDirectDescendantsId
-      case _                                  => Constants.datePropertyWasChangedId
-    }
-
   def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[_]) = {
     val reasonKey = reason match {
       case NoAssetsPassingToDirectDescendants =>

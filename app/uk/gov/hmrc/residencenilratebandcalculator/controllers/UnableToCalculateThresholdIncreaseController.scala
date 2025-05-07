@@ -41,13 +41,6 @@ class UnableToCalculateThresholdIncreaseController @Inject() (
 
   val getReason = GetUnableToCalculateThresholdIncreaseReason
 
-  def getControllerId(reason: Reason) =
-    reason match {
-      case GrossingUpForResidence     => Constants.grossingUpOnEstatePropertyId
-      case GrossingUpForOtherProperty => Constants.grossingUpOnEstateAssetsId
-      case _                          => ""
-    }
-
   def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[_]) =
     unableToCalculateThresholdIncreaseView("unable_to_calculate_threshold_increase.grossing_up")
 

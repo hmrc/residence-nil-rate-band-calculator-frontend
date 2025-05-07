@@ -55,7 +55,6 @@ class TransitionControllerSpec extends CommonPlaySpec with MockSessionConnector 
     val sessionConnector: SessionConnector = mockSessionConnector
     val getReason: GetReason = new GetReason { def apply(userAnswers: UserAnswers): Reason = new Reason {} }
     override implicit val ec: ExecutionContext = injector.instanceOf[ExecutionContext]
-    def getControllerId(reason: Reason)        = ""
 
     def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[_]): HtmlFormat.Appendable =
       HtmlFormat.empty
@@ -80,61 +79,6 @@ class TransitionControllerSpec extends CommonPlaySpec with MockSessionConnector 
       val result = createController.onPageLoad(fakeRequest)
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
-    }
-
-    def nonStartingController[A: ClassTag](
-        createController: () => SimpleControllerBase[A],
-        answerRowConstants: List[String]
-    )(rds: Reads[A], wts: Writes[A]): Unit = {
-
-      "On a page load with an expired session, return an redirect to an expired session page" in {
-        expireSessionConnector()
-        val result = createController().onPageLoad(rds)(fakeRequest)
-        status(result) mustBe Status.SEE_OTHER
-        redirectLocation(result) mustBe Some(
-          uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url
-        )
-      }
-      "On a page submit with an expired session, return an redirect to an expired session page" in {
-        expireSessionConnector()
-        val result = createController().onSubmit(wts)(fakeRequest)
-        status(result) mustBe Status.SEE_OTHER
-        redirectLocation(result) mustBe Some(
-          uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url
-        )
-      }
-      "The answer constants must be the same as the calulated constants for the controller" in {
-        val filledOutCacheMap = new CacheMap(
-          "",
-          Map[String, JsValue](
-            Constants.dateOfDeathId                            -> JsString("2019-03-04"),
-            Constants.partOfEstatePassingToDirectDescendantsId -> JsBoolean(true),
-            Constants.valueOfEstateId                          -> JsNumber(500000),
-            Constants.chargeableEstateValueId                  -> JsNumber(450000),
-            Constants.propertyInEstateId                       -> JsBoolean(true),
-            Constants.propertyValueId                          -> JsNumber(400000),
-            Constants.grossingUpOnEstateAssetsId               -> JsBoolean(true),
-            Constants.propertyPassingToDirectDescendantsId     -> JsBoolean(true),
-            Constants.percentagePassedToDirectDescendantsId    -> JsNumber(100),
-            Constants.transferAnyUnusedThresholdId             -> JsBoolean(true),
-            Constants.valueBeingTransferredId                  -> JsNumber(50000),
-            Constants.claimDownsizingThresholdId               -> JsBoolean(true),
-            Constants.datePropertyWasChangedId                 -> JsString("2018-03-02"),
-            Constants.valueOfChangedPropertyId                 -> JsNumber(100000),
-            Constants.assetsPassingToDirectDescendantsId       -> JsBoolean(true),
-            Constants.grossingUpOnEstateAssetsId               -> JsBoolean(true),
-            Constants.chargeablePropertyValueId                -> JsNumber(50000),
-            Constants.valueOfAssetsPassingId                   -> JsNumber(1000),
-            Constants.transferAvailableWhenPropertyChangedId   -> JsBoolean(true),
-            Constants.valueAvailableWhenPropertyChangedId      -> JsNumber(1000)
-          )
-        )
-        val controllerId = createController().controllerId
-        val calculatedConstants =
-          AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
-        val calculatedList = AnswerRows.rowOrderList.filter(calculatedConstants contains _)
-        answerRowConstants mustBe calculatedList
-      }
     }
   }
 

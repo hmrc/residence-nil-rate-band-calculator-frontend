@@ -36,10 +36,6 @@ class NoThresholdIncreaseControllerSpec
 
   val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
 
-  val userAnswers = mock[UserAnswers]
-
-  val reason = mock[Reason]
-
   val injector: Injector = fakeApplication.injector
 
   val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
@@ -90,43 +86,22 @@ class NoThresholdIncreaseControllerSpec
       val result =
         new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase)
           .onPageLoad(fakeRequest)
+
       contentAsString(result) mustBe
         no_threshold_increase("no_threshold_increase.direct_descendant")(fakeRequest, messages).toString
     }
 
     "return the No Threshold Increase view for none case a GET" in {
+
+      val userAnswers = mock[UserAnswers]
+      val reason      = mock[Reason]
+
       val result =
         new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase)
           .createView(reason, userAnswers)(fakeRequest)
+
       contentAsString(result) mustBe
         no_threshold_increase("")(fakeRequest, messages).toString
-    }
-
-    "return none for getControllerId when no reason" in {
-      val result =
-        new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase)
-          .getControllerId(reason)
-      assert(result == "")
-    }
-
-    "The answer constants must be the same as the calulated constants for the controller when the reason is DateOfDeath" in {
-      val controller =
-        new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase)
-      val controllerId        = controller.getControllerId(DateOfDeath)
-      val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
-      val calculatedList      = AnswerRows.rowOrderList.filter(calculatedConstants contains _)
-      val answerList          = List()
-      answerList mustBe calculatedList
-    }
-
-    "The answer constants must be the same as the calulated constants for the controller when the reason is DirectDescendant" in {
-      val controller =
-        new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase)
-      val controllerId        = controller.getControllerId(DirectDescendant)
-      val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
-      val calculatedList      = AnswerRows.rowOrderList.filter(calculatedConstants contains _)
-      val answerList          = List(Constants.dateOfDeathId)
-      answerList mustBe calculatedList
     }
   }
 

@@ -19,16 +19,14 @@ package uk.gov.hmrc.residencenilratebandcalculator.utils
 import org.scalatest.matchers.must.Matchers.must
 import uk.gov.hmrc.play.bootstrap.frontend.http.FrontendErrorHandler
 import play.api.i18n.MessagesApi
-import play.test.Helpers.fakeApplication
+
 import play.api.inject.Injector
-import play.api.mvc.{AnyContentAsEmpty, RequestHeader}
+import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.MockSessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.error_template
-
-import scala.concurrent.ExecutionContext.Implicits.global
 
 class RnrbErrorHandlerSpec
     extends CommonPlaySpec

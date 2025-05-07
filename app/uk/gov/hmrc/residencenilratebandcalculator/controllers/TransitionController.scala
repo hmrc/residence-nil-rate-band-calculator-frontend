@@ -30,7 +30,6 @@ trait TransitionController extends FrontendController with I18nSupport {
   val sessionConnector: SessionConnector
 
   val getReason: GetReason
-  def getControllerId(reason: Reason): String
 
   implicit val ec: ExecutionContext
 

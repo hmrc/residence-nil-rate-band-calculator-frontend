@@ -42,12 +42,6 @@ class NoAdditionalThresholdAvailableController @Inject() (
 
   val getReason = GetNoAdditionalThresholdAvailableReason
 
-  def getControllerId(reason: Reason) =
-    reason match {
-      case NotCloselyInherited => Constants.propertyPassingToDirectDescendantsId
-      case _                   => Constants.propertyInEstateId
-    }
-
   def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[_]) = {
     val reasonKey = reason match {
       case NotCloselyInherited | NoProperty => "no_additional_threshold_available.not_closely_inherited_reason"

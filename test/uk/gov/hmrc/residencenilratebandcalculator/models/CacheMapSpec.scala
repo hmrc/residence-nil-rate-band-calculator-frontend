@@ -33,16 +33,6 @@ class CacheMapSpec
   private val expectedJson = Json.parse("""{"id":"id1","data":{"key1":"value1"}}""".stripMargin)
 
   "CacheMap" when {
-    "apply" should {
-      "return expected object" in {
-        val cache = expectedJson.as[CacheMap]
-        cache mustBe model
-      }
-
-      "return expected json from object" in {
-        Json.toJson(model) mustBe expectedJson
-      }
-    }
 
     "formats" should {
       "successfully serialize CacheMap with empty data" in {
@@ -170,7 +160,8 @@ class CacheMapSpec
       "return None when missing key" in {
         model.getEntry[String]("key_test") mustBe None
       }
-      "throw an exception when object not matching" in {
+
+      "throw an exception when provided result type does not match" in {
         val exception = intercept[KeyStoreEntryValidationException] {
           model.getEntry[Date]("key1")
         }

@@ -41,9 +41,8 @@ class NoAdditionalThresholdAvailableControllerSpec
     with WithCommonFakeApplication {
 
   val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
-  val userAnswers                                      = mock[UserAnswers]
-  val reason                                           = mock[Reason]
-  val injector: Injector                               = fakeApplication.injector
+
+  val injector: Injector = fakeApplication.injector
 
   val navigator: Navigator = injector.instanceOf[Navigator]
 
@@ -115,6 +114,10 @@ class NoAdditionalThresholdAvailableControllerSpec
     }
 
     "return the  Correct View for a GET" in {
+
+      val userAnswers = mock[UserAnswers]
+      val reason      = mock[Reason]
+
       val controller = new NoAdditionalThresholdAvailableController(
         messagesControllerComponents,
         mockSessionConnector,
@@ -140,46 +143,6 @@ class NoAdditionalThresholdAvailableControllerSpec
       )
 
       an[RuntimeException] must be thrownBy controller.onPageLoad(fakeRequest)
-    }
-
-    "The answer constants must be the same as the calulated constants for the controller when the reason is NotCloselyInherited" in {
-      val controller = new NoAdditionalThresholdAvailableController(
-        messagesControllerComponents,
-        mockSessionConnector,
-        navigator,
-        no_additional_threshold_available
-      )
-      val controllerId        = controller.getControllerId(NotCloselyInherited)
-      val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
-      val calculatedList      = AnswerRows.rowOrderList.filter(calculatedConstants contains _)
-      val answerList = List(
-        Constants.dateOfDeathId,
-        Constants.partOfEstatePassingToDirectDescendantsId,
-        Constants.valueOfEstateId,
-        Constants.chargeableEstateValueId,
-        Constants.propertyInEstateId,
-        Constants.propertyValueId
-      )
-      answerList mustBe calculatedList
-    }
-
-    "The answer constants must be the same as the calulated constants for the controller when the reason is NoProperty" in {
-      val controller = new NoAdditionalThresholdAvailableController(
-        messagesControllerComponents,
-        mockSessionConnector,
-        navigator,
-        no_additional_threshold_available
-      )
-      val controllerId        = controller.getControllerId(NoProperty)
-      val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
-      val calculatedList      = AnswerRows.rowOrderList.filter(calculatedConstants contains _)
-      val answerList = List(
-        Constants.dateOfDeathId,
-        Constants.partOfEstatePassingToDirectDescendantsId,
-        Constants.valueOfEstateId,
-        Constants.chargeableEstateValueId
-      )
-      answerList mustBe calculatedList
     }
   }
 

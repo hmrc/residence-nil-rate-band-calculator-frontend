@@ -38,13 +38,6 @@ class NoThresholdIncreaseController @Inject() (
 
   val getReason = GetNoThresholdIncreaseReason
 
-  def getControllerId(reason: Reason) =
-    reason match {
-      case DateOfDeath      => Constants.dateOfDeathId
-      case DirectDescendant => Constants.partOfEstatePassingToDirectDescendantsId
-      case _                => ""
-    }
-
   def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[_]) = {
     val prefix = reason match {
       case DateOfDeath      => "no_threshold_increase.date_of_death"

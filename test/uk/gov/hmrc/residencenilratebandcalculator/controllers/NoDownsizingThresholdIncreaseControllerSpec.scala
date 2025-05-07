@@ -48,8 +48,6 @@ class NoDownsizingThresholdIncreaseControllerSpec
     with MockitoSugar
     with WithCommonFakeApplication {
 
-  val userAnswers = mock[UserAnswers]
-
   val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
 
   val injector: Injector = fakeApplication.injector
@@ -96,8 +94,6 @@ class NoDownsizingThresholdIncreaseControllerSpec
       Constants.valueAvailableWhenPropertyChangedId      -> JsNumber(1000)
     )
   )
-
-  val reason = UserAnswers(filledOutCacheMap)
 
   "No Downsizing Threshold Increase Controller" must {
     "return 200 for a GET" in {
@@ -176,58 +172,6 @@ class NoDownsizingThresholdIncreaseControllerSpec
       an[RuntimeException] must be thrownBy controller.onPageLoad(fakeRequest)
     }
 
-    "The answer constants must be the same as the calulated constants for the controller when the reason is NotCloselyInherited" in {
-      val controller = new NoAdditionalThresholdAvailableController(
-        messagesControllerComponents,
-        mockSessionConnector,
-        navigator,
-        no_additional_threshold_available
-      )
-      val controllerId        = controller.getControllerId(NoAssetsPassingToDirectDescendants)
-      val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
-      val calculatedList      = AnswerRows.rowOrderList.filter(calculatedConstants contains _)
-      val answerList = List(
-        Constants.dateOfDeathId,
-        Constants.partOfEstatePassingToDirectDescendantsId,
-        Constants.valueOfEstateId,
-        Constants.chargeableEstateValueId
-      )
-      answerList mustBe calculatedList
-    }
-
-    "The answer constants must be the same as the calulated constants for the controller when the reason is another reason" in {
-      val controller = new NoAdditionalThresholdAvailableController(
-        messagesControllerComponents,
-        mockSessionConnector,
-        navigator,
-        no_additional_threshold_available
-      )
-      val controllerId        = controller.getControllerId(DatePropertyWasChangedTooEarly)
-      val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
-      val calculatedList      = AnswerRows.rowOrderList.filter(calculatedConstants contains _)
-      val answerList = List(
-        Constants.dateOfDeathId,
-        Constants.partOfEstatePassingToDirectDescendantsId,
-        Constants.valueOfEstateId,
-        Constants.chargeableEstateValueId
-      )
-      answerList mustBe calculatedList
-    }
-
-    "getControllerId" must {
-
-      "return assetsPassingToDirectDescendantsId constant when no assets is passed in as the reason" in {
-        val controller = fakeApplication.injector.instanceOf[NoDownsizingThresholdIncreaseController]
-        controller.getControllerId(
-          NoAssetsPassingToDirectDescendants
-        ) mustBe Constants.assetsPassingToDirectDescendantsId
-      }
-
-      "return datePropertyWasChangedId constant when assets are passed as the reason" in {
-        val controller = fakeApplication.injector.instanceOf[NoDownsizingThresholdIncreaseController]
-        controller.getControllerId(NotCloselyInherited) mustBe Constants.datePropertyWasChangedId
-      }
-    }
   }
 
 }
