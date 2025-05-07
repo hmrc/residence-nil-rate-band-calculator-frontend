@@ -16,10 +16,13 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
+import play.api.http.Status
+import play.api.libs.json.Writes
 import play.api.mvc.DefaultMessagesControllerComponents
 import play.twirl.api.HtmlFormat
+import play.api.test.Helpers._
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
-import uk.gov.hmrc.residencenilratebandcalculator.forms.DatePropertyWasChangedForm._
+import uk.gov.hmrc.residencenilratebandcalculator.forms.DatePropertyWasChangedForm.*
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_property_was_changed
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
@@ -74,6 +77,15 @@ class DatePropertyWasChangedControllerSpec extends DateControllerSpecBase {
         )
       )
     )
+    "On a page submit with an expired session, return an redirect to an expired session page" in {
+      expireSessionConnector()
+      val result = createController().onSubmit(Date.dateWrites)(fakeRequest)
+      status(result) mustBe Status.SEE_OTHER
+      redirectLocation(result) mustBe Some(
+        uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url
+      )
+    }
+
   }
 
 }

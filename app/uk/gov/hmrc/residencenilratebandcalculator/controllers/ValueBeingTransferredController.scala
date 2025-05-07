@@ -70,13 +70,6 @@ class ValueBeingTransferredController @Inject() (
     cacheMap         <- getCacheMap
   } yield (nilRateValueJson, cacheMap)
 
-  def answerRows(cacheMap: CacheMap, request: Request[_]): Seq[AnswerRow] = AnswerRows.constructAnswerRows(
-    AnswerRows.truncateAndLocateInCacheMap(controllerId, cacheMap),
-    AnswerRows.answerRowFns,
-    AnswerRows.rowOrder,
-    messagesApi.preferred(request)
-  )
-
   def formatJsonNumber(numberStr: String): String = {
     val number = Integer.parseInt(numberStr)
     NumberFormat.getCurrencyInstance(Locale.UK).format(number)

@@ -27,17 +27,13 @@ class FrontendAppConfig @Inject() (val servicesConfig: ServicesConfig) {
   lazy val contactHost: String          = servicesConfig.getConfString("contact-frontend.www", "")
   lazy val contactFormServiceIdentifier = "RNRB"
 
-  lazy val timeOutCountdownSeconds: Int = loadConfig("timeOutCountdownSeconds").toInt
-  lazy val timeOutSession: Int          = loadConfig("mongodb.timeToLiveInSeconds").toInt
-  lazy val reportAProblemPartialUrl = s"$contactHost/contact/problem_reports_ajax?service=$contactFormServiceIdentifier"
-  lazy val reportAProblemNonJSUrl = s"$contactHost/contact/problem_reports_nonjs?service=$contactFormServiceIdentifier"
-  lazy val betaFeedbackUrl        = s"$contactHost/contact/beta-feedback?service=$contactFormServiceIdentifier"
+  lazy val betaFeedbackUrl = s"$contactHost/contact/beta-feedback?service=$contactFormServiceIdentifier"
 
   lazy val betaFeedbackUnauthenticatedUrl =
     s"$contactHost/contact/beta-feedback-unauthenticated?service=$contactFormServiceIdentifier"
 
   lazy val feedbackSurvey: String = loadConfig("feedback-survey-frontend.url")
-  lazy val serviceUrl: String = servicesConfig.baseUrl("residence-nil-rate-band-calculator")
+  lazy val serviceUrl: String     = servicesConfig.baseUrl("residence-nil-rate-band-calculator")
 
   val isWelshEnabled: Boolean = true
 }

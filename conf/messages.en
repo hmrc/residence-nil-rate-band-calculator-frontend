@@ -170,7 +170,6 @@ grossing_up_on_estate_property.error.required = Select yes if grossing up or int
 no_additional_threshold_available.browser_title = RNRB for passing on the home does not apply
 no_additional_threshold_available.title = RNRB for passing on the home does not apply
 no_additional_threshold_available.guidance = You might still be able to claim downsizing allowance or transfer unused RNRB if the person who has died was married during their lifetime and their spouse or civil partner died first.
-no_additional_threshold_available.no_property_reason = This is because no part of the property passed to a direct descendant, or the spouse or civil partner of a direct descendant.
 no_additional_threshold_available.not_closely_inherited_reason = This is because no part of the property passed to a direct descendant, or the spouse or civil partner of a direct descendant.
 
 no_downsizing_threshold_increase.browser_title = There is no downsizing allowance available for the estate

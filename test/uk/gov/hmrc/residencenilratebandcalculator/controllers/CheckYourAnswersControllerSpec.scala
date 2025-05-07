@@ -107,6 +107,15 @@ class CheckYourAnswersControllerSpec extends CommonPlaySpec with MockSessionConn
       val result = controller().onPageLoad(fakeRequest)
       status(result) mustBe Status.SEE_OTHER
     }
+
+    "On a page load with an expired session, return an redirect to an expired session page" in {
+      expireSessionConnector()
+      val result = controller().onPageLoad(fakeRequest)
+      status(result) mustBe Status.SEE_OTHER
+      redirectLocation(result) mustBe Some(
+        uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url
+      )
+    }
   }
 
 }
