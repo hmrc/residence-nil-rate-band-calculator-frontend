@@ -170,7 +170,6 @@ grossing_up_on_estate_property.error.required = Dewiswch ''Iawn'' os yw grosio n
 no_additional_threshold_available.browser_title = Nid yw RNRB yn gymwys ar gyfer trosglwyddo tŷ
 no_additional_threshold_available.title = Nid yw RNRB yn gymwys ar gyfer trosglwyddo tŷ
 no_additional_threshold_available.guidance = Mae''n bosibl y byddwch yn dal i allu hawlio lwfans ar gyfer symud i gartref llai o faint neu drosglwyddo RNRB sydd heb ei defnyddio os bu''r ymadawedig yn briod yn ystod ei oes a bu farw''i briod neu''i bartner sifil yn gyntaf.
-no_additional_threshold_available.no_property_reason = Mae hyn oherwydd na throsglwyddwyd unrhyw ran o''r eiddo i ddisgynnydd uniongyrchol, nag i briod neu bartner sifil disgynnydd uniongyrchol.
 no_additional_threshold_available.not_closely_inherited_reason = Mae hyn oherwydd na drosglwyddwyd unrhyw ran o''r eiddo i ddisgynnydd uniongyrchol, nag i briod neu bartner sifil disgynnydd uniongyrchol.
 
 no_downsizing_threshold_increase.browser_title = Nid oes lwfans ar gyfer symud i gartref llai o faint ar gael ar gyfer yr ystâd

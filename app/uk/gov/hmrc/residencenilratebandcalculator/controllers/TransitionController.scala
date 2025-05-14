@@ -30,19 +30,8 @@ trait TransitionController extends FrontendController with I18nSupport {
   val sessionConnector: SessionConnector
 
   val getReason: GetReason
-  def getControllerId(reason: Reason): String
 
   implicit val ec: ExecutionContext
-
-  def answerRows(cacheMap: CacheMap, request: Request[_]): Seq[AnswerRow] = {
-    val controllerId = getControllerId(getReason(new UserAnswers(cacheMap)))
-    AnswerRows.constructAnswerRows(
-      AnswerRows.truncateAndAddCurrentLocateInCacheMap(controllerId, cacheMap),
-      AnswerRows.answerRowFns,
-      AnswerRows.rowOrder,
-      messagesApi.preferred(request)
-    )
-  }
 
   def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[_]): HtmlFormat.Appendable
 
