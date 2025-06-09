@@ -6,7 +6,7 @@ lazy val appName                        = "residence-nil-rate-band-calculator-fr
 lazy val appDependencies: Seq[ModuleID] = AppDependencies()
 lazy val plugins: Seq[Plugins]          = Seq.empty
 lazy val playSettings: Seq[Setting[_]]  = Seq.empty
-val silencerVersion = "1.7.0"
+val silencerVersion                     = "1.7.0"
 
 ThisBuild / scalaVersion := "3.6.4"
 
@@ -29,14 +29,14 @@ lazy val microservice = Project(appName, file("."))
   .settings(libraryDependencies ++= appDependencies)
   .settings(
     Test / Keys.fork := true,
-    scalacOptions ++= Seq("-feature","-source:3.4-migration", "-rewrite"),
+    scalacOptions ++= Seq("-feature", "-source:3.4-migration", "-rewrite"),
     retrieveManaged := true,
     resolvers += Resolver.jcenterRepo,
     // only required for frontends
     scalacOptions += "-Wconf:msg=unused import&src=html/.*:s",
     scalacOptions += "-Wconf:src=routes/.*:s",
     scalacOptions += "-Wconf:msg=Flag.*repeatedly:s",
-    scalacOptions +=  "-Wconf:msg=.*-Wunused.*:s"
+    scalacOptions += "-Wconf:msg=.*-Wunused.*:s"
   )
   .settings(majorVersion := 0)
   .settings(

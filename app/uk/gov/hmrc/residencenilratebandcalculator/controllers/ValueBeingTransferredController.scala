@@ -80,7 +80,7 @@ class ValueBeingTransferredController @Inject() (
     microserviceValues
       .map { case (nilRateValueJson, cacheMap) =>
 
-        val nilRateBand       = formatJsonNumber(nilRateValueJson.json.toString())
+        val nilRateBand                 = formatJsonNumber(nilRateValueJson.json.toString())
         implicit val messages: Messages = messagesApi.preferred(request)
         Ok(
           valueBeingTransferredView(
@@ -101,10 +101,10 @@ class ValueBeingTransferredController @Inject() (
   def onSubmit(implicit wts: Writes[Int]): Action[AnyContent] = validatedSession.async { implicit request =>
     microserviceValues
       .flatMap { case (nilRateValueJson, cacheMap) =>
-        val boundForm            = form().bindFromRequest()
-        val nilRateBand          = nilRateValueJson.json.toString()
-        val formattedNilRateBand = formatJsonNumber(nilRateBand)
-        val userAnswers          = new UserAnswers(cacheMap)
+        val boundForm                   = form().bindFromRequest()
+        val nilRateBand                 = nilRateValueJson.json.toString()
+        val formattedNilRateBand        = formatJsonNumber(nilRateBand)
+        val userAnswers                 = new UserAnswers(cacheMap)
         implicit val messages: Messages = messagesApi.preferred(request)
         boundForm.fold(
           formWithErrors =>
