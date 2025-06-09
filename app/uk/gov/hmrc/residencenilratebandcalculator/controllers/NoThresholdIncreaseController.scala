@@ -19,7 +19,6 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import javax.inject.{Inject, Singleton}
 import play.api.mvc.{DefaultMessagesControllerComponents, Request}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoThresholdIncreaseReason.{DateOfDeath, DirectDescendant}
 import uk.gov.hmrc.residencenilratebandcalculator.models._
@@ -38,7 +37,7 @@ class NoThresholdIncreaseController @Inject() (
 
   val getReason = GetNoThresholdIncreaseReason
 
-  def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[_]) = {
+  def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[?]) = {
     val prefix = reason match {
       case DateOfDeath      => "no_threshold_increase.date_of_death"
       case DirectDescendant => "no_threshold_increase.direct_descendant"

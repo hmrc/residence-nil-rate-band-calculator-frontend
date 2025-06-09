@@ -43,7 +43,7 @@ class AssetsPassingToDirectDescendantsController @Inject() (
 
   override def form: () => Form[Boolean] = () => BooleanForm("assets_passing_to_direct_descendants.error.required")
 
-  override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[_]) = {
+  override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[?]) = {
     val formattedPropertyValue = userAnswers.propertyValue match {
       case Some(value) => Some(CurrencyFormatter.format(value))
       case _           => None

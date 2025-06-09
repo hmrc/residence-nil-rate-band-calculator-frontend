@@ -42,7 +42,7 @@ class PropertyPassingToDirectDescendantsController @Inject() (
 
   override def form: () => Form[String] = () => PropertyPassingToDirectDescendantsForm()
 
-  override def view(form: Form[String], userAnswers: UserAnswers)(implicit request: Request[_]) =
+  override def view(form: Form[String], userAnswers: UserAnswers)(implicit request: Request[?]) =
     propertyPassingToDirectDescendantsView(form)
 
 }

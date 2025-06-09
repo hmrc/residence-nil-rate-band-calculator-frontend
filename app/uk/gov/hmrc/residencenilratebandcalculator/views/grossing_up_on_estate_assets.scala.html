@@ -25,7 +25,7 @@
     layout: Layout
 )
 
-@(form: Form[Boolean])(implicit request: Request[_], messages: Messages)
+@(form: Form[Boolean])(implicit request: Request[?], messages: Messages)
 
 
 @title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("grossing_up_on_estate_assets.browser_title")) else messages("grossing_up_on_estate_assets.browser_title")}

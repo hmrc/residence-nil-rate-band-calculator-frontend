@@ -47,7 +47,7 @@ class ChargeableInheritedPropertyValueController @Inject() (
       "error.value_too_large"
     )
 
-  override def view(form: Form[Int], userAnswers: UserAnswers)(implicit request: Request[_]) =
+  override def view(form: Form[Int], userAnswers: UserAnswers)(implicit request: Request[?]) =
     chargeableInheritedPropertyValueView(form)
 
   override def validate(value: Int, userAnswers: UserAnswers): Option[FormError] =

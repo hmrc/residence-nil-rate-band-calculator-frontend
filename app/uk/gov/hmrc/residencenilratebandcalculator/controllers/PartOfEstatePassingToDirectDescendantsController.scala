@@ -43,7 +43,7 @@ class PartOfEstatePassingToDirectDescendantsController @Inject() (
   override def form: () => Form[Boolean] = () =>
     BooleanForm("part_of_estate_passing_to_direct_descendants.error.required")
 
-  override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[_]) =
+  override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[?]) =
     partOfEstatePassingToDirectDescendantsView(form)
 
 }

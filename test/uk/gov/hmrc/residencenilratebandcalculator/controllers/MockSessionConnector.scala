@@ -35,8 +35,8 @@ import scala.reflect.ClassTag
 
 trait MockSessionConnector extends CommonPlaySpec with MockitoSugar with Matchers with BeforeAndAfter {
 
-  var mockSessionConnector: SessionConnector = _
-  var mockCacheMap: CacheMap                 = _
+  var mockSessionConnector: SessionConnector = scala.compiletime.uninitialized
+  var mockCacheMap: CacheMap                 = scala.compiletime.uninitialized
 
   before {
     mockCacheMap = mock[CacheMap]

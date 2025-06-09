@@ -20,13 +20,9 @@ import javax.inject.{Inject, Singleton}
 import play.api.mvc.{DefaultMessagesControllerComponents, Request}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetUnableToCalculateThresholdIncreaseReason.{
-  GrossingUpForOtherProperty,
-  GrossingUpForResidence
-}
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetUnableToCalculateThresholdIncreaseReason
 import uk.gov.hmrc.residencenilratebandcalculator.models._
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.unable_to_calculate_threshold_increase
-import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 import scala.concurrent.ExecutionContext
 
@@ -41,7 +37,7 @@ class UnableToCalculateThresholdIncreaseController @Inject() (
 
   val getReason = GetUnableToCalculateThresholdIncreaseReason
 
-  def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[_]) =
+  def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[?]) =
     unableToCalculateThresholdIncreaseView("unable_to_calculate_threshold_increase.grossing_up")
 
 }

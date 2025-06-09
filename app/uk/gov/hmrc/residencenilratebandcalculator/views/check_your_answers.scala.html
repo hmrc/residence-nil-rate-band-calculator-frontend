@@ -21,10 +21,9 @@
     layout: Layout,
     heading: playComponents.heading,
     buttonLink: playComponents.button_link,
-    govukSummaryList : GovukSummaryList,
-    form: FormWithCSRF
+    govukSummaryList : GovukSummaryList
 )
-@(answerRows: Seq[AnswerRow])(implicit request: Request[_], messages: Messages)
+@(answerRows: Seq[AnswerRow])(implicit request: Request[?], messages: Messages)
 
 @rows = @{
     answerRows.map { answer =>

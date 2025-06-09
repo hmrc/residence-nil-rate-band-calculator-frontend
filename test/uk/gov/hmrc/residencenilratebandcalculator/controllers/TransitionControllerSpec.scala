@@ -56,7 +56,7 @@ class TransitionControllerSpec extends CommonPlaySpec with MockSessionConnector 
     val getReason: GetReason = new GetReason { def apply(userAnswers: UserAnswers): Reason = new Reason {} }
     override implicit val ec: ExecutionContext = injector.instanceOf[ExecutionContext]
 
-    def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[_]): HtmlFormat.Appendable =
+    def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[?]): HtmlFormat.Appendable =
       HtmlFormat.empty
 
   }

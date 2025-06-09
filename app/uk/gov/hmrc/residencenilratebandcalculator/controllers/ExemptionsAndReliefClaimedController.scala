@@ -42,7 +42,7 @@ class ExemptionsAndReliefClaimedController @Inject() (
 
   override def form: () => Form[Boolean] = () => BooleanForm("exemptions_and_relief_claimed.error.required")
 
-  override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[_]) =
+  override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[?]) =
     exemptionsAndReliefClaimedView(form)
 
 }

@@ -33,7 +33,7 @@ trait TransitionController extends FrontendController with I18nSupport {
 
   implicit val ec: ExecutionContext
 
-  def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[_]): HtmlFormat.Appendable
+  def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[?]): HtmlFormat.Appendable
 
   def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.fetch().map {

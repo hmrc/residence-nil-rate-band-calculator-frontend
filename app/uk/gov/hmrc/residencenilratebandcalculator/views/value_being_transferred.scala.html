@@ -25,7 +25,7 @@
     submitButton: playComponents.submit_button
 )
 
-@(nilRateBand: String, form: Form[Int])(implicit request: Request[_], messages: Messages)
+@(nilRateBand: String, form: Form[Int])(implicit request: Request[?], messages: Messages)
 
 @title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("value_being_transferred.browser_title")) else messages("value_being_transferred.browser_title")}
 

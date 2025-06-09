@@ -6,11 +6,12 @@ lazy val appName                        = "residence-nil-rate-band-calculator-fr
 lazy val appDependencies: Seq[ModuleID] = AppDependencies()
 lazy val plugins: Seq[Plugins]          = Seq.empty
 lazy val playSettings: Seq[Setting[_]]  = Seq.empty
+val silencerVersion = "1.7.0"
 
 ThisBuild / scalaVersion := "3.6.4"
 
 lazy val microservice = Project(appName, file("."))
-  .enablePlugins(Seq(play.sbt.PlayScala, SbtDistributablesPlugin) ++ plugins: _*)
+  .enablePlugins((Seq(play.sbt.PlayScala, SbtDistributablesPlugin) ++ plugins) *)
   .disablePlugins(JUnitXmlReportPlugin) // this is an experimental plugin that is (currently) enabled by default and prevents deployment to QA environment
   .settings(playSettings: _*)
   .settings(
@@ -28,13 +29,14 @@ lazy val microservice = Project(appName, file("."))
   .settings(libraryDependencies ++= appDependencies)
   .settings(
     Test / Keys.fork := true,
-    scalacOptions ++= Seq("-feature"),
+    scalacOptions ++= Seq("-feature","-source:3.4-migration", "-rewrite"),
     retrieveManaged := true,
     resolvers += Resolver.jcenterRepo,
     // only required for frontends
-    scalacOptions += "-Wconf:cat=unused-imports&src=html/.*:s",
-    // for all services
-    scalacOptions += "-Wconf:src=routes/.*:s"
+    scalacOptions += "-Wconf:msg=unused import&src=html/.*:s",
+    scalacOptions += "-Wconf:src=routes/.*:s",
+    scalacOptions += "-Wconf:msg=Flag.*repeatedly:s",
+    scalacOptions +=  "-Wconf:msg=.*-Wunused.*:s"
   )
   .settings(majorVersion := 0)
   .settings(

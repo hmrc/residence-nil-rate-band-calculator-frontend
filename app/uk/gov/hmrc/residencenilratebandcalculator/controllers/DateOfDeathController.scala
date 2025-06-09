@@ -45,7 +45,7 @@ class DateOfDeathController @Inject() (
 
   lazy val controllerId: String = Constants.dateOfDeathId
 
-  def view(form: Form[Date])(implicit request: Request[_]): HtmlFormat.Appendable = dateOfDeathView(form)
+  def view(form: Form[Date])(implicit request: Request[?]): HtmlFormat.Appendable = dateOfDeathView(form)
 
   def onPageLoad(implicit rds: Reads[Date]): Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.fetch().map { optionalCacheMap =>
