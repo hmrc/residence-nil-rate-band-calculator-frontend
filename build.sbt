@@ -31,7 +31,7 @@ lazy val microservice = Project(appName, file("."))
     Test / Keys.fork := true,
     scalacOptions ++= Seq("-feature", "-source:3.4-migration", "-rewrite"),
     retrieveManaged := true,
-    resolvers += Resolver.jcenterRepo,
+    resolvers += MavenRepository("HMRC-open-artefacts-maven2", "https://open.artefacts.tax.service.gov.uk/maven2"),
     // only required for frontends
     scalacOptions += "-Wconf:msg=unused import&src=html/.*:s",
     scalacOptions += "-Wconf:src=routes/.*:s",
