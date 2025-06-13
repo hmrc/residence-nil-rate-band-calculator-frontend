@@ -26,11 +26,7 @@ import play.api.test.Helpers.*
 import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
-import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CacheMap, Reason, UserAnswers}
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.{
-  NoProperty,
-  NotCloselyInherited
-}
+import uk.gov.hmrc.residencenilratebandcalculator.models.{CacheMap, Reason, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_additional_threshold_available
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 

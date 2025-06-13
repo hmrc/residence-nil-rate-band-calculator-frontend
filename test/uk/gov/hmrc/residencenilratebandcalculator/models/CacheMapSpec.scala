@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import uk.gov.hmrc.residencenilratebandcalculator.models.{CacheMap, Date}
+import uk.gov.hmrc.residencenilratebandcalculator.models
 import play.api.libs.json.*
 import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.MockSessionConnector
@@ -29,8 +29,6 @@ class CacheMapSpec
     with WithCommonFakeApplication {
 
   private val model = CacheMap("id1", Map("key1" -> Json.toJson("value1")))
-
-  private val expectedJson = Json.parse("""{"id":"id1","data":{"key1":"value1"}}""".stripMargin)
 
   "CacheMap" when {
 
