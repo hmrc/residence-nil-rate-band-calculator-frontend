@@ -42,7 +42,7 @@ class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with BeforeA
   val chargeablePropertyValue             = 9
   val chargeableInheritedPropertyValue    = 10
 
-  var userAnswers: UserAnswers = _
+  var userAnswers: UserAnswers = scala.compiletime.uninitialized
 
   before {
     userAnswers = mock[UserAnswers]

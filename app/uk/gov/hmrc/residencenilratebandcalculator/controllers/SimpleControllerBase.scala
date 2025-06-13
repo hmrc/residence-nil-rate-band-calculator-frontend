@@ -46,11 +46,11 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
 
   def form: () => Form[A]
 
-  def view(form: Form[A], userAnswers: UserAnswers)(implicit request: Request[_]): HtmlFormat.Appendable
+  def view(form: Form[A], userAnswers: UserAnswers)(implicit request: Request[?]): HtmlFormat.Appendable
 
   val navigator: Navigator
 
-  def answerRows(cacheMap: CacheMap, request: Request[_]): Seq[AnswerRow] = AnswerRows.constructAnswerRows(
+  def answerRows(cacheMap: CacheMap, request: Request[?]): Seq[AnswerRow] = AnswerRows.constructAnswerRows(
     AnswerRows.truncateAndLocateInCacheMap(controllerId, cacheMap),
     AnswerRows.answerRowFns,
     AnswerRows.rowOrder,

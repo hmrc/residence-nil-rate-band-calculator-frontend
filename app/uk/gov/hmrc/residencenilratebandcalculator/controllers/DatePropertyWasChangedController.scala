@@ -43,7 +43,7 @@ class DatePropertyWasChangedController @Inject() (
 
   val controllerId: String = Constants.datePropertyWasChangedId
 
-  def view(form: Form[Date])(implicit request: Request[_]) =
+  def view(form: Form[Date])(implicit request: Request[?]) =
     datePropertyWasChangedView(form)
 
   def onPageLoad(implicit rds: Reads[Date]): Action[AnyContent] = Action.async { implicit request =>

@@ -48,7 +48,7 @@ class ValueOfEstateController @Inject() (
       "error.value_too_large"
     )
 
-  override def view(form: Form[Int], userAnswers: UserAnswers)(implicit request: Request[_]) =
+  override def view(form: Form[Int], userAnswers: UserAnswers)(implicit request: Request[?]) =
     valueOfEstateView(form)
 
 }

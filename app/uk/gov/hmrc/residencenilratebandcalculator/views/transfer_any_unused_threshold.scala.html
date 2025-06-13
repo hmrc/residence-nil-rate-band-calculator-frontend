@@ -26,7 +26,7 @@
     submitButton: playComponents.submit_button
 )
 
-@(form: Form[Boolean])(implicit request: Request[_], messages: Messages)
+@(form: Form[Boolean])(implicit request: Request[?], messages: Messages)
 
 @title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("transfer_any_unused_threshold.browser_title")) else messages("transfer_any_unused_threshold.browser_title")}
 

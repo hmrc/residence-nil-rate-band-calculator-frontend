@@ -26,7 +26,7 @@
     uiForm: FormWithCSRF
 )
 
-@(form: Form[Date])(implicit request: Request[_], messages: Messages)
+@(form: Form[Date])(implicit request: Request[?], messages: Messages)
 
 @title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("date_property_was_changed.browser_title")) else messages("date_property_was_changed.browser_title")}
 

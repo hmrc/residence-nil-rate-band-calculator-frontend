@@ -26,7 +26,7 @@ case class PropertyValueAfterExemption(value: Int, inheritedValue: Int)
 object PropertyValueAfterExemption {
 
   val propertyValueAfterExemptionReads: Reads[PropertyValueAfterExemption] =
-    (__ \ "value").read[Int].and((__ \ "inheritedValue").read[Int])(PropertyValueAfterExemption.apply _)
+    (__ \ "value").read[Int].and((__ \ "inheritedValue").read[Int])(PropertyValueAfterExemption.apply)
 
   val propertyValueAfterExemptionWrites: Writes[PropertyValueAfterExemption] =
     (__ \ "value").write[Int].and((__ \ "inheritedValue").write[Int])(o => Tuple.fromProductTyped(o))

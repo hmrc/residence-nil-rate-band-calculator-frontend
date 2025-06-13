@@ -27,14 +27,11 @@ import play.api.test.Helpers.*
 import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.NotCloselyInherited
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThresholdIncreaseReason.{
-  DatePropertyWasChangedTooEarly,
-  NoAssetsPassingToDirectDescendants
-}
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThresholdIncreaseReason.NoAssetsPassingToDirectDescendants
+
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.NoProperty
 
-import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CacheMap, Reason, UserAnswers}
+import uk.gov.hmrc.residencenilratebandcalculator.models.{CacheMap, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.{
   no_additional_threshold_available,
   no_downsizing_threshold_increase

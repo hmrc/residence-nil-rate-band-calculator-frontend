@@ -26,7 +26,7 @@
     inputValue: playComponents.input_value
 )
 
-@(form: Form[Int])(implicit request: Request[_], messages: Messages)
+@(form: Form[Int])(implicit request: Request[?], messages: Messages)
 
 @title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("value_of_changed_property.browser_title")) else messages("value_of_changed_property.browser_title")}
 

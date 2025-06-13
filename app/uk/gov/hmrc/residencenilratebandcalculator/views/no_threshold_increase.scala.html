@@ -20,7 +20,7 @@
     buttonLink: playComponents.button_link
 )
 
-@(prefix: String)(implicit request: Request[_], messages: Messages)
+@(prefix: String)(implicit request: Request[?], messages: Messages)
 
 @layout(pageTitle = messages("no_threshold_increase.browser_title")) {
 

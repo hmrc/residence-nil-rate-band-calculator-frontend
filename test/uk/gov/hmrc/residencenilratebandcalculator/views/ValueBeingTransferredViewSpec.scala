@@ -31,7 +31,7 @@ class ValueBeingTransferredViewSpec extends NewIntViewSpecBase {
 
   val messageKeyPrefix                                 = "value_being_transferred"
   val navigator: Navigator                             = injector.instanceOf[Navigator]
-  var mockSessionConnector: SessionConnector           = _
+  var mockSessionConnector: SessionConnector           = scala.compiletime.uninitialized
   val mockRnrbConnector: RnrbConnector                 = mock[RnrbConnector]
   val mockValidatedSession: ValidatedSession           = mock[ValidatedSession]
   val value_being_transferred: value_being_transferred = injector.instanceOf[value_being_transferred]

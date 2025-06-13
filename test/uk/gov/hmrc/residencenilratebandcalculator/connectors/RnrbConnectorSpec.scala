@@ -54,7 +54,7 @@ class RnrbConnectorSpec
     when(
       httpMock.POST(anyString, any[JsValue], any[Seq[(String, String)]])(
         any[Writes[JsValue]](),
-        any[HttpReads[_]](),
+        any[HttpReads[?]](),
         any[HeaderCarrier](),
         any()
       )

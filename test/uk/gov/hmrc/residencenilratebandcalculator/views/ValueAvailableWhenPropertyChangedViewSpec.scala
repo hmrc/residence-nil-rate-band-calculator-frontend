@@ -30,7 +30,7 @@ class ValueAvailableWhenPropertyChangedViewSpec extends NewIntViewSpecBase {
 
   val messageKeyPrefix                       = "value_available_when_property_changed"
   val navigator: Navigator                   = injector.instanceOf[Navigator]
-  var mockSessionConnector: SessionConnector = _
+  var mockSessionConnector: SessionConnector = scala.compiletime.uninitialized
   val mockRnrbConnector: RnrbConnector       = mock[RnrbConnector]
   val mockValidatedSession: ValidatedSession = mock[ValidatedSession]
 

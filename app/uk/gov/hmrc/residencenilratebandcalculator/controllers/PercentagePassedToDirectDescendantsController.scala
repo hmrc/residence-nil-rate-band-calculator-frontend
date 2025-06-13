@@ -46,7 +46,7 @@ class PercentagePassedToDirectDescendantsController @Inject() (
       "percentage_passed_to_direct_descendants.error.out_of_range"
     )
 
-  override def view(form: Form[BigDecimal], userAnswers: UserAnswers)(implicit request: Request[_]) =
+  override def view(form: Form[BigDecimal], userAnswers: UserAnswers)(implicit request: Request[?]) =
     percentagePassedToDirectDescendantsView(form)
 
 }

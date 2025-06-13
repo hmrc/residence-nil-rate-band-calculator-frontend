@@ -26,7 +26,7 @@
     submitButton: playComponents.submit_button
 )
 
-@(form: Form[Date])(implicit request: Request[_], messages: Messages)
+@(form: Form[Date])(implicit request: Request[?], messages: Messages)
 
 @title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("date_of_death.browser_title")) else messages("date_of_death.browser_title")}
 

@@ -56,7 +56,7 @@ trait HtmlSpec extends BaseSpec { self: PlaySpec =>
 
   def assertPageTitleEqualsMessage(doc: Document, expectedMessageKey: String, args: Any*): Assertion = {
     val headers = doc.getElementsByTag("h1")
-    headers.first.text.replaceAll("\u00a0", " ") mustBe messages(expectedMessageKey, args: _*).replaceAll("&nbsp;", " ")
+    headers.first.text.replaceAll("\u00a0", " ") mustBe messages(expectedMessageKey, args *).replaceAll("&nbsp;", " ")
   }
 
   def assertContainsText(doc: Document, text: String): Assertion =

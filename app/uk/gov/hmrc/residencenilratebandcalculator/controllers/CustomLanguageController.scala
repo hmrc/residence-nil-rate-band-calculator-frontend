@@ -34,7 +34,7 @@ class CustomLanguageController @Inject() (val cc: MessagesControllerComponents, 
       uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.CustomLanguageController.switchToLanguage("english")
     }
 
-  def loadedLanguageMessages(implicit request: Request[_]): Messages =
+  def loadedLanguageMessages(implicit request: Request[?]): Messages =
     cc.messagesApi.preferred(request)
 
   def switchToLanguage(language: String): Action[AnyContent] = Action { implicit request =>

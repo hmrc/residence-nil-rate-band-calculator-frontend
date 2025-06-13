@@ -20,9 +20,10 @@ import java.text.NumberFormat
 import java.util.Locale
 import javax.inject.{Inject, Singleton}
 import play.api.Logging
-import play.api.data.FormError
+import play.api.data.{Form, FormError}
+import play.api.i18n.Messages
 import play.api.libs.json.{Reads, Writes}
-import play.api.mvc.{DefaultMessagesControllerComponents, Request}
+import play.api.mvc.{Action, AnyContent, DefaultMessagesControllerComponents}
 import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
@@ -30,7 +31,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, Ses
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, UserAnswers}
+import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 import uk.gov.hmrc.residencenilratebandcalculator.utils.TaxYear
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_being_transferred
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
@@ -49,9 +50,9 @@ class ValueBeingTransferredController @Inject() (
     extends FrontendController(cc)
     with Logging {
 
-  val controllerId = Constants.valueBeingTransferredId
+  val controllerId: String = Constants.valueBeingTransferredId
 
-  def form = () =>
+  def form: () => Form[Int] = () =>
     NonNegativeIntForm(
       "value_being_transferred.error.blank",
       "error.whole_pounds",
@@ -70,17 +71,17 @@ class ValueBeingTransferredController @Inject() (
     cacheMap         <- getCacheMap
   } yield (nilRateValueJson, cacheMap)
 
-  def formatJsonNumber(numberStr: String): String = {
+  private def formatJsonNumber(numberStr: String): String = {
     val number = Integer.parseInt(numberStr)
     NumberFormat.getCurrencyInstance(Locale.UK).format(number)
   }
 
-  def onPageLoad(implicit rds: Reads[Int]) = Action.async { implicit request =>
+  def onPageLoad(implicit rds: Reads[Int]): Action[AnyContent] = Action.async { implicit request =>
     microserviceValues
       .map { case (nilRateValueJson, cacheMap) =>
 
-        val nilRateBand       = formatJsonNumber(nilRateValueJson.json.toString())
-        implicit val messages = messagesApi.preferred(request)
+        val nilRateBand                 = formatJsonNumber(nilRateValueJson.json.toString())
+        implicit val messages: Messages = messagesApi.preferred(request)
         Ok(
           valueBeingTransferredView(
             nilRateBand,
@@ -97,14 +98,14 @@ class ValueBeingTransferredController @Inject() (
       }
   }
 
-  def onSubmit(implicit wts: Writes[Int]) = validatedSession.async { implicit request =>
+  def onSubmit(implicit wts: Writes[Int]): Action[AnyContent] = validatedSession.async { implicit request =>
     microserviceValues
       .flatMap { case (nilRateValueJson, cacheMap) =>
-        val boundForm            = form().bindFromRequest()
-        val nilRateBand          = nilRateValueJson.json.toString()
-        val formattedNilRateBand = formatJsonNumber(nilRateBand)
-        val userAnswers          = new UserAnswers(cacheMap)
-        implicit val messages    = messagesApi.preferred(request)
+        val boundForm                   = form().bindFromRequest()
+        val nilRateBand                 = nilRateValueJson.json.toString()
+        val formattedNilRateBand        = formatJsonNumber(nilRateBand)
+        val userAnswers                 = new UserAnswers(cacheMap)
+        implicit val messages: Messages = messagesApi.preferred(request)
         boundForm.fold(
           formWithErrors =>
             Future.successful(BadRequest(valueBeingTransferredView(formattedNilRateBand, formWithErrors))),
