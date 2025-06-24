@@ -66,20 +66,17 @@ class RnrbConnectorSpec
       when(httpClientV2Mock.post(any[URL])(any[HeaderCarrier]))
         .thenReturn(requestBuilderMock)
 
-      when(httpClientV2Mock.get(any[URL])(any[HeaderCarrier]))
-        .thenReturn(requestBuilderMock)
-
       when(requestBuilderMock.setHeader(any[(String, String)]))
         .thenReturn(requestBuilderMock)
 
       when(requestBuilderMock.withBody(any[JsValue]))
         .thenReturn(requestBuilderMock)
 
-      // Use doReturn to avoid Scala 3 using inference issues
-      val stubResult = Future.successful(HttpResponse(Status.OK, returnedData.toString()))
-      doAnswer(_ => stubResult)
-        .when(requestBuilderMock)
-        .execute[HttpResponse](using any(), any())
+      when(httpClientV2Mock.get(any[URL])(any[HeaderCarrier]))
+        .thenReturn(requestBuilderMock)
+
+      when(requestBuilderMock.execute[HttpResponse](using any(), any()))
+        .thenAnswer(_ => Future.successful(HttpResponse(Status.OK, returnedData.toString())))
 
 
       httpClientV2Mock

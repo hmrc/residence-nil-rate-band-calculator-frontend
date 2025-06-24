@@ -19,7 +19,6 @@ private object AppDependencies {
     "uk.gov.hmrc"       %% "bootstrap-test-play-30"  % bootstrapPlayVersion,
     "uk.gov.hmrc.mongo" %% "hmrc-mongo-test-play-30" % hmrcMongoVersion,
     "org.playframework" %% "play-test"               % PlayVersion.current,
-    "uk.gov.hmrc" %% "http-verbs-play-26" % "12.3.0",
   ).map(_ % Test)
 
   def apply(): Seq[sbt.ModuleID] = compile ++ testDependencies
