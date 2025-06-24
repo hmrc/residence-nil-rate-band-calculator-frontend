@@ -19,29 +19,30 @@ package uk.gov.hmrc.residencenilratebandcalculator.connectors
 import play.api.libs.json._
 import uk.gov.hmrc.http.HttpReads.Implicits.readRaw
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
-import uk.gov.hmrc.play.bootstrap.http.DefaultHttpClient
+import uk.gov.hmrc.http.client.HttpClientV2
+import uk.gov.hmrc.http.StringContextOps
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.JsonInvalidException
 import uk.gov.hmrc.residencenilratebandcalculator.json.JsonErrorProcessor
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, CalculationResult}
-
+import play.api.libs.ws.WSBodyWritables.writeableOf_JsValue
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
 
 @Singleton
-class RnrbConnector @Inject() (val http: DefaultHttpClient, val config: FrontendAppConfig)(
+class RnrbConnector @Inject() (val httpClientV2: HttpClientV2, val config: FrontendAppConfig)(
     implicit ec: ExecutionContext
 ) {
 
-  lazy val serviceUrl: String                 = config.serviceUrl
-  val baseSegment                             = "/residence-nil-rate-band-calculator/"
+  lazy val serviceUrl: String = config.serviceUrl
+  val baseSegment = "/residence-nil-rate-band-calculator/"
   val jsonContentTypeHeader: (String, String) = ("Content-Type", "application/json")
 
   implicit val calculationResultWrites: Writes[CalculationInput] = Writes { (input: CalculationInput) =>
     val propertyValueAfter = input.propertyValueAfterExemption match {
       case Some(pvae) => Json.obj("propertyValueAfterExemption" -> pvae)
-      case _          => Json.obj()
+      case _ => Json.obj()
     }
 
     val downsizingDetails = input.downsizingDetails match {
@@ -49,9 +50,9 @@ class RnrbConnector @Inject() (val http: DefaultHttpClient, val config: Frontend
         Json.obj(
           "downsizingDetails" ->
             Json.obj(
-              "datePropertyWasChanged"            -> Json.toJson(down.datePropertyWasChanged),
-              "valueOfChangedProperty"            -> Json.toJson(down.valueOfChangedProperty),
-              "valueOfAssetsPassing"              -> Json.toJson(down.valueOfAssetsPassing),
+              "datePropertyWasChanged" -> Json.toJson(down.datePropertyWasChanged),
+              "valueOfChangedProperty" -> Json.toJson(down.valueOfChangedProperty),
+              "valueOfAssetsPassing" -> Json.toJson(down.valueOfAssetsPassing),
               "valueAvailableWhenPropertyChanged" -> Json.toJson(down.valueAvailableWhenPropertyChanged)
             )
         )
@@ -59,12 +60,12 @@ class RnrbConnector @Inject() (val http: DefaultHttpClient, val config: Frontend
     }
 
     Json.obj(
-      "dateOfDeath"                         -> Json.toJson(input.dateOfDeath),
-      "valueOfEstate"                       -> Json.toJson(input.valueOfEstate),
-      "chargeableEstateValue"               -> Json.toJson(input.chargeableEstateValue),
-      "propertyValue"                       -> Json.toJson(input.propertyValue),
+      "dateOfDeath" -> Json.toJson(input.dateOfDeath),
+      "valueOfEstate" -> Json.toJson(input.valueOfEstate),
+      "chargeableEstateValue" -> Json.toJson(input.chargeableEstateValue),
+      "propertyValue" -> Json.toJson(input.propertyValue),
       "percentagePassedToDirectDescendants" -> Json.toJson(input.percentagePassedToDirectDescendants),
-      "valueBeingTransferred"               -> Json.toJson(input.valueBeingTransferred)
+      "valueBeingTransferred" -> Json.toJson(input.valueBeingTransferred)
     ) ++ propertyValueAfter ++ downsizingDetails
   }
 
@@ -72,18 +73,20 @@ class RnrbConnector @Inject() (val http: DefaultHttpClient, val config: Frontend
     Json.toJson(input)
   )
 
-  def sendJson(json: JsValue)(implicit hc: HeaderCarrier): Future[Try[CalculationResult]] =
-    http
-      .POST[JsValue, HttpResponse](s"$serviceUrl${baseSegment}calculate", json, Seq(jsonContentTypeHeader))
-      .map { response =>
+  def sendJson(json: JsValue)(implicit hc: HeaderCarrier): Future[Try[CalculationResult]] = {
+    httpClientV2.post(url"$serviceUrl${baseSegment}calculate").withBody(Json.toJson(json)).setHeader(jsonContentTypeHeader).execute[HttpResponse].map {
+      response =>
         Json.fromJson[CalculationResult](response.json) match {
           case JsSuccess(result, _) => Success(result)
           case JsError(error) =>
             Failure(new JsonInvalidException(JsonErrorProcessor(error)))
         }
-      }
+    }
+  }
 
-  def getNilRateBand(dateStr: String)(implicit hc: HeaderCarrier): Future[HttpResponse] =
-    http.GET(s"$serviceUrl${baseSegment}nilrateband/$dateStr")
+    def getNilRateBand(dateStr: String)(implicit hc: HeaderCarrier): Future[HttpResponse] = {
+      httpClientV2.get(url"$serviceUrl${baseSegment}nilrateband/$dateStr").execute[HttpResponse]
+    }
 
-}
+  }
+
