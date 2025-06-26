@@ -74,6 +74,8 @@ class RnrbConnector @Inject() (val httpClientV2: HttpClientV2, val config: Front
   )
 
   def sendJson(json: JsValue)(implicit hc: HeaderCarrier): Future[Try[CalculationResult]] = {
+    println(s"RnrbConnector is posting to: ${config.serviceUrl}${baseSegment}calculate")
+
     httpClientV2.post(url"$serviceUrl${baseSegment}calculate").withBody(Json.toJson(json)).setHeader(jsonContentTypeHeader).execute[HttpResponse].map {
       response =>
         Json.fromJson[CalculationResult](response.json) match {

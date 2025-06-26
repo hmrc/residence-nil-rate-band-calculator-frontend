@@ -1,6 +1,7 @@
-import sbt._
+import AppDependencies.integrationTestDependencies
+import sbt.*
 import scoverage.ScoverageKeys
-import uk.gov.hmrc.DefaultBuildSettings.{defaultSettings, scalaSettings}
+import uk.gov.hmrc.DefaultBuildSettings.{defaultSettings, itSettings, scalaSettings}
 
 lazy val appName                        = "residence-nil-rate-band-calculator-frontend"
 lazy val appDependencies: Seq[ModuleID] = AppDependencies()
@@ -9,6 +10,9 @@ lazy val playSettings: Seq[Setting[_]]  = Seq.empty
 val silencerVersion                     = "1.7.0"
 
 ThisBuild / scalaVersion := "3.6.4"
+
+lazy val IntegrationTest = config("it") extend Test
+
 
 lazy val microservice = Project(appName, file("."))
   .enablePlugins((Seq(play.sbt.PlayScala, SbtDistributablesPlugin) ++ plugins) *)
@@ -44,6 +48,21 @@ lazy val microservice = Project(appName, file("."))
       "uk.gov.hmrc.hmrcfrontend.views.html.components._",
       "uk.gov.hmrc.hmrcfrontend.views.html.helpers._",
       "uk.gov.hmrc.govukfrontend.views.html.components.implicits._"
+    )
+  )
+
+lazy val it = project
+  .enablePlugins(PlayScala)
+  .configs(IntegrationTest)
+  .dependsOn(microservice)
+  .settings(itSettings(): _*)
+  .settings(
+    majorVersion := 0,
+    libraryDependencies ++= Seq(
+      "com.github.tomakehurst" % "wiremock-jre8" % "2.35.0",
+      "org.scalatest"     %% "scalatest"               % "3.2.17",
+      "com.vladsch.flexmark" % "flexmark-all" % "0.64.0"
+
     )
   )
 
