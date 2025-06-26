@@ -23,21 +23,15 @@ import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach}
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
 import play.api.{Application, Configuration}
-import uk.gov.hmrc.http.client.HttpClientV2
-import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
-import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.JsonInvalidException
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, CalculationResult}
 import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationInput.formats
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
-
 import java.time.LocalDate
-import java.net.URL
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.*
 import scala.concurrent.{Await, Future}
-import scala.util.{Failure, Success, Try}
+import scala.util.{Success, Try}
 
 class RnrbConnectorISpec extends AnyWordSpec with Matchers with BeforeAndAfterAll with BeforeAndAfterEach {
 
@@ -139,6 +133,49 @@ class RnrbConnectorISpec extends AnyWordSpec with Matchers with BeforeAndAfterAl
       val result = await(connector.sendJson(testJson))
       result mustBe Success(expectedResult)
 
+    }
+  }
+
+  "RnrbConnector.getNilRateBand" should {
+    "return a 200 OK with expected body" in {
+      val date         = "2025-06-26"
+      val expectedJson = Json.obj("nilRateBand" -> 175000)
+
+      wireMockServer.stubFor(
+        get(urlEqualTo(s"$baseUrl/nilrateband/$date"))
+          .willReturn(okJson(expectedJson.toString()))
+      )
+
+      val response = await(connector.getNilRateBand(date))
+      response.status mustBe 200
+      response.json mustBe expectedJson
+    }
+
+    "return 404 Not Found when the NRB date is unavailable" in {
+      val missingDate = "1990-01-01"
+
+      wireMockServer.stubFor(
+        get(urlEqualTo(s"$baseUrl/nilrateband/$missingDate"))
+          .willReturn(aResponse().withStatus(404).withBody("Not found"))
+      )
+
+      val response = await(connector.getNilRateBand(missingDate))
+      response.status mustBe 404
+      response.body must include("Not found")
+    }
+
+    "return a 500 Internal Server Error when the microservice fails" in {
+      val date = "2025-06-26"
+
+      wireMockServer.stubFor(
+        get(urlEqualTo(s"$baseUrl/nilrateband/$date"))
+          .willReturn(serverError().withBody("Something went wrong"))
+      )
+
+      val response = await(connector.getNilRateBand(date))
+
+      response.status mustBe 500
+      response.body must include("Something went wrong")
     }
   }
 

@@ -10,7 +10,7 @@ private object AppDependencies {
   val compile: Seq[ModuleID] = Seq(
     ws,
     "uk.gov.hmrc.mongo" %% "hmrc-mongo-play-30"         % hmrcMongoVersion,
-    "uk.gov.hmrc"       %% "play-frontend-hmrc-play-30" % "12.4.0",
+    "uk.gov.hmrc"       %% "play-frontend-hmrc-play-30" % "12.6.0",
     "uk.gov.hmrc"       %% "bootstrap-frontend-play-30" % bootstrapPlayVersion,
     "org.apache.pdfbox"  % "pdfbox"                     % "2.0.28"
   )

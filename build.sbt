@@ -35,10 +35,22 @@ lazy val microservice = Project(appName, file("."))
     scalacOptions ++= Seq("-feature", "-source:3.4-migration", "-rewrite"),
     retrieveManaged := true,
     // only required for frontends
-    scalacOptions += "-Wconf:msg=unused import&src=html/.*:s",
-    scalacOptions += "-Wconf:src=routes/.*:s",
-    scalacOptions += "-Wconf:msg=Flag.*repeatedly:s",
-    scalacOptions += "-Wconf:msg=.*-Wunused.*:s"
+    scalacOptions := Seq(
+      "-deprecation",
+      "-unchecked",
+      "-encoding",
+      "UTF-8",
+      "-release",
+      "11",
+      "-feature",
+      "-source:3.4-migration",
+      "-rewrite",
+      "-Wunused:all",
+      "-Wconf:msg=unused import&src=html/.*:s",
+      "-Wconf:src=routes/.*:s",
+      "-Wconf:msg=Flag.*repeatedly:s",
+      "-Wconf:msg=.*-Wunused.*:s"
+    )
   )
   .settings(majorVersion := 0)
   .settings(
