@@ -32,27 +32,22 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, Calc
 import uk.gov.hmrc.residencenilratebandcalculator.models.CalculationInput.formats
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
 
-
 import java.time.LocalDate
 import java.net.URL
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.*
 import scala.concurrent.{Await, Future}
-import scala.util.{Success, Failure, Try}
+import scala.util.{Failure, Success, Try}
 
-class RnrbConnectorISpec
-  extends AnyWordSpec
-    with Matchers
-    with BeforeAndAfterAll
-    with BeforeAndAfterEach {
+class RnrbConnectorISpec extends AnyWordSpec with Matchers with BeforeAndAfterAll with BeforeAndAfterEach {
 
-  val wireMockPort = 11111
-  val wireMockServer = new WireMockServer(WireMockConfiguration.wireMockConfig().port(wireMockPort))
+  val wireMockPort               = 11111
+  val wireMockServer             = new WireMockServer(WireMockConfiguration.wireMockConfig().port(wireMockPort))
   implicit val hc: HeaderCarrier = HeaderCarrier()
 
   override def beforeAll(): Unit = wireMockServer.start()
 
-  override def afterAll(): Unit = wireMockServer.stop()
+  override def afterAll(): Unit   = wireMockServer.stop()
   override def beforeEach(): Unit = wireMockServer.resetAll()
 
   val testConfig: Configuration = Configuration(
@@ -60,8 +55,8 @@ class RnrbConnectorISpec
   )
 
   implicit val app: Application = new GuiceApplicationBuilder().configure(testConfig).build()
-  val connector: RnrbConnector = app.injector.instanceOf[RnrbConnector]
-  
+  val connector: RnrbConnector  = app.injector.instanceOf[RnrbConnector]
+
   val baseUrl = s"/residence-nil-rate-band-calculator"
   val sendUrl = s"$baseUrl/calculate"
 
@@ -83,23 +78,25 @@ class RnrbConnectorISpec
   "RnrbConnector.send" should {
 
     "return a CalculationResult when microservice returns valid JSON" in {
-      wireMockServer.stubFor(post(urlEqualTo(sendUrl))
-        .withRequestBody(equalToJson(Json.toJson(testInput).toString()))
-        .willReturn(okJson(Json.toJson(expectedResult).toString())))
-        val result = await(connector.send(testInput))
-        result mustBe Success(expectedResult)
+      wireMockServer.stubFor(
+        post(urlEqualTo(sendUrl))
+          .withRequestBody(equalToJson(Json.toJson(testInput).toString()))
+          .willReturn(okJson(Json.toJson(expectedResult).toString()))
+      )
+      val result = await(connector.send(testInput))
+      result mustBe Success(expectedResult)
     }
 
     "fail with JsonInvalidException when microservice returns unexpected JSON" in {
-      wireMockServer.stubFor(post(urlEqualTo(sendUrl))
-        .withRequestBody(equalToJson(Json.toJson(testInput).toString()))
-        .willReturn(ok("""{ "not": "expected" }""")))
+      wireMockServer.stubFor(
+        post(urlEqualTo(sendUrl))
+          .withRequestBody(equalToJson(Json.toJson(testInput).toString()))
+          .willReturn(ok("""{ "not": "expected" }"""))
+      )
 
       val result = await(connector.send(testInput))
       result.isFailure mustBe true
       result.failed.get mustBe a[JsonInvalidException]
-
-
 
     }
   }
@@ -108,35 +105,41 @@ class RnrbConnectorISpec
     val testJson = Json.obj("some" -> "json")
 
     "return a CalculationResult when valid JSON is returned" in {
-      wireMockServer.stubFor(post(urlEqualTo(sendUrl))
-        .withRequestBody(equalToJson(testJson.toString()))
-        .willReturn(okJson(Json.toJson(expectedResult).toString())))
+      wireMockServer.stubFor(
+        post(urlEqualTo(sendUrl))
+          .withRequestBody(equalToJson(testJson.toString()))
+          .willReturn(okJson(Json.toJson(expectedResult).toString()))
+      )
 
       val result = await(connector.sendJson(testJson))
       result mustBe Success(expectedResult)
     }
 
     "fail with JsonInvalidException when invalid JSON is returned" in {
-      wireMockServer.stubFor(post(urlEqualTo(sendUrl))
-        .withRequestBody(equalToJson(testJson.toString()))
-        .willReturn(ok("""{ "unexpected": "format" }""")))
+      wireMockServer.stubFor(
+        post(urlEqualTo(sendUrl))
+          .withRequestBody(equalToJson(testJson.toString()))
+          .willReturn(ok("""{ "unexpected": "format" }"""))
+      )
 
       val result = await(connector.sendJson(testJson))
       result.isFailure mustBe true
       result.failed.get mustBe a[JsonInvalidException]
 
-
     }
 
     "send correct JSON with content-type header" in {
-      wireMockServer.stubFor(post(urlEqualTo(sendUrl))
-        .withHeader("Content-Type", equalTo("application/json"))
-        .withRequestBody(equalToJson(testJson.toString()))
-        .willReturn(okJson(Json.toJson(expectedResult).toString())))
+      wireMockServer.stubFor(
+        post(urlEqualTo(sendUrl))
+          .withHeader("Content-Type", equalTo("application/json"))
+          .withRequestBody(equalToJson(testJson.toString()))
+          .willReturn(okJson(Json.toJson(expectedResult).toString()))
+      )
 
       val result = await(connector.sendJson(testJson))
       result mustBe Success(expectedResult)
 
     }
   }
+
 }

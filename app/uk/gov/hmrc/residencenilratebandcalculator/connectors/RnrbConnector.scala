@@ -35,13 +35,13 @@ class RnrbConnector @Inject() (val httpClientV2: HttpClientV2, val config: Front
     implicit ec: ExecutionContext
 ) {
 
-  lazy val baseSegment = s"${config.serviceUrl}/residence-nil-rate-band-calculator"
+  lazy val baseSegment                        = s"${config.serviceUrl}/residence-nil-rate-band-calculator"
   val jsonContentTypeHeader: (String, String) = ("Content-Type", "application/json")
 
   implicit val calculationResultWrites: Writes[CalculationInput] = Writes { (input: CalculationInput) =>
     val propertyValueAfter = input.propertyValueAfterExemption match {
       case Some(pvae) => Json.obj("propertyValueAfterExemption" -> pvae)
-      case _ => Json.obj()
+      case _          => Json.obj()
     }
 
     val downsizingDetails = input.downsizingDetails match {
@@ -49,9 +49,9 @@ class RnrbConnector @Inject() (val httpClientV2: HttpClientV2, val config: Front
         Json.obj(
           "downsizingDetails" ->
             Json.obj(
-              "datePropertyWasChanged" -> Json.toJson(down.datePropertyWasChanged),
-              "valueOfChangedProperty" -> Json.toJson(down.valueOfChangedProperty),
-              "valueOfAssetsPassing" -> Json.toJson(down.valueOfAssetsPassing),
+              "datePropertyWasChanged"            -> Json.toJson(down.datePropertyWasChanged),
+              "valueOfChangedProperty"            -> Json.toJson(down.valueOfChangedProperty),
+              "valueOfAssetsPassing"              -> Json.toJson(down.valueOfAssetsPassing),
               "valueAvailableWhenPropertyChanged" -> Json.toJson(down.valueAvailableWhenPropertyChanged)
             )
         )
@@ -59,12 +59,12 @@ class RnrbConnector @Inject() (val httpClientV2: HttpClientV2, val config: Front
     }
 
     Json.obj(
-      "dateOfDeath" -> Json.toJson(input.dateOfDeath),
-      "valueOfEstate" -> Json.toJson(input.valueOfEstate),
-      "chargeableEstateValue" -> Json.toJson(input.chargeableEstateValue),
-      "propertyValue" -> Json.toJson(input.propertyValue),
+      "dateOfDeath"                         -> Json.toJson(input.dateOfDeath),
+      "valueOfEstate"                       -> Json.toJson(input.valueOfEstate),
+      "chargeableEstateValue"               -> Json.toJson(input.chargeableEstateValue),
+      "propertyValue"                       -> Json.toJson(input.propertyValue),
       "percentagePassedToDirectDescendants" -> Json.toJson(input.percentagePassedToDirectDescendants),
-      "valueBeingTransferred" -> Json.toJson(input.valueBeingTransferred)
+      "valueBeingTransferred"               -> Json.toJson(input.valueBeingTransferred)
     ) ++ propertyValueAfter ++ downsizingDetails
   }
 
@@ -72,21 +72,22 @@ class RnrbConnector @Inject() (val httpClientV2: HttpClientV2, val config: Front
     Json.toJson(input)
   )
 
-  def sendJson(json: JsValue)(implicit hc: HeaderCarrier): Future[Try[CalculationResult]] = {
+  def sendJson(json: JsValue)(implicit hc: HeaderCarrier): Future[Try[CalculationResult]] =
 
-    httpClientV2.post(url"$baseSegment/calculate").withBody(Json.toJson(json)).setHeader(jsonContentTypeHeader).execute[HttpResponse].map {
-      response =>
+    httpClientV2
+      .post(url"$baseSegment/calculate")
+      .withBody(Json.toJson(json))
+      .setHeader(jsonContentTypeHeader)
+      .execute[HttpResponse]
+      .map { response =>
         Json.fromJson[CalculationResult](response.json) match {
           case JsSuccess(result, _) => Success(result)
           case JsError(error) =>
             Failure(new JsonInvalidException(JsonErrorProcessor(error)))
         }
-    }
-  }
+      }
 
-    def getNilRateBand(dateStr: String)(implicit hc: HeaderCarrier): Future[HttpResponse] = {
-      httpClientV2.get(url"$baseSegment/nilrateband/$dateStr").execute[HttpResponse]
-    }
+  def getNilRateBand(dateStr: String)(implicit hc: HeaderCarrier): Future[HttpResponse] =
+    httpClientV2.get(url"$baseSegment/nilrateband/$dateStr").execute[HttpResponse]
 
-  }
-
+}

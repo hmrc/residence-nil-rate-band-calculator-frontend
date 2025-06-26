@@ -15,17 +15,18 @@ private object AppDependencies {
     "org.apache.pdfbox"  % "pdfbox"                     % "2.0.28"
   )
 
-
   val unitTestDependencies: Seq[ModuleID] = Seq(
-    "uk.gov.hmrc" %% "bootstrap-test-play-30" % bootstrapPlayVersion,
-    "org.playframework" %% "play-test" % PlayVersion.current,
-    "org.scalatest" %% "scalatest" % "3.2.17"
+    "uk.gov.hmrc"       %% "bootstrap-test-play-30"  % bootstrapPlayVersion,
+    "org.playframework" %% "play-test"               % PlayVersion.current,
+    "org.scalatest"     %% "scalatest"               % "3.2.17",
+    "uk.gov.hmrc.mongo" %% "hmrc-mongo-test-play-30" % hmrcMongoVersion
   ).map(_ % Test)
 
   val integrationTestDependencies: Seq[ModuleID] = Seq(
-    "uk.gov.hmrc.mongo" %% "hmrc-mongo-test-play-30" % hmrcMongoVersion % "it",
-    "org.scalatest"     %% "scalatest"               % "3.2.17"         % "it",
-    "com.github.tomakehurst" % "wiremock-jre8"       % "2.35.0"         % "it"
+    "uk.gov.hmrc.mongo"     %% "hmrc-mongo-test-play-30" % hmrcMongoVersion % "it",
+    "org.scalatest"         %% "scalatest"               % "3.2.17"         % "it",
+    "com.github.tomakehurst" % "wiremock-jre8"           % "2.35.0"         % "it"
   )
+
   def apply(): Seq[sbt.ModuleID] = compile ++ unitTestDependencies
 }

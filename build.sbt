@@ -11,8 +11,7 @@ val silencerVersion                     = "1.7.0"
 
 ThisBuild / scalaVersion := "3.6.4"
 
-lazy val IntegrationTest = config("it") extend Test
-
+lazy val IntegrationTest = config("it").extend(Test)
 
 lazy val microservice = Project(appName, file("."))
   .enablePlugins((Seq(play.sbt.PlayScala, SbtDistributablesPlugin) ++ plugins) *)
@@ -60,9 +59,8 @@ lazy val it = project
     majorVersion := 0,
     libraryDependencies ++= Seq(
       "com.github.tomakehurst" % "wiremock-jre8" % "2.35.0",
-      "org.scalatest"     %% "scalatest"               % "3.2.17",
-      "com.vladsch.flexmark" % "flexmark-all" % "0.64.0"
-
+      "org.scalatest"         %% "scalatest"     % "3.2.17",
+      "com.vladsch.flexmark"   % "flexmark-all"  % "0.64.0"
     )
   )
 
