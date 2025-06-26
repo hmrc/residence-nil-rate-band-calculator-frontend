@@ -35,8 +35,7 @@ class RnrbConnector @Inject() (val httpClientV2: HttpClientV2, val config: Front
     implicit ec: ExecutionContext
 ) {
 
-  lazy val serviceUrl: String = config.serviceUrl
-  val baseSegment = "/residence-nil-rate-band-calculator/"
+  lazy val baseSegment = s"${config.serviceUrl}/residence-nil-rate-band-calculator"
   val jsonContentTypeHeader: (String, String) = ("Content-Type", "application/json")
 
   implicit val calculationResultWrites: Writes[CalculationInput] = Writes { (input: CalculationInput) =>
@@ -74,9 +73,8 @@ class RnrbConnector @Inject() (val httpClientV2: HttpClientV2, val config: Front
   )
 
   def sendJson(json: JsValue)(implicit hc: HeaderCarrier): Future[Try[CalculationResult]] = {
-    println(s"RnrbConnector is posting to: ${config.serviceUrl}${baseSegment}calculate")
 
-    httpClientV2.post(url"$serviceUrl${baseSegment}calculate").withBody(Json.toJson(json)).setHeader(jsonContentTypeHeader).execute[HttpResponse].map {
+    httpClientV2.post(url"$baseSegment/calculate").withBody(Json.toJson(json)).setHeader(jsonContentTypeHeader).execute[HttpResponse].map {
       response =>
         Json.fromJson[CalculationResult](response.json) match {
           case JsSuccess(result, _) => Success(result)
@@ -87,7 +85,7 @@ class RnrbConnector @Inject() (val httpClientV2: HttpClientV2, val config: Front
   }
 
     def getNilRateBand(dateStr: String)(implicit hc: HeaderCarrier): Future[HttpResponse] = {
-      httpClientV2.get(url"$serviceUrl${baseSegment}nilrateband/$dateStr").execute[HttpResponse]
+      httpClientV2.get(url"$baseSegment/nilrateband/$dateStr").execute[HttpResponse]
     }
 
   }

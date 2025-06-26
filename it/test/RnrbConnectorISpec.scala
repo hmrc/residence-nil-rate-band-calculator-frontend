@@ -55,17 +55,15 @@ class RnrbConnectorISpec
   override def afterAll(): Unit = wireMockServer.stop()
   override def beforeEach(): Unit = wireMockServer.resetAll()
 
-  val testConfig = Configuration(
-    "microservice.services.residence-nil-rate-band-calculator.host"     -> "localhost",
-    "microservice.services.residence-nil-rate-band-calculator.port"     -> wireMockPort,
-    "microservice.services.residence-nil-rate-band-calculator.protocol" -> "http"
+  val testConfig: Configuration = Configuration(
+    "microservice.services.residence-nil-rate-band-calculator.port" -> wireMockPort
   )
 
-  val app: Application = new GuiceApplicationBuilder().configure(testConfig).build()
-  val httpClientV2 = app.injector.instanceOf[HttpClientV2]
-  val servicesConfig = app.injector.instanceOf[ServicesConfig]
-  val config = new FrontendAppConfig(servicesConfig)
-  val connector = new RnrbConnector(httpClientV2, config)
+  implicit val app: Application = new GuiceApplicationBuilder().configure(testConfig).build()
+  val connector: RnrbConnector = app.injector.instanceOf[RnrbConnector]
+  
+  val baseUrl = s"/residence-nil-rate-band-calculator"
+  val sendUrl = s"$baseUrl/calculate"
 
   def await[T](f: Future[T]): T = Await.result(f, 5.seconds)
 
@@ -83,8 +81,9 @@ class RnrbConnectorISpec
   val expectedResult = CalculationResult(100, 200, 300, 400, 500)
 
   "RnrbConnector.send" should {
+
     "return a CalculationResult when microservice returns valid JSON" in {
-      wireMockServer.stubFor(post(urlEqualTo("/residence-nil-rate-band-calculator/calculate"))
+      wireMockServer.stubFor(post(urlEqualTo(sendUrl))
         .withRequestBody(equalToJson(Json.toJson(testInput).toString()))
         .willReturn(okJson(Json.toJson(expectedResult).toString())))
         val result = await(connector.send(testInput))
@@ -92,7 +91,7 @@ class RnrbConnectorISpec
     }
 
     "fail with JsonInvalidException when microservice returns unexpected JSON" in {
-      wireMockServer.stubFor(post(urlEqualTo("/residence-nil-rate-band-calculator/calculate"))
+      wireMockServer.stubFor(post(urlEqualTo(sendUrl))
         .withRequestBody(equalToJson(Json.toJson(testInput).toString()))
         .willReturn(ok("""{ "not": "expected" }""")))
 
@@ -109,7 +108,7 @@ class RnrbConnectorISpec
     val testJson = Json.obj("some" -> "json")
 
     "return a CalculationResult when valid JSON is returned" in {
-      wireMockServer.stubFor(post(urlEqualTo("/residence-nil-rate-band-calculator/calculate"))
+      wireMockServer.stubFor(post(urlEqualTo(sendUrl))
         .withRequestBody(equalToJson(testJson.toString()))
         .willReturn(okJson(Json.toJson(expectedResult).toString())))
 
@@ -118,7 +117,7 @@ class RnrbConnectorISpec
     }
 
     "fail with JsonInvalidException when invalid JSON is returned" in {
-      wireMockServer.stubFor(post(urlEqualTo("/residence-nil-rate-band-calculator/calculate"))
+      wireMockServer.stubFor(post(urlEqualTo(sendUrl))
         .withRequestBody(equalToJson(testJson.toString()))
         .willReturn(ok("""{ "unexpected": "format" }""")))
 
@@ -130,7 +129,7 @@ class RnrbConnectorISpec
     }
 
     "send correct JSON with content-type header" in {
-      wireMockServer.stubFor(post(urlEqualTo("/residence-nil-rate-band-calculator/calculate"))
+      wireMockServer.stubFor(post(urlEqualTo(sendUrl))
         .withHeader("Content-Type", equalTo("application/json"))
         .withRequestBody(equalToJson(testJson.toString()))
         .willReturn(okJson(Json.toJson(expectedResult).toString())))
