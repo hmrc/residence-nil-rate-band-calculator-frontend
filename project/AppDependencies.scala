@@ -10,16 +10,23 @@ private object AppDependencies {
   val compile: Seq[ModuleID] = Seq(
     ws,
     "uk.gov.hmrc.mongo" %% "hmrc-mongo-play-30"         % hmrcMongoVersion,
-    "uk.gov.hmrc"       %% "play-frontend-hmrc-play-30" % "12.4.0",
+    "uk.gov.hmrc"       %% "play-frontend-hmrc-play-30" % "12.6.0",
     "uk.gov.hmrc"       %% "bootstrap-frontend-play-30" % bootstrapPlayVersion,
     "org.apache.pdfbox"  % "pdfbox"                     % "2.0.28"
   )
 
-  val testDependencies: Seq[ModuleID] = Seq(
+  val unitTestDependencies: Seq[ModuleID] = Seq(
     "uk.gov.hmrc"       %% "bootstrap-test-play-30"  % bootstrapPlayVersion,
-    "uk.gov.hmrc.mongo" %% "hmrc-mongo-test-play-30" % hmrcMongoVersion,
-    "org.playframework" %% "play-test"               % PlayVersion.current
+    "org.playframework" %% "play-test"               % PlayVersion.current,
+    "org.scalatest"     %% "scalatest"               % "3.2.17",
+    "uk.gov.hmrc.mongo" %% "hmrc-mongo-test-play-30" % hmrcMongoVersion
   ).map(_ % Test)
 
-  def apply(): Seq[sbt.ModuleID] = compile ++ testDependencies
+  val integrationTestDependencies: Seq[ModuleID] = Seq(
+    "uk.gov.hmrc.mongo"     %% "hmrc-mongo-test-play-30" % hmrcMongoVersion % "it",
+    "org.scalatest"         %% "scalatest"               % "3.2.17"         % "it",
+    "com.github.tomakehurst" % "wiremock-jre8"           % "2.35.0"         % "it"
+  )
+
+  def apply(): Seq[sbt.ModuleID] = compile ++ unitTestDependencies
 }
