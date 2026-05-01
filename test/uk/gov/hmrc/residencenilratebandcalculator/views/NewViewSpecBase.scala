@@ -39,7 +39,7 @@ trait NewViewSpecBase extends HtmlSpec {
           implicit val lang: Lang = Lang("en")
 
           val doc         = asDocument(createView(emptyForm))
-          val serviceName = doc.getElementsByClass("govuk-header__content").text
+          val serviceName = doc.getElementsByClass("govuk-service-navigation__service-name").text
           serviceName mustBe messagesApi("site.service_name")
         }
 
