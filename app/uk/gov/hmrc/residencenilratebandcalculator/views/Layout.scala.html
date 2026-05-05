@@ -24,7 +24,6 @@
 @this(
     hmrcStandardBetaBanner: StandardBetaBanner,
     hmrcTimeoutDialogHelper: HmrcTimeoutDialogHelper,
-    hmrcLanguageSelectHelper: HmrcLanguageSelectHelper,
     hmrcReportTechnicalIssueHelper: HmrcReportTechnicalIssueHelper,
     hmrcStandardPage: HmrcStandardPage,
     appConfig: FrontendAppConfig
@@ -41,9 +40,7 @@
     messages: Messages
 )
 
-@accountMenu = {
-    @Some(hmrcLanguageSelectHelper())
-}
+
 
 @head = {
     <meta name="format-detection" content="telephone=no" />
@@ -79,10 +76,10 @@
         ),
         templateOverrides = TemplateOverrides(
             additionalHeadBlock = Some(head),
-            beforeContentBlock = Some(accountMenu),
             additionalScriptsBlock = scripts
         ),
         serviceName = Some(messages("service.name")),
+        isWelshTranslationAvailable = true,
         pageTitle = Some(s"""$pageTitle - ${messages("service.name")} - GOV.UK""")
     )
 )(mainContent)
