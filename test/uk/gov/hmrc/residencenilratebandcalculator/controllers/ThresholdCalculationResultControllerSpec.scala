@@ -17,14 +17,14 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import org.mockito.ArgumentCaptor
-import org.mockito.ArgumentMatchers._
-import org.mockito.Mockito._
+import org.mockito.ArgumentMatchers.*
+import org.mockito.Mockito.*
 import org.scalatest.matchers.must.Matchers
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.http.Status
-import play.api.libs.json._
+import play.api.libs.json.*
 import play.api.mvc.DefaultMessagesControllerComponents
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
@@ -35,7 +35,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.threshold_calculati
 
 import java.time.LocalDate
 import scala.concurrent.Future
-import scala.util.Success
+import scala.util.{Failure, Success}
 
 class ThresholdCalculationResultControllerSpec extends NewSimpleControllerSpecBase with MockitoSugar with Matchers {
 
@@ -114,11 +114,21 @@ class ThresholdCalculationResultControllerSpec extends NewSimpleControllerSpecBa
       )
     }
 
-    "returns an Internal Server Error when the cache is in an unusable state" in {
-      setCacheMap(CacheMap("id", Map()))
-      assertThrows[IllegalArgumentException] {
-        await(thresholdCalculationResultController().onPageLoad(fakeRequest))
-      }
+    "return 400 Bad Request when 'Transfer Any Unused Threshold' is missing from cache" in {
+      val incompleteCacheMap: CacheMap = CacheMap(
+        "id",
+        Map(
+          Constants.dateOfDeathId              -> JsString(dateOfDeathString),
+          Constants.valueOfEstateId            -> JsNumber(valueOfEstate),
+          Constants.chargeableEstateValueId    -> JsNumber(chargeableEstateValue),
+          Constants.propertyInEstateId         -> JsBoolean(false),
+          Constants.claimDownsizingThresholdId -> JsBoolean(false)
+        )
+      )
+      setCacheMap(incompleteCacheMap)
+      val result = thresholdCalculationResultController().onPageLoad(fakeRequest)
+      status(result) mustBe BAD_REQUEST
+      contentAsString(result) must include("requirement failed: Transfer Any Unused Allowance was not answered")
     }
 
     "send the input to the Microservice if the cache is in a valid state" in {

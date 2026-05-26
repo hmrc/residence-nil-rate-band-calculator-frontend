@@ -30,7 +30,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.Validat
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CalculationInput, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.threshold_calculation_result
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.{error_template, threshold_calculation_result}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
@@ -77,6 +77,8 @@ class ThresholdCalculationResultController @Inject() (
     } yield (tryResult, tryAnswers) match {
       case (_, Failure(_)) =>
         Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
+      case (Failure(ex: IllegalArgumentException), _) =>
+        BadRequest(ex.getMessage)
       case (Failure(ex), _) => fail(ex)
       case (Success(result), Success(_)) =>
         sessionConnector.cache[Int](Constants.thresholdCalculationResultId, result.residenceNilRateAmount)
