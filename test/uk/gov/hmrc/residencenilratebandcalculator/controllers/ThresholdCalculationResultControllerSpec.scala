@@ -17,14 +17,14 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import org.mockito.ArgumentCaptor
-import org.mockito.ArgumentMatchers.*
+import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito.*
 import org.scalatest.matchers.must.Matchers
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.http.Status
-import play.api.libs.json.*
+import play.api.libs.json._
 import play.api.mvc.DefaultMessagesControllerComponents
-import play.api.test.Helpers.*
+import play.api.test.Helpers._
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
@@ -35,7 +35,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.threshold_calculati
 
 import java.time.LocalDate
 import scala.concurrent.Future
-import scala.util.{Failure, Success}
+import scala.util.Success
 
 class ThresholdCalculationResultControllerSpec extends NewSimpleControllerSpecBase with MockitoSugar with Matchers {
 
