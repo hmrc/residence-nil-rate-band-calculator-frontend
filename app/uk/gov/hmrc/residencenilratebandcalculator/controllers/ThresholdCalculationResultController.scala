@@ -77,7 +77,8 @@ class ThresholdCalculationResultController @Inject() (
     } yield (tryResult, tryAnswers) match {
       case (_, Failure(_)) =>
         Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
-      case (Failure(ex), _) => fail(ex)
+      case (Failure(ex: IllegalArgumentException), _) => BadRequest(ex.getMessage)
+      case (Failure(ex), _)                           => fail(ex)
       case (Success(result), Success(_)) =>
         sessionConnector.cache[Int](Constants.thresholdCalculationResultId, result.residenceNilRateAmount)
         val residenceNilRateAmount = CurrencyFormatter.format(result.residenceNilRateAmount)
