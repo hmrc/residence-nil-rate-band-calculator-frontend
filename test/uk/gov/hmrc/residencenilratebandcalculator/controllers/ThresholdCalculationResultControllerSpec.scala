@@ -115,20 +115,50 @@ class ThresholdCalculationResultControllerSpec extends NewSimpleControllerSpecBa
     }
 
     "return 400 Bad Request when 'Transfer Any Unused Threshold' is missing from cache" in {
-      val incompleteCacheMap: CacheMap = CacheMap(
-        "id",
-        Map(
-          Constants.dateOfDeathId              -> JsString(dateOfDeathString),
-          Constants.valueOfEstateId            -> JsNumber(valueOfEstate),
-          Constants.chargeableEstateValueId    -> JsNumber(chargeableEstateValue),
-          Constants.propertyInEstateId         -> JsBoolean(false),
-          Constants.claimDownsizingThresholdId -> JsBoolean(false)
-        )
-      )
+      val incompleteCacheMap: CacheMap = cacheMap.copy(data = cacheMap.data - Constants.transferAnyUnusedThresholdId)
       setCacheMap(incompleteCacheMap)
       val result = thresholdCalculationResultController().onPageLoad(fakeRequest)
       status(result) mustBe BAD_REQUEST
       contentAsString(result) must include("requirement failed: Transfer Any Unused Allowance was not answered")
+    }
+
+    "return 400 Bad Request when 'Date Of Death' is missing from cache" in {
+      val incompleteCacheMap: CacheMap = cacheMap.copy(data = cacheMap.data - Constants.dateOfDeathId)
+      setCacheMap(incompleteCacheMap)
+      val result = thresholdCalculationResultController().onPageLoad(fakeRequest)
+      status(result) mustBe BAD_REQUEST
+      contentAsString(result) must include("requirement failed: Date of Death was not answered")
+    }
+
+    "return 400 Bad Request when 'Value Of Estate' is missing from cache" in {
+      val incompleteCacheMap: CacheMap = cacheMap.copy(data = cacheMap.data - Constants.valueOfEstateId)
+      setCacheMap(incompleteCacheMap)
+      val result = thresholdCalculationResultController().onPageLoad(fakeRequest)
+      status(result) mustBe BAD_REQUEST
+      contentAsString(result) must include("requirement failed: Value Of Estate was not answered")
+    }
+
+    "return 400 Bad Request when 'Chargeable Estate Value' is missing from cache" in {
+      val incompleteCacheMap: CacheMap = cacheMap.copy(data = cacheMap.data - Constants.chargeableEstateValueId)
+      setCacheMap(incompleteCacheMap)
+      val result = thresholdCalculationResultController().onPageLoad(fakeRequest)
+      status(result) mustBe BAD_REQUEST
+      contentAsString(result) must include("requirement failed: Chargeable Estate Value was not answered")
+    }
+
+    "return 400 Bad Request when 'Claim Downsizing Threshold' is missing from cache" in {
+      val incompleteCacheMap: CacheMap = cacheMap.copy(data = cacheMap.data - Constants.claimDownsizingThresholdId)
+      setCacheMap(incompleteCacheMap)
+      val result = thresholdCalculationResultController().onPageLoad(fakeRequest)
+      status(result) mustBe BAD_REQUEST
+      contentAsString(result) must include("requirement failed: Claim Downsizing Threshold was not answered")
+    }
+    "return 400 Bad Request when 'Property In Estate' is missing from cache" in {
+      val incompleteCacheMap: CacheMap = cacheMap.copy(data = cacheMap.data - Constants.propertyInEstateId)
+      setCacheMap(incompleteCacheMap)
+      val result = thresholdCalculationResultController().onPageLoad(fakeRequest)
+      status(result) mustBe BAD_REQUEST
+      contentAsString(result) must include("requirement failed: Property In Estate was not answered")
     }
 
     "send the input to the Microservice if the cache is in a valid state" in {
