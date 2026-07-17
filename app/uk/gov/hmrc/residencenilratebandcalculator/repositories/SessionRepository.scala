@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.repositories
 
-import org.mongodb.scala.SingleObservableFuture
 import org.mongodb.scala.model.Filters.*
 import org.mongodb.scala.model.Indexes.*
 import org.mongodb.scala.model.{IndexModel, IndexOptions, ReplaceOptions}
