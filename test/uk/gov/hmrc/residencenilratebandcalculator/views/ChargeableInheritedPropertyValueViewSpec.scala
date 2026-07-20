@@ -19,16 +19,17 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableInheritedPropertyValueController
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.*
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.NewIntViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_inherited_property_value
 
-class ChargeableInheritedPropertyValueViewSpec extends NewIntViewSpecBase {
+class ChargeableInheritedPropertyValueViewSpec extends NewIntViewSpec {
 
   val messageKeyPrefix = "chargeable_inherited_property_value"
 
   val chargeable_inherited_property_value: chargeable_inherited_property_value =
-    injector.instanceOf[chargeable_inherited_property_value]
+    inject[chargeable_inherited_property_value]
 
   def createView(form: Form[Int]): HtmlFormat.Appendable = chargeable_inherited_property_value(form)(request, messages)
 
@@ -36,14 +37,14 @@ class ChargeableInheritedPropertyValueViewSpec extends NewIntViewSpecBase {
 
     behave.like(
       rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2")(
-        fakeApplication().injector.instanceOf[ChargeableInheritedPropertyValueController].form()
+        inject[ChargeableInheritedPropertyValueController].form()
       )
     )
 
     behave.like(
       pageWithoutBackLink[Int](
         createView,
-        fakeApplication().injector.instanceOf[ChargeableInheritedPropertyValueController].form()
+        inject[ChargeableInheritedPropertyValueController].form()
       )
     )
 
@@ -53,7 +54,7 @@ class ChargeableInheritedPropertyValueViewSpec extends NewIntViewSpecBase {
         messageKeyPrefix,
         ChargeableInheritedPropertyValueController.onSubmit.url,
         NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage),
-        fakeApplication().injector.instanceOf[ChargeableInheritedPropertyValueController].form()
+        inject[ChargeableInheritedPropertyValueController].form()
       )
     )
   }

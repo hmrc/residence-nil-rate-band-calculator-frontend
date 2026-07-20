@@ -19,6 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.forms
 import org.scalatest.Assertion
 import play.api.data.{Form, FormError}
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
+import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 
 trait FormSpec extends BaseSpec {
 

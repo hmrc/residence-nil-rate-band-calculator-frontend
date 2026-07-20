@@ -19,17 +19,18 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.AssetsPassingToDirectDescendantsController
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.*
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.NewBooleanViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.assets_passing_to_direct_descendants
 
-class AssetsPassingToDirectDescendantsViewSpec extends NewBooleanViewSpecBase {
+class AssetsPassingToDirectDescendantsViewSpec extends NewBooleanViewSpec {
 
   val messageKeyPrefix = "assets_passing_to_direct_descendants"
 
   val formattedPropertyValue = "£123,456.78"
 
   val assets_passing_to_direct_descendants: assets_passing_to_direct_descendants =
-    injector.instanceOf[assets_passing_to_direct_descendants]
+    inject[assets_passing_to_direct_descendants]
 
   def createView(form: Form[Boolean]): HtmlFormat.Appendable =
     assets_passing_to_direct_descendants(form, None)(request, messages)
@@ -38,14 +39,14 @@ class AssetsPassingToDirectDescendantsViewSpec extends NewBooleanViewSpecBase {
 
     behave.like(
       rnrbPage[Boolean](createView, messageKeyPrefix)(
-        fakeApplication().injector.instanceOf[AssetsPassingToDirectDescendantsController].form()
+        inject[AssetsPassingToDirectDescendantsController].form()
       )
     )
 
     behave.like(
       pageWithoutBackLink[Boolean](
         createView,
-        fakeApplication().injector.instanceOf[AssetsPassingToDirectDescendantsController].form()
+        inject[AssetsPassingToDirectDescendantsController].form()
       )
     )
 
@@ -54,7 +55,7 @@ class AssetsPassingToDirectDescendantsViewSpec extends NewBooleanViewSpecBase {
         createView,
         messageKeyPrefix,
         AssetsPassingToDirectDescendantsController.onSubmit.url,
-        fakeApplication().injector.instanceOf[AssetsPassingToDirectDescendantsController].form(),
+        inject[AssetsPassingToDirectDescendantsController].form(),
         true
       )
     )
@@ -66,7 +67,7 @@ class AssetsPassingToDirectDescendantsViewSpec extends NewBooleanViewSpecBase {
       "contain guidance that includes the property value" in {
         val doc = asDocument(
           assets_passing_to_direct_descendants(
-            fakeApplication().injector.instanceOf[AssetsPassingToDirectDescendantsController].form(),
+            inject[AssetsPassingToDirectDescendantsController].form(),
             Some(formattedPropertyValue)
           )(request, messages)
         )
@@ -77,7 +78,7 @@ class AssetsPassingToDirectDescendantsViewSpec extends NewBooleanViewSpecBase {
     "there is no property in the estate" must {
       "contain guidance that does not include the property value" in {
         val doc = asDocument(
-          createView(fakeApplication().injector.instanceOf[AssetsPassingToDirectDescendantsController].form())
+          createView(inject[AssetsPassingToDirectDescendantsController].form())
         )
         assertContainsText(doc, messages("assets_passing_to_direct_descendants.guidance_no_property"))
       }

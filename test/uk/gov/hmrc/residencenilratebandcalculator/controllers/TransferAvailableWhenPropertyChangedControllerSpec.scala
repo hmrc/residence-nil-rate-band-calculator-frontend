@@ -20,19 +20,20 @@ import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.DefaultMessagesControllerComponents
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_available_when_property_changed
 
-class TransferAvailableWhenPropertyChangedControllerSpec extends NewSimpleControllerSpecBase {
+class TransferAvailableWhenPropertyChangedControllerSpec extends RnrbControllerSpec {
 
   val messageKey       = "transfer_available_when_property_changed.error.required"
   val messageKeyPrefix = "transfer_available_when_property_changed"
 
   val messagesControllerComponents: DefaultMessagesControllerComponents =
-    injector.instanceOf[DefaultMessagesControllerComponents]
+    inject[DefaultMessagesControllerComponents]
 
   val transfer_available_when_property_changed: transfer_available_when_property_changed =
-    injector.instanceOf[transfer_available_when_property_changed]
+    inject[transfer_available_when_property_changed]
 
   "Transfer Available When Property Changed Controller" must {
 

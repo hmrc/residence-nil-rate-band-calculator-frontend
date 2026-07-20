@@ -16,10 +16,11 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
-import java.time.LocalDate
-import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
-import uk.gov.hmrc.residencenilratebandcalculator.utils.Transformers._
 import org.scalatest.matchers
+import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
+import uk.gov.hmrc.residencenilratebandcalculator.utils.Transformers.*
+
+import java.time.LocalDate
 
 class TransformersSpec extends BaseSpec {
 

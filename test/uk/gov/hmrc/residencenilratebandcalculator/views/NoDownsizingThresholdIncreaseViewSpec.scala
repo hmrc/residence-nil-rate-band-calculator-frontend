@@ -18,14 +18,15 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.i18n.Messages
 import play.api.mvc.Call
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.ViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_downsizing_threshold_increase
 
-class NoDownsizingThresholdIncreaseViewSpec extends HtmlSpec {
+class NoDownsizingThresholdIncreaseViewSpec extends ViewSpec {
   implicit val msg: Messages = messages
   val messageKeyPrefix       = "no_downsizing_threshold_increase"
 
   val no_downsizing_threshold_increase: no_downsizing_threshold_increase =
-    injector.instanceOf[no_downsizing_threshold_increase]
+    inject[no_downsizing_threshold_increase]
 
   "No Downsizing Threshold Increase View" must {
     "display the correct browser title" in {

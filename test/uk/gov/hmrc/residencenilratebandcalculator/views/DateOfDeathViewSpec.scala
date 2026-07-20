@@ -18,15 +18,16 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.*
+import uk.gov.hmrc.residencenilratebandcalculator.forms.DateOfDeathForm.*
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.NewDateViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
-import uk.gov.hmrc.residencenilratebandcalculator.forms.DateOfDeathForm._
 
-class DateOfDeathViewSpec extends NewDateViewSpecBase {
+class DateOfDeathViewSpec extends NewDateViewSpec {
 
   val messageKeyPrefix                                    = "date_of_death"
-  val date_of_death: date_of_death                        = injector.instanceOf[date_of_death]
+  val date_of_death: date_of_death                        = inject[date_of_death]
   def createView(form: Form[Date]): HtmlFormat.Appendable = date_of_death(form)(request, messages)
 
   "Date of Death View" must {

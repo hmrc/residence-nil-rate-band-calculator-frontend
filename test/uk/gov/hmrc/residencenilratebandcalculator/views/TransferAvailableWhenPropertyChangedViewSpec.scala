@@ -19,15 +19,16 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.TransferAvailableWhenPropertyChangedController
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.*
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.NewBooleanViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_available_when_property_changed
 
-class TransferAvailableWhenPropertyChangedViewSpec extends NewBooleanViewSpecBase {
+class TransferAvailableWhenPropertyChangedViewSpec extends NewBooleanViewSpec {
 
   val messageKeyPrefix = "transfer_available_when_property_changed"
 
   val transfer_available_when_property_changed: transfer_available_when_property_changed =
-    injector.instanceOf[transfer_available_when_property_changed]
+    inject[transfer_available_when_property_changed]
 
   def createView(form: Form[Boolean]): HtmlFormat.Appendable =
     transfer_available_when_property_changed(form)(request, messages)
@@ -36,14 +37,14 @@ class TransferAvailableWhenPropertyChangedViewSpec extends NewBooleanViewSpecBas
 
     behave.like(
       rnrbPage[Boolean](createView, messageKeyPrefix, "guidance")(
-        fakeApplication().injector.instanceOf[TransferAvailableWhenPropertyChangedController].form()
+        inject[TransferAvailableWhenPropertyChangedController].form()
       )
     )
 
     behave.like(
       pageWithoutBackLink[Boolean](
         createView,
-        fakeApplication().injector.instanceOf[TransferAvailableWhenPropertyChangedController].form()
+        inject[TransferAvailableWhenPropertyChangedController].form()
       )
     )
 
@@ -52,7 +53,7 @@ class TransferAvailableWhenPropertyChangedViewSpec extends NewBooleanViewSpecBas
         createView,
         messageKeyPrefix,
         TransferAvailableWhenPropertyChangedController.onSubmit.url,
-        fakeApplication().injector.instanceOf[TransferAvailableWhenPropertyChangedController].form(),
+        inject[TransferAvailableWhenPropertyChangedController].form(),
         useNewValues = true
       )
     )

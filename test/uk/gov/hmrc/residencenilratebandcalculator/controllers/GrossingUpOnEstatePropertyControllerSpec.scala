@@ -20,19 +20,20 @@ import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.DefaultMessagesControllerComponents
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_estate_property
 
-class GrossingUpOnEstatePropertyControllerSpec extends NewSimpleControllerSpecBase {
+class GrossingUpOnEstatePropertyControllerSpec extends RnrbControllerSpec {
 
   val messageKey       = "grossing_up_on_estate_property.error.required"
   val messageKeyPrefix = "grossing_up_on_estate_property"
 
   val messagesControllerComponents: DefaultMessagesControllerComponents =
-    injector.instanceOf[DefaultMessagesControllerComponents]
+    inject[DefaultMessagesControllerComponents]
 
   val grossing_up_on_estate_property: grossing_up_on_estate_property =
-    injector.instanceOf[grossing_up_on_estate_property]
+    inject[grossing_up_on_estate_property]
 
   "Grossing Up On Estate Property Controller" must {
 

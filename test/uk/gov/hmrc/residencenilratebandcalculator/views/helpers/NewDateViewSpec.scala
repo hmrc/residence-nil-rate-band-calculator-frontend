@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.views
-
-import java.time.LocalDate
+package uk.gov.hmrc.residencenilratebandcalculator.views.helpers
 
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.residencenilratebandcalculator.forms.DateOfDeathForm._
+import uk.gov.hmrc.residencenilratebandcalculator.forms.DateOfDeathForm.*
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 
-trait NewDateViewSpecBase extends NewViewSpecBase {
+import java.time.LocalDate
+
+trait NewDateViewSpec extends NewViewSpec {
 
   val day        = 1
   val month      = 2

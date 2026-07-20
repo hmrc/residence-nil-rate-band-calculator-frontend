@@ -16,21 +16,23 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
-import java.time.LocalDate
-
 import play.api.data.Form
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import uk.gov.hmrc.http.SessionKeys
+import uk.gov.hmrc.residencenilratebandcalculator.forms.DateOfDeathForm.*
+import uk.gov.hmrc.residencenilratebandcalculator.forms.DatePropertyWasChangedForm.*
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
-import uk.gov.hmrc.residencenilratebandcalculator.forms.DatePropertyWasChangedForm._
-import uk.gov.hmrc.residencenilratebandcalculator.forms.DateOfDeathForm._
+
+import java.time.LocalDate
 
 class DateFormSpec extends FormSpec {
 
-  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "").withSession(SessionKeys.sessionId -> "id")
-  def messages: Messages = fakeApplication().injector.instanceOf[MessagesApi].preferred(fakeRequest)
+  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] =
+    FakeRequest("", "").withSession(SessionKeys.sessionId -> "id")
+
+  def messages: Messages = inject[MessagesApi].preferred(fakeRequest)
 
   private def dateMap(fieldName: String, day: String, month: String, year: String) =
     Map(s"$fieldName.day" -> day, s"$fieldName.month" -> month, s"$fieldName.year" -> year)

@@ -21,12 +21,13 @@ import play.api.libs.json.{Json, Reads, Writes}
 import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CacheMap, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_assets_passing
 
-class ValueOfAssetsPassingControllerSpec extends NewSimpleControllerSpecBase with CommonPlaySpec {
+class ValueOfAssetsPassingControllerSpec extends RnrbControllerSpec with CommonPlaySpec {
 
   val errorKeyBlank      = "value_of_assets_passing.error.blank"
   val errorKeyDecimal    = "error.whole_pounds"
@@ -34,8 +35,8 @@ class ValueOfAssetsPassingControllerSpec extends NewSimpleControllerSpecBase wit
   val errorKeyTooLarge   = "error.value_too_large"
   val messageKeyPrefix   = "value_of_assets_passing"
 
-  val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
-  val value_of_assets_passing      = injector.instanceOf[value_of_assets_passing]
+  val messagesControllerComponents: DefaultMessagesControllerComponents = inject[DefaultMessagesControllerComponents]
+  val value_of_assets_passing: value_of_assets_passing                  = inject[value_of_assets_passing]
 
   "Value Of Assets Passing Controller" must {
 

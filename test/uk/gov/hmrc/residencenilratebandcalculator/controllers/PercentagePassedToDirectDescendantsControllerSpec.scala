@@ -20,10 +20,11 @@ import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.DefaultMessagesControllerComponents
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PositivePercentForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_passed_to_direct_descendants
 
-class PercentagePassedToDirectDescendantsControllerSpec extends NewSimpleControllerSpecBase {
+class PercentagePassedToDirectDescendantsControllerSpec extends RnrbControllerSpec {
 
   val errorKeyBlank      = "percentage_passed_to_direct_descendants.error.required"
   val errorKeyNonNumeric = "percentage_passed_to_direct_descendants.error.non_numeric"
@@ -31,10 +32,10 @@ class PercentagePassedToDirectDescendantsControllerSpec extends NewSimpleControl
   val messageKeyPrefix   = "percentage_passed_to_direct_descendants"
 
   val messagesControllerComponents: DefaultMessagesControllerComponents =
-    injector.instanceOf[DefaultMessagesControllerComponents]
+    inject[DefaultMessagesControllerComponents]
 
   val percentage_passed_to_direct_descendants: percentage_passed_to_direct_descendants =
-    injector.instanceOf[percentage_passed_to_direct_descendants]
+    inject[percentage_passed_to_direct_descendants]
 
   "Percentage Passed To Direct Descendants Controller" must {
 

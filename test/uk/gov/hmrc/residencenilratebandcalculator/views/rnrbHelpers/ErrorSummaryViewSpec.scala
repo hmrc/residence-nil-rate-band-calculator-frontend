@@ -16,22 +16,22 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views.rnrbHelpers
 
-import org.mockito.Mockito._
+import org.mockito.Mockito.*
 import play.api.data.{Form, FormError}
-import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.ViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.playComponents.error_summary
 
-class ErrorSummaryViewSpec extends HtmlSpec {
+class ErrorSummaryViewSpec extends ViewSpec {
 
   val errorKey1 = "key1"
   val errorKey2 = "key2"
   val message1  = "message1"
   val message2  = "message2"
 
-  val error: FormError  = FormError(errorKey1, message1)
-  val error2: FormError = FormError(errorKey2, message2)
+  override val error: FormError = FormError(errorKey1, message1)
+  val error2: FormError         = FormError(errorKey2, message2)
 
-  val error_summary: error_summary = injector.instanceOf[error_summary]
+  val error_summary: error_summary = inject[error_summary]
 
   def createForm(errors: Seq[FormError]): Form[Int] = {
     val form = mock[Form[Int]]

@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.views
+package uk.gov.hmrc.residencenilratebandcalculator.views.helpers
 
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 
-trait NewIntViewSpecBase extends NewViewSpecBase {
+trait IntViewSpec extends ViewSpec {
 
   val number = 123
 
   def intPage(
-      createView: (Form[Int]) => HtmlFormat.Appendable,
+      createView: Form[Int] => HtmlFormat.Appendable,
       messageKeyPrefix: String,
       expectedFormAction: String,
       form: Form[Int],
@@ -57,13 +57,13 @@ trait NewIntViewSpecBase extends NewViewSpecBase {
 
         "show an error summary" in {
           val doc = asDocument(createView(form.withError(error)))
-          assertRenderedByCssSelector(doc, ".govuk-error-summary")
+          assertRenderedById(doc, "error-summary-heading")
         }
 
         "show an error in the value field's label" in {
           val doc       = asDocument(createView(form.withError(error)))
-          val errorSpan = doc.getElementsByClass("govuk-error-message").first
-          errorSpan.text mustBe "Error: " + messages(errorMessage)
+          val errorSpan = doc.getElementsByClass("error-notification").first
+          errorSpan.text mustBe messages(errorMessage)
         }
       }
     }

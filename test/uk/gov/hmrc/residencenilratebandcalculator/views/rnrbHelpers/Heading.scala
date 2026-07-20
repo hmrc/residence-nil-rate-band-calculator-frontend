@@ -16,12 +16,12 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views.rnrbHelpers
 
-import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.ViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.playComponents.heading
 
-class Heading extends HtmlSpec {
+class Heading extends ViewSpec {
 
-  val heading: heading = injector.instanceOf[heading]
+  val heading: heading = inject[heading]
 
   "Heading" when {
     "rendered" must {

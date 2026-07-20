@@ -20,19 +20,20 @@ import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.DefaultMessagesControllerComponents
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.assets_passing_to_direct_descendants
 
-class AssetsPassingToDirectDescendantsControllerSpec extends NewSimpleControllerSpecBase {
+class AssetsPassingToDirectDescendantsControllerSpec extends RnrbControllerSpec {
 
   val messageKey       = "assets_passing_to_direct_descendants.error.required"
   val messageKeyPrefix = "assets_passing_to_direct_descendants"
 
   val messagesControllerComponents: DefaultMessagesControllerComponents =
-    injector.instanceOf[DefaultMessagesControllerComponents]
+    inject[DefaultMessagesControllerComponents]
 
   val assetsPassingToDirectDescendantsView: assets_passing_to_direct_descendants =
-    fakeApplication.injector.instanceOf[assets_passing_to_direct_descendants]
+    inject[assets_passing_to_direct_descendants]
 
   "Assets Passing To Direct Descendants Controller" must {
 

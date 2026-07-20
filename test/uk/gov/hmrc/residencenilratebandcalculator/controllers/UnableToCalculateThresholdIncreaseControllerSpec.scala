@@ -23,30 +23,20 @@ import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import play.api.mvc.{AnyContentAsEmpty, DefaultMessagesControllerComponents}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.{ControllerSpec, MockSessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.unable_to_calculate_threshold_increase
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
 
-class UnableToCalculateThresholdIncreaseControllerSpec
-    extends CommonPlaySpec
-    with MockSessionConnector
-    with WithCommonFakeApplication {
+class UnableToCalculateThresholdIncreaseControllerSpec extends ControllerSpec {
 
-  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
-
-  val injector: Injector = fakeApplication.injector
-
-  val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
+  override val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
 
   val messagesControllerComponents: DefaultMessagesControllerComponents =
-    injector.instanceOf[DefaultMessagesControllerComponents]
+    inject[DefaultMessagesControllerComponents]
 
   val unable_to_calculate_threshold_increase: unable_to_calculate_threshold_increase =
-    injector.instanceOf[unable_to_calculate_threshold_increase]
-
-  def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
-  def messages: Messages       = messagesApi.preferred(fakeRequest)
+    inject[unable_to_calculate_threshold_increase]
 
   val filledOutCacheMap = new CacheMap(
     "",

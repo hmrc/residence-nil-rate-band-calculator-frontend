@@ -24,21 +24,22 @@ import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, Ses
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.{ValueAvailableWhenPropertyChangedController, routes}
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.NewIntViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_available_when_property_changed
 
-class ValueAvailableWhenPropertyChangedViewSpec extends NewIntViewSpecBase {
+class ValueAvailableWhenPropertyChangedViewSpec extends NewIntViewSpec {
 
   val messageKeyPrefix                       = "value_available_when_property_changed"
-  val navigator: Navigator                   = injector.instanceOf[Navigator]
+  val navigator: Navigator                   = inject[Navigator]
   var mockSessionConnector: SessionConnector = scala.compiletime.uninitialized
   val mockRnrbConnector: RnrbConnector       = mock[RnrbConnector]
   val mockValidatedSession: ValidatedSession = mock[ValidatedSession]
 
   val value_available_when_property_changed: value_available_when_property_changed =
-    injector.instanceOf[value_available_when_property_changed]
+    inject[value_available_when_property_changed]
 
   val messagesControllerComponents: DefaultMessagesControllerComponents =
-    injector.instanceOf[DefaultMessagesControllerComponents]
+    inject[DefaultMessagesControllerComponents]
 
   val controller: Form[Int] = new ValueAvailableWhenPropertyChangedController(
     messagesControllerComponents,

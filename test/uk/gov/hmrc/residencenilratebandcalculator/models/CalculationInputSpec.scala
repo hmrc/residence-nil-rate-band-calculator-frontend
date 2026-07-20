@@ -26,7 +26,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 
 import java.time.LocalDate
 
-class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with BeforeAndAfter {
+class CalculationInputSpec extends CommonPlaySpec with BeforeAndAfter {
 
   val cacheMapKey                         = "a"
   val dateOfDeath: LocalDate              = LocalDate.of(2020, 1, 1)

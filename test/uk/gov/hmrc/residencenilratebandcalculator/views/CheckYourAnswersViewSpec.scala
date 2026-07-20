@@ -18,13 +18,14 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.mvc.Call
 import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.residencenilratebandcalculator.views.html.check_your_answers
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ThresholdCalculationResultController
 import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.ViewSpec
+import uk.gov.hmrc.residencenilratebandcalculator.views.html.check_your_answers
 
-class CheckYourAnswersViewSpec extends HtmlSpec {
+class CheckYourAnswersViewSpec extends ViewSpec {
   val messageKeyPrefix                       = "check_your_answers"
-  val check_your_answers: check_your_answers = injector.instanceOf[check_your_answers]
+  val check_your_answers: check_your_answers = inject[check_your_answers]
   val numberOfRows                           = 22
 
   val answerRows: Seq[AnswerRow] =

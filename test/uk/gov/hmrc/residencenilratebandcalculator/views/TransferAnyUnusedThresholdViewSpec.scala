@@ -19,27 +19,28 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.TransferAnyUnusedThresholdController
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.*
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.NewBooleanViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_any_unused_threshold
 
-class TransferAnyUnusedThresholdViewSpec extends NewBooleanViewSpecBase {
+class TransferAnyUnusedThresholdViewSpec extends NewBooleanViewSpec {
 
   val messageKeyPrefix                                             = "transfer_any_unused_threshold"
-  val transfer_any_unused_threshold: transfer_any_unused_threshold = injector.instanceOf[transfer_any_unused_threshold]
+  val transfer_any_unused_threshold: transfer_any_unused_threshold = inject[transfer_any_unused_threshold]
   def createView(form: Form[Boolean]): HtmlFormat.Appendable = transfer_any_unused_threshold(form)(request, messages)
 
   "Transfer Any Unused Allowance View" must {
 
     behave.like(
       rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")(
-        fakeApplication().injector.instanceOf[TransferAnyUnusedThresholdController].form()
+        inject[TransferAnyUnusedThresholdController].form()
       )
     )
 
     behave.like(
       pageWithoutBackLink[Boolean](
         createView,
-        fakeApplication().injector.instanceOf[TransferAnyUnusedThresholdController].form()
+        inject[TransferAnyUnusedThresholdController].form()
       )
     )
 
@@ -48,7 +49,7 @@ class TransferAnyUnusedThresholdViewSpec extends NewBooleanViewSpecBase {
         createView,
         messageKeyPrefix,
         TransferAnyUnusedThresholdController.onSubmit.url,
-        fakeApplication().injector.instanceOf[TransferAnyUnusedThresholdController].form(),
+        inject[TransferAnyUnusedThresholdController].form(),
         true
       )
     )

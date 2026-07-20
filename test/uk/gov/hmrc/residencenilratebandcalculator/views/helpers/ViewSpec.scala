@@ -14,30 +14,35 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.views
+package uk.gov.hmrc.residencenilratebandcalculator.views.helpers
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.scalatestplus.play.PlaySpec
-import play.api.i18n.{Messages, MessagesApi}
-import play.api.inject.Injector
-import play.api.mvc.AnyContentAsEmpty
-import play.api.test.FakeRequest
-import play.twirl.api.Html
-import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, FrontendAppConfig}
 import org.scalatest.Assertion
+import org.scalatestplus.mockito.MockitoSugar
+import org.scalatestplus.play.PlaySpec
+import play.api.data.{Form, FormError}
+import play.api.i18n.{Lang, Messages, MessagesApi}
+import play.api.mvc.AnyContentAsEmpty
+import play.api.test.{FakeRequest, Injecting}
+import play.twirl.api.{Html, HtmlFormat}
+import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
+import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 
 import scala.concurrent.ExecutionContext
+import scala.reflect.ClassTag
 
-trait HtmlSpec extends BaseSpec { self: PlaySpec =>
+trait ViewSpec extends CommonPlaySpec {
+
+  val errorKey         = "value"
+  val errorMessage     = "error.number"
+  val error: FormError = FormError(errorKey, errorMessage)
 
   implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
 
-  lazy val injector: Injector                     = fakeApplication().injector
-  implicit val ec: ExecutionContext               = injector.instanceOf[ExecutionContext]
-  implicit lazy val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
+  implicit val mockConfig: FrontendAppConfig = inject[FrontendAppConfig]
 
-  def messagesApi: MessagesApi    = injector.instanceOf[MessagesApi]
+  def messagesApi: MessagesApi    = inject[MessagesApi]
   implicit val messages: Messages = messagesApi.preferred(request)
 
   def asDocument(html: Html): Document = Jsoup.parse(html.toString())
@@ -56,7 +61,7 @@ trait HtmlSpec extends BaseSpec { self: PlaySpec =>
 
   def assertPageTitleEqualsMessage(doc: Document, expectedMessageKey: String, args: Any*): Assertion = {
     val headers = doc.getElementsByTag("h1")
-    headers.first.text.replaceAll("\u00a0", " ") mustBe messages(expectedMessageKey, args *).replaceAll("&nbsp;", " ")
+    headers.first.text.replaceAll("\u00a0", " ") mustBe messages(expectedMessageKey, args*).replaceAll("&nbsp;", " ")
   }
 
   def assertContainsText(doc: Document, text: String): Assertion =
@@ -103,5 +108,93 @@ trait HtmlSpec extends BaseSpec { self: PlaySpec =>
       assert(!radio.hasAttr("checked") && radio.attr("checked") != "checked", s"\n\nElement $id is checked")
     }
   }
+
+  def rnrbPage[A: ClassTag](
+      createView: Form[A] => HtmlFormat.Appendable,
+      messageKeyPrefix: String,
+      expectedGuidanceKeys: String*
+  )(emptyForm: Form[A]): Unit =
+    "behave like a standard RNRB page" when {
+      "rendered" must {
+        "have the correct banner title" in {
+          implicit val lang: Lang = Lang("en")
+
+          val doc  = asDocument(createView(emptyForm))
+          val nav  = doc.getElementById("proposition-menu")
+          val span = nav.children.first
+          span.text mustBe messagesApi("site.service_name")
+        }
+
+        "display the correct browser title" in {
+          val doc = asDocument(createView(emptyForm))
+          assertEqualsMessage(doc, "title", s"$messageKeyPrefix.browser_title")
+        }
+
+        "display the correct page title" in {
+          val doc = asDocument(createView(emptyForm))
+          assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.title")
+        }
+
+        "display the correct guidance" in {
+          val doc = asDocument(createView(emptyForm))
+          for (key <- expectedGuidanceKeys) assertContainsText(doc, messages(s"$messageKeyPrefix.$key"))
+        }
+
+        "not display the HMRC logo" in {
+          val doc = asDocument(createView(emptyForm))
+          assertNotRenderedByCssSelector(doc, ".organisation-logo")
+        }
+      }
+    }
+
+  def pageWithoutBackLink[A: ClassTag](createView: Form[A] => HtmlFormat.Appendable, emptyForm: Form[A]): Unit =
+
+    "behave like a page without a back link" when {
+      "rendered" must {
+        "not contain a back link pointing to another page" in {
+          val doc = asDocument(createView(emptyForm))
+          assertNotRenderedById(doc, "back")
+          assert(!doc.toString.contains(messages("site.back")))
+        }
+      }
+    }
+
+  def questionPage[A: ClassTag](
+      createView: Form[A] => HtmlFormat.Appendable,
+      messageKeyPrefix: String,
+      expectedFormAction: String,
+      emptyForm: Form[A]
+  ): Unit =
+
+    "behave like a page with a question" when {
+      "rendered" must {
+        "contain a form that POSTs to the correct action" in {
+          val doc   = asDocument(createView(emptyForm))
+          val forms = doc.getElementsByTag("form")
+          forms.size mustBe 1
+          val form = forms.first
+          form.attr("method") mustBe "POST"
+          form.attr("action") mustBe expectedFormAction
+        }
+
+        "contain a submit button" in {
+          val doc = asDocument(createView(emptyForm))
+          assertRenderedById(doc, "submit")
+        }
+      }
+    }
+
+  def pageContainingPreviousAnswers[A: ClassTag](
+      createView: Form[A] => HtmlFormat.Appendable,
+      emptyForm: Form[A]
+  ): Unit =
+    "behave like a page containing previous answers" when {
+      "rendered" must {
+        "contain the Show previous answers link" in {
+          val doc = asDocument(createView(emptyForm))
+          assertContainsMessages(doc, "site.show_previous_answers")
+        }
+      }
+    }
 
 }

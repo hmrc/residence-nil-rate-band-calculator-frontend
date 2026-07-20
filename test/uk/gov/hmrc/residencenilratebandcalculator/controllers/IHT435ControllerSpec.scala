@@ -16,29 +16,25 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import org.mockito.ArgumentMatchers._
-import org.mockito.Mockito._
+import org.mockito.ArgumentMatchers.*
+import org.mockito.Mockito.*
 import play.api.Environment
 import play.api.http.Status
 import play.api.mvc.DefaultMessagesControllerComponents
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
-import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
+import play.api.test.Helpers.*
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.utils.PDFHelperImpl
 
 import java.io.ByteArrayOutputStream
 
-class IHT435ControllerSpec extends CommonPlaySpec with MockSessionConnector with WithCommonFakeApplication {
-  private val fakeRequest = FakeRequest("", "")
-
-  private val injector = fakeApplication.injector
-
-  private val env = injector.instanceOf[Environment]
+class IHT435ControllerSpec extends RnrbControllerSpec {
+  private val env = inject[Environment]
 
   private val mockPDFHelper = mock[PDFHelperImpl]
 
   val messagesControllerComponents: DefaultMessagesControllerComponents =
-    injector.instanceOf[DefaultMessagesControllerComponents]
+    inject[DefaultMessagesControllerComponents]
 
   private def controller = new IHT435Controller(env, messagesControllerComponents, mockSessionConnector, mockPDFHelper)
 

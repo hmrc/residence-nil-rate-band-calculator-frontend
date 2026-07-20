@@ -21,10 +21,11 @@ import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_value
 
-class PropertyValueControllerSpec extends NewSimpleControllerSpecBase with CommonPlaySpec {
+class PropertyValueControllerSpec extends RnrbControllerSpec with CommonPlaySpec {
 
   val errorKeyBlank      = "property_value.error.blank"
   val errorKeyDecimal    = "error.whole_pounds"
@@ -33,9 +34,9 @@ class PropertyValueControllerSpec extends NewSimpleControllerSpecBase with Commo
   val messageKeyPrefix   = "property_value"
 
   val messagesControllerComponents: DefaultMessagesControllerComponents =
-    injector.instanceOf[DefaultMessagesControllerComponents]
+    inject[DefaultMessagesControllerComponents]
 
-  val property_value: property_value = injector.instanceOf[property_value]
+  val property_value: property_value = inject[property_value]
 
   "Property Value Controller" must {
     def createView = (value: Option[Map[String, String]]) =>

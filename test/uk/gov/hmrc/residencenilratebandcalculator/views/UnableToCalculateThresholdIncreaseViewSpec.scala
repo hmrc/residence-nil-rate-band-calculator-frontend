@@ -18,16 +18,17 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import org.jsoup.nodes.Document
 import play.twirl.api.HtmlFormat
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.ViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.unable_to_calculate_threshold_increase
 
 import scala.language.reflectiveCalls
 
-class UnableToCalculateThresholdIncreaseViewSpec extends HtmlSpec {
+class UnableToCalculateThresholdIncreaseViewSpec extends ViewSpec {
 
   val prefix = "unable_to_calculate_threshold_increase.grossing_up"
 
   val unable_to_calculate_threshold_increase: unable_to_calculate_threshold_increase =
-    injector.instanceOf[unable_to_calculate_threshold_increase]
+    inject[unable_to_calculate_threshold_increase]
 
   val view: HtmlFormat.Appendable = unable_to_calculate_threshold_increase(prefix)(request, messages)
   val doc: Document               = asDocument(view)

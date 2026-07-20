@@ -17,7 +17,6 @@
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import play.api.i18n.{Lang, Messages, MessagesApi}
-import play.api.inject.Injector
 import play.api.mvc.{AnyContentAsEmpty, Call}
 import play.api.test.FakeRequest
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
@@ -25,11 +24,9 @@ import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 import java.time.LocalDate
 
 class AnswerRowSpec extends BaseSpec {
-  val injector: Injector = fakeApplication().injector
-
   val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
 
-  def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
+  def messagesApi: MessagesApi = inject[MessagesApi]
 
   def messages: Messages = messagesApi.preferred(fakeRequest)
 

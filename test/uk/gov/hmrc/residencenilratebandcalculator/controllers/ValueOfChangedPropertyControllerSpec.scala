@@ -19,10 +19,11 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_changed_property
 
-class ValueOfChangedPropertyControllerSpec extends NewSimpleControllerSpecBase {
+class ValueOfChangedPropertyControllerSpec extends RnrbControllerSpec {
 
   val errorKeyBlank      = "value_of_changed_property.error.blank"
   val errorKeyDecimal    = "error.whole_pounds"
@@ -30,11 +31,11 @@ class ValueOfChangedPropertyControllerSpec extends NewSimpleControllerSpecBase {
   val errorKeyTooLarge   = "error.value_too_large"
   val messageKeyPrefix   = "value_of_changed_property"
 
-  val value_of_changed_property: value_of_changed_property = injector.instanceOf[value_of_changed_property]
+  val value_of_changed_property: value_of_changed_property = inject[value_of_changed_property]
 
   "Value Of Changed Property Controller" must {
 
-    val messagesControllerComponents = injector.instanceOf[DefaultMessagesControllerComponents]
+    val messagesControllerComponents = inject[DefaultMessagesControllerComponents]
 
     def createView = (value: Option[Map[String, String]]) =>
       value match {

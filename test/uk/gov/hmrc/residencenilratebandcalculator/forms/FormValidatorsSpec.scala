@@ -16,9 +16,9 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.forms
 
-import org.scalatestplus.play.PlaySpec
+import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
-class FormValidatorsSpec extends PlaySpec {
+class FormValidatorsSpec extends BaseSpec {
 
   "The isValidDate method" must {
 

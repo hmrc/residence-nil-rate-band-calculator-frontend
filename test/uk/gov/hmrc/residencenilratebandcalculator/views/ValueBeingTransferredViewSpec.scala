@@ -23,21 +23,22 @@ import uk.gov.hmrc.residencenilratebandcalculator.Navigator
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueBeingTransferredController
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.*
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.NewIntViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_being_transferred
 
-class ValueBeingTransferredViewSpec extends NewIntViewSpecBase {
+class ValueBeingTransferredViewSpec extends NewIntViewSpec {
 
   val messageKeyPrefix                                 = "value_being_transferred"
-  val navigator: Navigator                             = injector.instanceOf[Navigator]
+  val navigator: Navigator                             = inject[Navigator]
   var mockSessionConnector: SessionConnector           = scala.compiletime.uninitialized
   val mockRnrbConnector: RnrbConnector                 = mock[RnrbConnector]
   val mockValidatedSession: ValidatedSession           = mock[ValidatedSession]
-  val value_being_transferred: value_being_transferred = injector.instanceOf[value_being_transferred]
+  val value_being_transferred: value_being_transferred = inject[value_being_transferred]
 
   val messagesControllerComponents: DefaultMessagesControllerComponents =
-    injector.instanceOf[DefaultMessagesControllerComponents]
+    inject[DefaultMessagesControllerComponents]
 
   val controller: Form[Int] = new ValueBeingTransferredController(
     messagesControllerComponents,

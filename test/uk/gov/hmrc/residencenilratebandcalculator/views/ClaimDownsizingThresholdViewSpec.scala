@@ -19,13 +19,14 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.ClaimDownsizingThresholdController
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.*
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.NewBooleanViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.claim_downsizing_threshold
 
-class ClaimDownsizingThresholdViewSpec extends NewBooleanViewSpecBase {
+class ClaimDownsizingThresholdViewSpec extends NewBooleanViewSpec {
 
   val messageKeyPrefix                                       = "claim_downsizing_threshold"
-  val claim_downsizing_threshold: claim_downsizing_threshold = injector.instanceOf[claim_downsizing_threshold]
+  val claim_downsizing_threshold: claim_downsizing_threshold = inject[claim_downsizing_threshold]
   def createView(form: Form[Boolean]): HtmlFormat.Appendable = claim_downsizing_threshold(form)(request, messages)
 
   "Claim Downsizing Threshold View" must {
@@ -38,13 +39,13 @@ class ClaimDownsizingThresholdViewSpec extends NewBooleanViewSpecBase {
         "guidance1.bullet1",
         "guidance1.bullet2",
         "guidance1.bullet3"
-      )(fakeApplication().injector.instanceOf[ClaimDownsizingThresholdController].form())
+      )(inject[ClaimDownsizingThresholdController].form())
     )
 
     behave.like(
       pageWithoutBackLink[Boolean](
         createView,
-        fakeApplication().injector.instanceOf[ClaimDownsizingThresholdController].form()
+        inject[ClaimDownsizingThresholdController].form()
       )
     )
 
@@ -53,7 +54,7 @@ class ClaimDownsizingThresholdViewSpec extends NewBooleanViewSpecBase {
         createView,
         messageKeyPrefix,
         ClaimDownsizingThresholdController.onSubmit.url,
-        fakeApplication().injector.instanceOf[ClaimDownsizingThresholdController].form(),
+        inject[ClaimDownsizingThresholdController].form(),
         true
       )
     )

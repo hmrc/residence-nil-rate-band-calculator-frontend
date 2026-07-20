@@ -17,12 +17,13 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.ViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.calculate_threshold_increase
 
-class CalculateThresholdIncreaseViewSpec extends ViewSpecBase {
+class CalculateThresholdIncreaseViewSpec extends ViewSpec {
 
   val messageKeyPrefix                                           = "calculate_threshold_increase"
-  val calculate_threshold_increase: calculate_threshold_increase = injector.instanceOf[calculate_threshold_increase]
+  val calculate_threshold_increase: calculate_threshold_increase = inject[calculate_threshold_increase]
 
   "Calculate Threshold Increase view" must {
     "display the correct browser title" in {

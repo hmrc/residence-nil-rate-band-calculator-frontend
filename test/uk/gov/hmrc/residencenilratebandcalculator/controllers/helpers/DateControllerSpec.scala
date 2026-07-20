@@ -14,32 +14,26 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.controllers
+package uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers
 
 import play.api.http.Status
-import play.api.i18n._
+import play.api.i18n.*
 import play.api.inject.Injector
-import play.api.libs.json._
+import play.api.libs.json.*
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.http.SessionKeys
-import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
+import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.{ControllerBase, DatePropertyWasChangedController}
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CacheMap, Date}
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
+
 import java.time.LocalDate
 
-trait DateControllerSpecBase extends CommonPlaySpec with MockSessionConnector with WithCommonFakeApplication {
-  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "").withSession(SessionKeys.sessionId -> "id")
-
-  val injector: Injector = fakeApplication.injector
-
-  val navigator: Navigator = injector.instanceOf[Navigator]
-
-  def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
-
-  def messages: Messages = messagesApi.preferred(fakeRequest)
+trait DateControllerSpec extends ControllerSpec {
 
   def rnrbDateController(
       createController: () => ControllerBase[Date],

@@ -21,10 +21,11 @@ import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.DefaultMessagesControllerComponents
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_estate_value
 
-class ChargeableEstateValueControllerSpec extends NewSimpleControllerSpecBase {
+class ChargeableEstateValueControllerSpec extends RnrbControllerSpec {
 
   val errorKeyBlank      = "chargeable_estate_value.error.blank"
   val errorKeyDecimal    = "error.whole_pounds"
@@ -33,9 +34,9 @@ class ChargeableEstateValueControllerSpec extends NewSimpleControllerSpecBase {
   val messageKeyPrefix   = "chargeable_estate_value"
 
   val messagesControllerComponents: DefaultMessagesControllerComponents =
-    injector.instanceOf[DefaultMessagesControllerComponents]
+    inject[DefaultMessagesControllerComponents]
 
-  val chargeable_estate_value: chargeable_estate_value = fakeApplication.injector.instanceOf[chargeable_estate_value]
+  val chargeable_estate_value: chargeable_estate_value = inject[chargeable_estate_value]
 
   "Chargeable Estate Value Controller" must {
 

@@ -20,26 +20,17 @@ import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.Injector
 import play.api.mvc.{AnyContentAsEmpty, DefaultMessagesControllerComponents}
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
-import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.session_expired
 
-class SessionExpiredControllerSpec extends CommonPlaySpec with MockSessionConnector with WithCommonFakeApplication {
-
-  implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
-
-  lazy val injector: Injector                     = fakeApplication.injector
-  implicit lazy val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
-
-  def messagesApi: MessagesApi                         = injector.instanceOf[MessagesApi]
-  def messages: Messages                               = messagesApi.preferred(request)
-  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
+class SessionExpiredControllerSpec extends RnrbControllerSpec {
 
   val messagesControllerComponents: DefaultMessagesControllerComponents =
-    injector.instanceOf[DefaultMessagesControllerComponents]
+    inject[DefaultMessagesControllerComponents]
 
-  val session_expired: session_expired = injector.instanceOf[session_expired]
+  val session_expired: session_expired = inject[session_expired]
 
   "Session Expired controller" must {
 

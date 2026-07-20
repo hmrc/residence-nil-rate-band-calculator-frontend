@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.mocks
 
-import org.mockito.Mockito._
+import org.mockito.Mockito.*
 import org.scalatestplus.mockito.MockitoSugar
 import uk.gov.hmrc.http.HttpResponse
 

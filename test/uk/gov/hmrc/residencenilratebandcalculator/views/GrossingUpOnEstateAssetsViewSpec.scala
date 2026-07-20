@@ -19,27 +19,28 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossingUpOnEstateAssetsController
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.*
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.NewBooleanViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_estate_assets
 
-class GrossingUpOnEstateAssetsViewSpec extends NewBooleanViewSpecBase {
+class GrossingUpOnEstateAssetsViewSpec extends NewBooleanViewSpec {
 
   val messageKeyPrefix                                           = "grossing_up_on_estate_assets"
-  val grossing_up_on_estate_assets: grossing_up_on_estate_assets = injector.instanceOf[grossing_up_on_estate_assets]
+  val grossing_up_on_estate_assets: grossing_up_on_estate_assets = inject[grossing_up_on_estate_assets]
   def createView(form: Form[Boolean]): HtmlFormat.Appendable     = grossing_up_on_estate_assets(form)(request, messages)
 
   "Grossing Up On Estate AssetsView" must {
 
     behave.like(
       rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")(
-        fakeApplication().injector.instanceOf[GrossingUpOnEstateAssetsController].form()
+        inject[GrossingUpOnEstateAssetsController].form()
       )
     )
 
     behave.like(
       pageWithoutBackLink[Boolean](
         createView,
-        fakeApplication().injector.instanceOf[GrossingUpOnEstateAssetsController].form()
+        inject[GrossingUpOnEstateAssetsController].form()
       )
     )
 
@@ -48,7 +49,7 @@ class GrossingUpOnEstateAssetsViewSpec extends NewBooleanViewSpecBase {
         createView,
         messageKeyPrefix,
         GrossingUpOnEstateAssetsController.onSubmit.url,
-        fakeApplication().injector.instanceOf[GrossingUpOnEstateAssetsController].form(),
+        inject[GrossingUpOnEstateAssetsController].form(),
         true
       )
     )

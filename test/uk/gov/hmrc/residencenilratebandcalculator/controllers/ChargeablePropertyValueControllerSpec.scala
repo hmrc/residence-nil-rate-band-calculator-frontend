@@ -22,10 +22,11 @@ import play.api.mvc.DefaultMessagesControllerComponents
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_property_value
 
-class ChargeablePropertyValueControllerSpec extends NewSimpleControllerSpecBase with CommonPlaySpec {
+class ChargeablePropertyValueControllerSpec extends RnrbControllerSpec with CommonPlaySpec {
 
   val errorKeyBlank      = "chargeable_property_value.error.blank"
   val errorKeyDecimal    = "error.whole_pounds"
@@ -34,10 +35,10 @@ class ChargeablePropertyValueControllerSpec extends NewSimpleControllerSpecBase 
   val messageKeyPrefix   = "chargeable_property_value"
 
   val messagesControllerComponents: DefaultMessagesControllerComponents =
-    injector.instanceOf[DefaultMessagesControllerComponents]
+    inject[DefaultMessagesControllerComponents]
 
   val chargeable_property_value: chargeable_property_value =
-    fakeApplication.injector.instanceOf[chargeable_property_value]
+    inject[chargeable_property_value]
 
   "Chargeable Property Value Controller" must {
     def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {

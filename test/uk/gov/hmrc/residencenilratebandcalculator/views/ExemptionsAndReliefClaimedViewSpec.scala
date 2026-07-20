@@ -19,17 +19,18 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.ExemptionsAndReliefClaimedController
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.*
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.NewBooleanViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exemptions_and_relief_claimed
 
-class ExemptionsAndReliefClaimedViewSpec extends NewBooleanViewSpecBase {
+class ExemptionsAndReliefClaimedViewSpec extends NewBooleanViewSpec {
 
   val messageKeyPrefix = "exemptions_and_relief_claimed"
 
   lazy val injectedController: ExemptionsAndReliefClaimedController =
-    injector.instanceOf[ExemptionsAndReliefClaimedController]
+    inject[ExemptionsAndReliefClaimedController]
 
-  val exemptions_and_relief_claimed: exemptions_and_relief_claimed = injector.instanceOf[exemptions_and_relief_claimed]
+  val exemptions_and_relief_claimed: exemptions_and_relief_claimed = inject[exemptions_and_relief_claimed]
   def createView(form: Form[Boolean]): HtmlFormat.Appendable = exemptions_and_relief_claimed(form)(request, messages)
 
   "Exemptions And Relief Claimed View" must {

@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.views
+package uk.gov.hmrc.residencenilratebandcalculator.views.helpers
 
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 
-trait BigDecimalViewSpecBase extends ViewSpecBase {
+trait BigDecimalViewSpec extends ViewSpec {
 
   val number: BigDecimal = BigDecimal(50.01)
 

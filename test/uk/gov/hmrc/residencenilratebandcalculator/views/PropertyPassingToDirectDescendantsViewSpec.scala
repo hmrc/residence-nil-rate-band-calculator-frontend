@@ -19,16 +19,17 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyPassingToDirectDescendantsController
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.*
 import uk.gov.hmrc.residencenilratebandcalculator.forms.PropertyPassingToDirectDescendantsForm
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.NewBooleanViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_passing_to_direct_descendants
 
-class PropertyPassingToDirectDescendantsViewSpec extends NewBooleanViewSpecBase {
+class PropertyPassingToDirectDescendantsViewSpec extends NewBooleanViewSpec {
 
   val messageKeyPrefix = "property_passing_to_direct_descendants"
 
   val property_passing_to_direct_descendants: property_passing_to_direct_descendants =
-    injector.instanceOf[property_passing_to_direct_descendants]
+    inject[property_passing_to_direct_descendants]
 
   def createView(form: Form[String]): HtmlFormat.Appendable =
     property_passing_to_direct_descendants(form)(request, messages)
@@ -37,14 +38,14 @@ class PropertyPassingToDirectDescendantsViewSpec extends NewBooleanViewSpecBase 
 
     behave.like(
       rnrbPage[String](createView, messageKeyPrefix, "guidance1", "guidance2")(
-        fakeApplication().injector.instanceOf[PropertyPassingToDirectDescendantsController].form()
+        inject[PropertyPassingToDirectDescendantsController].form()
       )
     )
 
     behave.like(
       pageWithoutBackLink[String](
         createView,
-        fakeApplication().injector.instanceOf[PropertyPassingToDirectDescendantsController].form()
+        inject[PropertyPassingToDirectDescendantsController].form()
       )
     )
 
@@ -53,7 +54,7 @@ class PropertyPassingToDirectDescendantsViewSpec extends NewBooleanViewSpecBase 
         createView,
         messageKeyPrefix,
         PropertyPassingToDirectDescendantsController.onSubmit.url,
-        fakeApplication().injector.instanceOf[PropertyPassingToDirectDescendantsController].form()
+        inject[PropertyPassingToDirectDescendantsController].form()
       )
     )
   }

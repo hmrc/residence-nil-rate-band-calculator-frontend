@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.json
 
-import play.api.libs.json._
+import play.api.libs.json.*
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
 class JsonErrorProcessorSpec extends BaseSpec {

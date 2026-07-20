@@ -17,33 +17,22 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.http.Status
-import play.api.i18n.{Messages, MessagesApi}
-import play.api.inject.Injector
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
-import play.api.mvc.{AnyContentAsEmpty, DefaultMessagesControllerComponents}
-import play.api.test.FakeRequest
-import play.api.test.Helpers._
-import uk.gov.hmrc.http.SessionKeys
-import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
+import play.api.mvc.DefaultMessagesControllerComponents
+import play.api.test.Helpers.*
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CacheMap}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.check_your_answers
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
-class CheckYourAnswersControllerSpec extends CommonPlaySpec with MockSessionConnector with WithCommonFakeApplication {
-
-  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "").withSession(SessionKeys.sessionId -> "id")
-  val injector: Injector                               = fakeApplication.injector
-
-  val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
+class CheckYourAnswersControllerSpec extends RnrbControllerSpec {
 
   val messagesControllerComponents: DefaultMessagesControllerComponents =
-    injector.instanceOf[DefaultMessagesControllerComponents]
+    inject[DefaultMessagesControllerComponents]
 
-  val validatedSession: ValidatedSession     = injector.instanceOf[ValidatedSession]
-  def messagesApi: MessagesApi               = injector.instanceOf[MessagesApi]
-  def messages: Messages                     = messagesApi.preferred(fakeRequest)
-  val check_your_answers: check_your_answers = fakeApplication.injector.instanceOf[check_your_answers]
+  val validatedSession: ValidatedSession     = inject[ValidatedSession]
+  val check_your_answers: check_your_answers = inject[check_your_answers]
 
   val filledOutCacheMap = new CacheMap(
     "id",

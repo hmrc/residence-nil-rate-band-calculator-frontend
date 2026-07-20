@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import org.mockito.Mockito._
+import org.mockito.Mockito.*
 import org.scalatestplus.mockito.MockitoSugar
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.{
   NoProperty,
@@ -24,7 +24,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThreshol
 }
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
 
-class GetNoAdditionalThresholdAvailableReasonSpec extends BaseSpec with MockitoSugar {
+class GetNoAdditionalThresholdAvailableReasonSpec extends BaseSpec {
 
   "GetNoAdditionalThresholdAvailableReason" must {
     "get the 'Not closely inherited' reason when there is no closely inherited property" in {

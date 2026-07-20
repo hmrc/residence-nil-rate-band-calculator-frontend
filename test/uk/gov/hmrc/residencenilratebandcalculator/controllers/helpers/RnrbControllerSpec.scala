@@ -14,42 +14,28 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.controllers
+package uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers
 
 import org.jsoup.Jsoup
 import play.api.http.Status
-import play.api.i18n._
+import play.api.i18n.*
 import play.api.inject.Injector
-import play.api.libs.json._
+import play.api.libs.json.*
 import play.api.mvc.AnyContentAsEmpty
-import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
+import play.api.test.{FakeRequest, Injecting}
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.http.SessionKeys
-import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
+import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.{ControllerBase, SimpleControllerBase}
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
-import uk.gov.hmrc.residencenilratebandcalculator.models._
+import uk.gov.hmrc.residencenilratebandcalculator.models.*
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
 
+import scala.concurrent.ExecutionContext
 import scala.reflect.ClassTag
 
-trait SimpleControllerSpecBase
-    extends CommonPlaySpec
-    with HttpResponseMocks
-    with MockSessionConnector
-    with WithCommonFakeApplication {
-
-  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "").withSession(SessionKeys.sessionId -> "id")
-
-  val injector: Injector = fakeApplication.injector
-
-  val navigator: Navigator = injector.instanceOf[Navigator]
-
-  def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
-
-  def messages: Messages = messagesApi.preferred(fakeRequest)
-
-  val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
+trait RnrbControllerSpec extends ControllerSpec {
 
   def rnrbController[A: ClassTag](
       createController: () => ControllerBase[A],
@@ -70,7 +56,9 @@ trait SimpleControllerSpecBase
     "return the View for a GET" in {
       for (v <- valuesToCacheBeforeLoad) setCacheValue(v._1, v._2)
       val result = createController().onPageLoad(rds)(fakeRequest)
-      Jsoup.parse(contentAsString(result)).title() mustBe messages(s"$messageKeyPrefix.title")
+      Jsoup.parse(contentAsString(result)).title() mustBe messages(
+        s"$messageKeyPrefix.title"
+      ) + " - Calculate the available RNRB - GOV.UK"
     }
 
     "return a redirect on submit with valid data" in {

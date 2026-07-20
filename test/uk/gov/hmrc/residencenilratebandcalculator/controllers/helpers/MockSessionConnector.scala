@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.controllers
+package uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers
 
 import org.mockito.ArgumentCaptor
-import org.mockito.ArgumentMatchers._
-import org.mockito.Mockito._
+import org.mockito.ArgumentMatchers.*
+import org.mockito.Mockito.*
 import org.mockito.stubbing.OngoingStubbing
 import org.scalatest.BeforeAndAfter
 import org.scalatest.matchers.must.Matchers
@@ -69,9 +69,9 @@ trait MockSessionConnector extends CommonPlaySpec with MockitoSugar with Matcher
   }
 
   def verifyValueIsCached[A: ClassTag](key: String, value: A): Any = {
-    implicit val headnapper   = ArgumentCaptor.forClass(classOf[HeaderCarrier])
-    implicit val writesnapper = ArgumentCaptor.forClass(classOf[Writes[A]])
-    val valueCaptor           = ArgumentCaptor.forClass(value.getClass)
+    implicit val headnapper: ArgumentCaptor[HeaderCarrier] = ArgumentCaptor.forClass(classOf[HeaderCarrier])
+    implicit val writesnapper: ArgumentCaptor[Writes[A]]   = ArgumentCaptor.forClass(classOf[Writes[A]])
+    val valueCaptor                                        = ArgumentCaptor.forClass(value.getClass)
     verify(mockSessionConnector).cache[A](matches(key), valueCaptor.capture)(writesnapper.capture, headnapper.capture)
     valueCaptor.getValue mustBe value
   }

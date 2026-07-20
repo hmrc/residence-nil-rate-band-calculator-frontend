@@ -16,12 +16,12 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import play.api.libs.json._
+import play.api.libs.json.*
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
 import java.time.LocalDate
 
-class DateSpec extends BaseSpec {
+class DateModelSpec extends BaseSpec {
 
   "Date Model" must {
     "write itself as JSON exactly as if it were a Java LocalDate" in {

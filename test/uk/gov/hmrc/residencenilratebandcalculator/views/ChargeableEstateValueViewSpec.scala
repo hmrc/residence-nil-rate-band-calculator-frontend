@@ -19,28 +19,29 @@ package uk.gov.hmrc.residencenilratebandcalculator.views
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableEstateValueController
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.*
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.NewIntViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_estate_value
 
-class ChargeableEstateValueViewSpec extends NewIntViewSpecBase {
+class ChargeableEstateValueViewSpec extends NewIntViewSpec {
 
   val messageKeyPrefix                                   = "chargeable_estate_value"
-  val chargeable_estate_value: chargeable_estate_value   = injector.instanceOf[chargeable_estate_value]
+  val chargeable_estate_value: chargeable_estate_value   = inject[chargeable_estate_value]
   def createView(form: Form[Int]): HtmlFormat.Appendable = chargeable_estate_value(form)(request, messages)
 
   "Chargeable Estate Value View" must {
 
     behave.like(
       rnrbPage[Int](createView, messageKeyPrefix, "guidance")(
-        fakeApplication().injector.instanceOf[ChargeableEstateValueController].form()
+        inject[ChargeableEstateValueController].form()
       )
     )
 
     behave.like(
       pageWithoutBackLink[Int](
         createView,
-        fakeApplication().injector.instanceOf[ChargeableEstateValueController].form()
+        inject[ChargeableEstateValueController].form()
       )
     )
 
@@ -50,7 +51,7 @@ class ChargeableEstateValueViewSpec extends NewIntViewSpecBase {
         messageKeyPrefix,
         ChargeableEstateValueController.onSubmit.url,
         NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage),
-        fakeApplication().injector.instanceOf[ChargeableEstateValueController].form()
+        inject[ChargeableEstateValueController].form()
       )
     )
   }

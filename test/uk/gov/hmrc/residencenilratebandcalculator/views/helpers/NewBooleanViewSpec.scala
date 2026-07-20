@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.views
+package uk.gov.hmrc.residencenilratebandcalculator.views.helpers
 
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
 
-trait BooleanViewSpecBase extends ViewSpecBase {
+trait NewBooleanViewSpec extends NewViewSpec {
 
   def booleanPage(
       createView: Form[Boolean] => HtmlFormat.Appendable,
@@ -32,8 +32,8 @@ trait BooleanViewSpecBase extends ViewSpecBase {
 
     behave.like(questionPage[Boolean](createView, messageKeyPrefix, expectedFormAction, emptyForm))
 
-    val yes = if (useNewValues) "value-true" else "yes"
-    val no  = if (useNewValues) "value-false" else "no"
+    val yes = if (useNewValues) "value" else "yes"
+    val no  = if (useNewValues) "value-2" else "no"
 
     "behave like a page with a Yes/No question" when {
       "rendered" must {
@@ -58,7 +58,7 @@ trait BooleanViewSpecBase extends ViewSpecBase {
 
         "not render an error summary" in {
           val doc = asDocument(createView(emptyForm))
-          assertNotRenderedById(doc, "error-summary_header")
+          assertNotRenderedByCssSelector(doc, ".govuk-error-summary")
         }
       }
 
@@ -72,12 +72,12 @@ trait BooleanViewSpecBase extends ViewSpecBase {
 
         "show an error summary" in {
           val doc = asDocument(createView(BooleanForm("").withError(error)))
-          assertRenderedById(doc, "error-summary-heading")
+          assertRenderedByCssSelector(doc, ".govuk-error-summary")
         }
 
         "show an error in the value field's label" in {
           val doc       = asDocument(createView(BooleanForm("").withError(error)))
-          val errorSpan = doc.getElementsByClass("error-notification").first
+          val errorSpan = doc.getElementsByClass("govuk-error-summary__list").first
           errorSpan.text mustBe messages(errorMessage)
         }
       }
@@ -91,8 +91,8 @@ trait BooleanViewSpecBase extends ViewSpecBase {
       useNewValues: Boolean = false
   ): Unit = {
 
-    val yes = if (useNewValues) "value-true" else "yes"
-    val no  = if (useNewValues) "value-false" else "no"
+    val yes = if (useNewValues) "value" else "yes"
+    val no  = if (useNewValues) "value-2" else "no"
 
     "have only the correct value checked" in {
       val doc = asDocument(createView(BooleanForm("").fill(answer)))
@@ -102,7 +102,7 @@ trait BooleanViewSpecBase extends ViewSpecBase {
 
     "not render an error summary" in {
       val doc = asDocument(createView(BooleanForm("").fill(answer)))
-      assertNotRenderedById(doc, "error-summary_header")
+      assertNotRenderedByCssSelector(doc, ".govuk-error-summary")
     }
   }
 

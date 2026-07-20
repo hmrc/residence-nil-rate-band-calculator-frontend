@@ -19,31 +19,30 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import org.apache.pekko.stream.Materializer
 import org.jsoup.Jsoup
 import org.mockito.ArgumentMatchers
-import org.mockito.Mockito._
+import org.mockito.Mockito.*
 import org.mockito.stubbing.OngoingStubbing
 import play.api.mvc.DefaultMessagesControllerComponents
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.DateControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
-import uk.gov.hmrc.residencenilratebandcalculator.forms.DateOfDeathForm._
+import uk.gov.hmrc.residencenilratebandcalculator.forms.DateOfDeathForm.*
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CacheMap, Date}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 import scala.concurrent.Future
 
-class DateOfDeathControllerSpec extends DateControllerSpecBase with CommonPlaySpec {
+class DateOfDeathControllerSpec extends DateControllerSpec {
 
   val mockConnector: SessionConnector = mock[SessionConnector]
-  val mockConfig: FrontendAppConfig   = injector.instanceOf[FrontendAppConfig]
 
   val messagesControllerComponents: DefaultMessagesControllerComponents =
-    injector.instanceOf[DefaultMessagesControllerComponents]
+    inject[DefaultMessagesControllerComponents]
 
-  val mockValidatedSession: ValidatedSession = injector.instanceOf[ValidatedSession]
-  val date_of_death: date_of_death           = injector.instanceOf[date_of_death]
+  val mockValidatedSession: ValidatedSession = inject[ValidatedSession]
+  val date_of_death: date_of_death           = inject[date_of_death]
 
   val controller = new DateOfDeathController(
     messagesControllerComponents,
@@ -53,7 +52,7 @@ class DateOfDeathControllerSpec extends DateControllerSpecBase with CommonPlaySp
     date_of_death
   )
 
-  implicit val mat: Materializer = fakeApplication.injector.instanceOf[Materializer]
+  implicit val mat: Materializer = inject[Materializer]
 
   def setupMock(result: Future[Option[CacheMap]]): OngoingStubbing[Future[Option[CacheMap]]] =
     when(mockConnector.fetch()(ArgumentMatchers.any[HeaderCarrier]))

@@ -17,12 +17,13 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.ViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.session_expired
 
-class SessionExpiredViewSpec extends ViewSpecBase {
+class SessionExpiredViewSpec extends ViewSpec {
 
   val messageKeyPrefix                 = "session_expired"
-  val session_expired: session_expired = injector.instanceOf[session_expired]
+  val session_expired: session_expired = inject[session_expired]
 
   "Session Expired view" must {
     "display the correct browser title" in {

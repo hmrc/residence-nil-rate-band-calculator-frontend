@@ -20,16 +20,19 @@ import org.apache.pekko.stream.Materializer
 import org.apache.pekko.util.ByteString
 import org.scalatest.OptionValues
 import org.scalatest.matchers.must.Matchers
-import org.scalatestplus.play.PlaySpec
 import play.api.mvc.Result
+import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
 import java.nio.charset.Charset
+import scala.concurrent.ExecutionContext
 import scala.language.{implicitConversions, postfixOps}
 
-trait CommonPlaySpec extends PlaySpec with Matchers with OptionValues {
+trait CommonPlaySpec extends BaseSpec with Matchers with OptionValues {
 
   import scala.concurrent.duration.*
   import scala.concurrent.{Await, Future}
+
+  implicit val executionContext: ExecutionContext = ExecutionContext.global
 
   implicit val defaultTimeout: FiniteDuration = 5.seconds
 
