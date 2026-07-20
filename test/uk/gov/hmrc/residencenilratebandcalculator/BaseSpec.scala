@@ -18,15 +18,16 @@ package uk.gov.hmrc.residencenilratebandcalculator
 
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.PlaySpec
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.Injecting
-import uk.gov.hmrc.mongo.play.PlayMongoModule
 import play.api.Application
 
-abstract class BaseSpec extends PlaySpec with MockitoSugar with GuiceOneAppPerSuite with Injecting {
+abstract class BaseSpec extends PlaySpec with MockitoSugar with Injecting {
 
-  override lazy val app: Application = new GuiceApplicationBuilder().build()
+  protected lazy val app: Application = BaseSpec.singletonApp
 
-  override def fakeApplication(): Application = app
+}
+
+object BaseSpec {
+  private val singletonApp: Application = new GuiceApplicationBuilder().build()
 }

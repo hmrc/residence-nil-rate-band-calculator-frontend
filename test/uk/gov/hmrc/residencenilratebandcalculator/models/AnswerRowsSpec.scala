@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import org.mockito.Mockito
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.libs.json.*
 import play.api.mvc.{AnyContentAsEmpty, Call}

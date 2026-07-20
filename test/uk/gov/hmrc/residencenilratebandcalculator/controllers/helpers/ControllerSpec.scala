@@ -18,13 +18,11 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers
 
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.mvc.AnyContentAsEmpty
-import play.api.test.{FakeRequest, Injecting}
+import play.api.test.FakeRequest
 import uk.gov.hmrc.http.SessionKeys
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.{FrontendAppConfig, Navigator}
-
-import scala.concurrent.ExecutionContext
 
 trait ControllerSpec extends CommonPlaySpec with HttpResponseMocks with MockSessionConnector {
 

@@ -21,7 +21,6 @@ import org.mockito.Mockito.*
 import play.api.Environment
 import play.api.http.Status
 import play.api.mvc.DefaultMessagesControllerComponents
-import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.utils.PDFHelperImpl

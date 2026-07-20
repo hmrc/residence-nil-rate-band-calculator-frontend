@@ -21,8 +21,6 @@ import org.mockito.ArgumentMatchers.*
 import org.mockito.Mockito.*
 import org.mockito.stubbing.OngoingStubbing
 import org.scalatest.BeforeAndAfter
-import org.scalatest.matchers.must.Matchers
-import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.json.{JsValue, Reads, Writes}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
@@ -33,7 +31,7 @@ import java.time.LocalDate
 import scala.concurrent.Future
 import scala.reflect.ClassTag
 
-trait MockSessionConnector extends CommonPlaySpec with MockitoSugar with Matchers with BeforeAndAfter {
+trait MockSessionConnector extends CommonPlaySpec with BeforeAndAfter {
 
   var mockSessionConnector: SessionConnector = scala.compiletime.uninitialized
   var mockCacheMap: CacheMap                 = scala.compiletime.uninitialized

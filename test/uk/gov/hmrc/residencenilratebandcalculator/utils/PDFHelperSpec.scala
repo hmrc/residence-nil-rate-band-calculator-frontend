@@ -23,7 +23,6 @@ import play.api.Environment
 import play.api.i18n.Lang
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import play.api.mvc.{DefaultMessagesControllerComponents, MessagesControllerComponents}
-import play.api.test.Injecting
 import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
 

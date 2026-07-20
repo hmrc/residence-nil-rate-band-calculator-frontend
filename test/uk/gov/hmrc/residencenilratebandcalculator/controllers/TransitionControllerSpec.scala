@@ -19,8 +19,6 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import org.mockito.ArgumentMatchers.*
 import org.mockito.Mockito.*
 import play.api.http.Status
-import play.api.i18n.{Messages, MessagesApi}
-import play.api.inject.Injector
 import play.api.mvc.{AnyContentAsEmpty, DefaultMessagesControllerComponents, Request}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
@@ -28,7 +26,7 @@ import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.{ControllerSpec, MockSessionConnector}
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.ControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.models.{GetReason, Reason, UserAnswers}
 
 import scala.concurrent.{ExecutionContext, Future}

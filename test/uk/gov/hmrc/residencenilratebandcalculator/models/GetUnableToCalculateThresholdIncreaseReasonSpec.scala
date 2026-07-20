@@ -17,7 +17,6 @@
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
 import org.mockito.Mockito.*
-import org.scalatestplus.mockito.MockitoSugar
 import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetUnableToCalculateThresholdIncreaseReason.{
   GrossingUpForOtherProperty,

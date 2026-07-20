@@ -18,9 +18,8 @@ package uk.gov.hmrc.residencenilratebandcalculator.utils
 
 import org.scalatest.matchers.must.Matchers.must
 import play.api.i18n.MessagesApi
-import play.api.inject.Injector
 import play.api.mvc.AnyContentAsEmpty
-import play.api.test.{FakeRequest, Injecting}
+import play.api.test.FakeRequest
 import uk.gov.hmrc.play.bootstrap.frontend.http.FrontendErrorHandler
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.MockSessionConnector

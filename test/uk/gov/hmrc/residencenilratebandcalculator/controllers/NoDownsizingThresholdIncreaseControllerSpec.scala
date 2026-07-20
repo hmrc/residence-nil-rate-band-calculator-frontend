@@ -16,17 +16,12 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import org.scalatestplus.mockito.MockitoSugar
 import play.api.http.Status
-import play.api.i18n.{Messages, MessagesApi}
-import play.api.inject.Injector
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
-import play.api.mvc.{AnyContentAsEmpty, DefaultMessagesControllerComponents}
-import play.api.test.FakeRequest
+import play.api.mvc.DefaultMessagesControllerComponents
 import play.api.test.Helpers.*
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
-import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.NoProperty
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThresholdIncreaseReason.NoAssetsPassingToDirectDescendants
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CacheMap, UserAnswers}
@@ -34,7 +29,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.{
   no_additional_threshold_available,
   no_downsizing_threshold_increase
 }
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 class NoDownsizingThresholdIncreaseControllerSpec extends RnrbControllerSpec {
 

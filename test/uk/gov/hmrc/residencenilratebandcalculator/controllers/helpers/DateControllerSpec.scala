@@ -17,19 +17,12 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers
 
 import play.api.http.Status
-import play.api.i18n.*
-import play.api.inject.Injector
 import play.api.libs.json.*
-import play.api.mvc.AnyContentAsEmpty
-import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.http.SessionKeys
-import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.{ControllerBase, DatePropertyWasChangedController}
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CacheMap, Date}
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 import java.time.LocalDate
 

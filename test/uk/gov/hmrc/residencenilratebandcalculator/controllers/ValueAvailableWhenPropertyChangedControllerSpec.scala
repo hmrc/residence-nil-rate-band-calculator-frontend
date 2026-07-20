@@ -21,22 +21,18 @@ import org.mockito.ArgumentMatchers.*
 import org.mockito.Mockito.*
 import play.api.data.FormError
 import play.api.http.Status
-import play.api.i18n.{Messages, MessagesApi}
-import play.api.inject.Injector
 import play.api.libs.json.*
-import play.api.mvc.{AnyContentAsEmpty, DefaultMessagesControllerComponents, Result}
-import play.api.test.FakeRequest
+import play.api.mvc.{DefaultMessagesControllerComponents, Result}
 import play.api.test.Helpers.*
 import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, SessionKeys}
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.{ControllerSpec, MockSessionConnector}
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.ControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CacheMap}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_available_when_property_changed
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 import scala.concurrent.Future
 

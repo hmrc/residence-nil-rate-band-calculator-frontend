@@ -18,21 +18,13 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers
 
 import org.jsoup.Jsoup
 import play.api.http.Status
-import play.api.i18n.*
-import play.api.inject.Injector
 import play.api.libs.json.*
-import play.api.mvc.AnyContentAsEmpty
 import play.api.test.Helpers.*
-import play.api.test.{FakeRequest, Injecting}
 import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.http.SessionKeys
-import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.{ControllerBase, SimpleControllerBase}
-import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.models.*
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
-import scala.concurrent.ExecutionContext
 import scala.reflect.ClassTag
 
 trait RnrbControllerSpec extends ControllerSpec {

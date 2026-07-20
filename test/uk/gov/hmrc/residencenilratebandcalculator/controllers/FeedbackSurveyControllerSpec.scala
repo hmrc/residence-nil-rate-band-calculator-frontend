@@ -17,11 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.http.Status
-import play.api.mvc.{AnyContentAsEmpty, DefaultMessagesControllerComponents}
-import play.api.test.FakeRequest
-import uk.gov.hmrc.http.SessionKeys
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
-import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
+import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 

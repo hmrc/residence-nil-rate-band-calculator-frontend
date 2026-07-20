@@ -19,7 +19,6 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import org.apache.pekko.stream.Materializer
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
-import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 
 class KeepAliveControllerSpec extends RnrbControllerSpec {

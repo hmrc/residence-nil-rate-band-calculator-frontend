@@ -19,8 +19,6 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.*
 import org.mockito.Mockito.*
-import org.scalatest.matchers.must.Matchers
-import org.scalatestplus.mockito.MockitoSugar
 import play.api.http.Status
 import play.api.libs.json.*
 import play.api.mvc.DefaultMessagesControllerComponents
@@ -38,7 +36,7 @@ import java.time.LocalDate
 import scala.concurrent.Future
 import scala.util.Success
 
-class ThresholdCalculationResultControllerSpec extends RnrbControllerSpec with MockitoSugar with Matchers {
+class ThresholdCalculationResultControllerSpec extends RnrbControllerSpec {
 
   val testJsNumber: JsNumber = JsNumber(10)
 

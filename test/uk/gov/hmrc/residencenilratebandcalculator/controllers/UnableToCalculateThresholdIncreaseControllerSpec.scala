@@ -17,16 +17,14 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.http.Status
-import play.api.i18n.{Messages, MessagesApi}
-import play.api.inject.Injector
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import play.api.mvc.{AnyContentAsEmpty, DefaultMessagesControllerComponents}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.{ControllerSpec, MockSessionConnector}
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.ControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.unable_to_calculate_threshold_increase
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 class UnableToCalculateThresholdIncreaseControllerSpec extends ControllerSpec {
 

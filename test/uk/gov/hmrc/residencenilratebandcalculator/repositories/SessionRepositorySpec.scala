@@ -21,7 +21,6 @@ import play.api.libs.json.Json
 import uk.gov.hmrc.mongo.test.DefaultPlayMongoRepositorySupport
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
-import uk.gov.hmrc.mongo.MongoComponent
 
 class SessionRepositorySpec extends CommonPlaySpec with DefaultPlayMongoRepositorySupport[DatedCacheMap] {
 
