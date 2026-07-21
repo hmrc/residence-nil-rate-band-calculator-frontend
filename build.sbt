@@ -30,7 +30,7 @@ lazy val microservice = Project(appName, file("."))
   .settings(defaultSettings(): _*)
   .settings(libraryDependencies ++= appDependencies)
   .settings(
-    Test / fork := false,
+    Test / fork := true,
     retrieveManaged := true,
     // only required for frontends
     scalacOptions ++= Seq(
