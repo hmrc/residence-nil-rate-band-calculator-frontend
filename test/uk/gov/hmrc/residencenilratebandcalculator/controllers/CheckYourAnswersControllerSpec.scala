@@ -18,7 +18,6 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.http.Status
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
-import play.api.mvc.DefaultMessagesControllerComponents
 import play.api.test.Helpers.*
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
@@ -27,9 +26,6 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.check_your_answers
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 class CheckYourAnswersControllerSpec extends RnrbControllerSpec {
-
-  val messagesControllerComponents: DefaultMessagesControllerComponents =
-    inject[DefaultMessagesControllerComponents]
 
   val validatedSession: ValidatedSession     = inject[ValidatedSession]
   val check_your_answers: check_your_answers = inject[check_your_answers]

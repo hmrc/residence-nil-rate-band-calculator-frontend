@@ -17,14 +17,14 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views.helpers
 
 import play.api.data.Form
-import play.twirl.api.HtmlFormat
+import play.twirl.api.Html
 
 trait NewBigDecimalViewSpec extends NewViewSpec {
 
   val number: BigDecimal = BigDecimal(50.01)
 
   def bigDecimalPage(
-      createView: (Form[BigDecimal]) => HtmlFormat.Appendable,
+      createView: (Form[BigDecimal]) => Html,
       messageKeyPrefix: String,
       expectedFormAction: String,
       form: Form[BigDecimal],

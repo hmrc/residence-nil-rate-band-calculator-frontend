@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
 import play.api.mvc.{DefaultMessagesControllerComponents, Request}
+import play.twirl.api.Html
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThresholdIncreaseReason._
@@ -37,9 +38,9 @@ class NoDownsizingThresholdIncreaseController @Inject() (
     extends FrontendController(cc)
     with TransitionController {
 
-  val getReason = GetNoDownsizingThresholdIncreaseReason
+  val getReason: GetReason = GetNoDownsizingThresholdIncreaseReason
 
-  def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[?]) = {
+  def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[?]): Html = {
     val reasonKey = reason match {
       case NoAssetsPassingToDirectDescendants =>
         "no_downsizing_threshold_increase.no_assets_passing_to_direct_descendants_reason"

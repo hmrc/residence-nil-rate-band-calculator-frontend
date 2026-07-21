@@ -17,10 +17,10 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.ChargeableInheritedPropertyValueController
+import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.*
-import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.Forms
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.NewIntViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_inherited_property_value
 
@@ -31,20 +31,22 @@ class ChargeableInheritedPropertyValueViewSpec extends NewIntViewSpec {
   val chargeable_inherited_property_value: chargeable_inherited_property_value =
     inject[chargeable_inherited_property_value]
 
-  def createView(form: Form[Int]): HtmlFormat.Appendable = chargeable_inherited_property_value(form)(request, messages)
+  def createView(form: Form[Int]): Html = chargeable_inherited_property_value(form)(request, messages)
+
+  val form: Form[Int] = Forms.ChargeableInheritedPropertyValue
 
   "Chargeable Inherited Property Value View" must {
 
     behave.like(
       rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance2")(
-        inject[ChargeableInheritedPropertyValueController].form()
+        form
       )
     )
 
     behave.like(
       pageWithoutBackLink[Int](
         createView,
-        inject[ChargeableInheritedPropertyValueController].form()
+        form
       )
     )
 
@@ -54,7 +56,7 @@ class ChargeableInheritedPropertyValueViewSpec extends NewIntViewSpec {
         messageKeyPrefix,
         ChargeableInheritedPropertyValueController.onSubmit.url,
         NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage),
-        inject[ChargeableInheritedPropertyValueController].form()
+        form
       )
     )
   }

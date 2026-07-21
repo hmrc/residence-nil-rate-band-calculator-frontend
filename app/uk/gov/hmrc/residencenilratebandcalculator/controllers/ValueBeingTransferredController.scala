@@ -30,7 +30,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.{RnrbConnector, SessionConnector}
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 import uk.gov.hmrc.residencenilratebandcalculator.exceptions.NoCacheMapException
-import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.Forms
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 import uk.gov.hmrc.residencenilratebandcalculator.utils.TaxYear
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_being_transferred
@@ -52,13 +52,7 @@ class ValueBeingTransferredController @Inject() (
 
   val controllerId: String = Constants.valueBeingTransferredId
 
-  def form: () => Form[Int] = () =>
-    NonNegativeIntForm(
-      "value_being_transferred.error.blank",
-      "error.whole_pounds",
-      "error.non_numeric",
-      "error.value_too_large"
-    )
+  def form: () => Form[Int] = () => Forms.ValueBeingTransferred
 
   private def getCacheMap(implicit hc: HeaderCarrier): Future[CacheMap] = sessionConnector.fetch().map {
     case Some(cacheMap) => cacheMap

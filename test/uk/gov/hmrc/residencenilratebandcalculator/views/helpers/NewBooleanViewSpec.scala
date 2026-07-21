@@ -17,13 +17,13 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views.helpers
 
 import play.api.data.Form
-import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
+import play.twirl.api.Html
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.BooleanForm
 
 trait NewBooleanViewSpec extends NewViewSpec {
 
   def booleanPage(
-      createView: Form[Boolean] => HtmlFormat.Appendable,
+      createView: Form[Boolean] => Html,
       messageKeyPrefix: String,
       expectedFormAction: String,
       emptyForm: Form[Boolean],
@@ -85,7 +85,7 @@ trait NewBooleanViewSpec extends NewViewSpec {
   }
 
   def answeredBooleanPage(
-      createView: (Form[Boolean]) => HtmlFormat.Appendable,
+      createView: (Form[Boolean]) => Html,
       answer: Boolean,
       emptyForm: Form[Boolean],
       useNewValues: Boolean = false

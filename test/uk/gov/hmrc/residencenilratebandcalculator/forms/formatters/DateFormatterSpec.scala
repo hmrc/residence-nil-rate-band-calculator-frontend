@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package forms.formatters
+package uk.gov.hmrc.residencenilratebandcalculator.forms.formatters
 
 import play.api.data.FormError
 import play.api.i18n.{Messages, MessagesApi}
@@ -22,7 +22,6 @@ import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import uk.gov.hmrc.http.SessionKeys
 import uk.gov.hmrc.residencenilratebandcalculator.forms.FormSpec
-import uk.gov.hmrc.residencenilratebandcalculator.forms.formatters.DateFormatter
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

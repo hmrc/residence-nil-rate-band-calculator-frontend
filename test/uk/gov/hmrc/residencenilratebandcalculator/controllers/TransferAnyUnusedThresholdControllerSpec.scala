@@ -17,11 +17,10 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
-import play.api.mvc.DefaultMessagesControllerComponents
-import play.twirl.api.HtmlFormat
+import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
-import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_any_unused_threshold
 
 class TransferAnyUnusedThresholdControllerSpec extends RnrbControllerSpec {
@@ -29,14 +28,11 @@ class TransferAnyUnusedThresholdControllerSpec extends RnrbControllerSpec {
   val messageKey       = "transfer_any_unused_threshold.error.required"
   val messageKeyPrefix = "transfer_any_unused_threshold"
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents =
-    inject[DefaultMessagesControllerComponents]
-
   val transfer_any_unused_threshold: transfer_any_unused_threshold = inject[transfer_any_unused_threshold]
 
   "Transfer Any Unused Threshold Controller" must {
 
-    def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
+    def createView: Option[Map[String, String]] => Html = {
       case None    => transfer_any_unused_threshold(BooleanForm.apply(messageKey))(fakeRequest, messages)
       case Some(v) => transfer_any_unused_threshold(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
     }

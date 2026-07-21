@@ -17,11 +17,10 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
-import play.api.mvc.DefaultMessagesControllerComponents
-import play.twirl.api.HtmlFormat
+import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
-import uk.gov.hmrc.residencenilratebandcalculator.forms.PositivePercentForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.PositivePercentForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_passed_to_direct_descendants
 
 class PercentagePassedToDirectDescendantsControllerSpec extends RnrbControllerSpec {
@@ -31,15 +30,12 @@ class PercentagePassedToDirectDescendantsControllerSpec extends RnrbControllerSp
   val errorKeyOutOfRange = "percentage_passed_to_direct_descendants.error.out_of_range"
   val messageKeyPrefix   = "percentage_passed_to_direct_descendants"
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents =
-    inject[DefaultMessagesControllerComponents]
-
   val percentage_passed_to_direct_descendants: percentage_passed_to_direct_descendants =
     inject[percentage_passed_to_direct_descendants]
 
   "Percentage Passed To Direct Descendants Controller" must {
 
-    def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
+    def createView: Option[Map[String, String]] => Html = {
       case None =>
         percentage_passed_to_direct_descendants(
           PositivePercentForm.apply(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange)

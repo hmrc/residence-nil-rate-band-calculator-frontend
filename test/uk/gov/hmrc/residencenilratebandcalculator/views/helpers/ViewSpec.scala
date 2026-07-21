@@ -21,9 +21,9 @@ import org.jsoup.nodes.Document
 import org.scalatest.Assertion
 import play.api.data.{Form, FormError}
 import play.api.i18n.{Lang, Messages, MessagesApi}
-import play.api.mvc.AnyContentAsEmpty
+import play.api.mvc.{AnyContentAsEmpty, DefaultMessagesControllerComponents}
 import play.api.test.FakeRequest
-import play.twirl.api.{Html, HtmlFormat}
+import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 
@@ -41,6 +41,8 @@ trait ViewSpec extends CommonPlaySpec {
 
   def messagesApi: MessagesApi    = inject[MessagesApi]
   implicit val messages: Messages = messagesApi.preferred(request)
+
+  val messagesControllerComponents: DefaultMessagesControllerComponents = inject[DefaultMessagesControllerComponents]
 
   def asDocument(html: Html): Document = Jsoup.parse(html.toString())
 
@@ -107,7 +109,7 @@ trait ViewSpec extends CommonPlaySpec {
   }
 
   def rnrbPage[A: ClassTag](
-      createView: Form[A] => HtmlFormat.Appendable,
+      createView: Form[A] => Html,
       messageKeyPrefix: String,
       expectedGuidanceKeys: String*
   )(emptyForm: Form[A]): Unit =
@@ -144,7 +146,7 @@ trait ViewSpec extends CommonPlaySpec {
       }
     }
 
-  def pageWithoutBackLink[A: ClassTag](createView: Form[A] => HtmlFormat.Appendable, emptyForm: Form[A]): Unit =
+  def pageWithoutBackLink[A: ClassTag](createView: Form[A] => Html, emptyForm: Form[A]): Unit =
 
     "behave like a page without a back link" when {
       "rendered" must {
@@ -157,7 +159,7 @@ trait ViewSpec extends CommonPlaySpec {
     }
 
   def questionPage[A: ClassTag](
-      createView: Form[A] => HtmlFormat.Appendable,
+      createView: Form[A] => Html,
       messageKeyPrefix: String,
       expectedFormAction: String,
       emptyForm: Form[A]
@@ -182,7 +184,7 @@ trait ViewSpec extends CommonPlaySpec {
     }
 
   def pageContainingPreviousAnswers[A: ClassTag](
-      createView: Form[A] => HtmlFormat.Appendable,
+      createView: Form[A] => Html,
       emptyForm: Form[A]
   ): Unit =
     "behave like a page containing previous answers" when {

@@ -20,7 +20,7 @@ import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
-import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_changed_property
 
 class ValueOfChangedPropertyControllerSpec extends RnrbControllerSpec {

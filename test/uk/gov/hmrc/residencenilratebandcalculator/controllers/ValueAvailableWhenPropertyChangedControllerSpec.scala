@@ -22,14 +22,14 @@ import org.mockito.Mockito.*
 import play.api.data.FormError
 import play.api.http.Status
 import play.api.libs.json.*
-import play.api.mvc.{DefaultMessagesControllerComponents, Result}
+import play.api.mvc.Result
 import play.api.test.Helpers.*
-import play.twirl.api.HtmlFormat
+import play.twirl.api.Html
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.ControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
-import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CacheMap}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_available_when_property_changed
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
@@ -43,9 +43,6 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends ControllerSpec {
   val errorKeyNonNumeric = "error.non_numeric"
   val errorKeyTooLarge   = "error.value_too_large"
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents =
-    inject[DefaultMessagesControllerComponents]
-
   val mockValidatedSession: ValidatedSession = inject[ValidatedSession]
 
   val value_available_when_property_changed: value_available_when_property_changed =
@@ -58,7 +55,7 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends ControllerSpec {
     mockConnector
   }
 
-  def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
+  def createView: Option[Map[String, String]] => Html = {
     case None =>
       value_available_when_property_changed(
         "£100,000",

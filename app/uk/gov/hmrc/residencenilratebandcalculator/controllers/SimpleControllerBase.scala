@@ -20,7 +20,7 @@ import play.api.data.{Form, FormError}
 import play.api.i18n.I18nSupport
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.{Action, AnyContent, Request}
-import play.twirl.api.HtmlFormat
+import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.Navigator
@@ -46,7 +46,7 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
 
   def form: () => Form[A]
 
-  def view(form: Form[A], userAnswers: UserAnswers)(implicit request: Request[?]): HtmlFormat.Appendable
+  def view(form: Form[A], userAnswers: UserAnswers)(implicit request: Request[?]): Html
 
   val navigator: Navigator
 

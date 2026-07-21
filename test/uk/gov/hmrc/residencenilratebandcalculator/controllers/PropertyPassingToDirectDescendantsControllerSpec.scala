@@ -17,18 +17,14 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
-import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
-import uk.gov.hmrc.residencenilratebandcalculator.forms.PropertyPassingToDirectDescendantsForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.PropertyPassingToDirectDescendantsForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_passing_to_direct_descendants
 
 class PropertyPassingToDirectDescendantsControllerSpec extends RnrbControllerSpec {
 
   val messageKeyPrefix = "property_passing_to_direct_descendants"
-
-  val messagesControllerComponents: DefaultMessagesControllerComponents =
-    inject[DefaultMessagesControllerComponents]
 
   val property_passing_to_direct_descendants: property_passing_to_direct_descendants =
     inject[property_passing_to_direct_descendants]

@@ -17,16 +17,12 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.http.Status
-import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 
 class FeedbackSurveyControllerSpec extends RnrbControllerSpec {
 
   val mockValidatedSession: ValidatedSession = inject[ValidatedSession]
-
-  val messagesControllerComponents: DefaultMessagesControllerComponents =
-    inject[DefaultMessagesControllerComponents]
 
   "Feedback Survey controller" must {
     "return 303 for a GET" in {

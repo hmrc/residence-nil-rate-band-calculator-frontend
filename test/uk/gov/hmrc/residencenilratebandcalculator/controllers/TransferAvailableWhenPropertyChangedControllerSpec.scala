@@ -17,11 +17,10 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
-import play.api.mvc.DefaultMessagesControllerComponents
-import play.twirl.api.HtmlFormat
+import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
-import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_available_when_property_changed
 
 class TransferAvailableWhenPropertyChangedControllerSpec extends RnrbControllerSpec {
@@ -29,15 +28,12 @@ class TransferAvailableWhenPropertyChangedControllerSpec extends RnrbControllerS
   val messageKey       = "transfer_available_when_property_changed.error.required"
   val messageKeyPrefix = "transfer_available_when_property_changed"
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents =
-    inject[DefaultMessagesControllerComponents]
-
   val transfer_available_when_property_changed: transfer_available_when_property_changed =
     inject[transfer_available_when_property_changed]
 
   "Transfer Available When Property Changed Controller" must {
 
-    def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
+    def createView: Option[Map[String, String]] => Html = {
       case None    => transfer_available_when_property_changed(BooleanForm.apply(messageKey))(fakeRequest, messages)
       case Some(v) => transfer_available_when_property_changed(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
     }

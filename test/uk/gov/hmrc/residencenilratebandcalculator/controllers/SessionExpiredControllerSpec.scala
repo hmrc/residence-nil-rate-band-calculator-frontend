@@ -16,15 +16,11 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import play.api.mvc.DefaultMessagesControllerComponents
 import play.api.test.Helpers.*
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.session_expired
 
 class SessionExpiredControllerSpec extends RnrbControllerSpec {
-
-  val messagesControllerComponents: DefaultMessagesControllerComponents =
-    inject[DefaultMessagesControllerComponents]
 
   val session_expired: session_expired = inject[session_expired]
 

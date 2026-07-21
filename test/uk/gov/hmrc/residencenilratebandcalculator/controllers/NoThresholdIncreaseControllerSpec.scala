@@ -18,7 +18,6 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.http.Status
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
-import play.api.mvc.DefaultMessagesControllerComponents
 import play.api.test.Helpers.*
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CacheMap, Reason, UserAnswers}
@@ -26,9 +25,6 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_threshold_increa
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 class NoThresholdIncreaseControllerSpec extends RnrbControllerSpec {
-
-  val messagesControllerComponents: DefaultMessagesControllerComponents =
-    inject[DefaultMessagesControllerComponents]
 
   val no_threshold_increase: no_threshold_increase = inject[no_threshold_increase]
 

@@ -17,11 +17,10 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
-import play.api.mvc.DefaultMessagesControllerComponents
-import play.twirl.api.HtmlFormat
+import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
-import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.claim_downsizing_threshold
 
 class ClaimDownsizingThresholdControllerSpec extends RnrbControllerSpec {
@@ -29,13 +28,10 @@ class ClaimDownsizingThresholdControllerSpec extends RnrbControllerSpec {
   val messageKey       = "claim_downsizing_threshold.error.required"
   val messageKeyPrefix = "claim_downsizing_threshold"
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents =
-    inject[DefaultMessagesControllerComponents]
-
   val claim_downsizing_threshold: claim_downsizing_threshold =
     inject[claim_downsizing_threshold]
 
-  def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
+  def createView: Option[Map[String, String]] => Html = {
     case None    => claim_downsizing_threshold(BooleanForm.apply(messageKey))(fakeRequest, messages)
     case Some(v) => claim_downsizing_threshold(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
   }

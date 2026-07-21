@@ -17,29 +17,31 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfAssetsPassingController
+import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.*
-import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.Forms
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.NewIntViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_assets_passing
 
 class ValueOfAssetsPassingViewSpec extends NewIntViewSpec {
 
-  val messageKeyPrefix                                   = "value_of_assets_passing"
-  val value_of_assets_passing: value_of_assets_passing   = inject[value_of_assets_passing]
-  def createView(form: Form[Int]): HtmlFormat.Appendable = value_of_assets_passing(form, None)(request, messages)
+  val messageKeyPrefix                                 = "value_of_assets_passing"
+  val value_of_assets_passing: value_of_assets_passing = inject[value_of_assets_passing]
+  def createView(form: Form[Int]): Html                = value_of_assets_passing(form, None)(request, messages)
+
+  val form: Form[Int] = Forms.ValueOfAssetsPassing
 
   "Value Of Assets Passing View" must {
 
     behave.like(
       rnrbPage[Int](createView, messageKeyPrefix, "guidance1", "guidance3")(
-        inject[ValueOfAssetsPassingController].form()
+        form
       )
     )
 
     behave.like(
-      pageWithoutBackLink[Int](createView, inject[ValueOfAssetsPassingController].form())
+      pageWithoutBackLink[Int](createView, form)
     )
 
     behave.like(
@@ -48,7 +50,7 @@ class ValueOfAssetsPassingViewSpec extends NewIntViewSpec {
         messageKeyPrefix,
         ValueOfAssetsPassingController.onSubmit.url,
         NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage),
-        inject[ValueOfAssetsPassingController].form()
+        form
       )
     )
   }

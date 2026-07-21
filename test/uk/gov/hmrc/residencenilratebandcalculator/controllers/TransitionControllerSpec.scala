@@ -22,7 +22,7 @@ import play.api.http.Status
 import play.api.mvc.{AnyContentAsEmpty, DefaultMessagesControllerComponents, Request}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import play.twirl.api.HtmlFormat
+import play.twirl.api.{Html, HtmlFormat}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
@@ -46,7 +46,7 @@ class TransitionControllerSpec extends ControllerSpec {
     val getReason: GetReason                   = (userAnswers: UserAnswers) => new Reason {}
     override implicit val ec: ExecutionContext = inject[ExecutionContext]
 
-    def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[?]): HtmlFormat.Appendable =
+    def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[?]): Html =
       HtmlFormat.empty
 
   }

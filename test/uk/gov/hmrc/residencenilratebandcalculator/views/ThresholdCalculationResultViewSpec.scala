@@ -17,7 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import org.jsoup.nodes.Document
-import play.twirl.api.HtmlFormat
+import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.ViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.threshold_calculation_result
@@ -28,8 +28,8 @@ class ThresholdCalculationResultViewSpec extends ViewSpec {
 
   val threshold_calculation_result: threshold_calculation_result = inject[threshold_calculation_result]
 
-  val view: HtmlFormat.Appendable = threshold_calculation_result("£10.00")(request, messages)
-  val doc: Document               = asDocument(view)
+  val view: Html    = threshold_calculation_result("£10.00")(request, messages)
+  val doc: Document = asDocument(view)
 
   "Threshold Calculation Result View" when {
     "rendered" must {

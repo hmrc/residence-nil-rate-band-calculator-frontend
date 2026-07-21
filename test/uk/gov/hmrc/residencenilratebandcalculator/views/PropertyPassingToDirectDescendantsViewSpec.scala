@@ -17,10 +17,10 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyPassingToDirectDescendantsController
+import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.*
-import uk.gov.hmrc.residencenilratebandcalculator.forms.PropertyPassingToDirectDescendantsForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.Forms
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.PropertyPassingToDirectDescendantsForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.NewBooleanViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_passing_to_direct_descendants
 
@@ -31,21 +31,23 @@ class PropertyPassingToDirectDescendantsViewSpec extends NewBooleanViewSpec {
   val property_passing_to_direct_descendants: property_passing_to_direct_descendants =
     inject[property_passing_to_direct_descendants]
 
-  def createView(form: Form[String]): HtmlFormat.Appendable =
+  def createView(form: Form[String]): Html =
     property_passing_to_direct_descendants(form)(request, messages)
+
+  val form: Form[String] = Forms.PropertyPassingToDirectDescendants
 
   "Property Passing To Direct Descendants View" must {
 
     behave.like(
       rnrbPage[String](createView, messageKeyPrefix, "guidance1", "guidance2")(
-        inject[PropertyPassingToDirectDescendantsController].form()
+        form
       )
     )
 
     behave.like(
       pageWithoutBackLink[String](
         createView,
-        inject[PropertyPassingToDirectDescendantsController].form()
+        form
       )
     )
 
@@ -54,7 +56,7 @@ class PropertyPassingToDirectDescendantsViewSpec extends NewBooleanViewSpec {
         createView,
         messageKeyPrefix,
         PropertyPassingToDirectDescendantsController.onSubmit.url,
-        inject[PropertyPassingToDirectDescendantsController].form()
+        form
       )
     )
   }

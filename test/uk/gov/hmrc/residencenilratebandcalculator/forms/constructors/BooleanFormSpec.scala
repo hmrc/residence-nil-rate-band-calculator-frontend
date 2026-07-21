@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.forms
+package uk.gov.hmrc.residencenilratebandcalculator.forms.constructors
+
+import uk.gov.hmrc.residencenilratebandcalculator.forms.FormSpec
 
 class BooleanFormSpec extends FormSpec {
 

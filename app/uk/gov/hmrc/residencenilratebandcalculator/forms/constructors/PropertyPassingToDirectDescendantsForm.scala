@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.forms
+package uk.gov.hmrc.residencenilratebandcalculator.forms.constructors
 
 import play.api.data.Form
-import play.api.data.Forms._
+import play.api.data.Forms.*
 import play.api.data.format.Formatter
-import uk.gov.hmrc.residencenilratebandcalculator.forms.FormValidators._
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.FormValidators.*
 
 object PropertyPassingToDirectDescendantsForm extends FormErrorHelper {
 

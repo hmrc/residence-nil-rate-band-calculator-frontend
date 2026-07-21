@@ -20,7 +20,6 @@ import org.mockito.ArgumentMatchers.*
 import org.mockito.Mockito.*
 import play.api.Environment
 import play.api.http.Status
-import play.api.mvc.DefaultMessagesControllerComponents
 import play.api.test.Helpers.*
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.utils.PDFHelperImpl
@@ -31,9 +30,6 @@ class IHT435ControllerSpec extends RnrbControllerSpec {
   private val env = inject[Environment]
 
   private val mockPDFHelper = mock[PDFHelperImpl]
-
-  val messagesControllerComponents: DefaultMessagesControllerComponents =
-    inject[DefaultMessagesControllerComponents]
 
   private def controller = new IHT435Controller(env, messagesControllerComponents, mockSessionConnector, mockPDFHelper)
 

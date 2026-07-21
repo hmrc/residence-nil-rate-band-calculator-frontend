@@ -18,11 +18,10 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.http.Status
 import play.api.libs.json.{Json, Reads, Writes}
-import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
-import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CacheMap, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_assets_passing
@@ -35,8 +34,7 @@ class ValueOfAssetsPassingControllerSpec extends RnrbControllerSpec with CommonP
   val errorKeyTooLarge   = "error.value_too_large"
   val messageKeyPrefix   = "value_of_assets_passing"
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents = inject[DefaultMessagesControllerComponents]
-  val value_of_assets_passing: value_of_assets_passing                  = inject[value_of_assets_passing]
+  val value_of_assets_passing: value_of_assets_passing = inject[value_of_assets_passing]
 
   "Value Of Assets Passing Controller" must {
 

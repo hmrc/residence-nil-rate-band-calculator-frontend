@@ -18,7 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, Request}
-import play.twirl.api.HtmlFormat
+import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
@@ -33,7 +33,7 @@ trait TransitionController extends FrontendController with I18nSupport {
 
   implicit val ec: ExecutionContext
 
-  def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[?]): HtmlFormat.Appendable
+  def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[?]): Html
 
   def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.fetch().map {

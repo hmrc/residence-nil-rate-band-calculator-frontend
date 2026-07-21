@@ -6,7 +6,7 @@ private object AppDependencies {
 
   val bootstrapPlayVersion = "10.7.1"
   val playFrontendHmrcVersion = "13.9.0"
-  val hmrcMongoVersion     = "2.12.0"
+  val hmrcMongoVersion     = "2.13.0"
   val pdfboxVersion = "2.0.28"
   val scalatestVersion = "3.2.20"
   val wiremockVersion = "2.35.0"

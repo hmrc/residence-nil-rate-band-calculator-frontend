@@ -17,14 +17,14 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views.helpers
 
 import play.api.data.Form
-import play.twirl.api.HtmlFormat
+import play.twirl.api.Html
 
 trait IntViewSpec extends ViewSpec {
 
   val number = 123
 
   def intPage(
-      createView: Form[Int] => HtmlFormat.Appendable,
+      createView: Form[Int] => Html,
       messageKeyPrefix: String,
       expectedFormAction: String,
       form: Form[Int],

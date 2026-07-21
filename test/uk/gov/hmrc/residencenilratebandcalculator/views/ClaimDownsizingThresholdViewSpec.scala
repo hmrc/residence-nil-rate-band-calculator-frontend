@@ -17,9 +17,9 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.ClaimDownsizingThresholdController
+import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.*
+import uk.gov.hmrc.residencenilratebandcalculator.forms.Forms
 import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.NewBooleanViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.claim_downsizing_threshold
 
@@ -27,7 +27,9 @@ class ClaimDownsizingThresholdViewSpec extends NewBooleanViewSpec {
 
   val messageKeyPrefix                                       = "claim_downsizing_threshold"
   val claim_downsizing_threshold: claim_downsizing_threshold = inject[claim_downsizing_threshold]
-  def createView(form: Form[Boolean]): HtmlFormat.Appendable = claim_downsizing_threshold(form)(request, messages)
+  def createView(form: Form[Boolean]): Html                  = claim_downsizing_threshold(form)(request, messages)
+
+  val form: Form[Boolean] = Forms.ClaimDownsizingThreshold
 
   "Claim Downsizing Threshold View" must {
 
@@ -39,13 +41,13 @@ class ClaimDownsizingThresholdViewSpec extends NewBooleanViewSpec {
         "guidance1.bullet1",
         "guidance1.bullet2",
         "guidance1.bullet3"
-      )(inject[ClaimDownsizingThresholdController].form())
+      )(form)
     )
 
     behave.like(
       pageWithoutBackLink[Boolean](
         createView,
-        inject[ClaimDownsizingThresholdController].form()
+        form
       )
     )
 
@@ -54,7 +56,7 @@ class ClaimDownsizingThresholdViewSpec extends NewBooleanViewSpec {
         createView,
         messageKeyPrefix,
         ClaimDownsizingThresholdController.onSubmit.url,
-        inject[ClaimDownsizingThresholdController].form(),
+        form,
         true
       )
     )

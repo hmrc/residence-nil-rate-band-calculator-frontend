@@ -17,17 +17,19 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.PropertyValueController
-import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
+import play.twirl.api.Html
+import uk.gov.hmrc.residencenilratebandcalculator.forms.Forms
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.NewIntViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_value
 
 class PropertyValueViewSpec extends NewIntViewSpec {
 
-  val messageKeyPrefix                                   = "property_value"
-  val property_value: property_value                     = inject[property_value]
-  def createView(form: Form[Int]): HtmlFormat.Appendable = property_value(form)(request, messages)
+  val messageKeyPrefix                  = "property_value"
+  val property_value: property_value    = inject[property_value]
+  def createView(form: Form[Int]): Html = property_value(form)(request, messages)
+
+  val form: Form[Int] = Forms.PropertyValue
 
   "Property Value View" must {
 
@@ -41,11 +43,11 @@ class PropertyValueViewSpec extends NewIntViewSpec {
         "guidance3.bullet1",
         "guidance3.bullet2",
         "guidance4"
-      )(inject[PropertyValueController].form())
+      )(form)
     )
 
     behave.like(
-      pageWithoutBackLink[Int](createView, inject[PropertyValueController].form())
+      pageWithoutBackLink[Int](createView, form)
     )
 
     behave.like(
@@ -54,7 +56,7 @@ class PropertyValueViewSpec extends NewIntViewSpec {
         messageKeyPrefix,
         "/calculate-additional-inheritance-tax-threshold/property-value",
         NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage),
-        inject[PropertyValueController].form()
+        form
       )
     )
   }

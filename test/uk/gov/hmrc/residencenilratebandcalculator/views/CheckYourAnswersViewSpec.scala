@@ -17,7 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.mvc.Call
-import play.twirl.api.HtmlFormat
+import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.ThresholdCalculationResultController
 import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.ViewSpec
@@ -31,7 +31,7 @@ class CheckYourAnswersViewSpec extends ViewSpec {
   val answerRows: Seq[AnswerRow] =
     (1 to numberOfRows).map(i => AnswerRow(titleKey = s"title$i", amount = i, url = Call("GET", s"url$i"))(messages))
 
-  def createView(): HtmlFormat.Appendable = check_your_answers(answerRows)(request, messages)
+  def createView(): Html = check_your_answers(answerRows)(request, messages)
 
   "Check Your Answers View" must {
     "display the correct browser title" in {

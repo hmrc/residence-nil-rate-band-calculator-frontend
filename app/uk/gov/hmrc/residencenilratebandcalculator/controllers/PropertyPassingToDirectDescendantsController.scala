@@ -19,9 +19,10 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import javax.inject.{Inject, Singleton}
 import play.api.data.Form
 import play.api.mvc.{DefaultMessagesControllerComponents, Request}
+import play.twirl.api.Html
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.forms.PropertyPassingToDirectDescendantsForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.Forms
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_passing_to_direct_descendants
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
@@ -40,9 +41,9 @@ class PropertyPassingToDirectDescendantsController @Inject() (
 
   override val controllerId: String = Constants.propertyPassingToDirectDescendantsId
 
-  override def form: () => Form[String] = () => PropertyPassingToDirectDescendantsForm()
+  override def form: () => Form[String] = () => Forms.PropertyPassingToDirectDescendants
 
-  override def view(form: Form[String], userAnswers: UserAnswers)(implicit request: Request[?]) =
+  override def view(form: Form[String], userAnswers: UserAnswers)(implicit request: Request[?]): Html =
     propertyPassingToDirectDescendantsView(form)
 
 }

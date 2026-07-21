@@ -17,18 +17,20 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.ValueOfEstateController
+import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.*
-import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.Forms
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.NewIntViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_estate
 
 class ValueOfEstateViewSpec extends NewIntViewSpec {
 
-  val messageKeyPrefix                                   = "value_of_estate"
-  val value_of_estate: value_of_estate                   = inject[value_of_estate]
-  def createView(form: Form[Int]): HtmlFormat.Appendable = value_of_estate(form)(request, messages)
+  val messageKeyPrefix                  = "value_of_estate"
+  val value_of_estate: value_of_estate  = inject[value_of_estate]
+  def createView(form: Form[Int]): Html = value_of_estate(form)(request, messages)
+
+  val form: Form[Int] = Forms.ValueBeingTransferred
 
   "Value of Estate View" must {
 
@@ -44,11 +46,11 @@ class ValueOfEstateViewSpec extends NewIntViewSpec {
         "guidance1.bullet5",
         "guidance1.bullet6",
         "guidance2"
-      )(inject[ValueOfEstateController].form())
+      )(form)
     )
 
     behave.like(
-      pageWithoutBackLink[Int](createView, inject[ValueOfEstateController].form())
+      pageWithoutBackLink[Int](createView, form)
     )
 
     behave.like(
@@ -57,7 +59,7 @@ class ValueOfEstateViewSpec extends NewIntViewSpec {
         messageKeyPrefix,
         ValueOfEstateController.onSubmit.url,
         NonNegativeIntForm(errorMessage, errorMessage, errorMessage, errorMessage),
-        inject[ValueOfEstateController].form()
+        form
       )
     )
   }

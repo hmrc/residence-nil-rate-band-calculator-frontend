@@ -21,7 +21,6 @@ import org.mockito.ArgumentMatchers.*
 import org.mockito.Mockito.*
 import play.api.http.Status
 import play.api.libs.json.*
-import play.api.mvc.DefaultMessagesControllerComponents
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
@@ -58,9 +57,6 @@ class ThresholdCalculationResultControllerSpec extends RnrbControllerSpec {
     expectedDefaultAllowance,
     adjustedAllowance
   )
-
-  val messagesControllerComponents: DefaultMessagesControllerComponents =
-    inject[DefaultMessagesControllerComponents]
 
   val mockValidatedSession: ValidatedSession = inject[ValidatedSession]
 

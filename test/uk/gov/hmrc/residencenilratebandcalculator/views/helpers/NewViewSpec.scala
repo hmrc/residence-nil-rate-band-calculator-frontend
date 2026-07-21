@@ -18,14 +18,14 @@ package uk.gov.hmrc.residencenilratebandcalculator.views.helpers
 
 import play.api.data.Form
 import play.api.i18n.Lang
-import play.twirl.api.HtmlFormat
+import play.twirl.api.Html
 
 import scala.reflect.ClassTag
 
 trait NewViewSpec extends ViewSpec {
 
   override def rnrbPage[A: ClassTag](
-      createView: Form[A] => HtmlFormat.Appendable,
+      createView: Form[A] => Html,
       messageKeyPrefix: String,
       expectedGuidanceKeys: String*
   )(emptyForm: Form[A]): Unit =
@@ -65,7 +65,7 @@ trait NewViewSpec extends ViewSpec {
     }
 
   override def pageWithoutBackLink[A: ClassTag](
-      createView: Form[A] => HtmlFormat.Appendable,
+      createView: Form[A] => Html,
       emptyForm: Form[A]
   ): Unit =
 
@@ -80,7 +80,7 @@ trait NewViewSpec extends ViewSpec {
     }
 
   override def questionPage[A: ClassTag](
-      createView: Form[A] => HtmlFormat.Appendable,
+      createView: Form[A] => Html,
       messageKeyPrefix: String,
       expectedFormAction: String,
       emptyForm: Form[A]

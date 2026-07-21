@@ -19,7 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers
 import play.api.http.Status
 import play.api.libs.json.*
 import play.api.test.Helpers.*
-import play.twirl.api.HtmlFormat
+import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.{ControllerBase, DatePropertyWasChangedController}
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CacheMap, Date}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
@@ -30,7 +30,7 @@ trait DateControllerSpec extends ControllerSpec {
 
   def rnrbDateController(
       createController: () => ControllerBase[Date],
-      createView: Option[Date] => HtmlFormat.Appendable,
+      createView: Option[Date] => Html,
       cacheKey: String,
       date: String = "dateOfDeath"
   )(rds: Reads[Date], wts: Writes[Date]): Unit = {

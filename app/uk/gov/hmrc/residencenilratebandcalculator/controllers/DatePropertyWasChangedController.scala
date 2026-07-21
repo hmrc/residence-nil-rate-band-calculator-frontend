@@ -20,10 +20,11 @@ import javax.inject.{Inject, Singleton}
 import play.api.data.Form
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.{Action, AnyContent, DefaultMessagesControllerComponents, Request}
+import play.twirl.api.Html
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
-import uk.gov.hmrc.residencenilratebandcalculator.forms.DatePropertyWasChangedForm._
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.DatePropertyWasChangedForm.*
 import uk.gov.hmrc.residencenilratebandcalculator.models.{Date, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_property_was_changed
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
@@ -43,7 +44,7 @@ class DatePropertyWasChangedController @Inject() (
 
   val controllerId: String = Constants.datePropertyWasChangedId
 
-  def view(form: Form[Date])(implicit request: Request[?]) =
+  def view(form: Form[Date])(implicit request: Request[?]): Html =
     datePropertyWasChangedView(form)
 
   def onPageLoad(implicit rds: Reads[Date]): Action[AnyContent] = Action.async { implicit request =>

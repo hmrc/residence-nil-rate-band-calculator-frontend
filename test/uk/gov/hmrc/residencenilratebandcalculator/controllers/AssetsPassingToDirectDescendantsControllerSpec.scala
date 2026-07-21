@@ -17,20 +17,16 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
-import play.api.mvc.DefaultMessagesControllerComponents
-import play.twirl.api.HtmlFormat
+import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
-import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.assets_passing_to_direct_descendants
 
 class AssetsPassingToDirectDescendantsControllerSpec extends RnrbControllerSpec {
 
   val messageKey       = "assets_passing_to_direct_descendants.error.required"
   val messageKeyPrefix = "assets_passing_to_direct_descendants"
-
-  val messagesControllerComponents: DefaultMessagesControllerComponents =
-    inject[DefaultMessagesControllerComponents]
 
   val assetsPassingToDirectDescendantsView: assets_passing_to_direct_descendants =
     inject[assets_passing_to_direct_descendants]
@@ -40,7 +36,7 @@ class AssetsPassingToDirectDescendantsControllerSpec extends RnrbControllerSpec 
     val propertyValue          = 123456
     val formattedPropertyValue = Some("£123,456")
 
-    def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
+    def createView: Option[Map[String, String]] => Html = {
       case None =>
         assetsPassingToDirectDescendantsView(BooleanForm(messageKey), formattedPropertyValue)(fakeRequest, messages)
       case Some(v) =>

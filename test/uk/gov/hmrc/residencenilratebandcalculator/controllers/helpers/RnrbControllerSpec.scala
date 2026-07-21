@@ -20,7 +20,7 @@ import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.libs.json.*
 import play.api.test.Helpers.*
-import play.twirl.api.HtmlFormat
+import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.{ControllerBase, SimpleControllerBase}
 import uk.gov.hmrc.residencenilratebandcalculator.models.*
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
@@ -31,7 +31,7 @@ trait RnrbControllerSpec extends ControllerSpec {
 
   def rnrbController[A: ClassTag](
       createController: () => ControllerBase[A],
-      createView: Option[Map[String, String]] => HtmlFormat.Appendable,
+      createView: Option[Map[String, String]] => Html,
       cacheKey: String,
       messageKeyPrefix: String,
       testValue: A,

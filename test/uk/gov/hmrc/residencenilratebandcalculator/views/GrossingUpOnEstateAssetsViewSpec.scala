@@ -17,9 +17,9 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossingUpOnEstateAssetsController
+import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.*
+import uk.gov.hmrc.residencenilratebandcalculator.forms.Forms
 import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.NewBooleanViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_estate_assets
 
@@ -27,20 +27,22 @@ class GrossingUpOnEstateAssetsViewSpec extends NewBooleanViewSpec {
 
   val messageKeyPrefix                                           = "grossing_up_on_estate_assets"
   val grossing_up_on_estate_assets: grossing_up_on_estate_assets = inject[grossing_up_on_estate_assets]
-  def createView(form: Form[Boolean]): HtmlFormat.Appendable     = grossing_up_on_estate_assets(form)(request, messages)
+  def createView(form: Form[Boolean]): Html                      = grossing_up_on_estate_assets(form)(request, messages)
+
+  val form: Form[Boolean] = Forms.GrossingUpOnEstateAssets
 
   "Grossing Up On Estate AssetsView" must {
 
     behave.like(
       rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")(
-        inject[GrossingUpOnEstateAssetsController].form()
+        form
       )
     )
 
     behave.like(
       pageWithoutBackLink[Boolean](
         createView,
-        inject[GrossingUpOnEstateAssetsController].form()
+        form
       )
     )
 
@@ -49,7 +51,7 @@ class GrossingUpOnEstateAssetsViewSpec extends NewBooleanViewSpec {
         createView,
         messageKeyPrefix,
         GrossingUpOnEstateAssetsController.onSubmit.url,
-        inject[GrossingUpOnEstateAssetsController].form(),
+        form,
         true
       )
     )

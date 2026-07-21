@@ -17,9 +17,9 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.TransferAvailableWhenPropertyChangedController
+import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.*
+import uk.gov.hmrc.residencenilratebandcalculator.forms.Forms
 import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.NewBooleanViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_available_when_property_changed
 
@@ -30,21 +30,23 @@ class TransferAvailableWhenPropertyChangedViewSpec extends NewBooleanViewSpec {
   val transfer_available_when_property_changed: transfer_available_when_property_changed =
     inject[transfer_available_when_property_changed]
 
-  def createView(form: Form[Boolean]): HtmlFormat.Appendable =
+  def createView(form: Form[Boolean]): Html =
     transfer_available_when_property_changed(form)(request, messages)
+
+  val form: Form[Boolean] = Forms.TransferAvailableWhenPropertyChanged
 
   "Transfer Available When Property Changed View" must {
 
     behave.like(
       rnrbPage[Boolean](createView, messageKeyPrefix, "guidance")(
-        inject[TransferAvailableWhenPropertyChangedController].form()
+        form
       )
     )
 
     behave.like(
       pageWithoutBackLink[Boolean](
         createView,
-        inject[TransferAvailableWhenPropertyChangedController].form()
+        form
       )
     )
 
@@ -53,7 +55,7 @@ class TransferAvailableWhenPropertyChangedViewSpec extends NewBooleanViewSpec {
         createView,
         messageKeyPrefix,
         TransferAvailableWhenPropertyChangedController.onSubmit.url,
-        inject[TransferAvailableWhenPropertyChangedController].form(),
+        form,
         useNewValues = true
       )
     )

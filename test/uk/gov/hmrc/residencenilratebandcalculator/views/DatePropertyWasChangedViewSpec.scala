@@ -17,9 +17,9 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import play.twirl.api.HtmlFormat
+import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.*
-import uk.gov.hmrc.residencenilratebandcalculator.forms.DatePropertyWasChangedForm.*
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.DatePropertyWasChangedForm.*
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.NewDateViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_property_was_changed
@@ -28,7 +28,7 @@ class DatePropertyWasChangedViewSpec extends NewDateViewSpec {
 
   val messageKeyPrefix                                     = "date_property_was_changed"
   val date_property_was_changed: date_property_was_changed = inject[date_property_was_changed]
-  def createView(form: Form[Date]): HtmlFormat.Appendable  = date_property_was_changed(form)(request, messages)
+  def createView(form: Form[Date]): Html                   = date_property_was_changed(form)(request, messages)
 
   "Date Property Was Changed View" must {
 

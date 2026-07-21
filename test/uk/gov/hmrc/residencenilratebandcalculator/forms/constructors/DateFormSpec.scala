@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.forms
+package uk.gov.hmrc.residencenilratebandcalculator.forms.constructors
 
 import play.api.data.Form
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import uk.gov.hmrc.http.SessionKeys
-import uk.gov.hmrc.residencenilratebandcalculator.forms.DateOfDeathForm.*
-import uk.gov.hmrc.residencenilratebandcalculator.forms.DatePropertyWasChangedForm.*
+import uk.gov.hmrc.residencenilratebandcalculator.forms.FormSpec
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.DateOfDeathForm.*
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.DatePropertyWasChangedForm.*
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 
 import java.time.LocalDate

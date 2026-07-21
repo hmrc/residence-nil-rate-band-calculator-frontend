@@ -18,7 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.http.Status
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
-import play.api.mvc.{AnyContentAsEmpty, DefaultMessagesControllerComponents}
+import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.ControllerSpec
@@ -29,9 +29,6 @@ import uk.gov.hmrc.residencenilratebandcalculator.Constants
 class UnableToCalculateThresholdIncreaseControllerSpec extends ControllerSpec {
 
   override val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
-
-  val messagesControllerComponents: DefaultMessagesControllerComponents =
-    inject[DefaultMessagesControllerComponents]
 
   val unable_to_calculate_threshold_increase: unable_to_calculate_threshold_increase =
     inject[unable_to_calculate_threshold_increase]

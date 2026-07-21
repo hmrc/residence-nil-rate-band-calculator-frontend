@@ -17,7 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers
 
 import play.api.i18n.{Messages, MessagesApi}
-import play.api.mvc.AnyContentAsEmpty
+import play.api.mvc.{AnyContentAsEmpty, DefaultMessagesControllerComponents}
 import play.api.test.FakeRequest
 import uk.gov.hmrc.http.SessionKeys
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
@@ -30,9 +30,12 @@ trait ControllerSpec extends CommonPlaySpec with HttpResponseMocks with MockSess
 
   val navigator: Navigator = inject[Navigator]
 
-  def messagesApi: MessagesApi = inject[MessagesApi]
+  val messagesApi: MessagesApi = inject[MessagesApi]
 
-  def messages: Messages = messagesApi.preferred(fakeRequest)
+  val messages: Messages = messagesApi.preferred(fakeRequest)
+
+  val messagesControllerComponents: DefaultMessagesControllerComponents =
+    inject[DefaultMessagesControllerComponents]
 
   val mockConfig: FrontendAppConfig = inject[FrontendAppConfig]
 

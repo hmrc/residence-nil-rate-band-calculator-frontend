@@ -19,9 +19,10 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import javax.inject.{Inject, Singleton}
 import play.api.data.Form
 import play.api.mvc.{DefaultMessagesControllerComponents, Request}
+import play.twirl.api.Html
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.Forms
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.property_in_estate
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
@@ -40,9 +41,9 @@ class PropertyInEstateController @Inject() (
 
   override val controllerId: String = Constants.propertyInEstateId
 
-  override def form: () => Form[Boolean] = () => BooleanForm("property_in_estate.error.required")
+  override def form: () => Form[Boolean] = () => Forms.PropertyInEstate
 
-  override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[?]) =
+  override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[?]): Html =
     propertyInEstateView(form)
 
 }
