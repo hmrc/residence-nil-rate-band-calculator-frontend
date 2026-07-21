@@ -17,32 +17,35 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.GrossingUpOnEstatePropertyController
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import play.twirl.api.Html
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.*
+import uk.gov.hmrc.residencenilratebandcalculator.forms.Forms
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.NewBooleanViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_estate_property
 
-class GrossingUpOnEstatePropertyViewSpec extends NewBooleanViewSpecBase {
+class GrossingUpOnEstatePropertyViewSpec extends NewBooleanViewSpec {
 
   val messageKeyPrefix = "grossing_up_on_estate_property"
 
   val grossing_up_on_estate_property: grossing_up_on_estate_property =
-    injector.instanceOf[grossing_up_on_estate_property]
+    inject[grossing_up_on_estate_property]
 
-  def createView(form: Form[Boolean]): HtmlFormat.Appendable = grossing_up_on_estate_property(form)(request, messages)
+  def createView(form: Form[Boolean]): Html = grossing_up_on_estate_property(form)(request, messages)
+
+  val form: Form[Boolean] = Forms.GrossingUpOnEstateProperty
 
   "Grossing Up On Estate Property View" must {
 
     behave.like(
       rnrbPage[Boolean](createView, messageKeyPrefix, "guidance1", "guidance2")(
-        fakeApplication().injector.instanceOf[GrossingUpOnEstatePropertyController].form()
+        form
       )
     )
 
     behave.like(
       pageWithoutBackLink[Boolean](
         createView,
-        fakeApplication().injector.instanceOf[GrossingUpOnEstatePropertyController].form()
+        form
       )
     )
 
@@ -51,7 +54,7 @@ class GrossingUpOnEstatePropertyViewSpec extends NewBooleanViewSpecBase {
         createView,
         messageKeyPrefix,
         GrossingUpOnEstatePropertyController.onSubmit.url,
-        fakeApplication().injector.instanceOf[GrossingUpOnEstatePropertyController].form(),
+        form,
         true
       )
     )

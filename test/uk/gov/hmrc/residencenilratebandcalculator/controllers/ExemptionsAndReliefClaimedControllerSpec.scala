@@ -17,25 +17,22 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
-import play.api.mvc.DefaultMessagesControllerComponents
-import play.twirl.api.HtmlFormat
+import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
-import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exemptions_and_relief_claimed
 
-class ExemptionsAndReliefClaimedControllerSpec extends NewSimpleControllerSpecBase {
+class ExemptionsAndReliefClaimedControllerSpec extends RnrbControllerSpec {
 
   val messageKey       = "exemptions_and_relief_claimed.error.required"
   val messageKeyPrefix = "exemptions_and_relief_claimed"
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents =
-    injector.instanceOf[DefaultMessagesControllerComponents]
-
-  val exemptions_and_relief_claimed: exemptions_and_relief_claimed = injector.instanceOf[exemptions_and_relief_claimed]
+  val exemptions_and_relief_claimed: exemptions_and_relief_claimed = inject[exemptions_and_relief_claimed]
 
   "Exemptions And Relief Claimed Controller" must {
 
-    def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
+    def createView: Option[Map[String, String]] => Html = {
       case None    => exemptions_and_relief_claimed(BooleanForm.apply(messageKey))(fakeRequest, messages)
       case Some(v) => exemptions_and_relief_claimed(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
     }

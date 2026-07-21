@@ -17,26 +17,23 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
-import play.api.mvc.DefaultMessagesControllerComponents
-import play.twirl.api.HtmlFormat
+import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
-import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.grossing_up_on_estate_property
 
-class GrossingUpOnEstatePropertyControllerSpec extends NewSimpleControllerSpecBase {
+class GrossingUpOnEstatePropertyControllerSpec extends RnrbControllerSpec {
 
   val messageKey       = "grossing_up_on_estate_property.error.required"
   val messageKeyPrefix = "grossing_up_on_estate_property"
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents =
-    injector.instanceOf[DefaultMessagesControllerComponents]
-
   val grossing_up_on_estate_property: grossing_up_on_estate_property =
-    injector.instanceOf[grossing_up_on_estate_property]
+    inject[grossing_up_on_estate_property]
 
   "Grossing Up On Estate Property Controller" must {
 
-    def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
+    def createView: Option[Map[String, String]] => Html = {
       case None    => grossing_up_on_estate_property(BooleanForm.apply(messageKey))(fakeRequest, messages)
       case Some(v) => grossing_up_on_estate_property(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
     }

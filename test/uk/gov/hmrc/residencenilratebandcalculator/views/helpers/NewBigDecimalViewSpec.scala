@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.views
+package uk.gov.hmrc.residencenilratebandcalculator.views.helpers
 
 import play.api.data.Form
-import play.twirl.api.HtmlFormat
+import play.twirl.api.Html
 
-trait BigDecimalViewSpecBase extends ViewSpecBase {
+trait NewBigDecimalViewSpec extends NewViewSpec {
 
   val number: BigDecimal = BigDecimal(50.01)
 
   def bigDecimalPage(
-      createView: (Form[BigDecimal]) => HtmlFormat.Appendable,
+      createView: (Form[BigDecimal]) => Html,
       messageKeyPrefix: String,
       expectedFormAction: String,
       form: Form[BigDecimal],
@@ -55,12 +55,12 @@ trait BigDecimalViewSpecBase extends ViewSpecBase {
 
           "show an error summary" in {
             val doc = asDocument(createView(form.withError(error)))
-            assertRenderedById(doc, "error-summary-heading")
+            assertRenderedByCssSelector(doc, ".govuk-error-summary")
           }
 
           "show an error in the value field's label" in {
             val doc       = asDocument(createView(form.withError(error)))
-            val errorSpan = doc.getElementsByClass("error-notification").first
+            val errorSpan = doc.getElementsByClass("govuk-list govuk-error-summary__list").first
             errorSpan.text mustBe messages(errorMessage)
           }
         }

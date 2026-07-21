@@ -16,12 +16,13 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.ViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.thank_you
 
-class ThankYouViewSpec extends ViewSpecBase {
+class ThankYouViewSpec extends ViewSpec {
 
   val messageKeyPrefix     = "thank_you"
-  val thank_you: thank_you = injector.instanceOf[thank_you]
+  val thank_you: thank_you = inject[thank_you]
 
   "Thank You view" must {
     "display the correct browser title" in {

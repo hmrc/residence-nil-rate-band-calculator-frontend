@@ -20,12 +20,12 @@ import javax.inject.{Inject, Singleton}
 import play.api.data.Form
 import play.api.libs.json.{Reads, Writes}
 import play.api.mvc.{Action, AnyContent, DefaultMessagesControllerComponents, Request}
-import play.twirl.api.HtmlFormat
+import play.twirl.api.Html
 import uk.gov.hmrc.http.SessionId
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
-import uk.gov.hmrc.residencenilratebandcalculator.forms.DateOfDeathForm._
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.DateOfDeathForm._
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CacheMap, Date, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
@@ -45,7 +45,7 @@ class DateOfDeathController @Inject() (
 
   lazy val controllerId: String = Constants.dateOfDeathId
 
-  def view(form: Form[Date])(implicit request: Request[?]): HtmlFormat.Appendable = dateOfDeathView(form)
+  def view(form: Form[Date])(implicit request: Request[?]): Html = dateOfDeathView(form)
 
   def onPageLoad(implicit rds: Reads[Date]): Action[AnyContent] = Action.async { implicit request =>
     sessionConnector.fetch().map { optionalCacheMap =>

@@ -17,26 +17,20 @@
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
 import org.scalatest.matchers.must.Matchers.must
-import uk.gov.hmrc.play.bootstrap.frontend.http.FrontendErrorHandler
 import play.api.i18n.MessagesApi
-
-import play.api.inject.Injector
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
-import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.MockSessionConnector
+import uk.gov.hmrc.play.bootstrap.frontend.http.FrontendErrorHandler
+import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.MockSessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.error_template
 
-class RnrbErrorHandlerSpec
-    extends CommonPlaySpec
-    with HttpResponseMocks
-    with MockSessionConnector
-    with WithCommonFakeApplication {
+class RnrbErrorHandlerSpec extends CommonPlaySpec with HttpResponseMocks with MockSessionConnector {
+
   implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
-  val injector: Injector                                    = fakeApplication.injector
-  private val messageApi: MessagesApi                       = injector.instanceOf[MessagesApi]
-  private val errorTemplate: error_template                 = injector.instanceOf[error_template]
+  private val messageApi: MessagesApi                       = inject[MessagesApi]
+  private val errorTemplate: error_template                 = inject[error_template]
   private val errorHandler: FrontendErrorHandler            = new RnrbErrorHandler(messageApi, errorTemplate)
 
   "RnrbErrorHandler" must {

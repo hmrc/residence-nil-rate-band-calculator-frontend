@@ -17,17 +17,15 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import org.mockito.ArgumentCaptor
-import org.mockito.ArgumentMatchers._
-import org.mockito.Mockito._
-import org.scalatest.matchers.must.Matchers
-import org.scalatestplus.mockito.MockitoSugar
+import org.mockito.ArgumentMatchers.*
+import org.mockito.Mockito.*
 import play.api.http.Status
-import play.api.libs.json._
-import play.api.mvc.DefaultMessagesControllerComponents
-import play.api.test.Helpers._
+import play.api.libs.json.*
+import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CacheMap, CalculationInput, CalculationResult}
 import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
@@ -37,7 +35,7 @@ import java.time.LocalDate
 import scala.concurrent.Future
 import scala.util.Success
 
-class ThresholdCalculationResultControllerSpec extends NewSimpleControllerSpecBase with MockitoSugar with Matchers {
+class ThresholdCalculationResultControllerSpec extends RnrbControllerSpec {
 
   val testJsNumber: JsNumber = JsNumber(10)
 
@@ -60,15 +58,12 @@ class ThresholdCalculationResultControllerSpec extends NewSimpleControllerSpecBa
     adjustedAllowance
   )
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents =
-    injector.instanceOf[DefaultMessagesControllerComponents]
-
-  val mockValidatedSession: ValidatedSession = injector.instanceOf[ValidatedSession]
+  val mockValidatedSession: ValidatedSession = inject[ValidatedSession]
 
   val expectedCalculationInput: CalculationInput =
     CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, 0, 0, 0, None, None)
 
-  val threshold_calculation_result: threshold_calculation_result = injector.instanceOf[threshold_calculation_result]
+  val threshold_calculation_result: threshold_calculation_result = inject[threshold_calculation_result]
 
   val cacheMap: CacheMap = CacheMap(
     "id",

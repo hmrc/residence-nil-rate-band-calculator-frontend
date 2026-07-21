@@ -16,55 +16,27 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import org.scalatestplus.mockito.MockitoSugar
 import play.api.http.Status
-import play.api.i18n.{Messages, MessagesApi}
-import play.api.inject.Injector
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
-import play.api.mvc.{AnyContentAsEmpty, DefaultMessagesControllerComponents}
-import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
-import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThresholdIncreaseReason.NoAssetsPassingToDirectDescendants
-
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.NoProperty
-
+import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThresholdIncreaseReason.NoAssetsPassingToDirectDescendants
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CacheMap, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.{
   no_additional_threshold_available,
   no_downsizing_threshold_increase
 }
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
-class NoDownsizingThresholdIncreaseControllerSpec
-    extends CommonPlaySpec
-    with HttpResponseMocks
-    with MockSessionConnector
-    with MockitoSugar
-    with WithCommonFakeApplication {
-
-  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
-
-  val injector: Injector = fakeApplication.injector
-
-  val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
-
-  val navigator: Navigator = injector.instanceOf[Navigator]
-
-  val messagesControllerComponents: DefaultMessagesControllerComponents =
-    injector.instanceOf[DefaultMessagesControllerComponents]
-
-  def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
-
-  def messages: Messages = messagesApi.preferred(fakeRequest)
+class NoDownsizingThresholdIncreaseControllerSpec extends RnrbControllerSpec {
 
   val no_downsizing_threshold_increase: no_downsizing_threshold_increase =
-    fakeApplication.injector.instanceOf[no_downsizing_threshold_increase]
+    inject[no_downsizing_threshold_increase]
 
   val no_additional_threshold_available: no_additional_threshold_available =
-    fakeApplication.injector.instanceOf[no_additional_threshold_available]
+    inject[no_additional_threshold_available]
 
   val filledOutCacheMap = new CacheMap(
     "",

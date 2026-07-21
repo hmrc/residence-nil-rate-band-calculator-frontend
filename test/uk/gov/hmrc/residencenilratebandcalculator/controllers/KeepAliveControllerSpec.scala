@@ -19,15 +19,15 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import org.apache.pekko.stream.Materializer
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
-import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 
-class KeepAliveControllerSpec extends CommonPlaySpec with WithCommonFakeApplication {
+class KeepAliveControllerSpec extends RnrbControllerSpec {
 
-  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
+  override val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
 
   "Calling the onPageLoad action" must {
-    lazy val result = fakeApplication.injector.instanceOf[KeepAliveController].onPageLoad(fakeRequest)
-    implicit lazy val mat: Materializer = fakeApplication.injector.instanceOf[Materializer]
+    lazy val result                     = inject[KeepAliveController].onPageLoad(fakeRequest)
+    implicit lazy val mat: Materializer = inject[Materializer]
 
     "return a status of 200" in {
       status(result) mustBe 200

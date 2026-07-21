@@ -17,12 +17,12 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
-import play.api.mvc.DefaultMessagesControllerComponents
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
-import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_estate
 
-class ValueOfEstateControllerSpec extends NewSimpleControllerSpecBase {
+class ValueOfEstateControllerSpec extends RnrbControllerSpec {
 
   val errorKeyBlank      = "value_of_estate.error.blank"
   val errorKeyDecimal    = "error.whole_pounds"
@@ -30,10 +30,7 @@ class ValueOfEstateControllerSpec extends NewSimpleControllerSpecBase {
   val errorKeyTooLarge   = "error.value_too_large"
   val messageKeyPrefix   = "value_of_estate"
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents =
-    injector.instanceOf[DefaultMessagesControllerComponents]
-
-  val value_of_estate: value_of_estate = injector.instanceOf[value_of_estate]
+  val value_of_estate: value_of_estate = inject[value_of_estate]
 
   "Value Of Estate Controller" must {
 

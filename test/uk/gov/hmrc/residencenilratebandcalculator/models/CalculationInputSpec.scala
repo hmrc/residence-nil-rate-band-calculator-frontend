@@ -19,14 +19,13 @@ package uk.gov.hmrc.residencenilratebandcalculator.models
 import org.mockito.Mockito.*
 import org.mockito.stubbing.OngoingStubbing
 import org.scalatest.BeforeAndAfter
-import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.json.Json
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 
 import java.time.LocalDate
 
-class CalculationInputSpec extends CommonPlaySpec with MockitoSugar with BeforeAndAfter {
+class CalculationInputSpec extends CommonPlaySpec with BeforeAndAfter {
 
   val cacheMapKey                         = "a"
   val dateOfDeath: LocalDate              = LocalDate.of(2020, 1, 1)

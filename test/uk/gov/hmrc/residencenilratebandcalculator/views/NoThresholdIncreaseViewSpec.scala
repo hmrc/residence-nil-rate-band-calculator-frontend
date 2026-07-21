@@ -17,16 +17,17 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import org.jsoup.nodes.Document
-import play.twirl.api.HtmlFormat
+import play.twirl.api.Html
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.ViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_threshold_increase
 
 import scala.language.reflectiveCalls
 
-class NoThresholdIncreaseViewSpec extends HtmlSpec {
+class NoThresholdIncreaseViewSpec extends ViewSpec {
 
   val prefix                                       = "no_threshold_increase.direct_descendants"
-  val no_threshold_increase: no_threshold_increase = injector.instanceOf[no_threshold_increase]
-  val view: HtmlFormat.Appendable                  = no_threshold_increase(prefix)(request, messages)
+  val no_threshold_increase: no_threshold_increase = inject[no_threshold_increase]
+  val view: Html                                   = no_threshold_increase(prefix)(request, messages)
   val doc: Document                                = asDocument(view)
 
   "No Threshold Increase View" must {

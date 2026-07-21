@@ -16,16 +16,16 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
-import javax.inject.{Inject, Singleton}
 import play.api.data.{Form, FormError}
 import play.api.mvc.{DefaultMessagesControllerComponents, Request}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.Forms
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.chargeable_property_value
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
 
+import javax.inject.{Inject, Singleton}
 import scala.concurrent.ExecutionContext
 
 @Singleton
@@ -40,13 +40,7 @@ class ChargeablePropertyValueController @Inject() (
 
   override val controllerId: String = Constants.chargeablePropertyValueId
 
-  override def form: () => Form[Int] = () =>
-    NonNegativeIntForm(
-      "chargeable_property_value.error.blank",
-      "error.whole_pounds",
-      "chargeable_property_value.error.non_numeric",
-      "error.value_too_large"
-    )
+  override def form: () => Form[Int] = () => Forms.ChargeablePropertyValue
 
   override def view(form: Form[Int], userAnswers: UserAnswers)(implicit request: Request[?]) =
     chargeablePropertyValueView(form)

@@ -17,20 +17,23 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.PartOfEstatePassingToDirectDescendantsController
+import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
+import uk.gov.hmrc.residencenilratebandcalculator.forms.Forms
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.NewBooleanViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.part_of_estate_passing_to_direct_descendants
 
-class PartOfEstatePassingToDirectDescendantsViewSpec extends NewBooleanViewSpecBase {
+class PartOfEstatePassingToDirectDescendantsViewSpec extends NewBooleanViewSpec {
 
   val messageKeyPrefix = "part_of_estate_passing_to_direct_descendants"
 
   val part_of_estate_passing_to_direct_descendants: part_of_estate_passing_to_direct_descendants =
-    injector.instanceOf[part_of_estate_passing_to_direct_descendants]
+    inject[part_of_estate_passing_to_direct_descendants]
 
-  def createView(form: Form[Boolean]): HtmlFormat.Appendable =
+  def createView(form: Form[Boolean]): Html =
     part_of_estate_passing_to_direct_descendants(form)(request, messages)
+
+  val form: Form[Boolean] = Forms.PartOfEstatePassingToDirectDescendants
 
   "Part Of Estate Passing To Direct Descendants View" must {
 
@@ -51,13 +54,13 @@ class PartOfEstatePassingToDirectDescendantsViewSpec extends NewBooleanViewSpecB
         "guidance3.bullet7",
         "guidance3.bullet8",
         "guidance4"
-      )(fakeApplication().injector.instanceOf[PartOfEstatePassingToDirectDescendantsController].form())
+      )(form)
     )
 
     behave.like(
       pageWithoutBackLink[Boolean](
         createView,
-        fakeApplication().injector.instanceOf[PartOfEstatePassingToDirectDescendantsController].form()
+        form
       )
     )
 
@@ -66,7 +69,7 @@ class PartOfEstatePassingToDirectDescendantsViewSpec extends NewBooleanViewSpecB
         createView,
         messageKeyPrefix,
         routes.PartOfEstatePassingToDirectDescendantsController.onSubmit.url,
-        fakeApplication().injector.instanceOf[PartOfEstatePassingToDirectDescendantsController].form(),
+        form,
         true
       )
     )

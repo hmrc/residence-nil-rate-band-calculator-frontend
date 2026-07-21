@@ -17,18 +17,18 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views.rnrbHelpers
 
 import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
-import uk.gov.hmrc.residencenilratebandcalculator.views.HtmlSpec
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.ViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.playComponents.answer_rows
 
-class AnswerRowsViewSpec extends HtmlSpec {
+class AnswerRowsViewSpec extends ViewSpec {
 
-  val answer_rows: answer_rows = injector.instanceOf[answer_rows]
+  val answer_rows: answer_rows = inject[answer_rows]
 
   "Answer Rows View Spec" when {
     "rendered" must {
 
       "contain four description details when passed a seq containing a single row" in {
-        val row     = AnswerRow("Title", "Data", "http://www.example.com")
+        val row     = AnswerRow("Title", "Data", "https://www.example.com")
         val partial = answer_rows(Seq[AnswerRow](row))(messages)
         val doc     = asDocument(partial)
         assert(doc.select("dd").size() == 4)
@@ -38,8 +38,8 @@ class AnswerRowsViewSpec extends HtmlSpec {
       }
 
       "contains six description details when passed a seq containing 2 rows" in {
-        val row1    = AnswerRow("Title1", "Data1", "http://www.example.com/1")
-        val row2    = AnswerRow("Title2", "Data2", "http://www.example.com/2")
+        val row1    = AnswerRow("Title1", "Data1", "https://www.example.com/1")
+        val row2    = AnswerRow("Title2", "Data2", "https://www.example.com/2")
         val partial = answer_rows(Seq[AnswerRow](row1, row2))(messages)
         val doc     = asDocument(partial)
 
@@ -55,8 +55,8 @@ class AnswerRowsViewSpec extends HtmlSpec {
       }
 
       "display the last item in the Answer Rows collection as the first (non-heading) item in the previous answers" in {
-        val row1    = AnswerRow("Title1", "Data1", "http://www.example.com/1")
-        val row2    = AnswerRow("Title2", "Data2", "http://www.example.com/2")
+        val row1    = AnswerRow("Title1", "Data1", "https://www.example.com/1")
+        val row2    = AnswerRow("Title2", "Data2", "https://www.example.com/2")
         val partial = answer_rows(Seq[AnswerRow](row1, row2))(messages)
         val doc     = asDocument(partial)
         assertEqualsValue(doc, "details div dl div:first-child dt", messages("site.previous_answers"))

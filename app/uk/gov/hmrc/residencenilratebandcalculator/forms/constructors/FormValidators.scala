@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.forms
+package uk.gov.hmrc.residencenilratebandcalculator.forms.constructors
 
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
-import uk.gov.hmrc.residencenilratebandcalculator.utils.Transformers._
+import uk.gov.hmrc.residencenilratebandcalculator.utils.Transformers.*
 
 import scala.util.{Success, Try}
 

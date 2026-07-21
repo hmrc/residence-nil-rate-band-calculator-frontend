@@ -19,9 +19,10 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import javax.inject.Inject
 import play.api.data.Form
 import play.api.mvc.{DefaultMessagesControllerComponents, Request}
+import play.twirl.api.Html
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.forms.PositivePercentForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.Forms
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.percentage_passed_to_direct_descendants
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
@@ -37,16 +38,11 @@ class PercentagePassedToDirectDescendantsController @Inject() (
     extends FrontendController(cc)
     with SimpleControllerBase[BigDecimal] {
 
-  override val controllerId = Constants.percentagePassedToDirectDescendantsId
+  override val controllerId: String = Constants.percentagePassedToDirectDescendantsId
 
-  override def form = () =>
-    PositivePercentForm(
-      "percentage_passed_to_direct_descendants.error.required",
-      "percentage_passed_to_direct_descendants.error.non_numeric",
-      "percentage_passed_to_direct_descendants.error.out_of_range"
-    )
+  override def form: () => Form[BigDecimal] = () => Forms.PercentagePassedToDirectDescendants
 
-  override def view(form: Form[BigDecimal], userAnswers: UserAnswers)(implicit request: Request[?]) =
+  override def view(form: Form[BigDecimal], userAnswers: UserAnswers)(implicit request: Request[?]): Html =
     percentagePassedToDirectDescendantsView(form)
 
 }

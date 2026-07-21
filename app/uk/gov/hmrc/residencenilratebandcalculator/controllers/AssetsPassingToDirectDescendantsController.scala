@@ -21,7 +21,7 @@ import play.api.data.Form
 import play.api.mvc.{DefaultMessagesControllerComponents, Request}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.Forms
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 import uk.gov.hmrc.residencenilratebandcalculator.utils.CurrencyFormatter
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.assets_passing_to_direct_descendants
@@ -41,7 +41,7 @@ class AssetsPassingToDirectDescendantsController @Inject() (
 
   override val controllerId: String = Constants.assetsPassingToDirectDescendantsId
 
-  override def form: () => Form[Boolean] = () => BooleanForm("assets_passing_to_direct_descendants.error.required")
+  override def form: () => Form[Boolean] = () => Forms.AssetsPassingToDirectDescendants
 
   override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[?]) = {
     val formattedPropertyValue = userAnswers.propertyValue match {

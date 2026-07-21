@@ -17,58 +17,35 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import org.jsoup.Jsoup
-import org.mockito.ArgumentMatchers._
-import org.mockito.Mockito._
+import org.mockito.ArgumentMatchers.*
+import org.mockito.Mockito.*
 import play.api.data.FormError
 import play.api.http.Status
-import play.api.i18n.{Messages, MessagesApi}
-import play.api.inject.Injector
-import play.api.libs.json._
-import play.api.mvc.{AnyContentAsEmpty, DefaultMessagesControllerComponents, Result}
-import play.api.test.FakeRequest
-import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, SessionKeys}
-import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
+import play.api.libs.json.*
+import play.api.mvc.Result
+import play.api.test.Helpers.*
+import play.twirl.api.Html
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.ControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
-import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CacheMap, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_being_transferred
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 import scala.concurrent.Future
 
-class ValueBeingTransferredControllerSpec
-    extends CommonPlaySpec
-    with HttpResponseMocks
-    with MockSessionConnector
-    with WithCommonFakeApplication {
+class ValueBeingTransferredControllerSpec extends ControllerSpec {
 
   val errorKeyBlank      = "value_being_transferred.error.blank"
   val errorKeyDecimal    = "error.whole_pounds"
   val errorKeyNonNumeric = "error.non_numeric"
   val errorKeyTooLarge   = "error.value_too_large"
 
-  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "").withSession(SessionKeys.sessionId -> "id")
+  val mockValidatedSession: ValidatedSession = inject[ValidatedSession]
 
-  val injector: Injector = fakeApplication.injector
-
-  val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
-
-  val navigator: Navigator = injector.instanceOf[Navigator]
-
-  def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
-
-  def messages: Messages = messagesApi.preferred(fakeRequest)
-
-  val messagesControllerComponents: DefaultMessagesControllerComponents =
-    injector.instanceOf[DefaultMessagesControllerComponents]
-
-  val mockValidatedSession: ValidatedSession = injector.instanceOf[ValidatedSession]
-
-  val value_being_transferred: value_being_transferred = injector.instanceOf[value_being_transferred]
+  val value_being_transferred: value_being_transferred = inject[value_being_transferred]
 
   def mockRnrbConnector: RnrbConnector = {
     val mockConnector = mock[RnrbConnector]
@@ -77,7 +54,7 @@ class ValueBeingTransferredControllerSpec
     mockConnector
   }
 
-  def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
+  def createView: Option[Map[String, String]] => Html = {
     case None =>
       value_being_transferred(
         "£100,000.00",
@@ -90,7 +67,7 @@ class ValueBeingTransferredControllerSpec
       )(fakeRequest, messages)
   }
 
-  def createViewWithBacklink: Option[Map[String, String]] => HtmlFormat.Appendable = {
+  def createViewWithBacklink: Option[Map[String, String]] => Html = {
     case None =>
       value_being_transferred(
         "£100,000.00",
@@ -223,7 +200,7 @@ class ValueBeingTransferredControllerSpec
       val controllerId        = createController().controllerId
       val calculatedConstants = AnswerRows.truncateAndLocateInCacheMap(controllerId, filledOutCacheMap).data.keys.toList
       val calculatedList      = AnswerRows.rowOrderList.filter(calculatedConstants contains _)
-      calculatedList mustBe (List(
+      calculatedList mustBe List(
         Constants.dateOfDeathId,
         Constants.partOfEstatePassingToDirectDescendantsId,
         Constants.valueOfEstateId,
@@ -233,7 +210,7 @@ class ValueBeingTransferredControllerSpec
         Constants.propertyPassingToDirectDescendantsId,
         Constants.percentagePassedToDirectDescendantsId,
         Constants.transferAnyUnusedThresholdId
-      ))
+      )
       true mustBe true
     }
 

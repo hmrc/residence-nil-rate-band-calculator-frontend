@@ -16,17 +16,13 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import uk.gov.hmrc.residencenilratebandcalculator.models
 import play.api.libs.json.*
-import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.MockSessionConnector
+import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.MockSessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
+import uk.gov.hmrc.residencenilratebandcalculator.models
 
-class CacheMapSpec
-    extends CommonPlaySpec
-    with HttpResponseMocks
-    with MockSessionConnector
-    with WithCommonFakeApplication {
+class CacheMapSpec extends CommonPlaySpec with HttpResponseMocks with MockSessionConnector {
 
   private val model = CacheMap("id1", Map("key1" -> Json.toJson("value1")))
 

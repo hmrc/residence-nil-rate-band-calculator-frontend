@@ -19,9 +19,10 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import javax.inject.{Inject, Singleton}
 import play.api.data.Form
 import play.api.mvc.{DefaultMessagesControllerComponents, Request}
+import play.twirl.api.Html
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.Forms
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_of_estate
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
@@ -38,17 +39,11 @@ class ValueOfEstateController @Inject() (
     extends FrontendController(cc)
     with SimpleControllerBase[Int] {
 
-  override val controllerId = Constants.valueOfEstateId
+  override val controllerId: String = Constants.valueOfEstateId
 
-  override def form = () =>
-    NonNegativeIntForm(
-      "value_of_estate.error.blank",
-      "error.whole_pounds",
-      "value_of_estate.error.non_numeric",
-      "error.value_too_large"
-    )
+  override def form: () => Form[Int] = () => Forms.ValueOfEstate
 
-  override def view(form: Form[Int], userAnswers: UserAnswers)(implicit request: Request[?]) =
+  override def view(form: Form[Int], userAnswers: UserAnswers)(implicit request: Request[?]): Html =
     valueOfEstateView(form)
 
 }

@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.views
+package uk.gov.hmrc.residencenilratebandcalculator.views.helpers
+
+import play.api.data.Form
+import play.twirl.api.Html
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.DateOfDeathForm.*
+import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 
 import java.time.LocalDate
 
-import play.api.data.Form
-import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.residencenilratebandcalculator.forms.DateOfDeathForm._
-import uk.gov.hmrc.residencenilratebandcalculator.models.Date
-
-trait NewDateViewSpecBase extends NewViewSpecBase {
+trait NewDateViewSpec extends NewViewSpec {
 
   val day        = 1
   val month      = 2
@@ -31,7 +31,7 @@ trait NewDateViewSpecBase extends NewViewSpecBase {
   val date: Date = Date(LocalDate.of(year, month, day))
 
   def datePage(
-      createView: (Form[Date]) => HtmlFormat.Appendable,
+      createView: (Form[Date]) => Html,
       messageKeyPrefix: String,
       expectedFormAction: String,
       pageType: String = "dateOfDeath",

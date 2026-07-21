@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.forms
+package uk.gov.hmrc.residencenilratebandcalculator.forms.constructors
 
 import play.api.data.Form
-import play.api.data.Forms._
+import play.api.data.Forms.*
 import play.api.data.format.Formatter
 
 import scala.util.Try

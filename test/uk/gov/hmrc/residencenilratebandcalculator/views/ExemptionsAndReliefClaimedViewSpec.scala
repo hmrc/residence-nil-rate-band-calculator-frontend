@@ -17,20 +17,20 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.ExemptionsAndReliefClaimedController
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import play.twirl.api.Html
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.*
+import uk.gov.hmrc.residencenilratebandcalculator.forms.Forms
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.NewBooleanViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.exemptions_and_relief_claimed
 
-class ExemptionsAndReliefClaimedViewSpec extends NewBooleanViewSpecBase {
+class ExemptionsAndReliefClaimedViewSpec extends NewBooleanViewSpec {
 
   val messageKeyPrefix = "exemptions_and_relief_claimed"
 
-  lazy val injectedController: ExemptionsAndReliefClaimedController =
-    injector.instanceOf[ExemptionsAndReliefClaimedController]
+  val form: Form[Boolean] = Forms.ExemptionsAndReliefClaimed
 
-  val exemptions_and_relief_claimed: exemptions_and_relief_claimed = injector.instanceOf[exemptions_and_relief_claimed]
-  def createView(form: Form[Boolean]): HtmlFormat.Appendable = exemptions_and_relief_claimed(form)(request, messages)
+  val exemptions_and_relief_claimed: exemptions_and_relief_claimed = inject[exemptions_and_relief_claimed]
+  def createView(form: Form[Boolean]): Html = exemptions_and_relief_claimed(form)(request, messages)
 
   "Exemptions And Relief Claimed View" must {
 
@@ -42,17 +42,17 @@ class ExemptionsAndReliefClaimedViewSpec extends NewBooleanViewSpecBase {
         "guidance2.bullet1",
         "guidance2.bullet2",
         "guidance2.bullet3"
-      )(injectedController.form())
+      )(form)
     )
 
-    behave.like(pageWithoutBackLink[Boolean](createView, injectedController.form()))
+    behave.like(pageWithoutBackLink[Boolean](createView, form))
 
     behave.like(
       booleanPage(
         createView,
         messageKeyPrefix,
         ExemptionsAndReliefClaimedController.onSubmit.url,
-        injectedController.form(),
+        form,
         useNewValues = true
       )
     )

@@ -16,15 +16,14 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import org.mockito.Mockito._
-import org.scalatestplus.mockito.MockitoSugar
+import org.mockito.Mockito.*
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoDownsizingThresholdIncreaseReason.{
   DatePropertyWasChangedTooEarly,
   NoAssetsPassingToDirectDescendants
 }
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
 
-class GetNoDownsizingThresholdIncreaseReasonSpec extends BaseSpec with MockitoSugar {
+class GetNoDownsizingThresholdIncreaseReasonSpec extends BaseSpec {
 
   "Get No Downsizing Threshold Increase Reason" must {
     "get the 'no assets passing to a direct descendant' reason when there are no assets passing to direct descendants" in {

@@ -19,5 +19,6 @@ package uk.gov.hmrc.residencenilratebandcalculator
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import play.api.test.Injecting
 
-trait BaseSpec extends PlaySpec with MockitoSugar with GuiceOneAppPerSuite
+trait BaseSpec extends PlaySpec with MockitoSugar with Injecting with GuiceOneAppPerSuite

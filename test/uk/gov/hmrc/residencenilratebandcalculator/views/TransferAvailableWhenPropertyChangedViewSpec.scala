@@ -17,33 +17,36 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import play.api.data.Form
-import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.TransferAvailableWhenPropertyChangedController
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import play.twirl.api.Html
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.*
+import uk.gov.hmrc.residencenilratebandcalculator.forms.Forms
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.NewBooleanViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_available_when_property_changed
 
-class TransferAvailableWhenPropertyChangedViewSpec extends NewBooleanViewSpecBase {
+class TransferAvailableWhenPropertyChangedViewSpec extends NewBooleanViewSpec {
 
   val messageKeyPrefix = "transfer_available_when_property_changed"
 
   val transfer_available_when_property_changed: transfer_available_when_property_changed =
-    injector.instanceOf[transfer_available_when_property_changed]
+    inject[transfer_available_when_property_changed]
 
-  def createView(form: Form[Boolean]): HtmlFormat.Appendable =
+  def createView(form: Form[Boolean]): Html =
     transfer_available_when_property_changed(form)(request, messages)
+
+  val form: Form[Boolean] = Forms.TransferAvailableWhenPropertyChanged
 
   "Transfer Available When Property Changed View" must {
 
     behave.like(
       rnrbPage[Boolean](createView, messageKeyPrefix, "guidance")(
-        fakeApplication().injector.instanceOf[TransferAvailableWhenPropertyChangedController].form()
+        form
       )
     )
 
     behave.like(
       pageWithoutBackLink[Boolean](
         createView,
-        fakeApplication().injector.instanceOf[TransferAvailableWhenPropertyChangedController].form()
+        form
       )
     )
 
@@ -52,7 +55,7 @@ class TransferAvailableWhenPropertyChangedViewSpec extends NewBooleanViewSpecBas
         createView,
         messageKeyPrefix,
         TransferAvailableWhenPropertyChangedController.onSubmit.url,
-        fakeApplication().injector.instanceOf[TransferAvailableWhenPropertyChangedController].form(),
+        form,
         useNewValues = true
       )
     )

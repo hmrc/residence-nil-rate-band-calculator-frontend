@@ -17,26 +17,23 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.libs.json.{Reads, Writes}
-import play.api.mvc.DefaultMessagesControllerComponents
-import play.twirl.api.HtmlFormat
+import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
-import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.BooleanForm
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.part_of_estate_passing_to_direct_descendants
 
-class PartOfEstatePassingToDirectDescendantsControllerSpec extends NewSimpleControllerSpecBase {
+class PartOfEstatePassingToDirectDescendantsControllerSpec extends RnrbControllerSpec {
 
   val messageKey       = "part_of_estate_passing_to_direct_descendants.error.required"
   val messageKeyPrefix = "part_of_estate_passing_to_direct_descendants"
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents =
-    injector.instanceOf[DefaultMessagesControllerComponents]
-
   val part_of_estate_passing_to_direct_descendants: part_of_estate_passing_to_direct_descendants =
-    injector.instanceOf[part_of_estate_passing_to_direct_descendants]
+    inject[part_of_estate_passing_to_direct_descendants]
 
   "Part Of Estate Passing To Direct Descendants Controller" must {
 
-    def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
+    def createView: Option[Map[String, String]] => Html = {
       case None => part_of_estate_passing_to_direct_descendants(BooleanForm.apply(messageKey))(fakeRequest, messages)
       case Some(v) =>
         part_of_estate_passing_to_direct_descendants(BooleanForm(messageKey).bind(v))(fakeRequest, messages)

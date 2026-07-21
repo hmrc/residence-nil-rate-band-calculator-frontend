@@ -27,11 +27,10 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.{BaseSpec, Constants}
 
 class PDFHelperSpec extends BaseSpec {
-  private val injector    = fakeApplication().injector
-  private val injectedEnv = injector.instanceOf[Environment]
+  private val injectedEnv = inject[Environment]
 
   val messagesControllerComponents: DefaultMessagesControllerComponents =
-    injector.instanceOf[DefaultMessagesControllerComponents]
+    inject[DefaultMessagesControllerComponents]
 
   private val cacheMapKey       = "aa"
   private val noDigitsInDate    = 8

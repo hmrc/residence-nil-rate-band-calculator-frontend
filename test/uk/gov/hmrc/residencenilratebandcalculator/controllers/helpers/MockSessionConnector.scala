@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.residencenilratebandcalculator.controllers
+package uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers
 
 import org.mockito.ArgumentCaptor
-import org.mockito.ArgumentMatchers._
-import org.mockito.Mockito._
+import org.mockito.ArgumentMatchers.*
+import org.mockito.Mockito.*
 import org.mockito.stubbing.OngoingStubbing
 import org.scalatest.BeforeAndAfter
-import org.scalatest.matchers.must.Matchers
-import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.json.{JsValue, Reads, Writes}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
@@ -33,7 +31,7 @@ import java.time.LocalDate
 import scala.concurrent.Future
 import scala.reflect.ClassTag
 
-trait MockSessionConnector extends CommonPlaySpec with MockitoSugar with Matchers with BeforeAndAfter {
+trait MockSessionConnector extends CommonPlaySpec with BeforeAndAfter {
 
   var mockSessionConnector: SessionConnector = scala.compiletime.uninitialized
   var mockCacheMap: CacheMap                 = scala.compiletime.uninitialized
@@ -69,9 +67,9 @@ trait MockSessionConnector extends CommonPlaySpec with MockitoSugar with Matcher
   }
 
   def verifyValueIsCached[A: ClassTag](key: String, value: A): Any = {
-    implicit val headnapper   = ArgumentCaptor.forClass(classOf[HeaderCarrier])
-    implicit val writesnapper = ArgumentCaptor.forClass(classOf[Writes[A]])
-    val valueCaptor           = ArgumentCaptor.forClass(value.getClass)
+    implicit val headnapper: ArgumentCaptor[HeaderCarrier] = ArgumentCaptor.forClass(classOf[HeaderCarrier])
+    implicit val writesnapper: ArgumentCaptor[Writes[A]]   = ArgumentCaptor.forClass(classOf[Writes[A]])
+    val valueCaptor                                        = ArgumentCaptor.forClass(value.getClass)
     verify(mockSessionConnector).cache[A](matches(key), valueCaptor.capture)(writesnapper.capture, headnapper.capture)
     valueCaptor.getValue mustBe value
   }

@@ -14,10 +14,7 @@
  * limitations under the License.
  */
 
-package forms.formatters
-
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+package uk.gov.hmrc.residencenilratebandcalculator.forms.formatters
 
 import play.api.data.FormError
 import play.api.i18n.{Messages, MessagesApi}
@@ -25,7 +22,9 @@ import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import uk.gov.hmrc.http.SessionKeys
 import uk.gov.hmrc.residencenilratebandcalculator.forms.FormSpec
-import uk.gov.hmrc.residencenilratebandcalculator.forms.formatters.DateFormatter
+
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class DateFormatterSpec extends FormSpec {
 
@@ -61,8 +60,10 @@ class DateFormatterSpec extends FormSpec {
   val testMinDate: LocalDate = testDate.minusYears(1)
   val testMaxDate: LocalDate = testDate.plusYears(1)
 
-  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "").withSession(SessionKeys.sessionId -> "id")
-  def messages: Messages = fakeApplication().injector.instanceOf[MessagesApi].preferred(fakeRequest)
+  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] =
+    FakeRequest("", "").withSession(SessionKeys.sessionId -> "id")
+
+  def messages: Messages = inject[MessagesApi].preferred(fakeRequest)
 
   val testFormatter: DateFormatter     = DateFormatter(testKey)(messages)
   val dateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy", messages.lang.toLocale)

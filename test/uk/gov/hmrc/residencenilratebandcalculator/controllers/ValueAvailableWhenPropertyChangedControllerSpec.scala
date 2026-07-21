@@ -17,59 +17,36 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import org.jsoup.Jsoup
-import org.mockito.ArgumentMatchers._
-import org.mockito.Mockito._
+import org.mockito.ArgumentMatchers.*
+import org.mockito.Mockito.*
 import play.api.data.FormError
 import play.api.http.Status
-import play.api.i18n.{Messages, MessagesApi}
-import play.api.inject.Injector
-import play.api.libs.json._
-import play.api.mvc.{AnyContentAsEmpty, DefaultMessagesControllerComponents, Result}
-import play.api.test.FakeRequest
-import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, SessionKeys}
-import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
+import play.api.libs.json.*
+import play.api.mvc.Result
+import play.api.test.Helpers.*
+import play.twirl.api.Html
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.RnrbConnector
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.ControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
-import uk.gov.hmrc.residencenilratebandcalculator.forms.NonNegativeIntForm
-import uk.gov.hmrc.residencenilratebandcalculator.mocks.HttpResponseMocks
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.NonNegativeIntForm
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CacheMap}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_available_when_property_changed
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig, Navigator}
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 import scala.concurrent.Future
 
-class ValueAvailableWhenPropertyChangedControllerSpec
-    extends CommonPlaySpec
-    with HttpResponseMocks
-    with MockSessionConnector
-    with WithCommonFakeApplication {
+class ValueAvailableWhenPropertyChangedControllerSpec extends ControllerSpec {
 
   val errorKeyBlank      = "value_available_when_property_changed.error.blank"
   val errorKeyDecimal    = "error.whole_pounds"
   val errorKeyNonNumeric = "error.non_numeric"
   val errorKeyTooLarge   = "error.value_too_large"
 
-  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "").withSession(SessionKeys.sessionId -> "id")
-
-  val injector: Injector = fakeApplication.injector
-
-  val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
-
-  val navigator: Navigator = injector.instanceOf[Navigator]
-
-  def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
-
-  val messagesControllerComponents: DefaultMessagesControllerComponents =
-    injector.instanceOf[DefaultMessagesControllerComponents]
-
-  val mockValidatedSession: ValidatedSession = injector.instanceOf[ValidatedSession]
+  val mockValidatedSession: ValidatedSession = inject[ValidatedSession]
 
   val value_available_when_property_changed: value_available_when_property_changed =
-    injector.instanceOf[value_available_when_property_changed]
-
-  def messages: Messages = messagesApi.preferred(fakeRequest)
+    inject[value_available_when_property_changed]
 
   def mockRnrbConnector: RnrbConnector = {
     val mockConnector = mock[RnrbConnector]
@@ -78,7 +55,7 @@ class ValueAvailableWhenPropertyChangedControllerSpec
     mockConnector
   }
 
-  def createView: Option[Map[String, String]] => HtmlFormat.Appendable = {
+  def createView: Option[Map[String, String]] => Html = {
     case None =>
       value_available_when_property_changed(
         "£100,000",

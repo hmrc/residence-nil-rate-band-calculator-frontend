@@ -17,28 +17,17 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.http.Status
-import play.api.inject.Injector
-import play.api.mvc.{AnyContentAsEmpty, DefaultMessagesControllerComponents}
-import play.api.test.FakeRequest
-import uk.gov.hmrc.http.SessionKeys
-import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
-import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 
-class FeedbackSurveyControllerSpec extends MockSessionConnector with CommonPlaySpec with WithCommonFakeApplication {
+class FeedbackSurveyControllerSpec extends RnrbControllerSpec {
 
-  implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest().withSession(SessionKeys.sessionId -> "id")
-  lazy val injector: Injector                               = fakeApplication.injector
-  implicit lazy val mockConfig: FrontendAppConfig           = injector.instanceOf[FrontendAppConfig]
-  val mockValidatedSession: ValidatedSession                = injector.instanceOf[ValidatedSession]
-
-  val messagesControllerComponents: DefaultMessagesControllerComponents =
-    injector.instanceOf[DefaultMessagesControllerComponents]
+  val mockValidatedSession: ValidatedSession = inject[ValidatedSession]
 
   "Feedback Survey controller" must {
     "return 303 for a GET" in {
       val testController = new FeedbackSurveyController(messagesControllerComponents, mockConfig, mockValidatedSession)
-      val result         = testController.redirectExitSurvey(request)
+      val result         = testController.redirectExitSurvey(fakeRequest)
       status(result) mustBe Status.SEE_OTHER
     }
   }

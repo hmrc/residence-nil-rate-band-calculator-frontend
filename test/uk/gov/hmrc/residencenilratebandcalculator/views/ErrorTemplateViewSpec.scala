@@ -17,13 +17,14 @@
 package uk.gov.hmrc.residencenilratebandcalculator.views
 
 import org.jsoup.nodes.Document
-import play.twirl.api.HtmlFormat
+import play.twirl.api.Html
+import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.ViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.error_template
 
-class ErrorTemplateViewSpec extends HtmlSpec {
+class ErrorTemplateViewSpec extends ViewSpec {
 
-  val error_template: error_template = injector.instanceOf[error_template]
-  val view: HtmlFormat.Appendable    = error_template("title", "heading", "message")(request, messages)
+  val error_template: error_template = inject[error_template]
+  val view: Html                     = error_template("title", "heading", "message")(request, messages)
   val doc: Document                  = asDocument(view)
 
   "Error Template" must {

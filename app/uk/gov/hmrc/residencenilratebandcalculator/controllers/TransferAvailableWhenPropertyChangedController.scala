@@ -21,7 +21,7 @@ import play.api.data.Form
 import play.api.mvc.{DefaultMessagesControllerComponents, Request}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.forms.BooleanForm
+import uk.gov.hmrc.residencenilratebandcalculator.forms.Forms
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.transfer_available_when_property_changed
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
@@ -40,7 +40,7 @@ class TransferAvailableWhenPropertyChangedController @Inject() (
 
   override val controllerId: String = Constants.transferAvailableWhenPropertyChangedId
 
-  override def form: () => Form[Boolean] = () => BooleanForm("transfer_available_when_property_changed.error.required")
+  override def form: () => Form[Boolean] = () => Forms.TransferAvailableWhenPropertyChanged
 
   override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[?]) =
     transferAvailableWhenPropertyChangedView(form)

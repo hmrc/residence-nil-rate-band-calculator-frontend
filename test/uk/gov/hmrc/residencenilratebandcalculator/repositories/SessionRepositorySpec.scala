@@ -19,16 +19,13 @@ package uk.gov.hmrc.residencenilratebandcalculator.repositories
 import play.api.Configuration
 import play.api.libs.json.Json
 import uk.gov.hmrc.mongo.test.DefaultPlayMongoRepositorySupport
-import uk.gov.hmrc.residencenilratebandcalculator.common.{CommonPlaySpec, WithCommonFakeApplication}
+import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 
-class SessionRepositorySpec
-    extends CommonPlaySpec
-    with DefaultPlayMongoRepositorySupport[DatedCacheMap]
-    with WithCommonFakeApplication {
+class SessionRepositorySpec extends CommonPlaySpec with DefaultPlayMongoRepositorySupport[DatedCacheMap] {
 
   val repository: SessionRepository = new SessionRepository(
-    config = fakeApplication.injector.instanceOf[Configuration],
+    config = inject[Configuration],
     mongoComponent = mongoComponent
   )
 

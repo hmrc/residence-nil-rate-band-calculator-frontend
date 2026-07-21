@@ -16,14 +16,14 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator
 
-import java.time.LocalDate
-import org.mockito.Mockito._
-import org.scalatestplus.mockito.MockitoSugar
+import org.mockito.Mockito.*
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 
-class NavigatorSpec extends CommonPlaySpec with MockitoSugar {
+import java.time.LocalDate
+
+class NavigatorSpec extends CommonPlaySpec {
   val navigator = new Navigator
 
   "Navigator" must {

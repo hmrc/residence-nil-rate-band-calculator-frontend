@@ -16,11 +16,12 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
+import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
+
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import org.scalatestplus.play.PlaySpec
 
-class TaxYearSpec extends PlaySpec {
+class TaxYearSpec extends BaseSpec {
 
   val DateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd")
 

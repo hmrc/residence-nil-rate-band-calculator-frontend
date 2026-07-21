@@ -17,27 +17,23 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.http.Status
-import play.api.mvc.DefaultMessagesControllerComponents
-import play.twirl.api.HtmlFormat
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
+import play.twirl.api.Html
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.DateControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
-import uk.gov.hmrc.residencenilratebandcalculator.forms.DatePropertyWasChangedForm.*
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.DatePropertyWasChangedForm.*
 import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_property_was_changed
-import uk.gov.hmrc.residencenilratebandcalculator.{Constants, FrontendAppConfig}
+import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
-class DatePropertyWasChangedControllerSpec extends DateControllerSpecBase {
-  val mockConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
+class DatePropertyWasChangedControllerSpec extends DateControllerSpec {
 
-  val messagesControllerComponents: DefaultMessagesControllerComponents =
-    injector.instanceOf[DefaultMessagesControllerComponents]
-
-  val date_property_was_changed: date_property_was_changed = injector.instanceOf[date_property_was_changed]
-  val mockValidatedSession: ValidatedSession               = injector.instanceOf[ValidatedSession]
+  val date_property_was_changed: date_property_was_changed = inject[date_property_was_changed]
+  val mockValidatedSession: ValidatedSession               = inject[ValidatedSession]
 
   "Date Property Was Changed Controller" must {
 
-    def createView: Option[Date] => HtmlFormat.Appendable = {
+    def createView: Option[Date] => Html = {
       case None    => date_property_was_changed(datePropertyWasChangedForm(messages))(fakeRequest, messages)
       case Some(v) => date_property_was_changed(datePropertyWasChangedForm(messages).fill(v))(fakeRequest, messages)
     }

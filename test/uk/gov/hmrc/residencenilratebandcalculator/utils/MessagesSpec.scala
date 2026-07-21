@@ -16,13 +16,13 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.utils
 
-import org.scalatestplus.play.PlaySpec
 import play.api.i18n.Messages
 import play.api.i18n.Messages.MessageSource
+import uk.gov.hmrc.residencenilratebandcalculator.BaseSpec
 
 import scala.io.Source
 
-class MessagesSpec extends PlaySpec {
+class MessagesSpec extends BaseSpec {
 
   private val MatchSingleQuoteOnly      = """\w+'{1}\w+""".r
   private val MatchBacktickQuoteOnly    = """`+""".r
