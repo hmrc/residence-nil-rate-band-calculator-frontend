@@ -19,20 +19,6 @@ package uk.gov.hmrc.residencenilratebandcalculator
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
-import play.api.Application
-import play.api.inject.bind
-import play.api.inject.guice.{GuiceApplicationBuilder, GuiceableModule}
 import play.api.test.Injecting
-import uk.gov.hmrc.mongo.MongoComponent
-import uk.gov.hmrc.mongo.play.PlayMongoComponent
 
-abstract class BaseSpec extends PlaySpec with MockitoSugar with Injecting with GuiceOneAppPerSuite {
-
-  override implicit lazy val app: Application = new GuiceApplicationBuilder()
-    // PlayMongoModule instantiates this as an eager singleton, which means each spec initiates a mongo connection.
-    // This will ensure that only specs requiring mongo will actually make connections
-    .overrides(bind[MongoComponent].to[PlayMongoComponent])
-    .build()
-
-  override def fakeApplication(): Application = app
-}
+trait BaseSpec extends PlaySpec with MockitoSugar with Injecting with GuiceOneAppPerSuite
