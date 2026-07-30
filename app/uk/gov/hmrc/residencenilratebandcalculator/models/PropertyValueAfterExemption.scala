@@ -16,10 +16,10 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import play.api.libs.json._
-import play.api.libs.json.Writes._
-import play.api.libs.json.Reads._
-import play.api.libs.functional.syntax._
+import play.api.libs.json.*
+import play.api.libs.json.Writes.*
+import play.api.libs.json.Reads.*
+import play.api.libs.functional.syntax.*
 
 case class PropertyValueAfterExemption(value: Int, inheritedValue: Int)
 
@@ -31,7 +31,7 @@ object PropertyValueAfterExemption {
   val propertyValueAfterExemptionWrites: Writes[PropertyValueAfterExemption] =
     (__ \ "value").write[Int].and((__ \ "inheritedValue").write[Int])(o => Tuple.fromProductTyped(o))
 
-  implicit val propertyValueAfterExemptionFormat: Format[PropertyValueAfterExemption] =
+  given propertyValueAfterExemptionFormat: Format[PropertyValueAfterExemption] =
     Format(propertyValueAfterExemptionReads, propertyValueAfterExemptionWrites)
 
 }

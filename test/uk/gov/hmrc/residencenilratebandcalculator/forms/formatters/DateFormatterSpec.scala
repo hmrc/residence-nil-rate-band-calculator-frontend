@@ -65,7 +65,7 @@ class DateFormatterSpec extends FormSpec {
 
   def messages: Messages = inject[MessagesApi].preferred(fakeRequest)
 
-  val testFormatter: DateFormatter     = DateFormatter(testKey)(messages)
+  val testFormatter: DateFormatter     = DateFormatter(testKey)(using messages)
   val dateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy", messages.lang.toLocale)
 
   "testFormatter.bind" when {
@@ -294,7 +294,7 @@ class DateFormatterSpec extends FormSpec {
       }
     }
     "the formatter does not have min and max dates" must {
-      val formatter = DateFormatter(testKey)(messages)
+      val formatter = DateFormatter(testKey)(using messages)
       "return the date when date is valid in the future" in {
         formatter.bind(
           testKey,

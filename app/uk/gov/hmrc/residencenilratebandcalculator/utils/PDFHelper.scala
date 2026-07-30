@@ -105,7 +105,7 @@ trait PDFHelper {
     Constants.thresholdCalculationResultId           -> Seq("IHT435_28")
   )
 
-  private def setupPDFDocument(pdf: PDDocument)(implicit lang: Lang): Unit = {
+  private def setupPDFDocument(pdf: PDDocument)(using lang: Lang): Unit = {
     val pdDocumentInformation: PDDocumentInformation = pdf.getDocumentInformation
     pdDocumentInformation.setTitle(cc.messagesApi("threshold_calculation_result.pdf.title"))
     pdf.setDocumentInformation(pdDocumentInformation)
@@ -171,7 +171,7 @@ trait PDFHelper {
     }
   }
 
-  def generatePDF(cacheMap: CacheMap, generateWelshPDF: Boolean)(implicit lang: Lang): Option[ByteArrayOutputStream] = {
+  def generatePDF(cacheMap: CacheMap, generateWelshPDF: Boolean)(using lang: Lang): Option[ByteArrayOutputStream] = {
     val resourceName = if (generateWelshPDF) {
       "IHT435Cymraeg.pdf"
     } else {

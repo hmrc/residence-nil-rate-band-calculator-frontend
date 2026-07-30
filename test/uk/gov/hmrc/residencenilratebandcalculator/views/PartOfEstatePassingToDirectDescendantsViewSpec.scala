@@ -31,7 +31,7 @@ class PartOfEstatePassingToDirectDescendantsViewSpec extends NewBooleanViewSpec 
     inject[part_of_estate_passing_to_direct_descendants]
 
   def createView(form: Form[Boolean]): Html =
-    part_of_estate_passing_to_direct_descendants(form)(request, messages)
+    part_of_estate_passing_to_direct_descendants(form)
 
   val form: Form[Boolean] = Forms.PartOfEstatePassingToDirectDescendants
 

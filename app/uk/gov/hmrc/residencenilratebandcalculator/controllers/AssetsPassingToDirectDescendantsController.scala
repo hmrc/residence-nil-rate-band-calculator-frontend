@@ -35,7 +35,7 @@ class AssetsPassingToDirectDescendantsController @Inject() (
     override val navigator: Navigator,
     cc: DefaultMessagesControllerComponents,
     assetsPassingToDirectDescendantsView: assets_passing_to_direct_descendants
-)(override implicit val ec: ExecutionContext)
+)(using ExecutionContext)
     extends FrontendController(cc)
     with SimpleControllerBase[Boolean] {
 
@@ -43,7 +43,7 @@ class AssetsPassingToDirectDescendantsController @Inject() (
 
   override def form: () => Form[Boolean] = () => Forms.AssetsPassingToDirectDescendants
 
-  override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[?]) = {
+  override def view(form: Form[Boolean], userAnswers: UserAnswers)(using request: Request[?]) = {
     val formattedPropertyValue = userAnswers.propertyValue match {
       case Some(value) => Some(CurrencyFormatter.format(value))
       case _           => None

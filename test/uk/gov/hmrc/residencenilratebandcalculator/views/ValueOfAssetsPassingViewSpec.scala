@@ -28,7 +28,7 @@ class ValueOfAssetsPassingViewSpec extends NewIntViewSpec {
 
   val messageKeyPrefix                                 = "value_of_assets_passing"
   val value_of_assets_passing: value_of_assets_passing = inject[value_of_assets_passing]
-  def createView(form: Form[Int]): Html                = value_of_assets_passing(form, None)(request, messages)
+  def createView(form: Form[Int]): Html                = value_of_assets_passing(form, None)
 
   val form: Form[Int] = Forms.ValueOfAssetsPassing
 

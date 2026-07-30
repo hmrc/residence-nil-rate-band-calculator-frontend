@@ -27,7 +27,7 @@ class TransferAnyUnusedThresholdViewSpec extends NewBooleanViewSpec {
 
   val messageKeyPrefix                                             = "transfer_any_unused_threshold"
   val transfer_any_unused_threshold: transfer_any_unused_threshold = inject[transfer_any_unused_threshold]
-  def createView(form: Form[Boolean]): Html = transfer_any_unused_threshold(form)(request, messages)
+  def createView(form: Form[Boolean]): Html                        = transfer_any_unused_threshold(form)
 
   val form: Form[Boolean] = Forms.TransferAnyUnusedThreshold
 

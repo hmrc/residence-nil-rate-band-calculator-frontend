@@ -35,7 +35,7 @@ class PropertyPassingToDirectDescendantsController @Inject() (
     override val sessionConnector: SessionConnector,
     override val navigator: Navigator,
     propertyPassingToDirectDescendantsView: property_passing_to_direct_descendants
-)(override implicit val ec: ExecutionContext)
+)(using ExecutionContext)
     extends FrontendController(cc)
     with SimpleControllerBase[String] {
 
@@ -43,7 +43,7 @@ class PropertyPassingToDirectDescendantsController @Inject() (
 
   override def form: () => Form[String] = () => Forms.PropertyPassingToDirectDescendants
 
-  override def view(form: Form[String], userAnswers: UserAnswers)(implicit request: Request[?]): Html =
+  override def view(form: Form[String], userAnswers: UserAnswers)(using request: Request[?]): Html =
     propertyPassingToDirectDescendantsView(form)
 
 }

@@ -34,7 +34,7 @@ class ChargeableInheritedPropertyValueController @Inject() (
     override val sessionConnector: SessionConnector,
     override val navigator: Navigator,
     chargeableInheritedPropertyValueView: chargeable_inherited_property_value
-)(override implicit val ec: ExecutionContext)
+)(using ExecutionContext)
     extends FrontendController(cc)
     with SimpleControllerBase[Int] {
 
@@ -42,7 +42,7 @@ class ChargeableInheritedPropertyValueController @Inject() (
 
   override def form: () => Form[Int] = () => Forms.ChargeableInheritedPropertyValue
 
-  override def view(form: Form[Int], userAnswers: UserAnswers)(implicit request: Request[?]): Html =
+  override def view(form: Form[Int], userAnswers: UserAnswers)(using request: Request[?]): Html =
     chargeableInheritedPropertyValueView(form)
 
   override def validate(value: Int, userAnswers: UserAnswers): Option[FormError] =

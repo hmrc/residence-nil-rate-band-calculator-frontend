@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.http.Status
 import play.api.libs.json.{Reads, Writes}
+import scala.language.implicitConversions
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
@@ -40,11 +41,11 @@ class PropertyValueControllerSpec extends RnrbControllerSpec with CommonPlaySpec
         case None =>
           property_value(
             NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge)
-          )(fakeRequest, messages)
+          )(using fakeRequest, messages)
         case Some(v) =>
           property_value(
             NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v)
-          )(fakeRequest, messages)
+          )(using fakeRequest, messages)
       }
 
     def createController =
@@ -81,7 +82,7 @@ class PropertyValueControllerSpec extends RnrbControllerSpec with CommonPlaySpec
     "return bad request on submit with a value greater than the previously saved Value Of Estate" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString)).withMethod("POST")
       setCacheValue(Constants.valueOfEstateId, testValue - 1)
-      val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
+      val result = createController().onSubmit(using Writes.IntWrites)(fakePostRequest)
       status(result) mustBe Status.BAD_REQUEST
     }
   }

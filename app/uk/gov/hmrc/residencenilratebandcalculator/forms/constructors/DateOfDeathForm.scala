@@ -24,7 +24,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 
 object DateOfDeathForm {
 
-  def dateOfDeathForm(implicit messages: Messages): Form[Date] = Form(
+  def dateOfDeathForm(using messages: Messages): Form[Date] = Form(
     mapping(
       "dateOfDeath" -> of(DateFormatter("dateOfDeath"))
     )(Date.apply)(o => Some(o.date))

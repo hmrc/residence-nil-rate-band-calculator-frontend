@@ -172,9 +172,11 @@ class DateFormSpec extends FormSpec {
   }
 
   "dateOfDeathForm" must
-    behave.like(dateField(dateOfDeathForm(messages), "dateOfDeath", "dateOfDeath"))
+    behave.like(dateField(dateOfDeathForm(using messages), "dateOfDeath", "dateOfDeath"))
 
   "datePropertyWasChanged" must
-    behave.like(dateField(datePropertyWasChangedForm(messages), "datePropertyWasChanged", "datePropertyWasChanged"))
+    behave.like(
+      dateField(datePropertyWasChangedForm(using messages), "datePropertyWasChanged", "datePropertyWasChanged")
+    )
 
 }

@@ -23,6 +23,7 @@ import play.twirl.api.Html
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.{ControllerBase, DatePropertyWasChangedController}
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CacheMap, Date}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import scala.language.implicitConversions
 
 import java.time.LocalDate
 
@@ -36,12 +37,12 @@ trait DateControllerSpec extends ControllerSpec {
   )(rds: Reads[Date], wts: Writes[Date]): Unit = {
 
     "return 200 for a GET" in {
-      val result = createController().onPageLoad(rds)(fakeRequest)
+      val result = createController().onPageLoad(using rds)(fakeRequest)
       status(result) mustBe Status.OK
     }
 
     "return the View for a GET" in {
-      val result = createController().onPageLoad(rds)(fakeRequest)
+      val result = createController().onPageLoad(using rds)(fakeRequest)
       contentAsString(result) mustBe createView(None).toString
     }
 
@@ -53,7 +54,7 @@ trait DateControllerSpec extends ControllerSpec {
         .withFormUrlEncodedBody((s"$date${".day"}", "01"), (s"$date${".month"}", "01"), (s"$date${".year"}", "2018"))
         .withMethod("POST")
       setCacheValue(cacheKey, LocalDate.of(year, month, day))
-      val result = createController().onSubmit(wts)(fakePostRequest)
+      val result = createController().onSubmit(using wts)(fakePostRequest)
       status(result) mustBe Status.SEE_OTHER
     }
 
@@ -63,7 +64,7 @@ trait DateControllerSpec extends ControllerSpec {
         .withFormUrlEncodedBody((s"$date${".day"}", "01"), (s"$date${".month"}", "01"), (s"$date${".year"}", "2018"))
         .withMethod("POST")
       setCacheValue(cacheKey, LocalDate.of(2018, 1, 1))
-      await(createController().onSubmit(wts)(fakePostRequest))
+      await(createController().onSubmit(using wts)(fakePostRequest))
       verifyValueIsCached(cacheKey, value)
     }
 
@@ -72,7 +73,7 @@ trait DateControllerSpec extends ControllerSpec {
       val fakePostRequest = fakeRequest
         .withFormUrlEncodedBody((s"$date${".day"}", value), (s"$date${".month"}", value), (s"$date${".year"}", value))
         .withMethod("POST")
-      val result = createController().onSubmit(wts)(fakePostRequest)
+      val result = createController().onSubmit(using wts)(fakePostRequest)
       status(result) mustBe Status.BAD_REQUEST
     }
 
@@ -81,7 +82,7 @@ trait DateControllerSpec extends ControllerSpec {
       val fakePostRequest = fakeRequest
         .withFormUrlEncodedBody((s"$date${".day"}", value), (s"$date${".month"}", value), (s"$date${".year"}", value))
         .withMethod("POST")
-      val result = createController().onSubmit(wts)(fakePostRequest)
+      val result = createController().onSubmit(using wts)(fakePostRequest)
       contentAsString(result) must include(messages(s"$date.error.invalid"))
     }
 
@@ -89,7 +90,7 @@ trait DateControllerSpec extends ControllerSpec {
       val value = "not a number"
       val fakePostRequest =
         fakeRequest.withFormUrlEncodedBody(("day", value), ("month", value), ("month", value)).withMethod("POST")
-      createController().onSubmit(wts)(fakePostRequest)
+      createController().onSubmit(using wts)(fakePostRequest)
       verifyValueIsNotCached()
     }
 
@@ -99,7 +100,7 @@ trait DateControllerSpec extends ControllerSpec {
       val year  = 2018
       val value = Date(LocalDate.of(year, month, day))
       setCacheValue(cacheKey, value)
-      val result = createController().onPageLoad(rds)(fakeRequest)
+      val result = createController().onPageLoad(using rds)(fakeRequest)
 
       contentAsString(result) mustBe createView(Some(value)).toString
     }
@@ -114,7 +115,7 @@ trait DateControllerSpec extends ControllerSpec {
 
       val rds = Date.dateReads
 
-      val result = createController().onPageLoad(rds)(fakeRequest)
+      val result = createController().onPageLoad(using rds)(fakeRequest)
       status(result) mustBe Status.SEE_OTHER
       redirectLocation(result) mustBe Some(
         uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url

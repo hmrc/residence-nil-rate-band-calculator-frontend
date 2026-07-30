@@ -28,7 +28,7 @@ class ThresholdCalculationResultViewSpec extends ViewSpec {
 
   val threshold_calculation_result: threshold_calculation_result = inject[threshold_calculation_result]
 
-  val view: Html    = threshold_calculation_result("£10.00")(request, messages)
+  val view: Html    = threshold_calculation_result("£10.00")
   val doc: Document = asDocument(view)
 
   "Threshold Calculation Result View" when {
@@ -54,7 +54,7 @@ class ThresholdCalculationResultViewSpec extends ViewSpec {
 
       "display the correct information when there is no Residence Nil Rate Amount" in {
         val residenceNilRateAmount = "£0.00"
-        val view                   = threshold_calculation_result(residenceNilRateAmount)(request, messages)
+        val view                   = threshold_calculation_result(residenceNilRateAmount)
         val doc                    = asDocument(view)
 
         assertContainsMessages(
@@ -68,7 +68,7 @@ class ThresholdCalculationResultViewSpec extends ViewSpec {
 
       "display the correct information when there is a positive Residence Nil Rate Amount" in {
         val residenceNilRateAmount = "£10.00"
-        val view                   = threshold_calculation_result(residenceNilRateAmount)(request, messages)
+        val view                   = threshold_calculation_result(residenceNilRateAmount)
         val doc                    = asDocument(view)
 
         assertContainsMessages(

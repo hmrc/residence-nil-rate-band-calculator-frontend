@@ -32,7 +32,7 @@
     shortAnswer: Boolean = false,
     field: Field,
     suffix: Option[String] = None
-)(implicit messages: Messages)
+)(using messages: Messages)
 
 @hint = @{
     (Seq(hintLine1, hintLine2).flatten.mkString(" ")) match {

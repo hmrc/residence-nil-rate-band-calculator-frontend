@@ -34,10 +34,13 @@ class PropertyPassingToDirectDescendantsControllerSpec extends RnrbControllerSpe
     def createView = (value: Option[Map[String, String]]) =>
       value match {
         case None =>
-          property_passing_to_direct_descendants(PropertyPassingToDirectDescendantsForm.apply())(fakeRequest, messages)
+          property_passing_to_direct_descendants(PropertyPassingToDirectDescendantsForm.apply())(
+            using fakeRequest,
+            messages
+          )
         case Some(v) =>
           property_passing_to_direct_descendants(PropertyPassingToDirectDescendantsForm().bind(v))(
-            fakeRequest,
+            using fakeRequest,
             messages
           )
       }

@@ -35,7 +35,7 @@ class GrossingUpOnEstateAssetsController @Inject() (
     override val sessionConnector: SessionConnector,
     override val navigator: Navigator,
     grossingUpOnEstateAssetsView: grossing_up_on_estate_assets
-)(override implicit val ec: ExecutionContext)
+)(using ExecutionContext)
     extends FrontendController(cc)
     with SimpleControllerBase[Boolean] {
 
@@ -43,7 +43,7 @@ class GrossingUpOnEstateAssetsController @Inject() (
 
   override def form: () => Form[Boolean] = () => Forms.GrossingUpOnEstateAssets
 
-  override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[?]): Html =
+  override def view(form: Form[Boolean], userAnswers: UserAnswers)(using request: Request[?]): Html =
     grossingUpOnEstateAssetsView(form)
 
 }

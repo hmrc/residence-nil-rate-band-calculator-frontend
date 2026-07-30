@@ -31,7 +31,7 @@ class CheckYourAnswersViewSpec extends ViewSpec {
   val answerRows: Seq[AnswerRow] =
     (1 to numberOfRows).map(i => AnswerRow(titleKey = s"title$i", amount = i, url = Call("GET", s"url$i"))(messages))
 
-  def createView(): Html = check_your_answers(answerRows)(request, messages)
+  def createView(): Html = check_your_answers(answerRows)
 
   "Check Your Answers View" must {
     "display the correct browser title" in {

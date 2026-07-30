@@ -17,6 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.test.Helpers.*
+import scala.language.implicitConversions
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.session_expired
 
@@ -35,7 +36,7 @@ class SessionExpiredControllerSpec extends RnrbControllerSpec {
     "return the View for a GET" in {
       val result = new SessionExpiredController(messagesControllerComponents, mockSessionConnector, session_expired)
         .onPageLoad(fakeRequest)
-      contentAsString(result) mustBe session_expired()(fakeRequest, messages).toString
+      contentAsString(result) mustBe session_expired()(using fakeRequest, messages).toString
     }
   }
 

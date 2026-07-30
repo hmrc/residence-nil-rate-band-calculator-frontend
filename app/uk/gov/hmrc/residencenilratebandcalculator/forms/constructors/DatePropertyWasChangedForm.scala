@@ -24,7 +24,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.Date
 
 object DatePropertyWasChangedForm {
 
-  def datePropertyWasChangedForm(implicit messages: Messages): Form[Date] = Form(
+  def datePropertyWasChangedForm(using messages: Messages): Form[Date] = Form(
     mapping(
       "datePropertyWasChanged" -> of(DateFormatter("datePropertyWasChanged"))
     )(Date.apply)(o => Some(o.date))

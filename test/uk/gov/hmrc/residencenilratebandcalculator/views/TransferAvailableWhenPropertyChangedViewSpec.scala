@@ -31,7 +31,7 @@ class TransferAvailableWhenPropertyChangedViewSpec extends NewBooleanViewSpec {
     inject[transfer_available_when_property_changed]
 
   def createView(form: Form[Boolean]): Html =
-    transfer_available_when_property_changed(form)(request, messages)
+    transfer_available_when_property_changed(form)
 
   val form: Form[Boolean] = Forms.TransferAvailableWhenPropertyChanged
 

@@ -63,7 +63,7 @@ class PDFHelperSpec extends BaseSpec {
     )
   )
 
-  implicit val lang: Lang = Lang("en")
+  given lang: Lang = Lang("en")
 
   private def acroForm(
       filledCacheMap: CacheMap = cacheMapAllNonDecimalFields,

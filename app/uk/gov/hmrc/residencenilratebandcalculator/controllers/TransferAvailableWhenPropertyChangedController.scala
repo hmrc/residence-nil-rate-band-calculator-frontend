@@ -34,7 +34,7 @@ class TransferAvailableWhenPropertyChangedController @Inject() (
     override val sessionConnector: SessionConnector,
     override val navigator: Navigator,
     transferAvailableWhenPropertyChangedView: transfer_available_when_property_changed
-)(override implicit val ec: ExecutionContext)
+)(using ExecutionContext)
     extends FrontendController(cc)
     with SimpleControllerBase[Boolean] {
 
@@ -42,7 +42,7 @@ class TransferAvailableWhenPropertyChangedController @Inject() (
 
   override def form: () => Form[Boolean] = () => Forms.TransferAvailableWhenPropertyChanged
 
-  override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[?]) =
+  override def view(form: Form[Boolean], userAnswers: UserAnswers)(using request: Request[?]) =
     transferAvailableWhenPropertyChangedView(form)
 
 }

@@ -21,6 +21,7 @@ import org.mockito.Mockito.*
 import play.api.Environment
 import play.api.http.Status
 import play.api.test.Helpers.*
+import scala.language.implicitConversions
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.utils.PDFHelperImpl
 
@@ -35,13 +36,13 @@ class IHT435ControllerSpec extends RnrbControllerSpec {
 
   "onPageLoad" must {
     "return 200" in {
-      when(mockPDFHelper.generatePDF(any(), any())(any())).thenReturn(Some(new ByteArrayOutputStream()))
+      when(mockPDFHelper.generatePDF(any(), any())(using any())).thenReturn(Some(new ByteArrayOutputStream()))
       val result = controller.onPageLoad(fakeRequest)
       status(result) mustBe Status.OK
     }
 
     "return exception when no resource" in {
-      when(mockPDFHelper.generatePDF(any(), any())(any())).thenReturn(None)
+      when(mockPDFHelper.generatePDF(any(), any())(using any())).thenReturn(None)
       a[RuntimeException] mustBe thrownBy {
         status(controller.onPageLoad(fakeRequest))
       }

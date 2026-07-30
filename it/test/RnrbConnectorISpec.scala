@@ -15,7 +15,7 @@
  */
 
 import com.github.tomakehurst.wiremock.WireMockServer
-import com.github.tomakehurst.wiremock.client.WireMock._
+import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import org.scalatest.matchers.must.Matchers
 import org.scalatest.wordspec.AnyWordSpec
@@ -35,9 +35,9 @@ import scala.util.{Success, Try}
 
 class RnrbConnectorISpec extends AnyWordSpec with Matchers with BeforeAndAfterAll with BeforeAndAfterEach {
 
-  val wireMockPort               = 11111
-  val wireMockServer             = new WireMockServer(WireMockConfiguration.wireMockConfig().port(wireMockPort))
-  implicit val hc: HeaderCarrier = HeaderCarrier()
+  val wireMockPort        = 11111
+  val wireMockServer      = new WireMockServer(WireMockConfiguration.wireMockConfig().port(wireMockPort))
+  given hc: HeaderCarrier = HeaderCarrier()
 
   override def beforeAll(): Unit = wireMockServer.start()
 
@@ -48,8 +48,8 @@ class RnrbConnectorISpec extends AnyWordSpec with Matchers with BeforeAndAfterAl
     "microservice.services.residence-nil-rate-band-calculator.port" -> wireMockPort
   )
 
-  implicit val app: Application = new GuiceApplicationBuilder().configure(testConfig).build()
-  val connector: RnrbConnector  = app.injector.instanceOf[RnrbConnector]
+  given app: Application       = new GuiceApplicationBuilder().configure(testConfig).build()
+  val connector: RnrbConnector = app.injector.instanceOf[RnrbConnector]
 
   val baseUrl = s"/residence-nil-rate-band-calculator"
   val sendUrl = s"$baseUrl/calculate"

@@ -27,14 +27,14 @@ class Heading extends ViewSpec {
     "rendered" must {
 
       "show heading in medium size when it is of default size" in {
-        val headingRow = heading("title")(messages)
+        val headingRow = heading("title")
         val doc        = asDocument(headingRow)
         assertContainsText(doc, "title")
         assert(doc.select("h1").hasClass("govuk-heading-xl"))
       }
 
       "show heading in the given size when it is explicitly provided" in {
-        val headingRow = heading("title", "heading-xlarge")(messages)
+        val headingRow = heading("title", "heading-xlarge")
         val doc        = asDocument(headingRow)
         assertContainsText(doc, "title")
         assert(doc.select("h1").hasClass("govuk-heading-xlarge"))

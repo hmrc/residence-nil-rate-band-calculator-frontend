@@ -30,7 +30,7 @@ class GrossingUpOnEstatePropertyViewSpec extends NewBooleanViewSpec {
   val grossing_up_on_estate_property: grossing_up_on_estate_property =
     inject[grossing_up_on_estate_property]
 
-  def createView(form: Form[Boolean]): Html = grossing_up_on_estate_property(form)(request, messages)
+  def createView(form: Form[Boolean]): Html = grossing_up_on_estate_property(form)
 
   val form: Form[Boolean] = Forms.GrossingUpOnEstateProperty
 

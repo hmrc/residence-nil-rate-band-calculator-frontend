@@ -28,7 +28,7 @@ class DateOfDeathViewSpec extends NewDateViewSpec {
 
   val messageKeyPrefix                   = "date_of_death"
   val date_of_death: date_of_death       = inject[date_of_death]
-  def createView(form: Form[Date]): Html = date_of_death(form)(request, messages)
+  def createView(form: Form[Date]): Html = date_of_death(form)
 
   "Date of Death View" must {
 

@@ -27,7 +27,7 @@ class NoThresholdIncreaseViewSpec extends ViewSpec {
 
   val prefix                                       = "no_threshold_increase.direct_descendants"
   val no_threshold_increase: no_threshold_increase = inject[no_threshold_increase]
-  val view: Html                                   = no_threshold_increase(prefix)(request, messages)
+  val view: Html                                   = no_threshold_increase(prefix)
   val doc: Document                                = asDocument(view)
 
   "No Threshold Increase View" must {

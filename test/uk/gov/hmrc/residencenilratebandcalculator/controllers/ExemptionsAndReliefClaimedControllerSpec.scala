@@ -33,8 +33,8 @@ class ExemptionsAndReliefClaimedControllerSpec extends RnrbControllerSpec {
   "Exemptions And Relief Claimed Controller" must {
 
     def createView: Option[Map[String, String]] => Html = {
-      case None    => exemptions_and_relief_claimed(BooleanForm.apply(messageKey))(fakeRequest, messages)
-      case Some(v) => exemptions_and_relief_claimed(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
+      case None    => exemptions_and_relief_claimed(BooleanForm.apply(messageKey))(using fakeRequest, messages)
+      case Some(v) => exemptions_and_relief_claimed(BooleanForm(messageKey).bind(v))(using fakeRequest, messages)
     }
 
     def createController: () => ExemptionsAndReliefClaimedController = () =>

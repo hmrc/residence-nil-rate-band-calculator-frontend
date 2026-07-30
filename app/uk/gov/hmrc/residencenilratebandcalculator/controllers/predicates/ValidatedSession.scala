@@ -19,7 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates
 import javax.inject.Inject
 import play.api.Logging
 import play.api.i18n.I18nSupport
-import play.api.mvc._
+import play.api.mvc.*
 
 import scala.concurrent.Future
 import uk.gov.hmrc.http.SessionKeys
@@ -33,7 +33,7 @@ class ValidatedSession @Inject() (mcc: MessagesControllerComponents)
   private type AsyncRequest = Request[AnyContent] => Future[Result]
 
   def async(action: AsyncRequest): Action[AnyContent] =
-    Action.async { implicit request =>
+    Action.async { request =>
       if (request.session.get(SessionKeys.sessionId).isEmpty) {
         logger.warn("No session ID found; timing out")
         Future.successful(

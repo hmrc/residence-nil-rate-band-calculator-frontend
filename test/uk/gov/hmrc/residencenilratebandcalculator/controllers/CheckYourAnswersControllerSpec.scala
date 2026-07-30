@@ -19,6 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import play.api.http.Status
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import play.api.test.Helpers.*
+import scala.language.implicitConversions
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRows, CacheMap}
@@ -83,7 +84,10 @@ class CheckYourAnswersControllerSpec extends RnrbControllerSpec {
     "return the Check Your Answers view for a GET" in {
       setCacheMap(filledOutCacheMap)
       val result = controller().onPageLoad(fakeRequest)
-      contentAsString(result) mustBe check_your_answers(AnswerRows(filledOutCacheMap, messages))(fakeRequest, messages)
+      contentAsString(result) mustBe check_your_answers(AnswerRows(filledOutCacheMap, messages))(
+        using fakeRequest,
+        messages
+      )
         .toString()
     }
 

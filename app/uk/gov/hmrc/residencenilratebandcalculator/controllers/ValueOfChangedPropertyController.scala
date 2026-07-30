@@ -35,7 +35,7 @@ class ValueOfChangedPropertyController @Inject() (
     override val sessionConnector: SessionConnector,
     override val navigator: Navigator,
     valueOfChangedPropertyView: value_of_changed_property
-)(override implicit val ec: ExecutionContext)
+)(using ExecutionContext)
     extends FrontendController(cc)
     with SimpleControllerBase[Int] {
 
@@ -43,7 +43,7 @@ class ValueOfChangedPropertyController @Inject() (
 
   override def form: () => Form[Int] = () => Forms.ValueOfChangedProperty
 
-  override def view(form: Form[Int], userAnswers: UserAnswers)(implicit request: Request[?]): Html =
+  override def view(form: Form[Int], userAnswers: UserAnswers)(using request: Request[?]): Html =
     valueOfChangedPropertyView(form)
 
 }

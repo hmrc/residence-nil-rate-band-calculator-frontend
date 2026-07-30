@@ -25,7 +25,7 @@ import uk.gov.hmrc.http.SessionId
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
-import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.DateOfDeathForm._
+import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.DateOfDeathForm.*
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CacheMap, Date, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.date_of_death
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
@@ -39,15 +39,16 @@ class DateOfDeathController @Inject() (
     val navigator: Navigator,
     validatedSession: ValidatedSession,
     dateOfDeathView: date_of_death
-)(implicit ex: ExecutionContext)
+)(using ex: ExecutionContext)
     extends FrontendController(cc)
     with ControllerBase[Date] {
 
   lazy val controllerId: String = Constants.dateOfDeathId
 
-  def view(form: Form[Date])(implicit request: Request[?]): Html = dateOfDeathView(form)
+  def view(form: Form[Date])(using request: Request[?]): Html = dateOfDeathView(form)
 
-  def onPageLoad(implicit rds: Reads[Date]): Action[AnyContent] = Action.async { implicit request =>
+  def onPageLoad(using rds: Reads[Date]): Action[AnyContent] = Action.async { request =>
+    given Request[AnyContent] = request
     sessionConnector.fetch().map { optionalCacheMap =>
       val cacheMap: CacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
       val dateOfDeath        = cacheMap.getEntry[Date](controllerId)
@@ -56,8 +57,9 @@ class DateOfDeathController @Inject() (
     }
   }
 
-  def onSubmit(implicit wts: Writes[Date]): Action[AnyContent] = validatedSession.async { implicit request =>
-    val boundForm = dateOfDeathForm.bindFromRequest()
+  def onSubmit(using wts: Writes[Date]): Action[AnyContent] = validatedSession.async { request =>
+    given Request[AnyContent] = request
+    val boundForm             = dateOfDeathForm.bindFromRequest()
     boundForm.fold(
       (formWithErrors: Form[Date]) => Future.successful(BadRequest(view(formWithErrors))),
       value =>

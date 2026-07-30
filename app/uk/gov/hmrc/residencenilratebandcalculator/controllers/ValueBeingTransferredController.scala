@@ -23,7 +23,7 @@ import play.api.Logging
 import play.api.data.{Form, FormError}
 import play.api.i18n.Messages
 import play.api.libs.json.{Reads, Writes}
-import play.api.mvc.{Action, AnyContent, DefaultMessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, DefaultMessagesControllerComponents, Request}
 import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
@@ -46,7 +46,7 @@ class ValueBeingTransferredController @Inject() (
     val rnrbConnector: RnrbConnector,
     validatedSession: ValidatedSession,
     valueBeingTransferredView: value_being_transferred
-)(implicit ec: ExecutionContext)
+)(using ec: ExecutionContext)
     extends FrontendController(cc)
     with Logging {
 
@@ -54,12 +54,12 @@ class ValueBeingTransferredController @Inject() (
 
   def form: () => Form[Int] = () => Forms.ValueBeingTransferred
 
-  private def getCacheMap(implicit hc: HeaderCarrier): Future[CacheMap] = sessionConnector.fetch().map {
+  private def getCacheMap(using hc: HeaderCarrier): Future[CacheMap] = sessionConnector.fetch().map {
     case Some(cacheMap) => cacheMap
     case None           => throw new NoCacheMapException("CacheMap not available")
   }
 
-  def microserviceValues(implicit hc: HeaderCarrier): Future[(HttpResponse, CacheMap)] = for {
+  def microserviceValues(using hc: HeaderCarrier): Future[(HttpResponse, CacheMap)] = for {
     dateOfDeath      <- getCacheMap.map(_.data(Constants.dateOfDeathId).toString().replaceAll("\"", ""))
     nilRateValueJson <- rnrbConnector.getNilRateBand(dateOfDeath)
     cacheMap         <- getCacheMap
@@ -70,12 +70,13 @@ class ValueBeingTransferredController @Inject() (
     NumberFormat.getCurrencyInstance(Locale.UK).format(number)
   }
 
-  def onPageLoad(implicit rds: Reads[Int]): Action[AnyContent] = Action.async { implicit request =>
+  def onPageLoad(using rds: Reads[Int]): Action[AnyContent] = Action.async { request =>
+    given Request[AnyContent] = request
     microserviceValues
       .map { case (nilRateValueJson, cacheMap) =>
 
-        val nilRateBand                 = formatJsonNumber(nilRateValueJson.json.toString())
-        implicit val messages: Messages = messagesApi.preferred(request)
+        val nilRateBand          = formatJsonNumber(nilRateValueJson.json.toString())
+        given messages: Messages = messagesApi.preferred(request)
         Ok(
           valueBeingTransferredView(
             nilRateBand,
@@ -92,14 +93,15 @@ class ValueBeingTransferredController @Inject() (
       }
   }
 
-  def onSubmit(implicit wts: Writes[Int]): Action[AnyContent] = validatedSession.async { implicit request =>
+  def onSubmit(using wts: Writes[Int]): Action[AnyContent] = validatedSession.async { request =>
+    given Request[AnyContent] = request
     microserviceValues
       .flatMap { case (nilRateValueJson, cacheMap) =>
-        val boundForm                   = form().bindFromRequest()
-        val nilRateBand                 = nilRateValueJson.json.toString()
-        val formattedNilRateBand        = formatJsonNumber(nilRateBand)
-        val userAnswers                 = new UserAnswers(cacheMap)
-        implicit val messages: Messages = messagesApi.preferred(request)
+        val boundForm            = form().bindFromRequest()
+        val nilRateBand          = nilRateValueJson.json.toString()
+        val formattedNilRateBand = formatJsonNumber(nilRateBand)
+        val userAnswers          = new UserAnswers(cacheMap)
+        given messages: Messages = messagesApi.preferred(request)
         boundForm.fold(
           formWithErrors =>
             Future.successful(BadRequest(valueBeingTransferredView(formattedNilRateBand, formWithErrors))),

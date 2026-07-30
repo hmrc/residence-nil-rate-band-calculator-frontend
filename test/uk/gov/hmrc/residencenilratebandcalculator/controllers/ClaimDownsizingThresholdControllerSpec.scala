@@ -32,8 +32,8 @@ class ClaimDownsizingThresholdControllerSpec extends RnrbControllerSpec {
     inject[claim_downsizing_threshold]
 
   def createView: Option[Map[String, String]] => Html = {
-    case None    => claim_downsizing_threshold(BooleanForm.apply(messageKey))(fakeRequest, messages)
-    case Some(v) => claim_downsizing_threshold(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
+    case None    => claim_downsizing_threshold(BooleanForm.apply(messageKey))(using fakeRequest, messages)
+    case Some(v) => claim_downsizing_threshold(BooleanForm(messageKey).bind(v))(using fakeRequest, messages)
   }
 
   def createController: () => ClaimDownsizingThresholdController = () =>

@@ -27,7 +27,7 @@ class PropertyInEstateViewSpec extends NewBooleanViewSpec {
 
   val messageKeyPrefix                       = "property_in_estate"
   val property_in_estate: property_in_estate = inject[property_in_estate]
-  def createView(form: Form[Boolean]): Html  = property_in_estate(form)(request, messages)
+  def createView(form: Form[Boolean]): Html  = property_in_estate(form)
 
   val form: Form[Boolean] = Forms.PropertyInEstate
 

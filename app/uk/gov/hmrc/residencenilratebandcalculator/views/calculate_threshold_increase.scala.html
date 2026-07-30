@@ -15,15 +15,14 @@
  *@
 
 @import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes
-@import uk.gov.hmrc.govukfrontend.views.html.components._
-
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @this(
     layout: Layout,
     heading: playComponents.heading,
     govukButton : GovukButton
 )
 
-@()(implicit request: Request[?], messages: Messages)
+@()(using request: Request[?], messages: Messages)
 
 @layout(
     pageTitle = messages("calculate_threshold_increase.title"),

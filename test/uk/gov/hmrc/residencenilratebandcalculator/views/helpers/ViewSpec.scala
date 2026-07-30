@@ -35,12 +35,12 @@ trait ViewSpec extends CommonPlaySpec {
   val errorMessage     = "error.number"
   val error: FormError = FormError(errorKey, errorMessage)
 
-  implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
+  given request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
 
-  implicit val mockConfig: FrontendAppConfig = inject[FrontendAppConfig]
+  given mockConfig: FrontendAppConfig = inject[FrontendAppConfig]
 
-  def messagesApi: MessagesApi    = inject[MessagesApi]
-  implicit val messages: Messages = messagesApi.preferred(request)
+  def messagesApi: MessagesApi = inject[MessagesApi]
+  given messages: Messages     = messagesApi.preferred(request)
 
   val messagesControllerComponents: DefaultMessagesControllerComponents = inject[DefaultMessagesControllerComponents]
 
@@ -116,7 +116,7 @@ trait ViewSpec extends CommonPlaySpec {
     "behave like a standard RNRB page" when {
       "rendered" must {
         "have the correct banner title" in {
-          implicit val lang: Lang = Lang("en")
+          given lang: Lang = Lang("en")
 
           val doc  = asDocument(createView(emptyForm))
           val nav  = doc.getElementById("proposition-menu")

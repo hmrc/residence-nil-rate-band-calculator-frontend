@@ -22,7 +22,7 @@ import play.twirl.api.Html
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoThresholdIncreaseReason.{DateOfDeath, DirectDescendant}
-import uk.gov.hmrc.residencenilratebandcalculator.models._
+import uk.gov.hmrc.residencenilratebandcalculator.models.*
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_threshold_increase
 
 import scala.concurrent.ExecutionContext
@@ -32,13 +32,13 @@ class NoThresholdIncreaseController @Inject() (
     cc: DefaultMessagesControllerComponents,
     override val sessionConnector: SessionConnector,
     noThresholdIncreaseView: no_threshold_increase
-)(override implicit val ec: ExecutionContext)
+)(using ExecutionContext)
     extends FrontendController(cc)
     with TransitionController {
 
   val getReason: GetReason = GetNoThresholdIncreaseReason
 
-  def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[?]): Html = {
+  def createView(reason: Reason, userAnswers: UserAnswers)(using request: Request[?]): Html = {
     val prefix = reason match {
       case DateOfDeath      => "no_threshold_increase.date_of_death"
       case DirectDescendant => "no_threshold_increase.direct_descendant"

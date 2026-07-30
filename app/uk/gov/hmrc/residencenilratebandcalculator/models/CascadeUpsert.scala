@@ -19,7 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.models
 import javax.inject.Singleton
 import java.time.LocalDate
 import play.api.Logging
-import play.api.libs.json._
+import play.api.libs.json.*
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 import scala.util.{Failure, Success, Try}
@@ -27,7 +27,7 @@ import scala.util.{Failure, Success, Try}
 @Singleton
 class CascadeUpsert extends Logging {
 
-  def apply[A](key: String, value: A, originalCacheMap: CacheMap)(implicit wts: Writes[A]): CacheMap =
+  def apply[A](key: String, value: A, originalCacheMap: CacheMap)(using wts: Writes[A]): CacheMap =
     funcMap.get(key).fold(store(key, value, originalCacheMap))(fn => fn(Json.toJson(value), originalCacheMap))
 
   val funcMap: Map[String, (JsValue, CacheMap) => CacheMap] =
@@ -42,11 +42,11 @@ class CascadeUpsert extends Logging {
       Constants.datePropertyWasChangedId               -> ((v, cm) => datePropertyWasChanged(v, cm))
     )
 
-  private def store[A](key: String, value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]) =
+  private def store[A](key: String, value: A, cacheMap: CacheMap)(using wrts: Writes[A]) =
     cacheMap.copy(data = cacheMap.data + (key -> Json.toJson(value)))
 
   private def clearIfFalse[A](key: String, value: A, keysToRemove: Set[String], cacheMap: CacheMap)(
-      implicit wrts: Writes[A]
+      using wrts: Writes[A]
   ): CacheMap = {
     val mapToStore = value match {
       case JsBoolean(false) => cacheMap.copy(data = cacheMap.data.view.filterKeys(s => !keysToRemove.contains(s)).toMap)
@@ -55,7 +55,7 @@ class CascadeUpsert extends Logging {
     store(key, value, mapToStore)
   }
 
-  private def propertyInEstate[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+  private def propertyInEstate[A](value: A, cacheMap: CacheMap)(using wrts: Writes[A]): CacheMap =
     clearIfFalse(
       Constants.propertyInEstateId,
       value,
@@ -73,7 +73,7 @@ class CascadeUpsert extends Logging {
   private def propertyPassingToDirectDescendants[A](
       value: A,
       cacheMap: CacheMap
-  )(implicit wrts: Writes[A]): CacheMap = {
+  )(using wrts: Writes[A]): CacheMap = {
     val keysToRemoveWhenNone = Set(
       Constants.percentagePassedToDirectDescendantsId,
       Constants.exemptionsAndReliefClaimedId,
@@ -91,7 +91,7 @@ class CascadeUpsert extends Logging {
     store(Constants.propertyPassingToDirectDescendantsId, value, mapToStore)
   }
 
-  private def exemptionsAndReliefClaimedClearance[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+  private def exemptionsAndReliefClaimedClearance[A](value: A, cacheMap: CacheMap)(using wrts: Writes[A]): CacheMap =
     clearIfFalse(
       Constants.exemptionsAndReliefClaimedId,
       value,
@@ -103,7 +103,7 @@ class CascadeUpsert extends Logging {
       cacheMap
     )
 
-  private def transferAnyUnusedThreshold[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+  private def transferAnyUnusedThreshold[A](value: A, cacheMap: CacheMap)(using wrts: Writes[A]): CacheMap =
     clearIfFalse(
       Constants.transferAnyUnusedThresholdId,
       value,
@@ -115,7 +115,7 @@ class CascadeUpsert extends Logging {
       cacheMap
     )
 
-  private def claimDownsizingThreshold[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+  private def claimDownsizingThreshold[A](value: A, cacheMap: CacheMap)(using wrts: Writes[A]): CacheMap =
     clearIfFalse(
       Constants.claimDownsizingThresholdId,
       value,
@@ -131,7 +131,7 @@ class CascadeUpsert extends Logging {
       cacheMap
     )
 
-  private def assetsPassingToDirectDescendants[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap =
+  private def assetsPassingToDirectDescendants[A](value: A, cacheMap: CacheMap)(using wrts: Writes[A]): CacheMap =
     clearIfFalse(
       Constants.assetsPassingToDirectDescendantsId,
       value,
@@ -145,7 +145,7 @@ class CascadeUpsert extends Logging {
     )
 
   private def transferAvailableWhenPropertyChanged[A](value: A, cacheMap: CacheMap)(
-      implicit wrts: Writes[A]
+      using wrts: Writes[A]
   ): CacheMap =
     clearIfFalse(
       Constants.transferAvailableWhenPropertyChangedId,
@@ -154,7 +154,7 @@ class CascadeUpsert extends Logging {
       cacheMap
     )
 
-  private def datePropertyWasChanged[A](value: A, cacheMap: CacheMap)(implicit wrts: Writes[A]): CacheMap = {
+  private def datePropertyWasChanged[A](value: A, cacheMap: CacheMap)(using wrts: Writes[A]): CacheMap = {
     val keysToRemoveWhenDateBeforeDownsizingDate = Set(
       Constants.valueOfChangedPropertyId,
       Constants.assetsPassingToDirectDescendantsId,

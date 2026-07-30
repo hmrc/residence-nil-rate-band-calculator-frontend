@@ -33,8 +33,8 @@ class GrossingUpOnEstateAssetsControllerSpec extends RnrbControllerSpec {
   "Grossing Up On Estate Assets Controller" must {
 
     def createView: Option[Map[String, String]] => Html = {
-      case None    => grossing_up_on_estate_assets(BooleanForm.apply(messageKey))(fakeRequest, messages)
-      case Some(v) => grossing_up_on_estate_assets(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
+      case None    => grossing_up_on_estate_assets(BooleanForm.apply(messageKey))(using fakeRequest, messages)
+      case Some(v) => grossing_up_on_estate_assets(BooleanForm(messageKey).bind(v))(using fakeRequest, messages)
     }
 
     def createController: () => GrossingUpOnEstateAssetsController = () =>

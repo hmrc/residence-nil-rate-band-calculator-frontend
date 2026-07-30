@@ -21,7 +21,7 @@
     href: String,
     classes: String = "",
     attributes: Map[String, String] = Map.empty
-)(implicit messages: Messages)
+)(using messages: Messages)
 
 @govukButton(Button(
     content = Text(messages(messageKey)),

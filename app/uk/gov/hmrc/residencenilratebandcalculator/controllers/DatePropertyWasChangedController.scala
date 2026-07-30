@@ -38,16 +38,17 @@ class DatePropertyWasChangedController @Inject() (
     val navigator: Navigator,
     validatedSession: ValidatedSession,
     datePropertyWasChangedView: date_property_was_changed
-)(implicit val ec: ExecutionContext)
+)(using ec: ExecutionContext)
     extends FrontendController(cc)
     with ControllerBase[Date] {
 
   val controllerId: String = Constants.datePropertyWasChangedId
 
-  def view(form: Form[Date])(implicit request: Request[?]): Html =
+  def view(form: Form[Date])(using request: Request[?]): Html =
     datePropertyWasChangedView(form)
 
-  def onPageLoad(implicit rds: Reads[Date]): Action[AnyContent] = Action.async { implicit request =>
+  def onPageLoad(using rds: Reads[Date]): Action[AnyContent] = Action.async { request =>
+    given Request[AnyContent] = request
     sessionConnector.fetch().map {
       case None =>
         Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
@@ -59,7 +60,8 @@ class DatePropertyWasChangedController @Inject() (
     }
   }
 
-  def onSubmit(implicit wts: Writes[Date]): Action[AnyContent] = validatedSession.async { implicit request =>
+  def onSubmit(using wts: Writes[Date]): Action[AnyContent] = validatedSession.async { request =>
+    given Request[AnyContent] = request
     sessionConnector.fetch().flatMap {
       case None =>
         Future.successful(

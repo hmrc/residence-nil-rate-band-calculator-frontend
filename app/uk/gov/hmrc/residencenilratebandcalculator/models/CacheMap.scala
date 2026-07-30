@@ -16,11 +16,11 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import play.api.libs.json._
+import play.api.libs.json.*
 
 case class CacheMap(id: String, data: Map[String, JsValue]) {
 
-  def getEntry[T](key: String)(implicit fjs: Reads[T]): Option[T] =
+  def getEntry[T](key: String)(using fjs: Reads[T]): Option[T] =
     data
       .get(key)
       .map(json =>
@@ -35,7 +35,7 @@ case class CacheMap(id: String, data: Map[String, JsValue]) {
 }
 
 object CacheMap {
-  implicit val formats: OFormat[CacheMap] = Json.format[CacheMap]
+  given formats: OFormat[CacheMap] = Json.format[CacheMap]
 }
 
 class KeyStoreEntryValidationException(

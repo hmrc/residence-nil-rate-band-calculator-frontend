@@ -31,7 +31,7 @@ class ValueBeingTransferredViewSpec extends NewIntViewSpec {
 
   val form: Form[Int] = Forms.ValueBeingTransferred
 
-  def createView(form: Form[Int]): Html = value_being_transferred("100000", form)(request, messages)
+  def createView(form: Form[Int]): Html = value_being_transferred("100000", form)
 
   "Value Being Transferred View" must {
 

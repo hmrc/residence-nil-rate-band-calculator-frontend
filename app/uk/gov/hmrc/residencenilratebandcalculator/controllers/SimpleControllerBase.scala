@@ -27,12 +27,14 @@ import uk.gov.hmrc.residencenilratebandcalculator.Navigator
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.models.{AnswerRow, AnswerRows, UserAnswers}
 
+import scala.compiletime.deferred
 import scala.concurrent.{ExecutionContext, Future}
+import scala.language.implicitConversions
 
 trait ControllerBase[A] extends FrontendController with I18nSupport {
-  def onPageLoad(implicit rds: Reads[A]): Action[AnyContent]
+  def onPageLoad(using Reads[A]): Action[AnyContent]
 
-  def onSubmit(implicit wts: Writes[A]): Action[AnyContent]
+  def onSubmit(using Writes[A]): Action[AnyContent]
 
 }
 
@@ -42,11 +44,11 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
 
   def sessionConnector: SessionConnector
 
-  implicit val ec: ExecutionContext
+  given ec: ExecutionContext = deferred
 
   def form: () => Form[A]
 
-  def view(form: Form[A], userAnswers: UserAnswers)(implicit request: Request[?]): Html
+  def view(form: Form[A], userAnswers: UserAnswers)(using request: Request[?]): Html
 
   val navigator: Navigator
 
@@ -57,7 +59,8 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
     messagesApi.preferred(request)
   )
 
-  override def onPageLoad(implicit rds: Reads[A]): Action[AnyContent] = Action.async { implicit request =>
+  override def onPageLoad(using rds: Reads[A]): Action[AnyContent] = Action.async { request =>
+    given Request[AnyContent] = request
     sessionConnector.fetch().map {
       case None =>
         Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
@@ -67,7 +70,8 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
     }
   }
 
-  def onSubmit(implicit wts: Writes[A]): Action[AnyContent] = Action.async { implicit request =>
+  def onSubmit(using wts: Writes[A]): Action[AnyContent] = Action.async { request =>
+    given Request[AnyContent] = request
     sessionConnector.fetch().flatMap {
       case None =>
         Future.successful(

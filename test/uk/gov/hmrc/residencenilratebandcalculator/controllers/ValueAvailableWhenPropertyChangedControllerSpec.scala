@@ -35,6 +35,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_available_whe
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 import scala.concurrent.Future
+import scala.language.implicitConversions
 
 class ValueAvailableWhenPropertyChangedControllerSpec extends ControllerSpec {
 
@@ -50,7 +51,7 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends ControllerSpec {
 
   def mockRnrbConnector: RnrbConnector = {
     val mockConnector = mock[RnrbConnector]
-    when(mockConnector.getNilRateBand(any[String])(any[HeaderCarrier]))
+    when(mockConnector.getNilRateBand(any[String])(using any[HeaderCarrier]))
       .thenReturn(Future.successful(HttpResponse(200, JsNumber(100000).toString)))
     mockConnector
   }
@@ -60,12 +61,12 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends ControllerSpec {
       value_available_when_property_changed(
         "£100,000",
         NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge)
-      )(fakeRequest, messages)
+      )(using fakeRequest, messages)
     case Some(v) =>
       value_available_when_property_changed(
         "£100,000",
         NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v)
-      )(fakeRequest, messages)
+      )(using fakeRequest, messages)
   }
 
   def testValue = "100000"
@@ -84,13 +85,13 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends ControllerSpec {
 
     "return 200 for a GET" in {
       setCacheMap(new CacheMap("", Map(Constants.datePropertyWasChangedId -> JsString("2018-5-11"))))
-      val result = createController().onPageLoad(Reads.IntReads)(fakeRequest)
+      val result = createController().onPageLoad(using Reads.IntReads)(fakeRequest)
       status(result) mustBe Status.OK
     }
 
     "return the View for a GET" in {
       setCacheMap(new CacheMap("", Map(Constants.datePropertyWasChangedId -> JsString("2018-5-11"))))
-      val result = createController().onPageLoad(Reads.IntReads)(fakeRequest)
+      val result = createController().onPageLoad(using Reads.IntReads)(fakeRequest)
       Jsoup.parse(contentAsString(result)).title() mustBe messages(
         "value_available_when_property_changed.title"
       ) + " - Calculate the available RNRB - GOV.UK"
@@ -99,7 +100,7 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends ControllerSpec {
 
     "if the date property was changed key is not set throw an exception" in {
       val exception = intercept[NoSuchElementException] {
-        val result: Future[Result] = createController().onPageLoad(Reads.IntReads)(fakeRequest)
+        val result: Future[Result] = createController().onPageLoad(using Reads.IntReads)(fakeRequest)
         contentAsString(result) mustBe createView(None).toString
       }
       exception.getMessage mustBe "key not found: DatePropertyWasChanged"
@@ -108,14 +109,14 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends ControllerSpec {
     "return a redirect on submit with valid data" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue)).withMethod("POST")
       setCacheMap(new CacheMap("", Map(Constants.datePropertyWasChangedId -> JsString("2018-5-11"))))
-      val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
+      val result = createController().onSubmit(using Writes.IntWrites)(fakePostRequest)
       status(result) mustBe Status.SEE_OTHER
     }
 
     "store valid submitted data" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", "100000")).withMethod("POST")
       setCacheMap(new CacheMap("", Map(Constants.datePropertyWasChangedId -> JsString("2018-5-11"))))
-      await(createController().onSubmit(Writes.IntWrites)(fakePostRequest))
+      await(createController().onSubmit(using Writes.IntWrites)(fakePostRequest))
       verifyValueIsCached(Constants.valueAvailableWhenPropertyChangedId, 100000)
     }
 
@@ -123,7 +124,7 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends ControllerSpec {
       setCacheMap(new CacheMap("", Map(Constants.datePropertyWasChangedId -> JsString("2018-5-11"))))
       val value           = "invalid data"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
-      val result          = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
+      val result          = createController().onSubmit(using Writes.IntWrites)(fakePostRequest)
       status(result) mustBe Status.BAD_REQUEST
     }
 
@@ -131,14 +132,14 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends ControllerSpec {
       setCacheMap(new CacheMap("", Map(Constants.datePropertyWasChangedId -> JsString("2018-5-11"))))
       val value           = "invalid data"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
-      val result          = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
+      val result          = createController().onSubmit(using Writes.IntWrites)(fakePostRequest)
       contentAsString(result) mustBe createView(Some(Map("value" -> value))).toString
     }
 
     "not store invalid submitted data" in {
       val value           = "invalid data"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
-      createController().onSubmit(Writes.IntWrites)(fakePostRequest)
+      createController().onSubmit(using Writes.IntWrites)(fakePostRequest)
       verifyValueIsNotCached()
     }
 
@@ -152,13 +153,13 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends ControllerSpec {
           )
         )
       )
-      val result = createController().onPageLoad(Reads.IntReads)(fakeRequest)
+      val result = createController().onPageLoad(using Reads.IntReads)(fakeRequest)
       contentAsString(result) mustBe createView(Some(Map("value" -> testValue))).toString
     }
 
     "On a page load with an expired session, return an redirect to an expired session page" in {
       expireSessionConnector()
-      val result = createController().onPageLoad(Reads.IntReads)(fakeRequest)
+      val result = createController().onPageLoad(using Reads.IntReads)(fakeRequest)
       status(result) mustBe Status.SEE_OTHER
       redirectLocation(result) mustBe Some(
         uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url
@@ -167,7 +168,7 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends ControllerSpec {
 
     "On a page submit with an expired session, return an redirect to an expired session page" in {
       expireSessionConnector()
-      val result = createController().onSubmit(Writes.IntWrites)(fakeRequest)
+      val result = createController().onSubmit(using Writes.IntWrites)(fakeRequest)
       status(result) mustBe Status.SEE_OTHER
       redirectLocation(result) mustBe Some(
         uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url

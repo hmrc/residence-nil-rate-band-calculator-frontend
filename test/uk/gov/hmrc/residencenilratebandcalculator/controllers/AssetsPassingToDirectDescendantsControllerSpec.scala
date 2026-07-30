@@ -38,10 +38,13 @@ class AssetsPassingToDirectDescendantsControllerSpec extends RnrbControllerSpec 
 
     def createView: Option[Map[String, String]] => Html = {
       case None =>
-        assetsPassingToDirectDescendantsView(BooleanForm(messageKey), formattedPropertyValue)(fakeRequest, messages)
+        assetsPassingToDirectDescendantsView(BooleanForm(messageKey), formattedPropertyValue)(
+          using fakeRequest,
+          messages
+        )
       case Some(v) =>
         assetsPassingToDirectDescendantsView(BooleanForm(messageKey).bind(v), formattedPropertyValue)(
-          fakeRequest,
+          using fakeRequest,
           messages
         )
     }

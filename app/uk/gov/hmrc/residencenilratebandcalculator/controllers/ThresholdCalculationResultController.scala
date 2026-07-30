@@ -19,7 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import javax.inject.{Inject, Singleton}
 import play.api.Logging
 import play.api.i18n.I18nSupport
-import play.api.mvc.DefaultMessagesControllerComponents
+import play.api.mvc.{AnyContent, DefaultMessagesControllerComponents, Request}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
@@ -42,7 +42,7 @@ class ThresholdCalculationResultController @Inject() (
     sessionConnector: SessionConnector,
     validatedSession: ValidatedSession,
     thresholdCalculationResultView: threshold_calculation_result
-)(implicit ec: ExecutionContext)
+)(using ec: ExecutionContext)
     extends FrontendController(cc)
     with I18nSupport
     with Logging {
@@ -52,7 +52,7 @@ class ThresholdCalculationResultController @Inject() (
     throw ex
   }
 
-  private def getAnswers(implicit hc: HeaderCarrier) = sessionConnector.fetch().map {
+  private def getAnswers(using hc: HeaderCarrier) = sessionConnector.fetch().map {
     case Some(answers) => Success(answers)
     case None          => Failure(new NoCacheMapException("Unable to retrieve cache map from SessionConnector"))
   }
@@ -62,13 +62,14 @@ class ThresholdCalculationResultController @Inject() (
     case Failure(ex)      => Future.successful(Failure(ex))
   }
 
-  private def getResult(tryInput: Try[CalculationInput])(implicit hc: HeaderCarrier) = tryInput match {
+  private def getResult(tryInput: Try[CalculationInput])(using hc: HeaderCarrier) = tryInput match {
     case Success(input) => rnrbConnector.send(input)
     case Failure(ex)    => Future.successful(Failure(ex))
   }
 
-  def onPageLoad = validatedSession.async { implicit request =>
-    implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
+  def onPageLoad = validatedSession.async { request =>
+    given Request[AnyContent] = request
+    given hc: HeaderCarrier   = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
     for {
       tryAnswers <- getAnswers

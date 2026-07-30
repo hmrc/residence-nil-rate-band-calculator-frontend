@@ -27,7 +27,7 @@ class SessionExpiredViewSpec extends ViewSpec {
 
   "Session Expired view" must {
     "display the correct browser title" in {
-      val doc = asDocument(session_expired()(request, messages))
+      val doc = asDocument(session_expired())
       assertEqualsMessage(
         doc,
         "title",
@@ -36,12 +36,12 @@ class SessionExpiredViewSpec extends ViewSpec {
     }
 
     "display the correct title" in {
-      val doc = asDocument(session_expired()(request, messages))
+      val doc = asDocument(session_expired())
       assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.title")
     }
 
     "display a Start Again button linking to the 'Calculate Threshold Increase' page" in {
-      val doc       = asDocument(session_expired()(request, messages))
+      val doc       = asDocument(session_expired())
       val startLink = doc.getElementById("start-again")
       startLink.className mustBe "govuk-button"
       startLink.attr("href") mustBe routes.DateOfDeathController.onPageLoad.url
@@ -49,7 +49,7 @@ class SessionExpiredViewSpec extends ViewSpec {
     }
 
     "not display the HMRC logo" in {
-      val doc = asDocument(session_expired()(request, messages))
+      val doc = asDocument(session_expired())
       assertNotRenderedByCssSelector(doc, ".organisation-logo")
     }
   }

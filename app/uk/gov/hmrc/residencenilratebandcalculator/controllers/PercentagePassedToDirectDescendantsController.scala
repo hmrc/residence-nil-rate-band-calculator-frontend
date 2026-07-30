@@ -34,7 +34,7 @@ class PercentagePassedToDirectDescendantsController @Inject() (
     override val sessionConnector: SessionConnector,
     override val navigator: Navigator,
     percentagePassedToDirectDescendantsView: percentage_passed_to_direct_descendants
-)(implicit val ec: ExecutionContext)
+)(using ExecutionContext)
     extends FrontendController(cc)
     with SimpleControllerBase[BigDecimal] {
 
@@ -42,7 +42,7 @@ class PercentagePassedToDirectDescendantsController @Inject() (
 
   override def form: () => Form[BigDecimal] = () => Forms.PercentagePassedToDirectDescendants
 
-  override def view(form: Form[BigDecimal], userAnswers: UserAnswers)(implicit request: Request[?]): Html =
+  override def view(form: Form[BigDecimal], userAnswers: UserAnswers)(using request: Request[?]): Html =
     percentagePassedToDirectDescendantsView(form)
 
 }

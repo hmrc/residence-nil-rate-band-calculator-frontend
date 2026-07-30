@@ -19,11 +19,13 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, Request}
 import play.twirl.api.Html
+import scala.language.implicitConversions
 import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
-import uk.gov.hmrc.residencenilratebandcalculator.models._
+import uk.gov.hmrc.residencenilratebandcalculator.models.*
 
+import scala.compiletime.deferred
 import scala.concurrent.ExecutionContext
 
 trait TransitionController extends FrontendController with I18nSupport {
@@ -31,11 +33,12 @@ trait TransitionController extends FrontendController with I18nSupport {
 
   val getReason: GetReason
 
-  implicit val ec: ExecutionContext
+  given ec: ExecutionContext = deferred
 
-  def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[?]): Html
+  def createView(reason: Reason, userAnswers: UserAnswers)(using request: Request[?]): Html
 
-  def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
+  def onPageLoad: Action[AnyContent] = Action.async { request =>
+    given Request[AnyContent] = request
     sessionConnector.fetch().map {
       case Some(cacheMap) =>
         val userAnswers = new UserAnswers(cacheMap)

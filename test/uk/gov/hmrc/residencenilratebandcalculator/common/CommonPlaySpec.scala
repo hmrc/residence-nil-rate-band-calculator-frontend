@@ -32,20 +32,20 @@ trait CommonPlaySpec extends BaseSpec with Matchers with OptionValues {
   import scala.concurrent.duration.*
   import scala.concurrent.{Await, Future}
 
-  implicit val executionContext: ExecutionContext = ExecutionContext.global
+  given executionContext: ExecutionContext = ExecutionContext.global
 
-  implicit val defaultTimeout: FiniteDuration = 5.seconds
+  given defaultTimeout: FiniteDuration = 5.seconds
 
-  implicit def extractAwait[A](future: Future[A]): A = await[A](future)
+  given [A]: Conversion[Future[A], A] = future => await[A](future)
 
-  def await[A](future: Future[A])(implicit timeout: Duration): A = Await.result(future, timeout)
+  def await[A](future: Future[A])(using timeout: Duration): A = Await.result(future, timeout)
 
   // Convenience to avoid having to wrap andThen() parameters in Future.successful
-  implicit def liftFuture[A](v: A): Future[A] = Future.successful(v)
+  given [A]: Conversion[A, Future[A]] = v => Future.successful(v)
 
   def status(of: Result): Int = of.header.status
 
-  def bodyOf(result: Result)(implicit mat: Materializer): String = {
+  def bodyOf(result: Result)(using mat: Materializer): String = {
     val bodyBytes: ByteString = await(result.body.consumeData)
     bodyBytes.decodeString(Charset.defaultCharset().name)
   }

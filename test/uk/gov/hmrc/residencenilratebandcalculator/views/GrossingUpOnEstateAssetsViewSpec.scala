@@ -27,7 +27,7 @@ class GrossingUpOnEstateAssetsViewSpec extends NewBooleanViewSpec {
 
   val messageKeyPrefix                                           = "grossing_up_on_estate_assets"
   val grossing_up_on_estate_assets: grossing_up_on_estate_assets = inject[grossing_up_on_estate_assets]
-  def createView(form: Form[Boolean]): Html                      = grossing_up_on_estate_assets(form)(request, messages)
+  def createView(form: Form[Boolean]): Html                      = grossing_up_on_estate_assets(form)
 
   val form: Form[Boolean] = Forms.GrossingUpOnEstateAssets
 

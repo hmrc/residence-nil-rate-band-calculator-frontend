@@ -28,7 +28,7 @@ class ChargeableEstateValueViewSpec extends NewIntViewSpec {
 
   val messageKeyPrefix                                 = "chargeable_estate_value"
   val chargeable_estate_value: chargeable_estate_value = inject[chargeable_estate_value]
-  def createView(form: Form[Int]): Html                = chargeable_estate_value(form)(request, messages)
+  def createView(form: Form[Int]): Html                = chargeable_estate_value(form)
 
   val form: Form[Int] = Forms.ChargeableEstateValue
 

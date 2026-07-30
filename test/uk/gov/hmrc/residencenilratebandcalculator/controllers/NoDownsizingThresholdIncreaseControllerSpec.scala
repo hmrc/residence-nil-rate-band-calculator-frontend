@@ -19,6 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import play.api.http.Status
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import play.api.test.Helpers.*
+import scala.language.implicitConversions
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThresholdAvailableReason.NoProperty
@@ -90,7 +91,7 @@ class NoDownsizingThresholdIncreaseControllerSpec extends RnrbControllerSpec {
         no_downsizing_threshold_increase(
           "no_downsizing_threshold_increase.date_property_was_changed_too_early_reason",
           routes.CheckYourAnswersController.onPageLoad
-        )(fakeRequest, messages).toString
+        )(using fakeRequest, messages).toString
     }
 
     "return the view with the no assets key when that is the reason" in {
@@ -102,11 +103,11 @@ class NoDownsizingThresholdIncreaseControllerSpec extends RnrbControllerSpec {
       )
       val userAnswers = new UserAnswers(filledOutCacheMap)
 
-      val result = controller.createView(NoAssetsPassingToDirectDescendants, userAnswers)(fakeRequest)
+      val result = controller.createView(NoAssetsPassingToDirectDescendants, userAnswers)(using fakeRequest)
       val target = no_downsizing_threshold_increase(
         "no_downsizing_threshold_increase.no_assets_passing_to_direct_descendants_reason",
         navigator.nextPage(Constants.noDownsizingThresholdIncrease)(userAnswers)
-      )(fakeRequest, messages).toString()
+      )(using fakeRequest, messages).toString()
       result.toString() mustBe target
 
     }
@@ -120,11 +121,11 @@ class NoDownsizingThresholdIncreaseControllerSpec extends RnrbControllerSpec {
       )
       val userAnswers = new UserAnswers(filledOutCacheMap)
 
-      val result = controller.createView(NoProperty, userAnswers)(fakeRequest)
+      val result = controller.createView(NoProperty, userAnswers)(using fakeRequest)
       val target = no_downsizing_threshold_increase(
         "",
         navigator.nextPage(Constants.noDownsizingThresholdIncrease)(userAnswers)
-      )(fakeRequest, messages).toString()
+      )(using fakeRequest, messages).toString()
       result.toString() mustBe target
 
     }

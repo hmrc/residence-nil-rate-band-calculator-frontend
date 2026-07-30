@@ -20,6 +20,7 @@ import org.scalatest.matchers.must.Matchers.must
 import play.api.i18n.MessagesApi
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
+import scala.language.implicitConversions
 import uk.gov.hmrc.play.bootstrap.frontend.http.FrontendErrorHandler
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.MockSessionConnector
@@ -28,10 +29,10 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.error_template
 
 class RnrbErrorHandlerSpec extends CommonPlaySpec with HttpResponseMocks with MockSessionConnector {
 
-  implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
-  private val messageApi: MessagesApi                       = inject[MessagesApi]
-  private val errorTemplate: error_template                 = inject[error_template]
-  private val errorHandler: FrontendErrorHandler            = new RnrbErrorHandler(messageApi, errorTemplate)
+  given request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
+  private val messageApi: MessagesApi                = inject[MessagesApi]
+  private val errorTemplate: error_template          = inject[error_template]
+  private val errorHandler: FrontendErrorHandler     = new RnrbErrorHandler(messageApi, errorTemplate)
 
   "RnrbErrorHandler" must {
 

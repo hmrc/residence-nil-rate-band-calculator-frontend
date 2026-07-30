@@ -19,6 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import play.api.http.Status
 import play.api.test.Helpers.*
 import play.twirl.api.Html
+import scala.language.implicitConversions
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.DateControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 import uk.gov.hmrc.residencenilratebandcalculator.forms.constructors.DatePropertyWasChangedForm.*
@@ -34,8 +35,9 @@ class DatePropertyWasChangedControllerSpec extends DateControllerSpec {
   "Date Property Was Changed Controller" must {
 
     def createView: Option[Date] => Html = {
-      case None    => date_property_was_changed(datePropertyWasChangedForm(messages))(fakeRequest, messages)
-      case Some(v) => date_property_was_changed(datePropertyWasChangedForm(messages).fill(v))(fakeRequest, messages)
+      case None => date_property_was_changed(datePropertyWasChangedForm(using messages))(using fakeRequest, messages)
+      case Some(v) =>
+        date_property_was_changed(datePropertyWasChangedForm(using messages).fill(v))(using fakeRequest, messages)
     }
 
     def createController: () => DatePropertyWasChangedController = () =>
@@ -74,7 +76,7 @@ class DatePropertyWasChangedControllerSpec extends DateControllerSpec {
     )
     "On a page submit with an expired session, return an redirect to an expired session page" in {
       expireSessionConnector()
-      val result = createController().onSubmit(Date.dateWrites)(fakeRequest)
+      val result = createController().onSubmit(using Date.dateWrites)(fakeRequest)
       status(result) mustBe Status.SEE_OTHER
       redirectLocation(result) mustBe Some(
         uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url

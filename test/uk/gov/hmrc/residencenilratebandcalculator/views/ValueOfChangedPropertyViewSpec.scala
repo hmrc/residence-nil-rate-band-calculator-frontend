@@ -28,7 +28,7 @@ class ValueOfChangedPropertyViewSpec extends NewIntViewSpec {
 
   val messageKeyPrefix                                     = "value_of_changed_property"
   val value_of_changed_property: value_of_changed_property = inject[value_of_changed_property]
-  def createView(form: Form[Int]): Html                    = value_of_changed_property(form)(request, messages)
+  def createView(form: Form[Int]): Html                    = value_of_changed_property(form)
 
   val form: Form[Int] = Forms.ValueOfChangedProperty
 

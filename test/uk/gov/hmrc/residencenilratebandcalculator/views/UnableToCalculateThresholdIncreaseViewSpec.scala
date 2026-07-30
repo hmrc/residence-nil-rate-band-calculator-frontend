@@ -30,7 +30,7 @@ class UnableToCalculateThresholdIncreaseViewSpec extends ViewSpec {
   val unable_to_calculate_threshold_increase: unable_to_calculate_threshold_increase =
     inject[unable_to_calculate_threshold_increase]
 
-  val view: Html    = unable_to_calculate_threshold_increase(prefix)(request, messages)
+  val view: Html    = unable_to_calculate_threshold_increase(prefix)
   val doc: Document = asDocument(view)
 
   "Unable To Calculate Threshold Increase View" must {
