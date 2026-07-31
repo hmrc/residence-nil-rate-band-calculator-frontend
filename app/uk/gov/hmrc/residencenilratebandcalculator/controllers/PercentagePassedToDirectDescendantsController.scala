@@ -42,7 +42,7 @@ class PercentagePassedToDirectDescendantsController @Inject() (
 
   override def form: () => Form[BigDecimal] = () => Forms.PercentagePassedToDirectDescendants
 
-  override def view(form: Form[BigDecimal], userAnswers: UserAnswers)(using request: Request[?]): Html =
+  override def view(form: Form[BigDecimal], userAnswers: UserAnswers)(using Request[?]): Html =
     percentagePassedToDirectDescendantsView(form)
 
 }

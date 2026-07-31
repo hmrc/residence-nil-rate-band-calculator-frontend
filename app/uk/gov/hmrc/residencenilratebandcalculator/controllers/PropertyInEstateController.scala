@@ -43,7 +43,7 @@ class PropertyInEstateController @Inject() (
 
   override def form: () => Form[Boolean] = () => Forms.PropertyInEstate
 
-  override def view(form: Form[Boolean], userAnswers: UserAnswers)(using request: Request[?]): Html =
+  override def view(form: Form[Boolean], userAnswers: UserAnswers)(using Request[?]): Html =
     propertyInEstateView(form)
 
 }

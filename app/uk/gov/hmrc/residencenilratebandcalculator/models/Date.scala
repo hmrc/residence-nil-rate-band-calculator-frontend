@@ -33,5 +33,5 @@ object Date {
 
   val dateWrites: Writes[Date] = (date: Date) => JsString(date.date.toString)
 
-  given dateFormat: Format[Date] = Format(dateReads, dateWrites)
+  given Format[Date] = Format(dateReads, dateWrites)
 }

@@ -27,7 +27,7 @@ import scala.util.{Failure, Success, Try}
 @Singleton
 class CascadeUpsert extends Logging {
 
-  def apply[A](key: String, value: A, originalCacheMap: CacheMap)(using wts: Writes[A]): CacheMap =
+  def apply[A](key: String, value: A, originalCacheMap: CacheMap)(using Writes[A]): CacheMap =
     funcMap.get(key).fold(store(key, value, originalCacheMap))(fn => fn(Json.toJson(value), originalCacheMap))
 
   val funcMap: Map[String, (JsValue, CacheMap) => CacheMap] =
@@ -42,11 +42,11 @@ class CascadeUpsert extends Logging {
       Constants.datePropertyWasChangedId               -> ((v, cm) => datePropertyWasChanged(v, cm))
     )
 
-  private def store[A](key: String, value: A, cacheMap: CacheMap)(using wrts: Writes[A]) =
+  private def store[A](key: String, value: A, cacheMap: CacheMap)(using Writes[A]) =
     cacheMap.copy(data = cacheMap.data + (key -> Json.toJson(value)))
 
   private def clearIfFalse[A](key: String, value: A, keysToRemove: Set[String], cacheMap: CacheMap)(
-      using wrts: Writes[A]
+      using Writes[A]
   ): CacheMap = {
     val mapToStore = value match {
       case JsBoolean(false) => cacheMap.copy(data = cacheMap.data.view.filterKeys(s => !keysToRemove.contains(s)).toMap)

@@ -35,9 +35,9 @@ import scala.util.{Success, Try}
 
 class RnrbConnectorISpec extends AnyWordSpec with Matchers with BeforeAndAfterAll with BeforeAndAfterEach {
 
-  val wireMockPort        = 11111
-  val wireMockServer      = new WireMockServer(WireMockConfiguration.wireMockConfig().port(wireMockPort))
-  given hc: HeaderCarrier = HeaderCarrier()
+  val wireMockPort    = 11111
+  val wireMockServer  = new WireMockServer(WireMockConfiguration.wireMockConfig().port(wireMockPort))
+  given HeaderCarrier = HeaderCarrier()
 
   override def beforeAll(): Unit = wireMockServer.start()
 

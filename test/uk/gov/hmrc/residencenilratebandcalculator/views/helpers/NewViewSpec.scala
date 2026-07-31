@@ -32,7 +32,7 @@ trait NewViewSpec extends ViewSpec {
     "behave like a standard RNRB page" when {
       "rendered" must {
         "have the correct banner title" in {
-          given lang: Lang = Lang("en")
+          given Lang = Lang("en")
 
           val doc         = asDocument(createView(emptyForm))
           val serviceName = doc.getElementsByClass("govuk-service-navigation__service-name").text
@@ -40,8 +40,8 @@ trait NewViewSpec extends ViewSpec {
         }
 
         "display the correct browser title" in {
-          given lang: Lang = Lang("en")
-          val doc          = asDocument(createView(emptyForm))
+          given Lang = Lang("en")
+          val doc    = asDocument(createView(emptyForm))
           doc.select("title").first().text mustBe (messagesApi(
             s"$messageKeyPrefix.browser_title"
           ) + " - Calculate the available RNRB - GOV.UK")

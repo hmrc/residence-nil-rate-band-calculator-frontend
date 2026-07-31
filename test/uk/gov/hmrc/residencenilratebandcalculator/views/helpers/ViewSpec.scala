@@ -37,7 +37,7 @@ trait ViewSpec extends CommonPlaySpec {
 
   given request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
 
-  given mockConfig: FrontendAppConfig = inject[FrontendAppConfig]
+  given FrontendAppConfig = inject[FrontendAppConfig]
 
   def messagesApi: MessagesApi = inject[MessagesApi]
   given messages: Messages     = messagesApi.preferred(request)
@@ -116,7 +116,7 @@ trait ViewSpec extends CommonPlaySpec {
     "behave like a standard RNRB page" when {
       "rendered" must {
         "have the correct banner title" in {
-          given lang: Lang = Lang("en")
+          given Lang = Lang("en")
 
           val doc  = asDocument(createView(emptyForm))
           val nav  = doc.getElementById("proposition-menu")

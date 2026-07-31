@@ -48,7 +48,8 @@ lazy val microservice = Project(appName, file("."))
       "-rewrite",
       "-source:3.4-migration",
       "-unchecked",
-    )
+    ),
+    scalacOptions := scalacOptions.value.distinct
   )
   .settings(majorVersion := 0)
   .settings(

@@ -43,7 +43,7 @@ class ValueOfChangedPropertyController @Inject() (
 
   override def form: () => Form[Int] = () => Forms.ValueOfChangedProperty
 
-  override def view(form: Form[Int], userAnswers: UserAnswers)(using request: Request[?]): Html =
+  override def view(form: Form[Int], userAnswers: UserAnswers)(using Request[?]): Html =
     valueOfChangedPropertyView(form)
 
 }

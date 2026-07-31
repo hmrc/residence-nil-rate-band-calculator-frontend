@@ -48,8 +48,8 @@ class IHT435Controller @Inject() (
           throw new RuntimeException(msg)
         }
 
-        given currentLang: Lang = request.lang
-        val generateWelshPDF    = messagesApi.preferred(request).lang.code == "cy"
+        given Lang           = request.lang
+        val generateWelshPDF = messagesApi.preferred(request).lang.code == "cy"
 
         pdfHelper
           .generatePDF(cacheMap = cacheMap, generateWelshPDF = generateWelshPDF)

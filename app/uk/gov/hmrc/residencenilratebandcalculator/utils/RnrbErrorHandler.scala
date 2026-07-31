@@ -30,7 +30,7 @@ class RnrbErrorHandler @Inject() (val messagesApi: MessagesApi, errorTemplateVie
 ) extends FrontendErrorHandler {
 
   override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(
-      using request: RequestHeader
+      using RequestHeader
   ): Future[Html] =
     Future.successful(errorTemplateView(pageTitle, heading, message))
 

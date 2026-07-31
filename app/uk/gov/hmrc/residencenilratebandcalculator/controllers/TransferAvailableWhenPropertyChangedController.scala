@@ -42,7 +42,7 @@ class TransferAvailableWhenPropertyChangedController @Inject() (
 
   override def form: () => Form[Boolean] = () => Forms.TransferAvailableWhenPropertyChanged
 
-  override def view(form: Form[Boolean], userAnswers: UserAnswers)(using request: Request[?]) =
+  override def view(form: Form[Boolean], userAnswers: UserAnswers)(using Request[?]) =
     transferAvailableWhenPropertyChangedView(form)
 
 }

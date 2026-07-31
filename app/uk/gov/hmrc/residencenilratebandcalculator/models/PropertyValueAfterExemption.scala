@@ -31,7 +31,7 @@ object PropertyValueAfterExemption {
   val propertyValueAfterExemptionWrites: Writes[PropertyValueAfterExemption] =
     (__ \ "value").write[Int].and((__ \ "inheritedValue").write[Int])(o => Tuple.fromProductTyped(o))
 
-  given propertyValueAfterExemptionFormat: Format[PropertyValueAfterExemption] =
+  given Format[PropertyValueAfterExemption] =
     Format(propertyValueAfterExemptionReads, propertyValueAfterExemptionWrites)
 
 }

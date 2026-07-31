@@ -43,7 +43,7 @@ class ValueOfEstateController @Inject() (
 
   override def form: () => Form[Int] = () => Forms.ValueOfEstate
 
-  override def view(form: Form[Int], userAnswers: UserAnswers)(using request: Request[?]): Html =
+  override def view(form: Form[Int], userAnswers: UserAnswers)(using Request[?]): Html =
     valueOfEstateView(form)
 
 }

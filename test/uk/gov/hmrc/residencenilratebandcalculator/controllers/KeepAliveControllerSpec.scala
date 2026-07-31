@@ -27,8 +27,8 @@ class KeepAliveControllerSpec extends RnrbControllerSpec {
   override val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
 
   "Calling the onPageLoad action" must {
-    lazy val result         = inject[KeepAliveController].onPageLoad(fakeRequest)
-    given mat: Materializer = inject[Materializer]
+    lazy val result    = inject[KeepAliveController].onPageLoad(fakeRequest)
+    given Materializer = inject[Materializer]
 
     "return a status of 200" in {
       status(result) mustBe 200

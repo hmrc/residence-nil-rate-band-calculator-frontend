@@ -47,7 +47,7 @@ class DateOfDeathController @Inject() (
 
   def view(form: Form[Date])(using request: Request[?]): Html = dateOfDeathView(form)
 
-  def onPageLoad(using rds: Reads[Date]): Action[AnyContent] = Action.async { request =>
+  def onPageLoad(using Reads[Date]): Action[AnyContent] = Action.async { request =>
     given Request[AnyContent] = request
     sessionConnector.fetch().map { optionalCacheMap =>
       val cacheMap: CacheMap = optionalCacheMap.getOrElse(CacheMap(hc.sessionId.getOrElse(SessionId("")).value, Map()))
@@ -57,7 +57,7 @@ class DateOfDeathController @Inject() (
     }
   }
 
-  def onSubmit(using wts: Writes[Date]): Action[AnyContent] = validatedSession.async { request =>
+  def onSubmit(using Writes[Date]): Action[AnyContent] = validatedSession.async { request =>
     given Request[AnyContent] = request
     val boundForm             = dateOfDeathForm.bindFromRequest()
     boundForm.fold(

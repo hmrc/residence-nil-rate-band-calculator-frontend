@@ -65,7 +65,7 @@ class ValueAvailableWhenPropertyChangedController @Inject() (
     cacheMap         <- getCacheMap
   } yield (nilRateValueJson, cacheMap)
 
-  def onPageLoad(using rds: Reads[Int]) = Action.async { request =>
+  def onPageLoad(using Reads[Int]) = Action.async { request =>
     given Request[AnyContent] = request
     microserviceValues
       .map { case (nilRateValueJson, cacheMap) =>
@@ -87,7 +87,7 @@ class ValueAvailableWhenPropertyChangedController @Inject() (
       }
   }
 
-  def onSubmit(using wts: Writes[Int]) = validatedSession.async { request =>
+  def onSubmit(using Writes[Int]) = validatedSession.async { request =>
     given Request[AnyContent] = request
     microserviceValues
       .flatMap { case (nilRateValueJson, cacheMap) =>

@@ -52,7 +52,7 @@ class ThresholdCalculationResultController @Inject() (
     throw ex
   }
 
-  private def getAnswers(using hc: HeaderCarrier) = sessionConnector.fetch().map {
+  private def getAnswers(using HeaderCarrier) = sessionConnector.fetch().map {
     case Some(answers) => Success(answers)
     case None          => Failure(new NoCacheMapException("Unable to retrieve cache map from SessionConnector"))
   }
@@ -62,14 +62,14 @@ class ThresholdCalculationResultController @Inject() (
     case Failure(ex)      => Future.successful(Failure(ex))
   }
 
-  private def getResult(tryInput: Try[CalculationInput])(using hc: HeaderCarrier) = tryInput match {
+  private def getResult(tryInput: Try[CalculationInput])(using HeaderCarrier) = tryInput match {
     case Success(input) => rnrbConnector.send(input)
     case Failure(ex)    => Future.successful(Failure(ex))
   }
 
   def onPageLoad = validatedSession.async { request =>
     given Request[AnyContent] = request
-    given hc: HeaderCarrier   = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
+    given HeaderCarrier       = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
     for {
       tryAnswers <- getAnswers

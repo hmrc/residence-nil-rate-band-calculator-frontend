@@ -48,7 +48,7 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
 
   def form: () => Form[A]
 
-  def view(form: Form[A], userAnswers: UserAnswers)(using request: Request[?]): Html
+  def view(form: Form[A], userAnswers: UserAnswers)(using Request[?]): Html
 
   val navigator: Navigator
 
@@ -59,7 +59,7 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
     messagesApi.preferred(request)
   )
 
-  override def onPageLoad(using rds: Reads[A]): Action[AnyContent] = Action.async { request =>
+  override def onPageLoad(using Reads[A]): Action[AnyContent] = Action.async { request =>
     given Request[AnyContent] = request
     sessionConnector.fetch().map {
       case None =>
@@ -70,7 +70,7 @@ trait SimpleControllerBase[A] extends ControllerBase[A] {
     }
   }
 
-  def onSubmit(using wts: Writes[A]): Action[AnyContent] = Action.async { request =>
+  def onSubmit(using Writes[A]): Action[AnyContent] = Action.async { request =>
     given Request[AnyContent] = request
     sessionConnector.fetch().flatMap {
       case None =>

@@ -43,7 +43,7 @@ class ExemptionsAndReliefClaimedController @Inject() (
 
   override def form: () => Form[Boolean] = () => Forms.ExemptionsAndReliefClaimed
 
-  override def view(form: Form[Boolean], userAnswers: UserAnswers)(using request: Request[?]): Html =
+  override def view(form: Form[Boolean], userAnswers: UserAnswers)(using Request[?]): Html =
     exemptionsAndReliefClaimedView(form)
 
 }

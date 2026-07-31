@@ -22,7 +22,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.ViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_downsizing_threshold_increase
 
 class NoDownsizingThresholdIncreaseViewSpec extends ViewSpec {
-  given msg: Messages  = messages
+  given Messages       = messages
   val messageKeyPrefix = "no_downsizing_threshold_increase"
 
   val no_downsizing_threshold_increase: no_downsizing_threshold_increase =

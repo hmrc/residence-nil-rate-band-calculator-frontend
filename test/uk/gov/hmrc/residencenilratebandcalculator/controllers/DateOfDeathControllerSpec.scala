@@ -49,7 +49,7 @@ class DateOfDeathControllerSpec extends DateControllerSpec {
     date_of_death
   )
 
-  given mat: Materializer = inject[Materializer]
+  given Materializer = inject[Materializer]
 
   def setupMock(result: Future[Option[CacheMap]]): OngoingStubbing[Future[Option[CacheMap]]] =
     when(mockConnector.fetch()(using ArgumentMatchers.any[HeaderCarrier]))

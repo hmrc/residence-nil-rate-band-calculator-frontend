@@ -42,7 +42,7 @@ class ChargeableInheritedPropertyValueController @Inject() (
 
   override def form: () => Form[Int] = () => Forms.ChargeableInheritedPropertyValue
 
-  override def view(form: Form[Int], userAnswers: UserAnswers)(using request: Request[?]): Html =
+  override def view(form: Form[Int], userAnswers: UserAnswers)(using Request[?]): Html =
     chargeableInheritedPropertyValueView(form)
 
   override def validate(value: Int, userAnswers: UserAnswers): Option[FormError] =

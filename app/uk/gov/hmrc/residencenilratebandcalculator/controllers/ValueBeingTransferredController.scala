@@ -46,7 +46,7 @@ class ValueBeingTransferredController @Inject() (
     val rnrbConnector: RnrbConnector,
     validatedSession: ValidatedSession,
     valueBeingTransferredView: value_being_transferred
-)(using ec: ExecutionContext)
+)(using ExecutionContext)
     extends FrontendController(cc)
     with Logging {
 
@@ -54,12 +54,12 @@ class ValueBeingTransferredController @Inject() (
 
   def form: () => Form[Int] = () => Forms.ValueBeingTransferred
 
-  private def getCacheMap(using hc: HeaderCarrier): Future[CacheMap] = sessionConnector.fetch().map {
+  private def getCacheMap(using HeaderCarrier): Future[CacheMap] = sessionConnector.fetch().map {
     case Some(cacheMap) => cacheMap
     case None           => throw new NoCacheMapException("CacheMap not available")
   }
 
-  def microserviceValues(using hc: HeaderCarrier): Future[(HttpResponse, CacheMap)] = for {
+  def microserviceValues(using HeaderCarrier): Future[(HttpResponse, CacheMap)] = for {
     dateOfDeath      <- getCacheMap.map(_.data(Constants.dateOfDeathId).toString().replaceAll("\"", ""))
     nilRateValueJson <- rnrbConnector.getNilRateBand(dateOfDeath)
     cacheMap         <- getCacheMap
@@ -70,13 +70,13 @@ class ValueBeingTransferredController @Inject() (
     NumberFormat.getCurrencyInstance(Locale.UK).format(number)
   }
 
-  def onPageLoad(using rds: Reads[Int]): Action[AnyContent] = Action.async { request =>
+  def onPageLoad(using Reads[Int]): Action[AnyContent] = Action.async { request =>
     given Request[AnyContent] = request
     microserviceValues
       .map { case (nilRateValueJson, cacheMap) =>
 
-        val nilRateBand          = formatJsonNumber(nilRateValueJson.json.toString())
-        given messages: Messages = messagesApi.preferred(request)
+        val nilRateBand = formatJsonNumber(nilRateValueJson.json.toString())
+        given Messages  = messagesApi.preferred(request)
         Ok(
           valueBeingTransferredView(
             nilRateBand,
@@ -93,7 +93,7 @@ class ValueBeingTransferredController @Inject() (
       }
   }
 
-  def onSubmit(using wts: Writes[Int]): Action[AnyContent] = validatedSession.async { request =>
+  def onSubmit(using Writes[Int]): Action[AnyContent] = validatedSession.async { request =>
     given Request[AnyContent] = request
     microserviceValues
       .flatMap { case (nilRateValueJson, cacheMap) =>
@@ -101,7 +101,7 @@ class ValueBeingTransferredController @Inject() (
         val nilRateBand          = nilRateValueJson.json.toString()
         val formattedNilRateBand = formatJsonNumber(nilRateBand)
         val userAnswers          = new UserAnswers(cacheMap)
-        given messages: Messages = messagesApi.preferred(request)
+        given Messages           = messagesApi.preferred(request)
         boundForm.fold(
           formWithErrors =>
             Future.successful(BadRequest(valueBeingTransferredView(formattedNilRateBand, formWithErrors))),

@@ -38,16 +38,16 @@ class DatePropertyWasChangedController @Inject() (
     val navigator: Navigator,
     validatedSession: ValidatedSession,
     datePropertyWasChangedView: date_property_was_changed
-)(using ec: ExecutionContext)
+)(using ExecutionContext)
     extends FrontendController(cc)
     with ControllerBase[Date] {
 
   val controllerId: String = Constants.datePropertyWasChangedId
 
-  def view(form: Form[Date])(using request: Request[?]): Html =
+  def view(form: Form[Date])(using Request[?]): Html =
     datePropertyWasChangedView(form)
 
-  def onPageLoad(using rds: Reads[Date]): Action[AnyContent] = Action.async { request =>
+  def onPageLoad(using Reads[Date]): Action[AnyContent] = Action.async { request =>
     given Request[AnyContent] = request
     sessionConnector.fetch().map {
       case None =>
@@ -60,7 +60,7 @@ class DatePropertyWasChangedController @Inject() (
     }
   }
 
-  def onSubmit(using wts: Writes[Date]): Action[AnyContent] = validatedSession.async { request =>
+  def onSubmit(using Writes[Date]): Action[AnyContent] = validatedSession.async { request =>
     given Request[AnyContent] = request
     sessionConnector.fetch().flatMap {
       case None =>

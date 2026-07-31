@@ -43,7 +43,7 @@ class GrossingUpOnEstatePropertyController @Inject() (
 
   override def form: () => Form[Boolean] = () => Forms.GrossingUpOnEstateProperty
 
-  override def view(form: Form[Boolean], userAnswers: UserAnswers)(using request: Request[?]): Html =
+  override def view(form: Form[Boolean], userAnswers: UserAnswers)(using Request[?]): Html =
     grossingUpOnEstatePropertyView(form)
 
 }

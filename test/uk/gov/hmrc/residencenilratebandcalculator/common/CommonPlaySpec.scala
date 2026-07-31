@@ -34,7 +34,7 @@ trait CommonPlaySpec extends BaseSpec with Matchers with OptionValues {
 
   given executionContext: ExecutionContext = ExecutionContext.global
 
-  given defaultTimeout: FiniteDuration = 5.seconds
+  given FiniteDuration = 5.seconds
 
   given [A]: Conversion[Future[A], A] = future => await[A](future)
 

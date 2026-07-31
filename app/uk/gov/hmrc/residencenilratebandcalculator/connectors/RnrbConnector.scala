@@ -38,7 +38,7 @@ class RnrbConnector @Inject() (val httpClientV2: HttpClientV2, val config: Front
   lazy val baseSegment                        = s"${config.serviceUrl}/residence-nil-rate-band-calculator"
   val jsonContentTypeHeader: (String, String) = ("Content-Type", "application/json")
 
-  given calculationResultWrites: Writes[CalculationInput] = Writes { (input: CalculationInput) =>
+  given Writes[CalculationInput] = Writes { (input: CalculationInput) =>
     val propertyValueAfter = input.propertyValueAfterExemption match {
       case Some(pvae) => Json.obj("propertyValueAfterExemption" -> pvae)
       case _          => Json.obj()
@@ -68,11 +68,11 @@ class RnrbConnector @Inject() (val httpClientV2: HttpClientV2, val config: Front
     ) ++ propertyValueAfter ++ downsizingDetails
   }
 
-  def send(input: CalculationInput)(using hc: HeaderCarrier): Future[Try[CalculationResult]] = sendJson(
+  def send(input: CalculationInput)(using HeaderCarrier): Future[Try[CalculationResult]] = sendJson(
     Json.toJson(input)
   )
 
-  def sendJson(json: JsValue)(using hc: HeaderCarrier): Future[Try[CalculationResult]] =
+  def sendJson(json: JsValue)(using HeaderCarrier): Future[Try[CalculationResult]] =
 
     httpClientV2
       .post(url"$baseSegment/calculate")
@@ -87,7 +87,7 @@ class RnrbConnector @Inject() (val httpClientV2: HttpClientV2, val config: Front
         }
       }
 
-  def getNilRateBand(dateStr: String)(using hc: HeaderCarrier): Future[HttpResponse] =
+  def getNilRateBand(dateStr: String)(using HeaderCarrier): Future[HttpResponse] =
     httpClientV2.get(url"$baseSegment/nilrateband/$dateStr").execute[HttpResponse]
 
 }

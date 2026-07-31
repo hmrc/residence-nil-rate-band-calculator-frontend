@@ -31,7 +31,7 @@ class SessionExpiredController @Inject() (
     cc: DefaultMessagesControllerComponents,
     val sessionConnector: SessionConnector,
     sessionExpiredView: session_expired
-)(using ec: ExecutionContext)
+)(using ExecutionContext)
     extends FrontendController(cc)
     with I18nSupport
     with Logging {
