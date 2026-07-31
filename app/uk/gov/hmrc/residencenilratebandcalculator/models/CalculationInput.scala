@@ -140,7 +140,7 @@ case class DownsizingDetails(
 )
 
 object DownsizingDetails {
-  given formats: OFormat[DownsizingDetails] = Json.format[DownsizingDetails]
+  given OFormat[DownsizingDetails] = Json.format[DownsizingDetails]
 
   def apply(userAnswers: UserAnswers): DownsizingDetails = {
     require(userAnswers.datePropertyWasChanged.isDefined, "Date Property Was Changed was not answered")

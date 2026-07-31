@@ -34,7 +34,7 @@ import scala.concurrent.{ExecutionContext, Future}
 case class DatedCacheMap(id: String, data: Map[String, JsValue], lastUpdated: Instant = Instant.now())
 
 object DatedCacheMap {
-  given dateFormat: Format[Instant]    = MongoJavatimeFormats.Implicits.jatInstantFormat
+  given Format[Instant]                = MongoJavatimeFormats.Implicits.jatInstantFormat
   given formats: Format[DatedCacheMap] = Json.format[DatedCacheMap]
 
   def apply(cacheMap: CacheMap): DatedCacheMap = DatedCacheMap(cacheMap.id, cacheMap.data)

@@ -27,5 +27,5 @@ case class CalculationResult(
 ) {}
 
 object CalculationResult {
-  given formats: OFormat[CalculationResult] = Json.format[CalculationResult]
+  given OFormat[CalculationResult] = Json.format[CalculationResult]
 }
