@@ -17,7 +17,7 @@
 @import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 @import uk.gov.hmrc.hmrcfrontend.views.config.StandardBetaBanner
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcReportTechnicalIssue
-@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.hmrcstandardpage._
+@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.hmrcstandardpage.*
 
 
 
@@ -36,7 +36,7 @@
 )(
     contentBlock: Html
 )(
-    implicit request: RequestHeader,
+    using request: RequestHeader,
     messages: Messages
 )
 

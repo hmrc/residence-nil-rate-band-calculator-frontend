@@ -33,8 +33,8 @@ class TransferAnyUnusedThresholdControllerSpec extends RnrbControllerSpec {
   "Transfer Any Unused Threshold Controller" must {
 
     def createView: Option[Map[String, String]] => Html = {
-      case None    => transfer_any_unused_threshold(BooleanForm.apply(messageKey))(fakeRequest, messages)
-      case Some(v) => transfer_any_unused_threshold(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
+      case None    => transfer_any_unused_threshold(BooleanForm.apply(messageKey))(using fakeRequest, messages)
+      case Some(v) => transfer_any_unused_threshold(BooleanForm(messageKey).bind(v))(using fakeRequest, messages)
     }
 
     def createController: () => TransferAnyUnusedThresholdController = () =>

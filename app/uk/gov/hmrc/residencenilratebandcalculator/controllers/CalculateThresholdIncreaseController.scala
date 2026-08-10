@@ -18,7 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
 import play.api.i18n.I18nSupport
-import play.api.mvc.DefaultMessagesControllerComponents
+import play.api.mvc.{AnyContent, DefaultMessagesControllerComponents, Request}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.calculate_threshold_increase
 
@@ -31,5 +31,9 @@ class CalculateThresholdIncreaseController @Inject() (
 ) extends FrontendController(cc)
     with I18nSupport {
 
-  def onPageLoad = Action.async(implicit request => Future.successful(Ok(calculateThresholdIncreaseView())))
+  def onPageLoad = Action.async(request =>
+    given Request[AnyContent] = request
+    Future.successful(Ok(calculateThresholdIncreaseView()))
+  )
+
 }

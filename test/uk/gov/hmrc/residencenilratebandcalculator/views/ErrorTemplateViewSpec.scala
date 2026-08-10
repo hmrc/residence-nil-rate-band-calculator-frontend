@@ -24,7 +24,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.error_template
 class ErrorTemplateViewSpec extends ViewSpec {
 
   val error_template: error_template = inject[error_template]
-  val view: Html                     = error_template("title", "heading", "message")(request, messages)
+  val view: Html                     = error_template("title", "heading", "message")
   val doc: Document                  = asDocument(view)
 
   "Error Template" must {

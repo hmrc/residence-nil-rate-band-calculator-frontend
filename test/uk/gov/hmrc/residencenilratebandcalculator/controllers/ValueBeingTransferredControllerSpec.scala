@@ -35,6 +35,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.value_being_transfe
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
 import scala.concurrent.Future
+import scala.language.implicitConversions
 
 class ValueBeingTransferredControllerSpec extends ControllerSpec {
 
@@ -47,9 +48,11 @@ class ValueBeingTransferredControllerSpec extends ControllerSpec {
 
   val value_being_transferred: value_being_transferred = inject[value_being_transferred]
 
+  given Reads[Int] = Reads.IntReads
+
   def mockRnrbConnector: RnrbConnector = {
     val mockConnector = mock[RnrbConnector]
-    when(mockConnector.getNilRateBand(any[String])(any[HeaderCarrier]))
+    when(mockConnector.getNilRateBand(any[String])(using any[HeaderCarrier]))
       .thenReturn(Future.successful(HttpResponse(200, JsNumber(100000).toString)))
     mockConnector
   }
@@ -59,12 +62,12 @@ class ValueBeingTransferredControllerSpec extends ControllerSpec {
       value_being_transferred(
         "£100,000.00",
         NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge)
-      )(fakeRequest, messages)
+      )(using fakeRequest, messages)
     case Some(v) =>
       value_being_transferred(
         "£100,000.00",
         NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v)
-      )(fakeRequest, messages)
+      )(using fakeRequest, messages)
   }
 
   def createViewWithBacklink: Option[Map[String, String]] => Html = {
@@ -72,12 +75,12 @@ class ValueBeingTransferredControllerSpec extends ControllerSpec {
       value_being_transferred(
         "£100,000.00",
         NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge)
-      )(fakeRequest, messages)
+      )(using fakeRequest, messages)
     case Some(v) =>
       value_being_transferred(
         "£100,000.00",
         NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v)
-      )(fakeRequest, messages)
+      )(using fakeRequest, messages)
   }
 
   def createController: () => ValueBeingTransferredController = () =>
@@ -95,13 +98,13 @@ class ValueBeingTransferredControllerSpec extends ControllerSpec {
   "Value Being Transferred Controller" must {
     "if the date of death key is set return 200 for a GET" in {
       setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"))))
-      val result = createController().onPageLoad(Reads.IntReads)(fakeRequest)
+      val result = createController().onPageLoad(fakeRequest)
       status(result) mustBe Status.OK
     }
 
     "if the date of death key is set return the View for a GET" in {
       setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"))))
-      val result = createController().onPageLoad(Reads.IntReads)(fakeRequest)
+      val result = createController().onPageLoad(using Reads.IntReads)(fakeRequest)
       Jsoup.parse(contentAsString(result)).title() mustBe messages(
         "value_being_transferred.title"
       ) + " - Calculate the available RNRB - GOV.UK"
@@ -109,7 +112,7 @@ class ValueBeingTransferredControllerSpec extends ControllerSpec {
 
     "if the date of death key is not set throw an exception" in {
       val exception = intercept[NoSuchElementException] {
-        val result: Future[Result] = createController().onPageLoad(Reads.IntReads)(fakeRequest)
+        val result: Future[Result] = createController().onPageLoad(using Reads.IntReads)(fakeRequest)
         contentAsString(result) mustBe createViewWithBacklink(None).toString
       }
       exception.getMessage mustBe "key not found: DateOfDeath"
@@ -118,14 +121,14 @@ class ValueBeingTransferredControllerSpec extends ControllerSpec {
     "return a redirect on submit with valid data" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue)).withMethod("POST")
       setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"), "value" -> JsNumber(100000))))
-      val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
+      val result = createController().onSubmit(using Writes.IntWrites)(fakePostRequest)
       status(result) mustBe Status.SEE_OTHER
     }
 
     "store valid submitted data" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", "100000")).withMethod("POST")
       setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"), "value" -> JsNumber(100000))))
-      await(createController().onSubmit(Writes.IntWrites)(fakePostRequest))
+      await(createController().onSubmit(using Writes.IntWrites)(fakePostRequest))
       verifyValueIsCached(Constants.valueBeingTransferredId, 100000)
     }
 
@@ -133,7 +136,7 @@ class ValueBeingTransferredControllerSpec extends ControllerSpec {
       setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"))))
       val value           = "invalid data"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
-      val result          = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
+      val result          = createController().onSubmit(using Writes.IntWrites)(fakePostRequest)
       status(result) mustBe Status.BAD_REQUEST
     }
 
@@ -141,7 +144,7 @@ class ValueBeingTransferredControllerSpec extends ControllerSpec {
       setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"))))
       val value           = "invalid data"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
-      val result          = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
+      val result          = createController().onSubmit(using Writes.IntWrites)(fakePostRequest)
       contentAsString(result) mustBe createViewWithBacklink(Some(Map("value" -> value))).toString
     }
 
@@ -149,7 +152,7 @@ class ValueBeingTransferredControllerSpec extends ControllerSpec {
       setCacheMap(new CacheMap("", Map(Constants.dateOfDeathId -> JsString("2017-5-11"))))
       val value           = "invalid data"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
-      createController().onSubmit(Writes.IntWrites)(fakePostRequest)
+      createController().onSubmit(using Writes.IntWrites)(fakePostRequest)
       verifyValueIsNotCached()
     }
 
@@ -160,13 +163,13 @@ class ValueBeingTransferredControllerSpec extends ControllerSpec {
           Map(Constants.dateOfDeathId -> JsString("2017-5-11"), Constants.valueBeingTransferredId -> JsNumber(100000))
         )
       )
-      val result = createController().onPageLoad(Reads.IntReads)(fakeRequest)
+      val result = createController().onPageLoad(using Reads.IntReads)(fakeRequest)
       contentAsString(result) mustBe createView(Some(Map("value" -> testValue))).toString
     }
 
     "On a page load with an expired session, return an redirect to an expired session page" in {
       expireSessionConnector()
-      val result = createController().onPageLoad(Reads.IntReads)(fakeRequest)
+      val result = createController().onPageLoad(using Reads.IntReads)(fakeRequest)
       status(result) mustBe Status.SEE_OTHER
       redirectLocation(result) mustBe Some(
         uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url
@@ -175,7 +178,7 @@ class ValueBeingTransferredControllerSpec extends ControllerSpec {
 
     "On a page submit with an expired session, return an redirect to an expired session page" in {
       expireSessionConnector()
-      val result = createController().onSubmit(Writes.IntWrites)(fakeRequest)
+      val result = createController().onSubmit(using Writes.IntWrites)(fakeRequest)
       status(result) mustBe Status.SEE_OTHER
       redirectLocation(result) mustBe Some(
         uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url

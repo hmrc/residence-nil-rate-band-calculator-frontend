@@ -21,6 +21,7 @@ import play.api.http.Status
 import play.api.libs.json.*
 import play.api.test.Helpers.*
 import play.twirl.api.Html
+import scala.language.implicitConversions
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.{ControllerBase, SimpleControllerBase}
 import uk.gov.hmrc.residencenilratebandcalculator.models.*
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
@@ -41,13 +42,13 @@ trait RnrbControllerSpec extends ControllerSpec {
 
     "return 200 for a GET" in {
       for (v <- valuesToCacheBeforeLoad) setCacheValue(v._1, v._2)
-      val result = createController().onPageLoad(rds)(fakeRequest)
+      val result = createController().onPageLoad(using rds)(fakeRequest)
       status(result) mustBe Status.OK
     }
 
     "return the View for a GET" in {
       for (v <- valuesToCacheBeforeLoad) setCacheValue(v._1, v._2)
-      val result = createController().onPageLoad(rds)(fakeRequest)
+      val result = createController().onPageLoad(using rds)(fakeRequest)
       Jsoup.parse(contentAsString(result)).title() mustBe messages(
         s"$messageKeyPrefix.title"
       ) + " - Calculate the available RNRB - GOV.UK"
@@ -57,7 +58,7 @@ trait RnrbControllerSpec extends ControllerSpec {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString)).withMethod("POST")
       for (v <- valuesToCacheBeforeSubmission) setCacheValue(v._1, v._2)
       setCacheValue(cacheKey, testValue)
-      val result = createController().onSubmit(wts)(fakePostRequest)
+      val result = createController().onSubmit(using wts)(fakePostRequest)
       status(result) mustBe Status.SEE_OTHER
     }
 
@@ -65,7 +66,7 @@ trait RnrbControllerSpec extends ControllerSpec {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString)).withMethod("POST")
       for (v <- valuesToCacheBeforeSubmission) setCacheValue(v._1, v._2)
       setCacheValue(cacheKey, testValue)
-      await(createController().onSubmit(wts)(fakePostRequest))
+      await(createController().onSubmit(using wts)(fakePostRequest))
       verifyValueIsCached(cacheKey, testValue)
     }
 
@@ -73,7 +74,7 @@ trait RnrbControllerSpec extends ControllerSpec {
       for (v <- valuesToCacheBeforeLoad) setCacheValue(v._1, v._2)
       val value           = "invalid data"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
-      val result          = createController().onSubmit(wts)(fakePostRequest)
+      val result          = createController().onSubmit(using wts)(fakePostRequest)
       status(result) mustBe Status.BAD_REQUEST
     }
 
@@ -81,21 +82,21 @@ trait RnrbControllerSpec extends ControllerSpec {
       for (v <- valuesToCacheBeforeLoad) setCacheValue(v._1, v._2)
       val value           = "invalid data"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
-      val result          = createController().onSubmit(wts)(fakePostRequest)
+      val result          = createController().onSubmit(using wts)(fakePostRequest)
       contentAsString(result) mustBe createView(Some(Map("value" -> value))).toString
     }
 
     "not store invalid submitted data" in {
       val value           = "invalid data"
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", value)).withMethod("POST")
-      createController().onSubmit(wts)(fakePostRequest)
+      createController().onSubmit(using wts)(fakePostRequest)
       verifyValueIsNotCached()
     }
 
     "get a previously stored value from keystore" in {
       for (v <- valuesToCacheBeforeLoad) setCacheValue(v._1, v._2)
       setCacheValue(cacheKey, testValue)
-      val result = createController().onPageLoad(rds)(fakeRequest)
+      val result = createController().onPageLoad(using rds)(fakeRequest)
       contentAsString(result) mustBe createView(Some(Map("value" -> testValue.toString))).toString
     }
   }
@@ -107,7 +108,7 @@ trait RnrbControllerSpec extends ControllerSpec {
 
     "On a page load with an expired session, return an redirect to an expired session page" in {
       expireSessionConnector()
-      val result = createController().onPageLoad(rds)(fakeRequest)
+      val result = createController().onPageLoad(using rds)(fakeRequest)
       status(result) mustBe Status.SEE_OTHER
       redirectLocation(result) mustBe Some(
         uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url
@@ -116,7 +117,7 @@ trait RnrbControllerSpec extends ControllerSpec {
 
     "On a page submit with an expired session, return an redirect to an expired session page" in {
       expireSessionConnector()
-      val result = createController().onSubmit(wts)(fakeRequest)
+      val result = createController().onSubmit(using wts)(fakeRequest)
       status(result) mustBe Status.SEE_OTHER
       redirectLocation(result) mustBe Some(
         uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad.url

@@ -19,7 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import javax.inject.{Inject, Singleton}
 import play.api.Logging
 import play.api.i18n.I18nSupport
-import play.api.mvc.DefaultMessagesControllerComponents
+import play.api.mvc.{AnyContent, DefaultMessagesControllerComponents, Request}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
@@ -35,13 +35,14 @@ class CheckYourAnswersController @Inject() (
     sessionConnector: SessionConnector,
     validatedSession: ValidatedSession,
     checkYourAnswersView: check_your_answers
-)(implicit ec: ExecutionContext)
+)(using ExecutionContext)
     extends FrontendController(cc)
     with I18nSupport
     with Logging {
 
   def onPageLoad =
-    validatedSession.async { implicit request =>
+    validatedSession.async { request =>
+      given Request[AnyContent] = request
       sessionConnector.fetch().map {
         case Some(answers) =>
           val requiredAnswers = Set(

@@ -18,6 +18,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import play.api.http.Status
 import play.api.libs.json.{Json, Reads, Writes}
+import scala.language.implicitConversions
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
@@ -44,12 +45,12 @@ class ValueOfAssetsPassingControllerSpec extends RnrbControllerSpec with CommonP
           value_of_assets_passing(
             NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),
             formattedPropertyValue = None
-          )(fakeRequest, messages)
+          )(using fakeRequest, messages)
         case Some(v) =>
           value_of_assets_passing(
             NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v),
             None
-          )(fakeRequest, messages)
+          )(using fakeRequest, messages)
       }
 
     def createController = () =>
@@ -102,7 +103,7 @@ class ValueOfAssetsPassingControllerSpec extends RnrbControllerSpec with CommonP
     "return bad request on submit with a value greater than the previously saved Value Of Estate" in {
       val fakePostRequest = fakeRequest.withFormUrlEncodedBody(("value", testValue.toString))
       setCacheValue(Constants.valueOfEstateId, testValue - 1)
-      val result = createController().onSubmit(Writes.IntWrites)(fakePostRequest)
+      val result = createController().onSubmit(using Writes.IntWrites)(fakePostRequest)
       status(result) mustBe Status.BAD_REQUEST
     }
 
@@ -110,11 +111,11 @@ class ValueOfAssetsPassingControllerSpec extends RnrbControllerSpec with CommonP
       val result = createController().view(
         NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),
         new UserAnswers(CacheMap("id", Map(Constants.propertyValueId -> Json.toJson(1))))
-      )(fakeRequest)
+      )(using fakeRequest)
       result mustBe value_of_assets_passing(
         NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge),
         Some(CurrencyFormatter.format(1))
-      )(fakeRequest, messages)
+      )(using fakeRequest, messages)
     }
   }
 

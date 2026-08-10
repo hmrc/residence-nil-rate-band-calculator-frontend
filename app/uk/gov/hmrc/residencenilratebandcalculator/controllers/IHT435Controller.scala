@@ -19,7 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import javax.inject.{Inject, Singleton}
 import play.api.{Environment, Logging}
 import play.api.i18n.{I18nSupport, Lang}
-import play.api.mvc.{Action, AnyContent, DefaultMessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, DefaultMessagesControllerComponents, Request}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.utils.PDFHelperImpl
@@ -32,12 +32,13 @@ class IHT435Controller @Inject() (
     val cc: DefaultMessagesControllerComponents,
     val sessionConnector: SessionConnector,
     val pdfHelper: PDFHelperImpl
-)(implicit ex: ExecutionContext)
+)(using ex: ExecutionContext)
     extends FrontendController(cc)
     with I18nSupport
     with Logging {
 
-  def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
+  def onPageLoad: Action[AnyContent] = Action.async { request =>
+    given Request[AnyContent] = request
     sessionConnector.fetch().map {
       case None =>
         Redirect(uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.SessionExpiredController.onPageLoad)
@@ -47,8 +48,8 @@ class IHT435Controller @Inject() (
           throw new RuntimeException(msg)
         }
 
-        implicit val currentLang: Lang = request.lang
-        val generateWelshPDF           = messagesApi.preferred(request).lang.code == "cy"
+        given Lang           = request.lang
+        val generateWelshPDF = messagesApi.preferred(request).lang.code == "cy"
 
         pdfHelper
           .generatePDF(cacheMap = cacheMap, generateWelshPDF = generateWelshPDF)

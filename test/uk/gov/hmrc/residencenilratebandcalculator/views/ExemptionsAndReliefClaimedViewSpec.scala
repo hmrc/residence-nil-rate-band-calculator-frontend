@@ -30,7 +30,7 @@ class ExemptionsAndReliefClaimedViewSpec extends NewBooleanViewSpec {
   val form: Form[Boolean] = Forms.ExemptionsAndReliefClaimed
 
   val exemptions_and_relief_claimed: exemptions_and_relief_claimed = inject[exemptions_and_relief_claimed]
-  def createView(form: Form[Boolean]): Html = exemptions_and_relief_claimed(form)(request, messages)
+  def createView(form: Form[Boolean]): Html                        = exemptions_and_relief_claimed(form)
 
   "Exemptions And Relief Claimed View" must {
 

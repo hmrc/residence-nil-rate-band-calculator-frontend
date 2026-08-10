@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.connectors
 
-import play.api.libs.json._
+import play.api.libs.json.*
 import play.api.Logging
 import javax.inject.{Inject, Singleton}
 import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
@@ -27,10 +27,10 @@ import uk.gov.hmrc.http.HeaderCarrier
 
 @Singleton
 class SessionConnector @Inject() (val sessionRepository: SessionRepository, val cascadeUpsert: CascadeUpsert)(
-    implicit ec: ExecutionContext
+    using ExecutionContext
 ) extends Logging {
 
-  def cache[A](key: String, value: A)(implicit wts: Writes[A], hc: HeaderCarrier): Future[CacheMap] =
+  def cache[A](key: String, value: A)(using wts: Writes[A], hc: HeaderCarrier): Future[CacheMap] =
     hc.sessionId match {
       case None =>
         val msg = "Unable to find session with id " + hc.sessionId + "while caching " + key + " = " + value
@@ -43,20 +43,20 @@ class SessionConnector @Inject() (val sessionRepository: SessionRepository, val 
         }
     }
 
-  def removeAll(implicit hc: HeaderCarrier): Future[Boolean] =
+  def removeAll(using hc: HeaderCarrier): Future[Boolean] =
     hc.sessionId match {
       case None => Future(false)
       case Some(id) =>
         sessionRepository.removeAll(id.toString)
     }
 
-  def fetch()(implicit hc: HeaderCarrier): Future[Option[CacheMap]] =
+  def fetch()(using hc: HeaderCarrier): Future[Option[CacheMap]] =
     hc.sessionId match {
       case None     => Future.successful(None)
       case Some(id) => sessionRepository.get(id.toString)
     }
 
-  def fetchAndGetEntry[A](key: String)(implicit hc: HeaderCarrier, rds: Reads[A]): Future[Option[A]] = {
+  def fetchAndGetEntry[A](key: String)(using HeaderCarrier, Reads[A]): Future[Option[A]] = {
     val futureOptionCacheMap = fetch()
     futureOptionCacheMap.map(optionalCacheMap => optionalCacheMap.flatMap(cm => cm.getEntry(key)))
   }

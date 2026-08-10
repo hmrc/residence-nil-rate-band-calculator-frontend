@@ -22,7 +22,7 @@ import javax.inject.{Inject, Singleton}
 import play.api.data.FormError
 import play.api.i18n.I18nSupport
 import play.api.libs.json.{Reads, Writes}
-import play.api.mvc.DefaultMessagesControllerComponents
+import play.api.mvc.{AnyContent, DefaultMessagesControllerComponents, Request}
 import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
@@ -45,7 +45,7 @@ class ValueAvailableWhenPropertyChangedController @Inject() (
     val rnrbConnector: RnrbConnector,
     validatedSession: ValidatedSession,
     valueAvailableWhenPropertyChangedView: value_available_when_property_changed
-)(implicit ec: ExecutionContext)
+)(using ec: ExecutionContext)
     extends FrontendController(cc)
     with I18nSupport
     with Logging {
@@ -54,18 +54,19 @@ class ValueAvailableWhenPropertyChangedController @Inject() (
 
   def form = () => Forms.ValueAvailableWhenPropertyChanged
 
-  private def getCacheMap(implicit hc: HeaderCarrier): Future[CacheMap] = sessionConnector.fetch().map {
+  private def getCacheMap(using hc: HeaderCarrier): Future[CacheMap] = sessionConnector.fetch().map {
     case Some(cacheMap) => cacheMap
     case None           => throw new NoCacheMapException("CacheMap not available")
   }
 
-  def microserviceValues(implicit hc: HeaderCarrier): Future[(HttpResponse, CacheMap)] = for {
+  def microserviceValues(using hc: HeaderCarrier): Future[(HttpResponse, CacheMap)] = for {
     dateOfDisposal   <- getCacheMap.map(_.data(Constants.datePropertyWasChangedId).toString().replaceAll("\"", ""))
     nilRateValueJson <- rnrbConnector.getNilRateBand(dateOfDisposal)
     cacheMap         <- getCacheMap
   } yield (nilRateValueJson, cacheMap)
 
-  def onPageLoad(implicit rds: Reads[Int]) = Action.async { implicit request =>
+  def onPageLoad(using Reads[Int]) = Action.async { request =>
+    given Request[AnyContent] = request
     microserviceValues
       .map { case (nilRateValueJson, cacheMap) =>
         val nilRateBand = CurrencyFormatter.format(nilRateValueJson.json.toString())
@@ -86,7 +87,8 @@ class ValueAvailableWhenPropertyChangedController @Inject() (
       }
   }
 
-  def onSubmit(implicit wts: Writes[Int]) = validatedSession.async { implicit request =>
+  def onSubmit(using Writes[Int]) = validatedSession.async { request =>
+    given Request[AnyContent] = request
     microserviceValues
       .flatMap { case (nilRateValueJson, cacheMap) =>
         val boundForm            = form().bindFromRequest()

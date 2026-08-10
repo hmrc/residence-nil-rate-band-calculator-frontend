@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+@import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.*
 @import uk.gov.hmrc.residencenilratebandcalculator.models.AnswerRow
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
@@ -27,7 +27,7 @@
     inputRadio: playComponents.input_radio,
 )
 
-@(form: Form[String])(implicit request: Request[?], messages: Messages)
+@(form: Form[String])(using request: Request[?], messages: Messages)
 
 @title = @{if(form.errors.nonEmpty) messages("site.title.error", messages("property_passing_to_direct_descendants.browser_title")) else messages("property_passing_to_direct_descendants.browser_title")}
 

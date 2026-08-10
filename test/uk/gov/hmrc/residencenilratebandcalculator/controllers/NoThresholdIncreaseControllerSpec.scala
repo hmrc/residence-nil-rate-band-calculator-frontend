@@ -19,6 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import play.api.http.Status
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import play.api.test.Helpers.*
+import scala.language.implicitConversions
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CacheMap, Reason, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_threshold_increase
@@ -68,7 +69,7 @@ class NoThresholdIncreaseControllerSpec extends RnrbControllerSpec {
           .onPageLoad(fakeRequest)
 
       contentAsString(result) mustBe
-        no_threshold_increase("no_threshold_increase.direct_descendant")(fakeRequest, messages).toString
+        no_threshold_increase("no_threshold_increase.direct_descendant")(using fakeRequest, messages).toString
     }
 
     "return the No Threshold Increase view for none case a GET" in {
@@ -78,10 +79,10 @@ class NoThresholdIncreaseControllerSpec extends RnrbControllerSpec {
 
       val result =
         new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase)
-          .createView(reason, userAnswers)(fakeRequest)
+          .createView(reason, userAnswers)(using fakeRequest)
 
       contentAsString(result) mustBe
-        no_threshold_increase("")(fakeRequest, messages).toString
+        no_threshold_increase("")(using fakeRequest, messages).toString
     }
   }
 

@@ -31,7 +31,7 @@ class ChargeableInheritedPropertyValueViewSpec extends NewIntViewSpec {
   val chargeable_inherited_property_value: chargeable_inherited_property_value =
     inject[chargeable_inherited_property_value]
 
-  def createView(form: Form[Int]): Html = chargeable_inherited_property_value(form)(request, messages)
+  def createView(form: Form[Int]): Html = chargeable_inherited_property_value(form)
 
   val form: Form[Int] = Forms.ChargeableInheritedPropertyValue
 

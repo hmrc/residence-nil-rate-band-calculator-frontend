@@ -19,7 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import javax.inject.{Inject, Singleton}
 import play.api.Logging
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, DefaultMessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, DefaultMessagesControllerComponents, Request}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.session_expired
@@ -31,12 +31,13 @@ class SessionExpiredController @Inject() (
     cc: DefaultMessagesControllerComponents,
     val sessionConnector: SessionConnector,
     sessionExpiredView: session_expired
-)(implicit ec: ExecutionContext)
+)(using ExecutionContext)
     extends FrontendController(cc)
     with I18nSupport
     with Logging {
 
-  def onPageLoad: Action[AnyContent] = Action.async { implicit request =>
+  def onPageLoad: Action[AnyContent] = Action.async { request =>
+    given Request[AnyContent] = request
     sessionConnector.removeAll.flatMap { isDropped =>
       logger.debug(s"Drop of session connector cache return status: $isDropped")
       Future.successful(Ok(sessionExpiredView()))

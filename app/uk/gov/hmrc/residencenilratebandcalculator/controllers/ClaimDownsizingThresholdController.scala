@@ -35,7 +35,7 @@ class ClaimDownsizingThresholdController @Inject() (
     override val sessionConnector: SessionConnector,
     override val navigator: Navigator,
     claimDownsizingThresholdView: claim_downsizing_threshold
-)(override implicit val ec: ExecutionContext)
+)(using ExecutionContext)
     extends FrontendController(cc)
     with SimpleControllerBase[Boolean] {
 
@@ -43,7 +43,7 @@ class ClaimDownsizingThresholdController @Inject() (
 
   override def form: () => Form[Boolean] = () => Forms.ClaimDownsizingThreshold
 
-  override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[?]): Html =
+  override def view(form: Form[Boolean], userAnswers: UserAnswers)(using request: Request[?]): Html =
     claimDownsizingThresholdView(form)
 
 }

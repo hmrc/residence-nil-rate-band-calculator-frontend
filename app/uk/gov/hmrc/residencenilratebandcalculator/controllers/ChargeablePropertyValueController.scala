@@ -34,7 +34,7 @@ class ChargeablePropertyValueController @Inject() (
     override val sessionConnector: SessionConnector,
     override val navigator: Navigator,
     chargeablePropertyValueView: chargeable_property_value
-)(override implicit val ec: ExecutionContext)
+)(using ExecutionContext)
     extends FrontendController(cc)
     with SimpleControllerBase[Int] {
 
@@ -42,7 +42,7 @@ class ChargeablePropertyValueController @Inject() (
 
   override def form: () => Form[Int] = () => Forms.ChargeablePropertyValue
 
-  override def view(form: Form[Int], userAnswers: UserAnswers)(implicit request: Request[?]) =
+  override def view(form: Form[Int], userAnswers: UserAnswers)(using request: Request[?]) =
     chargeablePropertyValueView(form)
 
   override def validate(value: Int, userAnswers: UserAnswers): Option[FormError] =

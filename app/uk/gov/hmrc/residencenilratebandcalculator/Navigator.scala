@@ -20,7 +20,7 @@ import javax.inject.{Inject, Singleton}
 
 import java.time.LocalDate
 import play.api.mvc.Call
-import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes._
+import uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.*
 import uk.gov.hmrc.residencenilratebandcalculator.models.UserAnswers
 
 @Singleton

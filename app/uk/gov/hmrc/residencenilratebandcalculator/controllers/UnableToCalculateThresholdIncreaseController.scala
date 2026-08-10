@@ -32,13 +32,13 @@ class UnableToCalculateThresholdIncreaseController @Inject() (
     val cc: DefaultMessagesControllerComponents,
     override val sessionConnector: SessionConnector,
     unableToCalculateThresholdIncreaseView: unable_to_calculate_threshold_increase
-)(override implicit val ec: ExecutionContext)
+)(using ExecutionContext)
     extends FrontendController(cc)
     with TransitionController {
 
   val getReason: GetReason = GetUnableToCalculateThresholdIncreaseReason
 
-  def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[?]): Html =
+  def createView(reason: Reason, userAnswers: UserAnswers)(using request: Request[?]): Html =
     unableToCalculateThresholdIncreaseView("unable_to_calculate_threshold_increase.grossing_up")
 
 }

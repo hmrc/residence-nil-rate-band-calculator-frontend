@@ -28,7 +28,7 @@ class ValueOfEstateViewSpec extends NewIntViewSpec {
 
   val messageKeyPrefix                  = "value_of_estate"
   val value_of_estate: value_of_estate  = inject[value_of_estate]
-  def createView(form: Form[Int]): Html = value_of_estate(form)(request, messages)
+  def createView(form: Form[Int]): Html = value_of_estate(form)
 
   val form: Form[Int] = Forms.ValueBeingTransferred
 

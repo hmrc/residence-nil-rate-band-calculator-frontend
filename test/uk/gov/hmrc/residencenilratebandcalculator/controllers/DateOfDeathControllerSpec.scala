@@ -22,6 +22,7 @@ import org.mockito.ArgumentMatchers
 import org.mockito.Mockito.*
 import org.mockito.stubbing.OngoingStubbing
 import play.twirl.api.Html
+import scala.language.implicitConversions
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.DateControllerSpec
@@ -48,10 +49,10 @@ class DateOfDeathControllerSpec extends DateControllerSpec {
     date_of_death
   )
 
-  implicit val mat: Materializer = inject[Materializer]
+  given Materializer = inject[Materializer]
 
   def setupMock(result: Future[Option[CacheMap]]): OngoingStubbing[Future[Option[CacheMap]]] =
-    when(mockConnector.fetch()(ArgumentMatchers.any[HeaderCarrier]))
+    when(mockConnector.fetch()(using ArgumentMatchers.any[HeaderCarrier]))
       .thenReturn(result)
 
   "Loading the page" when {
@@ -60,14 +61,14 @@ class DateOfDeathControllerSpec extends DateControllerSpec {
 
       "return the exception" in {
         setupMock(Future.failed(new Exception("Test message")))
-        val result = controller.onPageLoad(implicitly)(fakeRequest)
+        val result = controller.onPageLoad(using Date.dateReads)(fakeRequest)
 
         (the[Exception] thrownBy await(result) must have).message("Test message")
       }
     }
 
     "sessionConnector returns a none" must {
-      lazy val result = controller.onPageLoad(implicitly)(fakeRequest)
+      lazy val result = controller.onPageLoad(using Date.dateReads)(fakeRequest)
 
       "return a status of OK" in {
         setupMock(Future.successful(None))
@@ -82,7 +83,7 @@ class DateOfDeathControllerSpec extends DateControllerSpec {
     }
 
     "sessionConnector returns a cachemap" must {
-      lazy val result = controller.onPageLoad(implicitly)(fakeRequest)
+      lazy val result = controller.onPageLoad(using Date.dateReads)(fakeRequest)
 
       "return a status of OK" in {
         setupMock(Future.successful(Some(CacheMap("id", Map()))))
@@ -100,8 +101,8 @@ class DateOfDeathControllerSpec extends DateControllerSpec {
   "Date of Death Controller" must {
 
     def createView: Option[Date] => Html = {
-      case None    => date_of_death(dateOfDeathForm(messages))(fakeRequest, messages)
-      case Some(v) => date_of_death(dateOfDeathForm(messages).fill(v))(fakeRequest, messages)
+      case None    => date_of_death(dateOfDeathForm(using messages))(using fakeRequest, messages)
+      case Some(v) => date_of_death(dateOfDeathForm(using messages).fill(v))(using fakeRequest, messages)
     }
 
     def createController: () => DateOfDeathController = () =>

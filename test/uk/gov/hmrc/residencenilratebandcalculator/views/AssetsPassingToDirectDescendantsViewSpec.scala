@@ -35,7 +35,7 @@ class AssetsPassingToDirectDescendantsViewSpec extends NewBooleanViewSpec {
   val form: Form[Boolean] = Forms.AssetsPassingToDirectDescendants
 
   def createView(form: Form[Boolean]): Html =
-    assets_passing_to_direct_descendants(form, None)(request, messages)
+    assets_passing_to_direct_descendants(form, None)(using request, messages)
 
   "Assets Passing To Direct Descendants View" must {
 
@@ -71,7 +71,7 @@ class AssetsPassingToDirectDescendantsViewSpec extends NewBooleanViewSpec {
           assets_passing_to_direct_descendants(
             form,
             Some(formattedPropertyValue)
-          )(request, messages)
+          )
         )
         assertContainsText(doc, messages("assets_passing_to_direct_descendants.guidance", formattedPropertyValue))
       }

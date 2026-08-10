@@ -22,8 +22,8 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.ViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_additional_threshold_available
 
 class NoAdditionalThresholdAvailableViewSpec extends ViewSpec {
-  implicit val msg: Messages = messages
-  val messageKeyPrefix       = "no_additional_threshold_available"
+  given Messages       = messages
+  val messageKeyPrefix = "no_additional_threshold_available"
 
   val no_additional_threshold_available: no_additional_threshold_available =
     inject[no_additional_threshold_available]

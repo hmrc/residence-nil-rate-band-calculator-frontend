@@ -21,7 +21,7 @@
     govukDetails: GovukDetails
 )
 
-@(rows: Seq[AnswerRow], includeChangeLink: Boolean = true, showHeading: Boolean = true)(implicit messages: Messages)
+@(rows: Seq[AnswerRow], includeChangeLink: Boolean = true, showHeading: Boolean = true)(using messages: Messages)
 
 @rowUrl(row: AnswerRow) = @{
     Some(Actions(

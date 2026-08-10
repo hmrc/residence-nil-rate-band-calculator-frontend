@@ -34,9 +34,10 @@ class PartOfEstatePassingToDirectDescendantsControllerSpec extends RnrbControlle
   "Part Of Estate Passing To Direct Descendants Controller" must {
 
     def createView: Option[Map[String, String]] => Html = {
-      case None => part_of_estate_passing_to_direct_descendants(BooleanForm.apply(messageKey))(fakeRequest, messages)
+      case None =>
+        part_of_estate_passing_to_direct_descendants(BooleanForm.apply(messageKey))(using fakeRequest, messages)
       case Some(v) =>
-        part_of_estate_passing_to_direct_descendants(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
+        part_of_estate_passing_to_direct_descendants(BooleanForm(messageKey).bind(v))(using fakeRequest, messages)
     }
 
     def createController = () =>

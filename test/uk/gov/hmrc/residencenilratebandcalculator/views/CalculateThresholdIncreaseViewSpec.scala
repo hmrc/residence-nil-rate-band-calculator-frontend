@@ -27,7 +27,7 @@ class CalculateThresholdIncreaseViewSpec extends ViewSpec {
 
   "Calculate Threshold Increase view" must {
     "display the correct browser title" in {
-      val doc = asDocument(calculate_threshold_increase()(request, messages))
+      val doc = asDocument(calculate_threshold_increase())
       assertEqualsMessage(
         doc,
         "title",
@@ -36,12 +36,12 @@ class CalculateThresholdIncreaseViewSpec extends ViewSpec {
     }
 
     "display the correct title" in {
-      val doc = asDocument(calculate_threshold_increase()(request, messages))
+      val doc = asDocument(calculate_threshold_increase())
       assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.title")
     }
 
     "display the correct guidance" in {
-      val doc = asDocument(calculate_threshold_increase()(request, messages))
+      val doc = asDocument(calculate_threshold_increase())
       assertContainsMessages(
         doc,
         s"$messageKeyPrefix.guidance1",
@@ -53,14 +53,14 @@ class CalculateThresholdIncreaseViewSpec extends ViewSpec {
     }
 
     "display a Start button linking to the 'Date Of Death' page" in {
-      val doc       = asDocument(calculate_threshold_increase()(request, messages))
+      val doc       = asDocument(calculate_threshold_increase())
       val startLink = doc.getElementsByClass("govuk-button govuk-button--start")
       startLink.attr("href") mustBe routes.DateOfDeathController.onPageLoad.url
       startLink.text mustBe messages("site.start_now")
     }
 
     "not display the HMRC logo" in {
-      val doc = asDocument(calculate_threshold_increase()(request, messages))
+      val doc = asDocument(calculate_threshold_increase())
       assertNotRenderedByCssSelector(doc, ".organisation-logo")
     }
   }

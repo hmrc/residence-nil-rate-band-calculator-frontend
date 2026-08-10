@@ -24,7 +24,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.GetNoAdditionalThreshol
   NoProperty,
   NotCloselyInherited
 }
-import uk.gov.hmrc.residencenilratebandcalculator.models._
+import uk.gov.hmrc.residencenilratebandcalculator.models.*
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_additional_threshold_available
 import uk.gov.hmrc.residencenilratebandcalculator.{Constants, Navigator}
 import play.twirl.api.Html
@@ -37,13 +37,13 @@ class NoAdditionalThresholdAvailableController @Inject() (
     override val sessionConnector: SessionConnector,
     val navigator: Navigator,
     noAdditionalThresholdAvailableView: no_additional_threshold_available
-)(override implicit val ec: ExecutionContext)
+)(using ExecutionContext)
     extends FrontendController(cc)
     with TransitionController {
 
   val getReason: GetReason = GetNoAdditionalThresholdAvailableReason
 
-  def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[?]): Html = {
+  def createView(reason: Reason, userAnswers: UserAnswers)(using request: Request[?]): Html = {
     val reasonKey = reason match {
       case NotCloselyInherited | NoProperty => "no_additional_threshold_available.not_closely_inherited_reason"
       case _                                => ""

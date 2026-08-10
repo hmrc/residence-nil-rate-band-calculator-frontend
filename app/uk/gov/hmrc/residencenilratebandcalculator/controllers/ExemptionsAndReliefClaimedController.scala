@@ -35,7 +35,7 @@ class ExemptionsAndReliefClaimedController @Inject() (
     override val sessionConnector: SessionConnector,
     override val navigator: Navigator,
     exemptionsAndReliefClaimedView: exemptions_and_relief_claimed
-)(override implicit val ec: ExecutionContext)
+)(using ExecutionContext)
     extends FrontendController(cc)
     with SimpleControllerBase[Boolean] {
 
@@ -43,7 +43,7 @@ class ExemptionsAndReliefClaimedController @Inject() (
 
   override def form: () => Form[Boolean] = () => Forms.ExemptionsAndReliefClaimed
 
-  override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[?]): Html =
+  override def view(form: Form[Boolean], userAnswers: UserAnswers)(using Request[?]): Html =
     exemptionsAndReliefClaimedView(form)
 
 }

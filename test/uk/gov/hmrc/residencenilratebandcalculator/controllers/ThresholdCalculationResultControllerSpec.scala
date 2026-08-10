@@ -34,6 +34,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.html.threshold_calculati
 import java.time.LocalDate
 import scala.concurrent.Future
 import scala.util.Success
+import scala.language.implicitConversions
 
 class ThresholdCalculationResultControllerSpec extends RnrbControllerSpec {
 
@@ -79,7 +80,7 @@ class ThresholdCalculationResultControllerSpec extends RnrbControllerSpec {
 
   def mockRnrbConnector: RnrbConnector = {
     val mockConnector = mock[RnrbConnector]
-    when(mockConnector.send(any[CalculationInput])(any[HeaderCarrier]))
+    when(mockConnector.send(any[CalculationInput])(using any[HeaderCarrier]))
       .thenReturn(Future.successful(Success(calculationResult)))
     mockConnector
   }
@@ -161,7 +162,7 @@ class ThresholdCalculationResultControllerSpec extends RnrbControllerSpec {
       val connector  = mockRnrbConnector
       val jsonNapper = ArgumentCaptor.forClass(classOf[CalculationInput])
       await(thresholdCalculationResultController(connector).onPageLoad(fakeRequest))
-      verify(connector).send(jsonNapper.capture)(any[HeaderCarrier])
+      verify(connector).send(jsonNapper.capture)(using any[HeaderCarrier])
       jsonNapper.getValue mustBe expectedCalculationInput
     }
 
@@ -173,7 +174,7 @@ class ThresholdCalculationResultControllerSpec extends RnrbControllerSpec {
     }
 
     "redirect to the SessionExpiredController if no CacheMap can be found" in {
-      when(mockSessionConnector.fetch()(any[HeaderCarrier])).thenReturn(Future.successful(None))
+      when(mockSessionConnector.fetch()(using any[HeaderCarrier])).thenReturn(Future.successful(None))
       val result = thresholdCalculationResultController().onPageLoad(fakeRequest)
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)

@@ -19,6 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import play.api.http.Status
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import play.api.test.Helpers.*
+import scala.language.implicitConversions
 import uk.gov.hmrc.residencenilratebandcalculator.connectors.SessionConnector
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.models.{CacheMap, Reason, UserAnswers}
@@ -82,7 +83,7 @@ class NoAdditionalThresholdAvailableControllerSpec extends RnrbControllerSpec {
         no_additional_threshold_available(
           "no_additional_threshold_available.not_closely_inherited_reason",
           routes.TransferAnyUnusedThresholdController.onPageLoad
-        )(fakeRequest, messages).toString
+        )(using fakeRequest, messages).toString
     }
 
     "return the  Correct View for a GET" in {
@@ -97,12 +98,12 @@ class NoAdditionalThresholdAvailableControllerSpec extends RnrbControllerSpec {
         no_additional_threshold_available
       )
 
-      val result = controller.createView(reason, userAnswers)(fakeRequest)
+      val result = controller.createView(reason, userAnswers)(using fakeRequest)
       contentAsString(result) mustBe
         no_additional_threshold_available(
           "",
           routes.TransferAnyUnusedThresholdController.onPageLoad
-        )(fakeRequest, messages).toString
+        )(using fakeRequest, messages).toString
     }
 
     "throw an exception when the cache is unavailable" in {

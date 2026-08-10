@@ -33,8 +33,8 @@ class PropertyInEstateControllerSpec extends RnrbControllerSpec {
   "Property In Estate Controller" must {
 
     def createView: Option[Map[String, String]] => Html = {
-      case None    => property_in_estate(BooleanForm.apply(messageKey))(fakeRequest, messages)
-      case Some(v) => property_in_estate(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
+      case None    => property_in_estate(BooleanForm.apply(messageKey))(using fakeRequest, messages)
+      case Some(v) => property_in_estate(BooleanForm(messageKey).bind(v))(using fakeRequest, messages)
     }
 
     def createController: () => PropertyInEstateController = () =>

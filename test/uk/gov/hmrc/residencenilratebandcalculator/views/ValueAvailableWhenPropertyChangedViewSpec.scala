@@ -34,7 +34,7 @@ class ValueAvailableWhenPropertyChangedViewSpec extends NewIntViewSpec {
   val form: Form[Int] = Forms.ValueAvailableWhenPropertyChanged
 
   def createView(form: Form[Int]): Html =
-    value_available_when_property_changed("100000", form)(request, messages)
+    value_available_when_property_changed("100000", form)
 
   "Value Available When Property Changed View" must {
 

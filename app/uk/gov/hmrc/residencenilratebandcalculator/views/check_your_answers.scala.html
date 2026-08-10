@@ -23,7 +23,7 @@
     buttonLink: playComponents.button_link,
     govukSummaryList : GovukSummaryList
 )
-@(answerRows: Seq[AnswerRow])(implicit request: Request[?], messages: Messages)
+@(answerRows: Seq[AnswerRow])(using request: Request[?], messages: Messages)
 
 @rows = @{
     answerRows.map { answer =>

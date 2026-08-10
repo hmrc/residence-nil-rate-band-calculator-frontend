@@ -27,7 +27,7 @@ class PropertyValueViewSpec extends NewIntViewSpec {
 
   val messageKeyPrefix                  = "property_value"
   val property_value: property_value    = inject[property_value]
-  def createView(form: Form[Int]): Html = property_value(form)(request, messages)
+  def createView(form: Form[Int]): Html = property_value(form)
 
   val form: Form[Int] = Forms.PropertyValue
 

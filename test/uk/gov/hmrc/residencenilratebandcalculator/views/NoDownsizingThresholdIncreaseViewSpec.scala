@@ -22,8 +22,8 @@ import uk.gov.hmrc.residencenilratebandcalculator.views.helpers.ViewSpec
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_downsizing_threshold_increase
 
 class NoDownsizingThresholdIncreaseViewSpec extends ViewSpec {
-  implicit val msg: Messages = messages
-  val messageKeyPrefix       = "no_downsizing_threshold_increase"
+  given Messages       = messages
+  val messageKeyPrefix = "no_downsizing_threshold_increase"
 
   val no_downsizing_threshold_increase: no_downsizing_threshold_increase =
     inject[no_downsizing_threshold_increase]

@@ -31,6 +31,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.models.{GetReason, Reason, Use
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.reflect.ClassTag
+import scala.language.implicitConversions
 
 class TransitionControllerSpec extends ControllerSpec {
 
@@ -42,11 +43,11 @@ class TransitionControllerSpec extends ControllerSpec {
   private[controllers] class TestTransitionController
       extends FrontendController(injectedMessagesControllerComponents)
       with TransitionController {
-    val sessionConnector: SessionConnector     = mockSessionConnector
-    val getReason: GetReason                   = (userAnswers: UserAnswers) => new Reason {}
-    override implicit val ec: ExecutionContext = inject[ExecutionContext]
+    val sessionConnector: SessionConnector = mockSessionConnector
+    val getReason: GetReason               = (userAnswers: UserAnswers) => new Reason {}
+    given ExecutionContext                 = inject[ExecutionContext]
 
-    def createView(reason: Reason, userAnswers: UserAnswers)(implicit request: Request[?]): Html =
+    def createView(reason: Reason, userAnswers: UserAnswers)(using request: Request[?]): Html =
       HtmlFormat.empty
 
   }
@@ -65,7 +66,7 @@ class TransitionControllerSpec extends ControllerSpec {
     }
 
     "redirect to the SessionExpiredController when no CacheMap can be found" in {
-      when(mockSessionConnector.fetch()(any[HeaderCarrier])).thenReturn(Future.successful(None))
+      when(mockSessionConnector.fetch()(using any[HeaderCarrier])).thenReturn(Future.successful(None))
       val result = createController.onPageLoad(fakeRequest)
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)

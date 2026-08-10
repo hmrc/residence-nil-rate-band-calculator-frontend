@@ -34,8 +34,9 @@ class TransferAvailableWhenPropertyChangedControllerSpec extends RnrbControllerS
   "Transfer Available When Property Changed Controller" must {
 
     def createView: Option[Map[String, String]] => Html = {
-      case None    => transfer_available_when_property_changed(BooleanForm.apply(messageKey))(fakeRequest, messages)
-      case Some(v) => transfer_available_when_property_changed(BooleanForm(messageKey).bind(v))(fakeRequest, messages)
+      case None => transfer_available_when_property_changed(BooleanForm.apply(messageKey))(using fakeRequest, messages)
+      case Some(v) =>
+        transfer_available_when_property_changed(BooleanForm(messageKey).bind(v))(using fakeRequest, messages)
     }
 
     def createController: () => TransferAvailableWhenPropertyChangedController = () =>

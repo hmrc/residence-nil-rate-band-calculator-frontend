@@ -24,7 +24,7 @@ import java.time.LocalDate
 import java.time.temporal.{ChronoField, ValueRange}
 import scala.util.{Failure, Success, Try}
 
-case class DateFormatter(key: String)(implicit val messages: Messages) extends Formatter[LocalDate] {
+case class DateFormatter(key: String)(using Messages) extends Formatter[LocalDate] {
 
   private val dateRequiredError      = s"$key.error.required"
   private val dayRequiredError       = s"$key.error.required.day"

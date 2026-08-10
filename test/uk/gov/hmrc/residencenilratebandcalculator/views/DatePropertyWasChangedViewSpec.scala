@@ -28,7 +28,7 @@ class DatePropertyWasChangedViewSpec extends NewDateViewSpec {
 
   val messageKeyPrefix                                     = "date_property_was_changed"
   val date_property_was_changed: date_property_was_changed = inject[date_property_was_changed]
-  def createView(form: Form[Date]): Html                   = date_property_was_changed(form)(request, messages)
+  def createView(form: Form[Date]): Html                   = date_property_was_changed(form)
 
   "Date Property Was Changed View" must {
 

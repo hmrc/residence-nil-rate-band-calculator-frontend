@@ -32,7 +32,7 @@ class PropertyPassingToDirectDescendantsViewSpec extends NewBooleanViewSpec {
     inject[property_passing_to_direct_descendants]
 
   def createView(form: Form[String]): Html =
-    property_passing_to_direct_descendants(form)(request, messages)
+    property_passing_to_direct_descendants(form)
 
   val form: Form[String] = Forms.PropertyPassingToDirectDescendants
 

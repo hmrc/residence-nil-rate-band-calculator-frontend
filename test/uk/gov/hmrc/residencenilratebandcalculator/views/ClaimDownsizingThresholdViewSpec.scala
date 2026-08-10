@@ -27,7 +27,7 @@ class ClaimDownsizingThresholdViewSpec extends NewBooleanViewSpec {
 
   val messageKeyPrefix                                       = "claim_downsizing_threshold"
   val claim_downsizing_threshold: claim_downsizing_threshold = inject[claim_downsizing_threshold]
-  def createView(form: Form[Boolean]): Html                  = claim_downsizing_threshold(form)(request, messages)
+  def createView(form: Form[Boolean]): Html                  = claim_downsizing_threshold(form)
 
   val form: Form[Boolean] = Forms.ClaimDownsizingThreshold
 

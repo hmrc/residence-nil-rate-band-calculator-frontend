@@ -19,6 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import javax.inject.{Inject, _}
 import play.api.i18n.{I18nSupport, Lang, Messages}
 import play.api.mvc.{Action, AnyContent, Call, _}
+import scala.language.implicitConversions
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 
@@ -34,10 +35,10 @@ class CustomLanguageController @Inject() (val cc: MessagesControllerComponents, 
       uk.gov.hmrc.residencenilratebandcalculator.controllers.routes.CustomLanguageController.switchToLanguage("english")
     }
 
-  def loadedLanguageMessages(implicit request: Request[?]): Messages =
+  def loadedLanguageMessages(using request: Request[?]): Messages =
     cc.messagesApi.preferred(request)
 
-  def switchToLanguage(language: String): Action[AnyContent] = Action { implicit request =>
+  def switchToLanguage(language: String): Action[AnyContent] = Action { request =>
     val lang =
       if (appConfig.isWelshEnabled) {
         CustomLanguageController.languageMap.getOrElse(language, Lang.defaultLang)

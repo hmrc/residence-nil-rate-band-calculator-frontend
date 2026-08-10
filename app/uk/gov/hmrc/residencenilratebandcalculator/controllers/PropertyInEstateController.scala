@@ -35,7 +35,7 @@ class PropertyInEstateController @Inject() (
     override val sessionConnector: SessionConnector,
     override val navigator: Navigator,
     propertyInEstateView: property_in_estate
-)(override implicit val ec: ExecutionContext)
+)(using ExecutionContext)
     extends FrontendController(cc)
     with SimpleControllerBase[Boolean] {
 
@@ -43,7 +43,7 @@ class PropertyInEstateController @Inject() (
 
   override def form: () => Form[Boolean] = () => Forms.PropertyInEstate
 
-  override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[?]): Html =
+  override def view(form: Form[Boolean], userAnswers: UserAnswers)(using Request[?]): Html =
     propertyInEstateView(form)
 
 }

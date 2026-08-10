@@ -16,7 +16,7 @@
 
 @this(govukButton : GovukButton)
 
-@(submitText: String = "site.continue")(implicit messages: Messages)
+@(submitText: String = "site.continue")(using messages: Messages)
 
  @govukButton(Button(
   content = Text(messages(submitText)),

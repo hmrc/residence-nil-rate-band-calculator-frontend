@@ -26,7 +26,7 @@ class ThankYouViewSpec extends ViewSpec {
 
   "Thank You view" must {
     "display the correct browser title" in {
-      val doc = asDocument(thank_you()(request, messages))
+      val doc = asDocument(thank_you())
       assertEqualsMessage(
         doc,
         "title",
@@ -35,12 +35,12 @@ class ThankYouViewSpec extends ViewSpec {
     }
 
     "display the correct title" in {
-      val doc = asDocument(thank_you()(request, messages))
+      val doc = asDocument(thank_you())
       assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.title")
     }
 
     "not display the HMRC logo" in {
-      val doc = asDocument(thank_you()(request, messages))
+      val doc = asDocument(thank_you())
       assertNotRenderedByCssSelector(doc, ".organisation-logo")
     }
   }

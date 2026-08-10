@@ -20,7 +20,7 @@
         betaFeedbackUrl: String,
         betaFeedbackUnauthenticatedUrl: String,
         showFeedbackLinkInBetaBanner: Boolean = true,
-        noBorder: Boolean = false)(implicit messages: Messages)
+        noBorder: Boolean = false)(using messages: Messages)
 
 <div class="beta-banner @if(noBorder) {beta-banner--borderless}">
     <p>

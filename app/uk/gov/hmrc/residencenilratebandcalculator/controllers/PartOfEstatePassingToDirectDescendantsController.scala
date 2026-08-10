@@ -35,7 +35,7 @@ class PartOfEstatePassingToDirectDescendantsController @Inject() (
     override val sessionConnector: SessionConnector,
     override val navigator: Navigator,
     partOfEstatePassingToDirectDescendantsView: part_of_estate_passing_to_direct_descendants
-)(override implicit val ec: ExecutionContext)
+)(using ExecutionContext)
     extends FrontendController(cc)
     with SimpleControllerBase[Boolean] {
 
@@ -43,7 +43,7 @@ class PartOfEstatePassingToDirectDescendantsController @Inject() (
 
   override def form: () => Form[Boolean] = () => Forms.PartOfEstatePassingToDirectDescendants
 
-  override def view(form: Form[Boolean], userAnswers: UserAnswers)(implicit request: Request[?]): Html =
+  override def view(form: Form[Boolean], userAnswers: UserAnswers)(using request: Request[?]): Html =
     partOfEstatePassingToDirectDescendantsView(form)
 
 }

@@ -32,7 +32,7 @@ case class CalculationInput(
 )
 
 object CalculationInput {
-  implicit val formats: OFormat[CalculationInput] = Json.format[CalculationInput]
+  given formats: OFormat[CalculationInput] = Json.format[CalculationInput]
 
   def apply(userAnswers: UserAnswers): CalculationInput = {
     require(userAnswers.dateOfDeath.isDefined, "Date of Death was not answered")
@@ -140,7 +140,7 @@ case class DownsizingDetails(
 )
 
 object DownsizingDetails {
-  implicit val formats: OFormat[DownsizingDetails] = Json.format[DownsizingDetails]
+  given OFormat[DownsizingDetails] = Json.format[DownsizingDetails]
 
   def apply(userAnswers: UserAnswers): DownsizingDetails = {
     require(userAnswers.datePropertyWasChanged.isDefined, "Date Property Was Changed was not answered")

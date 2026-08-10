@@ -36,7 +36,7 @@ class ValueOfAssetsPassingController @Inject() (
     override val sessionConnector: SessionConnector,
     override val navigator: Navigator,
     valueOfAssetsPassingView: value_of_assets_passing
-)(override implicit val ec: ExecutionContext)
+)(using ExecutionContext)
     extends FrontendController(cc)
     with SimpleControllerBase[Int] {
 
@@ -44,7 +44,7 @@ class ValueOfAssetsPassingController @Inject() (
 
   override def form: () => Form[Int] = () => Forms.ValueOfAssetsPassing
 
-  override def view(form: Form[Int], userAnswers: UserAnswers)(implicit request: Request[?]): Html = {
+  override def view(form: Form[Int], userAnswers: UserAnswers)(using request: Request[?]): Html = {
     val formattedPropertyValue = userAnswers.propertyValue match {
       case Some(value) => Some(CurrencyFormatter.format(value))
       case _           => None

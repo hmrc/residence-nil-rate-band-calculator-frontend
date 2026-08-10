@@ -32,7 +32,7 @@ class PercentagePassedToDirectDescendantsViewSpec extends NewBigDecimalViewSpec 
     inject[percentage_passed_to_direct_descendants]
 
   def createView(form: Form[BigDecimal]): Html =
-    percentage_passed_to_direct_descendants(form)(request, messages)
+    percentage_passed_to_direct_descendants(form)
 
   val form: Form[BigDecimal] = Forms.PercentagePassedToDirectDescendants
 

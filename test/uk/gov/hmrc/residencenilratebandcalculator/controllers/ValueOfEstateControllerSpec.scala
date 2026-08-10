@@ -39,11 +39,11 @@ class ValueOfEstateControllerSpec extends RnrbControllerSpec {
         case None =>
           value_of_estate(
             NonNegativeIntForm.apply(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge)
-          )(fakeRequest, messages)
+          )(using fakeRequest, messages)
         case Some(v) =>
           value_of_estate(
             NonNegativeIntForm(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric, errorKeyTooLarge).bind(v)
-          )(fakeRequest, messages)
+          )(using fakeRequest, messages)
       }
 
     def createController =

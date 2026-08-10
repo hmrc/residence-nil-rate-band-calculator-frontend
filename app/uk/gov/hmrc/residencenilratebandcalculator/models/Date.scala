@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.models
 
-import play.api.libs.json._
+import play.api.libs.json.*
 
 import java.time.LocalDate
 import scala.util.{Failure, Success, Try}
@@ -33,5 +33,5 @@ object Date {
 
   val dateWrites: Writes[Date] = (date: Date) => JsString(date.date.toString)
 
-  implicit val dateFormat: Format[Date] = Format(dateReads, dateWrites)
+  given Format[Date] = Format(dateReads, dateWrites)
 }

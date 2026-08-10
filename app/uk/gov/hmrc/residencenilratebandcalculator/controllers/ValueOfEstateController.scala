@@ -35,7 +35,7 @@ class ValueOfEstateController @Inject() (
     override val sessionConnector: SessionConnector,
     override val navigator: Navigator,
     valueOfEstateView: value_of_estate
-)(override implicit val ec: ExecutionContext)
+)(using ExecutionContext)
     extends FrontendController(cc)
     with SimpleControllerBase[Int] {
 
@@ -43,7 +43,7 @@ class ValueOfEstateController @Inject() (
 
   override def form: () => Form[Int] = () => Forms.ValueOfEstate
 
-  override def view(form: Form[Int], userAnswers: UserAnswers)(implicit request: Request[?]): Html =
+  override def view(form: Form[Int], userAnswers: UserAnswers)(using Request[?]): Html =
     valueOfEstateView(form)
 
 }

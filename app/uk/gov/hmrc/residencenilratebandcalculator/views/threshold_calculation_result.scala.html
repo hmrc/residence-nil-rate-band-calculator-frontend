@@ -22,7 +22,7 @@
     buttonLink: playComponents.button_link
 )
 
-@(residenceNilRateAmount: String)(implicit request: Request[?], messages: Messages)
+@(residenceNilRateAmount: String)(using request: Request[?], messages: Messages)
 @title = @{if(residenceNilRateAmount == "£0.00") messages("threshold_calculation_result.info.zero.header") else messages("threshold_calculation_result.info.non_zero.header")}
 
 

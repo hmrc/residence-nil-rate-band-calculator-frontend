@@ -39,11 +39,11 @@ class PercentagePassedToDirectDescendantsControllerSpec extends RnrbControllerSp
       case None =>
         percentage_passed_to_direct_descendants(
           PositivePercentForm.apply(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange)
-        )(fakeRequest, messages)
+        )(using fakeRequest, messages)
       case Some(v) =>
         percentage_passed_to_direct_descendants(
           PositivePercentForm(errorKeyBlank, errorKeyNonNumeric, errorKeyOutOfRange).bind(v)
-        )(fakeRequest, messages)
+        )(using fakeRequest, messages)
     }
 
     def createController = () =>

@@ -21,6 +21,7 @@ import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
+import scala.language.implicitConversions
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.ControllerSpec
 import uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.unable_to_calculate_threshold_increase
@@ -77,7 +78,7 @@ class UnableToCalculateThresholdIncreaseControllerSpec extends ControllerSpec {
       ).onPageLoad(fakeRequest)
       contentAsString(result) mustBe
         unable_to_calculate_threshold_increase("unable_to_calculate_threshold_increase.grossing_up")(
-          fakeRequest,
+          using fakeRequest,
           messages
         ).toString
     }

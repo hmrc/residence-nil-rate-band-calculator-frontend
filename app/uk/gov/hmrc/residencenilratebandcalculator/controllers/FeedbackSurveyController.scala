@@ -23,6 +23,7 @@ import uk.gov.hmrc.residencenilratebandcalculator.FrontendAppConfig
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.predicates.ValidatedSession
 
 import scala.concurrent.Future
+import scala.language.implicitConversions
 
 class FeedbackSurveyController @Inject() (
     cc: DefaultMessagesControllerComponents,
@@ -31,6 +32,6 @@ class FeedbackSurveyController @Inject() (
 ) extends FrontendController(cc) {
 
   def redirectExitSurvey: Action[AnyContent] =
-    validatedSession.async(implicit request => Future.successful(Redirect(appConfig.feedbackSurvey).withNewSession))
+    validatedSession.async(request => Future.successful(Redirect(appConfig.feedbackSurvey).withNewSession))
 
 }

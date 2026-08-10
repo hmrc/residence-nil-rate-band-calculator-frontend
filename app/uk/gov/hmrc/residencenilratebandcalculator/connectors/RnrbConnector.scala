@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.residencenilratebandcalculator.connectors
 
-import play.api.libs.json._
+import play.api.libs.json.*
 import uk.gov.hmrc.http.HttpReads.Implicits.readRaw
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.http.client.HttpClientV2
@@ -32,13 +32,13 @@ import scala.util.{Failure, Success, Try}
 
 @Singleton
 class RnrbConnector @Inject() (val httpClientV2: HttpClientV2, val config: FrontendAppConfig)(
-    implicit ec: ExecutionContext
+    using ExecutionContext
 ) {
 
   lazy val baseSegment                        = s"${config.serviceUrl}/residence-nil-rate-band-calculator"
   val jsonContentTypeHeader: (String, String) = ("Content-Type", "application/json")
 
-  implicit val calculationResultWrites: Writes[CalculationInput] = Writes { (input: CalculationInput) =>
+  given Writes[CalculationInput] = Writes { (input: CalculationInput) =>
     val propertyValueAfter = input.propertyValueAfterExemption match {
       case Some(pvae) => Json.obj("propertyValueAfterExemption" -> pvae)
       case _          => Json.obj()
@@ -68,11 +68,11 @@ class RnrbConnector @Inject() (val httpClientV2: HttpClientV2, val config: Front
     ) ++ propertyValueAfter ++ downsizingDetails
   }
 
-  def send(input: CalculationInput)(implicit hc: HeaderCarrier): Future[Try[CalculationResult]] = sendJson(
+  def send(input: CalculationInput)(using HeaderCarrier): Future[Try[CalculationResult]] = sendJson(
     Json.toJson(input)
   )
 
-  def sendJson(json: JsValue)(implicit hc: HeaderCarrier): Future[Try[CalculationResult]] =
+  def sendJson(json: JsValue)(using HeaderCarrier): Future[Try[CalculationResult]] =
 
     httpClientV2
       .post(url"$baseSegment/calculate")
@@ -87,7 +87,7 @@ class RnrbConnector @Inject() (val httpClientV2: HttpClientV2, val config: Front
         }
       }
 
-  def getNilRateBand(dateStr: String)(implicit hc: HeaderCarrier): Future[HttpResponse] =
+  def getNilRateBand(dateStr: String)(using HeaderCarrier): Future[HttpResponse] =
     httpClientV2.get(url"$baseSegment/nilrateband/$dateStr").execute[HttpResponse]
 
 }

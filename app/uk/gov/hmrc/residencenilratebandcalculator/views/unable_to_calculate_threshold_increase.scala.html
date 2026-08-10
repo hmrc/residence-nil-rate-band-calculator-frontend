@@ -23,7 +23,7 @@
     buttonLink: playComponents.button_link
 )
 
-@(prefix: String)(implicit request: Request[?], messages: Messages)
+@(prefix: String)(using request: Request[?], messages: Messages)
 
 @layout(
     pageTitle = messages("unable_to_calculate_threshold_increase.browser_title")
