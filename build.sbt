@@ -15,7 +15,7 @@ lazy val IntegrationTest = config("it").extend(Test)
 lazy val microservice = Project(appName, file("."))
   .enablePlugins((Seq(play.sbt.PlayScala, SbtDistributablesPlugin) ++ plugins) *)
   .disablePlugins(JUnitXmlReportPlugin) // this is an experimental plugin that is (currently) enabled by default and prevents deployment to QA environment
-  .settings(playSettings: _*)
+  .settings(playSettings*)
   .settings(
     ScoverageKeys.coverageExcludedFiles :=
       "<empty>;Reverse.*;.*AuthService.*;.*CustomLanguageController.*;models/.data/..*;.*filters.*;.*handlers.*;.*components.*;" +
@@ -26,8 +26,8 @@ lazy val microservice = Project(appName, file("."))
     ScoverageKeys.coverageHighlighting     := true,
     Test / parallelExecution               := false
   )
-  .settings(scalaSettings: _*)
-  .settings(defaultSettings(): _*)
+  .settings(scalaSettings*)
+  .settings(defaultSettings()*)
   .settings(libraryDependencies ++= appDependencies)
   .settings(
     Test / fork := true,
@@ -65,7 +65,7 @@ lazy val it = project
   .enablePlugins(PlayScala)
   .configs(IntegrationTest)
   .dependsOn(microservice)
-  .settings(itSettings(): _*)
+  .settings(itSettings()*)
   .settings(
     majorVersion := 0,
     libraryDependencies ++= AppDependencies.integrationTestDependencies,
