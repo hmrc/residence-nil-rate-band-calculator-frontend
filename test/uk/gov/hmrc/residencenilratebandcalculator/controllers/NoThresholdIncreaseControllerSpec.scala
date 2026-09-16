@@ -19,9 +19,10 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers
 import play.api.http.Status
 import play.api.libs.json.{JsBoolean, JsNumber, JsString, JsValue}
 import play.api.test.Helpers.*
+
 import scala.language.implicitConversions
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers.RnrbControllerSpec
-import uk.gov.hmrc.residencenilratebandcalculator.models.{CacheMap, Reason, UserAnswers}
+import uk.gov.hmrc.residencenilratebandcalculator.models.{CacheMap, GetNoThresholdIncreaseReason, Reason, UserAnswers}
 import uk.gov.hmrc.residencenilratebandcalculator.views.html.no_threshold_increase
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 
@@ -72,14 +73,39 @@ class NoThresholdIncreaseControllerSpec extends RnrbControllerSpec {
         no_threshold_increase("no_threshold_increase.direct_descendant")(using fakeRequest, messages).toString
     }
 
-    "return the No Threshold Increase view for none case a GET" in {
+    "return the No Threshold Increase view with correct content for reason being Date of Death" in {
+      val userAnswers       = mock[UserAnswers]
+      val dateofDeathReason = GetNoThresholdIncreaseReason.DateOfDeath
+      val result =
+        new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase)
+          .createView(dateofDeathReason, userAnswers)(using fakeRequest)
 
-      val userAnswers = mock[UserAnswers]
-      val reason      = mock[Reason]
+      contentAsString(result) mustBe
+        no_threshold_increase("no_threshold_increase.date_of_death")(using fakeRequest, messages).toString
+
+    }
+
+    "return the No Threshold Increase view with correct content for reason being Direct Descendent" in {
+
+      val userAnswers            = mock[UserAnswers]
+      val directDescendentReason = GetNoThresholdIncreaseReason.DirectDescendant
 
       val result =
         new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase)
-          .createView(reason, userAnswers)(using fakeRequest)
+          .createView(directDescendentReason, userAnswers)(using fakeRequest)
+
+      contentAsString(result) mustBe
+        no_threshold_increase("no_threshold_increase.direct_descendant")(using fakeRequest, messages).toString
+    }
+
+    "return the No Threshold Increase view with no reason content when reason is not direct descendent or date of death" in {
+
+      val userAnswers   = mock[UserAnswers]
+      val genericReason = mock[Reason]
+
+      val result =
+        new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase)
+          .createView(genericReason, userAnswers)(using fakeRequest)
 
       contentAsString(result) mustBe
         no_threshold_increase("")(using fakeRequest, messages).toString

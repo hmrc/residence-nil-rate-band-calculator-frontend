@@ -235,6 +235,15 @@ class ValueAvailableWhenPropertyChangedControllerSpec extends ControllerSpec {
         result.map(x => x must be(Some(FormError("value", "value_available_when_property_changed.error"))))
       }
 
+      "throw an exception when given a nil rate band value that cannot be parsed to an integer" in {
+        val exception = intercept[NumberFormatException] {
+          val testValue  = 90000
+          val controller = createController()
+          controller.validate(testValue, "not a number")
+        }
+        exception.getMessage mustBe "Bad value in nil rate band"
+      }
+
       "return a None when given a value less than or equal to the nil rate band for the year of disposal" in {
         val testValue  = 90000
         val controller = createController()

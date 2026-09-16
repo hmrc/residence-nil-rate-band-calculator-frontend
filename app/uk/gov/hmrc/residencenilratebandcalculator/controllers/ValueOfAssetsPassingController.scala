@@ -52,11 +52,4 @@ class ValueOfAssetsPassingController @Inject() (
     valueOfAssetsPassingView(form, formattedPropertyValue)
   }
 
-  override def validate(value: Int, userAnswers: UserAnswers): Option[FormError] =
-    userAnswers.valueOfEstate match {
-      case Some(v) if value > v =>
-        Some(FormError("value", "value_of_assets_passing.greater_than_estate_value.error", Seq(v)))
-      case _ => None
-    }
-
 }

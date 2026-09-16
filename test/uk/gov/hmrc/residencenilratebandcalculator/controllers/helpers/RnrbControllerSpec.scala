@@ -19,8 +19,10 @@ package uk.gov.hmrc.residencenilratebandcalculator.controllers.helpers
 import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.libs.json.*
+import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import play.twirl.api.Html
+
 import scala.language.implicitConversions
 import uk.gov.hmrc.residencenilratebandcalculator.controllers.{ControllerBase, SimpleControllerBase}
 import uk.gov.hmrc.residencenilratebandcalculator.models.*
