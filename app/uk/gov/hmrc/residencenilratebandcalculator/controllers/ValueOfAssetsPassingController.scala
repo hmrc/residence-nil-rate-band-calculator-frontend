@@ -17,7 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
-import play.api.data.{Form, FormError}
+import play.api.data.Form
 import play.api.mvc.{DefaultMessagesControllerComponents, Request}
 import play.twirl.api.Html
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
