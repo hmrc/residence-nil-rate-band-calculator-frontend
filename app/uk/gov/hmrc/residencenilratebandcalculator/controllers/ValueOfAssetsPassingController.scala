@@ -17,7 +17,7 @@
 package uk.gov.hmrc.residencenilratebandcalculator.controllers
 
 import javax.inject.{Inject, Singleton}
-import play.api.data.{Form, FormError}
+import play.api.data.Form
 import play.api.mvc.{DefaultMessagesControllerComponents, Request}
 import play.twirl.api.Html
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
@@ -51,12 +51,5 @@ class ValueOfAssetsPassingController @Inject() (
     }
     valueOfAssetsPassingView(form, formattedPropertyValue)
   }
-
-  override def validate(value: Int, userAnswers: UserAnswers): Option[FormError] =
-    userAnswers.valueOfEstate match {
-      case Some(v) if value > v =>
-        Some(FormError("value", "value_of_assets_passing.greater_than_estate_value.error", Seq(v)))
-      case _ => None
-    }
 
 }

@@ -39,7 +39,6 @@ case class TaxYear(startYear: Int) {
   lazy val finishYear: Int     = startYear + 1
   lazy val finishes: LocalDate = LocalDate.of(finishYear, 4, 5)
   lazy val currentYear: Int    = startYear
-  lazy val next: TaxYear       = forwards(1)
 
   def back(years: Int): TaxYear = TaxYear(startYear - years)
 

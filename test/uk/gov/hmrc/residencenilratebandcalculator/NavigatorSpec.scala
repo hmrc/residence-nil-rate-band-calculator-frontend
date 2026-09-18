@@ -121,6 +121,14 @@ class NavigatorSpec extends CommonPlaySpec {
       ) mustBe routes.NoAdditionalThresholdAvailableController.onPageLoad
     }
 
+    "return a function that goes to the Calculate Threshold Increase controller when a Property Passing value is not provided" in {
+      val mockCacheMap = mock[UserAnswers]
+      when(mockCacheMap.propertyPassingToDirectDescendants).thenReturn(None)
+      navigator.nextPage(Constants.propertyPassingToDirectDescendantsId)(
+        mockCacheMap
+      ) mustBe routes.CalculateThresholdIncreaseController.onPageLoad
+    }
+
     "return a call to the TransferAnyUnusedThreshold onPageLoad method when there is no property in the estate and we're on the No Additional Threshold Available page" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.propertyInEstate).thenReturn(Some(false))

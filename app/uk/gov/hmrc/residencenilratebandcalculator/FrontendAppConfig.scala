@@ -24,13 +24,7 @@ import javax.inject.{Inject, Singleton}
 class FrontendAppConfig @Inject() (val servicesConfig: ServicesConfig) {
   private def loadConfig(key: String) = servicesConfig.getString(key)
 
-  lazy val contactHost: String          = servicesConfig.getConfString("contact-frontend.www", "")
-  lazy val contactFormServiceIdentifier = "RNRB"
-
-  lazy val betaFeedbackUrl = s"$contactHost/contact/beta-feedback?service=$contactFormServiceIdentifier"
-
-  lazy val betaFeedbackUnauthenticatedUrl =
-    s"$contactHost/contact/beta-feedback-unauthenticated?service=$contactFormServiceIdentifier"
+  lazy val betaFeedbackUnauthenticatedUrl: String = servicesConfig.getConfString("betaFeedbackUnauthenticated.url", "")
 
   lazy val feedbackSurvey: String = loadConfig("feedback-survey-frontend.url")
   lazy val serviceUrl: String     = servicesConfig.baseUrl("residence-nil-rate-band-calculator")
