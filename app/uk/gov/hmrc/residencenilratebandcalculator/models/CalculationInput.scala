@@ -19,6 +19,7 @@ package uk.gov.hmrc.residencenilratebandcalculator.models
 import java.time.LocalDate
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
+import uk.gov.hmrc.residencenilratebandcalculator.models.InputValidationError.*
 
 case class CalculationInput(
     dateOfDeath: LocalDate,
@@ -31,104 +32,140 @@ case class CalculationInput(
     downsizingDetails: Option[DownsizingDetails]
 )
 
+private final case class ValidatedAnswers(
+    dateOfDeath: LocalDate,
+    valueOfEstate: Int,
+    chargeableEstateValue: Int,
+    propertyValue: Int,
+    valueBeingTransferred: Int
+)
+
 object CalculationInput {
   given formats: OFormat[CalculationInput] = Json.format[CalculationInput]
 
-  def apply(userAnswers: UserAnswers): CalculationInput = {
-    require(userAnswers.dateOfDeath.isDefined, "Date of Death was not answered")
-    require(userAnswers.valueOfEstate.isDefined, "Value Of Estate was not answered")
-    require(userAnswers.chargeableEstateValue.isDefined, "Chargeable Estate Value was not answered")
-    require(userAnswers.propertyInEstate.isDefined, "Property In Estate was not answered")
-    if (userAnswers.propertyInEstate.get) requirePropertyInEstateDependencies(userAnswers)
-    require(userAnswers.transferAnyUnusedThreshold.isDefined, "Transfer Any Unused Allowance was not answered")
-    if (userAnswers.transferAnyUnusedThreshold.get) requireValueBeingTransferredDependencies(userAnswers)
-    require(userAnswers.claimDownsizingThreshold.isDefined, "Claim Downsizing Threshold was not answered")
+  def apply(userAnswers: UserAnswers): Either[InputValidationError, CalculationInput] =
+    validate(userAnswers).flatMap(validated => create(userAnswers, validated))
 
-    CalculationInput(
-      userAnswers.dateOfDeath.get,
-      userAnswers.valueOfEstate.get,
-      userAnswers.chargeableEstateValue.get,
-      getPropertyValue(userAnswers),
-      userAnswers.getPercentagePassedToDirectDescendants,
-      getValueBeingTransferred(userAnswers),
-      getChargeablePropertyValue(userAnswers),
-      getDownsizingDetails(userAnswers)
+  private def validate(userAnswers: UserAnswers): Either[InputValidationError, ValidatedAnswers] =
+    for {
+      dateOfDeath           <- userAnswers.dateOfDeath.toRight(DateOfDeathNotDefined)
+      valueOfEstate         <- userAnswers.valueOfEstate.toRight(ValueOfEstateNotDefined)
+      chargeableEstateValue <- userAnswers.chargeableEstateValue.toRight(ChargeableEstateValueNotDefined)
+      propertyInEstate      <- userAnswers.propertyInEstate.toRight(PropertyInEstateNotDefined)
+      propertyValue <-
+        if (propertyInEstate)
+          validatePropertyInEstateDependencies(userAnswers)
+        else
+          Right(0)
+      transferAnyUnusedThreshold <- userAnswers.transferAnyUnusedThreshold.toRight(TransferAnyUnusedThresholdNotDefined)
+      valueBeingTransferred <-
+        if (transferAnyUnusedThreshold)
+          validateValueBeingTransferredDependencies(userAnswers)
+        else
+          Right(0)
+      _ <- userAnswers.claimDownsizingThreshold.toRight(ClaimDownsizingThresholdNotDefined)
+    } yield ValidatedAnswers(dateOfDeath, valueOfEstate, chargeableEstateValue, propertyValue, valueBeingTransferred)
+
+  private def create(
+      userAnswers: UserAnswers,
+      validatedAnswers: ValidatedAnswers
+  ): Either[InputValidationError, CalculationInput] =
+    for {
+      propertyValueAfterExemption <- getChargeablePropertyValue(userAnswers)
+      downsizingDetails           <- getDownsizingDetails(userAnswers)
+
+    } yield CalculationInput(
+      dateOfDeath = validatedAnswers.dateOfDeath,
+      valueOfEstate = validatedAnswers.valueOfEstate,
+      chargeableEstateValue = validatedAnswers.chargeableEstateValue,
+      propertyValue = validatedAnswers.propertyValue,
+      percentagePassedToDirectDescendants = userAnswers.percentagePassedToDirectDescendants.getOrElse(BigDecimal(0)),
+      valueBeingTransferred = validatedAnswers.valueBeingTransferred,
+      propertyValueAfterExemption = propertyValueAfterExemption,
+      downsizingDetails = downsizingDetails
     )
-  }
 
-  def getChargeablePropertyValue(userAnswers: UserAnswers): Option[PropertyValueAfterExemption] =
-    if (userAnswers.chargeablePropertyValue.isDefined) {
-      Some(
-        PropertyValueAfterExemption(
-          userAnswers.chargeablePropertyValue.get,
-          userAnswers.chargeableInheritedPropertyValue.get
-        )
-      )
+  private def getChargeablePropertyValue(
+      userAnswers: UserAnswers
+  ): Either[InputValidationError, Option[PropertyValueAfterExemption]] =
+    userAnswers.chargeablePropertyValue match {
+      case None =>
+        Right(None)
+      case Some(chargeablePropertyValue) =>
+        userAnswers.chargeableInheritedPropertyValue
+          .toRight(ChargeableInheritedPropertyValueNotDefined)
+          .map { chargeableInheritedPropertyValue =>
+            Some(
+              PropertyValueAfterExemption(
+                chargeablePropertyValue,
+                chargeableInheritedPropertyValue
+              )
+            )
+          }
+    }
+
+  private def getDownsizingDetails(userAnswers: UserAnswers): Either[InputValidationError, Option[DownsizingDetails]] =
+    if (userAnswers.claimDownsizingThreshold.contains(true)) {
+      userAnswers.datePropertyWasChanged
+        .toRight(DatePropertyWasChangedNotDefined)
+        .flatMap {
+          case d if d.isBefore(Constants.downsizingEligibilityDate) => Right(None)
+          case _                                                    => DownsizingDetails(userAnswers).map(Some(_))
+        }
     } else {
-      None
+      Right(None)
     }
 
-  private def getPropertyValue(userAnswers: UserAnswers) = if (userAnswers.propertyInEstate.get) {
-    userAnswers.propertyValue.get
-  } else {
-    0
-  }
+  private def validatePropertyInEstateDependencies(userAnswers: UserAnswers): Either[InputValidationError, Int] =
 
-  private def getValueBeingTransferred(userAnswers: UserAnswers) = if (userAnswers.transferAnyUnusedThreshold.get) {
-    userAnswers.valueBeingTransferred.get
-  } else {
-    0
-  }
-
-  private def getDownsizingDetails(userAnswers: UserAnswers) = if (userAnswers.claimDownsizingThreshold.get) {
-    require(userAnswers.datePropertyWasChanged.isDefined, "Date Property Was Changed was not answered")
-
-    userAnswers.datePropertyWasChanged match {
-      case Some(d) if d.isBefore(Constants.downsizingEligibilityDate) => None
-      case Some(_)                                                    => Some(DownsizingDetails(userAnswers))
-      case _                                                          => None
-    }
-  } else {
-    None
-  }
-
-  private def requirePropertyInEstateDependencies(userAnswers: UserAnswers) = {
-    require(userAnswers.propertyValue.isDefined, "Property Value was not answered")
-    require(
-      userAnswers.propertyPassingToDirectDescendants.isDefined,
-      "Property Passing To Direct Descendants was not answered"
-    )
-
-    if (userAnswers.propertyPassingToDirectDescendants.get == Constants.some) {
-      require(
-        userAnswers.percentagePassedToDirectDescendants.isDefined,
-        "Percentage Passed To Direct Descendants was not answered"
+    for {
+      propertyValue <- userAnswers.propertyValue.toRight(PropertyValueNotDefined)
+      propertyPassingToDirectDescendants <- userAnswers.propertyPassingToDirectDescendants.toRight(
+        PropertyPassingToDirectDescendantsNotDefined
       )
-    }
-    if (userAnswers.propertyPassingToDirectDescendants.get != Constants.none)
-      requirePropertyPassingToDirectDescendantsDependencies(userAnswers)
-  }
+      _ <-
+        if (propertyPassingToDirectDescendants == Constants.some)
+          userAnswers.percentagePassedToDirectDescendants.toRight(PercentagePassedToDirectDescendantsNotDefined)
+        else
+          Right(())
+      _ <-
+        if (propertyPassingToDirectDescendants != Constants.none)
+          validatePropertyPassingToDirectDescendantsDependencies(userAnswers)
+        else
+          Right(())
 
-  private def requirePropertyPassingToDirectDescendantsDependencies(userAnswers: UserAnswers) = {
-    require(userAnswers.exemptionsAndReliefClaimed.isDefined, "Exemptions And Relief Claimed was not answered")
-    if (userAnswers.exemptionsAndReliefClaimed.get) requireExemptionsDependancies(userAnswers)
-  }
+    } yield propertyValue
 
-  private def requireExemptionsDependancies(userAnswers: UserAnswers) = {
-    require(userAnswers.grossingUpOnEstateProperty.isDefined, "Grossing Up On Estate Property was not answered")
-    if (!userAnswers.grossingUpOnEstateProperty.get) requireNoGrossingUpDependancies(userAnswers)
-  }
+  private def validatePropertyPassingToDirectDescendantsDependencies(
+      userAnswers: UserAnswers
+  ): Either[InputValidationError, UserAnswers] =
+    for {
+      exemptionsAndReliefClaimed <- userAnswers.exemptionsAndReliefClaimed.toRight(ExemptionsAndReliefClaimedNotDefined)
+      _ <-
+        if (exemptionsAndReliefClaimed)
+          validateExemptionsDependencies(userAnswers)
+        else
+          Right(())
+    } yield userAnswers
 
-  private def requireNoGrossingUpDependancies(userAnswers: UserAnswers) = {
-    require(userAnswers.chargeablePropertyValue.isDefined, "Chargeable Property Value was not answered")
-    require(
-      userAnswers.chargeableInheritedPropertyValue.isDefined,
-      "Chargeable Inherited Property Value was not answered"
-    )
-  }
+  private def validateExemptionsDependencies(userAnswers: UserAnswers): Either[InputValidationError, UserAnswers] =
+    for {
+      grossingUpOnEstateProperty <- userAnswers.grossingUpOnEstateProperty.toRight(GrossingUpOnEstatePropertyNotDefined)
+      _ <-
+        if (!grossingUpOnEstateProperty)
+          validateNoGrossingUpDependencies(userAnswers)
+        else
+          Right(())
+    } yield userAnswers
 
-  private def requireValueBeingTransferredDependencies(userAnswers: UserAnswers) =
-    require(userAnswers.valueBeingTransferred.isDefined, "Value Being Transferred was not answered")
+  private def validateNoGrossingUpDependencies(userAnswers: UserAnswers): Either[InputValidationError, UserAnswers] =
+    for {
+      _ <- userAnswers.chargeablePropertyValue.toRight(ChargeablePropertyValueNotDefined)
+      _ <- userAnswers.chargeableInheritedPropertyValue.toRight(ChargeableInheritedPropertyValueNotDefined)
+    } yield userAnswers
+
+  private def validateValueBeingTransferredDependencies(userAnswers: UserAnswers) =
+    userAnswers.valueBeingTransferred.toRight(ValueBeingTransferredNotDefined)
 
 }
 
@@ -142,59 +179,84 @@ case class DownsizingDetails(
 object DownsizingDetails {
   given OFormat[DownsizingDetails] = Json.format[DownsizingDetails]
 
-  def apply(userAnswers: UserAnswers): DownsizingDetails = {
-    require(userAnswers.datePropertyWasChanged.isDefined, "Date Property Was Changed was not answered")
-    require(userAnswers.valueOfChangedProperty.isDefined, "Value Of Changed Property was not answered")
-    require(
-      userAnswers.assetsPassingToDirectDescendants.isDefined,
-      "Assets Passing To Direct Descendants was not answered"
-    )
-    if (userAnswers.assetsPassingToDirectDescendants.get) requireValueOfAssetsPassingDependancies(userAnswers)
+  def apply(userAnswers: UserAnswers): Either[InputValidationError, DownsizingDetails] =
 
+    validate(userAnswers).map {
+      case (datePropertyWasChange, valueOfChangedProperty, valueOfAssetPassing, valueAvailableWhenPropertyChanged) =>
+        create(datePropertyWasChange, valueOfChangedProperty, valueOfAssetPassing, valueAvailableWhenPropertyChanged)
+    }
+
+  private def create(
+      datePropertyWasChanged: LocalDate,
+      valueOfChangedProperty: Int,
+      valueOfAssetsPassing: Int,
+      valueAvailableWhenPropertyChanged: Int
+  ): DownsizingDetails =
     DownsizingDetails(
-      userAnswers.datePropertyWasChanged.get,
-      userAnswers.valueOfChangedProperty.get,
-      getValueOfAssetsPassing(userAnswers),
-      getValueAvailableWhenPropertyChanged(userAnswers)
+      datePropertyWasChanged,
+      valueOfChangedProperty,
+      valueOfAssetsPassing,
+      valueAvailableWhenPropertyChanged
     )
-  }
 
-  private def getValueOfAssetsPassing(userAnswers: UserAnswers) =
-    userAnswers.assetsPassingToDirectDescendants.get match {
-      case true => userAnswers.valueOfAssetsPassing.get
-      case _    => 0
-    }
-
-  private def getValueAvailableWhenPropertyChanged(userAnswers: UserAnswers) =
-    userAnswers.assetsPassingToDirectDescendants.get match {
-      case true
-          if userAnswers.transferAvailableWhenPropertyChanged.isDefined && userAnswers.transferAvailableWhenPropertyChanged.get =>
-        userAnswers.valueAvailableWhenPropertyChanged.get
-      case _ => 0
-    }
-
-  private def requireValueOfAssetsPassingDependancies(userAnswers: UserAnswers) = {
-    require(userAnswers.valueOfAssetsPassing.isDefined, "Value Of Assets Passing was not answered")
-    if (
-      userAnswers.transferAnyUnusedThreshold.get && !userAnswers.datePropertyWasChanged.get.isBefore(
-        Constants.eligibilityDate
+  private def validate(userAnswers: UserAnswers): Either[InputValidationError, (LocalDate, Int, Int, Int)] =
+    for {
+      datePropertyWasChanged <- userAnswers.datePropertyWasChanged.toRight(DatePropertyWasChangedNotDefined)
+      valueOfChangedProperty <- userAnswers.valueOfChangedProperty.toRight(ValueOfChangedPropertyNotDefined)
+      assetsPassingToDirectDescendants <- userAnswers.assetsPassingToDirectDescendants.toRight(
+        AssetsPassingToDirectDescendantsNotDefined
       )
-    ) {
-      requireTransferAvailableWhenPropertyChangedDependencies(userAnswers)
-    }
-  }
+      valueOfAssetsPassing <-
+        if (assetsPassingToDirectDescendants)
+          validateValueOfAssetsPassingDependencies(userAnswers)
+        else
+          Right(0)
+      valueWhenPropertyChanged <- getValueAvailableWhenPropertyChanged(userAnswers)
+    } yield (datePropertyWasChanged, valueOfChangedProperty, valueOfAssetsPassing, valueWhenPropertyChanged)
 
-  private def requireTransferAvailableWhenPropertyChangedDependencies(userAnswers: UserAnswers) = {
-    require(
-      userAnswers.transferAvailableWhenPropertyChanged.isDefined,
-      "Transfer Available When Property Changed was not answered"
-    )
-    if (userAnswers.transferAvailableWhenPropertyChanged.get) {
-      require(
-        userAnswers.valueAvailableWhenPropertyChanged.isDefined,
-        "Value Available When Property Changed was not answered"
-      )
+//  private def getValueOfAssetsPassing(userAnswers: UserAnswers) =
+//    userAnswers.assetsPassingToDirectDescendants match {
+//      case Some(true)  => userAnswers.valueOfAssetsPassing.toRight(ValueOfAssetsPassingNotDefined)
+//      case Some(false) => Right(0)
+//      case None        => Left(AssetsPassingToDirectDescendantsNotDefined)
+//    }
+
+  private def getValueAvailableWhenPropertyChanged(userAnswers: UserAnswers): Either[InputValidationError, Int] =
+    userAnswers.assetsPassingToDirectDescendants match {
+      case Some(true) =>
+        userAnswers.transferAvailableWhenPropertyChanged match {
+          case Some(true) =>
+            userAnswers.valueAvailableWhenPropertyChanged.toRight(ValueAvailableWhenPropertyChangedNotDefined)
+          case _ => Right(0)
+        }
+      case _ => Right(0)
     }
-  }
+
+  private def validateValueOfAssetsPassingDependencies(
+      userAnswers: UserAnswers
+  ): Either[InputValidationError, Int] =
+
+    for {
+      valueOfAssetsPassing       <- userAnswers.valueOfAssetsPassing.toRight(ValueOfAssetsPassingNotDefined)
+      transferAnyUnusedThreshold <- userAnswers.transferAnyUnusedThreshold.toRight(TransferAnyUnusedThresholdNotDefined)
+      datePropertyWasChanged     <- userAnswers.datePropertyWasChanged.toRight(DatePropertyWasChangedNotDefined)
+      _ <-
+        if (transferAnyUnusedThreshold && !datePropertyWasChanged.isBefore(Constants.eligibilityDate))
+          validateTransferAvailableWhenPropertyChangedDependencies(userAnswers)
+        else
+          Right(())
+    } yield valueOfAssetsPassing
+
+  private def validateTransferAvailableWhenPropertyChangedDependencies(userAnswers: UserAnswers) =
+
+    userAnswers.transferAvailableWhenPropertyChanged match {
+      case None        => Left(TransferAvailableWhenPropertyChangedNotDefined)
+      case Some(false) => Right(())
+      case Some(true) =>
+        userAnswers.valueAvailableWhenPropertyChanged match {
+          case Some(_) => Right(())
+          case None    => Left(ValueAvailableWhenPropertyChangedNotDefined)
+        }
+    }
 
 }

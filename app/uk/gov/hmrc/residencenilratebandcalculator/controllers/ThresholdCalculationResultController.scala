@@ -58,8 +58,14 @@ class ThresholdCalculationResultController @Inject() (
   }
 
   private def getInput(tryAnswers: Try[CacheMap]) = tryAnswers match {
-    case Success(answers) => Future.successful(Try(CalculationInput(new UserAnswers(answers))))
-    case Failure(ex)      => Future.successful(Failure(ex))
+    case Success(answers) =>
+      Future.successful(CalculationInput(new UserAnswers(answers)) match {
+        case Right(input) =>
+          Success(input)
+        case Left(error) =>
+          Failure(new IllegalArgumentException(error.errorMessage))
+      })
+    case Failure(ex) => Future.successful(Failure(ex))
   }
 
   private def getResult(tryInput: Try[CalculationInput])(using HeaderCarrier) = tryInput match {
