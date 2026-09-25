@@ -85,20 +85,20 @@ class NoThresholdIncreaseControllerSpec extends RnrbControllerSpec {
 
     }
 
-    "return the No Threshold Increase view with correct content for reason being Direct Descendent" in {
+    "return the No Threshold Increase view with correct content for reason being Direct descendant" in {
 
       val userAnswers            = mock[UserAnswers]
-      val directDescendentReason = GetNoThresholdIncreaseReason.DirectDescendant
+      val directdescendantReason = GetNoThresholdIncreaseReason.DirectDescendant
 
       val result =
         new NoThresholdIncreaseController(messagesControllerComponents, mockSessionConnector, no_threshold_increase)
-          .createView(directDescendentReason, userAnswers)(using fakeRequest)
+          .createView(directdescendantReason, userAnswers)(using fakeRequest)
 
       contentAsString(result) mustBe
         no_threshold_increase("no_threshold_increase.direct_descendant")(using fakeRequest, messages).toString
     }
 
-    "return the No Threshold Increase view with no reason content when reason is not direct descendent or date of death" in {
+    "return the No Threshold Increase view with no reason content when reason is not direct descendant or date of death" in {
 
       val userAnswers   = mock[UserAnswers]
       val genericReason = mock[Reason]
