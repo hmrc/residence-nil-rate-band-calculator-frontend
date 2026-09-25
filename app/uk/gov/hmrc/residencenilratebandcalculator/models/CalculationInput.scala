@@ -214,13 +214,6 @@ object DownsizingDetails {
       valueWhenPropertyChanged <- getValueAvailableWhenPropertyChanged(userAnswers)
     } yield (datePropertyWasChanged, valueOfChangedProperty, valueOfAssetsPassing, valueWhenPropertyChanged)
 
-//  private def getValueOfAssetsPassing(userAnswers: UserAnswers) =
-//    userAnswers.assetsPassingToDirectDescendants match {
-//      case Some(true)  => userAnswers.valueOfAssetsPassing.toRight(ValueOfAssetsPassingNotDefined)
-//      case Some(false) => Right(0)
-//      case None        => Left(AssetsPassingToDirectDescendantsNotDefined)
-//    }
-
   private def getValueAvailableWhenPropertyChanged(userAnswers: UserAnswers): Either[InputValidationError, Int] =
     userAnswers.assetsPassingToDirectDescendants match {
       case Some(true) =>
