@@ -79,7 +79,7 @@ object CalculationInput {
       valueOfEstate = validatedAnswers.valueOfEstate,
       chargeableEstateValue = validatedAnswers.chargeableEstateValue,
       propertyValue = validatedAnswers.propertyValue,
-      percentagePassedToDirectDescendants = userAnswers.percentagePassedToDirectDescendants.getOrElse(BigDecimal(0)),
+      percentagePassedToDirectDescendants = userAnswers.getPercentagePassedToDirectDescendants,
       valueBeingTransferred = validatedAnswers.valueBeingTransferred,
       propertyValueAfterExemption = propertyValueAfterExemption,
       downsizingDetails = downsizingDetails
