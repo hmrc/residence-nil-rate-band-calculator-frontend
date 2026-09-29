@@ -19,9 +19,10 @@ package uk.gov.hmrc.residencenilratebandcalculator.models
 import org.mockito.Mockito.*
 import org.mockito.stubbing.OngoingStubbing
 import org.scalatest.BeforeAndAfter
-import play.api.libs.json.Json
+import play.api.libs.json.{JsObject, Json}
 import uk.gov.hmrc.residencenilratebandcalculator.Constants
 import uk.gov.hmrc.residencenilratebandcalculator.common.CommonPlaySpec
+import uk.gov.hmrc.residencenilratebandcalculator.models.InputValidationError.*
 
 import java.time.LocalDate
 
@@ -89,17 +90,34 @@ class CalculationInputSpec extends CommonPlaySpec with BeforeAndAfter {
     when(userAnswers.chargeableInheritedPropertyValue).thenReturn(chargeableInheritedPropertyValue)
     when(userAnswers.propertyValue).thenReturn(propertyValue)
     when(userAnswers.valueOfChangedProperty).thenReturn(valueOfChangedProperty)
+
     percentagePassedToDirectDescendants.foreach { percentage =>
       when(userAnswers.getPercentagePassedToDirectDescendants).thenReturn(percentage)
     }
+
     when(userAnswers.isTransferAvailableWhenPropertyChanged).thenReturn(transferAvailableWhenPropertyChanged)
   }
+
+  private def validCalculationInput(): CalculationInput =
+    CalculationInput(userAnswers) match {
+      case Right(calculationInput) => calculationInput
+      case Left(error)             => fail(s"Expected valid CalculationInput but received: ${error.errorMessage}")
+    }
+
+  private def assertValid(expected: CalculationInput): Unit =
+    CalculationInput(userAnswers) mustBe Right(expected)
+
+  private def assertJson(expected: JsObject): Unit =
+    Json.toJson(validCalculationInput()) mustBe expected
+
+  private def assertInvalid(expected: InputValidationError): Unit =
+    CalculationInput(userAnswers) mustBe Left(expected)
 
   "Calculation Input" when {
 
     "there is no property, value being transferred or downsizing" must {
 
-      def buildAnswers = setupMock(
+      def buildAnswers: OngoingStubbing[Option[Boolean]] = setupMock(
         dateOfDeath = Some(dateOfDeath),
         valueOfEstate = Some(valueOfEstate),
         chargeableEstateValue = Some(chargeableEstateValue),
@@ -111,14 +129,12 @@ class CalculationInputSpec extends CommonPlaySpec with BeforeAndAfter {
 
       "construct correctly from user answers" in {
         buildAnswers
-        val calculationInput = CalculationInput(userAnswers)
-        calculationInput mustBe CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, 0, 0, 0, None, None)
+        assertValid(CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, 0, 0, 0, None, None))
       }
 
       "render to JSON" in {
         buildAnswers
-        val calculationInput = CalculationInput(userAnswers)
-        Json.toJson(calculationInput) mustBe
+        assertJson(
           Json.obj(
             "dateOfDeath"                         -> "2020-01-01",
             "valueOfEstate"                       -> 1,
@@ -127,12 +143,13 @@ class CalculationInputSpec extends CommonPlaySpec with BeforeAndAfter {
             "percentagePassedToDirectDescendants" -> 0,
             "valueBeingTransferred"               -> 0
           )
+        )
       }
     }
 
     "there is a property, none of which is closely inherited, and no value being transferred or downsizing" must {
 
-      def buildAnswers = setupMock(
+      def buildAnswers: OngoingStubbing[Option[Boolean]] = setupMock(
         dateOfDeath = Some(dateOfDeath),
         valueOfEstate = Some(valueOfEstate),
         chargeableEstateValue = Some(chargeableEstateValue),
@@ -146,23 +163,14 @@ class CalculationInputSpec extends CommonPlaySpec with BeforeAndAfter {
 
       "construct correctly from user answers" in {
         buildAnswers
-        val calculationInput = CalculationInput(userAnswers)
-        calculationInput mustBe CalculationInput(
-          dateOfDeath,
-          valueOfEstate,
-          chargeableEstateValue,
-          propertyValue,
-          0,
-          0,
-          None,
-          None
+        assertValid(
+          CalculationInput(dateOfDeath, valueOfEstate, chargeableEstateValue, propertyValue, 0, 0, None, None)
         )
       }
 
       "render to JSON" in {
         buildAnswers
-        val calculationInput = CalculationInput(userAnswers)
-        Json.toJson(calculationInput) mustBe
+        assertJson(
           Json.obj(
             "dateOfDeath"                         -> "2020-01-01",
             "valueOfEstate"                       -> 1,
@@ -171,12 +179,13 @@ class CalculationInputSpec extends CommonPlaySpec with BeforeAndAfter {
             "percentagePassedToDirectDescendants" -> 0,
             "valueBeingTransferred"               -> 0
           )
+        )
       }
     }
 
     "there is a property, all of which is closely inherited, and no exemptions, value being transferred or downsizing" must {
 
-      def buildAnswers = setupMock(
+      def buildAnswers: OngoingStubbing[Option[Boolean]] = setupMock(
         dateOfDeath = Some(dateOfDeath),
         valueOfEstate = Some(valueOfEstate),
         chargeableEstateValue = Some(chargeableEstateValue),
@@ -191,23 +200,23 @@ class CalculationInputSpec extends CommonPlaySpec with BeforeAndAfter {
 
       "construct correctly from user answers" in {
         buildAnswers
-        val calculationInput = CalculationInput(userAnswers)
-        calculationInput mustBe CalculationInput(
-          dateOfDeath,
-          valueOfEstate,
-          chargeableEstateValue,
-          propertyValue,
-          percentagePassedToDirectDescendants,
-          0,
-          None,
-          None
+        assertValid(
+          CalculationInput(
+            dateOfDeath,
+            valueOfEstate,
+            chargeableEstateValue,
+            propertyValue,
+            percentagePassedToDirectDescendants,
+            0,
+            None,
+            None
+          )
         )
       }
 
       "render to JSON" in {
         buildAnswers
-        val calculationInput = CalculationInput(userAnswers)
-        Json.toJson(calculationInput) mustBe
+        assertJson(
           Json.obj(
             "dateOfDeath"                         -> "2020-01-01",
             "valueOfEstate"                       -> 1,
@@ -216,12 +225,13 @@ class CalculationInputSpec extends CommonPlaySpec with BeforeAndAfter {
             "percentagePassedToDirectDescendants" -> 4,
             "valueBeingTransferred"               -> 0
           )
+        )
       }
     }
 
     "there is a property, some of which is closely inherited, and no exemptions, value being transferred or downsizing" must {
 
-      def buildAnswers = setupMock(
+      def buildAnswers: OngoingStubbing[Option[Boolean]] = setupMock(
         dateOfDeath = Some(dateOfDeath),
         valueOfEstate = Some(valueOfEstate),
         chargeableEstateValue = Some(chargeableEstateValue),
@@ -236,23 +246,23 @@ class CalculationInputSpec extends CommonPlaySpec with BeforeAndAfter {
 
       "construct correctly from user answers" in {
         buildAnswers
-        val calculationInput = CalculationInput(userAnswers)
-        calculationInput mustBe CalculationInput(
-          dateOfDeath,
-          valueOfEstate,
-          chargeableEstateValue,
-          propertyValue,
-          percentagePassedToDirectDescendants,
-          0,
-          None,
-          None
+        assertValid(
+          CalculationInput(
+            dateOfDeath,
+            valueOfEstate,
+            chargeableEstateValue,
+            propertyValue,
+            percentagePassedToDirectDescendants,
+            0,
+            None,
+            None
+          )
         )
       }
 
       "render to JSON" in {
         buildAnswers
-        val calculationInput = CalculationInput(userAnswers)
-        Json.toJson(calculationInput) mustBe
+        assertJson(
           Json.obj(
             "dateOfDeath"                         -> "2020-01-01",
             "valueOfEstate"                       -> 1,
@@ -261,12 +271,13 @@ class CalculationInputSpec extends CommonPlaySpec with BeforeAndAfter {
             "percentagePassedToDirectDescendants" -> 4,
             "valueBeingTransferred"               -> 0
           )
+        )
       }
     }
 
     "there is a property, some of which is closely inherited, some exemptions, and no value being transferred or downsizing" must {
 
-      def buildAnswers = setupMock(
+      def buildAnswers: OngoingStubbing[Option[Boolean]] = setupMock(
         dateOfDeath = Some(dateOfDeath),
         valueOfEstate = Some(valueOfEstate),
         chargeableEstateValue = Some(chargeableEstateValue),
@@ -284,23 +295,23 @@ class CalculationInputSpec extends CommonPlaySpec with BeforeAndAfter {
 
       "construct correctly from user answers" in {
         buildAnswers
-        val calculationInput = CalculationInput(userAnswers)
-        calculationInput mustBe CalculationInput(
-          dateOfDeath,
-          valueOfEstate,
-          chargeableEstateValue,
-          propertyValue,
-          percentagePassedToDirectDescendants,
-          0,
-          Some(PropertyValueAfterExemption(chargeablePropertyValue, chargeableInheritedPropertyValue)),
-          None
+        assertValid(
+          CalculationInput(
+            dateOfDeath,
+            valueOfEstate,
+            chargeableEstateValue,
+            propertyValue,
+            percentagePassedToDirectDescendants,
+            0,
+            Some(PropertyValueAfterExemption(chargeablePropertyValue, chargeableInheritedPropertyValue)),
+            None
+          )
         )
       }
 
       "render to JSON" in {
         buildAnswers
-        val calculationInput = CalculationInput(userAnswers)
-        Json.toJson(calculationInput) mustBe
+        assertJson(
           Json.obj(
             "dateOfDeath"                         -> "2020-01-01",
             "valueOfEstate"                       -> 1,
@@ -313,12 +324,13 @@ class CalculationInputSpec extends CommonPlaySpec with BeforeAndAfter {
               "inheritedValue" -> 10
             )
           )
+        )
       }
     }
 
     "there is a property, some of which is closely inherited, no exemptions, some value being transferred and no downsizing" must {
 
-      def buildAnswers = setupMock(
+      def buildAnswers: OngoingStubbing[Option[Boolean]] = setupMock(
         dateOfDeath = Some(dateOfDeath),
         valueOfEstate = Some(valueOfEstate),
         chargeableEstateValue = Some(chargeableEstateValue),
@@ -334,23 +346,23 @@ class CalculationInputSpec extends CommonPlaySpec with BeforeAndAfter {
 
       "construct correctly from user answers" in {
         buildAnswers
-        val calculationInput = CalculationInput(userAnswers)
-        calculationInput mustBe CalculationInput(
-          dateOfDeath,
-          valueOfEstate,
-          chargeableEstateValue,
-          propertyValue,
-          percentagePassedToDirectDescendants,
-          valueBeingTransferred,
-          None,
-          None
+        assertValid(
+          CalculationInput(
+            dateOfDeath,
+            valueOfEstate,
+            chargeableEstateValue,
+            propertyValue,
+            percentagePassedToDirectDescendants,
+            valueBeingTransferred,
+            None,
+            None
+          )
         )
       }
 
       "render to JSON" in {
         buildAnswers
-        val calculationInput = CalculationInput(userAnswers)
-        Json.toJson(calculationInput) mustBe
+        assertJson(
           Json.obj(
             "dateOfDeath"                         -> "2020-01-01",
             "valueOfEstate"                       -> 1,
@@ -359,12 +371,13 @@ class CalculationInputSpec extends CommonPlaySpec with BeforeAndAfter {
             "percentagePassedToDirectDescendants" -> 4,
             "valueBeingTransferred"               -> 5
           )
+        )
       }
     }
 
     "there is a property, some of which is closely inherited, no exemptions, no value being transferred and downsizing" must {
 
-      def buildAnswers = setupMock(
+      def buildAnswers: OngoingStubbing[Option[Boolean]] = setupMock(
         dateOfDeath = Some(dateOfDeath),
         valueOfEstate = Some(valueOfEstate),
         chargeableEstateValue = Some(chargeableEstateValue),
@@ -382,23 +395,23 @@ class CalculationInputSpec extends CommonPlaySpec with BeforeAndAfter {
 
       "construct correctly from user answers" in {
         buildAnswers
-        val calculationInput = CalculationInput(userAnswers)
-        calculationInput mustBe CalculationInput(
-          dateOfDeath,
-          valueOfEstate,
-          chargeableEstateValue,
-          propertyValue,
-          percentagePassedToDirectDescendants,
-          0,
-          None,
-          Some(DownsizingDetails(datePropertyWasChanged, valueOfChangedProperty, 0, 0))
+        assertValid(
+          CalculationInput(
+            dateOfDeath,
+            valueOfEstate,
+            chargeableEstateValue,
+            propertyValue,
+            percentagePassedToDirectDescendants,
+            0,
+            None,
+            Some(DownsizingDetails(datePropertyWasChanged, valueOfChangedProperty, 0, 0))
+          )
         )
       }
 
       "render to JSON" in {
         buildAnswers
-        val calculationInput = CalculationInput(userAnswers)
-        Json.toJson(calculationInput) mustBe
+        assertJson(
           Json.obj(
             "dateOfDeath"                         -> "2020-01-01",
             "valueOfEstate"                       -> 1,
@@ -413,34 +426,34 @@ class CalculationInputSpec extends CommonPlaySpec with BeforeAndAfter {
               "valueAvailableWhenPropertyChanged" -> 0
             )
           )
+        )
       }
     }
 
-    "there is a property, some of which is closely inherited, no exemptions, no value being transferred, " +
-      "downsizing and other assets left to a direct descendant" must {
+    "there is a property, downsizing, and other assets left to a direct descendant" must {
 
-        def buildAnswers = setupMock(
-          dateOfDeath = Some(dateOfDeath),
-          valueOfEstate = Some(valueOfEstate),
-          chargeableEstateValue = Some(chargeableEstateValue),
-          propertyInEstate = Some(true),
-          propertyValue = Some(propertyValue),
-          propertyPassingToDirectDescendants = Some(Constants.some),
-          percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants),
-          exemptionsAndReliefClaimed = Some(false),
-          transferAnyUnusedThreshold = Some(false),
-          claimDownsizingThreshold = Some(true),
-          datePropertyWasChanged = Some(datePropertyWasChanged),
-          valueOfChangedProperty = Some(valueOfChangedProperty),
-          assetsPassingToDirectDescendants = Some(true),
-          valueOfAssetsPassing = Some(valueOfAssetsPassing),
-          transferAvailableWhenPropertyChanged = Some(false)
-        )
+      def buildAnswers: OngoingStubbing[Option[Boolean]] = setupMock(
+        dateOfDeath = Some(dateOfDeath),
+        valueOfEstate = Some(valueOfEstate),
+        chargeableEstateValue = Some(chargeableEstateValue),
+        propertyInEstate = Some(true),
+        propertyValue = Some(propertyValue),
+        propertyPassingToDirectDescendants = Some(Constants.some),
+        percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants),
+        exemptionsAndReliefClaimed = Some(false),
+        transferAnyUnusedThreshold = Some(false),
+        claimDownsizingThreshold = Some(true),
+        datePropertyWasChanged = Some(datePropertyWasChanged),
+        valueOfChangedProperty = Some(valueOfChangedProperty),
+        assetsPassingToDirectDescendants = Some(true),
+        valueOfAssetsPassing = Some(valueOfAssetsPassing),
+        transferAvailableWhenPropertyChanged = Some(false)
+      )
 
-        "construct correctly from user answers" in {
-          buildAnswers
-          val calculationInput = CalculationInput(userAnswers)
-          calculationInput mustBe CalculationInput(
+      "construct correctly from user answers" in {
+        buildAnswers
+        assertValid(
+          CalculationInput(
             dateOfDeath,
             valueOfEstate,
             chargeableEstateValue,
@@ -450,56 +463,56 @@ class CalculationInputSpec extends CommonPlaySpec with BeforeAndAfter {
             None,
             Some(DownsizingDetails(datePropertyWasChanged, valueOfChangedProperty, valueOfAssetsPassing, 0))
           )
-        }
-
-        "render to JSON" in {
-          buildAnswers
-          val calculationInput = CalculationInput(userAnswers)
-          Json.toJson(calculationInput) mustBe
-            Json.obj(
-              "dateOfDeath"                         -> "2020-01-01",
-              "valueOfEstate"                       -> 1,
-              "chargeableEstateValue"               -> 2,
-              "propertyValue"                       -> 3,
-              "percentagePassedToDirectDescendants" -> 4,
-              "valueBeingTransferred"               -> 0,
-              "downsizingDetails" -> Json.obj(
-                "datePropertyWasChanged"            -> "2018-02-02",
-                "valueOfChangedProperty"            -> 6,
-                "valueOfAssetsPassing"              -> 7,
-                "valueAvailableWhenPropertyChanged" -> 0
-              )
-            )
-        }
+        )
       }
 
-    "there is a property, some of which is closely inherited, no exemptions, value being transferred, downsizing and " +
-      "other assets left to a direct descendant" must {
-
-        def buildAnswers = setupMock(
-          dateOfDeath = Some(dateOfDeath),
-          valueOfEstate = Some(valueOfEstate),
-          chargeableEstateValue = Some(chargeableEstateValue),
-          propertyInEstate = Some(true),
-          propertyValue = Some(propertyValue),
-          propertyPassingToDirectDescendants = Some(Constants.some),
-          percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants),
-          exemptionsAndReliefClaimed = Some(false),
-          transferAnyUnusedThreshold = Some(true),
-          valueBeingTransferred = Some(valueBeingTransferred),
-          claimDownsizingThreshold = Some(true),
-          datePropertyWasChanged = Some(datePropertyWasChanged),
-          valueOfChangedProperty = Some(valueOfChangedProperty),
-          assetsPassingToDirectDescendants = Some(true),
-          valueOfAssetsPassing = Some(valueOfAssetsPassing),
-          transferAvailableWhenPropertyChanged = Some(true),
-          valueAvailableWhenPropertyChanged = Some(valueAvailableWhenPropertyChanged)
+      "render to JSON" in {
+        buildAnswers
+        assertJson(
+          Json.obj(
+            "dateOfDeath"                         -> "2020-01-01",
+            "valueOfEstate"                       -> 1,
+            "chargeableEstateValue"               -> 2,
+            "propertyValue"                       -> 3,
+            "percentagePassedToDirectDescendants" -> 4,
+            "valueBeingTransferred"               -> 0,
+            "downsizingDetails" -> Json.obj(
+              "datePropertyWasChanged"            -> "2018-02-02",
+              "valueOfChangedProperty"            -> 6,
+              "valueOfAssetsPassing"              -> 7,
+              "valueAvailableWhenPropertyChanged" -> 0
+            )
+          )
         )
+      }
+    }
 
-        "construct correctly from user answers" in {
-          buildAnswers
-          val calculationInput = CalculationInput(userAnswers)
-          calculationInput mustBe CalculationInput(
+    "there is value being transferred, downsizing, and other assets left to a direct descendant" must {
+
+      def buildAnswers: OngoingStubbing[Option[Boolean]] = setupMock(
+        dateOfDeath = Some(dateOfDeath),
+        valueOfEstate = Some(valueOfEstate),
+        chargeableEstateValue = Some(chargeableEstateValue),
+        propertyInEstate = Some(true),
+        propertyValue = Some(propertyValue),
+        propertyPassingToDirectDescendants = Some(Constants.some),
+        percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants),
+        exemptionsAndReliefClaimed = Some(false),
+        transferAnyUnusedThreshold = Some(true),
+        valueBeingTransferred = Some(valueBeingTransferred),
+        claimDownsizingThreshold = Some(true),
+        datePropertyWasChanged = Some(datePropertyWasChanged),
+        valueOfChangedProperty = Some(valueOfChangedProperty),
+        assetsPassingToDirectDescendants = Some(true),
+        valueOfAssetsPassing = Some(valueOfAssetsPassing),
+        transferAvailableWhenPropertyChanged = Some(true),
+        valueAvailableWhenPropertyChanged = Some(valueAvailableWhenPropertyChanged)
+      )
+
+      "construct correctly from user answers" in {
+        buildAnswers
+        assertValid(
+          CalculationInput(
             dateOfDeath,
             valueOfEstate,
             chargeableEstateValue,
@@ -516,51 +529,51 @@ class CalculationInputSpec extends CommonPlaySpec with BeforeAndAfter {
               )
             )
           )
-        }
-
-        "render to JSON" in {
-          buildAnswers
-          val calculationInput = CalculationInput(userAnswers)
-          Json.toJson(calculationInput) mustBe
-            Json.obj(
-              "dateOfDeath"                         -> "2020-01-01",
-              "valueOfEstate"                       -> 1,
-              "chargeableEstateValue"               -> 2,
-              "propertyValue"                       -> 3,
-              "percentagePassedToDirectDescendants" -> 4,
-              "valueBeingTransferred"               -> 5,
-              "downsizingDetails" -> Json.obj(
-                "datePropertyWasChanged"            -> "2018-02-02",
-                "valueOfChangedProperty"            -> 6,
-                "valueOfAssetsPassing"              -> 7,
-                "valueAvailableWhenPropertyChanged" -> 8
-              )
-            )
-        }
+        )
       }
 
-    "there is a property, some of which is closely inherited, no exemptions, value being transferred, downsizing is claimed " +
-      "but the Date Property Was Changed is before the eligibility date" must {
-
-        def buildAnswers = setupMock(
-          dateOfDeath = Some(dateOfDeath),
-          valueOfEstate = Some(valueOfEstate),
-          chargeableEstateValue = Some(chargeableEstateValue),
-          propertyInEstate = Some(true),
-          propertyValue = Some(propertyValue),
-          propertyPassingToDirectDescendants = Some(Constants.some),
-          percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants),
-          exemptionsAndReliefClaimed = Some(false),
-          transferAnyUnusedThreshold = Some(true),
-          valueBeingTransferred = Some(valueBeingTransferred),
-          claimDownsizingThreshold = Some(true),
-          datePropertyWasChanged = Some(Constants.downsizingEligibilityDate.minusDays(1))
+      "render to JSON" in {
+        buildAnswers
+        assertJson(
+          Json.obj(
+            "dateOfDeath"                         -> "2020-01-01",
+            "valueOfEstate"                       -> 1,
+            "chargeableEstateValue"               -> 2,
+            "propertyValue"                       -> 3,
+            "percentagePassedToDirectDescendants" -> 4,
+            "valueBeingTransferred"               -> 5,
+            "downsizingDetails" -> Json.obj(
+              "datePropertyWasChanged"            -> "2018-02-02",
+              "valueOfChangedProperty"            -> 6,
+              "valueOfAssetsPassing"              -> 7,
+              "valueAvailableWhenPropertyChanged" -> 8
+            )
+          )
         )
+      }
+    }
 
-        "construct correctly from user answers" in {
-          buildAnswers
-          val calculationInput = CalculationInput(userAnswers)
-          calculationInput mustBe CalculationInput(
+    "downsizing is claimed but the date property was changed is before the eligibility date" must {
+
+      def buildAnswers: OngoingStubbing[Option[Boolean]] = setupMock(
+        dateOfDeath = Some(dateOfDeath),
+        valueOfEstate = Some(valueOfEstate),
+        chargeableEstateValue = Some(chargeableEstateValue),
+        propertyInEstate = Some(true),
+        propertyValue = Some(propertyValue),
+        propertyPassingToDirectDescendants = Some(Constants.some),
+        percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants),
+        exemptionsAndReliefClaimed = Some(false),
+        transferAnyUnusedThreshold = Some(true),
+        valueBeingTransferred = Some(valueBeingTransferred),
+        claimDownsizingThreshold = Some(true),
+        datePropertyWasChanged = Some(Constants.downsizingEligibilityDate.minusDays(1))
+      )
+
+      "construct correctly from user answers" in {
+        buildAnswers
+        assertValid(
+          CalculationInput(
             dateOfDeath,
             valueOfEstate,
             chargeableEstateValue,
@@ -570,440 +583,363 @@ class CalculationInputSpec extends CommonPlaySpec with BeforeAndAfter {
             None,
             None
           )
-        }
-
-        "render to JSON" in {
-          buildAnswers
-          val calculationInput = CalculationInput(userAnswers)
-          Json.toJson(calculationInput) mustBe
-            Json.obj(
-              "dateOfDeath"                         -> "2020-01-01",
-              "valueOfEstate"                       -> 1,
-              "chargeableEstateValue"               -> 2,
-              "propertyValue"                       -> 3,
-              "percentagePassedToDirectDescendants" -> 4,
-              "valueBeingTransferred"               -> 5
-            )
-        }
+        )
       }
 
-    "there is no value for 'date of death'" must {
-      "throw an exception" in {
-        val exception = intercept[IllegalArgumentException] {
-          setupMock()
-          CalculationInput(userAnswers)
-        }
-
-        exception.getMessage mustBe "requirement failed: Date of Death was not answered"
-      }
-    }
-
-    "there is no value for 'value of estate'" must {
-      "throw an exception" in {
-        val exception = intercept[IllegalArgumentException] {
-          setupMock(dateOfDeath = Some(dateOfDeath))
-          CalculationInput(userAnswers)
-        }
-
-        exception.getMessage mustBe "requirement failed: Value Of Estate was not answered"
-      }
-    }
-
-    "there is no value for 'chargeable transfer amount'" must {
-      "throw an exception" in {
-        val exception = intercept[IllegalArgumentException] {
-          setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate))
-          CalculationInput(userAnswers)
-        }
-
-        exception.getMessage mustBe "requirement failed: Chargeable Estate Value was not answered"
-      }
-    }
-
-    "there is no value for 'property in estate'" must {
-      "throw an exception" in {
-        val exception = intercept[IllegalArgumentException] {
-          setupMock(
-            dateOfDeath = Some(dateOfDeath),
-            valueOfEstate = Some(valueOfEstate),
-            chargeableEstateValue = Some(chargeableEstateValue)
+      "render to JSON" in {
+        buildAnswers
+        assertJson(
+          Json.obj(
+            "dateOfDeath"                         -> "2020-01-01",
+            "valueOfEstate"                       -> 1,
+            "chargeableEstateValue"               -> 2,
+            "propertyValue"                       -> 3,
+            "percentagePassedToDirectDescendants" -> 4,
+            "valueBeingTransferred"               -> 5
           )
-          CalculationInput(userAnswers)
-        }
-
-        exception.getMessage mustBe "requirement failed: Property In Estate was not answered"
+        )
       }
     }
 
-    "'property in estate' is true but there is no value for 'property value'" must {
-      "throw an exception" in {
-        val exception = intercept[IllegalArgumentException] {
-          setupMock(
-            dateOfDeath = Some(dateOfDeath),
-            valueOfEstate = Some(valueOfEstate),
-            chargeableEstateValue = Some(chargeableEstateValue),
-            propertyInEstate = Some(true)
-          )
-          CalculationInput(userAnswers)
-        }
-
-        exception.getMessage mustBe "requirement failed: Property Value was not answered"
+    "there is no value for date of death" must {
+      "return DateOfDeathNotDefined" in {
+        setupMock()
+        assertInvalid(DateOfDeathNotDefined)
       }
     }
 
-    "'property in estate' is true but there is no value for 'property passing to direct descendants'" must {
-      "throw an exception" in {
-        val exception = intercept[IllegalArgumentException] {
-          setupMock(
-            dateOfDeath = Some(dateOfDeath),
-            valueOfEstate = Some(valueOfEstate),
-            chargeableEstateValue = Some(chargeableEstateValue),
-            propertyInEstate = Some(true),
-            propertyValue = Some(propertyValue)
-          )
-          CalculationInput(userAnswers)
-        }
-
-        exception.getMessage mustBe "requirement failed: Property Passing To Direct Descendants was not answered"
+    "there is no value for value of estate" must {
+      "return ValueOfEstateNotDefined" in {
+        setupMock(dateOfDeath = Some(dateOfDeath))
+        assertInvalid(ValueOfEstateNotDefined)
       }
     }
 
-    "'property in estate' is true and 'property passing to direct descendants' is 'some' but there is no value for 'percentage passed to direct descendants'" must {
-      "throw an exception" in {
-        val exception = intercept[IllegalArgumentException] {
-          setupMock(
-            dateOfDeath = Some(dateOfDeath),
-            valueOfEstate = Some(valueOfEstate),
-            chargeableEstateValue = Some(chargeableEstateValue),
-            propertyInEstate = Some(true),
-            propertyValue = Some(propertyValue),
-            propertyPassingToDirectDescendants = Some(Constants.some)
-          )
-          CalculationInput(userAnswers)
-        }
-
-        exception.getMessage mustBe "requirement failed: Percentage Passed To Direct Descendants was not answered"
+    "there is no value for chargeable transfer amount" must {
+      "return ChargeableEstateValueNotDefined" in {
+        setupMock(dateOfDeath = Some(dateOfDeath), valueOfEstate = Some(valueOfEstate))
+        assertInvalid(ChargeableEstateValueNotDefined)
       }
     }
 
-    "'property passing to direct descendants' is 'all' but there is no value for 'exemptions and relief claimed'" must {
-      "throw an exception" in {
-        val exception = intercept[IllegalArgumentException] {
-          setupMock(
-            dateOfDeath = Some(dateOfDeath),
-            valueOfEstate = Some(valueOfEstate),
-            chargeableEstateValue = Some(chargeableEstateValue),
-            propertyInEstate = Some(true),
-            propertyValue = Some(propertyValue),
-            propertyPassingToDirectDescendants = Some(Constants.all),
-            percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants)
-          )
-          CalculationInput(userAnswers)
-        }
-
-        exception.getMessage mustBe "requirement failed: Exemptions And Relief Claimed was not answered"
+    "there is no value for property in estate" must {
+      "return PropertyInEstateNotDefined" in {
+        setupMock(
+          dateOfDeath = Some(dateOfDeath),
+          valueOfEstate = Some(valueOfEstate),
+          chargeableEstateValue = Some(chargeableEstateValue)
+        )
+        assertInvalid(PropertyInEstateNotDefined)
       }
     }
 
-    "'property passing to direct descendants' is 'some' but there is no value for 'exemptions and relief claimed'" must {
-      "throw an exception" in {
-        val exception = intercept[IllegalArgumentException] {
-          setupMock(
-            dateOfDeath = Some(dateOfDeath),
-            valueOfEstate = Some(valueOfEstate),
-            chargeableEstateValue = Some(chargeableEstateValue),
-            propertyInEstate = Some(true),
-            propertyValue = Some(propertyValue),
-            propertyPassingToDirectDescendants = Some(Constants.some),
-            percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants)
-          )
-          CalculationInput(userAnswers)
-        }
-
-        exception.getMessage mustBe "requirement failed: Exemptions And Relief Claimed was not answered"
+    "property in estate is true but there is no property value" must {
+      "return PropertyValueNotDefined" in {
+        setupMock(
+          dateOfDeath = Some(dateOfDeath),
+          valueOfEstate = Some(valueOfEstate),
+          chargeableEstateValue = Some(chargeableEstateValue),
+          propertyInEstate = Some(true)
+        )
+        assertInvalid(PropertyValueNotDefined)
       }
     }
 
-    "'property passing to direct descendants' is 'some' and 'exemptions and relief claimed' is true but there is no value for 'grossing up on estate property'" must {
-      "throw an exception" in {
-        val exception = intercept[IllegalArgumentException] {
-          setupMock(
-            dateOfDeath = Some(dateOfDeath),
-            valueOfEstate = Some(valueOfEstate),
-            chargeableEstateValue = Some(chargeableEstateValue),
-            propertyInEstate = Some(true),
-            propertyValue = Some(propertyValue),
-            propertyPassingToDirectDescendants = Some(Constants.some),
-            percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants),
-            exemptionsAndReliefClaimed = Some(true)
-          )
-          CalculationInput(userAnswers)
-        }
-
-        exception.getMessage mustBe "requirement failed: Grossing Up On Estate Property was not answered"
+    "property in estate is true but there is no property passing to direct descendants" must {
+      "return PropertyPassingToDirectDescendantsNotDefined" in {
+        setupMock(
+          dateOfDeath = Some(dateOfDeath),
+          valueOfEstate = Some(valueOfEstate),
+          chargeableEstateValue = Some(chargeableEstateValue),
+          propertyInEstate = Some(true),
+          propertyValue = Some(propertyValue)
+        )
+        assertInvalid(PropertyPassingToDirectDescendantsNotDefined)
       }
     }
 
-    "'grossing up on estate property' is false and there is no value for 'chargeable property value'" must {
-      "throw an exception" in {
-        val exception = intercept[IllegalArgumentException] {
-          setupMock(
-            dateOfDeath = Some(dateOfDeath),
-            valueOfEstate = Some(valueOfEstate),
-            chargeableEstateValue = Some(chargeableEstateValue),
-            propertyInEstate = Some(true),
-            propertyValue = Some(propertyValue),
-            propertyPassingToDirectDescendants = Some(Constants.some),
-            percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants),
-            exemptionsAndReliefClaimed = Some(true),
-            grossingUpOnEstateProperty = Some(false)
-          )
-          CalculationInput(userAnswers)
-        }
-
-        exception.getMessage mustBe "requirement failed: Chargeable Property Value was not answered"
+    "property passing to direct descendants is some but no percentage is given" must {
+      "return PercentagePassedToDirectDescendantsNotDefined" in {
+        setupMock(
+          dateOfDeath = Some(dateOfDeath),
+          valueOfEstate = Some(valueOfEstate),
+          chargeableEstateValue = Some(chargeableEstateValue),
+          propertyInEstate = Some(true),
+          propertyValue = Some(propertyValue),
+          propertyPassingToDirectDescendants = Some(Constants.some)
+        )
+        assertInvalid(PercentagePassedToDirectDescendantsNotDefined)
       }
     }
 
-    "'grossing up on estate property' is false and there is no value for 'chargeable inhertied property value'" must {
-      "throw an exception" in {
-        val exception = intercept[IllegalArgumentException] {
-          setupMock(
-            dateOfDeath = Some(dateOfDeath),
-            valueOfEstate = Some(valueOfEstate),
-            chargeableEstateValue = Some(chargeableEstateValue),
-            propertyInEstate = Some(true),
-            propertyValue = Some(propertyValue),
-            propertyPassingToDirectDescendants = Some(Constants.some),
-            percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants),
-            exemptionsAndReliefClaimed = Some(true),
-            grossingUpOnEstateProperty = Some(false),
-            chargeablePropertyValue = Some(chargeablePropertyValue)
-          )
-          CalculationInput(userAnswers)
-        }
-
-        exception.getMessage mustBe "requirement failed: Chargeable Inherited Property Value was not answered"
+    "property passing to direct descendants is all but exemptions and relief claimed is missing" must {
+      "return ExemptionsAndReliefClaimedNotDefined" in {
+        setupMock(
+          dateOfDeath = Some(dateOfDeath),
+          valueOfEstate = Some(valueOfEstate),
+          chargeableEstateValue = Some(chargeableEstateValue),
+          propertyInEstate = Some(true),
+          propertyValue = Some(propertyValue),
+          propertyPassingToDirectDescendants = Some(Constants.all),
+          percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants)
+        )
+        assertInvalid(ExemptionsAndReliefClaimedNotDefined)
       }
     }
 
-    "there is no value for 'Transfer Any Unused Allowance'" must {
-      "throw an exception" in {
-        val exception = intercept[IllegalArgumentException] {
-          setupMock(
-            dateOfDeath = Some(dateOfDeath),
-            valueOfEstate = Some(valueOfEstate),
-            chargeableEstateValue = Some(chargeableEstateValue),
-            propertyInEstate = Some(true),
-            propertyValue = Some(propertyValue),
-            propertyPassingToDirectDescendants = Some(Constants.none)
-          )
-          CalculationInput(userAnswers)
-        }
-
-        exception.getMessage mustBe "requirement failed: Transfer Any Unused Allowance was not answered"
+    "property passing to direct descendants is some but exemptions and relief claimed is missing" must {
+      "return ExemptionsAndReliefClaimedNotDefined" in {
+        setupMock(
+          dateOfDeath = Some(dateOfDeath),
+          valueOfEstate = Some(valueOfEstate),
+          chargeableEstateValue = Some(chargeableEstateValue),
+          propertyInEstate = Some(true),
+          propertyValue = Some(propertyValue),
+          propertyPassingToDirectDescendants = Some(Constants.some),
+          percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants)
+        )
+        assertInvalid(ExemptionsAndReliefClaimedNotDefined)
       }
     }
 
-    "'Transfer Any Unused Allowance' is true but there is no value for 'value being transferred'" must {
-      "throw an exception" in {
-        val exception = intercept[IllegalArgumentException] {
-          setupMock(
-            dateOfDeath = Some(dateOfDeath),
-            valueOfEstate = Some(valueOfEstate),
-            chargeableEstateValue = Some(chargeableEstateValue),
-            propertyInEstate = Some(true),
-            propertyValue = Some(propertyValue),
-            propertyPassingToDirectDescendants = Some(Constants.none),
-            transferAnyUnusedThreshold = Some(true)
-          )
-          CalculationInput(userAnswers)
-        }
-
-        exception.getMessage mustBe "requirement failed: Value Being Transferred was not answered"
+    "exemptions and relief are claimed but grossing up on estate property is missing" must {
+      "return GrossingUpOnEstatePropertyNotDefined" in {
+        setupMock(
+          dateOfDeath = Some(dateOfDeath),
+          valueOfEstate = Some(valueOfEstate),
+          chargeableEstateValue = Some(chargeableEstateValue),
+          propertyInEstate = Some(true),
+          propertyValue = Some(propertyValue),
+          propertyPassingToDirectDescendants = Some(Constants.some),
+          percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants),
+          exemptionsAndReliefClaimed = Some(true)
+        )
+        assertInvalid(GrossingUpOnEstatePropertyNotDefined)
       }
     }
 
-    "there is no value for 'claim downsizing threshold'" must {
-      "throw an exception" in {
-        val exception = intercept[IllegalArgumentException] {
-          setupMock(
-            dateOfDeath = Some(dateOfDeath),
-            valueOfEstate = Some(valueOfEstate),
-            chargeableEstateValue = Some(chargeableEstateValue),
-            propertyInEstate = Some(true),
-            propertyValue = Some(propertyValue),
-            propertyPassingToDirectDescendants = Some(Constants.none),
-            transferAnyUnusedThreshold = Some(false)
-          )
-          CalculationInput(userAnswers)
-        }
-
-        exception.getMessage mustBe "requirement failed: Claim Downsizing Threshold was not answered"
+    "grossing up is false and chargeable property value is missing" must {
+      "return ChargeablePropertyValueNotDefined" in {
+        setupMock(
+          dateOfDeath = Some(dateOfDeath),
+          valueOfEstate = Some(valueOfEstate),
+          chargeableEstateValue = Some(chargeableEstateValue),
+          propertyInEstate = Some(true),
+          propertyValue = Some(propertyValue),
+          propertyPassingToDirectDescendants = Some(Constants.some),
+          percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants),
+          exemptionsAndReliefClaimed = Some(true),
+          grossingUpOnEstateProperty = Some(false)
+        )
+        assertInvalid(ChargeablePropertyValueNotDefined)
       }
     }
 
-    "'claim downsizing threshold' is true but there is no value for 'Date Property Was Changed'" must {
-      "throw an exception" in {
-        val exception = intercept[IllegalArgumentException] {
-          setupMock(
-            dateOfDeath = Some(dateOfDeath),
-            valueOfEstate = Some(valueOfEstate),
-            chargeableEstateValue = Some(chargeableEstateValue),
-            propertyInEstate = Some(true),
-            propertyValue = Some(propertyValue),
-            propertyPassingToDirectDescendants = Some(Constants.none),
-            transferAnyUnusedThreshold = Some(false),
-            claimDownsizingThreshold = Some(true)
-          )
-          CalculationInput(userAnswers)
-        }
-
-        exception.getMessage mustBe "requirement failed: Date Property Was Changed was not answered"
+    "grossing up is false and chargeable inherited property value is missing" must {
+      "return ChargeableInheritedPropertyValueNotDefined" in {
+        setupMock(
+          dateOfDeath = Some(dateOfDeath),
+          valueOfEstate = Some(valueOfEstate),
+          chargeableEstateValue = Some(chargeableEstateValue),
+          propertyInEstate = Some(true),
+          propertyValue = Some(propertyValue),
+          propertyPassingToDirectDescendants = Some(Constants.some),
+          percentagePassedToDirectDescendants = Some(percentagePassedToDirectDescendants),
+          exemptionsAndReliefClaimed = Some(true),
+          grossingUpOnEstateProperty = Some(false),
+          chargeablePropertyValue = Some(chargeablePropertyValue)
+        )
+        assertInvalid(ChargeableInheritedPropertyValueNotDefined)
       }
     }
 
-    "'claim downsizing threshold' is true but there is no value for 'value of changed property'" must {
-      "throw an exception" in {
-        val exception = intercept[IllegalArgumentException] {
-          setupMock(
-            dateOfDeath = Some(dateOfDeath),
-            valueOfEstate = Some(valueOfEstate),
-            chargeableEstateValue = Some(chargeableEstateValue),
-            propertyInEstate = Some(true),
-            propertyValue = Some(propertyValue),
-            propertyPassingToDirectDescendants = Some(Constants.none),
-            transferAnyUnusedThreshold = Some(false),
-            claimDownsizingThreshold = Some(true),
-            datePropertyWasChanged = Some(datePropertyWasChanged)
-          )
-          CalculationInput(userAnswers)
-        }
-
-        exception.getMessage mustBe "requirement failed: Value Of Changed Property was not answered"
+    "transfer any unused allowance is missing" must {
+      "return TransferAnyUnusedThresholdNotDefined" in {
+        setupMock(
+          dateOfDeath = Some(dateOfDeath),
+          valueOfEstate = Some(valueOfEstate),
+          chargeableEstateValue = Some(chargeableEstateValue),
+          propertyInEstate = Some(true),
+          propertyValue = Some(propertyValue),
+          propertyPassingToDirectDescendants = Some(Constants.none),
+          percentagePassedToDirectDescendants = Some(BigDecimal(0))
+        )
+        assertInvalid(TransferAnyUnusedThresholdNotDefined)
       }
     }
 
-    "'claim downsizing threshold' is true but there is no value for 'assets passing to direct descendants'" must {
-      "throw an exception" in {
-        val exception = intercept[IllegalArgumentException] {
-          setupMock(
-            dateOfDeath = Some(dateOfDeath),
-            valueOfEstate = Some(valueOfEstate),
-            chargeableEstateValue = Some(chargeableEstateValue),
-            propertyInEstate = Some(true),
-            propertyValue = Some(propertyValue),
-            propertyPassingToDirectDescendants = Some(Constants.none),
-            transferAnyUnusedThreshold = Some(false),
-            claimDownsizingThreshold = Some(true),
-            datePropertyWasChanged = Some(datePropertyWasChanged),
-            valueOfChangedProperty = Some(valueOfChangedProperty)
-          )
-          CalculationInput(userAnswers)
-        }
-
-        exception.getMessage mustBe "requirement failed: Assets Passing To Direct Descendants was not answered"
+    "transfer any unused allowance is true but value being transferred is missing" must {
+      "return ValueBeingTransferredNotDefined" in {
+        setupMock(
+          dateOfDeath = Some(dateOfDeath),
+          valueOfEstate = Some(valueOfEstate),
+          chargeableEstateValue = Some(chargeableEstateValue),
+          propertyInEstate = Some(true),
+          propertyValue = Some(propertyValue),
+          propertyPassingToDirectDescendants = Some(Constants.none),
+          percentagePassedToDirectDescendants = Some(BigDecimal(0)),
+          transferAnyUnusedThreshold = Some(true)
+        )
+        assertInvalid(ValueBeingTransferredNotDefined)
       }
     }
 
-    "'claim downsizing threshold' is true and 'assets passing to direct descendants' is true but there is no value for " +
-      "'value of assets passing'" must {
-        "throw an exception" in {
-          val exception = intercept[IllegalArgumentException] {
-            setupMock(
-              dateOfDeath = Some(dateOfDeath),
-              valueOfEstate = Some(valueOfEstate),
-              chargeableEstateValue = Some(chargeableEstateValue),
-              propertyInEstate = Some(true),
-              propertyValue = Some(propertyValue),
-              propertyPassingToDirectDescendants = Some(Constants.none),
-              transferAnyUnusedThreshold = Some(false),
-              claimDownsizingThreshold = Some(true),
-              datePropertyWasChanged = Some(datePropertyWasChanged),
-              valueOfChangedProperty = Some(valueOfChangedProperty),
-              assetsPassingToDirectDescendants = Some(true)
-            )
-            CalculationInput(userAnswers)
-          }
-
-          exception.getMessage mustBe "requirement failed: Value Of Assets Passing was not answered"
-        }
+    "claim downsizing threshold is missing" must {
+      "return ClaimDownsizingThresholdNotDefined" in {
+        setupMock(
+          dateOfDeath = Some(dateOfDeath),
+          valueOfEstate = Some(valueOfEstate),
+          chargeableEstateValue = Some(chargeableEstateValue),
+          propertyInEstate = Some(true),
+          propertyValue = Some(propertyValue),
+          propertyPassingToDirectDescendants = Some(Constants.none),
+          percentagePassedToDirectDescendants = Some(BigDecimal(0)),
+          transferAnyUnusedThreshold = Some(false)
+        )
+        assertInvalid(ClaimDownsizingThresholdNotDefined)
       }
+    }
 
-    "there is value being transferred, 'claim downsizing threshold' is true and 'assets passing to direct descendants' is true but there is no value for " +
-      "'transfer available when property changed'" must {
-        "throw an exception" in {
-          val exception = intercept[IllegalArgumentException] {
-            setupMock(
-              dateOfDeath = Some(dateOfDeath),
-              valueOfEstate = Some(valueOfEstate),
-              chargeableEstateValue = Some(chargeableEstateValue),
-              propertyInEstate = Some(true),
-              propertyValue = Some(propertyValue),
-              propertyPassingToDirectDescendants = Some(Constants.none),
-              transferAnyUnusedThreshold = Some(true),
-              valueBeingTransferred = Some(valueBeingTransferred),
-              claimDownsizingThreshold = Some(true),
-              datePropertyWasChanged = Some(datePropertyWasChanged),
-              valueOfChangedProperty = Some(valueOfChangedProperty),
-              assetsPassingToDirectDescendants = Some(true),
-              valueOfAssetsPassing = Some(valueOfAssetsPassing)
-            )
-            CalculationInput(userAnswers)
-          }
-
-          exception.getMessage mustBe "requirement failed: Transfer Available When Property Changed was not answered"
-        }
+    "claim downsizing threshold is true but date property was changed is missing" must {
+      "return DatePropertyWasChangedNotDefined" in {
+        setupMock(
+          dateOfDeath = Some(dateOfDeath),
+          valueOfEstate = Some(valueOfEstate),
+          chargeableEstateValue = Some(chargeableEstateValue),
+          propertyInEstate = Some(true),
+          propertyValue = Some(propertyValue),
+          propertyPassingToDirectDescendants = Some(Constants.none),
+          percentagePassedToDirectDescendants = Some(BigDecimal(0)),
+          transferAnyUnusedThreshold = Some(false),
+          claimDownsizingThreshold = Some(true)
+        )
+        assertInvalid(DatePropertyWasChangedNotDefined)
       }
+    }
 
-    "there is no value being transferred, 'claim downsizing threshold' is true and 'assets passing to direct descendants' is true but there is no value " +
-      "for 'transfer available when property changed'" must {
-        "not throw an exception" in {
-          setupMock(
-            dateOfDeath = Some(dateOfDeath),
-            valueOfEstate = Some(valueOfEstate),
-            chargeableEstateValue = Some(chargeableEstateValue),
-            propertyInEstate = Some(true),
-            propertyValue = Some(propertyValue),
-            propertyPassingToDirectDescendants = Some(Constants.none),
-            transferAnyUnusedThreshold = Some(false),
-            claimDownsizingThreshold = Some(true),
-            datePropertyWasChanged = Some(datePropertyWasChanged),
-            valueOfChangedProperty = Some(valueOfChangedProperty),
-            assetsPassingToDirectDescendants = Some(true),
-            valueOfAssetsPassing = Some(valueOfAssetsPassing)
-          )
-
-          CalculationInput(userAnswers)
-        }
+    "claim downsizing threshold is true but value of changed property is missing" must {
+      "return ValueOfChangedPropertyNotDefined" in {
+        setupMock(
+          dateOfDeath = Some(dateOfDeath),
+          valueOfEstate = Some(valueOfEstate),
+          chargeableEstateValue = Some(chargeableEstateValue),
+          propertyInEstate = Some(true),
+          propertyValue = Some(propertyValue),
+          propertyPassingToDirectDescendants = Some(Constants.none),
+          percentagePassedToDirectDescendants = Some(BigDecimal(0)),
+          transferAnyUnusedThreshold = Some(false),
+          claimDownsizingThreshold = Some(true),
+          datePropertyWasChanged = Some(datePropertyWasChanged)
+        )
+        assertInvalid(ValueOfChangedPropertyNotDefined)
       }
+    }
 
-    "'claim downsizing threshold' is true, 'assets passing to direct descendants' is true and 'transfer available when property changed' is true " +
-      "but there is no value for 'transfer available when property changed'" must {
-        "throw an exception" in {
-          val exception = intercept[IllegalArgumentException] {
-            setupMock(
-              dateOfDeath = Some(dateOfDeath),
-              valueOfEstate = Some(valueOfEstate),
-              chargeableEstateValue = Some(chargeableEstateValue),
-              propertyInEstate = Some(true),
-              propertyValue = Some(propertyValue),
-              propertyPassingToDirectDescendants = Some(Constants.none),
-              transferAnyUnusedThreshold = Some(true),
-              valueBeingTransferred = Some(valueBeingTransferred),
-              claimDownsizingThreshold = Some(true),
-              datePropertyWasChanged = Some(datePropertyWasChanged),
-              valueOfChangedProperty = Some(valueOfChangedProperty),
-              assetsPassingToDirectDescendants = Some(true),
-              valueOfAssetsPassing = Some(valueOfAssetsPassing),
-              transferAvailableWhenPropertyChanged = Some(true)
-            )
-            CalculationInput(userAnswers)
-          }
-
-          exception.getMessage mustBe "requirement failed: Value Available When Property Changed was not answered"
-        }
+    "claim downsizing threshold is true but assets passing to direct descendants is missing" must {
+      "return AssetsPassingToDirectDescendantsNotDefined" in {
+        setupMock(
+          dateOfDeath = Some(dateOfDeath),
+          valueOfEstate = Some(valueOfEstate),
+          chargeableEstateValue = Some(chargeableEstateValue),
+          propertyInEstate = Some(true),
+          propertyValue = Some(propertyValue),
+          propertyPassingToDirectDescendants = Some(Constants.none),
+          percentagePassedToDirectDescendants = Some(BigDecimal(0)),
+          transferAnyUnusedThreshold = Some(false),
+          claimDownsizingThreshold = Some(true),
+          datePropertyWasChanged = Some(datePropertyWasChanged),
+          valueOfChangedProperty = Some(valueOfChangedProperty)
+        )
+        assertInvalid(AssetsPassingToDirectDescendantsNotDefined)
       }
+    }
+
+    "assets pass to direct descendants but value of assets passing is missing" must {
+      "return ValueOfAssetsPassingNotDefined" in {
+        setupMock(
+          dateOfDeath = Some(dateOfDeath),
+          valueOfEstate = Some(valueOfEstate),
+          chargeableEstateValue = Some(chargeableEstateValue),
+          propertyInEstate = Some(true),
+          propertyValue = Some(propertyValue),
+          propertyPassingToDirectDescendants = Some(Constants.none),
+          percentagePassedToDirectDescendants = Some(BigDecimal(0)),
+          transferAnyUnusedThreshold = Some(false),
+          claimDownsizingThreshold = Some(true),
+          datePropertyWasChanged = Some(datePropertyWasChanged),
+          valueOfChangedProperty = Some(valueOfChangedProperty),
+          assetsPassingToDirectDescendants = Some(true)
+        )
+        assertInvalid(ValueOfAssetsPassingNotDefined)
+      }
+    }
+
+    "value is transferred and transfer available when property changed is missing" must {
+      "return TransferAvailableWhenPropertyChangedNotDefined" in {
+        setupMock(
+          dateOfDeath = Some(dateOfDeath),
+          valueOfEstate = Some(valueOfEstate),
+          chargeableEstateValue = Some(chargeableEstateValue),
+          propertyInEstate = Some(true),
+          propertyValue = Some(propertyValue),
+          propertyPassingToDirectDescendants = Some(Constants.none),
+          percentagePassedToDirectDescendants = Some(BigDecimal(0)),
+          transferAnyUnusedThreshold = Some(true),
+          valueBeingTransferred = Some(valueBeingTransferred),
+          claimDownsizingThreshold = Some(true),
+          datePropertyWasChanged = Some(datePropertyWasChanged),
+          valueOfChangedProperty = Some(valueOfChangedProperty),
+          assetsPassingToDirectDescendants = Some(true),
+          valueOfAssetsPassing = Some(valueOfAssetsPassing)
+        )
+        assertInvalid(TransferAvailableWhenPropertyChangedNotDefined)
+      }
+    }
+
+    "there is no value being transferred and transfer available when property changed is missing" must {
+      "return a valid calculation input" in {
+        setupMock(
+          dateOfDeath = Some(dateOfDeath),
+          valueOfEstate = Some(valueOfEstate),
+          chargeableEstateValue = Some(chargeableEstateValue),
+          propertyInEstate = Some(true),
+          propertyValue = Some(propertyValue),
+          propertyPassingToDirectDescendants = Some(Constants.none),
+          percentagePassedToDirectDescendants = Some(BigDecimal(0)),
+          transferAnyUnusedThreshold = Some(false),
+          claimDownsizingThreshold = Some(true),
+          datePropertyWasChanged = Some(datePropertyWasChanged),
+          valueOfChangedProperty = Some(valueOfChangedProperty),
+          assetsPassingToDirectDescendants = Some(true),
+          valueOfAssetsPassing = Some(valueOfAssetsPassing)
+        )
+
+        CalculationInput(userAnswers).isRight mustBe true
+      }
+    }
+
+    "transfer available when property changed is true but its value is missing" must {
+      "return ValueAvailableWhenPropertyChangedNotDefined" in {
+        setupMock(
+          dateOfDeath = Some(dateOfDeath),
+          valueOfEstate = Some(valueOfEstate),
+          chargeableEstateValue = Some(chargeableEstateValue),
+          propertyInEstate = Some(true),
+          propertyValue = Some(propertyValue),
+          propertyPassingToDirectDescendants = Some(Constants.none),
+          percentagePassedToDirectDescendants = Some(BigDecimal(0)),
+          transferAnyUnusedThreshold = Some(true),
+          valueBeingTransferred = Some(valueBeingTransferred),
+          claimDownsizingThreshold = Some(true),
+          datePropertyWasChanged = Some(datePropertyWasChanged),
+          valueOfChangedProperty = Some(valueOfChangedProperty),
+          assetsPassingToDirectDescendants = Some(true),
+          valueOfAssetsPassing = Some(valueOfAssetsPassing),
+          transferAvailableWhenPropertyChanged = Some(true)
+        )
+        assertInvalid(ValueAvailableWhenPropertyChangedNotDefined)
+      }
+    }
   }
 
 }

@@ -115,7 +115,7 @@ class ThresholdCalculationResultControllerSpec extends RnrbControllerSpec {
       setCacheMap(incompleteCacheMap)
       val result = thresholdCalculationResultController().onPageLoad(fakeRequest)
       status(result) mustBe BAD_REQUEST
-      contentAsString(result) must include("requirement failed: Transfer Any Unused Allowance was not answered")
+      contentAsString(result) must include("Transfer Any Unused Allowance was not answered")
     }
 
     "return 400 Bad Request when 'Date Of Death' is missing from cache" in {
@@ -123,7 +123,7 @@ class ThresholdCalculationResultControllerSpec extends RnrbControllerSpec {
       setCacheMap(incompleteCacheMap)
       val result = thresholdCalculationResultController().onPageLoad(fakeRequest)
       status(result) mustBe BAD_REQUEST
-      contentAsString(result) must include("requirement failed: Date of Death was not answered")
+      contentAsString(result) must include("Date Of Death was not answered")
     }
 
     "return 400 Bad Request when 'Value Of Estate' is missing from cache" in {
@@ -131,7 +131,7 @@ class ThresholdCalculationResultControllerSpec extends RnrbControllerSpec {
       setCacheMap(incompleteCacheMap)
       val result = thresholdCalculationResultController().onPageLoad(fakeRequest)
       status(result) mustBe BAD_REQUEST
-      contentAsString(result) must include("requirement failed: Value Of Estate was not answered")
+      contentAsString(result) must include("Value Of Estate was not answered")
     }
 
     "return 400 Bad Request when 'Chargeable Estate Value' is missing from cache" in {
@@ -139,7 +139,7 @@ class ThresholdCalculationResultControllerSpec extends RnrbControllerSpec {
       setCacheMap(incompleteCacheMap)
       val result = thresholdCalculationResultController().onPageLoad(fakeRequest)
       status(result) mustBe BAD_REQUEST
-      contentAsString(result) must include("requirement failed: Chargeable Estate Value was not answered")
+      contentAsString(result) must include("Chargeable Estate Value was not answered")
     }
 
     "return 400 Bad Request when 'Claim Downsizing Threshold' is missing from cache" in {
@@ -147,14 +147,14 @@ class ThresholdCalculationResultControllerSpec extends RnrbControllerSpec {
       setCacheMap(incompleteCacheMap)
       val result = thresholdCalculationResultController().onPageLoad(fakeRequest)
       status(result) mustBe BAD_REQUEST
-      contentAsString(result) must include("requirement failed: Claim Downsizing Threshold was not answered")
+      contentAsString(result) must include("Claim Downsizing Threshold was not answered")
     }
     "return 400 Bad Request when 'Property In Estate' is missing from cache" in {
       val incompleteCacheMap: CacheMap = cacheMap.copy(data = cacheMap.data - Constants.propertyInEstateId)
       setCacheMap(incompleteCacheMap)
       val result = thresholdCalculationResultController().onPageLoad(fakeRequest)
       status(result) mustBe BAD_REQUEST
-      contentAsString(result) must include("requirement failed: Property In Estate was not answered")
+      contentAsString(result) must include("Property In Estate was not answered")
     }
 
     "send the input to the Microservice if the cache is in a valid state" in {
