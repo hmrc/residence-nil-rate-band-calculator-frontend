@@ -93,7 +93,7 @@ trait RnrbControllerSpec extends ControllerSpec {
       verifyValueIsNotCached()
     }
 
-    "get a previously stored value from keystore" in {
+    "get a previously stored value from cache" in {
       for (v <- valuesToCacheBeforeLoad) setCacheValue(v._1, v._2)
       setCacheValue(cacheKey, testValue)
       val result = createController().onPageLoad(using rds)(fakeRequest)

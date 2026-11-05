@@ -27,7 +27,7 @@ case class CacheMap(id: String, data: Map[String, JsValue]) {
         json
           .validate[T]
           .fold(
-            errors => throw new KeyStoreEntryValidationException(key, json, CacheMap.getClass, errors),
+            errors => throw new CacheMapEntryValidationException(key, json, CacheMap.getClass, errors),
             valid => valid
           )
       )
@@ -38,7 +38,7 @@ object CacheMap {
   given formats: OFormat[CacheMap] = Json.format[CacheMap]
 }
 
-class KeyStoreEntryValidationException(
+class CacheMapEntryValidationException(
     val key: String,
     val invalidJson: JsValue,
     val readingAs: Class[?],
@@ -46,6 +46,6 @@ class KeyStoreEntryValidationException(
 ) extends Exception {
 
   override def getMessage: String =
-    s"KeyStore entry for key '$key' was '${Json.stringify(invalidJson)}'. Attempt to convert to ${readingAs.getName} gave errors: $errors"
+    s"Cache entry for key '$key' was '${Json.stringify(invalidJson)}'. Attempt to convert to ${readingAs.getName} gave errors: $errors"
 
 }

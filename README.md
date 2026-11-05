@@ -21,7 +21,7 @@ To run dependencies for the service, the following command:
     sm2 --start RNRB_ALL
 
 #### Test Coverage
-To run the test coverage suite
+To run the test coverage suite/transfer-any-unused-threshold
 
  `sbt clean coverage test coverageReport`
 
