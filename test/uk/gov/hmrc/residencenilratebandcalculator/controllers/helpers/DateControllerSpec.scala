@@ -94,7 +94,7 @@ trait DateControllerSpec extends ControllerSpec {
       verifyValueIsNotCached()
     }
 
-    "get a previously stored value from keystore" in {
+    "get a previously stored value from cache" in {
       val day   = 1
       val month = 1
       val year  = 2018

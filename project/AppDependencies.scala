@@ -5,7 +5,7 @@ import sbt.*
 private object AppDependencies {
 
   val bootstrapPlayVersion    = "10.7.1"
-  val playFrontendHmrcVersion = "13.14.0"
+  val playFrontendHmrcVersion = "13.16.0"
   val hmrcMongoVersion        = "2.14.0"
   val pdfboxVersion           = "2.0.28"
   val scalatestVersion        = "3.2.20"

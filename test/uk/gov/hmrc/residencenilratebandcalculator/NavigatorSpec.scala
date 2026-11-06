@@ -67,7 +67,7 @@ class NavigatorSpec extends CommonPlaySpec {
       navigator.nextPage(Constants.dateOfDeathId)(mockCacheMap) mustBe routes.NoThresholdIncreaseController.onPageLoad
     }
 
-    "return a function that goes to the Calculate Threshold Increase controller when given DateOfDeath, and the date of death does not exist in keystore" in {
+    "return a function that goes to the Calculate Threshold Increase controller when given DateOfDeath, and the date of death does not exist in cache" in {
       val mockCacheMap = mock[UserAnswers]
       when(mockCacheMap.dateOfDeath).thenReturn(None)
       navigator.nextPage(Constants.dateOfDeathId)(

@@ -156,11 +156,11 @@ class CacheMapSpec extends CommonPlaySpec with HttpResponseMocks with MockSessio
       }
 
       "throw an exception when provided result type does not match" in {
-        val exception = intercept[KeyStoreEntryValidationException] {
+        val exception = intercept[CacheMapEntryValidationException] {
           model.getEntry[Date]("key1")
         }
 
-        exception.getMessage mustBe "KeyStore entry for key 'key1' was '\"value1\"'. Attempt to convert to " +
+        exception.getMessage mustBe "Cache entry for key 'key1' was '\"value1\"'. Attempt to convert to " +
           "uk.gov.hmrc.residencenilratebandcalculator.models.CacheMap$ gave errors: List((,List(JsonValidationError(List(Text 'value1' could not be parsed at index 0),ArraySeq()))))"
       }
     }
