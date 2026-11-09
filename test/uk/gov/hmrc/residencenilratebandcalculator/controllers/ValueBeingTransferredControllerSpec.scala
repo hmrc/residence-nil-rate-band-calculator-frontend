@@ -156,7 +156,7 @@ class ValueBeingTransferredControllerSpec extends ControllerSpec {
       verifyValueIsNotCached()
     }
 
-    "get a previously stored value from keystore" in {
+    "get a previously stored value from cache" in {
       setCacheMap(
         new CacheMap(
           "",
