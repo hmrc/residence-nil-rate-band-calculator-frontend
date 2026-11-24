@@ -4,12 +4,12 @@ import sbt.*
 
 private object AppDependencies {
 
-  val bootstrapPlayVersion    = "10.7.1"
-  val playFrontendHmrcVersion = "13.16.0"
+  val bootstrapPlayVersion    = "10.9.0"
+  val playFrontendHmrcVersion = "13.18.0"
   val hmrcMongoVersion        = "2.14.0"
-  val pdfboxVersion           = "2.0.28"
+  val pdfboxVersion           = "3.0.8"
   val scalatestVersion        = "3.2.20"
-  val wiremockVersion         = "2.35.0"
+  val wiremockVersion         = "3.0.1"
 
   val compile: Seq[ModuleID] = Seq(
     ws,
